@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import re
 
 # 1. Konfigurace stránky
 st.set_page_config(
@@ -9,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Načtení klíčů
+# Načtení klíčů z Secrets
 NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
 MAIN_PAGE_ID = st.secrets["PAGE_ID"]
 
@@ -48,9 +49,9 @@ def rich_text_to_markdown(rich_text_list):
         md_text += text
     return md_text
 
-# --- 2. NAČÍTÁNÍ BLOKŮ A DATABÁZÍ ---
+# --- 2. NAČÍTÁNÍ BLOKŮ Z NOTIONU ---
 def fetch_notion_blocks(block_id):
-    """Načte všechny bloky ze zadaného ID."""
+    """Načte všechny bloky ze zadaného ID (včetně stránkování)."""
     all_blocks = []
     url = f"https://api.notion.com/v1/blocks/{block_id}/children?page_size=100"
     has_more = True
@@ -58,72 +59,92 @@ def fetch_notion_blocks(block_id):
     
     while has_more:
         params_url = url + (f"&start_cursor={start_cursor}" if start_cursor else "")
-        res = requests.get(params_url, headers=headers)
-        if res.status_code == 200:
-            data = res.json()
-            all_blocks.extend(data.get("results", []))
-            has_more = data.get("has_more", False)
-            start_cursor = data.get("next_cursor")
-        else:
+        try:
+            res = requests.get(params_url, headers=headers)
+            if res.status_code == 200:
+                data = res.json()
+                all_blocks.extend(data.get("results", []))
+                has_more = data.get("has_more", False)
+                start_cursor = data.get("next_cursor")
+            else:
+                break
+        except Exception:
             break
     return all_blocks
 
 def fetch_database_pages(db_id):
-    """Načte kapitoly, pokud jsou vložené v Notionu jako databáze/tabulka."""
+    """Načte stránky z databáze."""
     url = f"https://api.notion.com/v1/databases/{db_id}/query"
-    res = requests.post(url, headers=headers)
     pages = []
-    if res.status_code == 200:
-        for p in res.json().get("results", []):
-            title = "Bez názvu"
-            props = p.get("properties", {})
-            for key, val in props.items():
-                if val.get("type") == "title" and val.get("title"):
-                    title = rich_text_to_markdown(val["title"])
-            pages.append({"id": p["id"], "title": title})
+    try:
+        res = requests.post(url, headers=headers)
+        if res.status_code == 200:
+            for p in res.json().get("results", []):
+                title = "Bez názvu"
+                props = p.get("properties", {})
+                for key, val in props.items():
+                    if val.get("type") == "title" and val.get("title"):
+                        title = rich_text_to_markdown(val["title"])
+                pages.append({"id": p["id"], "title": title})
+    except Exception:
+        pass
     return pages
 
-# Vyhledání kapitol bez duplicit
+# --- 3. DEDUPLIKACE A SEŘAZENÍ KAPITOL ---
+def extract_chapter_number(title):
+    """Vytáhne číslo kapitoly z textu (např. 'Kapitola 1', '01 · ...')."""
+    match = re.search(r'(?:kapitola\s*|0)?(\d+)', title.lower())
+    if match:
+        return int(match.group(1))
+    return 999
+
 def discover_chapters(blocks):
     raw_chapters = []
-    
-    for b in blocks:
-        b_type = b.get("type")
-        if b_type == "child_page":
-            title = b["child_page"]["title"].strip()
-            if title and "řídící centrum" not in title.lower() and "dashboard" not in title.lower():
-                raw_chapters.append({"id": b["id"], "title": title})
-        elif b_type == "child_database":
-            db_pages = fetch_database_pages(b["id"])
-            raw_chapters.extend(db_pages)
-        elif b_type == "column_list":
-            col_blocks = fetch_notion_blocks(b["id"])
-            for col in col_blocks:
-                child_in_col = fetch_notion_blocks(col["id"])
-                raw_chapters.extend(discover_chapters(child_in_col))
 
-    # DEDUPLIKACE: Vyfiltrujeme opakující se ID a stejné názvy
-    clean_chapters = []
-    seen_ids = set()
-    seen_titles = set()
+    def scan_blocks(block_list):
+        for b in block_list:
+            b_type = b.get("type")
+            if b_type == "child_page":
+                title = b["child_page"]["title"].strip()
+                if title and "řídící centrum" not in title.lower() and "dashboard" not in title.lower():
+                    raw_chapters.append({"id": b["id"], "title": title})
+            elif b_type == "child_database":
+                db_pages = fetch_database_pages(b["id"])
+                raw_chapters.extend(db_pages)
+            elif b_type == "column_list":
+                cols = fetch_notion_blocks(b["id"])
+                for col in cols:
+                    scan_blocks(fetch_notion_blocks(col["id"]))
+
+    scan_blocks(blocks)
+
+    # Sloučení duplicit podle čísla kapitoly (upřednostní přímé podstránky s delším názvem)
+    chapters_by_num = {}
+    other_chapters = []
 
     for ch in raw_chapters:
-        ch_id = ch["id"]
         title = ch["title"].strip()
+        num = extract_chapter_number(title)
         
-        if ch_id not in seen_ids and title not in seen_titles:
-            seen_ids.add(ch_id)
-            seen_titles.add(title)
-            clean_chapters.append({"id": ch_id, "title": title})
+        if num != 999:
+            if num not in chapters_by_num:
+                chapters_by_num[num] = ch
+            else:
+                # Pokud už kapitolu máme, vybereme ten název, který začíná na "Kapitola"
+                if "kapitola" in title.lower() and "kapitola" not in chapters_by_num[num]["title"].lower():
+                    chapters_by_num[num] = ch
+        else:
+            if not any(o["title"] == title for o in other_chapters):
+                other_chapters.append(ch)
 
-    # Seřazení podle názvu kapitol
-    clean_chapters.sort(key=lambda x: x["title"])
-    return clean_chapters
+    sorted_chapters = [chapters_by_num[k] for k in sorted(chapters_by_num.keys())]
+    sorted_chapters.extend(other_chapters)
+    return sorted_chapters
 
 main_blocks = fetch_notion_blocks(MAIN_PAGE_ID)
 chapters = discover_chapters(main_blocks)
 
-# --- 3. BOČNÍ PANEL ---
+# --- 4. BOČNÍ PANEL (NAVIGACE) ---
 with st.sidebar:
     st.title("📚 Učebnice Ekonomiky")
     st.divider()
@@ -135,14 +156,15 @@ with st.sidebar:
     st.divider()
     st.subheader("Kapitoly")
     for ch in chapters:
-        if st.button(f"📖 {ch['title']}", key=ch["id"], use_container_width=True):
+        if st.button(f"📖 {ch['title']}", key=f"side_{ch['id']}", use_container_width=True):
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 4. VYKRESLOVÁNÍ OBSAHU ---
+# --- 5. VYKRESLOVÁNÍ HLAVNÍHO OBSAHU ---
 def render_block(block):
     b_type = block.get("type")
 
+    # Textové prvky
     if b_type == "heading_1":
         st.title(rich_text_to_markdown(block["heading_1"]["rich_text"]))
     elif b_type == "heading_2":
@@ -155,8 +177,12 @@ def render_block(block):
             st.markdown(text)
     elif b_type == "bulleted_list_item":
         st.markdown(f"* {rich_text_to_markdown(block['bulleted_list_item']['rich_text'])}")
+        if block.get("has_children"):
+            render_children(block["id"])
     elif b_type == "numbered_list_item":
         st.markdown(f"1. {rich_text_to_markdown(block['numbered_list_item']['rich_text'])}")
+        if block.get("has_children"):
+            render_children(block["id"])
     elif b_type == "callout":
         text = rich_text_to_markdown(block["callout"]["rich_text"])
         st.info(text, icon="💡")
@@ -169,7 +195,7 @@ def render_block(block):
     elif b_type == "to_do":
         checked = block["to_do"].get("checked", False)
         text = rich_text_to_markdown(block["to_do"]["rich_text"])
-        st.checkbox(text, value=checked, key=block["id"])
+        st.checkbox(text, value=checked, key=f"todo_{block['id']}")
     elif b_type == "image":
         img_data = block["image"]
         img_url = img_data.get("file", {}).get("url") or img_data.get("external", {}).get("url")
@@ -178,12 +204,42 @@ def render_block(block):
     elif b_type == "divider":
         st.divider()
 
+    # --- VYROVNÁNÍ LAYOUTU A NAVIGACE UVNITŘ STRÁNKY ---
+    elif b_type == "column_list":
+        cols_blocks = fetch_notion_blocks(block["id"])
+        if cols_blocks:
+            cols = st.columns(len(cols_blocks))
+            for idx, col_block in enumerate(cols_blocks):
+                with cols[idx]:
+                    render_children(col_block["id"])
+
+    elif b_type == "child_page":
+        title = block["child_page"]["title"]
+        if "řídící centrum" not in title.lower():
+            if st.button(f"📖 {title}", key=f"page_{block['id']}", use_container_width=True):
+                st.session_state["current_page_id"] = block["id"]
+                st.rerun()
+
+    elif b_type == "link_to_page":
+        page_id = block.get("link_to_page", {}).get("page_id")
+        if page_id:
+            if st.button("🔗 Otevřít kapitolu", key=f"link_{block['id']}", use_container_width=True):
+                st.session_state["current_page_id"] = page_id
+                st.rerun()
+
+    elif b_type == "synced_block":
+        synced_from = block.get("synced_block", {}).get("synced_from")
+        if synced_from:
+            render_children(synced_from.get("block_id"))
+        else:
+            render_children(block["id"])
+
 def render_children(block_id):
     children = fetch_notion_blocks(block_id)
     for child in children:
         render_block(child)
 
-# --- HLAVNÍ STRÁNKA ---
+# --- VYSVIÍCENÍ STRÁNKY ---
 active_blocks = fetch_notion_blocks(st.session_state["current_page_id"])
 
 col1, main_col, col2 = st.columns([1, 4, 1])
