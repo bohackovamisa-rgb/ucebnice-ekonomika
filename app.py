@@ -157,16 +157,19 @@ with st.sidebar:
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 5. CHYTRÉ VYKRESLOVÁNÍ TEXTU A INTERAKTIVNÍCH PRVKŮ ---
+# --- 5. DETEKTOR A VYKRESLOVAČ INTERAKTIVNÍCH DOKONČENÍ ---
+def is_completion_prompt(text):
+    """Očistí text od markdown hvězdiček a zjistí, zda jde o úkol k doplňování."""
+    clean = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
+    return clean.startswith(("doplň:", "doplňte:", "doplň ", "doplňte ", "úkol:", "otázka:"))
+
 def render_text_or_input(text, block_id):
-    """Rozpozná úkoly k doplňování a vytvoří pro ně interaktivní vstupní pole."""
-    clean_text = text.strip()
-    lower_text = clean_text.lower()
-    
-    # Detekce klíčových slov pro doplňování
-    if lower_text.startswith(("doplň:", "doplňte:", "doplň ", "doplňte ", "úkol:", "otázka:")):
+    """Vykreslí buď běžný text nebo interaktivní pole pro odpověď."""
+    if is_completion_prompt(text):
+        # Odstraníme hvězdičky z popisku, aby vypadal čistě
+        label_text = text.replace("**", "").replace("*", "").strip()
         st.text_input(
-            label=clean_text,
+            label=f"✏️ {label_text}",
             placeholder="Sem napište svou odpověď...",
             key=f"input_{block_id}"
         )
@@ -178,29 +181,48 @@ def render_block(block):
 
     # Textové prvky
     if b_type == "heading_1":
-        st.title(rich_text_to_markdown(block["heading_1"]["rich_text"]))
+        text = rich_text_to_markdown(block["heading_1"]["rich_text"])
+        if is_completion_prompt(text):
+            render_text_or_input(text, block["id"])
+        else:
+            st.title(text)
     elif b_type == "heading_2":
-        st.header(rich_text_to_markdown(block["heading_2"]["rich_text"]))
+        text = rich_text_to_markdown(block["heading_2"]["rich_text"])
+        if is_completion_prompt(text):
+            render_text_or_input(text, block["id"])
+        else:
+            st.header(text)
     elif b_type == "heading_3":
-        st.subheader(rich_text_to_markdown(block["heading_3"]["rich_text"]))
+        text = rich_text_to_markdown(block["heading_3"]["rich_text"])
+        if is_completion_prompt(text):
+            render_text_or_input(text, block["id"])
+        else:
+            st.subheader(text)
     elif b_type == "paragraph":
         text = rich_text_to_markdown(block["paragraph"]["rich_text"])
         if text:
             render_text_or_input(text, block["id"])
     elif b_type == "bulleted_list_item":
-        st.markdown(f"* {rich_text_to_markdown(block['bulleted_list_item']['rich_text'])}")
+        text = rich_text_to_markdown(block["bulleted_list_item"]["rich_text"])
+        if is_completion_prompt(text):
+            render_text_or_input(text, block["id"])
+        else:
+            st.markdown(f"* {text}")
         if block.get("has_children"):
             render_children(block["id"])
     elif b_type == "numbered_list_item":
-        st.markdown(f"1. {rich_text_to_markdown(block['numbered_list_item']['rich_text'])}")
+        text = rich_text_to_markdown(block["numbered_list_item"]["rich_text"])
+        if is_completion_prompt(text):
+            render_text_or_input(text, block["id"])
+        else:
+            st.markdown(f"1. {text}")
         if block.get("has_children"):
             render_children(block["id"])
     elif b_type == "callout":
         text = rich_text_to_markdown(block["callout"]["rich_text"])
-        
-        # Pokud je v Calloutu úkol k doplňování
-        if text.strip().lower().startswith(("doplň:", "doplňte:", "úkol:", "otázka:")):
-            st.info("💡 " + text)
+        if is_completion_prompt(text):
+            label_text = text.replace("**", "").replace("*", "").strip()
+            st.info(f"💡 {label_text}")
             st.text_input("Vaše odpověď:", placeholder="Napište odpověď...", key=f"callout_input_{block['id']}")
         else:
             st.info(text, icon="💡")
@@ -247,7 +269,6 @@ def render_block(block):
                 st.rerun()
 
     elif b_type == "synced_block":
-        # Prevence zpožděného nebo dvojitého vykreslení u zrcadlených bloků
         synced_from = block.get("synced_block", {}).get("synced_from")
         target_id = synced_from.get("block_id") if synced_from else block["id"]
         render_children(target_id)
