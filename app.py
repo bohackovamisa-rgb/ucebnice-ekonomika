@@ -10,6 +10,30 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Vlastní CSS pro prémiový vzhled karet a formulářových polí
+st.markdown("""
+    <style>
+    .main {
+        background-color: #f8f9fa;
+    }
+    /* Stylování vstupních polí a textových oblastí */
+    .stTextInput input, .stTextArea textarea {
+        border-radius: 8px !important;
+        border: 1px solid #cbd5e1 !important;
+        background-color: #ffffff !important;
+    }
+    .stTextInput input:focus, .stTextArea textarea:focus {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
+    }
+    /* Úprava nadpisů */
+    h1, h2, h3 {
+        color: #1e293b;
+        font-weight: 700;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Načtení klíčů z Secrets
 NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
 MAIN_PAGE_ID = st.secrets["PAGE_ID"]
@@ -144,7 +168,7 @@ with st.sidebar:
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 5. DETEKTOR INTERAKTIVNÍCH POLÍ A VYKRESLOVÁNÍ BLOKŮ ---
+# --- 5. DESIGN INTERAKTIVNÍCH KARET (LEAN CANVAS & ŠABLONY) ---
 def is_completion_prompt(text):
     clean = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
     prompts = (
@@ -166,29 +190,49 @@ def render_text_or_input(text, block_id):
         clean_lower = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
         label_text = text.replace("**", "").replace("*", "").strip()
         
+        # Přiřazení ikony podle typu políčka
         icon = "✏️"
-        if "název projektu" in clean_lower: icon = "💡"
+        if "název projektu" in clean_lower: icon = "🚀"
+        elif "jedna věta" in clean_lower: icon = "🎯"
         elif "zákazník" in clean_lower: icon = "👥"
         elif "problém" in clean_lower: icon = "🚨"
-        elif "řešení" in clean_lower: icon = "✅"
-        elif "cena" in clean_lower or "náklad" in clean_lower: icon = "💰"
-        elif "rizika" in clean_lower: icon = "⚠️"
-        elif "metrika" in clean_lower or "jedna věta" in clean_lower: icon = "🎯"
+        elif "hodnota" in clean_lower: icon = "💎"
+        elif "řešení" in clean_lower: icon = "💡"
+        elif "konkurence" in clean_lower or "alternativy" in clean_lower: icon = "🥊"
+        elif "cena" in clean_lower: icon = "🏷️"
+        elif "náklad" in clean_lower: icon = "💰"
+        elif "test" in clean_lower: icon = "🧪"
+        elif "metrika" in clean_lower: icon = "📊"
+        elif "rizik" in clean_lower: icon = "⚠️"
         elif "právní" in clean_lower or "etické" in clean_lower: icon = "⚖️"
         elif "rozhodnutí" in clean_lower: icon = "🧭"
-        elif "konkurence" in clean_lower or "alternativy" in clean_lower: icon = "🥊"
         
+        # Určení, zda jde o víceřádkové pole
         long_prompts = (
             "problém", "hodnota pro zákazníka", "řešení", "konkurence", 
             "první test", "rizika", "etické pravidlo", "jedna věta projektu",
             "předpokládali jsme", "ověřili jsme", "naměřili jsme", "zjistili jsme"
         )
-        is_long = any(clean_lower.startswith(p) for p in long_prompts)
+        is_long = any(p in clean_lower for p in long_prompts)
         
-        if is_long:
-            st.text_area(label=f"{icon} {label_text}", placeholder="Zde se rozepište...", key=f"input_{block_id}")
-        else:
-            st.text_input(label=f"{icon} {label_text}", placeholder="Stručná odpověď...", key=f"input_{block_id}")
+        # Vytvoření samostatné designové karty s ohraničením
+        with st.container(border=True):
+            st.markdown(f"**{icon} {label_text}**")
+            if is_long:
+                st.text_area(
+                    label=label_text,
+                    label_visibility="collapsed",
+                    placeholder="Zde se rozepište...",
+                    key=f"input_{block_id}",
+                    height=100
+                )
+            else:
+                st.text_input(
+                    label=label_text,
+                    label_visibility="collapsed",
+                    placeholder="Stručná odpověď...",
+                    key=f"input_{block_id}"
+                )
     else:
         st.markdown(text)
 
@@ -225,8 +269,9 @@ def render_block(block):
         text = rich_text_to_markdown(block["callout"]["rich_text"])
         if is_completion_prompt(text):
             label_text = text.replace("**", "").replace("*", "").strip()
-            st.info(f"💡 {label_text}")
-            st.text_area("Vaše odpověď:", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}")
+            with st.container(border=True):
+                st.info(f"💡 {label_text}")
+                st.text_area("Vaše odpověď:", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}", height=100)
         else: st.info(text, icon="💡")
         if block.get("has_children"): render_children(block["id"])
     elif b_type == "toggle":
