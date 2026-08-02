@@ -21,7 +21,7 @@ headers = {
 if "current_page_id" not in st.session_state:
     st.session_state["current_page_id"] = MAIN_PAGE_ID
 
-# --- 1. PŘEKLADAČ FORMÁTOVÁNÍ (Zachová odkazy, bold, kurzívu) ---
+# --- 1. PŘEKLADAČ FORMÁTOVÁNÍ ---
 def rich_text_to_markdown(rich_text_list):
     """Převede Notion rich_text na formátovaný Markdown včetně odkazů."""
     if not rich_text_list:
@@ -33,7 +33,6 @@ def rich_text_to_markdown(rich_text_list):
         annotations = t.get("annotations", {})
         href = t.get("href")
 
-        # Aplikace stylů
         if annotations.get("bold"):
             text = f"**{text}**"
         if annotations.get("italic"):
@@ -43,7 +42,6 @@ def rich_text_to_markdown(rich_text_list):
         if annotations.get("code"):
             text = f"`{text}`"
         
-        # Aplikace odkazu
         if href:
             text = f"[{text}]({href})"
             
@@ -85,20 +83,42 @@ def fetch_database_pages(db_id):
             pages.append({"id": p["id"], "title": title})
     return pages
 
-# Vyhledání kapitol na hlavní stránce
+# Vyhledání kapitol bez duplicit
 def discover_chapters(blocks):
-    chapters = []
+    raw_chapters = []
+    
     for b in blocks:
         b_type = b.get("type")
         if b_type == "child_page":
-            title = b["child_page"]["title"]
-            if "řídící centrum" not in title.lower():
-                chapters.append({"id": b["id"], "title": title})
+            title = b["child_page"]["title"].strip()
+            if title and "řídící centrum" not in title.lower() and "dashboard" not in title.lower():
+                raw_chapters.append({"id": b["id"], "title": title})
         elif b_type == "child_database":
-            # Pokud máte kapitoly v tabulce/databázi
             db_pages = fetch_database_pages(b["id"])
-            chapters.extend(db_pages)
-    return chapters
+            raw_chapters.extend(db_pages)
+        elif b_type == "column_list":
+            col_blocks = fetch_notion_blocks(b["id"])
+            for col in col_blocks:
+                child_in_col = fetch_notion_blocks(col["id"])
+                raw_chapters.extend(discover_chapters(child_in_col))
+
+    # DEDUPLIKACE: Vyfiltrujeme opakující se ID a stejné názvy
+    clean_chapters = []
+    seen_ids = set()
+    seen_titles = set()
+
+    for ch in raw_chapters:
+        ch_id = ch["id"]
+        title = ch["title"].strip()
+        
+        if ch_id not in seen_ids and title not in seen_titles:
+            seen_ids.add(ch_id)
+            seen_titles.add(title)
+            clean_chapters.append({"id": ch_id, "title": title})
+
+    # Seřazení podle názvu kapitol
+    clean_chapters.sort(key=lambda x: x["title"])
+    return clean_chapters
 
 main_blocks = fetch_notion_blocks(MAIN_PAGE_ID)
 chapters = discover_chapters(main_blocks)
