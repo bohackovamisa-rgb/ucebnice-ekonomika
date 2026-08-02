@@ -51,7 +51,7 @@ def rich_text_to_markdown(rich_text_list):
 
 # --- 2. NAČÍTÁNÍ BLOKŮ Z NOTIONU ---
 def fetch_notion_blocks(block_id):
-    """Načte všechny bloky ze zadaného ID (včetně stránkování)."""
+    """Načte všechny bloky ze zadaného ID (řeší stránkování)."""
     all_blocks = []
     url = f"https://api.notion.com/v1/blocks/{block_id}/children?page_size=100"
     has_more = True
@@ -92,7 +92,6 @@ def fetch_database_pages(db_id):
 
 # --- 3. DEDUPLIKACE A SEŘAZENÍ KAPITOL ---
 def extract_chapter_number(title):
-    """Vytáhne číslo kapitoly z textu (např. 'Kapitola 1', '01 · ...')."""
     match = re.search(r'(?:kapitola\s*|0)?(\d+)', title.lower())
     if match:
         return int(match.group(1))
@@ -118,7 +117,6 @@ def discover_chapters(blocks):
 
     scan_blocks(blocks)
 
-    # Sloučení duplicit podle čísla kapitoly (upřednostní přímé podstránky s delším názvem)
     chapters_by_num = {}
     other_chapters = []
 
@@ -130,7 +128,6 @@ def discover_chapters(blocks):
             if num not in chapters_by_num:
                 chapters_by_num[num] = ch
             else:
-                # Pokud už kapitolu máme, vybereme ten název, který začíná na "Kapitola"
                 if "kapitola" in title.lower() and "kapitola" not in chapters_by_num[num]["title"].lower():
                     chapters_by_num[num] = ch
         else:
@@ -144,7 +141,7 @@ def discover_chapters(blocks):
 main_blocks = fetch_notion_blocks(MAIN_PAGE_ID)
 chapters = discover_chapters(main_blocks)
 
-# --- 4. BOČNÍ PANEL (NAVIGACE) ---
+# --- 4. BOČNÍ PANEL ---
 with st.sidebar:
     st.title("📚 Učebnice Ekonomiky")
     st.divider()
@@ -160,7 +157,22 @@ with st.sidebar:
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 5. VYKRESLOVÁNÍ HLAVNÍHO OBSAHU ---
+# --- 5. CHYTRÉ VYKRESLOVÁNÍ TEXTU A INTERAKTIVNÍCH PRVKŮ ---
+def render_text_or_input(text, block_id):
+    """Rozpozná úkoly k doplňování a vytvoří pro ně interaktivní vstupní pole."""
+    clean_text = text.strip()
+    lower_text = clean_text.lower()
+    
+    # Detekce klíčových slov pro doplňování
+    if lower_text.startswith(("doplň:", "doplňte:", "doplň ", "doplňte ", "úkol:", "otázka:")):
+        st.text_input(
+            label=clean_text,
+            placeholder="Sem napište svou odpověď...",
+            key=f"input_{block_id}"
+        )
+    else:
+        st.markdown(text)
+
 def render_block(block):
     b_type = block.get("type")
 
@@ -174,7 +186,7 @@ def render_block(block):
     elif b_type == "paragraph":
         text = rich_text_to_markdown(block["paragraph"]["rich_text"])
         if text:
-            st.markdown(text)
+            render_text_or_input(text, block["id"])
     elif b_type == "bulleted_list_item":
         st.markdown(f"* {rich_text_to_markdown(block['bulleted_list_item']['rich_text'])}")
         if block.get("has_children"):
@@ -185,7 +197,14 @@ def render_block(block):
             render_children(block["id"])
     elif b_type == "callout":
         text = rich_text_to_markdown(block["callout"]["rich_text"])
-        st.info(text, icon="💡")
+        
+        # Pokud je v Calloutu úkol k doplňování
+        if text.strip().lower().startswith(("doplň:", "doplňte:", "úkol:", "otázka:")):
+            st.info("💡 " + text)
+            st.text_input("Vaše odpověď:", placeholder="Napište odpověď...", key=f"callout_input_{block['id']}")
+        else:
+            st.info(text, icon="💡")
+            
         if block.get("has_children"):
             render_children(block["id"])
     elif b_type == "toggle":
@@ -204,7 +223,7 @@ def render_block(block):
     elif b_type == "divider":
         st.divider()
 
-    # --- VYROVNÁNÍ LAYOUTU A NAVIGACE UVNITŘ STRÁNKY ---
+    # --- LAYOUT A ZANOŘENÍ ---
     elif b_type == "column_list":
         cols_blocks = fetch_notion_blocks(block["id"])
         if cols_blocks:
@@ -216,30 +235,29 @@ def render_block(block):
     elif b_type == "child_page":
         title = block["child_page"]["title"]
         if "řídící centrum" not in title.lower():
-            if st.button(f"📖 {title}", key=f"page_{block['id']}", use_container_width=True):
+            if st.button(f"📖 Otevřít: {title}", key=f"page_{block['id']}", use_container_width=True):
                 st.session_state["current_page_id"] = block["id"]
                 st.rerun()
 
     elif b_type == "link_to_page":
         page_id = block.get("link_to_page", {}).get("page_id")
         if page_id:
-            if st.button("🔗 Otevřít kapitolu", key=f"link_{block['id']}", use_container_width=True):
+            if st.button("🔗 Přejít na kapitolu", key=f"link_{block['id']}", use_container_width=True):
                 st.session_state["current_page_id"] = page_id
                 st.rerun()
 
     elif b_type == "synced_block":
+        # Prevence zpožděného nebo dvojitého vykreslení u zrcadlených bloků
         synced_from = block.get("synced_block", {}).get("synced_from")
-        if synced_from:
-            render_children(synced_from.get("block_id"))
-        else:
-            render_children(block["id"])
+        target_id = synced_from.get("block_id") if synced_from else block["id"]
+        render_children(target_id)
 
 def render_children(block_id):
     children = fetch_notion_blocks(block_id)
     for child in children:
         render_block(child)
 
-# --- VYSVIÍCENÍ STRÁNKY ---
+# --- VYSVÍCENÍ OBSAHU ---
 active_blocks = fetch_notion_blocks(st.session_state["current_page_id"])
 
 col1, main_col, col2 = st.columns([1, 4, 1])
