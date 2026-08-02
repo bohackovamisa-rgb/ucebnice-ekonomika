@@ -12,17 +12,14 @@ st.set_page_config(
 
 # --- PŘIHLAŠOVACÍ BRÁNA ---
 def check_password():
-    """Vrátí True, pokud je uživatel autorizován."""
-    # Získání hesla ze secrets. Pokud tam není, upozorní vás to.
     app_pwd = st.secrets.get("APP_PASSWORD")
     if not app_pwd:
-        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD! Běžte do nastavení aplikace na webu Streamlitu a přidejte ji.")
+        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD! Přidejte ji v nastavení aplikace.")
         return False
         
     if st.session_state.get("password_correct", False):
         return True
 
-    # Design přihlašovací obrazovky
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.markdown("<br><br><br>", unsafe_allow_html=True)
@@ -38,13 +35,10 @@ def check_password():
                     st.error("❌ Nesprávné heslo!")
     return False
 
-# Pokud heslo není správné, kód se tady ZASTAVÍ a dál nepokračuje.
 if not check_password():
     st.stop()
 
-# --- NÍŽE SE SPUSTÍ AŽ PO ODEMKNUTÍ ---
-
-# Vlastní CSS pro moderní vzhled
+# --- VZHLED ---
 st.markdown("""
     <style>
     .main { background-color: #f8f9fa; }
@@ -61,7 +55,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Načtení klíčů z Secrets
 NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
 MAIN_PAGE_ID = st.secrets["PAGE_ID"]
 
@@ -73,10 +66,11 @@ headers = {
 if "current_page_id" not in st.session_state:
     st.session_state["current_page_id"] = MAIN_PAGE_ID
 
-# --- POMOCNÉ FUNKCE PRO ZACHYTÁVÁNÍ ODKAZŮ ---
+# --- ZPRACOVÁNÍ EXTERNÍCH A INTERNÍCH ODKAZŮ ---
 def extract_notion_id(href_or_text):
     if not href_or_text: return None
-    match = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})', href_or_text)
+    url_main = href_or_text.split('#')[0]
+    match = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})', url_main)
     if match: return match.group(1).replace("-", "")
     return None
 
@@ -90,17 +84,22 @@ def get_internal_links(rich_text_list):
     for t in rich_text_list:
         page_id = None
         href = t.get("href", "")
-        if t.get("type") == "mention" and t.get("mention", {}).get("type") == "page":
-            page_id = t["mention"]["page"]["id"].replace("-", "")
+        if t.get("type") == "mention":
+            mention_data = t.get("mention", {})
+            if mention_data.get("type") == "page":
+                page_id = mention_data["page"]["id"].replace("-", "")
+            elif mention_data.get("type") == "database":
+                page_id = mention_data["database"]["id"].replace("-", "")
         elif href and is_notion_link(href):
             page_id = extract_notion_id(href)
+            
         if page_id:
             link_text = t.get("plain_text", "Otevřít kapitolu").strip()
             if not any(l["id"] == page_id for l in internal_links):
                 internal_links.append({"text": link_text, "id": page_id})
     return internal_links
 
-# --- 1. PŘEKLADAČ FORMÁTOVÁNÍ ---
+# --- FORMÁTOVÁNÍ TEXTU ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list: return ""
     md_text = ""
@@ -119,7 +118,7 @@ def rich_text_to_markdown(rich_text_list):
         md_text += text
     return md_text
 
-# --- 2. NAČÍTÁNÍ BLOKŮ Z NOTIONU ---
+# --- API LEČENÍ ---
 def fetch_notion_blocks(block_id):
     all_blocks = []
     url = f"https://api.notion.com/v1/blocks/{block_id}/children?page_size=100"
@@ -154,7 +153,7 @@ def fetch_database_pages(db_id):
     except Exception: pass
     return pages
 
-# --- 3. DEDUPLIKACE A SEŘAZENÍ KAPITOL ---
+# --- KAPITOLY A NAVIGATION ---
 def extract_chapter_number(title):
     match = re.search(r'(?:kapitola\s*|0)?(\d+)', title.lower())
     if match: return int(match.group(1))
@@ -199,7 +198,7 @@ def discover_chapters(blocks):
 main_blocks = fetch_notion_blocks(MAIN_PAGE_ID)
 chapters = discover_chapters(main_blocks)
 
-# --- 4. BOČNÍ PANEL ---
+# --- SIDEBAR ---
 with st.sidebar:
     st.title("📚 Učebnice Ekonomiky")
     st.divider()
@@ -219,27 +218,31 @@ with st.sidebar:
         st.session_state["password_correct"] = False
         st.rerun()
 
-# --- 5. VYKRESLOVÁNÍ INTERAKTIVNÍCH KARET A TLAČÍTEK NAVIGACE ---
+# --- PŘÍSNÝ DETEKTOR INTERAKTIVNÍCH FORMULÁŘŮ ---
 def is_completion_prompt(text):
-    clean = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
-    prompts = (
-        "doplň", "úkol", "otázka", "název projektu", "jedna věta projektu", 
-        "zákazník", "problém", "hodnota pro zákazníka", "řešení", 
-        "konkurence", "cena", "jednorázové", "fixní", "variabilní", 
-        "první test", "metrika úspěchu", "rizika", "právní forma", 
-        "etické pravidlo", "rozhodnutí", "předpokládali jsme", 
-        "ověřili jsme", "naměřili jsme", "zjistili jsme", "proto teď rozhodujeme"
+    clean = re.sub(r"^[\*\_\#\d\.\s]+", "", text.strip()).lower()
+    
+    # Vyžadujeme dvojtečku u jednoslovných/klíčových slov
+    explicit_prefixes = (
+        "doplň:", "doplňte:", "úkol:", "otázka:", "odpověď:",
+        "název projektu:", "jedna věta projektu:", "zákazník:", "problém:", 
+        "hodnota pro zákazníka:", "řešení:", "konkurence:", "cena:", 
+        "jednorázové náklady:", "fixní náklady:", "variabilní náklady:", 
+        "první test:", "metrika úspěchu:", "rizika:", "právní forma:", 
+        "etické pravidlo:", "rozhodnutí:"
     )
-    if any(clean.startswith(p) for p in prompts): return True
-    if (clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean) and len(clean) < 200: return True
+    if clean.startswith(explicit_prefixes): return True
+        
+    reflection_phrases = (
+        "předpokládali jsme", "ověřili jsme", "naměřili jsme", 
+        "zjistili jsme", "proto teď rozhodujeme"
+    )
+    if any(clean.startswith(p) for p in reflection_phrases): return True
+        
+    if (clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean) and len(clean) < 200:
+        return True
+        
     return False
-
-def render_internal_nav_buttons(links, block_id):
-    if not links: return
-    for idx, link in enumerate(links):
-        if st.button(f"📖 Přejít na: {link['text']}", key=f"nav_btn_{block_id}_{idx}", use_container_width=True):
-            st.session_state["current_page_id"] = link["id"]
-            st.rerun()
 
 def render_text_or_input(text, block_id):
     if is_completion_prompt(text):
@@ -270,51 +273,56 @@ def render_text_or_input(text, block_id):
             else: st.text_input(label=label_text, label_visibility="collapsed", placeholder="Stručná odpověď...", key=f"input_{block_id}")
     else: st.markdown(text)
 
+# --- VYKRESLENÍ JEDNOTLIVÝCH BLOKŮ ---
 def render_block(block):
     b_type = block.get("type")
     
-    rich_text_data = block.get(b_type, {}).get("rich_text", [])
+    rich_text_data = block.get(b_type, {}).get("rich_text", []) if b_type in block else []
     internal_links = get_internal_links(rich_text_data)
+    text = rich_text_to_markdown(rich_text_data)
 
+    # 1. ČISTÁ NAVIGAČNÍ DLAŽDICE (Pokud blok obsahuje odkaz na jinou stránku)
+    if internal_links and not is_completion_prompt(text):
+        icon = "📖"
+        if b_type == "callout":
+            icon_data = block.get("callout", {}).get("icon", {})
+            icon = icon_data.get("emoji") if icon_data.get("type") == "emoji" else "💡"
+        
+        for idx, link in enumerate(internal_links):
+            btn_label = f"{icon} {link['text']}"
+            if st.button(btn_label, key=f"nav_card_{block['id']}_{idx}", use_container_width=True):
+                st.session_state["current_page_id"] = link["id"]
+                st.rerun()
+        if block.get("has_children"): render_children(block["id"])
+        return
+
+    # 2. STANDARDNÍ VYKRESLOVÁNÍ
     if b_type == "heading_1":
-        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.title(text)
-        render_internal_nav_buttons(internal_links, block["id"])
 
     elif b_type == "heading_2":
-        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.header(text)
-        render_internal_nav_buttons(internal_links, block["id"])
 
     elif b_type == "heading_3":
-        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.subheader(text)
-        render_internal_nav_buttons(internal_links, block["id"])
 
     elif b_type == "paragraph":
-        text = rich_text_to_markdown(rich_text_data)
         if text: render_text_or_input(text, block["id"])
-        render_internal_nav_buttons(internal_links, block["id"])
 
     elif b_type == "bulleted_list_item":
-        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.markdown(f"* {text}")
-        render_internal_nav_buttons(internal_links, block["id"])
         if block.get("has_children"): render_children(block["id"])
 
     elif b_type == "numbered_list_item":
-        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.markdown(f"1. {text}")
-        render_internal_nav_buttons(internal_links, block["id"])
         if block.get("has_children"): render_children(block["id"])
 
     elif b_type == "callout":
-        text = rich_text_to_markdown(rich_text_data)
         icon_data = block.get("callout", {}).get("icon", {})
         icon = icon_data.get("emoji") if icon_data.get("type") == "emoji" else "💡"
         
@@ -324,9 +332,8 @@ def render_block(block):
                 st.info(f"{icon} {label_text}")
                 st.text_area("Vaše odpověď:", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}", height=100)
         else:
-            st.info(text if text else "Odkaz na kapitolu", icon=icon)
+            st.info(text if text else "Informace", icon=icon)
             
-        render_internal_nav_buttons(internal_links, block["id"])
         if block.get("has_children"): render_children(block["id"])
 
     elif b_type == "toggle":
@@ -336,7 +343,6 @@ def render_block(block):
 
     elif b_type == "to_do":
         checked = block["to_do"].get("checked", False)
-        text = rich_text_to_markdown(rich_text_data)
         st.checkbox(text, value=checked, key=f"todo_{block['id']}")
 
     elif b_type == "image":
@@ -376,8 +382,8 @@ def render_block(block):
     elif b_type == "child_page":
         title = block["child_page"]["title"]
         if "řídící centrum" not in title.lower():
-            if st.button(f"📖 Otevřít: {title}", key=f"page_{block['id']}", use_container_width=True):
-                st.session_state["current_page_id"] = block["id"]
+            if st.button(f"📖 {title}", key=f"page_{block['id']}", use_container_width=True):
+                st.session_state["current_page_id"] = block["id"].replace("-", "")
                 st.rerun()
 
     elif b_type == "link_to_page":
