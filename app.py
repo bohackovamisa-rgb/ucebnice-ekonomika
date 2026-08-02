@@ -63,45 +63,58 @@ headers = {
     "Notion-Version": "2022-06-28"
 }
 
-if "current_page_id" not in st.session_state:
-    st.session_state["current_page_id"] = MAIN_PAGE_ID
+# Pomocná funkce pro převod 32-místného řetězce na platné UUID
+def format_uuid(id_str):
+    clean = id_str.replace("-", "")
+    if len(clean) == 32:
+        return f"{clean[:8]}-{clean[8:12]}-{clean[12:16]}-{clean[16:20]}-{clean[20:]}"
+    return id_str
 
-# --- ZPRACOVÁNÍ EXTERNÍCH A INTERNÍCH ODKAZŮ ---
+if "current_page_id" not in st.session_state:
+    st.session_state["current_page_id"] = format_uuid(MAIN_PAGE_ID)
+
+# --- ČIŠTĚNÍ A EXTRAKCE ID STRÁNEK Z NOTION ODKAZŮ ---
 def extract_notion_id(href_or_text):
-    if not href_or_text: return None
-    url_main = href_or_text.split('#')[0]
-    match = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})', url_main)
-    if match: return match.group(1).replace("-", "")
+    if not href_or_text: 
+        return None
+    # Odstranění parametrů ?pvs=... a kotev #...
+    clean_url = href_or_text.split('?')[0].split('#')[0]
+    match = re.search(r'([a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12}|[a-fA-F0-9]{32})', clean_url)
+    if match: 
+        return format_uuid(match.group(1))
     return None
 
 def is_notion_link(href):
-    if not href: return False
+    if not href: 
+        return False
     return "notion.so" in href or "notion.site" in href or extract_notion_id(href) is not None
 
 def get_internal_links(rich_text_list):
     internal_links = []
-    if not rich_text_list: return internal_links
+    if not rich_text_list: 
+        return internal_links
     for t in rich_text_list:
         page_id = None
         href = t.get("href", "")
         if t.get("type") == "mention":
             mention_data = t.get("mention", {})
             if mention_data.get("type") == "page":
-                page_id = mention_data["page"]["id"].replace("-", "")
+                page_id = format_uuid(mention_data["page"]["id"])
             elif mention_data.get("type") == "database":
-                page_id = mention_data["database"]["id"].replace("-", "")
+                page_id = format_uuid(mention_data["database"]["id"])
         elif href and is_notion_link(href):
             page_id = extract_notion_id(href)
             
         if page_id:
-            link_text = t.get("plain_text", "Otevřít kapitolu").strip()
-            if not any(l["id"] == page_id for l in internal_links):
+            link_text = t.get("plain_text", "").strip()
+            if link_text and not any(l["id"] == page_id for l in internal_links):
                 internal_links.append({"text": link_text, "id": page_id})
     return internal_links
 
 # --- FORMÁTOVÁNÍ TEXTU ---
 def rich_text_to_markdown(rich_text_list):
-    if not rich_text_list: return ""
+    if not rich_text_list: 
+        return ""
     md_text = ""
     for t in rich_text_list:
         text = t.get("plain_text", "")
@@ -114,14 +127,16 @@ def rich_text_to_markdown(rich_text_list):
         
         if is_notion_link(href) or (t.get("type") == "mention" and t.get("mention", {}).get("type") == "page"):
             text = f"**{text}**"
-        elif href: text = f"[{text}]({href})"
+        elif href: 
+            text = f"[{text}]({href})"
         md_text += text
     return md_text
 
-# --- API LEČENÍ ---
+# --- API NOTION ---
 def fetch_notion_blocks(block_id):
     all_blocks = []
-    url = f"https://api.notion.com/v1/blocks/{block_id}/children?page_size=100"
+    formatted_id = format_uuid(block_id)
+    url = f"https://api.notion.com/v1/blocks/{formatted_id}/children?page_size=100"
     has_more = True
     start_cursor = None
     while has_more:
@@ -133,12 +148,15 @@ def fetch_notion_blocks(block_id):
                 all_blocks.extend(data.get("results", []))
                 has_more = data.get("has_more", False)
                 start_cursor = data.get("next_cursor")
-            else: break
-        except Exception: break
+            else: 
+                break
+        except Exception: 
+            break
     return all_blocks
 
 def fetch_database_pages(db_id):
-    url = f"https://api.notion.com/v1/databases/{db_id}/query"
+    formatted_id = format_uuid(db_id)
+    url = f"https://api.notion.com/v1/databases/{formatted_id}/query"
     pages = []
     try:
         res = requests.post(url, headers=headers)
@@ -149,11 +167,12 @@ def fetch_database_pages(db_id):
                 for key, val in props.items():
                     if val.get("type") == "title" and val.get("title"):
                         title = rich_text_to_markdown(val["title"])
-                pages.append({"id": p["id"], "title": title})
-    except Exception: pass
+                pages.append({"id": format_uuid(p["id"]), "title": title})
+    except Exception: 
+        pass
     return pages
 
-# --- KAPITOLY A NAVIGATION ---
+# --- KAPITOLY A NAVIGACE ---
 def extract_chapter_number(title):
     match = re.search(r'(?:kapitola\s*|0)?(\d+)', title.lower())
     if match: return int(match.group(1))
@@ -167,13 +186,14 @@ def discover_chapters(blocks):
             if b_type == "child_page":
                 title = b["child_page"]["title"].strip()
                 if title and "řídící centrum" not in title.lower() and "dashboard" not in title.lower():
-                    raw_chapters.append({"id": b["id"], "title": title})
+                    raw_chapters.append({"id": format_uuid(b["id"]), "title": title})
             elif b_type == "child_database":
                 db_pages = fetch_database_pages(b["id"])
                 raw_chapters.extend(db_pages)
             elif b_type == "column_list":
                 cols = fetch_notion_blocks(b["id"])
-                for col in cols: scan_blocks(fetch_notion_blocks(col["id"]))
+                for col in cols: 
+                    scan_blocks(fetch_notion_blocks(col["id"]))
 
     scan_blocks(blocks)
     chapters_by_num = {}
@@ -183,7 +203,8 @@ def discover_chapters(blocks):
         title = ch["title"].strip()
         num = extract_chapter_number(title)
         if num != 999:
-            if num not in chapters_by_num: chapters_by_num[num] = ch
+            if num not in chapters_by_num: 
+                chapters_by_num[num] = ch
             else:
                 if "kapitola" in title.lower() and "kapitola" not in chapters_by_num[num]["title"].lower():
                     chapters_by_num[num] = ch
@@ -198,12 +219,12 @@ def discover_chapters(blocks):
 main_blocks = fetch_notion_blocks(MAIN_PAGE_ID)
 chapters = discover_chapters(main_blocks)
 
-# --- SIDEBAR ---
+# --- BOČNÍ PANEL ---
 with st.sidebar:
     st.title("📚 Učebnice Ekonomiky")
     st.divider()
     if st.button("🏠 Úvodní stránka", use_container_width=True):
-        st.session_state["current_page_id"] = MAIN_PAGE_ID
+        st.session_state["current_page_id"] = format_uuid(MAIN_PAGE_ID)
         st.rerun()
         
     st.divider()
@@ -218,11 +239,9 @@ with st.sidebar:
         st.session_state["password_correct"] = False
         st.rerun()
 
-# --- PŘÍSNÝ DETEKTOR INTERAKTIVNÍCH FORMULÁŘŮ ---
+# --- DETEKTOR FORMULÁŘŮ ---
 def is_completion_prompt(text):
     clean = re.sub(r"^[\*\_\#\d\.\s]+", "", text.strip()).lower()
-    
-    # Vyžadujeme dvojtečku u jednoslovných/klíčových slov
     explicit_prefixes = (
         "doplň:", "doplňte:", "úkol:", "otázka:", "odpověď:",
         "název projektu:", "jedna věta projektu:", "zákazník:", "problém:", 
@@ -231,13 +250,12 @@ def is_completion_prompt(text):
         "první test:", "metrika úspěchu:", "rizika:", "právní forma:", 
         "etické pravidlo:", "rozhodnutí:"
     )
-    if clean.startswith(explicit_prefixes): return True
+    if clean.startswith(explicit_prefixes): 
+        return True
         
-    reflection_phrases = (
-        "předpokládali jsme", "ověřili jsme", "naměřili jsme", 
-        "zjistili jsme", "proto teď rozhodujeme"
-    )
-    if any(clean.startswith(p) for p in reflection_phrases): return True
+    reflection_phrases = ("předpokládali jsme", "ověřili jsme", "naměřili jsme", "zjistili jsme", "proto teď rozhodujeme")
+    if any(clean.startswith(p) for p in reflection_phrases): 
+        return True
         
     if (clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean) and len(clean) < 200:
         return True
@@ -269,11 +287,14 @@ def render_text_or_input(text, block_id):
         
         with st.container(border=True):
             st.markdown(f"**{icon} {label_text}**")
-            if is_long: st.text_area(label=label_text, label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"input_{block_id}", height=100)
-            else: st.text_input(label=label_text, label_visibility="collapsed", placeholder="Stručná odpověď...", key=f"input_{block_id}")
-    else: st.markdown(text)
+            if is_long: 
+                st.text_area(label=label_text, label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"input_{block_id}", height=100)
+            else: 
+                st.text_input(label=label_text, label_visibility="collapsed", placeholder="Stručná odpověď...", key=f"input_{block_id}")
+    else: 
+        st.markdown(text)
 
-# --- VYKRESLENÍ JEDNOTLIVÝCH BLOKŮ ---
+# --- VYKRESLENÍ BLOKŮ ---
 def render_block(block):
     b_type = block.get("type")
     
@@ -281,19 +302,15 @@ def render_block(block):
     internal_links = get_internal_links(rich_text_data)
     text = rich_text_to_markdown(rich_text_data)
 
-    # 1. ČISTÁ NAVIGAČNÍ DLAŽDICE (Pokud blok obsahuje odkaz na jinou stránku)
+    # 1. ČISTÉ NAVIGAČNÍ TLAČÍTKO PRO ODKAZY NA JINÉ STRÁNKY
     if internal_links and not is_completion_prompt(text):
-        icon = "📖"
-        if b_type == "callout":
-            icon_data = block.get("callout", {}).get("icon", {})
-            icon = icon_data.get("emoji") if icon_data.get("type") == "emoji" else "💡"
-        
         for idx, link in enumerate(internal_links):
-            btn_label = f"{icon} {link['text']}"
-            if st.button(btn_label, key=f"nav_card_{block['id']}_{idx}", use_container_width=True):
+            # Tlačítko zobrazí POUZE čistý název odkazu/kapitoly bez nesmyslných textů
+            if st.button(link['text'], key=f"nav_card_{block['id']}_{idx}", use_container_width=True):
                 st.session_state["current_page_id"] = link["id"]
                 st.rerun()
-        if block.get("has_children"): render_children(block["id"])
+        if block.get("has_children"): 
+            render_children(block["id"])
         return
 
     # 2. STANDARDNÍ VYKRESLOVÁNÍ
@@ -382,15 +399,15 @@ def render_block(block):
     elif b_type == "child_page":
         title = block["child_page"]["title"]
         if "řídící centrum" not in title.lower():
-            if st.button(f"📖 {title}", key=f"page_{block['id']}", use_container_width=True):
-                st.session_state["current_page_id"] = block["id"].replace("-", "")
+            if st.button(title, key=f"page_{block['id']}", use_container_width=True):
+                st.session_state["current_page_id"] = format_uuid(block["id"])
                 st.rerun()
 
     elif b_type == "link_to_page":
         page_id = block.get("link_to_page", {}).get("page_id")
         if page_id:
-            if st.button("🔗 Přejít na kapitolu", key=f"link_{block['id']}", use_container_width=True):
-                st.session_state["current_page_id"] = page_id.replace("-", "")
+            if st.button("Přejít na stránku", key=f"link_{block['id']}", use_container_width=True):
+                st.session_state["current_page_id"] = format_uuid(page_id)
                 st.rerun()
 
     elif b_type == "synced_block":
@@ -410,6 +427,7 @@ col1, main_col, col2 = st.columns([1, 4, 1])
 with main_col:
     with st.container(border=True):
         if active_blocks:
-            for block in active_blocks: render_block(block)
+            for block in active_blocks: 
+                render_block(block)
         else:
-            st.info("Obsah se načítá nebo je tato stránka prázdná...")
+            st.warning("⚠️ Obsah se nepodařilo načíst. Ujistěte se, že tato podstránka má v Notionu sdílená oprávnění pro vaši Integraci (Share -> Add Connections).")
