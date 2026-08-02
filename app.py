@@ -157,20 +157,34 @@ with st.sidebar:
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 5. DETEKTOR A VYKRESLOVAČ INTERAKTIVNÍCH DOKONČENÍ ---
+# --- 5. UNIVERZÁLNÍ DETEKTOR PLNICÍCH POLÍ ---
 def is_completion_prompt(text):
-    """Očistí text od markdown hvězdiček a zjistí, zda jde o úkol k doplňování."""
+    """Rozpozná výzvy k doplňování, reflexi i věty končící trojtečkou."""
     clean = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
-    return clean.startswith(("doplň:", "doplňte:", "doplň ", "doplňte ", "úkol:", "otázka:"))
+    
+    # 1. Speciální klíčová slova na začátku
+    completion_prefixes = (
+        "doplň:", "doplňte:", "doplň", "doplňte", "úkol:", "otázka:",
+        "předpokládali jsme", "ověřili jsme", "naměřili jsme", "zjistili jsme",
+        "proto teď rozhodujeme", "rozhodujeme"
+    )
+    if clean.startswith(completion_prefixes):
+        return True
+        
+    # 2. Věty končící trojtečkou nebo podtržítky
+    if clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean:
+        if len(clean) < 200:  # Zamezí převedení celých dlouhých odstavců
+            return True
+            
+    return False
 
 def render_text_or_input(text, block_id):
     """Vykreslí buď běžný text nebo interaktivní pole pro odpověď."""
     if is_completion_prompt(text):
-        # Odstraníme hvězdičky z popisku, aby vypadal čistě
         label_text = text.replace("**", "").replace("*", "").strip()
         st.text_input(
             label=f"✏️ {label_text}",
-            placeholder="Sem napište svou odpověď...",
+            placeholder="Doplňte odpověď...",
             key=f"input_{block_id}"
         )
     else:
@@ -179,7 +193,6 @@ def render_text_or_input(text, block_id):
 def render_block(block):
     b_type = block.get("type")
 
-    # Textové prvky
     if b_type == "heading_1":
         text = rich_text_to_markdown(block["heading_1"]["rich_text"])
         if is_completion_prompt(text):
