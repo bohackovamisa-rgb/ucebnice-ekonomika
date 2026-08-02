@@ -24,34 +24,25 @@ if "current_page_id" not in st.session_state:
 
 # --- 1. PŘEKLADAČ FORMÁTOVÁNÍ ---
 def rich_text_to_markdown(rich_text_list):
-    """Převede Notion rich_text na formátovaný Markdown včetně odkazů."""
     if not rich_text_list:
         return ""
-    
     md_text = ""
     for t in rich_text_list:
         text = t.get("plain_text", "")
         annotations = t.get("annotations", {})
         href = t.get("href")
 
-        if annotations.get("bold"):
-            text = f"**{text}**"
-        if annotations.get("italic"):
-            text = f"*{text}*"
-        if annotations.get("strikethrough"):
-            text = f"~~{text}~~"
-        if annotations.get("code"):
-            text = f"`{text}`"
-        
-        if href:
-            text = f"[{text}]({href})"
+        if annotations.get("bold"): text = f"**{text}**"
+        if annotations.get("italic"): text = f"*{text}*"
+        if annotations.get("strikethrough"): text = f"~~{text}~~"
+        if annotations.get("code"): text = f"`{text}`"
+        if href: text = f"[{text}]({href})"
             
         md_text += text
     return md_text
 
 # --- 2. NAČÍTÁNÍ BLOKŮ Z NOTIONU ---
 def fetch_notion_blocks(block_id):
-    """Načte všechny bloky ze zadaného ID (řeší stránkování)."""
     all_blocks = []
     url = f"https://api.notion.com/v1/blocks/{block_id}/children?page_size=100"
     has_more = True
@@ -73,7 +64,6 @@ def fetch_notion_blocks(block_id):
     return all_blocks
 
 def fetch_database_pages(db_id):
-    """Načte stránky z databáze."""
     url = f"https://api.notion.com/v1/databases/{db_id}/query"
     pages = []
     try:
@@ -93,13 +83,11 @@ def fetch_database_pages(db_id):
 # --- 3. DEDUPLIKACE A SEŘAZENÍ KAPITOL ---
 def extract_chapter_number(title):
     match = re.search(r'(?:kapitola\s*|0)?(\d+)', title.lower())
-    if match:
-        return int(match.group(1))
+    if match: return int(match.group(1))
     return 999
 
 def discover_chapters(blocks):
     raw_chapters = []
-
     def scan_blocks(block_list):
         for b in block_list:
             b_type = b.get("type")
@@ -116,7 +104,6 @@ def discover_chapters(blocks):
                     scan_blocks(fetch_notion_blocks(col["id"]))
 
     scan_blocks(blocks)
-
     chapters_by_num = {}
     other_chapters = []
 
@@ -157,60 +144,77 @@ with st.sidebar:
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 5. UNIVERZÁLNÍ DETEKTOR PLNICÍCH POLÍ ---
+# --- 5. DETEKTOR A DESIGNER INTERAKTIVNÍCH POLÍ (ŠABLONY A ÚKOLY) ---
 def is_completion_prompt(text):
-    """Rozpozná výzvy k doplňování, reflexi i věty končící trojtečkou."""
     clean = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
     
-    # 1. Speciální klíčová slova na začátku
-    completion_prefixes = (
-        "doplň:", "doplňte:", "doplň", "doplňte", "úkol:", "otázka:",
-        "předpokládali jsme", "ověřili jsme", "naměřili jsme", "zjistili jsme",
-        "proto teď rozhodujeme", "rozhodujeme"
+    # Široká paleta klíčových slov z Podnikatelského záměru a Lean Startup
+    prompts = (
+        "doplň", "úkol", "otázka", "název projektu", "jedna věta projektu", 
+        "zákazník", "problém", "hodnota pro zákazníka", "řešení", 
+        "konkurence", "cena", "jednorázové", "fixní", "variabilní", 
+        "první test", "metrika úspěchu", "rizika", "právní forma", 
+        "etické pravidlo", "rozhodnutí", "předpokládali jsme", 
+        "ověřili jsme", "naměřili jsme", "zjistili jsme", "proto teď rozhodujeme"
     )
-    if clean.startswith(completion_prefixes):
+    if any(clean.startswith(p) for p in prompts):
         return True
         
-    # 2. Věty končící trojtečkou nebo podtržítky
-    if clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean:
-        if len(clean) < 200:  # Zamezí převedení celých dlouhých odstavců
-            return True
-            
+    if (clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean) and len(clean) < 200:
+        return True
+        
     return False
 
 def render_text_or_input(text, block_id):
-    """Vykreslí buď běžný text nebo interaktivní pole pro odpověď."""
     if is_completion_prompt(text):
+        clean_lower = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
         label_text = text.replace("**", "").replace("*", "").strip()
-        st.text_input(
-            label=f"✏️ {label_text}",
-            placeholder="Doplňte odpověď...",
-            key=f"input_{block_id}"
+        
+        # Přiřazení krásných ikon podle typu pole v šabloně
+        icon = "✏️"
+        if "název projektu" in clean_lower: icon = "💡"
+        elif "zákazník" in clean_lower: icon = "👥"
+        elif "problém" in clean_lower: icon = "🚨"
+        elif "řešení" in clean_lower: icon = "✅"
+        elif "cena" in clean_lower or "náklad" in clean_lower: icon = "💰"
+        elif "rizika" in clean_lower: icon = "⚠️"
+        elif "metrika" in clean_lower or "jedna věta" in clean_lower: icon = "🎯"
+        elif "právní" in clean_lower or "etické" in clean_lower: icon = "⚖️"
+        elif "rozhodnutí" in clean_lower: icon = "🧭"
+        elif "konkurence" in clean_lower or "alternativy" in clean_lower: icon = "🥊"
+        
+        # Určení, zda jde o pole vyžadující dlouhý text (rozepsání se)
+        long_prompts = (
+            "problém", "hodnota pro zákazníka", "řešení", "konkurence", 
+            "první test", "rizika", "etické pravidlo", "jedna věta projektu",
+            "předpokládali jsme", "ověřili jsme", "naměřili jsme", "zjistili jsme"
         )
+        is_long = any(clean_lower.startswith(p) for p in long_prompts)
+        
+        # Vykreslení designového pole
+        if is_long:
+            st.text_area(label=f"{icon} {label_text}", placeholder="Zde se rozepište...", key=f"input_{block_id}")
+        else:
+            st.text_input(label=f"{icon} {label_text}", placeholder="Stručná odpověď...", key=f"input_{block_id}")
     else:
         st.markdown(text)
 
 def render_block(block):
     b_type = block.get("type")
 
+    # Textové prvky s podporou interaktivních formulářů
     if b_type == "heading_1":
         text = rich_text_to_markdown(block["heading_1"]["rich_text"])
-        if is_completion_prompt(text):
-            render_text_or_input(text, block["id"])
-        else:
-            st.title(text)
+        if is_completion_prompt(text): render_text_or_input(text, block["id"])
+        else: st.title(text)
     elif b_type == "heading_2":
         text = rich_text_to_markdown(block["heading_2"]["rich_text"])
-        if is_completion_prompt(text):
-            render_text_or_input(text, block["id"])
-        else:
-            st.header(text)
+        if is_completion_prompt(text): render_text_or_input(text, block["id"])
+        else: st.header(text)
     elif b_type == "heading_3":
         text = rich_text_to_markdown(block["heading_3"]["rich_text"])
-        if is_completion_prompt(text):
-            render_text_or_input(text, block["id"])
-        else:
-            st.subheader(text)
+        if is_completion_prompt(text): render_text_or_input(text, block["id"])
+        else: st.subheader(text)
     elif b_type == "paragraph":
         text = rich_text_to_markdown(block["paragraph"]["rich_text"])
         if text:
@@ -221,27 +225,23 @@ def render_block(block):
             render_text_or_input(text, block["id"])
         else:
             st.markdown(f"* {text}")
-        if block.get("has_children"):
-            render_children(block["id"])
+        if block.get("has_children"): render_children(block["id"])
     elif b_type == "numbered_list_item":
         text = rich_text_to_markdown(block["numbered_list_item"]["rich_text"])
         if is_completion_prompt(text):
             render_text_or_input(text, block["id"])
         else:
             st.markdown(f"1. {text}")
-        if block.get("has_children"):
-            render_children(block["id"])
+        if block.get("has_children"): render_children(block["id"])
     elif b_type == "callout":
         text = rich_text_to_markdown(block["callout"]["rich_text"])
         if is_completion_prompt(text):
             label_text = text.replace("**", "").replace("*", "").strip()
             st.info(f"💡 {label_text}")
-            st.text_input("Vaše odpověď:", placeholder="Napište odpověď...", key=f"callout_input_{block['id']}")
+            st.text_area("Vaše odpověď:", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}")
         else:
             st.info(text, icon="💡")
-            
-        if block.get("has_children"):
-            render_children(block["id"])
+        if block.get("has_children"): render_children(block["id"])
     elif b_type == "toggle":
         title = rich_text_to_markdown(block["toggle"]["rich_text"])
         with st.expander(title or "Zobrazit detail"):
@@ -253,8 +253,7 @@ def render_block(block):
     elif b_type == "image":
         img_data = block["image"]
         img_url = img_data.get("file", {}).get("url") or img_data.get("external", {}).get("url")
-        if img_url:
-            st.image(img_url)
+        if img_url: st.image(img_url)
     elif b_type == "divider":
         st.divider()
 
