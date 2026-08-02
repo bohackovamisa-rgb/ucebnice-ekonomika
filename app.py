@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. Vlastní CSS design (čistý a moderní)
+# 2. Vlastní CSS design
 st.markdown("""
     <style>
     .main {
@@ -25,55 +25,66 @@ st.markdown("""
         padding-bottom: 0.3rem;
         margin-top: 1.5rem;
     }
-    .stAlert {
-        border-radius: 10px;
-        border: none;
-    }
     </style>
 """, unsafe_allow_html=True)
 
 # Načtení klíčů z trezoru
 NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
-PAGE_ID = st.secrets["PAGE_ID"]
+MAIN_PAGE_ID = st.secrets["PAGE_ID"]
 
 headers = {
     "Authorization": f"Bearer {NOTION_TOKEN}",
     "Notion-Version": "2022-06-28"
 }
 
-# Načtení dat z Notionu
-url = f"https://api.notion.com/v1/blocks/{PAGE_ID}/children"
-response = requests.get(url, headers=headers)
+# --- PAMĚŤ APLIKACE ---
+# Uložíme si, která stránka je právě otevřená (na začátku je to Úvodní stránka)
+if "current_page_id" not in st.session_state:
+    st.session_state["current_page_id"] = MAIN_PAGE_ID
 
-blocks = []
+# Funkce pro načtení bloků z Notionu pro jakékoliv ID stránky
+def fetch_notion_blocks(page_id):
+    url = f"https://api.notion.com/v1/blocks/{page_id}/children"
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json().get("results", [])
+    return []
+
+# Načteme si hlavní stránku pro sestavení menu v bočním panelu
+main_blocks = fetch_notion_blocks(MAIN_PAGE_ID)
+
+# Najdeme všechny podstránky (kapitoly)
 chapters = []
+for b in main_blocks:
+    if b.get("type") == "child_page":
+        chapters.append({
+            "id": b["id"],
+            "title": b["child_page"]["title"]
+        })
 
-if response.status_code == 200:
-    data = response.json()
-    all_results = data.get("results", [])
-    
-    # Rozdělíme obsah: co je běžný text a co jsou podstránky (kapitoly)
-    for b in all_results:
-        if b.get("type") == "child_page":
-            chapters.append(b)
-        else:
-            blocks.append(b)
-
-# --- BOČNÍ PANEL (ČISTÝ) ---
+# --- BOČNÍ PANEL (NAVIGACE) ---
 with st.sidebar:
     st.title("📚 Ekonomika")
     st.caption("Digitální učebnice")
     st.divider()
     
-    st.subheader("Kapitoly v učebnici")
-    if chapters:
-        for ch in chapters:
-            title = ch["child_page"]["title"]
-            st.button(f"📖 {title}", key=ch["id"], use_container_width=True)
-    else:
-        st.write("Úvodní stránka")
+    # Tlačítko pro návrat na úvod
+    if st.button("🏠 Úvodní stránka", use_container_width=True):
+        st.session_state["current_page_id"] = MAIN_PAGE_ID
+        st.rerun()
+        
+    st.divider()
+    st.subheader("Kapitoly")
+    
+    # Dynamická tlačítka pro jednotlivé kapitoly
+    for ch in chapters:
+        if st.button(f"📖 {ch['title']}", key=ch["id"], use_container_width=True):
+            st.session_state["current_page_id"] = ch["id"]
+            st.rerun()
 
-# --- HLAVNÍ OBSAH ---
+# --- HLAVNÍ OBSAH (Zobrazuje právě vybranou stránku) ---
+active_blocks = fetch_notion_blocks(st.session_state["current_page_id"])
+
 col1, main_col, col2 = st.columns([1, 4, 1])
 
 with main_col:
@@ -103,10 +114,25 @@ with main_col:
             st.warning(get_text(block["quote"]["rich_text"]), icon="💬")
         elif b_type == "divider":
             st.divider()
+        elif b_type == "to_do":
+            checked = block["to_do"].get("checked", False)
+            text = get_text(block["to_do"]["rich_text"])
+            st.checkbox(text, value=checked, key=block["id"])
+        elif b_type == "image":
+            img_data = block["image"]
+            img_url = img_data.get("file", {}).get("url") or img_data.get("external", {}).get("url")
+            if img_url:
+                st.image(img_url)
+        elif b_type == "child_page":
+            # Pokud se podstránka objeví přímo v textu, vykreslíme ji jako velkou proklikávací kartu
+            title = block["child_page"]["title"]
+            if st.button(f"📖 Otevřít kapitolu: {title}", key=f"main_{block['id']}", use_container_width=True):
+                st.session_state["current_page_id"] = block["id"]
+                st.rerun()
 
-    if response.status_code == 200:
-        with st.container(border=True):
-            for block in blocks:
+    with st.container(border=True):
+        if active_blocks:
+            for block in active_blocks:
                 render_block(block)
-    else:
-        st.error(f"Nepodařilo se načíst obsah. Kód chyby: {response.status_code}")
+        else:
+            st.info("Tato kapitola zatím neobsahuje žádný text nebo se načítá...")
