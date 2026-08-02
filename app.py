@@ -144,11 +144,9 @@ with st.sidebar:
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 5. DETEKTOR A DESIGNER INTERAKTIVNÍCH POLÍ (ŠABLONY A ÚKOLY) ---
+# --- 5. DETEKTOR INTERAKTIVNÍCH POLÍ A VYKRESLOVÁNÍ BLOKŮ ---
 def is_completion_prompt(text):
     clean = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
-    
-    # Široká paleta klíčových slov z Podnikatelského záměru a Lean Startup
     prompts = (
         "doplň", "úkol", "otázka", "název projektu", "jedna věta projektu", 
         "zákazník", "problém", "hodnota pro zákazníka", "řešení", 
@@ -159,10 +157,8 @@ def is_completion_prompt(text):
     )
     if any(clean.startswith(p) for p in prompts):
         return True
-        
     if (clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean) and len(clean) < 200:
         return True
-        
     return False
 
 def render_text_or_input(text, block_id):
@@ -170,7 +166,6 @@ def render_text_or_input(text, block_id):
         clean_lower = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
         label_text = text.replace("**", "").replace("*", "").strip()
         
-        # Přiřazení krásných ikon podle typu pole v šabloně
         icon = "✏️"
         if "název projektu" in clean_lower: icon = "💡"
         elif "zákazník" in clean_lower: icon = "👥"
@@ -183,7 +178,6 @@ def render_text_or_input(text, block_id):
         elif "rozhodnutí" in clean_lower: icon = "🧭"
         elif "konkurence" in clean_lower or "alternativy" in clean_lower: icon = "🥊"
         
-        # Určení, zda jde o pole vyžadující dlouhý text (rozepsání se)
         long_prompts = (
             "problém", "hodnota pro zákazníka", "řešení", "konkurence", 
             "první test", "rizika", "etické pravidlo", "jedna věta projektu",
@@ -191,7 +185,6 @@ def render_text_or_input(text, block_id):
         )
         is_long = any(clean_lower.startswith(p) for p in long_prompts)
         
-        # Vykreslení designového pole
         if is_long:
             st.text_area(label=f"{icon} {label_text}", placeholder="Zde se rozepište...", key=f"input_{block_id}")
         else:
@@ -202,7 +195,7 @@ def render_text_or_input(text, block_id):
 def render_block(block):
     b_type = block.get("type")
 
-    # Textové prvky s podporou interaktivních formulářů
+    # Textové prvky
     if b_type == "heading_1":
         text = rich_text_to_markdown(block["heading_1"]["rich_text"])
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
@@ -217,21 +210,16 @@ def render_block(block):
         else: st.subheader(text)
     elif b_type == "paragraph":
         text = rich_text_to_markdown(block["paragraph"]["rich_text"])
-        if text:
-            render_text_or_input(text, block["id"])
+        if text: render_text_or_input(text, block["id"])
     elif b_type == "bulleted_list_item":
         text = rich_text_to_markdown(block["bulleted_list_item"]["rich_text"])
-        if is_completion_prompt(text):
-            render_text_or_input(text, block["id"])
-        else:
-            st.markdown(f"* {text}")
+        if is_completion_prompt(text): render_text_or_input(text, block["id"])
+        else: st.markdown(f"* {text}")
         if block.get("has_children"): render_children(block["id"])
     elif b_type == "numbered_list_item":
         text = rich_text_to_markdown(block["numbered_list_item"]["rich_text"])
-        if is_completion_prompt(text):
-            render_text_or_input(text, block["id"])
-        else:
-            st.markdown(f"1. {text}")
+        if is_completion_prompt(text): render_text_or_input(text, block["id"])
+        else: st.markdown(f"1. {text}")
         if block.get("has_children"): render_children(block["id"])
     elif b_type == "callout":
         text = rich_text_to_markdown(block["callout"]["rich_text"])
@@ -239,8 +227,7 @@ def render_block(block):
             label_text = text.replace("**", "").replace("*", "").strip()
             st.info(f"💡 {label_text}")
             st.text_area("Vaše odpověď:", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}")
-        else:
-            st.info(text, icon="💡")
+        else: st.info(text, icon="💡")
         if block.get("has_children"): render_children(block["id"])
     elif b_type == "toggle":
         title = rich_text_to_markdown(block["toggle"]["rich_text"])
@@ -256,6 +243,36 @@ def render_block(block):
         if img_url: st.image(img_url)
     elif b_type == "divider":
         st.divider()
+
+    # --- PODPORA TABULEK Z NOTIONU ---
+    elif b_type == "table":
+        rows_blocks = fetch_notion_blocks(block["id"])
+        if rows_blocks:
+            has_header = block.get("table", {}).get("has_column_header", False)
+            table_matrix = []
+            
+            for r in rows_blocks:
+                if r.get("type") == "table_row":
+                    cells = r["table_row"].get("cells", [])
+                    row_cells = [rich_text_to_markdown(c).replace("|", "\\|") for c in cells]
+                    table_matrix.append(row_cells)
+            
+            if table_matrix:
+                num_cols = len(table_matrix[0])
+                if has_header and len(table_matrix) > 1:
+                    headers = table_matrix[0]
+                    data_rows = table_matrix[1:]
+                else:
+                    headers = [""] * num_cols
+                    data_rows = table_matrix
+                
+                md_table = "| " + " | ".join(headers) + " |\n"
+                md_table += "| " + " | ".join(["---"] * num_cols) + " |\n"
+                for row in data_rows:
+                    row_padded = row + [""] * (num_cols - len(row))
+                    md_table += "| " + " | ".join(row_padded) + " |\n"
+                    
+                st.markdown(md_table)
 
     # --- LAYOUT A ZANOŘENÍ ---
     elif b_type == "column_list":
