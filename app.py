@@ -4,7 +4,7 @@ import re
 
 # 1. Konfigurace stránky
 st.set_page_config(
-    page_title="Ekonomika - Učebnice",
+    page_title="Ekonomika - Digitální Učebnice",
     page_icon="📚",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -14,7 +14,7 @@ st.set_page_config(
 def check_password():
     app_pwd = st.secrets.get("APP_PASSWORD")
     if not app_pwd:
-        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD! Přidejte ji.")
+        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD! Přidejte ji v nastavení aplikace.")
         return False
         
     if st.session_state.get("password_correct", False):
@@ -22,12 +22,12 @@ def check_password():
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("<br><br><br>", unsafe_allow_html=True)
+        st.markdown("<br><br>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.title("🔒 Soukromá učebnice")
+            st.markdown("<h2 style='text-align: center; border: none;'>🔒 Soukromá učebnice</h2>", unsafe_allow_html=True)
             st.info("Tato aplikace je uzamčena. Zadejte přístupové heslo.")
             password = st.text_input("Heslo:", type="password")
-            if st.button("Vstoupit", use_container_width=True):
+            if st.button("Vstoupit do učebnice", use_container_width=True):
                 if password == app_pwd:
                     st.session_state["password_correct"] = True
                     st.rerun()
@@ -38,23 +38,86 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- VZHLED ---
+# --- ČISTÝ MODERNÍ DESIGN (CUSTOM CSS) ---
 st.markdown("""
     <style>
-    .main { background-color: #f8f9fa; }
-    .stTextInput input, .stTextArea textarea {
-        border-radius: 8px !important;
-        border: 1px solid #cbd5e1 !important;
+    /* Hlavní pozadí aplikace */
+    .stApp {
+        background-color: #f8fafc;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    
+    /* Vylepšení hlavního kontejneru obsahu */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+        padding: 1.25rem !important;
+    }
+    
+    /* Nadpisy */
+    h1 {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+        font-size: 2.1rem !important;
+        letter-spacing: -0.02em !important;
+    }
+    h2 {
+        color: #1e293b !important;
+        font-weight: 700 !important;
+        font-size: 1.5rem !important;
+        border-bottom: 2px solid #f1f5f9;
+        padding-bottom: 0.4rem;
+        margin-top: 1.2rem !important;
+    }
+    h3 {
+        color: #334155 !important;
+        font-weight: 600 !important;
+        font-size: 1.2rem !important;
+    }
+    
+    /* Vstupní formulářová pole */
+    .stTextInput input, .stTextArea textarea {
+        border-radius: 10px !important;
+        border: 1px solid #cbd5e1 !important;
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+        font-size: 0.95rem !important;
+        transition: all 0.2s ease-in-out !important;
     }
     .stTextInput input:focus, .stTextArea textarea:focus {
-        border-color: #2563eb !important;
-        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
+        border-color: #3b82f6 !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
     }
-    h1, h2, h3 { color: #1e293b; font-weight: 700; }
-    /* Schování podtržení u našich interních odkazů, aby vypadaly jako přirozený text */
-    a { text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
+    
+    /* Tlačítka v bočním panelu a v obsahu */
+    .stButton > button {
+        border-radius: 10px !important;
+        border: 1px solid #e2e8f0 !important;
+        background-color: #ffffff !important;
+        color: #1e293b !important;
+        font-weight: 600 !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+    .stButton > button:hover {
+        border-color: #3b82f6 !important;
+        color: #2563eb !important;
+        background-color: #eff6ff !important;
+        transform: translateY(-1px);
+    }
+    
+    /* Úprava odkazů */
+    a {
+        color: #2563eb !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+    }
+    a:hover {
+        text-decoration: underline !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -66,14 +129,12 @@ headers = {
     "Notion-Version": "2022-06-28"
 }
 
-# --- UNIVERZÁLNÍ ZPRACOVÁNÍ ID STRÁNEK ---
 def format_uuid(id_str):
     clean = id_str.replace("-", "")
     if len(clean) == 32:
         return f"{clean[:8]}-{clean[8:12]}-{clean[12:16]}-{clean[16:20]}-{clean[20:]}"
     return id_str
 
-# Nativní Streamlit navigace přes URL parametry (Zaručuje 100% funkčnost odkazů)
 if "page" in st.query_params:
     target_page = format_uuid(st.query_params["page"])
     if st.session_state.get("current_page_id") != target_page:
@@ -92,9 +153,7 @@ def is_notion_link(href):
     if not href: return False
     return "notion.so" in href or "notion.site" in href or extract_notion_id(href) is not None
 
-# --- FORMÁTOVÁNÍ TEXTU A PŘEVOD ODKAZŮ ---
 def rich_text_to_markdown(rich_text_list):
-    """Místo ošklivých tlačítek udělá z Notionu přirozené klikací odkazy"""
     if not rich_text_list: return ""
     md_text = ""
     for t in rich_text_list:
@@ -105,7 +164,6 @@ def rich_text_to_markdown(rich_text_list):
         is_internal = False
         page_id = None
         
-        # Rozpoznání interních zmínek a odkazů
         if t.get("type") == "mention" and t.get("mention", {}).get("type") == "page":
             is_internal = True
             page_id = format_uuid(t["mention"]["page"]["id"])
@@ -116,13 +174,11 @@ def rich_text_to_markdown(rich_text_list):
             is_internal = True
             page_id = extract_notion_id(href)
             
-        # Zpracování tučnosti/kurzívy
         if annotations.get("bold"): text = f"**{text}**"
         if annotations.get("italic"): text = f"*{text}*"
         if annotations.get("strikethrough"): text = f"~~{text}~~"
         if annotations.get("code"): text = f"`{text}`"
         
-        # Vytvoření klikacího odkazu přímo v textu
         if is_internal and page_id and text:
             text = f"[{text}](?page={page_id})"
         elif href and text:
@@ -131,7 +187,6 @@ def rich_text_to_markdown(rich_text_list):
         md_text += text
     return md_text
 
-# --- API NOTION ---
 def fetch_notion_blocks(block_id):
     all_blocks = []
     url = f"https://api.notion.com/v1/blocks/{format_uuid(block_id)}/children?page_size=100"
@@ -165,7 +220,6 @@ def fetch_database_pages(db_id):
     except Exception: pass
     return pages
 
-# --- BOČNÍ PANEL A KAPITOLY ---
 def discover_chapters(blocks):
     raw_chapters = []
     def scan_blocks(block_list):
@@ -181,7 +235,6 @@ def discover_chapters(blocks):
                 for col in cols: scan_blocks(fetch_notion_blocks(col["id"]))
     scan_blocks(blocks)
     
-    # Seřazení podle čísla kapitoly v názvu
     chapters_by_num, other_chapters = {}, []
     for ch in raw_chapters:
         match = re.search(r'(?:kapitola\s*|0)?(\d+)', ch["title"].lower())
@@ -194,8 +247,9 @@ def discover_chapters(blocks):
 
 chapters = discover_chapters(fetch_notion_blocks(MAIN_PAGE_ID))
 
+# --- BOČNÍ PANEL ---
 with st.sidebar:
-    st.title("📚 Učebnice Ekonomiky")
+    st.markdown("<h2 style='margin-top:0;'>📚 Učebnice Ekonomiky</h2>", unsafe_allow_html=True)
     st.divider()
     if st.button("🏠 Úvodní stránka", use_container_width=True):
         st.session_state["current_page_id"] = format_uuid(MAIN_PAGE_ID)
@@ -211,11 +265,11 @@ with st.sidebar:
             st.rerun()
             
     st.divider()
-    if st.button("🔒 Odhlásit", use_container_width=True):
+    if st.button("🔒 Odhlásit se", use_container_width=True):
         st.session_state["password_correct"] = False
         st.rerun()
 
-# --- DETEKTOR FORMULÁŘŮ (Zabraňuje chybným textovým polím) ---
+# --- DETEKTOR KARET UŽIVATELSKÝCH VSTUPŮ ---
 def is_completion_prompt(text):
     clean = re.sub(r"^[\*\_\#\d\.\s\[\]\(\)\?]+", "", text.strip()).lower()
     explicit_prefixes = (
@@ -236,7 +290,7 @@ def render_text_or_input(text, block_id):
     if is_completion_prompt(text):
         clean_lower = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
         label_text = text.replace("**", "").replace("*", "").strip()
-        label_text = re.sub(r"\[(.*?)\]\(.*?\)", r"\1", label_text) # Očištění od Markdown zbytků
+        label_text = re.sub(r"\[(.*?)\]\(.*?\)", r"\1", label_text)
         icon = "✏️"
         if "projekt" in clean_lower: icon = "🚀"
         elif "zákazník" in clean_lower: icon = "👥"
@@ -248,13 +302,13 @@ def render_text_or_input(text, block_id):
         is_long = any(p in clean_lower for p in long_prompts)
         
         with st.container(border=True):
-            st.markdown(f"**{icon} {label_text}**")
+            st.markdown(f"<span style='color: #2563eb; font-weight: 700;'>{icon} {label_text}</span>", unsafe_allow_html=True)
             if is_long: st.text_area("Odpo", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"input_{block_id}", height=100)
             else: st.text_input("Odpo", label_visibility="collapsed", placeholder="Stručná odpověď...", key=f"input_{block_id}")
     else: 
         st.markdown(text)
 
-# --- VYKRESLENÍ BLOKŮ ---
+# --- VYKRESLENÍ BLOKŮ NOTIONU ---
 def render_block(block):
     b_type = block.get("type")
     rich_text_data = block.get(b_type, {}).get("rich_text", []) if b_type in block else []
@@ -337,9 +391,10 @@ def render_block(block):
 def render_children(block_id):
     for child in fetch_notion_blocks(block_id): render_block(child)
 
-# --- VYKRESLENÍ OBSAHU ---
+# --- VYKRESLENÍ HLAVNÍHO OBSAHU ---
 active_blocks = fetch_notion_blocks(st.session_state["current_page_id"])
-col1, main_col, col2 = st.columns([1, 4, 1])
+col1, main_col, col2 = st.columns([0.5, 5, 0.5])
+
 with main_col:
     with st.container(border=True):
         if active_blocks:
