@@ -3,30 +3,21 @@ import requests
 
 # 1. Konfigurace stránky
 st.set_page_config(
-    page_title="Ekonomika - Digitální učebnice",
+    page_title="Ekonomika - Učebnice",
     page_icon="📚",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# 2. Vlastní CSS design pro moderní vzhled
+# 2. Vlastní CSS design (čistý a moderní)
 st.markdown("""
     <style>
-    /* Hlavní pozadí a písmo */
     .main {
         background-color: #f8f9fa;
     }
-    /* Styl pro hlavní karty s obsahem */
-    div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div {
-        background-color: white;
-        border-radius: 12px;
-        padding: 10px;
-    }
-    /* Úprava nadpisů */
     h1 {
         color: #1e3a8a;
         font-weight: 700;
-        margin-bottom: 0.5rem;
     }
     h2 {
         color: #2563eb;
@@ -34,11 +25,9 @@ st.markdown("""
         padding-bottom: 0.3rem;
         margin-top: 1.5rem;
     }
-    /* Stylování Callout boxů z Notionu */
     .stAlert {
         border-radius: 10px;
         border: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     </style>
 """, unsafe_allow_html=True)
@@ -52,26 +41,42 @@ headers = {
     "Notion-Version": "2022-06-28"
 }
 
-# --- BOČNÍ PANEL (SIDEBAR) ---
+# Načtení dat z Notionu
+url = f"https://api.notion.com/v1/blocks/{PAGE_ID}/children"
+response = requests.get(url, headers=headers)
+
+blocks = []
+chapters = []
+
+if response.status_code == 200:
+    data = response.json()
+    all_results = data.get("results", [])
+    
+    # Rozdělíme obsah: co je běžný text a co jsou podstránky (kapitoly)
+    for b in all_results:
+        if b.get("type") == "child_page":
+            chapters.append(b)
+        else:
+            blocks.append(b)
+
+# --- BOČNÍ PANEL (ČISTÝ) ---
 with st.sidebar:
-    st.image("https://img.icons8.com/illustrations/m_1.5x/education.png", width=150)
     st.title("📚 Ekonomika")
-    st.caption("Interaktivní učebnice pro studenty")
+    st.caption("Digitální učebnice")
     st.divider()
     
-    st.subheader("Kapitoly")
-    # Tady v budoucnu napojíme seznam všech kapitol
-    st.radio("Vyberte téma:", ["Úvod do ekonomiky", "1. Trh a jeho mechamismy", "2. Ponuka a poptávka"], index=0)
-    
-    st.divider()
-    st.progress(25, text="Celkový pokrok v předmětu: 25 %")
+    st.subheader("Kapitoly v učebnici")
+    if chapters:
+        for ch in chapters:
+            title = ch["child_page"]["title"]
+            st.button(f"📖 {title}", key=ch["id"], use_container_width=True)
+    else:
+        st.write("Úvodní stránka")
 
 # --- HLAVNÍ OBSAH ---
-# Zabalíme obsah do hezkého středového kontejneru
 col1, main_col, col2 = st.columns([1, 4, 1])
 
 with main_col:
-    # Funkce pro převod bloků z Notionu
     def render_block(block):
         b_type = block.get("type")
         
@@ -99,24 +104,9 @@ with main_col:
         elif b_type == "divider":
             st.divider()
 
-    # Načtení dat z Notionu
-    url = f"https://api.notion.com/v1/blocks/{PAGE_ID}/children"
-    response = requests.get(url, headers=headers)
-
     if response.status_code == 200:
-        data = response.json()
-        blocks = data.get("results", [])
-        
-        # Vykreslení obsahu uvnitř bílé karty
         with st.container(border=True):
             for block in blocks:
                 render_block(block)
-                
-            st.divider()
-            
-            # Tlačítko pro studenta na konci kapitoly
-            if st.button("✅ Označit tuto kapitolu za dokončenou", type="primary", use_container_width=True):
-                st.balloons()
-                st.success("Skvělá práce! Kapitola byla označena jako splněná.")
     else:
         st.error(f"Nepodařilo se načíst obsah. Kód chyby: {response.status_code}")
