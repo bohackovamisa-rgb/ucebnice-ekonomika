@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Vlastní CSS
+# Vlastní CSS pro moderní vzhled
 st.markdown("""
     <style>
     .main { background-color: #f8f9fa; }
@@ -27,7 +27,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Načtení klíčů
+# Načtení klíčů z Secrets
 NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
 MAIN_PAGE_ID = st.secrets["PAGE_ID"]
 
@@ -39,49 +39,47 @@ headers = {
 if "current_page_id" not in st.session_state:
     st.session_state["current_page_id"] = MAIN_PAGE_ID
 
-# --- POMOCNÉ FUNKCE PRO ZPRACOVÁNÍ ODKAZŮ A IKON ---
+# --- POMOCNÉ FUNKCE PRO ZACHYTÁVÁNÍ ODKAZŮ ---
+def extract_notion_id(href_or_text):
+    """Extrahuje 32-místné ID stránky Notion z URL nebo textu."""
+    if not href_or_text:
+        return None
+    match = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})', href_or_text)
+    if match:
+        return match.group(1).replace("-", "")
+    return None
+
+def is_notion_link(href):
+    """Zjistí, zda odkaz směřuje do Notionu."""
+    if not href:
+        return False
+    return "notion.so" in href or "notion.site" in href or extract_notion_id(href) is not None
+
 def get_internal_links(rich_text_list):
-    """Získá všechna ID stránek z interních odkazů v Notionu."""
+    """Najde všechny interní odkazy na Notion v rich_text bloku."""
     internal_links = []
-    if not rich_text_list: return internal_links
+    if not rich_text_list:
+        return internal_links
     
     for t in rich_text_list:
         page_id = None
         href = t.get("href", "")
         
-        # 1. Detekce pomocí Mention (např. @Slovníček)
+        # 1. Kontrola Mention (@Page)
         if t.get("type") == "mention" and t.get("mention", {}).get("type") == "page":
-            page_id = t["mention"]["page"]["id"]
-        # 2. Detekce přes běžný odkaz (Ctrl+K)
-        elif href and ("notion.so" in href or "notion.site" in href):
-            match = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})', href)
-            if match:
-                page_id = match.group(1).replace("-", "")
-        
+            page_id = t["mention"]["page"]["id"].replace("-", "")
+        # 2. Kontrola běžného odkazu
+        elif href and is_notion_link(href):
+            page_id = extract_notion_id(href)
+            
         if page_id:
-            link_text = t.get("plain_text", "Odkaz").strip()
-            # Zabránění duplikátům
+            link_text = t.get("plain_text", "Otevřít kapitolu").strip()
             if not any(l["id"] == page_id for l in internal_links):
                 internal_links.append({"text": link_text, "id": page_id})
                 
     return internal_links
 
-def get_callout_icon(block):
-    """Extrahuje vlastní ikonu z Callout bloku (výchozí je 💡)."""
-    icon_data = block.get("callout", {}).get("icon", {})
-    if icon_data.get("type") == "emoji":
-        return icon_data.get("emoji")
-    return "💡"
-
-def render_inline_buttons(links, block_id):
-    """Vykreslí tlačítka pro odkazy vložené uvnitř dlouhých textů."""
-    if not links: return
-    for idx, link in enumerate(links):
-        if st.button(f"🔗 Otevřít: {link['text']}", key=f"inline_{block_id}_{idx}"):
-            st.session_state["current_page_id"] = link["id"]
-            st.rerun()
-
-# --- 1. PŘEKLADAČ FORMÁTOVÁNÍ ---
+# --- 1. PŘEKLADAČ FORMÁTOVÁNÍ (NEPOVOLUJE EXTERNÍ NOTION ODKAZY) ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list:
         return ""
@@ -96,15 +94,11 @@ def rich_text_to_markdown(rich_text_list):
         if annotations.get("strikethrough"): text = f"~~{text}~~"
         if annotations.get("code"): text = f"`{text}`"
         
-        # Zabráníme prokliku ven u interních odkazů (jen je ztučníme)
-        is_internal = False
-        if href and ("notion.so" in href or "notion.site" in href): is_internal = True
-        elif t.get("type") == "mention" and t.get("mention", {}).get("type") == "page": is_internal = True
-            
-        if is_internal:
-            text = f"**{text}**"
+        # Pokud je to odkaz na Notion, ZÁKAZ vygenerování [text](url)
+        if is_notion_link(href) or (t.get("type") == "mention" and t.get("mention", {}).get("type") == "page"):
+            text = f"**{text}**"  # Zobrazí se jen tučně, tlačítko pro navigaci se vytvoří pod tím
         elif href:
-            text = f"[{text}]({href})"
+            text = f"[{text}]({href})"  # Pouze pro běžné externí webové stránky
             
         md_text += text
     return md_text
@@ -207,7 +201,7 @@ with st.sidebar:
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
 
-# --- 5. DETEKTOR INTERAKTIVNÍCH KARET A VYKRESLOVÁNÍ BLOKŮ ---
+# --- 5. VYKRESLOVÁNÍ INTERAKTIVNÍCH KARET A TLAČÍTEK NAVIGACE ---
 def is_completion_prompt(text):
     clean = re.sub(r"^[\*\_\#\s]+", "", text.strip()).lower()
     prompts = (
@@ -221,6 +215,15 @@ def is_completion_prompt(text):
     if any(clean.startswith(p) for p in prompts): return True
     if (clean.endswith(("…", "...", "___")) or "…" in clean or "..." in clean) and len(clean) < 200: return True
     return False
+
+def render_internal_nav_buttons(links, block_id):
+    """Vytvoří vnitřní tlačítka aplikace pro nalezené odkazy na stránky Notionu."""
+    if not links:
+        return
+    for idx, link in enumerate(links):
+        if st.button(f"📖 Přejít na: {link['text']}", key=f"nav_btn_{block_id}_{idx}", use_container_width=True):
+            st.session_state["current_page_id"] = link["id"]
+            st.rerun()
 
 def render_text_or_input(text, block_id):
     if is_completion_prompt(text):
@@ -254,83 +257,83 @@ def render_text_or_input(text, block_id):
 def render_block(block):
     b_type = block.get("type")
     
-    # 1. Extrakce interních odkazů z bloku
+    # Získání dat pro vnitřní odkazy
     rich_text_data = block.get(b_type, {}).get("rich_text", [])
     internal_links = get_internal_links(rich_text_data)
-    block_plain_text = "".join([t.get("plain_text", "") for t in rich_text_data]).strip()
 
-    # 2. Kontrola, zda blok neobsahuje POUZE odkaz (pak uděláme tlačítko)
-    is_pure_link = False
-    if len(internal_links) == 1 and internal_links[0]["text"] == block_plain_text and not is_completion_prompt(block_plain_text):
-        is_pure_link = True
-
-    if is_pure_link:
-        icon = get_callout_icon(block) if b_type == "callout" else "🔗"
-        if st.button(f"{icon} {internal_links[0]['text']}", key=f"pure_link_{block['id']}", use_container_width=True):
-            st.session_state["current_page_id"] = internal_links[0]["id"]
-            st.rerun()
-        if block.get("has_children"): render_children(block["id"])
-        return # Přeskočíme standardní textové vykreslování
-
-    # 3. Standardní vykreslování bloku
+    # Textové prvky
     if b_type == "heading_1":
-        text = rich_text_to_markdown(block["heading_1"]["rich_text"])
+        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.title(text)
-        render_inline_buttons(internal_links, block["id"])
+        render_internal_nav_buttons(internal_links, block["id"])
+
     elif b_type == "heading_2":
-        text = rich_text_to_markdown(block["heading_2"]["rich_text"])
+        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.header(text)
-        render_inline_buttons(internal_links, block["id"])
+        render_internal_nav_buttons(internal_links, block["id"])
+
     elif b_type == "heading_3":
-        text = rich_text_to_markdown(block["heading_3"]["rich_text"])
+        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.subheader(text)
-        render_inline_buttons(internal_links, block["id"])
+        render_internal_nav_buttons(internal_links, block["id"])
+
     elif b_type == "paragraph":
-        text = rich_text_to_markdown(block["paragraph"]["rich_text"])
+        text = rich_text_to_markdown(rich_text_data)
         if text: render_text_or_input(text, block["id"])
-        render_inline_buttons(internal_links, block["id"])
+        render_internal_nav_buttons(internal_links, block["id"])
+
     elif b_type == "bulleted_list_item":
-        text = rich_text_to_markdown(block["bulleted_list_item"]["rich_text"])
+        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.markdown(f"* {text}")
-        render_inline_buttons(internal_links, block["id"])
+        render_internal_nav_buttons(internal_links, block["id"])
         if block.get("has_children"): render_children(block["id"])
+
     elif b_type == "numbered_list_item":
-        text = rich_text_to_markdown(block["numbered_list_item"]["rich_text"])
+        text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
         else: st.markdown(f"1. {text}")
-        render_inline_buttons(internal_links, block["id"])
+        render_internal_nav_buttons(internal_links, block["id"])
         if block.get("has_children"): render_children(block["id"])
+
     elif b_type == "callout":
-        text = rich_text_to_markdown(block["callout"]["rich_text"])
-        icon = get_callout_icon(block)
+        text = rich_text_to_markdown(rich_text_data)
+        icon_data = block.get("callout", {}).get("icon", {})
+        icon = icon_data.get("emoji") if icon_data.get("type") == "emoji" else "💡"
+        
         if is_completion_prompt(text):
             label_text = text.replace("**", "").replace("*", "").strip()
             with st.container(border=True):
                 st.info(f"{icon} {label_text}")
                 st.text_area("Vaše odpověď:", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}", height=100)
-        else: st.info(text, icon=icon)
-        render_inline_buttons(internal_links, block["id"])
+        else:
+            st.info(text if text else "Odkaz na kapitolu", icon=icon)
+            
+        render_internal_nav_buttons(internal_links, block["id"])
         if block.get("has_children"): render_children(block["id"])
+
     elif b_type == "toggle":
-        title = rich_text_to_markdown(block["toggle"]["rich_text"])
+        title = rich_text_to_markdown(rich_text_data)
         with st.expander(title or "Zobrazit detail"):
             render_children(block["id"])
+
     elif b_type == "to_do":
         checked = block["to_do"].get("checked", False)
-        text = rich_text_to_markdown(block["to_do"]["rich_text"])
+        text = rich_text_to_markdown(rich_text_data)
         st.checkbox(text, value=checked, key=f"todo_{block['id']}")
+
     elif b_type == "image":
         img_data = block["image"]
         img_url = img_data.get("file", {}).get("url") or img_data.get("external", {}).get("url")
         if img_url: st.image(img_url)
+
     elif b_type == "divider":
         st.divider()
 
-    # --- PODPORA TABULEK ---
+    # --- TABULKY ---
     elif b_type == "table":
         rows_blocks = fetch_notion_blocks(block["id"])
         if rows_blocks:
@@ -351,25 +354,28 @@ def render_block(block):
                 for row in data_rows: md_table += "| " + " | ".join(row + [""] * (num_cols - len(row))) + " |\n"
                 st.markdown(md_table)
 
-    # --- LAYOUT A ZANOŘENÍ ---
+    # --- ZANOŘENÍ A STRÁNKY ---
     elif b_type == "column_list":
         cols_blocks = fetch_notion_blocks(block["id"])
         if cols_blocks:
             cols = st.columns(len(cols_blocks))
             for idx, col_block in enumerate(cols_blocks):
                 with cols[idx]: render_children(col_block["id"])
+
     elif b_type == "child_page":
         title = block["child_page"]["title"]
         if "řídící centrum" not in title.lower():
             if st.button(f"📖 Otevřít: {title}", key=f"page_{block['id']}", use_container_width=True):
                 st.session_state["current_page_id"] = block["id"]
                 st.rerun()
+
     elif b_type == "link_to_page":
         page_id = block.get("link_to_page", {}).get("page_id")
         if page_id:
             if st.button("🔗 Přejít na kapitolu", key=f"link_{block['id']}", use_container_width=True):
-                st.session_state["current_page_id"] = page_id
+                st.session_state["current_page_id"] = page_id.replace("-", "")
                 st.rerun()
+
     elif b_type == "synced_block":
         synced_from = block.get("synced_block", {}).get("synced_from")
         target_id = synced_from.get("block_id") if synced_from else block["id"]
