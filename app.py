@@ -41,27 +41,23 @@ if not check_password():
 # --- ČISTÝ MODERNÍ DESIGN (CUSTOM CSS) ---
 st.markdown("""
     <style>
-    /* Hlavní pozadí aplikace */
     .stApp {
         background-color: #f8fafc;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
     
-    /* Vylepšení hlavního kontejneru obsahu */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
         border-radius: 12px !important;
         border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
         padding: 1.25rem !important;
     }
     
-    /* Nadpisy */
     h1 {
         color: #0f172a !important;
         font-weight: 800 !important;
         font-size: 2.1rem !important;
-        letter-spacing: -0.02em !important;
     }
     h2 {
         color: #1e293b !important;
@@ -69,7 +65,6 @@ st.markdown("""
         font-size: 1.5rem !important;
         border-bottom: 2px solid #f1f5f9;
         padding-bottom: 0.4rem;
-        margin-top: 1.2rem !important;
     }
     h3 {
         color: #334155 !important;
@@ -77,14 +72,11 @@ st.markdown("""
         font-size: 1.2rem !important;
     }
     
-    /* Vstupní formulářová pole */
     .stTextInput input, .stTextArea textarea {
         border-radius: 10px !important;
         border: 1px solid #cbd5e1 !important;
         background-color: #f8fafc !important;
         color: #0f172a !important;
-        font-size: 0.95rem !important;
-        transition: all 0.2s ease-in-out !important;
     }
     .stTextInput input:focus, .stTextArea textarea:focus {
         border-color: #3b82f6 !important;
@@ -92,24 +84,20 @@ st.markdown("""
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
     }
     
-    /* Tlačítka v bočním panelu a v obsahu */
     .stButton > button {
         border-radius: 10px !important;
         border: 1px solid #e2e8f0 !important;
         background-color: #ffffff !important;
         color: #1e293b !important;
         font-weight: 600 !important;
-        padding: 0.5rem 1rem !important;
         transition: all 0.2s ease-in-out !important;
     }
     .stButton > button:hover {
         border-color: #3b82f6 !important;
         color: #2563eb !important;
         background-color: #eff6ff !important;
-        transform: translateY(-1px);
     }
     
-    /* Úprava odkazů */
     a {
         color: #2563eb !important;
         text-decoration: none !important;
@@ -153,39 +141,45 @@ def is_notion_link(href):
     if not href: return False
     return "notion.so" in href or "notion.site" in href or extract_notion_id(href) is not None
 
+# --- OPRAVENÝ PŘEKLADAČ FORMÁTOVÁNÍ A BEZPEČNÝCH ODKAZŮ ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list: return ""
     md_text = ""
     for t in rich_text_list:
-        text = t.get("plain_text", "")
+        text = t.get("plain_text", "").strip()
         annotations = t.get("annotations", {})
         href = t.get("href")
         
         is_internal = False
         page_id = None
         
-        if t.get("type") == "mention" and t.get("mention", {}).get("type") == "page":
-            is_internal = True
-            page_id = format_uuid(t["mention"]["page"]["id"])
-        elif t.get("type") == "mention" and t.get("mention", {}).get("type") == "database":
-            is_internal = True
-            page_id = format_uuid(t["mention"]["database"]["id"])
+        if t.get("type") == "mention":
+            mention = t.get("mention", {})
+            m_type = mention.get("type")
+            if m_type in ["page", "database"]:
+                is_internal = True
+                page_id = format_uuid(mention[m_type]["id"])
         elif href and is_notion_link(href):
             is_internal = True
             page_id = extract_notion_id(href)
             
-        if annotations.get("bold"): text = f"**{text}**"
-        if annotations.get("italic"): text = f"*{text}*"
-        if annotations.get("strikethrough"): text = f"~~{text}~~"
-        if annotations.get("code"): text = f"`{text}`"
-        
-        if is_internal and page_id and text:
-            text = f"[{text}](?page={page_id})"
-        elif href and text:
-            text = f"[{text}]({href})"
+        # Bezpečnostní pojistka: Pokud chybí text zmínky, dáme náhradní popisek
+        if is_internal and not text:
+            text = "Otevřít kapitolu"
+
+        if text:
+            if annotations.get("bold"): text = f"**{text}**"
+            if annotations.get("italic"): text = f"*{text}*"
+            if annotations.get("strikethrough"): text = f"~~{text}~~"
+            if annotations.get("code"): text = f"`{text}`"
             
-        md_text += text
-    return md_text
+            if is_internal and page_id:
+                text = f"[{text}](?page={page_id})"
+            elif href:
+                text = f"[{text}]({href})"
+                
+            md_text += text + " "
+    return md_text.strip()
 
 def fetch_notion_blocks(block_id):
     all_blocks = []
@@ -302,7 +296,7 @@ def render_text_or_input(text, block_id):
         is_long = any(p in clean_lower for p in long_prompts)
         
         with st.container(border=True):
-            st.markdown(f"<span style='color: #2563eb; font-weight: 700;'>{icon} {label_text}</span>", unsafe_allow_html=True)
+            st.markdown(f"**{icon} {label_text}**")
             if is_long: st.text_area("Odpo", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"input_{block_id}", height=100)
             else: st.text_input("Odpo", label_visibility="collapsed", placeholder="Stručná odpověď...", key=f"input_{block_id}")
     else: 
@@ -346,7 +340,10 @@ def render_block(block):
                 st.info(f"{icon} {label_text}")
                 st.text_area("Vaše odpověď:", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}", height=100)
         else:
-            st.info(text if text else " ", icon=icon)
+            # Zobrazí text Calloutu, případně náhradní mezeru, pokud obsahuje pouze zanořené bloky
+            display_text = text if text else " "
+            st.info(display_text, icon=icon)
+            
         if block.get("has_children"): render_children(block["id"])
     elif b_type == "toggle":
         with st.expander(text or "Zobrazit detail"):
