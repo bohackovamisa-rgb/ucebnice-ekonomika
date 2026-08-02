@@ -10,6 +10,40 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# --- PŘIHLAŠOVACÍ BRÁNA ---
+def check_password():
+    """Vrátí True, pokud je uživatel autorizován."""
+    # Získání hesla ze secrets. Pokud tam není, upozorní vás to.
+    app_pwd = st.secrets.get("APP_PASSWORD")
+    if not app_pwd:
+        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD! Běžte do nastavení aplikace na webu Streamlitu a přidejte ji.")
+        return False
+        
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Design přihlašovací obrazovky
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("<br><br><br>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.title("🔒 Soukromá učebnice")
+            st.info("Tato aplikace je uzamčena. Zadejte přístupové heslo.")
+            password = st.text_input("Heslo:", type="password")
+            if st.button("Vstoupit", use_container_width=True):
+                if password == app_pwd:
+                    st.session_state["password_correct"] = True
+                    st.rerun()
+                else:
+                    st.error("❌ Nesprávné heslo!")
+    return False
+
+# Pokud heslo není správné, kód se tady ZASTAVÍ a dál nepokračuje.
+if not check_password():
+    st.stop()
+
+# --- NÍŽE SE SPUSTÍ AŽ PO ODEMKNUTÍ ---
+
 # Vlastní CSS pro moderní vzhled
 st.markdown("""
     <style>
@@ -41,65 +75,47 @@ if "current_page_id" not in st.session_state:
 
 # --- POMOCNÉ FUNKCE PRO ZACHYTÁVÁNÍ ODKAZŮ ---
 def extract_notion_id(href_or_text):
-    """Extrahuje 32-místné ID stránky Notion z URL nebo textu."""
-    if not href_or_text:
-        return None
+    if not href_or_text: return None
     match = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})', href_or_text)
-    if match:
-        return match.group(1).replace("-", "")
+    if match: return match.group(1).replace("-", "")
     return None
 
 def is_notion_link(href):
-    """Zjistí, zda odkaz směřuje do Notionu."""
-    if not href:
-        return False
+    if not href: return False
     return "notion.so" in href or "notion.site" in href or extract_notion_id(href) is not None
 
 def get_internal_links(rich_text_list):
-    """Najde všechny interní odkazy na Notion v rich_text bloku."""
     internal_links = []
-    if not rich_text_list:
-        return internal_links
-    
+    if not rich_text_list: return internal_links
     for t in rich_text_list:
         page_id = None
         href = t.get("href", "")
-        
-        # 1. Kontrola Mention (@Page)
         if t.get("type") == "mention" and t.get("mention", {}).get("type") == "page":
             page_id = t["mention"]["page"]["id"].replace("-", "")
-        # 2. Kontrola běžného odkazu
         elif href and is_notion_link(href):
             page_id = extract_notion_id(href)
-            
         if page_id:
             link_text = t.get("plain_text", "Otevřít kapitolu").strip()
             if not any(l["id"] == page_id for l in internal_links):
                 internal_links.append({"text": link_text, "id": page_id})
-                
     return internal_links
 
-# --- 1. PŘEKLADAČ FORMÁTOVÁNÍ (NEPOVOLUJE EXTERNÍ NOTION ODKAZY) ---
+# --- 1. PŘEKLADAČ FORMÁTOVÁNÍ ---
 def rich_text_to_markdown(rich_text_list):
-    if not rich_text_list:
-        return ""
+    if not rich_text_list: return ""
     md_text = ""
     for t in rich_text_list:
         text = t.get("plain_text", "")
         annotations = t.get("annotations", {})
         href = t.get("href")
-
         if annotations.get("bold"): text = f"**{text}**"
         if annotations.get("italic"): text = f"*{text}*"
         if annotations.get("strikethrough"): text = f"~~{text}~~"
         if annotations.get("code"): text = f"`{text}`"
         
-        # Pokud je to odkaz na Notion, ZÁKAZ vygenerování [text](url)
         if is_notion_link(href) or (t.get("type") == "mention" and t.get("mention", {}).get("type") == "page"):
-            text = f"**{text}**"  # Zobrazí se jen tučně, tlačítko pro navigaci se vytvoří pod tím
-        elif href:
-            text = f"[{text}]({href})"  # Pouze pro běžné externí webové stránky
-            
+            text = f"**{text}**"
+        elif href: text = f"[{text}]({href})"
         md_text += text
     return md_text
 
@@ -109,7 +125,6 @@ def fetch_notion_blocks(block_id):
     url = f"https://api.notion.com/v1/blocks/{block_id}/children?page_size=100"
     has_more = True
     start_cursor = None
-    
     while has_more:
         params_url = url + (f"&start_cursor={start_cursor}" if start_cursor else "")
         try:
@@ -159,8 +174,7 @@ def discover_chapters(blocks):
                 raw_chapters.extend(db_pages)
             elif b_type == "column_list":
                 cols = fetch_notion_blocks(b["id"])
-                for col in cols:
-                    scan_blocks(fetch_notion_blocks(col["id"]))
+                for col in cols: scan_blocks(fetch_notion_blocks(col["id"]))
 
     scan_blocks(blocks)
     chapters_by_num = {}
@@ -170,8 +184,7 @@ def discover_chapters(blocks):
         title = ch["title"].strip()
         num = extract_chapter_number(title)
         if num != 999:
-            if num not in chapters_by_num:
-                chapters_by_num[num] = ch
+            if num not in chapters_by_num: chapters_by_num[num] = ch
             else:
                 if "kapitola" in title.lower() and "kapitola" not in chapters_by_num[num]["title"].lower():
                     chapters_by_num[num] = ch
@@ -200,6 +213,11 @@ with st.sidebar:
         if st.button(f"📖 {ch['title']}", key=f"side_{ch['id']}", use_container_width=True):
             st.session_state["current_page_id"] = ch["id"]
             st.rerun()
+            
+    st.divider()
+    if st.button("🔒 Odhlásit", use_container_width=True):
+        st.session_state["password_correct"] = False
+        st.rerun()
 
 # --- 5. VYKRESLOVÁNÍ INTERAKTIVNÍCH KARET A TLAČÍTEK NAVIGACE ---
 def is_completion_prompt(text):
@@ -217,9 +235,7 @@ def is_completion_prompt(text):
     return False
 
 def render_internal_nav_buttons(links, block_id):
-    """Vytvoří vnitřní tlačítka aplikace pro nalezené odkazy na stránky Notionu."""
-    if not links:
-        return
+    if not links: return
     for idx, link in enumerate(links):
         if st.button(f"📖 Přejít na: {link['text']}", key=f"nav_btn_{block_id}_{idx}", use_container_width=True):
             st.session_state["current_page_id"] = link["id"]
@@ -257,11 +273,9 @@ def render_text_or_input(text, block_id):
 def render_block(block):
     b_type = block.get("type")
     
-    # Získání dat pro vnitřní odkazy
     rich_text_data = block.get(b_type, {}).get("rich_text", [])
     internal_links = get_internal_links(rich_text_data)
 
-    # Textové prvky
     if b_type == "heading_1":
         text = rich_text_to_markdown(rich_text_data)
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
@@ -333,7 +347,6 @@ def render_block(block):
     elif b_type == "divider":
         st.divider()
 
-    # --- TABULKY ---
     elif b_type == "table":
         rows_blocks = fetch_notion_blocks(block["id"])
         if rows_blocks:
@@ -349,12 +362,10 @@ def render_block(block):
                     headers_row, data_rows = table_matrix[0], table_matrix[1:]
                 else:
                     headers_row, data_rows = [""] * num_cols, table_matrix
-                
                 md_table = "| " + " | ".join(headers_row) + " |\n| " + " | ".join(["---"] * num_cols) + " |\n"
                 for row in data_rows: md_table += "| " + " | ".join(row + [""] * (num_cols - len(row))) + " |\n"
                 st.markdown(md_table)
 
-    # --- ZANOŘENÍ A STRÁNKY ---
     elif b_type == "column_list":
         cols_blocks = fetch_notion_blocks(block["id"])
         if cols_blocks:
