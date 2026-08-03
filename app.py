@@ -46,14 +46,22 @@ st.markdown("""
         background-color: #ffffff !important; border-radius: 12px !important; border: 1px solid #e2e8f0 !important;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important; padding: 1.25rem !important;
     }
+    
+    /* Elegantní odsazení kotvy od shora, aby nadpis nebyl nalepený pod lištou! */
+    h1, h2, h3 { 
+        scroll-margin-top: 80px; 
+    }
+    
     h1 { color: #0f172a !important; font-weight: 800 !important; font-size: 2.1rem !important; margin-top: 1rem; }
     h2 { color: #1e293b !important; font-weight: 700 !important; font-size: 1.5rem !important; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.4rem; margin-top: 1.5rem; }
     h3 { color: #334155 !important; font-weight: 600 !important; font-size: 1.2rem !important; margin-top: 1rem; }
+    
     .stTextInput input, .stTextArea textarea { border-radius: 10px !important; border: 1px solid #cbd5e1 !important; background-color: #f8fafc !important; color: #0f172a !important; }
     .stTextInput input:focus, .stTextArea textarea:focus { border-color: #3b82f6 !important; background-color: #ffffff !important; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important; }
     .stButton > button { border-radius: 10px !important; border: 1px solid #e2e8f0 !important; background-color: #ffffff !important; color: #1e293b !important; font-weight: 600 !important; transition: all 0.2s ease-in-out !important; }
     .stButton > button:hover { border-color: #3b82f6 !important; color: #2563eb !important; background-color: #eff6ff !important; }
-    /* Styly pro naši novou automatickou navigaci */
+    
+    /* Styly pro automatickou navigaci */
     .nav-link-box {
         display: block; padding: 0.75rem 1rem; background-color: #f1f5f9; 
         border-radius: 8px; text-align: center; text-decoration: none !important;
@@ -61,7 +69,6 @@ st.markdown("""
         transition: all 0.2s;
     }
     .nav-link-box:hover { background-color: #e2e8f0; transform: translateY(-2px); }
-    /* U odkazů v textu ponecháme klasický styl */
     p a, li a { color: #2563eb !important; text-decoration: none !important; font-weight: 600 !important; }
     p a:hover, li a:hover { text-decoration: underline !important; }
     </style>
@@ -84,7 +91,7 @@ if "page" in st.query_params:
 elif "current_page_id" not in st.session_state:
     st.session_state["current_page_id"] = format_uuid(MAIN_PAGE_ID)
 
-# --- ČISTÝ PŘEKLADAČ TEXTU (BEZ HTML, KTERÉ ROZBÍJELO HVĚZDIČKY) ---
+# --- PŘEKLADAČ TEXTU S NATIVNÍMI KOTVAMI ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list: return ""
     md_text = ""
@@ -96,15 +103,17 @@ def rich_text_to_markdown(rich_text_list):
         is_internal = False
         target_id = None
         
-        # Záchyt odkazů z Notionu a jejich násilné přepsání na lokální kotvy
+        # Záchyt odkazů z Notionu a jejich přepsání na čisté lokální kotvy
         if href and ("notion.so" in href or "notion.site" in href):
             is_internal = True
             if "#" in href:
                 # Odkaz na blok (vnitřní sekce)
-                target_id = format_uuid(re.search(r'([a-fA-F0-9]{32})', href.split("#")[1].replace("-", "")).group(1)) if re.search(r'([a-fA-F0-9]{32})', href.split("#")[1].replace("-", "")) else None
+                matched = re.search(r'([a-fA-F0-9]{32})', href.split("#")[1].replace("-", ""))
+                if matched: target_id = format_uuid(matched.group(1))
             else:
                 # Odkaz na stránku
-                target_id = format_uuid(re.search(r'([a-fA-F0-9]{32})', href.replace("-", "")).group(1)) if re.search(r'([a-fA-F0-9]{32})', href.replace("-", "")) else None
+                matched = re.search(r'([a-fA-F0-9]{32})', href.replace("-", ""))
+                if matched: target_id = format_uuid(matched.group(1))
                 
         elif t.get("type") == "mention":
             m_type = t.get("mention", {}).get("type")
@@ -115,13 +124,13 @@ def rich_text_to_markdown(rich_text_list):
         if is_internal and not text: text = "Odkaz"
 
         if text:
-            # Aplikace Markdownu
+            # Aplikace standardního Markdownu
             if annotations.get("bold"): text = f"**{text}**"
             if annotations.get("italic"): text = f"*{text}*"
             if annotations.get("strikethrough"): text = f"~~{text}~~"
             if annotations.get("code"): text = f"`{text}`"
             
-            # Tvorba lokálních odkazů (žádné otevírání Notionu)
+            # Tvorba lokálních odkazů (využívají čistý Markdown formát)
             if is_internal and target_id:
                 text = f"[{text}](#{target_id})"
             elif href and not is_internal:
@@ -133,7 +142,6 @@ def rich_text_to_markdown(rich_text_list):
 # --- NAČÍTÁNÍ Z NOTIONU ---
 def fetch_notion_blocks(block_id):
     all_blocks, has_more, start_cursor = [], True, None
-    url = f"https://api.api.notion.com/v1/blocks/{format_uuid(block_id)}/children?page_size=100"
     url = f"https://api.notion.com/v1/blocks/{format_uuid(block_id)}/children?page_size=100"
     while has_more:
         try:
@@ -232,7 +240,7 @@ def render_text_or_input(text, block_id):
         if is_long: st.text_area("Odpo", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"input_{block_id}", height=100)
         else: st.text_input("Odpo", label_visibility="collapsed", placeholder="Stručná odpověď...", key=f"input_{block_id}")
 
-# --- VYKRESLENÍ BLOKŮ ---
+# --- BEZPEČNÉ VYKRESLENÍ BLOKŮ S NATIVNÍMI KOTVAMI ---
 def render_block(block):
     b_type = block.get("type")
     block_id = format_uuid(block["id"])
@@ -240,18 +248,16 @@ def render_block(block):
     rich_text_data = block.get(b_type, {}).get("rich_text", []) if b_type in block else []
     text = rich_text_to_markdown(rich_text_data)
 
-    # Řešení, které nerozbije Markdown: Vložíme kotvu zvlášť přes malý HTML blok před samotným textem.
-    st.markdown(f"<div id='{block_id}' style='position: relative; top: -80px;'></div>", unsafe_allow_html=True)
-
+    # Nyní používáme bezpečné nativní funkce st.title / st.header / st.subheader s parametrem anchor!
     if b_type == "heading_1":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.markdown(f"# {text}")
+        else: st.title(text, anchor=block_id)
     elif b_type == "heading_2":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.markdown(f"## {text}")
+        else: st.header(text, anchor=block_id)
     elif b_type == "heading_3":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.markdown(f"### {text}")
+        else: st.subheader(text, anchor=block_id)
     elif b_type == "paragraph":
         if text:
             if is_completion_prompt(text): render_text_or_input(text, block_id)
@@ -268,7 +274,7 @@ def render_block(block):
         icon_data = block.get("callout", {}).get("icon", {})
         icon = icon_data.get("emoji") if icon_data.get("type") == "emoji" else "💡"
         
-        # Ignorujeme "Navigace kapitolou", protože si vygenerujeme vlastní, hezčí!
+        # Schováme nepotřebné bloky z Notionu (např. ručně tvořené navigace)
         if "Navigace" in text or "pořadové studio" in text:
             return
 
@@ -325,27 +331,24 @@ with main_col:
     with st.container(border=True):
         if active_blocks:
             
-            # --- MOJE VLASTNÍ AUTOMATICKÁ NAVIGACE ---
-            # Najdeme všechny nadpisy a vygenerujeme z nich krásná tlačítka na začátek stránky!
-            headings = [b for b in active_blocks if b["type"] in ["heading_1", "heading_2"]]
+            # --- RYCHLÁ NAVIGACE ---
+            headings = [b for b in active_blocks if b["type"] in ["heading_1", "heading_2", "heading_3"]]
             if len(headings) > 1:
                 st.markdown("### 📍 Rychlá navigace kapitolou")
-                # Rozdělíme do 3 nebo 4 sloupců podle počtu
                 cols_count = min(len(headings), 3) 
                 nav_cols = st.columns(cols_count)
                 
                 for i, h in enumerate(headings):
                     h_text = h[h["type"]].get("rich_text", [])
                     if h_text:
-                        raw_text = h_text[0].get("plain_text", "").strip()
-                        # Vyčistíme text od formulářových slov (aby se to nejmenovalo "Doplň: Projekt")
+                        raw_text = "".join([t.get("plain_text", "") for t in h_text]).strip()
                         clean_text = re.sub(r"^(Doplň|Úkol|Otázka).*?:", "", raw_text, flags=re.IGNORECASE).strip()
                         h_id = format_uuid(h["id"])
                         with nav_cols[i % cols_count]:
                             st.markdown(f"<a href='#{h_id}' class='nav-link-box'>{clean_text}</a>", unsafe_allow_html=True)
                 st.divider()
             
-            # Konec automatické navigace, teď vypíšeme zbytek bloků
+            # --- ZBYTEK OBSAHU ---
             for block in active_blocks: 
                 render_block(block)
         else:
