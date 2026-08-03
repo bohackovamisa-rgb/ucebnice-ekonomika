@@ -120,7 +120,7 @@ st.markdown("""
         font-size: 0.92rem;
     }
 
-    .stTextInput input, .stTextArea textarea {
+    .stTextInput input, .stTextArea textarea, .stSelectbox select {
         font-family: 'Montserrat', sans-serif !important;
         border-radius: 8px !important;
         border: 1px solid #cbd5e1 !important;
@@ -217,13 +217,11 @@ with st.sidebar:
     # --- OSOBNÍ A UČITELSKÁ ZÓNY ---
     st.markdown("<div class='sidebar-section-title'>STUDIUM A METODIKA</div>", unsafe_allow_html=True)
     
-    # Tlačítko Moje pokroky
     is_pokroky = st.session_state["current_view"] == "Pokroky"
     if st.button("📈 Moje pokroky", key="nav_pokroky", use_container_width=True, type="primary" if is_pokroky else "secondary"):
         st.session_state["current_view"] = "Pokroky"
         st.rerun()
 
-    # Tlačítko Učitelská základna
     is_ucitel = st.session_state["current_view"] == "Ucitel"
     if st.button("👩‍🏫 Učitelská základna", key="nav_ucitel", use_container_width=True, type="primary" if is_ucitel else "secondary"):
         st.session_state["current_view"] = "Ucitel"
@@ -288,32 +286,70 @@ elif view == "Pokroky":
     with st.container(border=True):
         st.header("Moje uložené projekty")
         st.write("Zde uvidíte své uložené zápisky a Lean Canvas formuláře napříč všemi kapitolami.")
-        st.info("Při dalším rozšíření sem můžeme přidat tlačítko **'Stáhnout mé podklady v PDF'** pro odevzdání učiteli!")
 
 elif view == "Ucitel":
-    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>METODICKÁ ZÓNÁ</span>", unsafe_allow_html=True)
-    st.title("👩‍🏫 Učitelská základna & Řídící systém")
-    st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Metodické pokyny, projektové scénáře do výuky a časové dotace pro lekce.</p>", unsafe_allow_html=True)
+    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>METODIK & DASHBOARD</span>", unsafe_allow_html=True)
+    st.title("👩‍🏫 Učitelská základna")
+    st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Metodické pokyny a sledování práce jednotlivých žáků podle tříd.</p>", unsafe_allow_html=True)
 
-    with st.container(border=True):
-        st.header("🎯 Projektové aktivity do hodin (Kapitola 1)")
-        st.markdown("""
-        **Aktivita: Startupový Pitch (45 min)**
-        - **Cíl:** Žáci ve dvojicích formulují problém a řešení na základě Lean Canvas.
-        - **Pomůcky:** Vyplněná záložka *Lean Canvas* v této učebnici.
-        - **Postup:**
-          1. 15 min – Individuální vyplnění políček v učebnici.
-          2. 15 min – Vzájemná zpětná vazba ve dvojicích (Peer-review).
-          3. 15 min – 60sekundový prezentace před třídou ("Elevator Pitch").
-        """)
+    tab_prehled, tab_metodika = st.tabs(["📊 Přehled žáků a tříd", "🎯 Metodické plány do hodin"])
 
-    with st.container(border=True):
-        st.header("💡 Tipy pro hodnocení & reflexi")
-        st.write("Doporučené otázky pro diskuzi na konci vyučovací hodiny:")
-        st.markdown("""
-        * *Co je největším rizikem při přechodu z OSVČ na s.r.o.?*
-        * *Jak poznáme, že náš nápad řeší reálný problém a ne pouze naši představu?*
-        """)
+    with tab_prehled:
+        with st.container(border=True):
+            st.header("Sledování práce žáků")
+            
+            # Výběr třídy a žáka
+            col_treda, col_zak = st.columns(2)
+            with col_treda:
+                selected_class = st.selectbox("Vyberte třídu:", ["3.A (Obchodní akademie)", "3.B (Ekonomické lyceum)", "4.A (Podnikání)"])
+            with col_zak:
+                # Ukázkoví žáci pro vybranou třídu
+                zaci_map = {
+                    "3.A (Obchodní akademie)": ["Jan Novák", "Ema Dvořáková", "Petr Svoboda"],
+                    "3.B (Ekonomické lyceum)": ["Klára Horáková", "Martin Černý"],
+                    "4.A (Podnikání)": ["Lucie Kučerová", "David Veselý"]
+                }
+                selected_student = st.selectbox("Vyberte žáka:", zaci_map[selected_class])
+
+            st.divider()
+
+            # Karta vybraného žáka
+            st.subheader(f"👤 Karta žáka: {selected_student} ({selected_class})")
+            
+            c1, c2, c3 = st.columns(3)
+            with c1:
+                st.metric(label="Postup kurzem", value="33 %", delta="Kapitola 1 a 2")
+            with c2:
+                st.metric(label="Vyplněných odpovědí", value="8 / 10")
+            with c3:
+                st.metric(label="Poslední aktivita", value="Dnes v 14:20")
+
+            st.markdown("### 📝 Náhled vyplněného úkolu (Kapitola 1: Lean Canvas)")
+            
+            # Ukázkové odpovědi žáka
+            with st.expander("Rozkliknout detailní odpovědi žáka", expanded=True):
+                st.markdown("**1. Název projektu:** *Eko-Obaly z mycelia*")
+                st.markdown("**2. Cílová skupina:** *Lokální ekologické e-shopy a malé farmářské prodejny.*")
+                st.markdown("**3. Hlavní problém:** *Vysoká spotřeba plastových výplní při posílání balíků.*")
+                st.markdown("**4. Navrhované řešení:** *Plně rozložitelné výplně z houbového odpadu a pilin.*")
+                
+                st.divider()
+                st.markdown("**💬 Hodnocení a zpětná vazba učitele:**")
+                st.text_area("Napsat žákovi poznámku / schválení záměru:", placeholder="Skvělý nápad! Zkuste ještě více specifikovat nákladovou strukturu v tabulce Lean Canvas...", key=f"note_{selected_student}")
+                if st.button("Odeslat zpětnou vazbu žákovi", type="primary"):
+                    st.success(f"Zpětná vazba pro žáka {selected_student} byla uložena!")
+
+    with tab_metodika:
+        with st.container(border=True):
+            st.header("Projektové aktivity do hodin (Kapitola 1)")
+            st.markdown("""
+            **Aktivita: Startupový Pitch (45 min)**
+            - **Cíl:** Žáci ve dvojicích formulují problém a řešení na základě Lean Canvas.
+            - **Postup:**
+              1. 15 min – Individuální vyplnění políček v učebnici.
+              2. 15 min – Vzájemná zpětná vazba ve dvojicích.
+              3. 15 min – 60sekundový prezentace před třídou ("Elevator Pitch").
+            """)
 
 else:
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>KAPITOLA</span>", unsafe_allow_html=True)
