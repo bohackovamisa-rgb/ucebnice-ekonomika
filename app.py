@@ -3,7 +3,7 @@ import streamlit as st
 # 1. Konfigurace stránky
 st.set_page_config(
     page_title="Učebnice Ekonomiky",
-    page_icon="📖",
+    page_icon="📚",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -25,7 +25,7 @@ def check_password():
             st.markdown("<h2 style='text-align: center; border: none; font-weight: 700; margin-bottom: 0;'>🔒 Soukromá učebnice</h2>", unsafe_allow_html=True)
             st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem;'>Zadejte přístupové heslo pro odemknutí kurzu.</p>", unsafe_allow_html=True)
             password = st.text_input("Heslo:", type="password", label_visibility="collapsed", placeholder="Přístupové heslo...")
-            if st.button("Vstoupit do kurzu", use_container_width=True):
+            if st.button("Vstoupit do učebnice", use_container_width=True):
                 if password == app_pwd:
                     st.session_state["password_correct"] = True
                     st.rerun()
@@ -36,7 +36,7 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- MINIMALISTICKÉ SOFISTIKOVANÉ CSS ---
+# --- STYLOVÁNÍ (PURE SAAS / NOTION LOOK) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -45,7 +45,6 @@ st.markdown("""
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Pozadí celé aplikace */
     .stApp {
         background-color: #f8fafc;
         color: #0f172a;
@@ -53,8 +52,8 @@ st.markdown("""
 
     /* Šířka a zarovnání hlavního obsahu */
     .main .block-container {
-        max-width: 860px !important;
-        padding-top: 3rem !important;
+        max-width: 880px !important;
+        padding-top: 2.5rem !important;
         padding-bottom: 5rem !important;
     }
 
@@ -65,14 +64,14 @@ st.markdown("""
         border: 1px solid #e2e8f0 !important;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px -1px rgba(0, 0, 0, 0.02) !important;
         padding: 1.75rem !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 1.25rem !important;
     }
 
     /* Typografie */
     h1 {
         color: #0f172a !important;
         font-weight: 800 !important;
-        font-size: 2.25rem !important;
+        font-size: 2.2rem !important;
         letter-spacing: -0.03em !important;
         line-height: 1.25 !important;
         margin-bottom: 0.5rem !important;
@@ -81,25 +80,25 @@ st.markdown("""
     h2 {
         color: #1e293b !important;
         font-weight: 700 !important;
-        font-size: 1.4rem !important;
+        font-size: 1.35rem !important;
         letter-spacing: -0.02em !important;
-        margin-top: 1.75rem !important;
+        margin-top: 1.5rem !important;
         margin-bottom: 0.75rem !important;
         border-bottom: 1px solid #f1f5f9;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.4rem;
     }
 
     h3 {
         color: #334155 !important;
         font-weight: 600 !important;
-        font-size: 1.15rem !important;
+        font-size: 1.1rem !important;
         margin-top: 1.25rem !important;
     }
 
     p, li {
         color: #334155;
-        font-size: 1rem;
-        line-height: 1.7;
+        font-size: 0.98rem;
+        line-height: 1.75;
     }
 
     /* Zvýrazněný Callout Box */
@@ -160,28 +159,27 @@ st.markdown("""
 if "current_chapter" not in st.session_state:
     st.session_state["current_chapter"] = "Kapitola 1"
 
-# --- BOČNÍ PANEL (NAVIGACE) ---
+# --- BOČNÍ PANEL (NAVIGACE KAPITOL) ---
 with st.sidebar:
     st.markdown("""
         <div style='padding: 0.5rem 0 1rem 0;'>
-            <span style='font-size: 0.75rem; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em;'>E-Learning Kurz</span>
-            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.3rem; color: #0f172a;'>Ekonomika & Startup</h2>
+            <span style='font-size: 0.75rem; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em;'>E-Learning Portal</span>
+            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.3rem; color: #0f172a;'>Učebnice Ekonomiky</h2>
         </div>
     """, unsafe_allow_html=True)
     
     st.divider()
     
     chapters = {
-        "Kapitola 1": "1. Podnikavost a startupová kultura",
+        "Kapitola 1": "1. Podnikavost a startupy",
         "Kapitola 2": "2. Finance a osobní management",
         "Kapitola 3": "3. Výroba, náklady a efektivita",
         "Kapitola 4": "4. Zaměstnanci a trh práce",
-        "Kapitola 5": "5. Stát, daně a globální souvislosti",
+        "Kapitola 5": "5. Stát, daně a ekonomika",
         "Kapitola 6": "6. Management a marketing"
     }
 
     for key, title in chapters.items():
-        # Zvýraznění aktivní kapitoly
         is_active = st.session_state["current_chapter"] == key
         btn_type = "primary" if is_active else "secondary"
         if st.button(title, key=f"nav_{key}", use_container_width=True, type=btn_type):
@@ -194,73 +192,82 @@ with st.sidebar:
         st.session_state["password_correct"] = False
         st.rerun()
 
-# --- HLAVNÍ OBSAHOVÁ PLOCHA ---
-
+# --- HLAVNÍ PLOCHA A OBSAH KAPITOL ---
 active_chap = st.session_state["current_chapter"]
 
 if active_chap == "Kapitola 1":
-    
-    # Hlavička kapitoly
-    st.markdown("<span style='color: #6366f1; font-weight: 600; font-size: 0.9rem;'>KAPITOLA 1</span>", unsafe_allow_html=True)
+    st.markdown("<span style='color: #6366f1; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em;'>KAPITOLA 1</span>", unsafe_allow_html=True)
     st.title("Podnikavost a startupová kultura")
-    st.markdown("<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 2rem;'>Jak přetavit nápad v ověřitelný projekt, zvolit správnou právní formu a uvažovat v souvislostech.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 2rem;'>Od nápadu k ověřenému projektu, výběru právní formy a etickému podnikání.</p>", unsafe_allow_html=True)
 
-    # Rychlé záložky / Rychlá navigace sekcemi
-    tab1, tab2, tab3 = st.tabs(["📖 Výukový text", "✏️ Praktický úkol", "💡 Lean Canvas"])
+    # Vnitřní navigace kapitoly (Záložky)
+    tab_text, tab_tasks, tab_canvas = st.tabs(["📖 Výukový text", "✏️ Praktický projekt", "📊 Lean Canvas & Reflexe"])
 
-    with tab1:
+    with tab_text:
         with st.container(border=True):
-            st.header("1. Podnikatel a jeho úloha")
+            st.header("1. Podnikatel a základní pojmy")
             st.write("""
-            Podnikatel je osoba, která samostatně vykonává na vlastní účet a odpovědnost živnostenskou 
-            nebo obdobnou činnost se záměrem činit tak soustavně za účelem dosažení zisku.
+            Podnikatelem je podle občanského zákoníku ten, kdo samostatně vykonává na vlastní účet a odpovědnost 
+            výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku.
             """)
             
             st.markdown("""
             <div class='custom-callout'>
-                <strong>💡 Hlavní myšlenka:</strong> Podnikání není pouze o riziku, ale především o vyhledávání příležitostí a řešení problémů zákazníků.
+                <strong>💡 Klíčové pravidlo:</strong> Podnikatel nenesou odpovědnost pouze vůči svému zisku, ale také vůči zákazníkům, zaměstnancům a prostředí, ve kterém působí (CSR – Společenská odpovědnost firem).
             </div>
             """, unsafe_allow_html=True)
 
-            st.header("2. OSVČ a živnosti")
-            st.write("""
-            Fyzická osoba může podnikat nejčastěji jako **OSVČ** (Osoba samostatně výdělečně činná). 
-            Živnosti rozdělujeme do následujících kategorií:
-            """)
+            st.header("2. OSVČ a druhy živností")
+            st.write("Fyzická osoba nejčastěji podniká jako osoba samostatně výdělečně činná (OSVČ). Živnosti se dělí podle podmínek získání:")
+            
             st.markdown("""
-            * **Volná:** Není potřeba odborná způsobilost.
-            * **Řemeslná:** Vyžaduje výuční list nebo praxi.
-            * **Vázaná:** Vyžaduje specifické vzdělání či zkoušky.
-            * **Koncesovaná:** Vyžaduje státní povolení (koncesi).
+            - **Volné:** Stačí splnit všeobecné podmínky (věk 18 let, způsobilost, bezúhonnost). Není vyžadováno odborné vzdělání.
+            - **Řemeslné:** Vyžadují odbornou způsobilost (výuční list, maturitu v oboru nebo praxi).
+            - **Vázané:** Vyžadují specifickou odbornou způsobilost definovanou zákony (např. autoškola, účetnictví).
+            - **Koncesované:** Vyžadují státní povolení – koncesi (např. taxislužba, prodej zbraní).
             """)
 
-    with tab2:
-        with st.container(border=True):
-            st.header("Reflexe a příprava nápadu")
-            st.write("Vyplňte následující pole pro váš projekt. Odpovědi se uchovávají v rámci vaší lekce.")
+            st.header("3. Obchodní korporace")
+            st.write("Pokud podnikatel zakládá právnickou osobu, nejčastěji volí mezi kapitálovými a osobními společnostmi:")
             
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.text_input("🚀 Název vašeho projektu:", placeholder="Např. Ekologické obaly z houbového mycelia...")
-            st.text_area("👥 Kdo je váš cílový zákazník?", placeholder="Popište konkrétní skupinu lidí, kterým projekt řeší problém...", height=100)
-            st.text_area("🚨 Jaký hlavní problém zákazníka řešíte?", placeholder="Stručně popište zákaznickou bolest...", height=100)
+            # Přehledná tabulka
+            st.markdown("""
+            | Forma | Ručení | Minimální kapitál |
+            | :--- | :--- | :--- |
+            | **s.r.o.** (Společnost s r.o.) | Omezené (do výše nesplaceného vkladu) | 1 Kč |
+            | **a.s.** (Akciová společnost) | Společnost ručí celým majetkem, akcionáři neručí | 2 000 000 Kč |
+            | **OSVČ** | Neomezené (celým osobním majetkem) | 0 Kč |
+            """)
 
-    with tab3:
+    with tab_tasks:
         with st.container(border=True):
-            st.header("Lean Canvas šablona")
-            st.write("Stručný přehled obchodního modelu na jedné stránce.")
+            st.header("🚀 Váš podnikatelský záměr")
+            st.write("Vyplňte základní strukturu vašeho napadnutého projektu nebo nápadu.")
             
-            col_a, col_b = st.columns(2)
-            with col_a:
-                st.text_area("💎 Hodnota pro zákazníka:", height=120)
-                st.text_area("💰 Nákladová struktura:", height=120)
-            with col_b:
-                st.text_area("💡 Navrhované řešení:", height=120)
-                st.text_area("🏷️ Zdroje příjmů:", height=120)
+            st.text_input("1. Název projektu / nápadu:", placeholder="Napište název...", key="k1_nazev")
+            st.text_area("2. Kdo je cílový zákazník?", placeholder="Popište skupinu lidí, pro které projekt stavíte...", height=90, key="k1_zakaznik")
+            st.text_area("3. Jaký problém zákazníka řešíte?", placeholder="Popište hlavní bolest nebo potřebu...", height=90, key="k1_problem")
+            st.text_area("4. Jaké je vaše navrhované řešení?", placeholder="Stručně popsání produktu nebo služby...", height=90, key="k1_reseni")
+
+    with tab_canvas:
+        with st.container(border=True):
+            st.header("📊 Lean Canvas šablona")
+            st.write("Rychlý přehled biznis modelu vašeho nápadu.")
+            
+            c1, c2 = st.columns(2)
+            with c1:
+                st.text_area("Unikátní hodnota projektu:", placeholder="V čem jste jiní než konkurence?", height=100, key="lc_val")
+                st.text_area("Struktura nákladů:", placeholder="Fixní a variabilní náklady...", height=100, key="lc_cost")
+            with c2:
+                st.text_area("První test (MVP):", placeholder="Jak nejrychleji a nejlevněji ověříte nápad?", height=100, key="lc_mvp")
+                st.text_area("Zdroje příjmů:", placeholder="Za co přesně vám zákazník zaplatí?", height=100, key="lc_rev")
+            
+            st.divider()
+            st.text_area("📝 Reflexe a sebehodnocení na konci kapitoly:", placeholder="Co nového jste se v této kapitole naučili?", height=80, key="k1_reflexe")
 
 else:
     # Zástupný modul pro ostatní kapitoly
-    st.markdown(f"<span style='color: #6366f1; font-weight: 600; font-size: 0.9rem;'>{active_chap.upper()}</span>", unsafe_allow_html=True)
+    st.markdown(f"<span style='color: #6366f1; font-weight: 600; font-size: 0.85rem;'>{active_chap.upper()}</span>", unsafe_allow_html=True)
     st.title(chapters[active_chap])
-    
     with st.container(border=True):
-        st.info("Obsah této kapitoly můžete snadno vložit jako čistý kód.")
+        st.info("Tato kapitola je připravena pro vložení obsahu. Můžete mi poslat text a já ho hned zapracuji.")
