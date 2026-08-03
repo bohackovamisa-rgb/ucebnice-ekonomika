@@ -117,11 +117,21 @@ headers = {
     "Notion-Version": "2022-06-28"
 }
 
+# --- POMOCNÉ FUNKCE PRO ZPRACOVÁNÍ ODKAZŮ A KOTEV ---
 def format_uuid(id_str):
     clean = id_str.replace("-", "")
     if len(clean) == 32:
         return f"{clean[:8]}-{clean[8:12]}-{clean[12:16]}-{clean[16:20]}-{clean[20:]}"
     return id_str
+
+def make_slug(text):
+    """Vytvoří URL-friendly kotvu pro skrolování na stránce (odstraní diakritiku a speciální znaky)."""
+    if not text: return ""
+    text = re.sub(r'[\*\_\[\]\(\)]', '', text)
+    slug = text.lower()
+    slug = re.sub(r'[^\w\s-]', '', slug)
+    slug = re.sub(r'[-\s]+', '-', slug).strip('-')
+    return slug
 
 if "page" in st.query_params:
     target_page = format_uuid(st.query_params["page"])
@@ -141,12 +151,13 @@ def is_notion_link(href):
     if not href: return False
     return "notion.so" in href or "notion.site" in href or extract_notion_id(href) is not None
 
-# --- OPRAVENÝ PŘEKLADAČ FORMÁTOVÁNÍ A BEZPEČNÝCH ODKAZŮ ---
+# --- INTELIGENTNÍ PŘEKLADAČ FORMÁTOVÁNÍ A KOTEV ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list: return ""
     md_text = ""
     for t in rich_text_list:
-        text = t.get("plain_text", "").strip()
+        plain_text = t.get("plain_text", "").strip()
+        text = plain_text
         annotations = t.get("annotations", {})
         href = t.get("href")
         
@@ -163,9 +174,8 @@ def rich_text_to_markdown(rich_text_list):
             is_internal = True
             page_id = extract_notion_id(href)
             
-        # Bezpečnostní pojistka: Pokud chybí text zmínky, dáme náhradní popisek
         if is_internal and not text:
-            text = "Otevřít kapitolu"
+            text = "Odkaz"
 
         if text:
             if annotations.get("bold"): text = f"**{text}**"
@@ -173,8 +183,15 @@ def rich_text_to_markdown(rich_text_list):
             if annotations.get("strikethrough"): text = f"~~{text}~~"
             if annotations.get("code"): text = f"`{text}`"
             
-            if is_internal and page_id:
+            # --- ZÁKLAD PRO SKROLOVÁNÍ ---
+            # Pokud odkazujeme na stejnou stránku (kapitolu), udělá z toho plynulou kotvu
+            if is_internal and page_id == st.session_state["current_page_id"]:
+                slug = make_slug(plain_text)
+                text = f"[{text}](#{slug})"
+            # Pokud na jinou stránku, přesměruje přes URL
+            elif is_internal and page_id:
                 text = f"[{text}](?page={page_id})"
+            # Externí odkazy
             elif href:
                 text = f"[{text}]({href})"
                 
@@ -302,7 +319,7 @@ def render_text_or_input(text, block_id):
     else: 
         st.markdown(text)
 
-# --- VYKRESLENÍ BLOKŮ NOTIONU ---
+# --- VYKRESLENÍ BLOKŮ NOTIONU S PODPOROU KOTEV ---
 def render_block(block):
     b_type = block.get("type")
     rich_text_data = block.get(b_type, {}).get("rich_text", []) if b_type in block else []
@@ -310,13 +327,13 @@ def render_block(block):
 
     if b_type == "heading_1":
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
-        else: st.markdown(f"# {text}")
+        else: st.title(text, anchor=make_slug(text))
     elif b_type == "heading_2":
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
-        else: st.markdown(f"## {text}")
+        else: st.header(text, anchor=make_slug(text))
     elif b_type == "heading_3":
         if is_completion_prompt(text): render_text_or_input(text, block["id"])
-        else: st.markdown(f"### {text}")
+        else: st.subheader(text, anchor=make_slug(text))
     elif b_type == "paragraph":
         if text:
             if is_completion_prompt(text): render_text_or_input(text, block["id"])
@@ -340,7 +357,6 @@ def render_block(block):
                 st.info(f"{icon} {label_text}")
                 st.text_area("Vaše odpověď:", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"callout_input_{block['id']}", height=100)
         else:
-            # Zobrazí text Calloutu, případně náhradní mezeru, pokud obsahuje pouze zanořené bloky
             display_text = text if text else " "
             st.info(display_text, icon=icon)
             
