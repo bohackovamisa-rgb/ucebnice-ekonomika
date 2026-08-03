@@ -3,7 +3,7 @@ import streamlit as st
 # 1. Konfigurace stránky
 st.set_page_config(
     page_title="Učebnice Ekonomiky",
-    page_icon="📚",
+    page_icon="📖",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -22,7 +22,7 @@ def check_password():
     with col2:
         st.markdown("<br><br><br>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.markdown("<h2 style='text-align: center; border: none; font-weight: 700; margin-bottom: 0;'>🔒 Soukromá učebnice</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align: center; border: none; font-weight: 700; margin-bottom: 0;'>Soukromá učebnice</h2>", unsafe_allow_html=True)
             st.markdown("<p style='text-align: center; color: #64748b; font-size: 0.85rem; margin-bottom: 1.5rem;'>Zadejte přístupové heslo pro odemknutí kurzu.</p>", unsafe_allow_html=True)
             password = st.text_input("Heslo:", type="password", label_visibility="collapsed", placeholder="Přístupové heslo...")
             if st.button("Vstoupit do učebnice", use_container_width=True):
@@ -30,13 +30,13 @@ def check_password():
                     st.session_state["password_correct"] = True
                     st.rerun()
                 else:
-                    st.error("❌ Nesprávné heslo")
+                    st.error("Nesprávné heslo")
     return False
 
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (MONTSERRAT + SAAS MINIMALISMUS) ---
+# --- STYLOVÁNÍ (MONTSERRAT + MODERNÍ MINIMALISMUS) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
@@ -103,13 +103,20 @@ st.markdown("""
         font-weight: 400;
     }
 
-    /* LEGENDA UČEBNICE - BAREVNÉ BLOKY */
+    /* LEGENDA UČEBNICE - BAREVNÉ BLOKY PODLE STANDARDU */
     .leg-blue { background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 0.5rem; }
     .leg-yellow { background-color: #fefce8; border-left: 4px solid #eab308; padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 0.5rem; }
     .leg-purple { background-color: #faf5ff; border-left: 4px solid #a855f7; padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 0.5rem; }
     .leg-green { background-color: #f0fdf4; border-left: 4px solid #22c55e; padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 0.5rem; }
     .leg-red { background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 0.5rem; }
     .leg-gray { background-color: #f8fafc; border-left: 4px solid #64748b; padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 0.5rem; }
+
+    .icon-inline {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 8px;
+        vertical-align: -3px;
+    }
 
     .stTextInput input, .stTextArea textarea, .stSelectbox select {
         font-family: 'Montserrat', sans-serif !important;
@@ -162,8 +169,16 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- SVG IKONY ---
-SVG_LIGHTBULB = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>'
+# --- VYSOKOJAKOSTNÍ SVG IKONY (LUCIDE / FEATHER STYLE) ---
+SVG_HOME = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+SVG_COMPASS = '<svg class="icon-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>'
+SVG_TARGET = '<svg class="icon-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>'
+SVG_BOOK = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
+SVG_TOOL = '<svg class="icon-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
+SVG_CHART = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+SVG_TEACHER = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
+SVG_DICT = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>'
+SVG_PROJ = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></svg>'
 
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
@@ -182,7 +197,7 @@ with st.sidebar:
 
     # --- ÚVODNÍ STRÁNKA ---
     is_uvod = st.session_state["current_view"] == "Uvod"
-    if st.button("🏠 Úvodní stránka", key="nav_uvod", use_container_width=True, type="primary" if is_uvod else "secondary"):
+    if st.button("Úvodní stránka", key="nav_uvod", use_container_width=True, type="primary" if is_uvod else "secondary"):
         st.session_state["current_view"] = "Uvod"
         st.rerun()
 
@@ -208,18 +223,18 @@ with st.sidebar:
     st.markdown("<div class='sidebar-section-title'>STUDIUM A METODIKA</div>", unsafe_allow_html=True)
     
     is_pokroky = st.session_state["current_view"] == "Pokroky"
-    if st.button("📈 Moje pokroky", key="nav_pokroky", use_container_width=True, type="primary" if is_pokroky else "secondary"):
+    if st.button("Moje pokroky", key="nav_pokroky", use_container_width=True, type="primary" if is_pokroky else "secondary"):
         st.session_state["current_view"] = "Pokroky"
         st.rerun()
 
     is_ucitel = st.session_state["current_view"] == "Ucitel"
-    if st.button("👩‍🏫 Učitelská základna", key="nav_ucitel", use_container_width=True, type="primary" if is_ucitel else "secondary"):
+    if st.button("Učitelská základna", key="nav_ucitel", use_container_width=True, type="primary" if is_ucitel else "secondary"):
         st.session_state["current_view"] = "Ucitel"
         st.rerun()
 
     st.divider()
     
-    if st.button("🔒 Odhlásit se", use_container_width=True):
+    if st.button("Odhlásit se", use_container_width=True):
         st.session_state["password_correct"] = False
         st.rerun()
 
@@ -232,21 +247,21 @@ if view == "Uvod":
     st.markdown("<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 2rem;'>Moderní učebnice ekonomiky pro střední školy: Podnikavost, finance & ekonomika v souvislostech.</p>", unsafe_allow_html=True)
 
     with st.container(border=True):
-        st.header("🧭 Začni tady")
+        st.markdown(f"<h2>{SVG_COMPASS} Začni tady</h2>", unsafe_allow_html=True)
         st.write("""
         Tahle stránka je hlavní rozcestník učebnice. Propojuje podnikavost, osobní finance, výrobu, trh práce, 
         stát, daně, management a marketing s rozhodnutími, která poznáte z reálného života.
         """)
         
-        st.markdown("""
+        st.markdown(f"""
         <div style='background-color: #f0fdf4; border-left: 4px solid #22c55e; padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;'>
-            <strong style='color: #15803d;'>🎯 Cíl učebnice:</strong><br>
+            <strong style='color: #15803d;'>{SVG_TARGET} Cíl učebnice:</strong><br>
             <span style='color: #166534;'>Žák má umět propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho praktického rozhodování.</span>
         </div>
         """, unsafe_allow_html=True)
 
     with st.container(border=True):
-        st.header("📖 Jak s učebnicí pracovat")
+        st.markdown(f"<h2>{SVG_BOOK} Jak s učebnicí pracovat</h2>", unsafe_allow_html=True)
         st.markdown("""
         1. **Otevři kapitolu z obsahu vlevo.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
         2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
@@ -257,33 +272,33 @@ if view == "Uvod":
         """)
 
     with st.container(border=True):
-        st.header("🧩 Legenda učebnice")
+        st.markdown("<h2>Legenda učebnice</h2>", unsafe_allow_html=True)
         st.markdown("""
-        <div class='leg-blue'><strong>🔵 Modrá</strong> = výklad, struktura, důležité vysvětlení</div>
-        <div class='leg-yellow'><strong>🟡 Žlutá</strong> = úkol, otázka, aktivita, procvičení</div>
-        <div class='leg-purple'><strong>🟣 Fialová</strong> = AI mentoring a práce s asistencí</div>
-        <div class='leg-green'><strong>🟢 Zelená</strong> = praxe, doporučení, dobrý postup</div>
-        <div class='leg-red'><strong>🔴 Oranžová / Červená</strong> = riziko, varování, právní nebo etický problém</div>
-        <div class='leg-gray'><strong>⚪ Šedá</strong> = zdroje, ověřování, učitelské nebo organizační poznámky</div>
+        <div class='leg-blue'><strong>Modrá</strong> = Výklad, struktura, důležité vysvětlení</div>
+        <div class='leg-yellow'><strong>Žlutá</strong> = Úkol, otázka, aktivita, procvičení</div>
+        <div class='leg-purple'><strong>Fialová</strong> = AI mentoring a práce s asistencí</div>
+        <div class='leg-green'><strong>Zelená</strong> = Praxe, doporučení, dobrý postup</div>
+        <div class='leg-red'><strong>Červená</strong> = Riziko, varování, právní nebo etický problém</div>
+        <div class='leg-gray'><strong>Šedá</strong> = Zdroje, ověřování, učitelské poznámky</div>
         """, unsafe_allow_html=True)
 
-    st.subheader("🧰 Společné nástroje učebnice")
+    st.markdown(f"<h2>{SVG_TOOL} Společné nástroje učebnice</h2>", unsafe_allow_html=True)
     st.write("Tyto nástroje propojují kapitoly do jedné učebnice. Slouží k opakování, projektu, sledování pokroku a práci s pojmy.")
 
     c1, c2 = st.columns(2)
     with c1:
         with st.container(border=True):
-            st.markdown("### 📖 Slovníček pojmů")
+            st.markdown(f"### {SVG_DICT} Slovníček pojmů", unsafe_allow_html=True)
             st.write("Společné místo pro pojmy napříč kapitolami: podnikatel, rozpočet, náklady, mzda, daň, CSR, KPI a další.")
         with st.container(border=True):
-            st.markdown("### 🎒 Závěrečný projekt")
+            st.markdown(f"### {SVG_PROJ} Závěrečný projekt", unsafe_allow_html=True)
             st.write("Žák nebo tým navrhne vlastní projekt a obhájí ho podle zákazníka, nákladů, právní formy, rizik a marketingu.")
     with c2:
         with st.container(border=True):
-            st.markdown("### 🧩 Databáze aktivit")
+            st.markdown(f"### {SVG_CHART} Databáze aktivit", unsafe_allow_html=True)
             st.write("Přehled úkolů, případových studií, výpočtů, reflexí a AI mentoring promptů.")
         with st.container(border=True):
-            st.markdown("### 🪞 Sebehodnocení")
+            st.markdown(f"### {SVG_TEACHER} Sebehodnocení", unsafe_allow_html=True)
             st.write("Na konci kapitoly i celé učebnice žák vyhodnotí, co už umí vysvětlit, použít a obhájit.")
 
 elif view == "Kapitola 1":
@@ -313,7 +328,7 @@ elif view == "Kapitola 1":
 
 elif view == "Pokroky":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>STUDENTSKÁ ZÓNÁ</span>", unsafe_allow_html=True)
-    st.title("📈 Moje pokroky")
+    st.title("Moje pokroky")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Přehled dokončených kapitol, uložených odpovědí a rozpracovaných projektů.</p>", unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns(3)
@@ -329,10 +344,10 @@ elif view == "Pokroky":
 
 elif view == "Ucitel":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>METODIK & DASHBOARD</span>", unsafe_allow_html=True)
-    st.title("👩‍🏫 Učitelská základna")
+    st.title("Učitelská základna")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Metodické pokyny a sledování práce jednotlivých žáků podle tříd.</p>", unsafe_allow_html=True)
 
-    tab_prehled, tab_metodika = st.tabs(["📊 Přehled žáků a tříd", "🎯 Metodické plány do hodin"])
+    tab_prehled, tab_metodika = st.tabs(["Přehled žáků a tříd", "Metodické plány do hodin"])
 
     with tab_prehled:
         with st.container(border=True):
@@ -350,7 +365,7 @@ elif view == "Ucitel":
 
             st.divider()
 
-            st.subheader(f"👤 Karta žáka: {selected_student} ({selected_class})")
+            st.subheader(f"Karta žáka: {selected_student} ({selected_class})")
             st.markdown("**1. Název projektu:** *Eko-Obaly z mycelia*")
             st.text_area("Napsat žákovi poznámku / schválení záměru:", placeholder="Zpětná vazba...", key=f"note_{selected_student}")
 
