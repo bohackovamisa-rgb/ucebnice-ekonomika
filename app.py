@@ -22,7 +22,8 @@ def check_password():
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("<br><br>", unsafe_allow_html=True)
+        st.write("")
+        st.write("")
         with st.container(border=True):
             st.markdown("<h2 style='text-align: center; border: none;'>🔒 Soukromá učebnice</h2>", unsafe_allow_html=True)
             st.info("Tato aplikace je uzamčena. Zadejte přístupové heslo.")
@@ -38,7 +39,7 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- ČISTÝ MODERNÍ DESIGN (CUSTOM CSS) ---
+# --- ČISTÝ MODERNÍ DESIGN ---
 st.markdown("""
     <style>
     .stApp { background-color: #f8fafc; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -47,10 +48,8 @@ st.markdown("""
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important; padding: 1.25rem !important;
     }
     
-    /* Elegantní odsazení kotvy od shora, aby nadpis nebyl nalepený pod lištou! */
-    h1, h2, h3 { 
-        scroll-margin-top: 80px; 
-    }
+    /* Elegantní odsazení nadpisů po kliknutí na kotvu (aby nezalezly pod horní lištu) */
+    h1, h2, h3 { scroll-margin-top: 80px; }
     
     h1 { color: #0f172a !important; font-weight: 800 !important; font-size: 2.1rem !important; margin-top: 1rem; }
     h2 { color: #1e293b !important; font-weight: 700 !important; font-size: 1.5rem !important; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.4rem; margin-top: 1.5rem; }
@@ -61,16 +60,9 @@ st.markdown("""
     .stButton > button { border-radius: 10px !important; border: 1px solid #e2e8f0 !important; background-color: #ffffff !important; color: #1e293b !important; font-weight: 600 !important; transition: all 0.2s ease-in-out !important; }
     .stButton > button:hover { border-color: #3b82f6 !important; color: #2563eb !important; background-color: #eff6ff !important; }
     
-    /* Styly pro automatickou navigaci */
-    .nav-link-box {
-        display: block; padding: 0.75rem 1rem; background-color: #f1f5f9; 
-        border-radius: 8px; text-align: center; text-decoration: none !important;
-        color: #2563eb !important; font-weight: 600; margin-bottom: 0.5rem;
-        transition: all 0.2s;
-    }
-    .nav-link-box:hover { background-color: #e2e8f0; transform: translateY(-2px); }
-    p a, li a { color: #2563eb !important; text-decoration: none !important; font-weight: 600 !important; }
-    p a:hover, li a:hover { text-decoration: underline !important; }
+    /* Vzhled odkazů */
+    a { color: #2563eb !important; text-decoration: none !important; font-weight: 600 !important; }
+    a:hover { text-decoration: underline !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -78,7 +70,6 @@ NOTION_TOKEN = st.secrets["NOTION_TOKEN"]
 MAIN_PAGE_ID = st.secrets["PAGE_ID"]
 headers = { "Authorization": f"Bearer {NOTION_TOKEN}", "Notion-Version": "2022-06-28" }
 
-# --- POMOCNÉ FUNKCE ---
 def format_uuid(id_str):
     clean = id_str.replace("-", "")
     if len(clean) == 32: return f"{clean[:8]}-{clean[8:12]}-{clean[12:16]}-{clean[16:20]}-{clean[20:]}"
@@ -91,7 +82,7 @@ if "page" in st.query_params:
 elif "current_page_id" not in st.session_state:
     st.session_state["current_page_id"] = format_uuid(MAIN_PAGE_ID)
 
-# --- PŘEKLADAČ TEXTU S NATIVNÍMI KOTVAMI ---
+# --- PŘEKLADAČ TEXTU 100% BEZ HTML (Ochrana proti pádu Reactu) ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list: return ""
     md_text = ""
@@ -103,15 +94,12 @@ def rich_text_to_markdown(rich_text_list):
         is_internal = False
         target_id = None
         
-        # Záchyt odkazů z Notionu a jejich přepsání na čisté lokální kotvy
         if href and ("notion.so" in href or "notion.site" in href):
             is_internal = True
             if "#" in href:
-                # Odkaz na blok (vnitřní sekce)
                 matched = re.search(r'([a-fA-F0-9]{32})', href.split("#")[1].replace("-", ""))
                 if matched: target_id = format_uuid(matched.group(1))
             else:
-                # Odkaz na stránku
                 matched = re.search(r'([a-fA-F0-9]{32})', href.replace("-", ""))
                 if matched: target_id = format_uuid(matched.group(1))
                 
@@ -124,13 +112,13 @@ def rich_text_to_markdown(rich_text_list):
         if is_internal and not text: text = "Odkaz"
 
         if text:
-            # Aplikace standardního Markdownu
+            # Čistý formát textu bez HTML
             if annotations.get("bold"): text = f"**{text}**"
             if annotations.get("italic"): text = f"*{text}*"
             if annotations.get("strikethrough"): text = f"~~{text}~~"
             if annotations.get("code"): text = f"`{text}`"
             
-            # Tvorba lokálních odkazů (využívají čistý Markdown formát)
+            # Bezpečné nativní Markdown odkazy
             if is_internal and target_id:
                 text = f"[{text}](#{target_id})"
             elif href and not is_internal:
@@ -188,7 +176,6 @@ def discover_chapters(blocks):
 
 chapters = discover_chapters(fetch_notion_blocks(MAIN_PAGE_ID))
 
-# --- BOČNÍ PANEL ---
 with st.sidebar:
     st.markdown("<h2 style='margin-top:0;'>📚 Učebnice Ekonomiky</h2>", unsafe_allow_html=True)
     st.divider()
@@ -208,7 +195,6 @@ with st.sidebar:
         st.session_state["password_correct"] = False
         st.rerun()
 
-# --- DETEKTOR UŽIVATELSKÝCH VSTUPŮ ---
 def is_completion_prompt(text):
     clean = re.sub(r"^[\*\_\#\d\.\s\[\]\(\)\?]+", "", text.strip()).lower()
     explicit_prefixes = (
@@ -240,7 +226,7 @@ def render_text_or_input(text, block_id):
         if is_long: st.text_area("Odpo", label_visibility="collapsed", placeholder="Zde se rozepište...", key=f"input_{block_id}", height=100)
         else: st.text_input("Odpo", label_visibility="collapsed", placeholder="Stručná odpověď...", key=f"input_{block_id}")
 
-# --- BEZPEČNÉ VYKRESLENÍ BLOKŮ S NATIVNÍMI KOTVAMI ---
+# --- 100% BEZPEČNÉ VYKRESLENÍ BLOKŮ S NATIVNÍMI KOTVAMI ---
 def render_block(block):
     b_type = block.get("type")
     block_id = format_uuid(block["id"])
@@ -248,16 +234,16 @@ def render_block(block):
     rich_text_data = block.get(b_type, {}).get("rich_text", []) if b_type in block else []
     text = rich_text_to_markdown(rich_text_data)
 
-    # Nyní používáme bezpečné nativní funkce st.title / st.header / st.subheader s parametrem anchor!
+    # Bezpečné, nativní volání kotev, žádné divy!
     if b_type == "heading_1":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.title(text, anchor=block_id)
+        else: st.title(text if text else " ", anchor=block_id)
     elif b_type == "heading_2":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.header(text, anchor=block_id)
+        else: st.header(text if text else " ", anchor=block_id)
     elif b_type == "heading_3":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.subheader(text, anchor=block_id)
+        else: st.subheader(text if text else " ", anchor=block_id)
     elif b_type == "paragraph":
         if text:
             if is_completion_prompt(text): render_text_or_input(text, block_id)
@@ -274,7 +260,6 @@ def render_block(block):
         icon_data = block.get("callout", {}).get("icon", {})
         icon = icon_data.get("emoji") if icon_data.get("type") == "emoji" else "💡"
         
-        # Schováme nepotřebné bloky z Notionu (např. ručně tvořené navigace)
         if "Navigace" in text or "pořadové studio" in text:
             return
 
@@ -323,7 +308,7 @@ def render_block(block):
 def render_children(block_id):
     for child in fetch_notion_blocks(block_id): render_block(child)
 
-# --- VYKRESLENÍ HLAVNÍHO OBSAHU A VLASTNÍ NAVIGACE ---
+# --- VYKRESLENÍ HLAVNÍHO OBSAHU A ČISTÉ NAVIGACE ---
 active_blocks = fetch_notion_blocks(st.session_state["current_page_id"])
 col1, main_col, col2 = st.columns([0.5, 5, 0.5])
 
@@ -331,24 +316,27 @@ with main_col:
     with st.container(border=True):
         if active_blocks:
             
-            # --- RYCHLÁ NAVIGACE ---
+            # --- VLASTNÍ OBSAH (TABLE OF CONTENTS) ---
             headings = [b for b in active_blocks if b["type"] in ["heading_1", "heading_2", "heading_3"]]
             if len(headings) > 1:
-                st.markdown("### 📍 Rychlá navigace kapitolou")
-                cols_count = min(len(headings), 3) 
-                nav_cols = st.columns(cols_count)
-                
-                for i, h in enumerate(headings):
-                    h_text = h[h["type"]].get("rich_text", [])
-                    if h_text:
-                        raw_text = "".join([t.get("plain_text", "") for t in h_text]).strip()
-                        clean_text = re.sub(r"^(Doplň|Úkol|Otázka).*?:", "", raw_text, flags=re.IGNORECASE).strip()
-                        h_id = format_uuid(h["id"])
-                        with nav_cols[i % cols_count]:
-                            st.markdown(f"<a href='#{h_id}' class='nav-link-box'>{clean_text}</a>", unsafe_allow_html=True)
-                st.divider()
+                with st.container(border=True):
+                    st.markdown("### 📍 Obsah kapitoly")
+                    toc_lines = []
+                    for h in headings:
+                        h_text = h[h["type"]].get("rich_text", [])
+                        if h_text:
+                            raw_text = "".join([t.get("plain_text", "") for t in h_text]).strip()
+                            clean_text = re.sub(r"^(Doplň|Úkol|Otázka).*?:", "", raw_text, flags=re.IGNORECASE).strip()
+                            h_id = format_uuid(h["id"])
+                            # Vytvoření odrážek podle úrovně nadpisu
+                            level = int(h["type"][-1]) - 1 
+                            indent = "  " * level
+                            toc_lines.append(f"{indent}* [{clean_text}](#{h_id})")
+                    
+                    if toc_lines:
+                        st.markdown("\n".join(toc_lines))
             
-            # --- ZBYTEK OBSAHU ---
+            # --- VYKRESLENÍ ZBYTKU STRÁNKY ---
             for block in active_blocks: 
                 render_block(block)
         else:
