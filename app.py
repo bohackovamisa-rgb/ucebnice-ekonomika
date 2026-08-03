@@ -14,7 +14,7 @@ st.set_page_config(
 def check_password():
     app_pwd = st.secrets.get("APP_PASSWORD")
     if not app_pwd:
-        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD! Přidejte ji v nastavení aplikace.")
+        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD! Přidejte ji.")
         return False
         
     if st.session_state.get("password_correct", False):
@@ -76,7 +76,7 @@ if "page" in st.query_params:
 elif "current_page_id" not in st.session_state:
     st.session_state["current_page_id"] = format_uuid(MAIN_PAGE_ID)
 
-# --- INTELIGENTNÍ PŘEKLADAČ S PŘESNÝMI BLOKOVÝMI ODKAZY ---
+# --- 100% BEZPEČNÝ PŘEKLADAČ ODKAZŮ (ZABRAŇUJE ÚTĚKU DO NOTIONU) ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list: return ""
     md_text = ""
@@ -89,18 +89,21 @@ def rich_text_to_markdown(rich_text_list):
         block_id = None
         is_internal = False
         
-        # Rozpoznání interních odkazů s přesností na ID Bloku
+        # Zjištění, zda jde o interní link (a extrakce ID za každou cenu)
         if href and ("notion.so" in href or "notion.site" in href):
             is_internal = True
-            if "#" in href:
-                hash_part = href.split("#")[1]
-                m_block = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12})', hash_part)
-                if m_block: block_id = format_uuid(m_block.group(1))
+            parts = href.split("#")
             
-            url_main = href.split("?")[0].split("#")[0]
-            m_page = re.search(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12})', url_main)
-            if m_page: page_id = format_uuid(m_page.group(1))
+            # Najde jakékoliv platné UUID nebo 32znakový kód kdekoliv v URL
+            id_pattern = r'([a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12}|[a-fA-F0-9]{32})'
             
+            p_ids = re.findall(id_pattern, parts[0])
+            if p_ids: page_id = format_uuid(p_ids[-1].replace("-", ""))
+            
+            if len(parts) > 1:
+                b_ids = re.findall(id_pattern, parts[1])
+                if b_ids: block_id = format_uuid(b_ids[-1].replace("-", ""))
+                
         elif t.get("type") == "mention":
             m_type = t.get("mention", {}).get("type")
             if m_type in ["page", "database"]:
@@ -111,17 +114,25 @@ def rich_text_to_markdown(rich_text_list):
             text = "Odkaz"
 
         if text:
+            # Formátování
             if annotations.get("bold"): text = f"**{text}**"
             if annotations.get("italic"): text = f"*{text}*"
             if annotations.get("strikethrough"): text = f"~~{text}~~"
             if annotations.get("code"): text = f"`{text}`"
             
-            # --- ZAPOJENÍ PŘESNÉ KOTVY ---
-            if block_id and (page_id == st.session_state.get("current_page_id") or not page_id):
-                text = f"[{text}](#{block_id})"
-            elif page_id:
-                text = f"[{text}](?page={page_id})"
+            # --- STRIKTNÍ FIREWALL PRO ODKAZY ---
+            if is_internal:
+                if block_id and (page_id == st.session_state.get("current_page_id") or not page_id):
+                    # Vnitřní skok na kotvu
+                    text = f"[{text}](#{block_id})"
+                elif page_id:
+                    # Přepnutí na jinou kapitolu uvnitř naší aplikace
+                    text = f"[{text}](?page={page_id})"
+                else:
+                    # Záchrana: Pokud je to interní odkaz, ale UUID jsme nenašli, vymaže se link
+                    text = f"**{text}**"
             elif href:
+                # Externí odkazy povoleny (např. na Google, Youtube atd.)
                 text = f"[{text}]({href})"
                 
             md_text += text + " "
@@ -234,8 +245,7 @@ def render_block(block):
     b_type = block.get("type")
     block_id = format_uuid(block["id"])
     
-    # Tato neviditelná div kotva zaručí, že po kliknutí prohlížeč "přistane" přesně na požadovaném místě.
-    # Posun top:-60px zařídí, aby nadpis neskončil schovaný za horní lištou obrazovky.
+    # Neviditelná značka pro přesné skrolování
     anchor_html = f"<div id='{block_id}' style='position:relative; top:-60px;'></div>"
     
     rich_text_data = block.get(b_type, {}).get("rich_text", []) if b_type in block else []
