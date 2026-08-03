@@ -82,7 +82,7 @@ if "page" in st.query_params:
 elif "current_page_id" not in st.session_state:
     st.session_state["current_page_id"] = format_uuid(MAIN_PAGE_ID)
 
-# --- PŘEKLADAČ TEXTU 100% BEZ HTML (Ochrana proti pádu Reactu) ---
+# --- 100% BEZPEČNÝ PŘEKLADAČ TEXTU (S OCHRANNÝM PREFIXEM 'sec-') ---
 def rich_text_to_markdown(rich_text_list):
     if not rich_text_list: return ""
     md_text = ""
@@ -92,36 +92,45 @@ def rich_text_to_markdown(rich_text_list):
         href = t.get("href")
         
         is_internal = False
-        target_id = None
+        page_id = None
+        block_id = None
         
         if href and ("notion.so" in href or "notion.site" in href):
             is_internal = True
-            if "#" in href:
-                matched = re.search(r'([a-fA-F0-9]{32})', href.split("#")[1].replace("-", ""))
-                if matched: target_id = format_uuid(matched.group(1))
-            else:
-                matched = re.search(r'([a-fA-F0-9]{32})', href.replace("-", ""))
-                if matched: target_id = format_uuid(matched.group(1))
+            parts = href.split("#")
+            
+            p_ids = re.findall(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12})', parts[0])
+            if p_ids: page_id = format_uuid(p_ids[-1].replace("-", ""))
+            
+            if len(parts) > 1:
+                b_ids = re.findall(r'([a-fA-F0-9]{32}|[a-fA-F0-9]{8}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{4}-?[a-fA-F0-9]{12})', parts[1])
+                if b_ids: block_id = format_uuid(b_ids[-1].replace("-", ""))
                 
         elif t.get("type") == "mention":
             m_type = t.get("mention", {}).get("type")
             if m_type in ["page", "database"]:
                 is_internal = True
-                target_id = format_uuid(t["mention"][m_type]["id"])
+                page_id = format_uuid(t["mention"][m_type]["id"])
                 
         if is_internal and not text: text = "Odkaz"
 
         if text:
-            # Čistý formát textu bez HTML
+            # Aplikace Markdown formátování
             if annotations.get("bold"): text = f"**{text}**"
             if annotations.get("italic"): text = f"*{text}*"
             if annotations.get("strikethrough"): text = f"~~{text}~~"
             if annotations.get("code"): text = f"`{text}`"
             
-            # Bezpečné nativní Markdown odkazy
-            if is_internal and target_id:
-                text = f"[{text}](#{target_id})"
-            elif href and not is_internal:
+            if is_internal:
+                # Odkaz na blok na stejné stránce (přidán chránič 'sec-')
+                if block_id and (page_id == st.session_state.get("current_page_id") or not page_id):
+                    text = f"[{text}](#sec-{block_id})"
+                # Odkaz na jinou podkapitolu
+                elif page_id:
+                    text = f"[{text}](?page={page_id})"
+                else:
+                    text = f"**{text}**"
+            elif href:
                 text = f"[{text}]({href})"
                 
             md_text += text + " "
@@ -230,27 +239,27 @@ def render_text_or_input(text, block_id):
 def render_block(block):
     b_type = block.get("type")
     block_id = format_uuid(block["id"])
+    anchor_id = f"sec-{block_id}"  # Vynucení platného ID pro HTML
     
     rich_text_data = block.get(b_type, {}).get("rich_text", []) if b_type in block else []
     text = rich_text_to_markdown(rich_text_data)
 
-    # Bezpečné, nativní volání kotev, žádné divy!
     if b_type == "heading_1":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.title(text if text else " ", anchor=block_id)
+        else: st.title(text if text else " ", anchor=anchor_id)
     elif b_type == "heading_2":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.header(text if text else " ", anchor=block_id)
+        else: st.header(text if text else " ", anchor=anchor_id)
     elif b_type == "heading_3":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.subheader(text if text else " ", anchor=block_id)
+        else: st.subheader(text if text else " ", anchor=anchor_id)
     elif b_type == "paragraph":
         if text:
             if is_completion_prompt(text): render_text_or_input(text, block_id)
             else: st.markdown(text)
     elif b_type == "bulleted_list_item":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
-        else: st.markdown(f"* {text}")
+        else: st.markdown(f"• {text}") # Ochrana! Klasická odrážka "*" shazuje React, tečka "•" je naprosto imunní.
         if block.get("has_children"): render_children(block_id)
     elif b_type == "numbered_list_item":
         if is_completion_prompt(text): render_text_or_input(text, block_id)
@@ -328,10 +337,9 @@ with main_col:
                             raw_text = "".join([t.get("plain_text", "") for t in h_text]).strip()
                             clean_text = re.sub(r"^(Doplň|Úkol|Otázka).*?:", "", raw_text, flags=re.IGNORECASE).strip()
                             h_id = format_uuid(h["id"])
-                            # Vytvoření odrážek podle úrovně nadpisu
                             level = int(h["type"][-1]) - 1 
                             indent = "  " * level
-                            toc_lines.append(f"{indent}* [{clean_text}](#{h_id})")
+                            toc_lines.append(f"{indent}* [{clean_text}](#sec-{h_id})")
                     
                     if toc_lines:
                         st.markdown("\n".join(toc_lines))
