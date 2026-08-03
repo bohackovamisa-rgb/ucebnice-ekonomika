@@ -175,6 +175,16 @@ st.markdown("""
         font-weight: 600 !important;
         font-size: 0.88rem !important;
     }
+
+    /* Karta kapitoly na úvodní stránce */
+    .intro-card {
+        padding: 1.25rem;
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -183,7 +193,7 @@ SVG_LIGHTBULB = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24
 
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
-    st.session_state["current_view"] = "Kapitola 1"
+    st.session_state["current_view"] = "Uvod"
 
 # --- BOČNÍ PANEL ---
 with st.sidebar:
@@ -195,6 +205,12 @@ with st.sidebar:
     """, unsafe_allow_html=True)
     
     st.divider()
+
+    # --- ÚVODNÍ STRÁNKA ---
+    is_uvod = st.session_state["current_view"] == "Uvod"
+    if st.button("🏠 Úvodní stránka", key="nav_uvod", use_container_width=True, type="primary" if is_uvod else "secondary"):
+        st.session_state["current_view"] = "Uvod"
+        st.rerun()
 
     # --- KAPITOLY ---
     st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
@@ -236,7 +252,69 @@ with st.sidebar:
 # --- HLAVNÍ OBSAHOVÁ PLOCHA ---
 view = st.session_state["current_view"]
 
-if view == "Kapitola 1":
+if view == "Uvod":
+    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>INTERAKTIVNÍ UČEBNICE</span>", unsafe_allow_html=True)
+    st.title("Vítejte v učebnici Ekonomiky")
+    st.markdown("<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 2rem;'>Moderní průvodce světovými financemi, podnikáním a tržními principy.</p>", unsafe_allow_html=True)
+
+    with st.container(border=True):
+        st.header("🎯 O tomto kurzu")
+        st.write("""
+        Tato interaktivní učebnice propojuje teoretické znalosti ekonomiky s praktickým projektovým vyučováním. 
+        Místo pouhé četby si vyzkoušíte sestavit vlastní podnikatelský záměr, projít si Lean Canvas šablonu 
+        a pochopit fungování trhu v reálném světe.
+        """)
+
+    st.subheader("📚 Kapitoly kurzu")
+    
+    # Dlaždice kapitol (2 sloupce)
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        with st.container(border=True):
+            st.markdown("### 1. Podnikavost a startupy")
+            st.write("Od nápadu k ověřenému projektu, výběru právní formy a etickému podnikání.")
+            if st.button("Otevřít Kapitolu 1", key="intro_k1", use_container_width=True):
+                st.session_state["current_view"] = "Kapitola 1"
+                st.rerun()
+                
+        with st.container(border=True):
+            st.markdown("### 3. Výroba a efektivita")
+            st.write("Nákladové struktury, optimalizace procesů a produktivita.")
+            if st.button("Otevřít Kapitolu 3", key="intro_k3", use_container_width=True):
+                st.session_state["current_view"] = "Kapitola 3"
+                st.rerun()
+
+        with st.container(border=True):
+            st.markdown("### 5. Stát, daně a ekonomika")
+            st.write("Role státu v ekonomice, daňový systém a makroekonomické ukazatele.")
+            if st.button("Otevřít Kapitolu 5", key="intro_k5", use_container_width=True):
+                st.session_state["current_view"] = "Kapitola 5"
+                st.rerun()
+
+    with col2:
+        with st.container(border=True):
+            st.markdown("### 2. Finance a osobní mgmt")
+            st.write("Finanční gramotnost, rozpočet, úspory a řízení osobních financí.")
+            if st.button("Otevřít Kapitolu 2", key="intro_k2", use_container_width=True):
+                st.session_state["current_view"] = "Kapitola 2"
+                st.rerun()
+
+        with st.container(border=True):
+            st.markdown("### 4. Zaměstnanci a trh práce")
+            st.write("Pracovní právo, mzdy, výběrová řízení a rozvoj týmu.")
+            if st.button("Otevřít Kapitolu 4", key="intro_k4", use_container_width=True):
+                st.session_state["current_view"] = "Kapitola 4"
+                st.rerun()
+
+        with st.container(border=True):
+            st.markdown("### 6. Management a marketing")
+            st.write("Strategické řízení, propagace, zákaznický výzkum a značka.")
+            if st.button("Otevřít Kapitolu 6", key="intro_k6", use_container_width=True):
+                st.session_state["current_view"] = "Kapitola 6"
+                st.rerun()
+
+elif view == "Kapitola 1":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>KAPITOLA 1</span>", unsafe_allow_html=True)
     st.title("Podnikavost a startupová kultura")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Od nápadu k ověřenému projektu, výběru právní formy a etickému podnikání.</p>", unsafe_allow_html=True)
@@ -298,12 +376,10 @@ elif view == "Ucitel":
         with st.container(border=True):
             st.header("Sledování práce žáků")
             
-            # Výběr třídy a žáka
             col_treda, col_zak = st.columns(2)
             with col_treda:
                 selected_class = st.selectbox("Vyberte třídu:", ["3.A (Obchodní akademie)", "3.B (Ekonomické lyceum)", "4.A (Podnikání)"])
             with col_zak:
-                # Ukázkoví žáci pro vybranou třídu
                 zaci_map = {
                     "3.A (Obchodní akademie)": ["Jan Novák", "Ema Dvořáková", "Petr Svoboda"],
                     "3.B (Ekonomické lyceum)": ["Klára Horáková", "Martin Černý"],
@@ -313,7 +389,6 @@ elif view == "Ucitel":
 
             st.divider()
 
-            # Karta vybraného žáka
             st.subheader(f"👤 Karta žáka: {selected_student} ({selected_class})")
             
             c1, c2, c3 = st.columns(3)
@@ -326,7 +401,6 @@ elif view == "Ucitel":
 
             st.markdown("### 📝 Náhled vyplněného úkolu (Kapitola 1: Lean Canvas)")
             
-            # Ukázkové odpovědi žáka
             with st.expander("Rozkliknout detailní odpovědi žáka", expanded=True):
                 st.markdown("**1. Název projektu:** *Eko-Obaly z mycelia*")
                 st.markdown("**2. Cílová skupina:** *Lokální ekologické e-shopy a malé farmářské prodejny.*")
@@ -335,7 +409,7 @@ elif view == "Ucitel":
                 
                 st.divider()
                 st.markdown("**💬 Hodnocení a zpětná vazba učitele:**")
-                st.text_area("Napsat žákovi poznámku / schválení záměru:", placeholder="Skvělý nápad! Zkuste ještě více specifikovat nákladovou strukturu v tabulce Lean Canvas...", key=f"note_{selected_student}")
+                st.text_area("Napsat žákovi poznámku / schválení záměru:", placeholder="Skvělý nápad! Zkuste ještě více specifikovat nákladovou strukturu...", key=f"note_{selected_student}")
                 if st.button("Odeslat zpětnou vazbu žákovi", type="primary"):
                     st.success(f"Zpětná vazba pro žáka {selected_student} byla uložena!")
 
