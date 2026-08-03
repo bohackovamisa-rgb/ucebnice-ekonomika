@@ -36,7 +36,7 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- MODERNI MINIMALISTICKÉ STYLOVÁNÍ ---
+# --- STYLOVÁNÍ (MONTSERRAT + SAAS MINIMALISMUS) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
@@ -56,7 +56,6 @@ st.markdown("""
         padding-bottom: 5rem !important;
     }
 
-    /* Čisté bílé karty s jemným stínem a okrajem */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
         border-radius: 12px !important;
@@ -66,7 +65,6 @@ st.markdown("""
         margin-bottom: 1.25rem !important;
     }
 
-    /* Typografie */
     h1 {
         font-family: 'Montserrat', sans-serif !important;
         color: #0f172a !important;
@@ -105,7 +103,7 @@ st.markdown("""
         font-weight: 400;
     }
 
-    /* SOFISTIKOVANÝ SYSTÉM BAREVNÝCH BLOKŮ (LEGENDA UČEBNICE) */
+    /* LEGENDA UČEBNICE - BAREVNÉ BLOKY PODLE DESIGN SYSTEMU */
     .box-blue {
         background-color: #f0f9ff;
         border-left: 3px solid #0284c7;
@@ -173,7 +171,6 @@ st.markdown("""
         vertical-align: -3px;
     }
 
-    /* Formulářové prvky a tlačítka */
     .stTextInput input, .stTextArea textarea, .stSelectbox select {
         font-family: 'Montserrat', sans-serif !important;
         border-radius: 8px !important;
@@ -203,7 +200,6 @@ st.markdown("""
         background-color: #f5f3ff !important;
     }
 
-    /* Boční panel */
     section[data-testid="stSidebar"] {
         background-color: #ffffff !important;
         border-right: 1px solid #e2e8f0 !important;
@@ -362,42 +358,183 @@ if view == "Uvod":
 elif view == "Kapitola 1":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>KAPITOLA 1</span>", unsafe_allow_html=True)
     st.title("Podnikavost a startupová kultura")
-    st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Od nápadu k ověřenému projektu, výběru právní formy a etickému podnikání.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Od nápadu k odpovědnému podnikání, ověření projektu a výběru právní formy.</p>", unsafe_allow_html=True)
 
-    tab_text, tab_tasks, tab_canvas = st.tabs(["Výukový text", "Praktický projekt", "Lean Canvas & Reflexe"])
+    # 3 Záložky pro strukturovanou práci
+    tab_vyklad, tab_ukoly, tab_slovnicek = st.tabs(["Výukový text a praxe", "Pracovní úkoly a AI mentoring", "Slovníček pojmů kapitoly"])
 
-    with tab_text:
+    with tab_vyklad:
+        # Úvodní blok
         with st.container(border=True):
-            st.header("1. Podnikatel a základní pojmy")
+            st.markdown("### 🎯 Úvod kapitoly")
             st.write("""
-            Podnikatelem je podle občanského zákoníku ten, kdo samostatně vykonává na vlastní účet a odpovědnost 
-            výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku.
+            Máš předpoklady stát se zakladatelem startupu? V této kapitole zjistíš, jak převést nápad na ověřitelný projekt, 
+            jak zvolit právní formu a jak přemýšlet o rizicích, etice i odpovědnosti.
             """)
             st.markdown("""
-            <div class='box-blue'>
-                <strong>Výkladové pravidlo:</strong> Podnikatel nese plnou odpovědnost za své ekonomické rozhodování a hospodaření.
+            <div class='box-green'>
+                <strong>Rychlá orientaci:</strong><br>
+                • <strong>Téma:</strong> Podnikavost, startup, právní formy, Lean Canvas<br>
+                • <strong>Výstup:</strong> Návrh mini projektu<br>
+                • <strong>Způsob práce:</strong> Rozhodování, ověřování, počítání, reflexe
             </div>
             """, unsafe_allow_html=True)
 
-    with tab_tasks:
+        # Kontrolní seznam kapitoly
         with st.container(border=True):
-            st.header("Váš podnikatelský záměr")
+            st.markdown("### 📋 Kontrolní seznam kapitoly")
+            st.write("Odškrtávej si splněné části. Seznam slouží jako jednoduchá orientace v tom, co už máš hotovo:")
+            c_k1 = st.checkbox("Prošel/prošla jsem klíčová vysvětlení v části Podnikatel a základní pojmy.", key="chk_1")
+            c_k2 = st.checkbox("Splnil/a jsem úkoly k rozlišení podnikání, zaměstnání a přivýdělku.", key="chk_2")
+            c_k3 = st.checkbox("Použil/a jsem alespoň jeden AI mentoring prompt.", key="chk_3")
+            c_k4 = st.checkbox("Prošel/prošla jsem OSVČ, živnosti a základní povinnosti.", key="chk_4")
+            c_k5 = st.checkbox("Vybral/a jsem vhodnou právní formu pro modelový projekt.", key="chk_5")
+            c_k6 = st.checkbox("Vyplnil/a jsem základ podnikatelského záměru a Lean Canvas.", key="chk_6")
+
+        # 1. Podnikatel
+        with st.container(border=True):
+            st.markdown("## 1. Podnikatel a základní definice")
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>Základní definice podnikání:</strong><br>
+                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>Přesná zákonná opora:</strong> Podnikatele definuje zákon č. 89/2012 Sb., občanský zákoník, zejména § 420 odst. 1:<br>
+                <i>„Kdo samostatně vykonává na vlastní účet a odpovědnost výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku, je považován se zřetelem k této činnosti za podnikatele.“</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("### 1.1 Podnikatel v realitě současné generace")
+            st.write("""
+            Podnikání dnes nemusí začínat kanceláří, provozovnou ani výrobní halou. Může začít mobilem, profilem na sociální síti, prodejem digitální šablony, správou obsahu pro lokální firmu, výrobou merch produktů, doučováním, e-shopem, aplikací, kurzem nebo grafickou službou.
+            """)
+            st.write("""
+            **Je důležité rozlišovat:**
+            * **Koníček:** Dělám něco pro radost, bez soustavného záměru vydělávat.
+            * **Jednorázový přivýdělek:** Například jednorázově prodám staré věci.
+            * **Brigáda / zaměstnání:** Pracuji podle pokynů zaměstnavatele.
+            * **Podnikání:** Samostatně nabízím produkt nebo službu, nesu riziko a chci dlouhodobě vydělávat.
+            """)
+
+            st.markdown("### 1.2 Čtyři znaky podnikání")
+            st.markdown("""
+            | Znak podnikání | Co znamená | Příklad ze současnosti |
+            | :--- | :--- | :--- |
+            | **Soustavnost** | Činnost se opakuje nebo je plánovaná dlouhodobě. | Každý měsíc prodávám vlastní digitální plánovače. |
+            | **Samostatnost** | Sám/sama rozhoduji o ceně, zákaznících a způsobu práce. | Nabízím správu sociálních sítí lokálním podnikům. |
+            | **Vlastní jméno** | Vystupuji vůči zákazníkům a úřadům jako podnikatel/firma. | Mám značku, profil, faktury, obchodní podmínky nebo IČO. |
+            | **Vlastní odpovědnost** | Nesu riziko ztráty, reklamací, dluhů a špatných rozhodnutí. | Nakoupím materiál na merch, ale nikdo si ho nekoupí. |
+            """)
+
+        # 3. OSVČ a živnosti
+        with st.container(border=True):
+            st.markdown("## 3. OSVČ a živnosti")
+            st.write("""
+            **OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese za své podnikání plnou odpovědnost.
+            """)
+            st.markdown("""
+            <div class='box-red'>
+                <strong>Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem. Jednoduchý start tedy neznamená nulové riziko.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("### Druhy živností")
+            st.markdown("""
+            1. **Volná živnost:** Není potřeba speciální vzdělání ani praxe. Stačí splnit všeobecné podmínky (např. e-shop, marketing).
+            2. **Řemeslná živnost:** Vyžaduje odbornou způsobilost, například výuční list nebo praxi (např. truhlářství, kadeřnictví).
+            3. **Vázaná živnost:** Vyžaduje specifické vzdělání, praxi nebo zkoušku (např. účetní poradenství, autoškola).
+            4. **Koncesovaná živnost:** Vyžaduje státní povolení — koncesi (např. taxislužba, prodej zbraní).
+            """)
+
+            st.markdown("### Daně a odvody OSVČ (Modelový výpočet 2026)")
+            st.write("Příklad OSVČ s ročním příjmem 300 000 Kč a reálnými výdaji 120 000 Kč (Zisk: 180 000 Kč):")
+            
+            c_tax1, c_tax2 = st.columns(2)
+            with c_tax1:
+                st.markdown("""
+                <div class='box-blue'>
+                    <strong>Standardní režim (bez paušálu):</strong><br>
+                    • Daň z příjmů (po slevě): 0 Kč<br>
+                    • Min. sociální pojištění: ~5 005 Kč / měs.<br>
+                    • Min. zdravotní pojištění: ~3 306 Kč / měs.<br>
+                    • <strong>Celkem: ~8 311 Kč / měsíčně</strong>
+                </div>
+                """, unsafe_allow_html=True)
+            with c_tax2:
+                st.markdown("""
+                <div class='box-purple'>
+                    <strong>Paušální daň (1. pásmo):</strong><br>
+                    • Zahrnuje daň, sociální i zdravotní v jedné platbě.<br>
+                    • Jednoduchá administrativa bez daňového přiznání.<br>
+                    • <strong>Celkem: ~9 162 Kč / měsíčně</strong>
+                </div>
+                """, unsafe_allow_html=True)
+
+        # Kalkulačka hodinové sazby OSVČ
+        with st.container(border=True):
+            st.markdown("### 🧮 Kalkulačka hodinové sazby OSVČ")
+            st.write("Spočítej si, kolik musíš účtovat za hodinu, aby ti po zaplacení odvodů a nákladů zbylo dost peněz.")
+            
+            col_calc1, col_calc2 = st.columns(2)
+            with col_calc1:
+                target_pay = st.number_input("Požadovaný čistý příjem měsíčně (Kč):", value=30000, step=1000)
+                fixed_costs = st.number_input("Měsíční náklady na podnikání (Kč):", value=5000, step=500)
+            with col_calc2:
+                billable_hours = st.number_input("Počet odpracovaných/fakturovatelných hodin měsíčně:", value=100, step=10)
+                tax_estimate = 8311  # Orientační odvody
+
+            total_needed = target_pay + fixed_costs + tax_estimate
+            hourly_rate = total_needed / billable_hours if billable_hours > 0 else 0
+
+            st.markdown(f"""
+            <div class='box-green'>
+                <strong>Výsledek kalkulace:</strong><br>
+                Pro čistý příjem {target_pay:,} Kč musíte měsíčně vyfakturovat celkem <strong>{total_needed:,} Kč</strong>.<br>
+                Minimální hodinová sazba činí: <span style='font-size: 1.2rem; font-weight: 700;'>{hourly_rate:.0f} Kč / hod.</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_ukoly:
+        with st.container(border=True):
+            st.markdown("## 🟡 Pracovní úkoly & Cvičení")
             st.markdown("""
             <div class='box-yellow'>
-                <strong>Pracovní úkol:</strong> Formulujte úvodní představu o vašem projektu.
+                <strong>Úkol 1: Je to podnikání?</strong><br>
+                Rozhodni u následujících situací, zda jde o koníček, přivýdělek, zaměstnání nebo podnikání.
             </div>
             """, unsafe_allow_html=True)
-            st.text_input("1. Název projektu / nápadu:", placeholder="Napište název...", key="k1_nazev")
+            
+            q1 = st.selectbox("1. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram:", ["Vyberte odpoved...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="q1")
+            q2 = st.selectbox("2. Student pracuje v kavárně podle rozpisu směn:", ["Vyberte odpoved...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="q2")
+            q3 = st.selectbox("3. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu:", ["Vyberte odpoved...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="q3")
 
-    with tab_canvas:
+            if st.button("Uložit odpovědi úkolu 1"):
+                st.success("Odpovědi byly uloženy do vašeho profilu!")
+
         with st.container(border=True):
-            st.header("Lean Canvas & Reflexe")
+            st.markdown("## 🟣 AI Mentoring Prompty")
+            st.write("Zkopírujte následující prompty a vložte je do svého AI asistenta pro analýzu vašich nápadů:")
+            
+            st.code("Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.", language="markdown")
+            st.code("Podívej se na můj nápad a navrhni, jaký typ živnosti by mohl připadat v úvahu a co si mám ověřit u Finanční správy a Živnostenského úřadu.", language="markdown")
+
+    with tab_slovnicek:
+        with st.container(border=True):
+            st.markdown("## 📖 Slovníček pojmů Kapitoly 1")
+            
             st.markdown("""
-            <div class='box-purple'>
-                <strong>AI Mentoring Prompt:</strong> Zadejte svůj nápad do AI a požádejte o oponenturu cílové skupiny.
-            </div>
+            • **Podnikatel:** Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem zisku.<br>
+            • **Fyzická osoba:** Člověk — jednotlivec (např. v podnikání vystupuje jako OSVČ).<br>
+            • **Právnická osoba:** Organizovaný subjekt s právní osobností (např. s.r.o., a.s., spolek).<br>
+            • **OSVČ:** Osoba samostatně výdělečně činná podnikající vlastním jménem a na vlastní odpovědnost.<br>
+            • **Živnostenské oprávnění:** Právo provozovat živnost získané ohlášením nebo koncesí.<br>
+            • **Švarcsystém:** Nelegální praxe, kdy člověk vystupuje jako OSVČ, ale fakticky koná práci jako zaměstnanec.<br>
+            • **CSR:** Společenská odpovědnost firem (přístup zohledňující společnost, etiku a životní prostředí).
             """, unsafe_allow_html=True)
-            st.text_area("Unikátní hodnota projektu:", placeholder="V čem jste jiní?", height=100, key="lc_val")
 
 elif view == "Pokroky":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>STUDENTSKÁ ZÓNÁ</span>", unsafe_allow_html=True)
@@ -410,10 +547,10 @@ elif view == "Pokroky":
             st.metric(label="Dokončené kapitoly", value="1 / 6", delta="16 %")
     with c2:
         with st.container(border=True):
-            st.metric(label="Vyplněné úkoly", value="4", delta="+2 dnes")
+            st.metric(label="Vyplněné úkoly", value="3 / 3", delta="Kapitola 1")
     with c3:
         with st.container(border=True):
-            st.metric(label="Aktivní projekt", value="1", delta="Lean Canvas")
+            st.metric(label="Aktivní kalkulace", value="OSVČ Sazba", delta="Dokončeno")
 
 elif view == "Ucitel":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>METODIK & DASHBOARD</span>", unsafe_allow_html=True)
@@ -439,13 +576,15 @@ elif view == "Ucitel":
             st.divider()
 
             st.subheader(f"Karta žáka: {selected_student} ({selected_class})")
-            st.markdown("**1. Název projektu:** *Eko-Obaly z mycelia*")
+            st.markdown("**Vyplněné úkoly Kapitoly 1:**")
+            st.markdown("• Úkol 1 (Rozlišení podnikání): *Všechny odpovedi správně*")
+            st.markdown("• Kalkulačka hodinové sazby: *Nastaveno 450 Kč/hod*")
             st.text_area("Napsat žákovi poznámku / schválení záměru:", placeholder="Zpětná vazba...", key=f"note_{selected_student}")
 
     with tab_metodika:
         with st.container(border=True):
-            st.header("Projektové aktivity do hodin")
-            st.write("Metodické pokyny pro výuku Kapitoly 1.")
+            st.header("Projektové aktivity do hodin (Kapitola 1)")
+            st.write("Aktivita: Rozlišení OSVČ vs. Švarcsystém a simulace odvodů.")
 
 else:
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>KAPITOLA</span>", unsafe_allow_html=True)
