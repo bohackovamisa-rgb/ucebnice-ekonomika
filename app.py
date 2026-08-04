@@ -36,13 +36,13 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (MONTSERRAT + SAAS MINIMALISMUS) ---
+# --- STYLOVÁNÍ (SAAS MINIMALISMUS / LUCIDE UI) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
     html, body, [class*="css"] {
-        font-family: 'Montserrat', sans-serif !important;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
     .stApp {
@@ -51,11 +51,12 @@ st.markdown("""
     }
 
     .main .block-container {
-        max-width: 880px !important;
-        padding-top: 2.5rem !important;
+        max-width: 900px !important;
+        padding-top: 2rem !important;
         padding-bottom: 5rem !important;
     }
 
+    /* KARTY A KONTEJNERY */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
         border-radius: 12px !important;
@@ -63,15 +64,22 @@ st.markdown("""
         box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03) !important;
         padding: 1.75rem !important;
         margin-bottom: 1.25rem !important;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
+    div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+        border-color: #cbd5e1 !important;
+        box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05) !important;
+    }
+
+    /* NADPISY */
     h1 {
         font-family: 'Montserrat', sans-serif !important;
         color: #0f172a !important;
         font-weight: 800 !important;
         font-size: 2.1rem !important;
-        letter-spacing: -0.02em !important;
-        line-height: 1.25 !important;
+        letter-spacing: -0.025em !important;
+        line-height: 1.2 !important;
         margin-bottom: 0.5rem !important;
     }
 
@@ -80,11 +88,14 @@ st.markdown("""
         color: #1e293b !important;
         font-weight: 700 !important;
         font-size: 1.25rem !important;
-        letter-spacing: -0.01em !important;
-        margin-top: 1.5rem !important;
+        letter-spacing: -0.015em !important;
+        margin-top: 1.25rem !important;
         margin-bottom: 0.75rem !important;
         border-bottom: 1px solid #f1f5f9;
-        padding-bottom: 0.4rem;
+        padding-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     h3 {
@@ -93,17 +104,20 @@ st.markdown("""
         font-weight: 600 !important;
         font-size: 1.05rem !important;
         margin-top: 1.25rem !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     p, li {
         font-family: 'Montserrat', sans-serif !important;
         color: #334155;
-        font-size: 0.95rem;
+        font-size: 0.94rem;
         line-height: 1.7;
         font-weight: 400;
     }
 
-    /* LEGENDA UČEBNICE */
+    /* BAREVNÉ SYSTÉMOVÉ BOXY S VEKTOROVOU GRAFIKOU */
     .box-blue {
         background-color: #f0f9ff;
         border-left: 3px solid #0284c7;
@@ -165,11 +179,12 @@ st.markdown("""
         font-size: 0.93rem;
     }
 
-    .icon-inline {
+    .icon-svg {
         display: inline-flex;
         align-items: center;
-        margin-right: 8px;
+        justify-content: center;
         vertical-align: -3px;
+        margin-right: 6px;
     }
 
     .stTextInput input, .stTextArea textarea, .stSelectbox select {
@@ -216,26 +231,34 @@ st.markdown("""
         margin-bottom: 0.4rem;
     }
 
-    button[data-baseweb="tab"] {
-        font-family: 'Montserrat', sans-serif !important;
-        font-weight: 600 !important;
-        font-size: 0.88rem !important;
-    }
-
     .sub-section-header {
         color: #4f46e5;
         font-weight: 700;
         font-size: 0.85rem;
         letter-spacing: 0.05em;
         text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- MODERNÍ LINETYPE SVG IKONY ---
-SVG_COMPASS = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>'
-SVG_TARGET = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>'
-SVG_BOOK = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
+# --- MODERNÍ LUCIDE VEKTOROVÉ IKONY (SVG STRINGY) ---
+def get_icon(name, color="#4f46e5", size=18):
+    icons = {
+        "compass": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+        "target": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+        "book": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+        "bot": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>',
+        "calc": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>',
+        "alert": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+        "check": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+        "lightbulb": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+        "puzzle": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.439 7.85c-.049-.322.059-.648.289-.878l1.568-1.568a2.41 2.41 0 0 0 0-3.408 2.41 2.41 0 0 0-3.408 0l-1.568 1.568c-.23.23-.556.338-.878.289a2.41 2.41 0 0 0-2.732 2.378V7a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-.58a2.41 2.41 0 0 0-2.378-2.732c-.322-.049-.648.059-.878.289L2.176 5.545a2.41 2.41 0 0 0 0 3.408 2.41 2.41 0 0 0 3.408 0l1.568-1.568c.23-.23.556-.338.878-.289A2.41 2.41 0 0 0 10.41 9.47V10a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2v.53a2.41 2.41 0 0 0 2.378 2.732c.322.049.648-.059.878-.289l1.568-1.568a2.41 2.41 0 0 0 0-3.408 2.41 2.41 0 0 0-3.408 0l-1.568 1.568c-.23.23-.556.338-.878.289a2.41 2.41 0 0 0-2.732-2.378V17a2 2 0 0 1-2-2h-1a2 2 0 0 1-2-2v-.53a2.41 2.41 0 0 0-2.378-2.732"/></svg>',
+        "scale": f'<svg class="icon-svg" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8a3 3 0 0 1-6 0z"/><path d="m2 16 3-8 3 8a3 3 0 0 1-6 0z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>'
+    }
+    return icons.get(name, "")
 
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
@@ -304,7 +327,7 @@ if view == "Uvod":
     st.markdown("<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 2rem;'>Moderní učebnice ekonomiky pro střední školy: Podnikavost, finance & ekonomika v souvislostech.</p>", unsafe_allow_html=True)
 
     with st.container(border=True):
-        st.markdown(f"<h2>{SVG_COMPASS} Začni tady</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2>{get_icon('compass', '#4f46e5', 22)} Začni tady</h2>", unsafe_allow_html=True)
         st.write("""
         Tahle stránka je hlavní rozcestník učebnice. Najdeš tu obsah, pravidla práce, výstupy kapitol, 
         společné nástroje a odkaz do učitelského řídícího centra. Propojuje podnikavost, osobní finance, výrobu, 
@@ -313,13 +336,13 @@ if view == "Uvod":
         
         st.markdown(f"""
         <div class='box-green'>
-            <strong>{SVG_TARGET} Cíl učebnice:</strong><br>
+            <strong>{get_icon('target', '#166534', 18)} Cíl učebnice:</strong><br>
             Žák má umět propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho praktického rozhodování.
         </div>
         """, unsafe_allow_html=True)
 
     with st.container(border=True):
-        st.markdown(f"<h2>{SVG_BOOK} Jak s učebnicí pracovat</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2>{get_icon('book', '#4f46e5', 22)} Jak s učebnicí pracovat</h2>", unsafe_allow_html=True)
         st.markdown("""
         1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
         2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
@@ -397,9 +420,9 @@ elif view == "Kapitola 1":
             * **Podnikáním** — samostatně nabízím produkt nebo službu, nesu riziko a chci dlouhodobě vydělávat.
             """)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-green'>
-                <strong>Příklad pro dnešní studenty:</strong> Když jednou prodáš staré tenisky, nejde obvykle o podnikání. Když ale pravidelně nakupuješ, upravuješ, propaguješ a prodáváš zboží se záměrem vydělat, už se blížíš podnikání a musíš řešit pravidla.
+                <strong>{get_icon('check', '#166534', 18)} Příklad pro dnešní studenty:</strong> Když jednou prodáš staré tenisky, nejde obvykle o podnikání. Když ale pravidelně nakupuješ, upravuješ, propaguješ a prodáváš zboží se záměrem vydělat, už se blížíš podnikání a musíš řešit pravidla.
             </div>
             """, unsafe_allow_html=True)
 
@@ -432,39 +455,39 @@ elif view == "Kapitola 1":
 
         # AKTIVITY A ÚKOLY K PODKAPITOLE 1
         with st.container(border=True):
-            st.markdown("### 🟡 Tvůj úkol: Je to podnikání?")
-            st.write("U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdělek, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání.")
+            st.markdown(f"### {get_icon('lightbulb', '#eab308', 20)} Tvůj úkol: Je to podnikání?")
+            st.write("U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdele, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání.")
 
-            ex1 = st.selectbox("1. Student jednou prodá starý mobil:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex1")
-            ex2 = st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex2")
-            ex3 = st.selectbox("3. Student pracuje v kavárně podle rozpisu směn:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex3")
-            ex4 = st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex4")
-            ex5 = st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex5")
+            ex1 = st.selectbox("1. Student jednou prodá starý mobil:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex1")
+            ex2 = st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex2")
+            ex3 = st.selectbox("3. Student pracuje v kavárně podle rozpisu směn:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex3")
+            ex4 = st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex4")
+            ex5 = st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex5")
 
             if st.button("Uložit vyhodnocení úkolu"):
                 st.success("Odpovědi byly uloženy do vašeho profilu pokroků!")
 
         with st.container(border=True):
-            st.markdown("### 📝 Interaktivní výzva: vlastní nápad")
+            st.markdown(f"### {get_icon('puzzle', '#4f46e5', 20)} Interaktivní výzva: vlastní nápad")
             user_idea = st.text_area("Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost:", placeholder="Můj nápad je...", height=100, key="p1_user_idea")
             if st.button("Uložit můj nápad"):
                 st.success("Nápad uložen!")
 
         # AI MENTORING
         with st.container(border=True):
-            st.markdown("### 🟣 AI mentoring k podnikání")
+            st.markdown(f"### {get_icon('bot', '#a855f7', 22)} AI mentoring k podnikání")
             st.write("Použij tyto prompty pro analýzu svého nápadu s pomocí AI asistenta:")
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-purple'>
-                <strong>Prompt 1 — Analýza 4 znaků podnikání:</strong><br>
+                <strong>{get_icon('bot', '#6b21a8', 16)} Prompt 1 — Analýza 4 znaků podnikání:</strong><br>
                 Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-purple'>
-                <strong>Prompt 2 — Rozlišení aktivity:</strong><br>
+                <strong>{get_icon('bot', '#6b21a8', 16)} Prompt 2 — Rozlišení aktivity:</strong><br>
                 Pomoz mi rozlišit, jestli je můj nápad spíš jednorázová aktivita, nebo skutečné podnikání.
             </div>
             """, unsafe_allow_html=True)
@@ -492,9 +515,9 @@ elif view == "Kapitola 1":
         st.markdown("## 2. Slovníček základních pojmů")
         
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-blue'>
-                <strong>Proč jsou definice důležité:</strong> V podnikání nestačí používat pojmy „přibližně“. Výrazy jako podnikatel, fyzická osoba, právnická osoba nebo živnostenské oprávnění mají oporu v právních předpisech.
+                <strong>{get_icon('scale', '#0369a1', 18)} Proč jsou definice důležité:</strong> V podnikání nestačí používat pojmy „přibližně“. Výrazy jako podnikatel, fyzická osoba, právnická osoba nebo živnostenské oprávnění mají oporu v právních předpisech.
             </div>
             """, unsafe_allow_html=True)
 
@@ -503,12 +526,12 @@ elif view == "Kapitola 1":
             st.markdown("""
             | Termín | Co znamená | Proč je důležitý |
             | :--- | :--- | :--- |
-            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem dosažení zisku. | Pomáhá rozlišit, kdy už nejde jen o koníček nebo jednorázový přivýdělek. |
+            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem dosažení zisku. | Pomáhá rozlišit, kdy už nejde jen o koníček nebo jednorázový přivýdelek. |
             | **Podnikání** | Soustavná samostatná činnost vykonávaná na vlastní odpovědnost za účelem dosažení zisku. | Je základním pojmem celé kapitoly a určuje, kdy vznikají právní a finanční povinnosti. |
-            | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
+            | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi človekem podnikatelem a firmou jako právnickou osobou. |
             | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
             | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
-            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určuje, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
             | **Živnostenské oprávnění** | Právo provozovat živnost. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje. |
             | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
             | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
@@ -518,14 +541,14 @@ elif view == "Kapitola 1":
             | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty. | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají. |
             | **Živnostenský rejstřík** | Evidence osob podnikajících na základě živnostenského oprávnění. | Slouží k ověření, zda má podnikatel oprávnění k určité činnosti. |
             | **Ručení** | Odpovědnost za dluhy a závazky podnikatele nebo firmy. | Je klíčové při volbě právní formy, protože OSVČ a některé společnosti nesou vyšší osobní riziko. |
-            | **Švarcsystém** | Nelegální nastavení, kdy člověk formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec. | Pomáhá rozpoznat rizikovou spolupráci a rozdíl mezi podnikáním a zaměstnáním. |
+            | **Švarcsystém** | Nelegální nastavení, kdy človek formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec. | Pomáhá rozpoznat rizikovou spolupráci a rozdíl mezi podnikáním a zaměstnáním. |
             | **CSR** | Společenská odpovědnost firem — přístup, kdy firma sleduje nejen zisk, ale i dopady na lidi, společnost a životní prostředí. | Ukazuje, že podnikání má také etický a společenský rozměr. |
             | **Lean Canvas** | Stručná mapa podnikatelského nápadu, která zachycuje problém, zákazníka, řešení, náklady, příjmy a rizika. | Pomáhá rychle ověřovat nápad dřív, než tým investuje hodně času nebo peněz. |
             | **MVP** | Minimální životaschopný produkt — nejmenší verze řešení, která umožní ověřit důležitý předpoklad. | Učí testovat nápad levně, rychle a bezpečně. |
             """)
 
         with st.container(border=True):
-            st.markdown("### 🧩 Interaktivní výzva: Aplikace pojmů")
+            st.markdown(f"### {get_icon('puzzle', '#4f46e5', 20)} Interaktivní výzva: Aplikace pojmů")
             st.write("Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání.")
             
             c_p1, c_p2 = st.columns(2)
@@ -543,23 +566,23 @@ elif view == "Kapitola 1":
                 st.success("Vaše příklady byly uloženy!")
 
         with st.container(border=True):
-            st.markdown("### 🟣 AI mentoring ke slovníčku")
+            st.markdown(f"### {get_icon('bot', '#a855f7', 22)} AI mentoring ke slovníčku")
             st.write("Zkopíruj tento prompt do svého AI asistenta:")
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-purple'>
-                <strong>Prompt pro AI asistenta:</strong><br>
+                <strong>{get_icon('bot', '#6b21a8', 16)} Prompt pro AI asistenta:</strong><br>
                 Vysvětli mi tyto pojmy na mém podnikatelském nápadu: podnikatel, fyzická osoba, právnická osoba a živnost.
             </div>
             """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-gray'>
                 <strong>Opora v legislativě:</strong> Občanský zákoník, živnostenský zákon, zákon o obchodních korporacích a zákon o veřejných rejstřících.
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-green'>
                 <strong>Etika v podnikání:</strong> Podnikání není jen o legálnosti. Férový podnikatel nezneužívá švarcsystém, platí daně, jedná poctivě se zákazníky a chová se ohleduplně k zaměstnancům, partnerům i životnímu prostředí.
             </div>
@@ -611,13 +634,13 @@ elif view == "Kapitola 1":
             * počítat s daněmi a odvody dřív, než peníze utratí.
             """)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-green'>
-                <strong>Pravidlo pro začátečníka:</strong> To, co přijde na účet, není celé „moje výplata“. Část peněz patří na náklady, daně, sociální a zdravotní pojištění, rezervu a budoucí investice.
+                <strong>{get_icon('lightbulb', '#166534', 18)} Pravidlo pro začátečníka:</strong> To, co přijde na účet, není celé „moje výplata“. Část peněz patří na náklady, daně, sociální a zdravotní pojištění, rezervu a budoucí investice.
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("#### 🧮 Mini simulace OSVČ & Kalkulačka hodinové sazby")
+            st.markdown(f"#### {get_icon('calc', '#2563eb', 20)} Mini simulace OSVČ & Kalkulačka hodinové sazby")
             st.write("Představ si, že OSVČ za měsíc vyfakturuje **28 000 Kč**. Náklady na software, dopravu, materiál a reklamu jsou **6 000 Kč**.")
             
             c_sim1, c_sim2 = st.columns(2)
@@ -629,8 +652,8 @@ elif view == "Kapitola 1":
             with c_sim2:
                 st.text_area("Vysvětli, proč není bezpečné utratit celých 28 000 Kč:", placeholder="Napište důvod...", height=110, key="p3_sim_ans")
 
-            # INTERAKTIVNÍ KALKULAČKA HODINOVÉ SAZBY OSVČ
-            st.markdown("##### 🧮 Výpočet minimální hodinové sazby")
+            # KALKULAČKA SAZBY
+            st.markdown("##### Výpočet minimální potřebné hodinové sazby")
             c_calc1, c_calc2 = st.columns(2)
             with c_calc1:
                 prijem_calc = st.number_input("Požadovaný čistý příjem měsíčně (Kč):", value=35000, step=1000, key="calc_prijem")
@@ -649,22 +672,22 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-yellow'>
-                <strong>Interaktivní výzva:</strong> Napiš, jestli by se tvůj projekt dal na začátku provozovat jako OSVČ, a uveď jedno hlavní riziko.
+                <strong>{get_icon('puzzle', '#854d0e', 18)} Interaktivní výzva:</strong> Napiš, jestli by se tvůj projekt dal na začátku provozovat jako OSVČ, a uveď jedno hlavní riziko.
             </div>
             """, unsafe_allow_html=True)
             st.text_input("Váš projekt jako OSVČ + hlavní riziko:", placeholder="Napište odpověď...", key="p3_user_risk")
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-purple'>
-                <strong>AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
+                <strong>{get_icon('bot', '#6b21a8', 16)} AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
                 <i>„Podívej se na můj nápad a navrhni, jaký typ živnosti by mohl připadat v úvahu a co si mám ověřit.“</i>
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("""
-            <div class='box-red'><strong>Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem. Jednoduchý start tedy neznamená nulové riziko.</div>
+            st.markdown(f"""
+            <div class='box-red'><strong>{get_icon('alert', '#991b1b', 18)} Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem. Jednoduchý start tedy neznamená nulové riziko.</div>
             """, unsafe_allow_html=True)
 
         with st.container(border=True):
@@ -689,7 +712,7 @@ elif view == "Kapitola 1":
             | **Koncesovaná živnost** | Vyžaduje státní povolení — koncesi. Jde o více regulované nebo rizikovější činnosti. | Taxislužba, provozování střelnice, prodej zbraní. |
             """)
 
-            st.markdown("#### 🧩 Zařazení vlastního nápadu k živnosti")
+            st.markdown(f"#### {get_icon('puzzle', '#4f46e5', 18)} Zařazení vlastního nápadu k živnosti")
             c_z1, c_z2 = st.columns(2)
             with c_z1:
                 st.text_input("Můj nápad:", placeholder="Název nápadu...", key="p3_z_idea")
@@ -707,20 +730,20 @@ elif view == "Kapitola 1":
             4. Ohlásit živnost nebo požádat o koncesi (osobně na ŽÚ nebo elektronicky).
             5. Ověřit daňové, zdravotní a sociální povinnosti.
             """)
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-green'>
-                <strong>Digitální praxe:</strong> Portál živnostenského podnikání (rzp.cz) a veřejné rejstříky slouží k ověřování údajů, podávání žádostí a kontrole obchodních partnerů.
+                <strong>{get_icon('check', '#166534', 18)} Digitální praxe:</strong> Portál živnostenského podnikání (rzp.cz) a veřejné rejstříky slouží k ověřování údajů, podávání žádostí a kontrole obchodních partnerů.
             </div>
             """, unsafe_allow_html=True)
-            st.text_area("🧩 Interaktivní výzva: Sepiš první tři kroky, které bys udělal/a před ohlášením živnosti u svého projektu:", placeholder="1. krok...\n2. krok...\n3. krok...", height=90, key="p3_steps_user")
+            st.text_area("Interaktivní výzva: Sepiš první tři kroky, které bys udělal/a před ohlášením živnosti u svého projektu:", placeholder="1. krok...\n2. krok...\n3. krok...", height=90, key="p3_steps_user")
 
         with st.container(border=True):
             st.markdown("### 3.6 Povinnosti živnostníka: legislativní minimum")
             st.write("Živnostník neřeší jen zákazníky a cenu. Musí také splnit základní registrační, daňové a pojistné povinnosti.")
             
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-blue'>
-                <strong>Legislativní minimum pro OSVČ:</strong> Přesné částky a termíny se mohou měnit, proto je potřeba ověřovat aktuální informace na stránkách Finanční správy, ČSSZ, zdravotní pojišťovny a Portálu živnostenského podnikání.
+                <strong>{get_icon('scale', '#0369a1', 18)} Legislativní minimum pro OSVČ:</strong> Přesné částky a termíny se mohou měnit, proto je potřeba ověřovat aktuální informace na stránkách Finanční správy, ČSSZ, zdravotní pojišťovny a Portálu živnostenského podnikání.
             </div>
             """, unsafe_allow_html=True)
 
@@ -735,17 +758,17 @@ elif view == "Kapitola 1":
             * **Hlásit důležité změny:** změnu adresy, přerušení/ukončení činnosti, změnu zdravotní pojišťovny.
             """)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-yellow'>
-                <strong>Praktické pravidlo:</strong> Živnostník by si měl od každé přijaté platby odkládat část peněz na daň, sociální a zdravotní pojištění. To, co přijde na účet, ještě není čistý příjem.
+                <strong>{get_icon('lightbulb', '#854d0e', 18)} Praktické pravidlo:</strong> Živnostník by si měl od každé přijaté platby odkládat část peněz na daň, sociální a zdravotní pojištění. To, co přijde na účet, ještě není čistý příjem.
             </div>
             """, unsafe_allow_html=True)
 
         with st.container(border=True):
             st.markdown("### 3.7 Daně a odvody OSVČ úplně jednoduše")
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-red'>
-                <strong>Důležité zjednodušení:</strong> Přesné částky se každý rok mění. V první kapitole stačí pochopit princip: OSVČ platí daň z příjmů a odvody na sociální a zdravotní pojištění.
+                <strong>{get_icon('alert', '#991b1b', 18)} Důležité zjednodušení:</strong> Přesné částky se každý rok mění. V první kapitole stačí pochopit princip: OSVČ platí daň z příjmů a odvody na sociální a zdravotní pojištění.
             </div>
             """, unsafe_allow_html=True)
 
@@ -757,13 +780,13 @@ elif view == "Kapitola 1":
             * **Zálohy:** pravidelné měsíční platby během roku.
             """)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-blue'>
-                <strong>Jednoduchý příklad:</strong> Jana má za rok příjmy 300 000 Kč a výdaje 120 000 Kč. Její zisk je tedy 180 000 Kč. Z tohoto zisku se teprve počítá daň a pojistné. Neznamená to, že si může celých 180 000 Kč nechat bez dalších povinností.
+                <strong>{get_icon('calc', '#0369a1', 18)} Jednoduchý příklad:</strong> Jana má za rok příjmy 300 000 Kč a výdaje 120 000 Kč. Její zisk je tedy 180 000 Kč. Z tohoto zisku se teprve počítá daň a pojistné. Neznamená to, že si může celých 180 000 Kč nechat bez dalších povinností.
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("#### 🧮 Modelový výpočet odvodů OSVČ (2026)")
+            st.markdown(f"#### {get_icon('calc', '#2563eb', 20)} Modelový výpočet odvodů OSVČ (2026)")
             st.write("Příklad počítá s OSVČ na hlavní činnost (neplátce DPH, příjmy 300 000 Kč, výdaje 120 000 Kč, zisk 180 000 Kč):")
 
             st.markdown("""
@@ -790,9 +813,9 @@ elif view == "Kapitola 1":
             | **Zálohy** | Pravidelné platby během roku. |
             """)
 
-            st.markdown("""
+            st.markdown(f"""
             <div class='box-yellow'>
-                <strong>Praktické pravidlo pro začátečníka:</strong> Když OSVČ dostane zaplaceno, neměla by všechno utratit. Část peněz si musí odložit na daň, sociální a zdravotní pojištění.
+                <strong>{get_icon('lightbulb', '#854d0e', 18)} Praktické pravidlo pro začátečníka:</strong> Když OSVČ dostane zaplaceno, neměla by všechno utratit. Část peněz si musí odložit na daň, sociální a zdravotní pojištění.
             </div>
             """, unsafe_allow_html=True)
 
