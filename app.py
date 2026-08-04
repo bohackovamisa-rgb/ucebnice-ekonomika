@@ -56,7 +56,6 @@ st.markdown("""
         padding-bottom: 5rem !important;
     }
 
-    /* KARTY A KONTEJNERY S HOVER EFEKTEM */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
         border-radius: 14px !important;
@@ -72,7 +71,6 @@ st.markdown("""
         box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02) !important;
     }
 
-    /* TYPOGRAFIE */
     h1 {
         font-family: 'Montserrat', sans-serif !important;
         color: #0f172a !important;
@@ -111,7 +109,6 @@ st.markdown("""
         font-weight: 400;
     }
 
-    /* BADGE A ŠTÍTKY */
     .hero-badge {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
         color: #ffffff;
@@ -125,7 +122,6 @@ st.markdown("""
         margin-bottom: 0.8rem;
     }
 
-    /* ELEGANTNÍ CHYTRÉ BOXY */
     .box-blue {
         background-color: #f0f9ff;
         border-left: 4px solid #0284c7;
@@ -187,7 +183,6 @@ st.markdown("""
         font-size: 0.93rem;
     }
 
-    /* INPUTY A TLAČÍTKA */
     .stTextInput input, .stTextArea textarea, .stSelectbox select {
         font-family: 'Montserrat', sans-serif !important;
         border-radius: 10px !important;
@@ -519,7 +514,7 @@ elif view == "Kapitola 1":
             | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
             | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
             | **Vázaná živnost** | Živnost, která vyžaduje specifické vzdělání, praxi nebo jinou zákonem stanovenou způsobilost. | Pomáhá pochopit, že u některých služeb stát chrání zákazníka požadavkem na odbornost. |
-            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncesi. | Typicky jde o regulované nebo rizikovější činnosti. |
+            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncese. | Typicky jde o regulované nebo rizikovější činnosti. |
             | **Obchodní korporace** | Souhrnný pojem pro obchodní společnosti a družstva, například v.o.s., k.s., s.r.o., a.s. a družstvo. | Pomáhá zařadit základní právní formy podnikání. |
             | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty. | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají. |
             | **Živnostenský rejstřík** | Evidence osob podnikajících na základě živnostenského oprávnění. | Slouží k ověření, zda má podnikatel oprávnění k určité činnosti. |
@@ -578,7 +573,7 @@ elif view == "Kapitola 1":
         
         with st.container(border=True):
             st.write("""
-            **OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jním a nese za své podnikání plnou odpovědnost.
+            **OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy človeka, který podniká vlastním jménem a nese za své podnikání plnou odpovědnost.
             """)
             st.markdown("""
             <div class='box-blue'>
@@ -802,7 +797,7 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-    # PODKAPITOLA 4 - KOMPLETNÍ TEXT PODLE POSLANÝCH PODKLADŮ
+    # PODKAPITOLA 4 - KOMPLETNÍ ROZŠÍŘENÝ TEXT
     elif selected_section == "4. Obchodní korporace":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div>", unsafe_allow_html=True)
         st.markdown("## 4. Obchodní korporace")
@@ -818,7 +813,7 @@ elif view == "Kapitola 1":
             """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.1 Společnost s ručením omezeným (s.r.o.) ako nejčastější kapitálová korporace")
+            st.markdown("### 4.1 Společnost s ručením omezeným (s.r.o.) jako nejčastější kapitálová korporace")
             st.write("""
             Společnost s ručením omezeným (s.r.o.) je nejrozšířenější formou podnikání více osob i rostoucích projektů v ČR. Může ji založit i jediná osoba (zakladatel).
 
@@ -835,7 +830,7 @@ elif view == "Kapitola 1":
             """)
 
         with st.container(border=True):
-            st.markdown("### 4.2 Zákadní rozdělení obchodních korporací podle ZOK")
+            st.markdown("### 4.2 Základní rozdělení obchodních korporací podle ZOK")
             st.write("Zákon č. 90/2012 Sb., o obchodních korporacích (ZOK), rozlišuje dvě základní skupiny obchodních společností a družstva:")
 
             c_k1, c_k2, c_k3 = st.columns(3)
@@ -868,6 +863,15 @@ elif view == "Kapitola 1":
                 """, unsafe_allow_html=True)
 
         with st.container(border=True):
+            st.markdown("### 4.3 Právnická osoba v širším kontextu")
+            st.write("""
+            Podnikatelské korporace nejsou jedinými právnickými osobami v české ekonomice. Právnické osoby dělíme na:
+            * **Korporace založené za účelem zisku:** s.r.o., a.s., v.o.s., k.s.
+            * **Neziskové a komunitní subjekty:** spolky, ústavy, nadace, zájmová sdružení (vhodné pro sportovní oddíly, kulturní akce nebo charitativní projekty).
+            * **Veřejnoprávní subjekty:** obce, kraje, státní příspěvkové organizace, školy.
+            """)
+
+        with st.container(border=True):
             st.markdown("### 📊 Test: OSVČ, nebo s.r.o.? (Rozhodovací strom)")
             st.write("Odpověz na následující otázky a zjisti, která forma lépe odpovídá tvému záměru:")
 
@@ -897,7 +901,7 @@ elif view == "Kapitola 1":
                     """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.3 Jak probíhá založení s.r.o.")
+            st.markdown("### 4.4 Jak probíhá založení s.r.o.")
             st.markdown("""
             1. **Sepsání zakladatelské listiny nebo společenské smlouvy:** formou notářského zápisu u notáře.
             2. **Složení základního kapitálu:** na zvláštní bankovní účet (zákonné minimum je 1 Kč na společníka, v praxi se doporučují vyšší částky).
@@ -914,7 +918,7 @@ elif view == "Kapitola 1":
             st.text_area("Vaše odpověď:", placeholder="1. Název firmy...\n2. Společníci...\n3. Výše vkladu...", height=80, key="p4_sro_contract")
 
         with st.container(border=True):
-            st.markdown("### 4.4 Orgány s.r.o.")
+            st.markdown("### 4.5 Orgány s.r.o. a péče řádného hospodáře")
             st.write("Firma jako právnická osoba nemůže jednat sama. Jedná prostřednictvím svých orgánů:")
 
             st.markdown("""
@@ -925,7 +929,7 @@ elif view == "Kapitola 1":
 
             st.markdown("""
             <div class='box-red'>
-                <strong>Pozor na odpovědnost jednatele:</strong> Jednatel nese právní odpovědnost za výkon funkce s **péčí řádného hospodáře** (s potřebnými znalostmi, loyaltou a pečlivostí). Pokud způsobí firmě škodu porušením svých povinností, ručí za ni celým svým osobním majetkem!
+                <strong>Pozor na odpovědnost jednatele:</strong> Jednatel nese právní odpovědnost za výkon funkce s <strong>péčí řádného hospodáře</strong> (s potřebnými znalostmi, loajalitou a pečlivostí). Pokud způsobí firmě škodu porušením svých povinností, ručí za ni celým svým osobním majetkem!
             </div>
             """, unsafe_allow_html=True)
 
