@@ -36,47 +36,51 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (PREMIUM SAAS MINIMALISMUS) ---
+# --- STYLOVÁNÍ (MODERNÍ DASHBOARD / SAAS CLEAN DESIGN) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
     html, body, [class*="css"] {
-        font-family: 'Montserrat', -apple-system, sans-serif !important;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
+    /* Pozadí celé aplikace */
     .stApp {
-        background-color: #f1f5f9;
+        background-color: #f8fafc;
         color: #0f172a;
     }
 
+    /* Šířka hlavního obsahu */
     .main .block-container {
-        max-width: 900px !important;
+        max-width: 940px !important;
         padding-top: 2rem !important;
         padding-bottom: 5rem !important;
     }
 
+    /* KARTY / BLOKY OBSAHU */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
-        border-radius: 14px !important;
+        border-radius: 12px !important;
         border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02) !important;
-        padding: 1.8rem !important;
-        margin-bottom: 1.5rem !important;
-        transition: all 0.2s ease-in-out !important;
+        box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px 0 rgba(15, 23, 42, 0.02) !important;
+        padding: 1.75rem !important;
+        margin-bottom: 1.25rem !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     div[data-testid="stVerticalBlockBorderWrapper"]:hover {
         border-color: #cbd5e1 !important;
-        box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02) !important;
+        box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05) !important;
     }
 
+    /* TYPOGRAFIE A NADPISY */
     h1 {
         font-family: 'Montserrat', sans-serif !important;
         color: #0f172a !important;
         font-weight: 800 !important;
-        font-size: 2.2rem !important;
-        letter-spacing: -0.03em !important;
+        font-size: 2.1rem !important;
+        letter-spacing: -0.025em !important;
         line-height: 1.25 !important;
         margin-bottom: 0.5rem !important;
     }
@@ -109,9 +113,10 @@ st.markdown("""
         font-weight: 400;
     }
 
+    /* HERO BADGE */
     .hero-badge {
-        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        color: #ffffff;
+        background: #e0e7ff;
+        color: #4338ca;
         font-size: 0.72rem;
         font-weight: 700;
         padding: 0.3rem 0.8rem;
@@ -122,11 +127,12 @@ st.markdown("""
         margin-bottom: 0.8rem;
     }
 
+    /* SYSTÉMOVÉ BAREVNÉ BOXY */
     .box-blue {
         background-color: #f0f9ff;
         border-left: 4px solid #0284c7;
         padding: 1.1rem 1.3rem;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 8px 8px 0;
         margin: 1rem 0;
         color: #0f172a;
         font-size: 0.93rem;
@@ -136,7 +142,7 @@ st.markdown("""
         background-color: #fefce8;
         border-left: 4px solid #eab308;
         padding: 1.1rem 1.3rem;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 8px 8px 0;
         margin: 1rem 0;
         color: #0f172a;
         font-size: 0.93rem;
@@ -146,7 +152,7 @@ st.markdown("""
         background-color: #faf5ff;
         border-left: 4px solid #a855f7;
         padding: 1.1rem 1.3rem;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 8px 8px 0;
         margin: 1rem 0;
         color: #0f172a;
         font-size: 0.93rem;
@@ -157,7 +163,7 @@ st.markdown("""
         background-color: #f0fdf4;
         border-left: 4px solid #22c55e;
         padding: 1.1rem 1.3rem;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 8px 8px 0;
         margin: 1rem 0;
         color: #0f172a;
         font-size: 0.93rem;
@@ -167,7 +173,7 @@ st.markdown("""
         background-color: #fef2f2;
         border-left: 4px solid #ef4444;
         padding: 1.1rem 1.3rem;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 8px 8px 0;
         margin: 1rem 0;
         color: #0f172a;
         font-size: 0.93rem;
@@ -177,15 +183,16 @@ st.markdown("""
         background-color: #f8fafc;
         border-left: 4px solid #64748b;
         padding: 1.1rem 1.3rem;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 8px 8px 0;
         margin: 1rem 0;
         color: #0f172a;
         font-size: 0.93rem;
     }
 
+    /* INPUTY A FORMULÁŘOVÉ PRVKY */
     .stTextInput input, .stTextArea textarea, .stSelectbox select {
         font-family: 'Montserrat', sans-serif !important;
-        border-radius: 10px !important;
+        border-radius: 8px !important;
         border: 1px solid #cbd5e1 !important;
         background-color: #ffffff !important;
         color: #0f172a !important;
@@ -193,26 +200,27 @@ st.markdown("""
         padding: 0.65rem 0.9rem !important;
     }
 
+    /* TLAČÍTKA */
     .stButton > button {
         font-family: 'Montserrat', sans-serif !important;
-        border-radius: 10px !important;
+        border-radius: 8px !important;
         border: 1px solid #cbd5e1 !important;
         background-color: #ffffff !important;
         color: #0f172a !important;
         font-weight: 600 !important;
         font-size: 0.88rem !important;
-        padding: 0.6rem 1.2rem !important;
+        padding: 0.55rem 1.1rem !important;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
-        transition: all 0.2s ease !important;
+        transition: all 0.15s ease !important;
     }
 
     .stButton > button:hover {
-        border-color: #6366f1 !important;
-        color: #6366f1 !important;
+        border-color: #4f46e5 !important;
+        color: #4f46e5 !important;
         background-color: #f5f3ff !important;
-        transform: translateY(-1px);
     }
 
+    /* BOČNÍ PANEL */
     section[data-testid="stSidebar"] {
         background-color: #ffffff !important;
         border-right: 1px solid #e2e8f0 !important;
@@ -366,7 +374,7 @@ elif view == "Kapitola 1":
             st.markdown("""
             <div class='box-blue'>
                 <strong>Hlavní definice:</strong><br>
-                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku.
+                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jním, na vlastní odpovědnost, za účelem dosažení zisku.
             </div>
             """, unsafe_allow_html=True)
             
@@ -907,7 +915,7 @@ elif view == "Kapitola 1":
                 if sro_cnt > osvc_cnt:
                     st.markdown(f"""
                     <div class='box-blue'>
-                        <strong>Výsledek testu ({sro_cnt}× s.r.o. vs {osvc_cnt}× OSVČ):</strong> Pro váš projekt se jeví vhodnější uvažovat o <strong>s.r.o.</strong> z důvodu týmu, vyššího rizika, plálovaného růstu nebo ochrany majetku.
+                        <strong>Výsledek testu ({sro_cnt}× s.r.o. vs {osvc_cnt}× OSVČ):</strong> Pro váš projekt se jeví vhodnější uvažovat o <strong>s.r.o.</strong> z důvodu týmu, vyššího rizika, plánovaného růstu nebo ochrany majetku.
                     </div>
                     """, unsafe_allow_html=True)
                 else:
@@ -1106,7 +1114,7 @@ elif view == "Kapitola 1":
             * vzniká zápisem do obchodního rejstříku,
             * obchodní firma obsahuje označení „akciová společnost“ nebo zkratku „a.s.“,
             * základní kapitál je rozvržen na akcie,
-            * minimální základní kapitál je 2 000 000 Kč nebo odpovídající částku v eurech podle zákonných rules,
+            * minimální základní kapitál je 2 000 000 Kč nebo odpovídající částku v eurech podle zákonných pravidel,
             * akcionáři za dluhy společnosti neručí,
             * akcie vyjadřují podíl akcionáře na společnosti a jsou s nimi spojena práva,
             * společnost má složitější strukturu řízení a vyšší administrativní nároky než s.r.o.
