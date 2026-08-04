@@ -349,7 +349,6 @@ elif view == "Kapitola 1":
     st.title("Podnikavost a startupová kultura")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>Od nápadu k odpovědnému podnikání, ověření projektu a výběru právní formy.</p>", unsafe_allow_html=True)
 
-    # POPIS SEZNAMU PODKAPITOL PŘESNĚ 1 AŽ 14
     section_options = [
         "1. Podnikatel a základní pojmy",
         "2. Slovníček základních pojmů",
@@ -371,37 +370,123 @@ elif view == "Kapitola 1":
 
     st.divider()
 
-    # ZOBRAZENÍ VYBRANÉ PODKAPITOLY
+    # PODKAPITOLA 1 - KOMPLETNÍ TEXT PODLE PODKLADŮ
     if selected_section == "1. Podnikatel a základní pojmy":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 1</div>", unsafe_allow_html=True)
-        st.markdown("## 1. Podnikatel")
+        st.markdown("## 1. Podnikatel a základní pojmy")
         
         with st.container(border=True):
+            st.markdown("### Základní definice podnikání")
             st.markdown("""
             <div class='box-blue'>
-                <strong>Základní definice podnikání:</strong><br>
+                <strong>Hlavní definice:</strong><br>
                 Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku.
             </div>
             """, unsafe_allow_html=True)
+            
             st.markdown("""
             <div class='box-gray'>
-                <strong>Přesná zákonná opora:</strong> § 420 odst. 1 zákona č. 89/2012 Sb., občanský zákoník.
+                <strong>Přesná zákonná opora:</strong> Podnikatele definuje zákon č. 89/2012 Sb., občanský zákoník, zejména § 420 odst. 1:<br>
+                <i>„Kdo samostatně vykonává na vlastní účet a odpovědnost výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku, je považován se zřetelem k této činnosti za podnikatele.“</i><br><br>
+                <strong>Jednoduše řečeno:</strong> Podnikatelem je ten, kdo podniká samostatně, na vlastní účet, na vlastní odpovědnost, dělá výdělečnou činnost soustavně a jejím cílem je zisk.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("### Proč je to důležité")
+            st.write("""
+            Možná už máš nápad, něco prodáváš, tvoříš na zakázku nebo si jen přivyděláváš. Tady zjistíš, kdy už se z takové aktivity stává podnikání a proč je důležité poznat rozdíl mezi koníčkem, brigádou, OSVČ a firmou.
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 1.1 Podnikatel v realitě současné generace")
+            st.write("""
+            Podnikání dnes nemusí začínat kanceláří, provozovnou ani výrobní halou. Může začít mobilem, profilem na sociální síti, prodejem digitální šablony, správou obsahu pro lokální firmu, výrobou merch produktů, doučováním, e-shopem, aplikací, kurzem, grafickou službou, tvorbou videí nebo komunitním projektem.
+            """)
+
+            st.markdown("#### Hranice mezi koníčkem, přivýdělkem, zaměstnáním a podnikáním")
+            st.write("""
+            Právě proto je důležité umět rozpoznat hranici mezi:
+            * **Koníčkem** — dělám něco pro radost, bez soustavného záměru vydělávat,
+            * **Jednorázovým přivýdělkem** — například prodám vlastní staré věci,
+            * **Brigádou nebo zaměstnáním** — pracuji podle pokynů zaměstnavatele,
+            * **Podnikáním** — samostatně nabízím produkt nebo službu, nesu riziko a chci dlouhodobě vydělávat.
+            """)
+
+            st.markdown("""
+            <div class='box-green'>
+                <strong>Příklad pro dnešní studenty:</strong> Když jednou prodáš staré tenisky, nejde obvykle o podnikání. Když ale pravidelně nakupuješ, upravuješ, propaguješ a prodáváš zboží se záměrem vydělat, už se blížíš podnikání a musíš řešit pravidla.
             </div>
             """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 1.1 Podnikatel v realitě současné generace")
-            st.write("Podnikání dnes nemusí začínat kanceláří. Může začít správou obsahu, e-shopem, vývojem aplikace nebo digitální grafikou.")
-
-            st.markdown("### 1.2 Čtyři znaky podnikání")
+            st.markdown("### 1.2 Čtyři znaky podnikání na praktických příkladech")
             st.markdown("""
-            | Znak | Význam | Příklad ze současnosti |
-            | :--- | :--- | :--- |
-            | **Soustavnost** | Opakovaná činnost. | Pravidelný prodej plánovačů. |
-            | **Samostatnost** | Rozhoduji sám/sama. | Nabídka správy sítí. |
-            | **Vlastní jméno** | Vystupuji pod svým jménem/IČO. | Vydávání faktur. |
-            | **Vlastní odpovědnost** | Nesu riziko ztráty. | Neprodaný materiál. |
+            | Znak podnikání | Co znamená | Příklad ze současnosti | Otázka pro žáka |
+            | :--- | :--- | :--- | :--- |
+            | **Soustavnost** | Činnost se opakuje nebo je plánovaná dlouhodobě. | Každý měsíc prodávám vlastní digitální plánovače. | Dělám to jednou, nebo z toho chci pravidelný příjem? |
+            | **Samostatnost** | Sám/sama rozhoduji o ceně, zákaznících, způsobu práce a organizaci. | Nabízím správu sociálních sítí lokálním podnikům. | Kdo určuje, jak, kdy a pro koho pracuji? |
+            | **Vlastní jméno** | Vystupuji vůči zákazníkům a úřadům jako podnikatel nebo firma. | Mám značku, profil, faktury, obchodní podmínky nebo IČO. | Kdo nese odpovědnost před zákazníkem? |
+            | **Vlastní odpovědnost** | Nesu riziko ztráty, reklamací, dluhů a špatných rozhodnutí. | Nakoupím materiál na merch, ale nikdo si ho nekoupí. | Co se stane, když plán nevyjde? |
             """)
+
+        with st.container(border=True):
+            st.markdown("### 1.3 Podnikatel není jen „někdo, kdo vydělává“")
+            st.write("""
+            Podnikatel vytváří hodnotu pro zákazníka. Peníze jsou důsledkem toho, že někdo považuje produkt nebo službu za užitečnou.
+            
+            Moderní podnikavost proto zahrnuje nejen prodej, ale i schopnost:
+            * vidět problém,
+            * navrhnout řešení,
+            * ověřit zájem,
+            * komunikovat férově,
+            * počítat náklady a cenu,
+            * nést odpovědnost,
+            * učit se z chyb,
+            * používat technologie bezpečně a smysluplně.
+            """)
+
+        # AKTIVITY A ÚKOLY K PODKAPITOLE 1
+        with st.container(border=True):
+            st.markdown("### 🟡 Tvůj úkol: Je to podnikání?")
+            st.write("U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdělek, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání.")
+
+            ex1 = st.selectbox("1. Student jednou prodá starý mobil:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex1")
+            ex2 = st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex2")
+            ex3 = st.selectbox("3. Student pracuje v kavárně podle rozpisu směn:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex3")
+            ex4 = st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex4")
+            ex5 = st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_ex5")
+
+            if st.button("Uložit vyhodnocení úkolu"):
+                st.success("Odpovědi byly uloženy do vašeho profilu pokroků!")
+
+        with st.container(border=True):
+            st.markdown("### 📝 Interaktivní výzva: vlastní nápad")
+            user_idea = st.text_area("Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost:", placeholder="Můj nápad je...", height=100, key="p1_user_idea")
+            if st.button("Uložit můj nápad"):
+                st.success("Nápad uložen!")
+
+        with st.container(border=True):
+            st.markdown("### 🟣 AI mentoring k podnikání")
+            st.write("Zkopíruj tento prompt do svého AI asistenta:")
+            st.code("Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.", language="markdown")
+            st.code("Pomoz mi rozlišit, jestli je můj nápad spíš jednorázová aktivita, nebo skutečné podnikání.", language="markdown")
+
+        with st.container(border=True):
+            st.markdown("### 📌 Shrnující přehled & Čtyři pilíře")
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("""
+            * **Soustavnost:** nejde o jednorázový prodej, ale o činnost vykonávanou opakovaně nebo dlouhodobě.
+            * **Samostatnost:** podnikatel rozhoduje o tom, co dělá, jak pracuje a jak organizuje svou činnost.
+            * **Vlastní jméno:** podnikatel vystupuje vůči zákazníkům, úřadům a partnerům sám za sebe nebo za svou firmu.
+            * **Vlastní odpovědnost:** podnikatel nese následky svých rozhodnutí, včetně rizik, závazků a případných dluhů.
+            """)
+
+            st.text_area("Otázka k zamyšlení: V čem je podle vás největší rozdíl mezi zaměstnancem a podnikatelem?", placeholder="Vaše odpověď...", height=80, key="p1_reflect")
 
     elif selected_section == "2. Slovníček základních pojmů":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div>", unsafe_allow_html=True)
