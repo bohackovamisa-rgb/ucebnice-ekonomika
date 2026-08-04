@@ -36,17 +36,17 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (MONTSERRAT + SAAS MINIMALISMUS) ---
+# --- STYLOVÁNÍ (PREMIUM SAAS MINIMALISMUS) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
     html, body, [class*="css"] {
-        font-family: 'Montserrat', sans-serif !important;
+        font-family: 'Montserrat', -apple-system, sans-serif !important;
     }
 
     .stApp {
-        background-color: #f8fafc;
+        background-color: #f1f5f9;
         color: #0f172a;
     }
 
@@ -56,21 +56,29 @@ st.markdown("""
         padding-bottom: 5rem !important;
     }
 
+    /* KARTY A KONTEJNERY S HOVER EFEKTEM */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
         border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03) !important;
-        padding: 1.75rem !important;
-        margin-bottom: 1.25rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02) !important;
+        padding: 1.8rem !important;
+        margin-bottom: 1.5rem !important;
+        transition: all 0.2s ease-in-out !important;
     }
 
+    div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+        border-color: #cbd5e1 !important;
+        box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02) !important;
+    }
+
+    /* TYPOGRAFIE */
     h1 {
         font-family: 'Montserrat', sans-serif !important;
         color: #0f172a !important;
         font-weight: 800 !important;
-        font-size: 2.1rem !important;
-        letter-spacing: -0.02em !important;
+        font-size: 2.2rem !important;
+        letter-spacing: -0.03em !important;
         line-height: 1.25 !important;
         margin-bottom: 0.5rem !important;
     }
@@ -80,11 +88,11 @@ st.markdown("""
         color: #1e293b !important;
         font-weight: 700 !important;
         font-size: 1.25rem !important;
-        letter-spacing: -0.01em !important;
+        letter-spacing: -0.015em !important;
         margin-top: 1.25rem !important;
         margin-bottom: 0.75rem !important;
         border-bottom: 1px solid #f1f5f9;
-        padding-bottom: 0.4rem;
+        padding-bottom: 0.5rem;
     }
 
     h3 {
@@ -103,95 +111,111 @@ st.markdown("""
         font-weight: 400;
     }
 
-    /* LEGENDA UČEBNICE */
+    /* BADGE A ŠTÍTKY */
+    .hero-badge {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        color: #ffffff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        display: inline-block;
+        margin-bottom: 0.8rem;
+    }
+
+    /* ELEGANTNÍ CHYTRÉ BOXY (S JEDNOTNOU TMAVOU BARVOU PÍSMA/IKON) */
     .box-blue {
         background-color: #f0f9ff;
-        border-left: 3px solid #0284c7;
-        padding: 1rem 1.25rem;
-        border-radius: 0 8px 8px 0;
+        border-left: 4px solid #0284c7;
+        padding: 1.1rem 1.3rem;
+        border-radius: 0 10px 10px 0;
         margin: 1rem 0;
-        color: #0369a1;
+        color: #0f172a;
         font-size: 0.93rem;
     }
     
     .box-yellow {
         background-color: #fefce8;
-        border-left: 3px solid #eab308;
-        padding: 1rem 1.25rem;
-        border-radius: 0 8px 8px 0;
+        border-left: 4px solid #eab308;
+        padding: 1.1rem 1.3rem;
+        border-radius: 0 10px 10px 0;
         margin: 1rem 0;
-        color: #854d0e;
+        color: #0f172a;
         font-size: 0.93rem;
     }
 
     .box-purple {
         background-color: #faf5ff;
-        border-left: 3px solid #a855f7;
-        padding: 1rem 1.25rem;
-        border-radius: 0 8px 8px 0;
+        border-left: 4px solid #a855f7;
+        padding: 1.1rem 1.3rem;
+        border-radius: 0 10px 10px 0;
         margin: 1rem 0;
-        color: #6b21a8;
+        color: #0f172a;
         font-size: 0.93rem;
         word-wrap: break-word;
     }
 
     .box-green {
         background-color: #f0fdf4;
-        border-left: 3px solid #22c55e;
-        padding: 1rem 1.25rem;
-        border-radius: 0 8px 8px 0;
+        border-left: 4px solid #22c55e;
+        padding: 1.1rem 1.3rem;
+        border-radius: 0 10px 10px 0;
         margin: 1rem 0;
-        color: #166534;
+        color: #0f172a;
         font-size: 0.93rem;
     }
 
     .box-red {
         background-color: #fef2f2;
-        border-left: 3px solid #ef4444;
-        padding: 1rem 1.25rem;
-        border-radius: 0 8px 8px 0;
+        border-left: 4px solid #ef4444;
+        padding: 1.1rem 1.3rem;
+        border-radius: 0 10px 10px 0;
         margin: 1rem 0;
-        color: #991b1b;
+        color: #0f172a;
         font-size: 0.93rem;
     }
 
     .box-gray {
         background-color: #f8fafc;
-        border-left: 3px solid #64748b;
-        padding: 1rem 1.25rem;
-        border-radius: 0 8px 8px 0;
+        border-left: 4px solid #64748b;
+        padding: 1.1rem 1.3rem;
+        border-radius: 0 10px 10px 0;
         margin: 1rem 0;
-        color: #334155;
+        color: #0f172a;
         font-size: 0.93rem;
     }
 
+    /* INPUTY A TLAČÍTKA */
     .stTextInput input, .stTextArea textarea, .stSelectbox select {
         font-family: 'Montserrat', sans-serif !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
         border: 1px solid #cbd5e1 !important;
         background-color: #ffffff !important;
         color: #0f172a !important;
         font-size: 0.9rem !important;
-        padding: 0.6rem 0.8rem !important;
+        padding: 0.65rem 0.9rem !important;
     }
 
     .stButton > button {
         font-family: 'Montserrat', sans-serif !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
         border: 1px solid #cbd5e1 !important;
         background-color: #ffffff !important;
-        color: #1e293b !important;
+        color: #0f172a !important;
         font-weight: 600 !important;
-        font-size: 0.85rem !important;
-        padding: 0.5rem 1rem !important;
+        font-size: 0.88rem !important;
+        padding: 0.6rem 1.2rem !important;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
-        transition: all 0.15s ease !important;
+        transition: all 0.2s ease !important;
     }
 
     .stButton > button:hover {
-        border-color: #4f46e5 !important;
-        color: #4f46e5 !important;
+        border-color: #6366f1 !important;
+        color: #6366f1 !important;
         background-color: #f5f3ff !important;
+        transform: translateY(-1px);
     }
 
     section[data-testid="stSidebar"] {
@@ -205,8 +229,8 @@ st.markdown("""
         color: #94a3b8;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        margin-top: 1.2rem;
-        margin-bottom: 0.4rem;
+        margin-top: 1.4rem;
+        margin-bottom: 0.5rem;
     }
 
     .sub-section-header {
@@ -281,12 +305,12 @@ with st.sidebar:
 view = st.session_state["current_view"]
 
 if view == "Uvod":
-    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>DIGITÁLNÍ UČEBNICE</span>", unsafe_allow_html=True)
+    st.markdown("<span class='hero-badge'>Digitální Učebnice</span>", unsafe_allow_html=True)
     st.title("Ekonomika, která dává smysl")
     st.markdown("<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 2rem;'>Moderní učebnice ekonomiky pro střední školy: Podnikavost, finance & ekonomika v souvislostech.</p>", unsafe_allow_html=True)
 
     with st.container(border=True):
-        st.markdown("## 🎯 Začni tady")
+        st.markdown("## Začni tady")
         st.write("""
         Tahle stránka je hlavní rozcestník učebnice. Najdeš tu obsah, pravidla práce, výstupy kapitol, 
         společné nástroje a odkaz do učitelského řídícího centra. Propojuje podnikavost, osobní finance, výrobu, 
@@ -301,7 +325,7 @@ if view == "Uvod":
         """, unsafe_allow_html=True)
 
     with st.container(border=True):
-        st.markdown("## 📖 Jak s učebnicí pracovat")
+        st.markdown("## Jak s učebnicí pracovat")
         st.markdown("""
         1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
         2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
@@ -312,7 +336,7 @@ if view == "Uvod":
         """)
 
 elif view == "Kapitola 1":
-    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>KAPITOLA 1</span>", unsafe_allow_html=True)
+    st.markdown("<span class='hero-badge'>Kapitola 1</span>", unsafe_allow_html=True)
     st.title("Podnikavost a startupová kultura")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>Od nápadu k odpovědnému podnikání, ověření projektu a výběru právní formy.</p>", unsafe_allow_html=True)
 
@@ -414,7 +438,7 @@ elif view == "Kapitola 1":
 
         # AKTIVITY A ÚKOLY K PODKAPITOLE 1
         with st.container(border=True):
-            st.markdown("### 💡 Tvůj úkol: Je to podnikání?")
+            st.markdown("### Tvůj úkol: Je to podnikání?")
             st.write("U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdelek, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání.")
 
             ex1 = st.selectbox("1. Student jednou prodá starý mobil:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex1")
@@ -427,14 +451,14 @@ elif view == "Kapitola 1":
                 st.success("Odpovědi byly uloženy do vašeho profilu pokroků!")
 
         with st.container(border=True):
-            st.markdown("### 🧩 Interaktivní výzva: vlastní nápad")
+            st.markdown("### Interaktivní výzva: vlastní nápad")
             user_idea = st.text_area("Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost:", placeholder="Můj nápad je...", height=100, key="p1_user_idea")
             if st.button("Uložit můj nápad"):
                 st.success("Nápad uložen!")
 
         # AI MENTORING
         with st.container(border=True):
-            st.markdown("### 🤖 AI mentoring k podnikání")
+            st.markdown("### AI mentoring k podnikání")
             st.write("Použij tyto prompty pro analýzu svého nápadu s pomocí AI asistenta:")
 
             st.markdown("""
@@ -490,7 +514,7 @@ elif view == "Kapitola 1":
             | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
             | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
             | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
-            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určuje, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
             | **Živnostenské oprávnění** | Právo provozovat živnost. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje. |
             | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
             | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
@@ -507,7 +531,7 @@ elif view == "Kapitola 1":
             """)
 
         with st.container(border=True):
-            st.markdown("### 🧩 Interaktivní výzva: Aplikace pojmů")
+            st.markdown("### Interaktivní výzva: Aplikace pojmů")
             st.write("Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání.")
             
             c_p1, c_p2 = st.columns(2)
@@ -525,7 +549,7 @@ elif view == "Kapitola 1":
                 st.success("Vaše příklady byly uloženy!")
 
         with st.container(border=True):
-            st.markdown("### 🤖 AI mentoring ke slovníčku")
+            st.markdown("### AI mentoring ke slovníčku")
             st.write("Zkopíruj tento prompt do svého AI asistenta:")
             st.markdown("""
             <div class='box-purple'>
@@ -599,7 +623,7 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("#### 🧮 Mini simulace OSVČ & Kalkulačka hodinové sazby")
+            st.markdown("#### Mini simulace OSVČ & Kalkulačka hodinové sazby")
             st.write("Představ si, že OSVČ za měsíc vyfakturuje **28 000 Kč**. Náklady na software, dopravu, materiál a reklamu jsou **6 000 Kč**.")
             
             c_sim1, c_sim2 = st.columns(2)
@@ -671,7 +695,7 @@ elif view == "Kapitola 1":
             | **Koncesovaná živnost** | Vyžaduje státní povolení — koncesi. Jde o více regulované nebo rizikovější činnosti. | Taxislužba, provozování střelnice, prodej zbraní. |
             """)
 
-            st.markdown("#### 🧩 Zařazení vlastního nápadu k živnosti")
+            st.markdown("#### Zařazení vlastního nápadu k živnosti")
             c_z1, c_z2 = st.columns(2)
             with c_z1:
                 st.text_input("Můj nápad:", placeholder="Název nápadu...", key="p3_z_idea")
@@ -745,7 +769,7 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("#### 🧮 Modelový výpočet odvodů OSVČ (2026)")
+            st.markdown("#### Modelový výpočet odvodů OSVČ (2026)")
             st.write("Příklad počítá s OSVČ na hlavní činnost (neplátce DPH, příjmy 300 000 Kč, výdaje 120 000 Kč, zisk 180 000 Kč):")
 
             st.markdown("""
@@ -794,7 +818,7 @@ elif view == "Kapitola 1":
                 st.markdown("<div class='box-gray'><strong>Družstva</strong><br>• Družstvo, SCE<br>• Založeno na členství.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 📊 Test: OSVČ, nebo s.r.o.?")
+            st.markdown("### Test: OSVČ, nebo s.r.o.?")
             q1_opt = st.radio("1. Plánuješ podnikat sám/sama, nebo v týmu?", ["Sám/sama (OSVČ)", "V týmu (s.r.o.)"], key="t1_new")
             q2_opt = st.radio("2. Hrozí projektem větší finanční závazky a škody?", ["Nízké riziko (OSVČ)", "Vysoké riziko / úvěry (s.r.o.)"], key="t2_new")
 
@@ -865,7 +889,7 @@ elif view == "Kapitola 1":
             st.write("Závěrečný test a souhrnné aktivity Kapitoly 1.")
 
 elif view == "Pokroky":
-    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>STUDENTSKÁ ZÓNÁ</span>", unsafe_allow_html=True)
+    st.markdown("<span class='hero-badge'>Studentská zóna</span>", unsafe_allow_html=True)
     st.title("Moje pokroky")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Přehled dokončených kapitol, uložených odpovědí a rozpracovaných projektů.</p>", unsafe_allow_html=True)
 
@@ -881,7 +905,7 @@ elif view == "Pokroky":
             st.metric(label="Aktivní kalkulace", value="OSVČ Sazba", delta="Dokončeno")
 
 elif view == "Ucitel":
-    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>METODIK & DASHBOARD</span>", unsafe_allow_html=True)
+    st.markdown("<span class='hero-badge'>Metodik & Dashboard</span>", unsafe_allow_html=True)
     st.title("Učitelská základna")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Metodické pokyny a sledování práce jednotlivých žáků podle tříd.</p>", unsafe_allow_html=True)
 
@@ -914,7 +938,7 @@ elif view == "Ucitel":
             st.write("Aktivita: Vyhledávání reálných firem v obchodním rejstříku Justice.cz.")
 
 else:
-    st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>KAPITOLA</span>", unsafe_allow_html=True)
+    st.markdown("<span class='hero-badge'>Kapitola</span>", unsafe_allow_html=True)
     st.title(chapters.get(view, view))
     with st.container(border=True):
         st.info("Tato kapitola čeká na vložení textu. Stačí poslat podklady.")
