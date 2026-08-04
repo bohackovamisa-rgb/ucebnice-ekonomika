@@ -125,7 +125,7 @@ st.markdown("""
         margin-bottom: 0.8rem;
     }
 
-    /* ELEGANTNÍ CHYTRÉ BOXY (S JEDNOTNOU TMAVOU BARVOU PÍSMA/IKON) */
+    /* ELEGANTNÍ CHYTRÉ BOXY */
     .box-blue {
         background-color: #f0f9ff;
         border-left: 4px solid #0284c7;
@@ -514,12 +514,12 @@ elif view == "Kapitola 1":
             | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
             | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
             | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
-            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určuje, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
             | **Živnostenské oprávnění** | Právo provozovat živnost. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje. |
             | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
             | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
             | **Vázaná živnost** | Živnost, která vyžaduje specifické vzdělání, praxi nebo jinou zákonem stanovenou způsobilost. | Pomáhá pochopit, že u některých služeb stát chrání zákazníka požadavkem na odbornost. |
-            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncese. | Typicky jde o regulované nebo rizikovější činnosti. |
+            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncesi. | Typicky jde o regulované nebo rizikovější činnosti. |
             | **Obchodní korporace** | Souhrnný pojem pro obchodní společnosti a družstva, například v.o.s., k.s., s.r.o., a.s. a družstvo. | Pomáhá zařadit základní právní formy podnikání. |
             | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty. | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají. |
             | **Živnostenský rejstřík** | Evidence osob podnikajících na základě živnostenského oprávnění. | Slouží k ověření, zda má podnikatel oprávnění k určité činnosti. |
@@ -578,7 +578,7 @@ elif view == "Kapitola 1":
         
         with st.container(border=True):
             st.write("""
-            **OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese za své podnikání plnou odpovědnost.
+            **OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jním a nese za své podnikání plnou odpovědnost.
             """)
             st.markdown("""
             <div class='box-blue'>
@@ -802,31 +802,155 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
+    # PODKAPITOLA 4 - KOMPLETNÍ TEXT PODLE POSLANÝCH PODKLADŮ
     elif selected_section == "4. Obchodní korporace":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div>", unsafe_allow_html=True)
         st.markdown("## 4. Obchodní korporace")
         
         with st.container(border=True):
-            st.write("Obchodní korporace jsou právnické osoby zřízené podle ZOK (Zákon o obchodních korporacích).")
-            
-            c_k1, c_k2, c_k3 = st.columns(3)
-            with c_k1:
-                st.markdown("<div class='box-gray'><strong>Osobní společnosti</strong><br>• v.o.s., k.s.<br>• Neomezené ručení společníků.</div>", unsafe_allow_html=True)
-            with c_k2:
-                st.markdown("<div class='box-gray'><strong>Kapitálové společnosti</strong><br>• s.r.o., a.s.<br>• Oddělený majetek firmy.</div>", unsafe_allow_html=True)
-            with c_k3:
-                st.markdown("<div class='box-gray'><strong>Družstva</strong><br>• Družstvo, SCE<br>• Založeno na členství.</div>", unsafe_allow_html=True)
+            st.write("""
+            Obchodní korporace je právnická osoba založená za účelem podnikání nebo správy vlastního majetku. Na rozdíl od OSVČ vzniká nový samostatný subjekt, který má vlastní právní osobnost, vlastní majetek, název (obchodní firmu), IČO a nese odpovědnost samostatně jako firma.
+            """)
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>Proč je to důležité:</strong> Podnikání v týmu, vstup investorů, vyšší finanční riziko nebo budování značky často vyžadují založení firmy (právnické osoby). Je klíčové znát rozdíl mezi osobním ručením OSVČ a omezeným ručením u s.r.o.
+            </div>
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### Test: OSVČ, nebo s.r.o.?")
-            q1_opt = st.radio("1. Plánuješ podnikat sám/sama, nebo v týmu?", ["Sám/sama (OSVČ)", "V týmu (s.r.o.)"], key="t1_new")
-            q2_opt = st.radio("2. Hrozí projektem větší finanční závazky a škody?", ["Nízké riziko (OSVČ)", "Vysoké riziko / úvěry (s.r.o.)"], key="t2_new")
+            st.markdown("### 4.1 Společnost s ručením omezeným (s.r.o.) ako nejčastější kapitálová korporace")
+            st.write("""
+            Společnost s ručením omezeným (s.r.o.) je nejrozšířenější formou podnikání více osob i rostoucích projektů v ČR. Může ji založit i jediná osoba (zakladatel).
 
-            if st.button("Vyhodnotit doporučenou formu"):
-                if "s.r.o." in q1_opt or "s.r.o." in q2_opt:
-                    st.markdown("<div class='box-blue'><strong>Doporučení:</strong> Pro váš projekt se jeví vhodnější <strong>s.r.o.</strong></div>", unsafe_allow_html=True)
+            * **Společníci** ručí za závazky firmy společně a nerozdílně pouze do výše nesplaceného vkladu zapsaného v obchodním rejstříku.
+            * Jakmile je základní kapitál plně splacen, **společníci za dluhy firmy osobně neručí**. Za své závazky ručí sama společnost celým svým majetkem.
+            """)
+
+            st.markdown("""
+            | Situace | Proč s.r.o. dává smysl | Na co si dát pozor |
+            | :--- | :--- | :--- |
+            | **Dva studenti zakládají společný e-shop.** | Jasně vymezené podíly, pravidla rozhodování, oddělení od osobního majetku. | Vyšší náklady na založení, nutnost vedení účetnictví, společenská smlouva. |
+            | **Tým vyvíjí mobilní aplikaci a hledá investora.** | Investor může koupit podíl ve firmě výměnou za kapitál. | Smlouva mezi společníky, oceňování podílu, právní servis. |
+            | **Firma plánuje velké zakázky a úvěry.** | Ochrana osobního majetku zakladatelů před rizikem nezdaru. | Odpovědnost jednatelů za péči řádného hospodáře. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 4.2 Zákadní rozdělení obchodních korporací podle ZOK")
+            st.write("Zákon č. 90/2012 Sb., o obchodních korporacích (ZOK), rozlišuje dvě základní skupiny obchodních společností a družstva:")
+
+            c_k1, c_k2, c_k3 = st.columns(3)
+            with c_k1:
+                st.markdown("""
+                <div class='box-gray'>
+                    <strong>1. Osobní společnosti</strong><br>
+                    • <strong>v.o.s.</strong> (veřejná obchodní společnost)<br>
+                    • <strong>k.s.</strong> (komanditní společnost)<br><br>
+                    Společníci ručí celým svým majetkem neomezeně. Důležitá je osobní účast na řízení.
+                </div>
+                """, unsafe_allow_html=True)
+            with c_k2:
+                st.markdown("""
+                <div class='box-gray'>
+                    <strong>2. Kapitálové společnosti</strong><br>
+                    • <strong>s.r.o.</strong> (s ručením omezeným)<br>
+                    • <strong>a.s.</strong> (akciová společnost)<br><br>
+                    Společníci neručí osobně (nebo jen omezeně). Důležitý je vklad kapitálu.
+                </div>
+                """, unsafe_allow_html=True)
+            with c_k3:
+                st.markdown("""
+                <div class='box-gray'>
+                    <strong>3. Družstva</strong><br>
+                    • Družstvo<br>
+                    • Evropská družstevní společnost (SCE)<br><br>
+                    Společenství neuzavřeného počtu osob založené za účelem vzájemné podpory svých členů.
+                </div>
+                """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 📊 Test: OSVČ, nebo s.r.o.? (Rozhodovací strom)")
+            st.write("Odpověz na následující otázky a zjisti, která forma lépe odpovídá tvému záměru:")
+
+            q1_opt = st.radio("1. Plánuješ podnikat sám/sama, nebo v týmu společníků?", ["Sám/sama", "V týmu společníků"], key="t1_korp")
+            q2_opt = st.radio("2. Hrozí tvému projektu větší finanční závazky, dluhy nebo riziko škod?", ["Nízké riziko škod", "Vysoké riziko / plánuji úvěry a investory"], key="t2_korp")
+            q3_opt = st.radio("3. Máš na začátku kapitál na administrativu a vedení podvojného účetnictví?", ["Chci co nejnižší počáteční náklady", "Mám kapitál a zvládnu účetnictví"], key="t3_korp")
+
+            if st.button("Vyhodnotit doporučenou právní formu"):
+                sro_score = 0
+                if q1_opt == "V týmu společníků": sro_score += 1
+                if q2_opt == "Vysoké riziko / plánuji úvěry a investory": sro_score += 1
+                if q3_opt == "Mám kapitál a zvládnu účetnictví": sro_score += 1
+
+                if sro_score >= 2:
+                    st.markdown("""
+                    <div class='box-blue'>
+                        <strong>Doporučení: Pro tvůj projekt je vhodnější s.r.o.</strong><br>
+                        Umožní přehledně rozdát podíly v týmu, ochrání tvůj osobní majetek před vysokým rizikem a otevře dveře pro vstup investorů.
+                    </div>
+                    """, unsafe_allow_html=True)
                 else:
-                    st.markdown("<div class='box-green'><strong>Doporučení:</strong> Pro váš start je vhodnější <strong>OSVČ</strong>.</div>", unsafe_allow_html=True)
+                    st.markdown("""
+                    <div class='box-green'>
+                        <strong>Doporučení: Pro tvůj start je vhodnější OSVČ.</strong><br>
+                        Poskytuje nejrychlejší a nejlevnější začátek bez nutnosti zakládat firmu a vést podvojné účetnictví. Změnit formu na s.r.o. můžeš kdykoliv později.
+                    </div>
+                    """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 4.3 Jak probíhá založení s.r.o.")
+            st.markdown("""
+            1. **Sepsání zakladatelské listiny nebo společenské smlouvy:** formou notářského zápisu u notáře.
+            2. **Složení základního kapitálu:** na zvláštní bankovní účet (zákonné minimum je 1 Kč na společníka, v praxi se doporučují vyšší částky).
+            3. **Vyřízení živnostenských oprávnění:** na živnostenském úřadě pro nově vznikající firmu.
+            4. **Zápis do Obchodního rejstříku:** podáním návrhu na Krajský soud nebo přímo notářem. Vznikem zápisu s.r.o. oficiálně vzniká.
+            5. **Registrace na Finančním úřadě:** registrace k dani z příjmů právnických osob do 15 dnů od vzniku.
+            """)
+
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>🧩 Interaktivní výzva:</strong> Vypiš 3 základní náležitosti, které musí obsahovat Společenská smlouva s.r.o. (např. název firmy, sídlo, společníci, předmět podnikání, výše vkladů):
+            </div>
+            """, unsafe_allow_html=True)
+            st.text_area("Vaše odpověď:", placeholder="1. Název firmy...\n2. Společníci...\n3. Výše vkladu...", height=80, key="p4_sro_contract")
+
+        with st.container(border=True):
+            st.markdown("### 4.4 Orgány s.r.o.")
+            st.write("Firma jako právnická osoba nemůže jednat sama. Jedná prostřednictvím svých orgánů:")
+
+            st.markdown("""
+            * **Valná hromada:** Nejvyšší orgán s.r.o., tvořený všemi společníky. Rozhoduje o zásadních otázkách (schvaluje účetní závěrku, rozdělení zisku, jmenuje jednatele).
+            * **Jednatel / Jednatelé:** Statutární orgán. Osoba (nebo osoby), která za společnost samostatně nebo společně jedná navenek, podepisuje smlouvy a řídí běžný provoz. Jednatel nemusí být společníkem.
+            * **Dozorčí rada:** Kontrolní orgán (v s.r.o. se zřizuje dobrovolně, pokud to vyžaduje společenská smlouva).
+            """)
+
+            st.markdown("""
+            <div class='box-red'>
+                <strong>Pozor na odpovědnost jednatele:</strong> Jednatel nese právní odpovědnost za výkon funkce s **péčí řádného hospodáře** (s potřebnými znalostmi, loyaltou a pečlivostí). Pokud způsobí firmě škodu porušením svých povinností, ručí za ni celým svým osobním majetkem!
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 🤖 AI mentoring k obchodním korporacím")
+            st.write("Zkopíruj tento prompt do svého AI asistenta:")
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>Prompt pro AI asistenta:</strong><br>
+                „Porovnej pro můj nápad výhody a nevýhody OSVČ vs. s.r.o. Zohledni ručení, náklady na start, účetnictví a dojem na zákazníky.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>Opora v legislativě:</strong> Zákon č. 90/2012 Sb., o obchodních korporacích (ZOK) a zákon č. 89/2012 Sb., občanský zákoník.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-green'>
+                <strong>Etika v podnikání korporací:</strong> Vytvoření s.r.o. nesmí sloužit jako účelový nástroj k zakrytí podvodů nebo nesplácení dluhů. Férový zakladatel plní závazky vůči dodavatelům, zaměstnancům i státu a jedná v souladu s dobrými mravy.
+            </div>
+            """, unsafe_allow_html=True)
 
     elif selected_section == "5. Startup: nápad, který hledá byznys":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div>", unsafe_allow_html=True)
