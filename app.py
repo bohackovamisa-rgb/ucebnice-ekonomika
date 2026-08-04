@@ -221,15 +221,12 @@ st.markdown("""
         font-size: 0.88rem !important;
     }
 
-    /* ODKAZY V NAVIGACI */
-    .nav-link {
+    .sub-section-header {
         color: #4f46e5;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.88rem;
-    }
-    .nav-link:hover {
-        text-decoration: underline;
+        font-weight: 700;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -247,8 +244,6 @@ SVG_PROJ = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" 
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
     st.session_state["current_view"] = "Uvod"
-if "k1_active_section" not in st.session_state:
-    st.session_state["k1_active_section"] = "sec_1"
 
 # --- BOČNÍ PANEL ---
 with st.sidebar:
@@ -354,78 +349,34 @@ elif view == "Kapitola 1":
     st.title("Podnikavost a startupová kultura")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>Od nápadu k odpovědnému podnikání, ověření projektu a výběru právní formy.</p>", unsafe_allow_html=True)
 
-    # --- ROZBALOVACÍ FULL NOTION NAVIGACE ---
-    with st.expander("📌 Navigace kapitolou (Kliknutím skoč na téma)", expanded=False):
-        st.markdown("<div style='font-size: 0.85rem; color: #64748b; margin-bottom: 0.8rem;'>Vyberte sekci pro okamžitý přechod na příslušné učivo:</div>", unsafe_allow_html=True)
-        
-        c_nav1, c_nav2 = st.columns(2)
-        with c_nav1:
-            st.markdown("""
-            **1. Podnikatel**
-            - <a href='#1-podnikatel-a-zakladni-definice' class='nav-link'>1.1 Podnikatel v realitě současné generace</a>
-            - <a href='#1-2-ctyri-znaky-podnikani' class='nav-link'>1.2 Čtyři znaky podnikání</a>
-            - <a href='#1-podnikatel-a-zakladni-definice' class='nav-link'>1.3 Podnikatel není jen 'někdo, kdo vydělává'</a>
-            
-            **2. Slovníček základních pojmů**
-            - <a href='#slovnicek-kapitoly-1' class='nav-link'>Přehled klíčových definic</a>
+    # POPIS SEZNAMU PODKAPITOL PŘESNĚ 1 AŽ 14
+    section_options = [
+        "1. Podnikatel a základní pojmy",
+        "2. Slovníček základních pojmů",
+        "3. OSVČ a živnosti",
+        "4. Obchodní korporace",
+        "5. Startup: nápad, který hledá byznys",
+        "6. Lean Canvas",
+        "7. CSR, etika a odpovědné podnikání",
+        "8. Rizika podnikání",
+        "9. Švarcsystém",
+        "10. Ověřování informací a užitečné zdroje",
+        "11. Ukončení podnikání",
+        "12. Logická mapa podnikání",
+        "13. Reflexe a sebehodnocení",
+        "14. Integrované opakování"
+    ]
 
-            **3. OSVČ a živnosti**
-            - <a href='#3-osvc-a-zivnosti' class='nav-link'>3.1 OSVČ jako nejčastější start</a>
-            - <a href='#3-osvc-a-zivnosti' class='nav-link'>3.2 OSVČ a digitální realita</a>
-            - <a href='#3-osvc-a-zivnosti' class='nav-link'>3.3 Podmínky pro podnikání jako OSVČ</a>
-            - <a href='#3-osvc-a-zivnosti' class='nav-link'>3.4 Druhy živností</a>
-            - <a href='#3-osvc-a-zivnosti' class='nav-link'>3.5 Jak si zařídit živnost</a>
-            - <a href='#3-osvc-a-zivnosti' class='nav-link'>3.6 Povinnosti živnostníka: legislativní minimum</a>
-            - <a href='#3-osvc-a-zivnosti' class='nav-link'>3.7 Daně a odvody OSVČ v roce 2026</a>
-
-            **4. Obchodní korporace**
-            - <a href='#4-obchodni-korporace' class='nav-link'>4.1 Proč právní forma není formalita</a>
-            - <a href='#4-2-rozdeleni-obchodnich-korporaci' class='nav-link'>4.2 Co patří mezi obchodní korporace</a>
-            - <a href='#4-obchodni-korporace' class='nav-link'>4.3 Zákonné podmínky vzniku</a>
-            - <a href='#interaktivni-test-osvc-nebo-s-r-o' class='nav-link'>4.4 Volba právní formy (OSVČ vs. s.r.o.)</a>
-            - <a href='#4-obchodni-korporace' class='nav-link'>4.6 Osobní společnosti (v.o.s., k.s.)</a>
-            - <a href='#4-obchodni-korporace' class='nav-link'>4.7 Kapitálové společnosti (s.r.o., a.s., družstvo)</a>
-            - <a href='#4-obchodni-korporace' class='nav-link'>4.8 Péče řádného hospodáře</a>
-            - <a href='#4-obchodni-korporace' class='nav-link'>4.12 Zrušení, likvidace a zánik</a>
-            """, unsafe_allow_html=True)
-            
-        with c_nav2:
-            st.markdown("""
-            **5. Startup: nápad a byznys model**
-            - <a href='#5-startup-napad-ktery-hleda-byznys' class='nav-link'>5.1 Startup pro současnou generaci</a>
-            - <a href='#5-startup-napad-ktery-hleda-byznys' class='nav-link'>5.5 Metodika Lean Startup & MVP</a>
-            
-            **6. Lean Canvas**
-            - <a href='#6-lean-canvas' class='nav-link'>6.1–6.9 Devět bloků Lean Canvasu</a>
-
-            **7. CSR, etika a odpovědné podnikání**
-            - <a href='#7-csr-a-etika' class='nav-link'>7.1–7.8 ESG a odpovědnost firem</a>
-
-            **8. Rizika podnikání**
-            - <a href='#8-rizika-podnikani' class='nav-link'>8.1–8.4 Matice rizik a prevence</a>
-
-            **9. Švarcsystém**
-            - <a href='#9-svarcsystem' class='nav-link'>9.1 Rizika a rozpoznání nelegální práce</a>
-
-            **10. Ověřování informací & Zdroje**
-            - <a href='#10-overovani-informaci' class='nav-link'>ARES, Justice.cz, Živnostenský rejstřík</a>
-
-            **14. Integrované opakování & Projekt**
-            - <a href='#14-integrovane-opakovani' class='nav-link'>Shrnutí a závěrečná reflexe</a>
-            """, unsafe_allow_html=True)
+    selected_section = st.selectbox("📌 Přechod na podkapitolu (Vyberte téma):", section_options, index=0)
 
     st.divider()
 
-    # Rychlá volba hlavních modulů přes tlačítkový rozcestník
-    section_choice = st.radio(
-        "Vyberte téma kapitoly:", 
-        ["1. Podnikatel & OSVČ", "4. Obchodní korporace", "5. Startup & Lean Canvas", "7–10. Etika, Rizika & Švarcsystém", "Testy & Opakování"],
-        horizontal=True
-    )
-
-    if section_choice == "1. Podnikatel & OSVČ":
+    # ZOBRAZENÍ VYBRANÉ PODKAPITOLY
+    if selected_section == "1. Podnikatel a základní pojmy":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 1</div>", unsafe_allow_html=True)
+        st.markdown("## 1. Podnikatel")
+        
         with st.container(border=True):
-            st.markdown("## 1. Podnikatel a základní definice")
             st.markdown("""
             <div class='box-blue'>
                 <strong>Základní definice podnikání:</strong><br>
@@ -438,107 +389,147 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
+        with st.container(border=True):
+            st.markdown("### 1.1 Podnikatel v realitě současné generace")
+            st.write("Podnikání dnes nemusí začínat kanceláří. Může začít správou obsahu, e-shopem, vývojem aplikace nebo digitální grafikou.")
+
             st.markdown("### 1.2 Čtyři znaky podnikání")
             st.markdown("""
             | Znak | Význam | Příklad ze současnosti |
             | :--- | :--- | :--- |
-            | **Soustavnost** | Opakovaná nebo dlouhodobá činnost. | Pravidelný prodej digitálních šablon. |
-            | **Samostatnost** | Rozhoduji sám/sama o ceně a postupech. | Nabídka správy sociálních sítí. |
-            | **Vlastní jméno** | Vystupuji pod svým jménem nebo značkou (IČO). | Faktury a vystupování před klienty. |
-            | **Vlastní odpovědnost** | Nesu plné riziko zisku i ztráty. | Nakoupím materiál, který se neprodá. |
+            | **Soustavnost** | Opakovaná činnost. | Pravidelný prodej plánovačů. |
+            | **Samostatnost** | Rozhoduji sám/sama. | Nabídka správy sítí. |
+            | **Vlastní jméno** | Vystupuji pod svým jménem/IČO. | Vydávání faktur. |
+            | **Vlastní odpovědnost** | Nesu riziko ztráty. | Neprodaný materiál. |
+            """)
+
+    elif selected_section == "2. Slovníček základních pojmů":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div>", unsafe_allow_html=True)
+        st.markdown("## 2. Slovníček základních pojmů")
+        
+        with st.container(border=True):
+            st.markdown("""
+            • **Podnikatel:** Osoba samostatně vykonávající výdělečnou činnost na vlastní účet a odpovědnost.<br>
+            • **Fyzická osoba:** Člověk – jednotlivec (v podnikání typicky jako OSVČ).<br>
+            • **Právnická osoba:** Organizovaný subjekt (např. s.r.o., a.s., spolek).<br>
+            • **OSVČ:** Osoba samostatně výdělečně činná.<br>
+            • **Živnostenské oprávnění:** Právo provozovat živnost získané ohlášením nebo koncesí.
+            """, unsafe_allow_html=True)
+
+    elif selected_section == "3. OSVČ a živnosti":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 3</div>", unsafe_allow_html=True)
+        st.markdown("## 3. OSVČ a živnosti")
+        
+        with st.container(border=True):
+            st.write("OSVČ je fyzická osoba podnikající vlastním jménem na vlastní odpovědnost celým svým majetkem.")
+            st.markdown("<div class='box-red'><strong>Hlavní riziko OSVČ:</strong> Ručení za závazky celým osobním majetkem.</div>", unsafe_allow_html=True)
+
+            st.markdown("### Druhy živností")
+            st.markdown("""
+            1. **Volná:** Bez nutnosti kvalifikace (např. e-shop, marketing).
+            2. **Řemeslná:** Vyžaduje výuční list nebo praxi (např. truhlář, kadeřník).
+            3. **Vázaná:** Vyžaduje odbornou způsobilost podle zákona (např. autoškola).
+            4. **Koncesovaná:** Vyžaduje státní koncesi (např. taxislužba).
             """)
 
         with st.container(border=True):
-            st.markdown("## 3. OSVČ a živnosti")
-            st.write("OSVČ je fyzická osoba podnikající vlastním jménem na vlastní odpovědnost celým svým majetkem.")
-            
-            st.markdown("### Druhy živností")
-            st.markdown("""
-            • **Volná:** Bez nutnosti kvalifikace (např. e-shop, marketing).<br>
-            • **Řemeslná:** Vyžaduje výuční list nebo praxi (např. truhlář, kadeřník).<br>
-            • **Vázaná:** Vyžaduje odbornou způsobilost podle zákona (např. autoškola).<br>
-            • **Koncesovaná:** Vyžaduje udělení státní koncese (např. taxislužba).
-            """, unsafe_allow_html=True)
-
-            # Kalkulačka OSVČ
-            st.markdown("### 🧮 Hodinová sazba OSVČ")
+            st.markdown("### 🧮 Hodinová sazba OSVČ (Simulace)")
             c1, c2 = st.columns(2)
             with c1:
-                prijem = st.number_input("Cílový čistý příjem měsíčně (Kč):", value=35000, step=1000)
-                naklady = st.number_input("Provozní náklady měsíčně (Kč):", value=5000, step=500)
+                prijem = st.number_input("Požadovaný čistý příjem (Kč):", value=35000, step=1000)
+                naklady = st.number_input("Měsíční náklady (Kč):", value=5000, step=500)
             with c2:
-                hodiny = st.number_input("Odpracované hodiny měsíčně:", value=110, step=10)
+                hodiny = st.number_input("Odpracované hodiny za měsíc:", value=110, step=10)
                 odvody = 8311
 
             sazba = (prijem + naklady + odvody) / hodiny if hodiny > 0 else 0
-            st.markdown(f"""
-            <div class='box-green'>
-                Minimální hodinová sazba: <strong>{sazba:.0f} Kč / hod.</strong> (zahrnuje odvody v roce 2026).
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(f"<div class='box-green'>Minimální potřebná sazba: <strong>{sazba:.0f} Kč / hod.</strong></div>", unsafe_allow_html=True)
 
-    elif section_choice == "4. Obchodní korporace":
+    elif selected_section == "4. Obchodní korporace":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div>", unsafe_allow_html=True)
+        st.markdown("## 4. Obchodní korporace")
+        
         with st.container(border=True):
-            st.markdown("## 4. Obchodní korporace")
             st.write("Obchodní korporace jsou právnické osoby zřízené podle ZOK (Zákon o obchodních korporacích).")
             
-            st.markdown("### 4.2 Členění korporací")
-            c_korp1, c_korp2, c_korp3 = st.columns(3)
-            with c_korp1:
+            c_k1, c_k2, c_k3 = st.columns(3)
+            with c_k1:
                 st.markdown("<div class='box-gray'><strong>Osobní společnosti</strong><br>• v.o.s., k.s.<br>• Neomezené ručení společníků.</div>", unsafe_allow_html=True)
-            with c_korp2:
-                st.markdown("<div class='box-gray'><strong>Kapitálové společnosti</strong><br>• s.r.o., a.s.<br>• Oddělený majetek od vlastníka.</div>", unsafe_allow_html=True)
-            with c_korp3:
-                st.markdown("<div class='box-gray'><strong>Družstva</strong><br>• Družstvo, SCE<br>• Založeno na členství a spolupráci.</div>", unsafe_allow_html=True)
+            with c_k2:
+                st.markdown("<div class='box-gray'><strong>Kapitálové společnosti</strong><br>• s.r.o., a.s.<br>• Oddělený majetek firmy.</div>", unsafe_allow_html=True)
+            with c_k3:
+                st.markdown("<div class='box-gray'><strong>Družstva</strong><br>• Družstvo, SCE<br>• Založeno na členství.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### Hlavní formy: s.r.o. vs. a.s.")
-            st.write("• **s.r.o. (Společnost s ručením omezeným):** Min. vklad od 1 Kč, společníci ručí jen do výše nesplaceného vkladu.<br>• **a.s. (Akciová společnost):** Min. základní kapitál 2 000 000 Kč, kapitál rozdělen na akcie.", unsafe_allow_html=True)
-            st.markdown("<div class='box-red'><strong>Péče řádného hospodáře:</strong> Jednatelé nesou právní odpovědnost za pečlivé a loajální řízení firmy.</div>", unsafe_allow_html=True)
+            st.markdown("### 📊 Test: OSVČ, nebo s.r.o.?")
+            q1_opt = st.radio("1. Plánuješ podnikat sám/sama, nebo v týmu?", ["Sám/sama (OSVČ)", "V týmu (s.r.o.)"], key="t1_new")
+            q2_opt = st.radio("2. Hrozí projektem větší finanční závazky a škody?", ["Nízké riziko (OSVČ)", "Vysoké riziko / úvěry (s.r.o.)"], key="t2_new")
 
-    elif section_choice == "5. Startup & Lean Canvas":
+            if st.button("Vyhodnotit doporučenou formu"):
+                if "s.r.o." in q1_opt or "s.r.o." in q2_opt:
+                    st.markdown("<div class='box-blue'><strong>Doporučení:</strong> Pro váš projekt se jeví vhodnější <strong>s.r.o.</strong></div>", unsafe_allow_html=True)
+                else:
+                    st.markdown("<div class='box-green'><strong>Doporučení:</strong> Pro váš start je vhodnější <strong>OSVČ</strong>.</div>", unsafe_allow_html=True)
+
+    elif selected_section == "5. Startup: nápad, který hledá byznys":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div>", unsafe_allow_html=True)
+        st.markdown("## 5. Startup: nápad, který hledá byznys")
         with st.container(border=True):
-            st.markdown("## 5. Startup: nápad, který hledá byznys")
-            st.write("Startup je dočasná organizace určená k hledání opakovatelného a škálovatelného obchodního modelu za podmínek extrémní nejistoty.")
-            
-            st.markdown("""
-            <div class='box-purple'>
-                <strong>Lean Startup cyklus:</strong> Vytvoř (MVP) ➔ Změř (Testy) ➔ Pouč se (Validované učení / Pivot).
-            </div>
-            """, unsafe_allow_html=True)
+            st.write("Tato podkapitola je připravena pro vložení ČÁSTI 3 textu. (Čeká na zaslání podkladů).")
 
+    elif selected_section == "6. Lean Canvas":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 6</div>", unsafe_allow_html=True)
+        st.markdown("## 6. Lean Canvas")
         with st.container(border=True):
-            st.markdown("## 6. Lean Canvas šablona")
-            st.write("Lean Canvas je 1-stránkový nástroj pro rychlé ověření projektu zaměřený na Problém a Zákazníka.")
-            
-            st.text_area("1. Problém & Cílový zákazník:", placeholder="Popište hlavní Problém a Zákaznické segmenty...", height=80, key="lc_prob")
-            st.text_area("2. Unikátní hodnota & Řešení:", placeholder="V čem je projekt jedinečný a jak problém řeší...", height=80, key="lc_sol")
-            if st.button("Uložit do Lean Canvasu"):
-                st.success("Koncept Lean Canvasu uložen!")
+            st.write("Jednostránkový podnikatelský model zaměřený na rychlé testování hypotéz.")
 
-    elif section_choice == "7–10. Etika, Rizika & Švarcsystém":
+    elif selected_section == "7. CSR, etika a odpovědné podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div>", unsafe_allow_html=True)
+        st.markdown("## 7. CSR, etika a odpovědné podnikání")
         with st.container(border=True):
-            st.markdown("## 7. CSR, etika a ESG")
-            st.write("Odpovědné podnikání sleduje 3 pilíře (ESG): **Environmental** (životní prostředí), **Social** (společnost a zaměstnanci), **Governance** (férové řízení).")
+            st.write("Společenská odpovědnost firem (ESG) a etické rozhodování v praxi.")
 
+    elif selected_section == "8. Rizika podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div>", unsafe_allow_html=True)
+        st.markdown("## 8. Rizika podnikání")
         with st.container(border=True):
-            st.markdown("## 8. Rizika podnikání & 9. Švarcsystém")
-            st.markdown("<div class='box-red'><strong>Švarcsystém:</strong> Nelegální praxe, kdy člověk pracující jako faktický zaměstnanec vystupuje jako OSVČ na živnostenský list. Hrozí vysoké pokuty od úřadu práce a finanční správy!</div>", unsafe_allow_html=True)
+            st.write("Identifikace, matice rizik a preventivní opatření.")
 
+    elif selected_section == "9. Švarcsystém":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div>", unsafe_allow_html=True)
+        st.markdown("## 9. Švarcsystém")
         with st.container(border=True):
-            st.markdown("## 10. Ověřování informací")
-            st.write("Oficiální nástroje pro ověřování podnikatelů a firem v ČR: **ARES**, **Justice.cz (Obchodní rejstřík)**, **Živnostenský rejstřík (RŽP)**.")
+            st.markdown("<div class='box-red'><strong>Pozor na švarcsystém:</strong> Zastřený pracovněprávní vztah je nelegální.</div>", unsafe_allow_html=True)
 
-    elif section_choice == "Testy & Opakování":
+    elif selected_section == "10. Ověřování informací a užitečné zdroje":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div>", unsafe_allow_html=True)
+        st.markdown("## 10. Ověřování informací a užitečné zdroje")
         with st.container(border=True):
-            st.markdown("## 📊 Interaktivní test: OSVČ, nebo s.r.o.?")
-            st.write("Odpovězte na otázky a posuďte vhodnou formu:")
+            st.write("Veřejné rejstříky: ARES, Obchodní rejstřík (Justice.cz), Živnostenský rejstřík (RŽP).")
 
-            q1_opt = st.radio("1. Plánuješ podnikat sám/sama, nebo v týmu?", ["Sám/sama (OSVČ)", "V týmu (s.r.o.)"], key="t1")
-            q2_opt = st.radio("2. Hrozí projektem větší finanční závazky a škody?", ["Nízké riziko (OSVČ)", "Vysoké riziko / úvěry (s.r.o.)"], key="t2")
+    elif selected_section == "11. Ukončení podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 11</div>", unsafe_allow_html=True)
+        st.markdown("## 11. Ukončení podnikání")
+        with st.container(border=True):
+            st.write("Zrušení, likvidace a zánik podniku.")
 
-            if st.button("Vyhodnotit test"):
-                st.info("Vyhodnocení bylo uloženo do vašeho studentského přehledu.")
+    elif selected_section == "12. Logická mapa podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 12</div>", unsafe_allow_html=True)
+        st.markdown("## 12. Logická mapa podnikání")
+        with st.container(border=True):
+            st.write("Přehledná syntéza celé Kapitoly 1.")
+
+    elif selected_section == "13. Reflexe a sebehodnocení":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 13</div>", unsafe_allow_html=True)
+        st.markdown("## 13. Reflexe a sebehodnocení")
+        with st.container(border=True):
+            st.write("Vyhodnocení vlastní práce a posunu v kapitole.")
+
+    elif selected_section == "14. Integrované opakování":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 14</div>", unsafe_allow_html=True)
+        st.markdown("## 14. Integrované opakování")
+        with st.container(border=True):
+            st.write("Závěrečný test a souhrnné aktivity Kapitoly 1.")
 
 elif view == "Pokroky":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>STUDENTSKÁ ZÓNÁ</span>", unsafe_allow_html=True)
@@ -581,7 +572,7 @@ elif view == "Ucitel":
 
             st.subheader(f"Karta žáka: {selected_student} ({selected_class})")
             st.markdown("**Vyplněné úkoly Kapitoly 1:**")
-            st.markdown("• Lean Canvas: *Vyplněno Problém a Řešení*")
+            st.markdown("• Test právní formy: *Vyplněno*")
             st.text_area("Napsat žákovi poznámku / schválení záměru:", placeholder="Zpětná vazba...", key=f"note_{selected_student}")
 
     with tab_metodika:
