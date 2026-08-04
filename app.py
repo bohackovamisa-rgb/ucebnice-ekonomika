@@ -508,7 +508,7 @@ elif view == "Kapitola 1":
             | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
             | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
             | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
-            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určuje, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
             | **Živnostenské oprávnění** | Právo provozovat živnost. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje. |
             | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
             | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
@@ -565,14 +565,14 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-    # PODKAPITOLA 3 - KOMPLETNÍ TEXT PODLE NOVÝCH PODKLADŮ
+    # PODKAPITOLA 3
     elif selected_section == "3. OSVČ a živnosti":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 3</div>", unsafe_allow_html=True)
         st.markdown("## 3. OSVČ a živnosti")
         
         with st.container(border=True):
             st.write("""
-            **OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy človeka, který podniká vlastním jménem a nese za své podnikání plnou odpovědnost.
+            **OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese za své podnikání plnou odpovědnost.
             """)
             st.markdown("""
             <div class='box-blue'>
@@ -617,18 +617,37 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("#### 🧮 Mini simulace OSVČ")
+            st.markdown("#### 🧮 Mini simulace OSVČ & Kalkulačka hodinové sazby")
             st.write("Představ si, že OSVČ za měsíc vyfakturuje **28 000 Kč**. Náklady na software, dopravu, materiál a reklamu jsou **6 000 Kč**.")
             
             c_sim1, c_sim2 = st.columns(2)
             with c_sim1:
-                st.write("**Odpověz na otázky:**")
                 profit_calc = 28000 - 6000
-                st.markdown(f"1. Orientační zisk před daněmi a odvody činí: **{profit_calc:,} Kč** (28 000 − 6 000 Kč).")
-                reserve_pct = st.slider("2. Kolik % z tržby by si měla OSVČ odložit stranou?", min_value=10, max_value=50, value=30, step=5)
+                st.markdown(f"**Orientační zisk před daněmi:** **{profit_calc:,} Kč** (28 000 − 6 000 Kč).")
+                reserve_pct = st.slider("Kolik % z tržby by si měla OSVČ odložit stranou?", min_value=10, max_value=50, value=30, step=5)
                 st.info(f"Při {reserve_pct} % si odložíte: {28000 * (reserve_pct/100):,.0f} Kč.")
             with c_sim2:
-                st.text_area("3. Vysvětli, proč není bezpečné utratit celých 28 000 Kč:", placeholder="Napište důvod...", height=110, key="p3_sim_ans")
+                st.text_area("Vysvětli, proč není bezpečné utratit celých 28 000 Kč:", placeholder="Napište důvod...", height=110, key="p3_sim_ans")
+
+            # INTERAKTIVNÍ KALKULAČKA HODINOVÉ SAZBY OSVČ
+            st.markdown("##### 🧮 Výpočet minimální hodinové sazby")
+            c_calc1, c_calc2 = st.columns(2)
+            with c_calc1:
+                prijem_calc = st.number_input("Požadovaný čistý příjem měsíčně (Kč):", value=35000, step=1000, key="calc_prijem")
+                naklady_calc = st.number_input("Měsíční provozní náklady (Kč):", value=6000, step=500, key="calc_nakklady")
+            with c_calc2:
+                hodiny_calc = st.number_input("Odpracované fakturovatelné hodiny / měsíc:", value=110, step=10, key="calc_hodiny")
+                odvody_calc = st.number_input("Měsíční zálohy na odvody (Kč):", value=8311, step=500, key="calc_odvody")
+
+            potrebny_prijem = prijem_calc + naklady_calc + odvody_calc
+            vysledna_sazba = potrebny_prijem / hodiny_calc if hodiny_calc > 0 else 0
+            
+            st.markdown(f"""
+            <div class='box-green'>
+                <strong>Minimální potřebná hodinová sazba:</strong> <span style='font-size: 1.2rem; font-weight: 800;'>{vysledna_sazba:.0f} Kč / hod.</span><br>
+                <small>(Celkem potřebuješ vyfakturovat <strong>{potrebny_prijem:,} Kč</strong> měsíčně na pokrytí odvodů, nákladů a čistého příjmu).</small>
+            </div>
+            """, unsafe_allow_html=True)
 
             st.markdown("""
             <div class='box-yellow'>
