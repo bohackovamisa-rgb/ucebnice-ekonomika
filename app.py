@@ -132,6 +132,7 @@ st.markdown("""
         margin: 1rem 0;
         color: #6b21a8;
         font-size: 0.93rem;
+        word-wrap: break-word;
     }
 
     .box-green {
@@ -235,11 +236,6 @@ st.markdown("""
 SVG_COMPASS = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>'
 SVG_TARGET = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>'
 SVG_BOOK = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
-SVG_TOOL = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
-SVG_CHART = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
-SVG_TEACHER = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
-SVG_DICT = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>'
-SVG_PROJ = '<svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></svg>'
 
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
@@ -333,17 +329,6 @@ if view == "Uvod":
         6. **V závěrečném projektu propojíš všechno dohromady.** Výstupem učebnice je návrh odpovědného ekonomického nebo podnikatelského projektu.
         """)
 
-    with st.container(border=True):
-        st.markdown("<h2>Legenda učebnice</h2>", unsafe_allow_html=True)
-        st.markdown("""
-        <div class='box-blue'><strong>Modrá</strong> = Výklad, struktura, důležité vysvětlení</div>
-        <div class='box-yellow'><strong>Žlutá</strong> = Úkol, otázka, aktivita, procvičení</div>
-        <div class='box-purple'><strong>Fialová</strong> = AI mentoring a práce s asistencí</div>
-        <div class='box-green'><strong>Zelená</strong> = Praxe, doporučení, dobrý postup</div>
-        <div class='box-red'><strong>Červená / Oranžová</strong> = Riziko, varování, právní nebo etický problém</div>
-        <div class='box-gray'><strong>Šedá</strong> = Zdroje, ověřování, učitelské nebo organizační poznámky</div>
-        """, unsafe_allow_html=True)
-
 elif view == "Kapitola 1":
     st.markdown("<span style='color: #6366f1; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em;'>KAPITOLA 1</span>", unsafe_allow_html=True)
     st.title("Podnikavost a startupová kultura")
@@ -370,7 +355,7 @@ elif view == "Kapitola 1":
 
     st.divider()
 
-    # PODKAPITOLA 1 - KOMPLETNÍ TEXT PODLE PODKLADŮ
+    # PODKAPITOLA 1
     if selected_section == "1. Podnikatel a základní pojmy":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 1</div>", unsafe_allow_html=True)
         st.markdown("## 1. Podnikatel a základní pojmy")
@@ -465,11 +450,24 @@ elif view == "Kapitola 1":
             if st.button("Uložit můj nápad"):
                 st.success("Nápad uložen!")
 
+        # AI MENTORING - FIALOVÉ BOXY BEZ POSUVOVÁNÍ KURZOREM
         with st.container(border=True):
             st.markdown("### 🟣 AI mentoring k podnikání")
-            st.write("Zkopíruj tento prompt do svého AI asistenta:")
-            st.code("Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.", language="markdown")
-            st.code("Pomoz mi rozlišit, jestli je můj nápad spíš jednorázová aktivita, nebo skutečné podnikání.", language="markdown")
+            st.write("Použij tyto prompty pro analýzu svého nápadu s pomocí AI asistenta:")
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>Prompt 1 — Analýza 4 znaků podnikání:</strong><br>
+                Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>Prompt 2 — Rozlišení aktivity:</strong><br>
+                Pomoz mi rozlišit, jestli je můj nápad spíš jednorázová aktivita, nebo skutečné podnikání.
+            </div>
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
             st.markdown("### 📌 Shrnující přehled & Čtyři pilíře")
