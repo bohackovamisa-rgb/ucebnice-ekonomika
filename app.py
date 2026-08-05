@@ -1711,11 +1711,11 @@ elif view == "Kapitola 1":
             st.markdown("""
             | Zdroj | K čemu slouží |
             | :--- | :--- |
-            | **BusinessInfo.cz** | Oficiální portál pro podnikatele (návody, novinky, formuláře). |
-            | **Portál živnostenského podnikání** | Vyhledávání živností a informace k podnikání na živnost (rzp.cz). |
-            | **Justice.cz** | Veřejný rejstřík, kde lze ověřit firmy a jejich historii. |
-            | **Zákony pro lidi** | Aktuální znění zákonů. |
-            | **Moje daně** | Portál Finanční správy pro správu daňových povinností (mojedane.cz). |
+            | **[BusinessInfo.cz](https://www.businessinfo.cz/)** | Oficiální portál pro podnikatele (návody, novinky, formuláře). |
+            | **[Portál živnostenského podnikání](https://www.rzp.cz/)** | Vyhledávání živností a informace k podnikání na živnost (rzp.cz). |
+            | **[Justice.cz (Veřejný rejstřík)](https://or.justice.cz/)** | Veřejný rejstřík, kde lze ověřit firmy a jejich historii. |
+            | **[Zákony pro lidi](https://www.zakonyprolidi.cz/)** | Aktuální znění zákonů. |
+            | **[Moje daně](https://www.mojedane.cz/)** | Portál Finanční správy pro správu daňových povinností (mojedane.cz). |
             """)
 
             st.markdown("#### 🔍 Jak ověřit firmu krok za krokem:")
