@@ -302,76 +302,252 @@ elif view == "Kapitola 1":
 
     # --- 2. Slovníček základních pojmů ---
     elif selected_section == "2. Slovníček základních pojmů":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div><h2>2. Slovníček základních pojmů</h2> <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div><h2>2. Slovníček základních pojmů</h2>", unsafe_allow_html=True)
         with st.container(border=True):
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>⚖️ Proč jsou definice důležité:</strong> V podnikání nestačí používat pojmy „přibližně“[cite: 1]. Výrazy jako podnikatel, fyzická osoba, právnická osoba nebo živnostenské oprávnění mají oporu v právních předpisech[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání[cite: 1].</div>", unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vysvětli mi tyto pojmy na mém podnikatelském nápadu: podnikatel, fyzická osoba, právnická osoba a živnost.“[cite: 1]
+            </div>
+            """, unsafe_allow_html=True)
+
             st.markdown("""
             | Termín | Co znamená | Proč je důležitý |
             | :--- | :--- | :--- |
-            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem dosažení zisku. <span style='display:none'>[cite: 1]</span> | Pomáhá rozlišit, kdy už nejde jen o koníček nebo jednorázový přivýdělek. <span style='display:none'>[cite: 1]</span> |
-            | **Podnikání** | Soustavná samostatná činnost vykonávaná na vlastní odpovědnost za účelem dosažení zisku. <span style='display:none'>[cite: 1]</span> | Je základním pojmem celé kapitoly a určuje, kdy vznikají právní a finanční povinnosti. <span style='display:none'>[cite: 1]</span> |
-            | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. <span style='display:none'>[cite: 1]</span> | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. <span style='display:none'>[cite: 1]</span> |
-            | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. <span style='display:none'>[cite: 1]</span> | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. <span style='display:none'>[cite: 1]</span> |
-            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. <span style='display:none'>[cite: 1]</span> | Je častou formou začátku malého podnikání, freelancingu nebo služeb. <span style='display:none'>[cite: 1]</span> |
-            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. <span style='display:none'>[cite: 1]</span> | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. <span style='display:none'>[cite: 1]</span> |
-            | **Živnostenské oprávnění**| Právo provozovat živnost. U ohlašovacích živností vzniká ohlášením, u koncesovaných udělením koncese. <span style='display:none'>[cite: 1]</span> | Bez něj nelze legálně provozovat činnost, která ho vyžaduje. <span style='display:none'>[cite: 1]</span> |
-            | **Obchodní korporace** | Souhrnný pojem pro obchodní společnosti a družstva, například v.o.s., k.s., s.r.o., a.s. a družstvo. <span style='display:none'>[cite: 1]</span> | Pomáhá zařadit základní právní formy podnikání. <span style='display:none'>[cite: 1]</span> |
-            | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty. <span style='display:none'>[cite: 1]</span> | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají. <span style='display:none'>[cite: 1]</span> |
-            | **Švarcsystém** | Nelegální nastavení, kdy člověk formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec. <span style='display:none'>[cite: 1]</span> | Pomáhá rozpoznat rizikovou spolupráci a rozdíl mezi podnikáním a zaměstnáním. <span style='display:none'>[cite: 1]</span> |
-            | **Lean Canvas** | Stručná mapa podnikatelského nápadu, která zachycuje problém, zákazníka, řešení, náklady, příjmy a rizika. <span style='display:none'>[cite: 1]</span> | Pomáhá rychle ověřovat nápad dřív, než tým investuje hodně času nebo peněz. <span style='display:none'>[cite: 1]</span> |
-            | **MVP** | Minimální životaschopný produkt — nejmenší verze řešení, která umožní ověřit důležitý předpoklad. <span style='display:none'>[cite: 1]</span> | Učí testovat nápad levně, rychle a bezpečně. <span style='display:none'>[cite: 1]</span> |
+            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem dosažení zisku[cite: 1]. | Pomáhá rozlišit, kdy už nejde jen o koníček nebo jednorázový přivýdělek[cite: 1]. |
+            | **Podnikání** | Soustavná samostatná činnost vykonávaná na vlastní odpovědnost za účelem dosažení zisku[cite: 1]. | Je základním pojmem celé kapitoly a určuje, kdy vznikají právní a finanční povinnosti[cite: 1]. |
+            | **Fyzická osoba** | Člověk — jednotlivec[cite: 1]. V podnikání může vystupovat například jako OSVČ[cite: 1]. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou[cite: 1]. |
+            | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost[cite: 1]. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci[cite: 1]. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně[cite: 1]. |
+            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost[cite: 1]. | Je častou formou začátku malého podnikání, freelancingu nebo služeb[cite: 1]. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky[cite: 1]. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší[cite: 1]. |
+            | **Živnostenské oprávnění** | Právo provozovat živnost[cite: 1]. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese[cite: 1]. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje[cite: 1]. |
+            | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky[cite: 1]. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop[cite: 1]. |
+            | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi[cite: 1]. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace[cite: 1]. |
+            | **Vázaná živnost** | Živnost, která vyžaduje specifické vzdělání, praxi nebo jinou zákonem stanovenou způsobilost[cite: 1]. | Pomáhá pochopit, že u některých služeb stát chrání zákazníka požadavkem na odbornost[cite: 1]. |
+            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncese[cite: 1]. | Typicky jde o regulované nebo rizikovější činnosti[cite: 1]. |
+            | **Obchodní korporace** | Souhrnný pojem pro obchodní společnosti a družstva, například v.o.s., k.s., s.r.o., a.s. a družstvo[cite: 1]. | Pomáhá zařadit základní právní formy podnikání[cite: 1]. |
+            | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty[cite: 1]. | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají[cite: 1]. |
+            | **Živnostenský rejstřík** | Evidence osob podnikajících na základě živnostenského oprávnění[cite: 1]. | Slouží k ověření, zda má podnikatel oprávnění k určité činnosti[cite: 1]. |
+            | **Ručení** | Odpovědnost za dluhy a závazky podnikatele nebo firmy[cite: 1]. | Je klíčové při volbě právní formy, protože OSVČ a některé společnosti nesou vyšší osobní riziko[cite: 1]. |
+            | **Švarcsystém** | Nelegální nastavení, kdy člověk formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec[cite: 1]. | Pomáhá rozpoznat rizikovou spolupráci a rozdíl mezi podnikáním a zaměstnáním[cite: 1]. |
+            | **CSR** | Společenská odpovědnost firem — přístup, kdy firma sleduje nejen zisk, ale i dopady na lidi, společnost a životní prostředí[cite: 1]. | Ukazuje, že podnikání má také etický a společenský rozměr[cite: 1]. |
+            | **Lean Canvas** | Stručná mapa podnikatelského nápadu, která zachycuje problém, zákazníka, řešení, náklady, příjmy a rizika[cite: 1]. | Pomáhá rychle ověřovat nápad dřív, než tým investuje hodně času nebo peněz[cite: 1]. |
+            | **MVP** | Minimální životaschopný produkt — nejmenší verze řešení, která umožní ověřit důležitý předpoklad[cite: 1]. | Učí testovat nápad levně, rychle a bezpečně[cite: 1]. |
+            """)
+
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>📚 Opora v legislativě:</strong> občanský zákoník, živnostenský zákon, zákon o obchodních korporacích a zákon o veřejných rejstřících[cite: 1].
+            </div>
             """, unsafe_allow_html=True)
-            st.markdown("<div class='box-gray'><strong>📚 Opora v legislativě:</strong> občanský zákoník, živnostenský zákon, zákon o obchodních korporacích a zákon o veřejných rejstřících. <span style='display:none'>[cite: 1]</span></div>", unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🌱 Etika v podnikání:</strong> Podnikání není jen o legálnosti[cite: 1]. Férový podnikatel nezneužívá švarcsystém, platí daně, jedná poctivě se zákazníky a chová se ohleduplně k zaměstnancům, partnerům i životnímu prostředí[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
 
     # --- 3. OSVČ a živnosti ---
     elif selected_section == "3. OSVČ a živnosti":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 3</div><h2>3. OSVČ a živnosti</h2>", unsafe_allow_html=True)
-        
+
         with st.container(border=True):
-            st.write("OSVČ znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese za své podnikání odpovědnost. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            st.write("OSVČ znamená osoba samostatně výdělečně činná[cite: 1]. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese za své podnikání odpovědnost[cite: 1].")
             
-            st.markdown("### 3.1 OSVČ jako nejčastější start malé podnikavosti <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.write("OSVČ je pro mnoho lidí nejjednodušší cesta, jak začít. Hodí se pro malé služby, freelancing, řemeslo, doučování, správu sociálních sítí, grafiku, fotografování, tvorbu webů, e-shop v menším rozsahu nebo lokální podnikání. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Podnikání jako OSVČ vypadá jednoduše, ale má právní, daňové a sociální důsledky[cite: 1]. Je proto důležité znát základní podmínky živnostenského podnikání, povinnosti vůči státu a riziko osobního ručení[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 3.1 OSVČ jako nejčastější start malé podnikavosti")
+            st.write("OSVČ je pro mnoho lidí nejjednodušší cesta, jak začít[cite: 1]. Hodí se pro malé služby, freelancing, řemeslo, doučování, správu sociálních sítí, grafiku, fotografování, tvorbu webů, e-shop v menším rozsahu nebo lokální podnikání[cite: 1].")
+            st.write("Výhoda je rychlý start a menší administrativa než u firmy[cite: 1]. Nevýhoda je vyšší osobní riziko: OSVČ obvykle ručí za závazky celým svým majetkem[cite: 1].")
+            
             st.markdown("""
             | Situace | Proč může OSVČ dávat smysl | Na co si dát pozor |
             | :--- | :--- | :--- |
-            | **Student spravuje sociální sítě lokální kavárně.** <span style='display:none'>[cite: 1]</span> | Nízké vstupní náklady, služba založená na dovednosti. <span style='display:none'>[cite: 1]</span> | Smlouva, fakturace, daně, autorská práva k obsahu. <span style='display:none'>[cite: 1]</span> |
-            | **Grafik tvoří loga a šablony.** <span style='display:none'>[cite: 1]</span> | Lze začít s notebookem a portfoliem. <span style='display:none'>[cite: 1]</span> | Licenční podmínky, termíny, reklamace, komunikace s klientem. <span style='display:none'>[cite: 1]</span> |
-            | **Kadeřník nebo kosmetička pracuje samostatně.** <span style='display:none'>[cite: 1]</span> | Vlastní zákazníci, možnost budovat značku. <span style='display:none'>[cite: 1]</span> | Odborná způsobilost, hygiena, provozovna, odpovědnost. <span style='display:none'>[cite: 1]</span> |
-            | **Malý e-shop prodává vlastní produkty.** <span style='display:none'>[cite: 1]</span> | Jednoduchý start a přímý kontakt se zákazníkem. <span style='display:none'>[cite: 1]</span> | Obchodní podmínky, reklamace, sklad, ochrana spotřebitele. <span style='display:none'>[cite: 1]</span> |
+            | **Student spravuje sociální sítě lokální kavárně.** | Nízké vstupní náklady, služba založená na dovednosti[cite: 1]. | Smlouva, fakturace, daně, autorská práva k obsahu[cite: 1]. |
+            | **Grafik tvoří loga a šablony.** | Lze začít s notebookem a portfoliem[cite: 1]. | Licenční podmínky, termíny, reklamace, komunikace s klientem[cite: 1]. |
+            | **Kadeřník nebo kosmetička chce pracovat samostatně.** | Vlastní zákazníci, možnost budovat značku[cite: 1]. | Odborná způsobilost, hygiena, provozovna, odpovědnost[cite: 1]. |
+            | **Malý e-shop prodává vlastní produkty.** | Jednoduchý start a přímý kontakt se zákazníkem[cite: 1]. | Obchodní podmínky, reklamace, sklad, ochrana spotřebitele[cite: 1]. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 3.2 OSVČ a digitální realita")
+            st.write("Dnešní OSVČ často nepotřebuje jen živnostenské oprávnění[cite: 1]. Potřebuje také digitální a finanční gramotnost[cite: 1]:")
+            st.markdown("""
+            * oddělit osobní a podnikatelské peníze[cite: 1],
+            * evidovat příjmy a výdaje[cite: 1],
+            * zálohovat doklady[cite: 1],
+            * chránit osobní údaje zákazníků[cite: 1],
+            * nepoužívat cizí fotografie, hudbu a texty bez práv[cite: 1],
+            * komunikovat transparentně cenu, dodání a podmínky[cite: 1],
+            * počítat s daněmi a odvody dřív, než peníze utratí[cite: 1].
+            """)
+            
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>💡 Pravidlo pro začátečníka:</strong> To, co přijde na účet, není celé „moje výplata“[cite: 1]. Část peněz patří na náklady, daně, sociální a zdravotní pojištění, rezervu a budoucí investice[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("#### 🧮 Mini simulace OSVČ")
+            st.write("Představ si, že OSVČ za měsíc vyfakturuje 28 000 Kč[cite: 1]. Náklady na software, dopravu, materiál a reklamu jsou 6 000 Kč[cite: 1].")
+            
+            zisk_osvc = 28000 - 6000
+            st.info(f"**Orientační zisk před daněmi a odvody:** {zisk_osvc} Kč[cite: 1]")
+            
+            reserve_pct = st.slider("Navrhni, kolik procent by si měla OSVČ odložit stranou:[cite: 1]", 0, 50, 30, 5)
+            st.write(f"Při {reserve_pct} % si odložíte: {28000 * (reserve_pct/100):.0f} Kč[cite: 1].")
+            st.write("Vysvětli, proč není bezpečné utratit celých 28 000 Kč.[cite: 1]")
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš, jestli by se tvůj projekt dal na začátku provozovat jako OSVČ, a uveď jedno hlavní riziko[cite: 1].</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje odpověď:", key="osvc_vyzva")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Podívej se na můj nápad a navrhni, jaký typ živnosti by mohl připadat v úvahu a co si mám ověřit.“[cite: 1]
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-red'>
+                <strong>⚠️ Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem[cite: 1]. Jednoduchý start tedy neznamená nulové riziko[cite: 1].
+            </div>
             """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 3.2 OSVČ a digitální realita <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.write("Dnešní OSVČ často nepotřebuje jen živnostenské oprávnění. Potřebuje také digitální a finanční gramotnost: oddělit osobní a podnikatelské peníze, evidovat příjmy a výdaje, zálohovat doklady, chránit osobní údaje zákazníků, nepoužívat cizí fotografie a hudbu bez práv, a počítat s daněmi a odvody dřív, než peníze utratí. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.markdown("<div class='box-yellow'><strong>💡 Pravidlo pro začátečníka:</strong> To, co přijde na účet, není celé „moje výplata“. Část peněz patří na náklady, daně, sociální a zdravotní pojištění, rezervu a budoucí investice. <span style='display:none'>[cite: 1]</span></div>", unsafe_allow_html=True)
-
-            st.markdown("#### 🧮 Mini simulace OSVČ <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.write("Představ si, že OSVČ za měsíc vyfakturuje **28 000 Kč**. Náklady na software, dopravu, materiál a reklamu jsou **6 000 Kč**. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            profit_calc = 28000 - 6000
-            st.markdown(f"**Orientační zisk před daněmi a odvody:** **{profit_calc:,} Kč**")
-            reserve_pct = st.slider("Kolik % by si měla OSVČ odložit stranou?", 10, 50, 30, 5)
-            st.info(f"Při {reserve_pct} % si odložíte: {28000 * (reserve_pct/100):,.0f} Kč.")
-            st.markdown("<div class='box-red'><strong>⚠️ Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem. Jednoduchý start tedy neznamená nulové riziko. <span style='display:none'>[cite: 1]</span></div>", unsafe_allow_html=True)
+            st.markdown("### 3.3 Podmínky pro podnikání jako OSVČ")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vypiš, které podmínky by musel splnit začínající podnikatel ve tvém příkladu[cite: 1].</div>", unsafe_allow_html=True)
+            st.write("**Co musí splnit začínající OSVČ?**[cite: 1]")
+            st.markdown("""
+            * dosažení věku 18 let[cite: 1],
+            * svéprávnost[cite: 1],
+            * bezúhonnost[cite: 1],
+            * případně odbornou způsobilost podle druhu živnosti[cite: 1].
+            """)
 
         with st.container(border=True):
-            st.markdown("### 3.3 Podmínky pro podnikání a 3.4 Druhy živností <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.write("Základní podmínky pro začínající OSVČ: dosažení věku 18 let, svéprávnost, bezúhonnost, případně odborná způsobilost podle druhu živnosti. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            st.markdown("### 3.4 Druhy živností")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Zařaď svůj nápad k volné, řemeslné, vázané nebo koncesované živnosti a napiš, proč[cite: 1].</div>", unsafe_allow_html=True)
+            
             st.markdown("""
             | Druh živnosti | Co znamená | Příklad |
             | :--- | :--- | :--- |
-            | **Volná živnost** | Není potřeba speciální vzdělání ani praxe. Stačí splnit všeobecné podmínky. <span style='display:none'>[cite: 1]</span> | E-shop, marketingové služby, správa sociálních sítí. <span style='display:none'>[cite: 1]</span> |
-            | **Řemeslná živnost** | Vyžaduje odbornou způsobilost, například výuční list nebo praxi. <span style='display:none'>[cite: 1]</span> | Truhlářství, kadeřnictví, opravy strojů. <span style='display:none'>[cite: 1]</span> |
-            | **Vázaná živnost** | Vyžaduje specifické vzdělání, praxi nebo zkoušku. <span style='display:none'>[cite: 1]</span> | Účetní poradenství, průvodcovská činnost, masérské služby. <span style='display:none'>[cite: 1]</span> |
-            | **Koncesovaná živnost**| Vyžaduje státní povolení — koncesi. Jde o regulovanější nebo rizikovější činnosti. <span style='display:none'>[cite: 1]</span> | Taxislužba, provozování střelnice, prodej zbraní. <span style='display:none'>[cite: 1]</span> |
+            | **Volná živnost** | Není potřeba speciální vzdělání ani praxe[cite: 1]. Stačí splnit všeobecné podmínky[cite: 1]. | E-shop, marketingové služby, správa sociálních sítí[cite: 1]. |
+            | **Řemeslná živnost** | Vyžaduje odbornou způsobilost, například výuční list nebo praxi[cite: 1]. | Truhlářství, kadeřnictví, opravy strojů[cite: 1]. |
+            | **Vázaná živnost** | Vyžaduje specifické vzdělání, praxi nebo zkoušku[cite: 1]. | Účetní poradenství, průvodcovská činnost, masérské služby[cite: 1]. |
+            | **Koncesovaná živnost** | Vyžaduje státní povolení — koncesi[cite: 1]. Jde o více regulované nebo rizikovější činnosti[cite: 1]. | Taxislužba, provozování střelnice, prodej zbraní[cite: 1]. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 3.5 Jak si zařídit živnost")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Sepiš první tři kroky, které bys udělal/a před ohlášením živnosti[cite: 1].</div>", unsafe_allow_html=True)
+            
+            st.markdown("""
+            1. Rozhodnout se, o jaký typ živnosti jde[cite: 1].
+            2. Ověřit podmínky — všeobecné i případné zvláštní[cite: 1].
+            3. Vyplnit Jednotný registrační formulář – nové podání[cite: 1].
+            4. Ohlásit živnost nebo požádat o koncesi[cite: 1].
+            5. Ověřit daňové, zdravotní a sociální povinnosti[cite: 1].
+            """)
+            
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🌍 Digitální praxe:</strong> Portál živnostenského podnikání a veřejné rejstříky slouží k ověřování údajů, podávání žádostí a kontrole obchodních partnerů[cite: 1].
+            </div>
             """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 3.6 Povinnosti živnostníka a 3.7 Daně a odvody <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.write("OSVČ neřeší jen zákazníky a cenu. Musí také ohlásit živnost, platit daň z příjmů fyzických osob (základní sazba 15 %), sociální pojištění a zdravotní pojištění. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.write("Během roku se obvykle platí měsíční **zálohy** a po skončení roku se podává daňové přiznání a přehledy pro pojišťovny. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.markdown("<div class='box-blue'><strong>Paušální daň:</strong> OSVČ může za splnění zákonných podmínek vstoupit do paušálního režimu. V jedné měsíční platbě pak řeší daň z příjmů, sociální pojištění i zdravotní pojištění. Paušální daň se často vyplatí tehdy, když má OSVČ vyšší příjmy, nižší skutečné výdaje a splní podmínky. <span style='display:none'>[cite: 1]</span></div>", unsafe_allow_html=True)
-# ==========================================
-# KAPITOLA 2: FINANCE A OSOBNÍ MANAGEMENT (BEZ CITE TAGŮ)
+            st.markdown("### 3.6 Povinnosti živnostníka: legislativní minimum")
+            st.write("Živnostník neřeší jen zákazníky a cenu[cite: 1]. Musí také splnit základní registrační, daňové a pojistné povinnosti[cite: 1].")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>⚖️ Legislativní minimum pro OSVČ:</strong> Přesné částky a termíny se mohou měnit, proto je potřeba ověřovat aktuální informace na stránkách Finanční správy, ČSSZ, zdravotní pojišťovny a Portálu živnostenského podnikání[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.write("**Co musí živnostník typicky dělat?**[cite: 1]")
+            st.markdown("""
+            * **Ohlásit živnost nebo požádat o koncesi:** podle druhu činnosti na živnostenském úřadě, často přes Jednotný registrační formulář[cite: 1]. Ten může zároveň pomoci s oznámením vůči finančnímu úřadu, ČSSZ a zdravotní pojišťovně[cite: 1].
+            * **Platit daň z příjmů fyzických osob:** běžně se podává daňové přiznání po skončení roku[cite: 1]. Základní lhůta je do 3 měsíců po skončení zdaňovacího období; při elektronickém podání se lhůta prodlužuje na 4 měsíce a při využití daňového poradce zpravidla na 6 měsíců[cite: 1].
+            * **Zvážit paušální daň:** OSVČ může za splnění zákonných podmínek vstoupit do paušálního režimu[cite: 1]. V jedné měsíční platbě pak řeší daň z příjmů, sociální pojištění i zdravotní pojištění[cite: 1]. Paušální režim se nehodí pro každého, proto je nutné ověřit podmínky a pásmo[cite: 1].
+            * **Platit sociální pojištění:** OSVČ obvykle platí měsíční zálohy a po skončení roku podává přehled o příjmech a výdajích pro ČSSZ[cite: 1].
+            * **Platit zdravotní pojištění:** OSVČ obvykle platí měsíční zálohy a po skončení roku podává přehled své zdravotní pojišťovně[cite: 1].
+            * **Vést evidenci:** podle situace může jít o daňovou evidenci, účetnictví nebo evidenci příjmů při uplatnění výdajů procentem z příjmů[cite: 1]. Smyslem je prokázat příjmy, výdaje a základ daně[cite: 1].
+            * **Hlásit důležité změny:** například změnu adresy, přerušení nebo ukončení činnosti, změnu zdravotní pojišťovny nebo skutečnosti důležité pro sociální a zdravotní pojištění[cite: 1].
+            """)
+            
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>💡 Praktické pravidlo:</strong> Živnostník by si měl od každé přijaté platby odkládat část peněz na daň, sociální a zdravotní pojištění[cite: 1]. To, co přijde na účet, ještě není čistý příjem[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 3.7 Daně a odvody OSVČ úplně jednoduše")
+            st.write("OSVČ neřeší jen zákazníky a cenu[cite: 1]. Musí také počítat s tím, že část vydělaných peněz odvede státu a pojišťovnám[cite: 1].")
+            
+            st.markdown("""
+            <div class='box-red'>
+                <strong>⚠️ Důležité zjednodušení:</strong> Přesné částky se každý rok mění[cite: 1]. V první kapitole stačí pochopit princip: OSVČ platí daň z příjmů a odvody na sociální a zdravotní pojištění[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.write("**Co OSVČ typicky platí?**[cite: 1]")
+            st.markdown("""
+            * **Daň z příjmů fyzických osob:** základní sazba je 15 % ze základu daně; u velmi vysokých příjmů se používá vyšší sazba[cite: 1].
+            * **Sociální pojištění:** slouží hlavně na důchodový systém a další dávky[cite: 1].
+            * **Zdravotní pojištění:** slouží na financování zdravotní péče[cite: 1].
+            * **Zálohy:** OSVČ obvykle platí během roku měsíční zálohy a po skončení roku podá daňové přiznání a přehledy pro pojišťovny[cite: 1].
+            """)
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>🧮 Jednoduchý příklad:</strong> Jana má za rok příjmy 300 000 Kč a výdaje 120 000 Kč[cite: 1]. Její zisk je tedy 180 000 Kč[cite: 1]. Z tohoto zisku se teprve počítá daň a pojistné[cite: 1]. Neznamená to, že si může celých 180 000 Kč nechat bez dalších povinností[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+
+            with st.expander("🧮 Konkrétní příklad odvodů OSVČ v roce 2026"):
+                st.write("Příklad počítá s OSVČ na hlavní činnost, která není plátcem DPH, má roční příjmy 300 000 Kč, skutečné výdaje 120 000 Kč a zisk 180 000 Kč[cite: 1]. Částky jsou zjednodušené pro pochopení principu a je potřeba je vždy ověřit podle aktuálního roku[cite: 1].")
+                st.markdown("""
+                | Varianta | Jak se platí | Co je v částce zahrnuto | Orientační částka |
+                | :--- | :--- | :--- | :--- |
+                | **Bez paušální daně** | OSVČ řeší platby zvlášť[cite: 1]. | Daň z příjmů vyjde v tomto příkladu po základní slevě 0 Kč: 15 % ze zisku 180 000 Kč je 27 000 Kč, ale základní sleva na poplatníka je vyšší než vypočtená daň, takže daň k zaplacení vyjde nulová[cite: 1]. Neznamená to ale, že OSVČ nic neplatí — pořád musí řešit sociální a zdravotní pojištění[cite: 1]. K tomu se platí minimální sociální pojištění 5 005 Kč měsíčně a minimální zdravotní pojištění 3 306 Kč měsíčně[cite: 1]. | přibližně 8 311 Kč měsíčně, tedy 99 732 Kč ročně[cite: 1] |
+                | **S paušální daní — I. pásmo** | OSVČ posílá jednu pravidelnou platbu[cite: 1]. | V jedné částce je zahrnutá daň z příjmů, sociální pojištění i zdravotní pojištění[cite: 1]. | 9 162 Kč měsíčně, tedy 109 944 Kč ročně[cite: 1] |
+                """)
+                st.write("**Co z příkladu plyne:** Bez paušální daně se jednotlivé platby počítají a řeší odděleně, proto je důležité rozlišit daň, sociální a zdravotní pojištění[cite: 1]. Paušální daň je jednodušší administrativně, protože se platí jednou částkou, ale nemusí být automaticky levnější[cite: 1].")
+                st.write("**Kdy se může paušální daň vyplatit:** Představ si OSVČ v roce 2026, která má roční příjmy 1 000 000 Kč a používá 60% výdajový paušál[cite: 1]. To znamená, že do daňového výpočtu nemusí vypisovat každou účtenku za notebook, telefon, dopravu nebo reklamu[cite: 1]. Místo toho stát dovolí odečíst výdaje jednoduše procentem z příjmů[cite: 1]. V tomto příkladu jsou výdaje paušálem 600 000 Kč, základ pro výpočet je tedy 400 000 Kč[cite: 1]. Daň před slevou je 15 % z 400 000 Kč, tedy 60 000 Kč[cite: 1]. Po základní slevě na poplatníka vyjde daň přibližně 29 160 Kč[cite: 1]. K tomu se připočítá sociální a zdravotní pojištění[cite: 1]. V takové situaci může být paušální daň v I. pásmu 9 162 Kč měsíčně, tedy 109 944 Kč ročně, výhodná nejen administrativně, ale i finančně[cite: 1].")
+                st.write("**Jednoduše:** Paušální daň se často vyplatí tehdy, když má OSVČ vyšší příjmy, nižší skutečné výdaje a splní podmínky pro příslušné pásmo[cite: 1]. Naopak u nízkého zisku nemusí být výhodná[cite: 1].")
+                st.write("**Kde ověřit aktuální částky:** ČSSZ — OSVČ v paušálním režimu, Finanční správa — paušální daň a zdravotní pojišťovna OSVČ[cite: 1].")
+
+            st.markdown("""
+            | Krok | Jednoduché vysvětlení |
+            | :--- | :--- |
+            | **Příjmy** | Kolik OSVČ vyfakturovala zákazníkům[cite: 1]. |
+            | **Výdaje** | Kolik ji stálo podnikání — materiál, software, doprava, reklama[cite: 1]. |
+            | **Zisk / základ pro výpočet** | Příjmy minus výdaje[cite: 1]. Z něj se řeší daň a pojistné[cite: 1]. |
+            | **Zálohy** | Pravidelné platby během roku, aby OSVČ neplatila všechno najednou až po skončení roku[cite: 1]. |
+            """)
+
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>💡 Praktické pravidlo pro začátečníka:</strong> Když OSVČ dostane zaplaceno, neměla by všechno utratit[cite: 1]. Část peněz si musí odložit na daň, sociální a zdravotní pojištění[cite: 1].
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("🧮 Kalkulačka hodinové sazby OSVČ"):
+                st.info("Kalkulačka hodinové sazby se brzy otevře.[cite: 1]")
 # ==========================================
 elif view == "Kapitola 2":
     st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
