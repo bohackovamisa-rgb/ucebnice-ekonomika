@@ -2176,9 +2176,9 @@ elif view == "Kapitola 1":
             st.checkbox("Mám navržený test hypotézy (MVP).", key="chk_5")
             st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
             st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
-# ==========================================
-    # KAPITOLA 2: FINANČNÍ GRAMOTNOST
-    # ==========================================
+            # ==========================================
+            # KAPITOLA 2: FINANČNÍ GRAMOTNOST
+            # ==========================================
 
     # --- Podkapitola 1: Bankovní systém a peníze v 21. století ---
     elif "Bankovní systém" in selected_section or "1. Bankovní systém" in selected_section:
