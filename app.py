@@ -2489,6 +2489,17 @@ elif view == "Kapitola 1":
 
             st.text_input("🧩 Interaktivní výzva: Vymysli příklad spolupráce, která je férová, a příklad, který už by mohl připomínat švarcsystém:", placeholder="Férová vs Švarcsystém...", key="p10_fair_vs_svarc")
 
+            with st.expander("💡 Zobrazit znaky rizikového nastavení spolupráce (Nápověda k výzvě)"):
+                st.markdown("""
+                **Jak poznat rizikové nastavení spolupráce?**
+                * pracovník pracuje jen pro jednu firmu,
+                * dostává pravidelné pokyny jako zaměstnanec,
+                * má pevně určenou pracovní dobu,
+                * pracuje v prostorách firmy,
+                * používá vybavení firmy,
+                * vystupuje jménem firmy.
+                """)
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
@@ -2501,16 +2512,6 @@ elif view == "Kapitola 1":
                 <strong>⚠️ Švarcsystém:</strong> Nelegální nastavení spolupráce, které může vést k pokutám, doměření odvodů a dalším problémům.
             </div>
             """, unsafe_allow_html=True)
-
-            st.markdown("""
-            **Jak poznat rizikové nastavení spolupráce?**
-            * pracovník pracuje jen pro jednu firmu,
-            * dostává pravidelné pokyny jako zaměstnanec,
-            * má pevně určenou pracovní dobu,
-            * pracuje v prostorách firmy,
-            * používá vybavení firmy,
-            * vystupuje jménem firmy.
-            """)
 
         with st.container(border=True):
             st.markdown("### 10.1 Mini-hra: Švarc-detektiv")
@@ -2558,13 +2559,14 @@ elif view == "Kapitola 1":
             """, unsafe_allow_html=True)
 
             st.markdown("""
+            ### Klíčové online zdroje:
             | Zdroj | K čemu slouží |
             | :--- | :--- |
-            | **BusinessInfo.cz** | Oficiální portál pro podnikatele. |
-            | **Portál živnostenského podnikání** | Vyhledávání živností a informace k podnikání na živnost. |
-            | **Justice.cz** | Veřejný rejstřík, kde lze ověřit firmy a jejich historii. |
-            | **Zákony pro lidi** | Aktuální znění zákonů. |
-            | **Moje daně** | Portál Finanční správy pro správu daňových povinností. |
+            | **[BusinessInfo.cz](https://www.businessinfo.cz/)** | Oficiální portál pro podnikatele. |
+            | **[Portál živnostenského podnikání](https://www.rzp.cz/)** | Vyhledávání živností a informace k podnikání na živnost. |
+            | **[Justice.cz](https://or.justice.cz/)** | Veřejný rejstřík, kde lze ověřit firmy a jejich historii. |
+            | **[Zákony pro lidi](https://www.zakonyprolidi.cz/)** | Aktuální znění zákonů. |
+            | **[Moje daně](https://adisspr.mfcr.cz/)** | Portál Finanční správy pro správu daňových povinností. |
             """)
 
             st.markdown("""
@@ -2599,10 +2601,11 @@ elif view == "Kapitola 1":
             st.markdown("### 12.1 Zrušení vs. zánik")
             st.text_input("🧩 Interaktivní výzva: Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu:", placeholder="Zrušení vs zánik...", key="p12_cancel_vs_end")
 
-            st.markdown("""
-            * **Zrušení = proces:** Rozhodnutí, že firma končí. Může následovat likvidace, vypořádání majetku, dluhů a závazků.
-            * **Zánik = konec:** Definitivní okamžik, kdy firma právně přestává existovat. Obchodní korporace zaniká výmazem z obchodního rejstříku.
-            """)
+            with st.expander("💡 Zobrazit správné vysvětlení (Zrušení vs. Zánik)"):
+                st.markdown("""
+                * **Zrušení = proces:** Rozhodnutí, že firma končí. Může následovat likvidace, vypořádání majetku, dluhů a závazků.
+                * **Zánik = konec:** Definitivní okamžik, kdy firma právně přestává existovat. Obchodní korporace zaniká výmazem z obchodního rejstříku.
+                """)
 
             st.markdown("""
             <div class='box-red'>
@@ -2618,7 +2621,7 @@ elif view == "Kapitola 1":
         with st.container(border=True):
             st.markdown("""
             <div class='box-gray'>
-                <strong>Přehled tématu:</strong> Mapa shrnuje hlavní oblasti podnikání od právního rámce přes právní formy až po záměr, rizika a ukončení podnikání.
+                <strong>Přehled tématu:</strong> Tato mapa shrnuje hlavní oblasti podnikání od právního rámce přes právní formy až po záměr, rizika a ukončení podnikání.
             </div>
             """, unsafe_allow_html=True)
 
@@ -2631,24 +2634,23 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("### Základní stavební kameny mapy:")
+            st.markdown("### Vizualizace logické mapy podnikání:")
             
-            c_m1, c_m2, c_m3 = st.columns(3)
-            with c_m1:
-                st.markdown("**1. Legislativa a definice**")
-                st.write("- občanský zákoník\n- živnostenský zákon\n- ZOK\n- znaky podnikání")
-                st.markdown("**2. Právní formy**")
-                st.write("- OSVČ\n- v.o.s.\n- k.s.\n- s.r.o.\n- a.s.")
-            with c_m2:
-                st.markdown("**3. Záměr a Lean Canvas**")
-                st.write("- zákazník a problém\n- řešení\n- náklady a příjmy\n- první test")
-                st.markdown("**4. CSR a etika**")
-                st.write("- férové jednání\n- odpovědnost (zaměstnanci, zákazník, společnost, prostředí)")
-            with c_m3:
-                st.markdown("**5. Rizika**")
-                st.write("- finanční a tržní riziko\n- právní riziko\n- švarcsystém")
-                st.markdown("**6. Zdroje a ukončení**")
-                st.write("- veřejné rejstříky\n- zrušení a zánik\n- insolvence")
+            st.markdown("""
+            <div style="display:flex; flex-direction:column; gap: 8px;">
+                <div class="box-blue" style="margin:0;"><strong>1. Legislativa a definice</strong> <br><em>Občanský zákoník, živnostenský zákon, ZOK, znaky podnikání</em></div>
+                <div style="text-align:center; color:#94a3b8; font-size: 1.5rem; line-height:1;">⬇</div>
+                <div class="box-green" style="margin:0;"><strong>2. Právní formy</strong> <br><em>OSVČ, v.o.s., k.s., s.r.o., a.s.</em></div>
+                <div style="text-align:center; color:#94a3b8; font-size: 1.5rem; line-height:1;">⬇</div>
+                <div class="box-yellow" style="margin:0;"><strong>3. Záměr a Lean Canvas</strong> <br><em>Zákazník, problém, řešení, náklady, příjmy, první test</em></div>
+                <div style="text-align:center; color:#94a3b8; font-size: 1.5rem; line-height:1;">⬇</div>
+                <div class="box-purple" style="margin:0;"><strong>4. CSR a etika</strong> <br><em>Férové jednání, odpovědnost vůči zaměstnancům, zákazníkům a prostředí</em></div>
+                <div style="text-align:center; color:#94a3b8; font-size: 1.5rem; line-height:1;">⬇</div>
+                <div class="box-red" style="margin:0;"><strong>5. Rizika</strong> <br><em>Finanční rizika, tržní rizika, právní rizika, švarcsystém</em></div>
+                <div style="text-align:center; color:#94a3b8; font-size: 1.5rem; line-height:1;">⬇</div>
+                <div class="box-gray" style="margin:0;"><strong>6. Zdroje a ukončení</strong> <br><em>Veřejné rejstříky, ověřování firem, zrušení, zánik, insolvence</em></div>
+            </div>
+            """, unsafe_allow_html=True)
 
     # PODKAPITOLA 14 - REFLEXE A SEBEHODNOCENÍ
     elif selected_section == "14. Reflexe a sebehodnocení":
@@ -2793,15 +2795,15 @@ elif view == "Kapitola 1":
             """)
 
             st.markdown("#### 🧮 Aktivita: Kolik má stát moje hodina?")
-            st.write("Představ si, že chceš jako OSVČ vydělat 30 000 Kč měsíčně hrubého a můžeš reálně fakturovat 90 hodin:")
+            st.write("Představ si, že chceš jako OSVČ vydělat 30 000 Kč měsíčně hrubého a můžeš reálně fakturovat 90 hodin. Spočítej to krok za krokem:")
             
             c_calc1, c_calc2 = st.columns(2)
             with c_calc1:
-                st.text_input("Základní sazba (30 000 / 90):", value="333 Kč/hod", disabled=True)
-                st.text_input("Když přidáš 20 % na náklady (např. SW, doprava):", value="cca 400 Kč/hod", disabled=True)
+                st.text_input("Základní sazba (30 000 / 90):", placeholder="Napiš svůj výpočet...", key="p15_calc1")
+                st.text_input("Když přidáš 20 % na náklady (např. SW, doprava):", placeholder="Přičti k základu 20 %...", key="p15_calc2")
             with c_calc2:
-                st.text_input("Když přidáš dalších 15 % jako rezervu na období bez zakázek:", value="cca 460 Kč/hod", disabled=True)
-                st.text_input("Byl by zákazník ochoten toto zaplatit?", placeholder="Názor...", key="p15_calc_opin")
+                st.text_input("Když přidáš dalších 15 % jako rezervu na období bez zakázek:", placeholder="Přičti dalších 15 %...", key="p15_calc3")
+                st.text_input("Byl by zákazník ochoten toto zaplatit?", placeholder="Tvůj názor...", key="p15_calc_opin")
 
         with st.container(border=True):
             st.markdown("### 15.6 Obchodní korporace jako systém pravidel")
