@@ -181,15 +181,16 @@ elif view == "Kapitola 1":
         "3. OSVČ a živnosti",
         "4. Obchodní korporace",
         "5. Startup: nápad, který hledá funkční byznys",
-        "6. Lean Canvas",
-        "7. CSR, etika a odpovědné podnikání",
-        "8. Rizika podnikání",
-        "9. Švarcsystém",
-        "10. Ověřování informací a užitečné zdroje",
-        "11. Ukončení podnikání",
-        "12. Logická mapa podnikání",
-        "13. Reflexe a sebehodnocení",
-        "14. Integrované opakování"
+        "6. Podnikatelský záměr"
+        "7. Lean Canvas",
+        "8. CSR, etika a odpovědné podnikání",
+        "9. Rizika podnikání",
+        "10. Švarcsystém",
+        "11. Ověřování informací a užitečné zdroje",
+        "12. Ukončení podnikání",
+        "13. Logická mapa podnikání",
+        "14. Reflexe a sebehodnocení",
+        "15. Integrované opakování"
     ]
 
     selected_section = st.selectbox("📌 Přechod na podkapitolu:", section_options, index=0)
@@ -1210,6 +1211,178 @@ elif view == "Kapitola 1":
             """)
             
             st.info("**Je dobré si pamatovat:** Startup začíná hypotézou, ne jistotou. Nejdřív se ověřuje problém a zákazník, potom se řeší velké investice. Podpora může mít podobu rad, kontaktů, prostoru, soutěže, programu nebo financování. I neúspěšný test má hodnotu, protože šetří čas a peníze.")
+# --- 6. Podnikatelský záměr ---
+    elif "6. Podnikatelský záměr" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 6</div><h2>6. Podnikatelský záměr</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Podnikatelský záměr je dokument nebo pracovní plán, který pomáhá ověřit, zda má nápad šanci fungovat. Není to slohová práce ani „povinný papír do šuplíku“. Je to mapa rozhodování: ukazuje, komu projekt pomáhá, jakou hodnotu nabízí, kolik bude stát, jak bude vydělávat, jaká má rizika a podle čeho poznáme, že má smysl pokračovat.")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je důležité:</strong> Podnikatelský záměr pomáhá převést nápad do praktického návrhu, posoudit rizika, spočítat náklady a ověřit, jestli má projekt šanci fungovat. Nejde o opis definice, ale o plán pro konkrétní situaci.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš svůj podnikatelský nápad ve formátu: „Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit.“</div>", unsafe_allow_html=True)
+            st.text_input("Tvůj nápad:", key="zamer_napad")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Zkontroluj můj podnikatelský záměr. Najdi nejasného zákazníka, slabé místo v ceně, podceněné náklady, právní riziko a jednu otázku, kterou musím ověřit rozhovorem se zákazníkem.“
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-green'><strong>🧭 Navigace:</strong> Podnikatelský záměr pomáhá převést nápad do konkrétních rozhodnutí. Dobrý záměr neříká jen „co chceme dělat“, ale také pro koho, proč, za kolik, s jakými náklady, s jakým rizikem a jak ověříme zájem.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 6.1 Proč podnikatelský záměr vzniká")
+            st.write("Podnikatel často začíná nadšením: má nápad, vidí příležitost a chce rychle začít. Podnikatelský záměr ale nutí tým zpomalit a položit si otázky, které mohou ušetřit čas, peníze i zklamání.")
+            st.write("**Záměr pomáhá:**")
+            st.markdown("""
+            * ujasnit problém a zákazníka,
+            * oddělit přání od ověřených informací,
+            * zjistit, zda cena pokryje náklady,
+            * připravit první test trhu,
+            * domluvit role v týmu,
+            * odhalit právní, finanční a etická rizika,
+            * vysvětlit projekt učiteli, mentorovi, investorovi, bance nebo spolužákům.
+            """)
+            
+            st.markdown("""
+            | Špatný záměr | Lepší záměr |
+            | :--- | :--- |
+            | „Budeme prodávat moderní doplňky pro mladé.“ | „Budeme testovat prodej reflexních přívěsků na batohy pro tebe 1. ročníku, kteří chodí domů za šera a chtějí levný doplněk do 80 Kč.“ |
+            | „Cena bude nízká, aby to lidé kupovali.“ | „Cena bude 79 Kč, protože variabilní náklad je 38 Kč, potřebujeme rezervu na neprodané kusy a v dotazníku byla nejčastější ochota platit 60–90 Kč.“ |
+            | „Budeme ekologičtí.“ | „Použijeme recyklovatelný obal, budeme evidovat množství odpadu a nebudeme používat tvrzení, která neumíme doložit.“ |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.2 Co by měl podnikatelský záměr obsahovat")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyplň ke svému nápadu zákazníka, problém, hodnotu, konkurenci, cenu, náklady, rizika, právní formu a první test.</div>", unsafe_allow_html=True)
+            
+            with st.expander("Zobrazit strukturu podnikatelského záměru"):
+                st.markdown("""
+                | Část záměru | Kontrolní otázka | Co má být výstupem |
+                | :--- | :--- | :--- |
+                | **Vize a nápad** | Co chceme vytvořit a proč? | Jedna srozumitelná věta bez marketingových frází. |
+                | **Zákazník** | Komu přesně pomáháme? | Konkrétní skupina, situace a potřeba. |
+                | **Problém** | Jakou nepříjemnost, potřebu nebo překážku zákazník řeší? | Popis problému z pohledu zákazníka. |
+                | **Hodnota** | Co zákazník získá? | Úspora času, peněz, jistota, pohodlí, bezpečí, styl, zážitek nebo jiný přínos. |
+                | **Konkurence** | Jak zákazník řeší problém dnes? | 3 alternativy a vysvětlení, čím se lišíme. |
+                | **Cena** | Kolik je zákazník ochoten zaplatit a proč? | Návrh ceny opřený o náklady, hodnotu, konkurenci a test. |
+                | **Náklady** | Co bude stát start a provoz? | Jednorázové, fixní a variabilní náklady plus rezerva. |
+                | **Marketing** | Jak se zákazník o nabídce dozví? | Kanály, sdělení, ukázka příspěvku nebo pitch. |
+                | **Právní forma** | Je to jednorázový projekt, OSVČ, nebo firma? | Zdůvodnění podle soustavnosti, rizika a odpovědnosti. |
+                | **Rizika** | Co se může pokazit? | Riziková matice a preventivní opatření. |
+                | **První test** | Jak ověříme zájem levně a rychle? | Rozhovor, dotazník, prototyp, předobjednávka nebo zkušební prodej. |
+                """)
+
+        with st.container(border=True):
+            st.markdown("### 6.3 Analýza trhu")
+            st.write("Než podnikatel začne vyrábět nebo prodávat, musí zjistit, jestli o jeho nabídku někdo stojí. Analýza trhu neznamená jen „vygooglit konkurenci“. Znamená pochopit zákazníka, jeho současné chování a alternativy, ze kterých si vybírá.")
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Najdi tři podobné firmy, produkty nebo náhradní řešení. U každého napiš cenu, výhodu, slabinu a příležitost pro tvůj projekt.</div>", unsafe_allow_html=True)
+            
+            st.markdown("#### Zákazník není „všichni“")
+            st.write("Častá chyba začínajících projektů je tvrzení: „Naším zákazníkem jsou všichni studenti.“ Jenže prvák, maturant, student odborného výcviku, rodič a učitel mají jiné potřeby, rozpočet i motivaci.")
+            st.write("**Lepší popis zákazníka:** konkrétní skupina, konkrétní situace, konkrétní problém, konkrétní důvod, proč by změnila chování.")
+            st.info("**Příklad:** „Studenti prvního ročníku, kteří dojíždějí a potřebují levné, skladné a rychle dostupné svačiny mezi výukou a odpolední praxí.“")
+            
+            st.markdown("#### Konkurence není jen stejný produkt")
+            st.write("Konkurencí je každé řešení, které zákazník používá místo nás. Pokud prodáváme svačinový box, konkurencí není jen jiný box. Konkurencí je školní bufet, obchod cestou do školy, jídlo z domova, automat, rozvoz nebo rozhodnutí nejíst vůbec.")
+
+            st.markdown("""
+            | Co zkoumáme | Otázky | Příklad výstupu |
+            | :--- | :--- | :--- |
+            | **Zákazník** | Kdo má problém a kdy ho řeší? | Studenti dojíždějící do školy mají málo času mezi výukou a praxí. |
+            | **Současné řešení** | Jak to řeší dnes? | Kupují si dražší jídlo cestou, nosí svačinu z domova nebo nejí. |
+            | **Konkurence** | Kdo nebo co může nahradit náš produkt? | Bufet, supermarket, automat, donáška, domácí příprava. |
+            | **Odlišení** | Proč by zákazník zvolil nás? | Rychlé vyzvednutí ve škole, jasná cena, možnost předobjednávky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.4 Zakladatelský rozpočet")
+            st.write("Zakladatelský rozpočet odpovídá na otázku: Kolik peněz potřebuji na start a kolik mě bude stát provoz? Nestačí započítat jen materiál. Podnikatel musí myslet i na čas, propagaci, obaly, software, dopravu, rezervu a neprodané kusy.")
+            
+            st.markdown("""
+            | Typ nákladu | Co znamená | Příklad |
+            | :--- | :--- | :--- |
+            | **Jednorázové náklady** | Platí se při startu projektu. | První materiál, jednoduchý web, vybavení, registrace, grafika. |
+            | **Fixní náklady** | Platí se pravidelně bez ohledu na počet prodejů. | Nájem, software, účetnictví, paušální služby, doména. |
+            | **Variabilní náklady** | Rostou s každým kusem nebo zakázkou. | Materiál, obal, doprava, platební poplatek, provize. |
+            | **Rezerva** | Peníze na chyby, zpoždění a nečekané situace. | Reklamace, zmetky, zdražení materiálu, neprodané kusy. |
+            | **Čas práce** | Práce týmu má hodnotu, i když si ji hned nevyplácí. | Příprava, komunikace, balení, focení, sociální sítě, evidence. |
+            """)
+
+            st.markdown("#### 🧮 Interaktivní kalkulačka bodu zvratu")
+            st.write("Spočítej si, kolik kusů musíš prodat, aby projekt nebyl ve ztrátě.")
+            
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                cena = st.number_input("Prodejní cena za kus (Kč):", value=150)
+                var_naklad = st.number_input("Variabilní náklad na kus (Kč):", value=80)
+            with col_b2:
+                fix_naklad = st.number_input("Fixní náklady za měsíc (Kč):", value=2800)
+            
+            if cena > var_naklad:
+                marze = cena - var_naklad
+                bod_zvratu = fix_naklad / marze
+                import math
+                st.success(f"**Marže na kus:** {marze} Kč. **Bod zvratu:** Musíš prodat alespoň **{math.ceil(bod_zvratu)} kusů**, abys pokryl fixní náklady. Teprve další prodeje tvoří zisk.")
+            else:
+                st.error("Prodejní cena musí být vyšší než variabilní náklad, jinak s každým kusem proděláváš!")
+
+        with st.container(border=True):
+            st.markdown("### 6.5 Marketing a prodej v podnikatelském záměru")
+            st.write("Marketing není jen reklama. V podnikatelském záměru má ukázat, jak se zákazník dozví o nabídce, proč jí porozumí a proč jí bude důvěřovat.")
+            st.write("Dobrý marketingový plán odpovídá: kde zákazník tráví pozornost, jakým jazykem mu vysvětlíme hodnotu, jak ukážeme důkaz kvality, jak zabráníme přehnaným slibům, jak budeme měřit, zda marketing funguje.")
+            
+            st.markdown("""
+            | Kanál | Kdy dává smysl | Riziko | Metrika |
+            | :--- | :--- | :--- | :--- |
+            | **Školní Instagram** | Studentský projekt pro školní komunitu. | Lajky nemusí znamenat nákup. | Kliknutí na formulář, rezervace, předobjednávky. |
+            | **Plakát ve škole** | Lokální prodej nebo akce. | Studenti si nemusí zapamatovat detail. | QR skeny, návštěvy stánku. |
+            | **Osobní doporučení** | Malá komunita, důvěra, první zákazníci. | Pomalejší šíření. | Počet doporučení a opakovaných nákupů. |
+            | **Krátké video** | Produkt jde dobře ukázat vizuálně. | Přehnaný slib nebo povrchní viralita. | Zprávy, poptávky, objednávky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.6 Rizika a plán B")
+            st.write("Podnikatelský záměr má obsahovat i nepříjemné otázky. Silný tým nepůsobí slabě tím, že mluví o rizicích. Naopak ukazuje, že přemýšlí realisticky.")
+            
+            st.markdown("""
+            | Riziko | Jak se projeví | Prevence | Plán B |
+            | :--- | :--- | :--- | :--- |
+            | **Nízký zájem** | Málo objednávek, nízká účast, slabá zpětná vazba. | Rozhovory, předobjednávka, test malého množství. | Změnit cílovou skupinu, cenu nebo problém. |
+            | **Podceněné náklady** | Projekt prodává, ale nevydělává. | Kalkulace, rezerva, kontrola dodavatelů. | Zdražit, zjednodušit produkt, snížit rozsah. |
+            | **Konflikt v týmu** | Nerovnoměrná práce, hádky, zpoždění. | Týmová dohoda, role, pravidelná kontrola. | Přerozdělit role nebo zmenšit projekt. |
+            | **Právní problém** | Nejasné oprávnění, reklamace, autorská práva, data. | Ověření pravidel a transparentní podmínky. | Pozastavit prodej a upravit podmínky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.7 Šablona jednostránkového podnikatelského záměru")
+            st.write("Vyplň si základní osnovu svého projektu.")
+            
+            c_s1, c_s2 = st.columns(2)
+            with c_s1:
+                st.text_input("Název projektu:")
+                st.text_area("Jedna věta projektu (Pomáháme komu, s čím, jak):")
+                st.text_input("Zákazník:")
+                st.text_input("Problém:")
+                st.text_input("Hodnota pro zákazníka:")
+                st.text_input("Řešení:")
+                st.text_input("Konkurence / alternativy:")
+            with c_s2:
+                st.text_input("Cena:")
+                st.text_input("Jednorázové náklady:")
+                st.text_input("Fixní náklady:")
+                st.text_input("Variabilní náklady:")
+                st.text_input("První test & Metrika úspěchu:")
+                st.text_input("Rizika & Právní forma:")
+                st.text_input("Rozhodnutí po testu (pokračovat / upravit / ukončit):")
+            
+            st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
 # ==========================================
 elif view == "Kapitola 2":
     st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
