@@ -1493,7 +1493,7 @@ elif view == "Kapitola 1":
                 st.text_area("🔵 Kanály (Kudy k zákazníkovi?)", height=150)
                 st.text_area("🟣 Příjmy (Jak vyděláme?)", height=150)
 
-    # --- 8. CSR, etika a odpovědné podnikání ---
+   # --- 8. CSR, etika a odpovědné podnikání ---
     elif "8. CSR, etika a odpovědné podnikání" in selected_section or "Odpovědné podnikání" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div><h2>8. CSR, etika a odpovědné podnikání (ESG)</h2>", unsafe_allow_html=True)
         
@@ -1576,7 +1576,8 @@ elif view == "Kapitola 1":
             """)
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.</div>", unsafe_allow_html=True)
             st.text_input("Tvé hodnocení vybrané firmy:")
-# --- 9. Rizika podnikání ---
+
+    # --- 9. Rizika podnikání ---
     elif "9. Rizika podnikání" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div><h2>9. Rizika podnikání</h2>", unsafe_allow_html=True)
         
@@ -1649,7 +1650,7 @@ elif view == "Kapitola 1":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div><h2>10. Švarcsystém</h2>", unsafe_allow_html=True)
         
         with st.container(border=True):
-            st.write("Švarcsystém je situace, kdy člověk formálně vystupuje jako podnikatel (má živnost/IČO), ale fakticky pracuje jako zaměstnanec.")
+            st.write("Švarcsystém je situace, kdy človek formálně vystupuje jako podnikatel (má živnost/IČO), ale fakticky pracuje jako zaměstnanec.")
             
             st.error("⚠️ **Riziko Švarcsystému:** Je to nelegální nastavení spolupráce, které může vést k vysokým pokutám, doměření odvodů a dalším problémům jak pro zadavatele, tak pro OSVČ.")
             
