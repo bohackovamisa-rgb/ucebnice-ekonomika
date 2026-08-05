@@ -207,6 +207,109 @@ elif view == "Kapitola 2":
             st.markdown("### Kryptoměny a Blockchain[cite: 2]")
             st.write("Kryptoměny fungují na technologii blockchain (sdílený digitální záznam transakcí)[cite: 2].")
             st.markdown("<div class='box-red'><strong>Rizika:</strong> Vysoká volatilita (cena prudce kolísá), ztráta přístupu (soukromého klíče), podvody a hacky[cite: 2].</div>", unsafe_allow_html=True)
+# --- 2.4 ÚVĚRY A POJIŠTĚNÍ ---
+    elif vybrana_sekce_k2 == "2.4 Úvěry a pojištění":
+        st.markdown("<div class='sub-section-header'>SEKCE 4</div><h2>Úvěry, pojištění a ochrana majetku</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Úvěr přesouvá spotřebu z budoucnosti do současnosti[cite: 2]. Když si půjčíš, nekupuješ si jen věc. Kupuješ si čas. A za ten se platí úrokem[cite: 2].")
+            
+            st.markdown("### Úrok a RPSN[cite: 2]")
+            st.markdown("""
+            * **Úroková sazba:** Procento, které zaplatíš navíc za půjčení peněz[cite: 2].
+            * **RPSN (Roční procentní sazba nákladů):** Skutečná, celková cena úvěru za rok[cite: 2]. Zahrnuje úrok, ale i poplatky za vedení účtu nebo vyřízení půjčky[cite: 2]. **Při porovnávání půjček sleduj vždy RPSN![cite: 2]**
+            """)
 
+            st.markdown("### Typy úvěrů[cite: 2]")
+            st.markdown("""
+            * **Hypotéka:** Úvěr na bydlení zajištěný nemovitostí[cite: 2]. Banka nepůjčí 100 % ceny (sleduje ukazatel LTV)[cite: 2].
+            * **Spotřebitelský úvěr:** Často není zajištěný hodnotným majetkem, proto má vyšší úrok a RPSN[cite: 2].
+            * **Kreditní karta:** Opakovaně dostupný úvěrový limit s bezúročným obdobím. Vysoký úrok při nesplacení včas[cite: 2].
+            * **BNPL (Kup teď, zaplať později):** Psychologicky maskuje dluh jako pohodlnou platbu[cite: 2].
+            """)
+
+        with st.container(border=True):
+            st.markdown("### Pojištění (Ochrana majetku a zdraví)[cite: 2]")
+            st.write("Pojištění nezabrání tomu, aby se něco stalo (požár, úraz), ale zabrání tomu, aby tě taková událost finančně zruinovala[cite: 2].")
+            
+            st.markdown("""
+            <div class='box-green'>
+                <strong>1. Životní pojištění:</strong> Chrání výpadek příjmu při vážné nemoci, invaliditě nebo úmrtí[cite: 2].<br>
+                <strong>2. Pojištění nemovitosti:</strong> Chrání stavbu (zdi, střechu)[cite: 2].<br>
+                <strong>3. Pojištění domácnosti:</strong> Chrání vybavení domácnosti (nábytek, elektroniku)[cite: 2].<br>
+                <strong>4. Pojištění odpovědnosti:</strong> Chrání před škodou, kterou způsobíme někomu jinému (vytopení souseda)[cite: 2].
+            </div>
+            """, unsafe_allow_html=True)
+
+    # --- 2.5 FINANČNÍ ŘÍZENÍ PODNIKU ---
+    elif vybrana_sekce_k2 == "2.5 Finanční řízení podniku":
+        st.markdown("<div class='sub-section-header'>SEKCE 5</div><h2>Finanční řízení v podniku</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Firma může mít skvělý produkt, ale pokud neumí řídit finance (ziskovost, dluhy, cashflow), zkrachuje[cite: 2].")
+
+            st.markdown("### Základní finanční výkazy[cite: 2]")
+            st.markdown("""
+            * **Rozvaha:** Fotografie firmy k určitému dni[cite: 2]. Ukazuje, co firma vlastní (**Aktiva**) a z čeho to financuje (**Pasiva**)[cite: 2].
+            * **Výkaz zisku a ztráty:** Film za určité období. Výnosy minus Náklady. Ukazuje, zda firma generuje zisk[cite: 2].
+            * **Cashflow (Peněžní toky):** Skutečný tok peněz. Zisk neznamená automaticky peníze na účtu[cite: 2]. Pokud zákazníci platí pozdě a firmě chybí hotovost, může zkrachovat[cite: 2].
+            """)
+
+        with st.container(border=True):
+            st.markdown("### Bod zvratu (Break-even point)[cite: 2]")
+            st.write("Ukazuje, kolik musí firma prodat, aby pokryla všechny náklady a začala vydělávat[cite: 2].")
+            st.markdown("""
+            * **Fixní náklady (FN):** Nemění se podle počtu prodaných kusů (nájem, software)[cite: 2].
+            * **Variabilní náklady (VN):** Rostou s každým vyrobeným kusem (materiál, doprava)[cite: 2].
+            """)
+            st.info("**Vzorec:** Bod Zvratu = Fixní náklady / (Prodejní cena za 1 kus - Variabilní náklad na 1 kus)[cite: 2]")
+
+        with st.container(border=True):
+            st.markdown("### Finanční analýza[cite: 2]")
+            st.write("Pomáhá zjistit, zda je firma zisková, zadlužená, platebně schopná a efektivní[cite: 2].")
+            st.markdown("""
+            | Skupina | Ukazatel | Co říká |
+            | :--- | :--- | :--- |
+            | **Rentabilita** | ROS (Zisk ÷ Tržby × 100) | Kolik % z tržeb zůstává jako zisk[cite: 2]. |
+            | **Likvidita** | Běžná likvidita | Zda má firma dost prostředků na faktury a splátky[cite: 2]. |
+            | **Zadluženost** | Celková zadluženost | Jaká část majetku je financována dluhem[cite: 2]. |
+            | **Aktivita** | Doba inkasa pohledávek | Za kolik dní firma průměrně dostává zaplaceno[cite: 2]. |
+            """)
+
+    # --- 2.6 SLOVNÍK A AKTIVITY ---
+    elif vybrana_sekce_k2 == "2.6 Slovník a aktivity":
+        st.markdown("<div class='sub-section-header'>SEKCE 6</div><h2>Závěrečné aktivity a Slovník</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("### 📚 Slovník cizích pojmů[cite: 2]")
+            st.markdown("""
+            <div class='box-gray' style='font-size: 0.85rem;'>
+            <strong>Aktiva:</strong> Majetek firmy nebo člověka (peníze, zásoby)[cite: 2].<br>
+            <strong>Pasiva:</strong> Zdroje financování (vlastní peníze, dluhy)[cite: 2].<br>
+            <strong>Akcie:</strong> Cenný papír představující podíl na akciové společnosti[cite: 2].<br>
+            <strong>Dluhopis:</strong> Cenný papír, kterým si emitent půjčuje peníze a slibuje jejich splacení[cite: 2].<br>
+            <strong>Blockchain:</strong> Sdílený digitální záznam transakcí[cite: 2].<br>
+            <strong>Bonita:</strong> Schopnost klienta splácet úvěr[cite: 2].<br>
+            <strong>Cashflow:</strong> Skutečný tok peněz do firmy a ven[cite: 2].<br>
+            <strong>Diverzifikace:</strong> Rozložení peněz do více investic[cite: 2].<br>
+            <strong>Emitent:</strong> Ten, kdo vydává cenný papír (stát, firma)[cite: 2].<br>
+            <strong>RPSN:</strong> Roční procentní sazba nákladů[cite: 2].
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 🎯 Závěrečný Kvíz: Zvládl/a jsi finance v běžném životě?[cite: 2]")
+            
+            with st.expander("❓ 1. Jaký je rozdíl mezi pojištěním nemovitosti a domácnosti?[cite: 2]"):
+                st.write("**Odpověď:** Nemovitost jsou zdi, střecha, okna[cite: 2]. Domácnost je vybavení (nábytek, elektronika)[cite: 2].")
+
+            with st.expander("❓ 2. Banka A nabízí úrok 6 % a RPSN 8 %. Banka B nabízí úrok 7 % a RPSN 7,2 %. Co je levnější?[cite: 2]"):
+                st.write("**Odpověď:** Levnější je Banka B. Má sice vyšší 'reklamní' úrok, ale mnohem nižší vedlejší poplatky, takže celkové RPSN (skutečná cena) je nižší[cite: 2].")
+
+            with st.expander("❓ 3. Proč by měla firma sledovat Cashflow, i když je v zisku?[cite: 2]"):
+                st.write("**Odpověď:** Zisk je jen účetní rozdíl. Zákazníci mohou platit pozdě[cite: 2]. Pokud firma nemá reálnou hotovost (cashflow) na zaplacení účtů, může zkrachovat[cite: 2].")
+
+            with st.expander("❓ 4. Který z těchto nástrojů se nejvíce hodí na uchování finanční rezervy? a) Akcie b) Spořicí účet c) Krypto"):
+                st.write("**Odpověď: b) Spořicí účet.** Rezerva musí být bezpečně a rychle dostupná (likvidní)[cite: 2]. Akcie a krypto jsou příliš rizikové (kolísají)[cite: 2].")
 else:
     st.info("Tato sekce se teprve připravuje.")
