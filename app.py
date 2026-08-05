@@ -2049,7 +2049,7 @@ elif view == "Kapitola 1":
             
             col_calc1, col_calc2 = st.columns(2)
             with col_calc1:
-                rezerva_naklady = st.number_input("Přidej % na provozní náklady (nájem, PC, SW):", value=20)
+                rezerva_naklady = st.number_input("Přidej % na provozní náklady (nájem, počítač, licence a software):", value=20)
                 rezerva_vypadky = st.number_input("Přidej % na rezervu (nemoc, období bez zakázek):", value=15)
             
             doporucena_sazba = zakladni_sazba * (1 + (rezerva_naklady + rezerva_vypadky) / 100)
@@ -2077,7 +2077,7 @@ elif view == "Kapitola 1":
             st.markdown("#### 📈 Aktivita: Lajk, nebo zákazník? (Vanity vs. Reálné metriky)")
             col_m1, col_m2 = st.columns(2)
             with col_m1:
-                st.text_area("Napiš 3 'vanity metriky' (vypadají hezky, ale nenají):", placeholder="např. počet lajků, zhlédnutí...", key="metriky_vanity")
+                st.text_area("apiš 3 'vanity metriky' (čísla, která vypadají hezky, ale nepřinášejí reálný zisk):", placeholder="např. počet lajků, zhlédnutí...", key="metriky_vanity")
             with col_m2:
                 st.text_area("Napiš 3 metriky reálného zájmu:", placeholder="např. předobjednávka, zaplacená záloha...", key="metriky_realne")
 
