@@ -181,244 +181,188 @@ elif view == "Kapitola 1":
         "3. OSVČ a živnosti",
         "4. Obchodní korporace",
         "5. Startup: nápad, který hledá byznys",
-        "6. Podnikatelský záměr",
-        "7. Lean Canvas",
-        "8. CSR, etika a odpovědné podnikání",
-        "9. Rizika podnikání",
-        "10. Švarcsystém",
-        "11. Ověřování informací a užitečné zdroje",
-        "12. Ukončení podnikání",
-        "13. Logická mapa podnikání",
-        "14. Reflexe a sebehodnocení",
-        "15. Integrované opakování"
+        "6. Lean Canvas",
+        "7. CSR, etika a odpovědné podnikání",
+        "8. Rizika podnikání",
+        "9. Švarcsystém",
+        "10. Ověřování informací a užitečné zdroje",
+        "11. Ukončení podnikání",
+        "12. Logická mapa podnikání",
+        "13. Reflexe a sebehodnocení",
+        "14. Integrované opakování"
     ]
 
-    selected_section = st.selectbox("📌 Přechod na podkapitolu (Vyberte téma):", section_options, index=0)
+    selected_section = st.selectbox("📌 Přechod na podkapitolu:", section_options, index=0)
     st.divider()
 
-    # PODKAPITOLA 1
+    # --- 1. Podnikatel a základní pojmy ---
     if selected_section == "1. Podnikatel a základní pojmy":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 1</div>", unsafe_allow_html=True)
-        st.markdown("## 1. Podnikatel a základní pojmy")
-        
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 1</div><h2>1. Podnikatel a základní pojmy</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.markdown("### Základní definice podnikání")
+            st.write("Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku[cite: 3].")
             st.markdown("""
             <div class='box-blue'>
-                <strong>Hlavní definice:</strong><br>
-                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku.
+                <strong>Přesná zákonná opora:</strong> Podnikatele definuje zákon č. 89/2012 Sb., občanský zákoník, zejména § 420 odst. 1: „Kdo samostatně vykonává na vlastní účet a odpovědnost výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku...“[cite: 3]
             </div>
             """, unsafe_allow_html=True)
+            st.write("Podnikání dnes nemusí začínat kanceláří. Může začít mobilem, profilem na sociální síti, prodejem digitální šablony nebo e-shopem[cite: 3].")
+            
+            st.markdown("### Čtyři znaky podnikání[cite: 3]")
+            st.markdown("""
+            | Znak podnikání | Co znamená | Příklad ze současnosti |
+            | :--- | :--- | :--- |
+            | **Soustavnost** | Činnost se opakuje nebo je plánovaná dlouhodobě[cite: 3]. | Každý měsíc prodávám digitální plánovače[cite: 3]. |
+            | **Samostatnost** | Sám rozhoduji o ceně, zákaznících, způsobu práce[cite: 3]. | Nabízím správu sítí lokálním podnikům[cite: 3]. |
+            | **Vlastní jméno** | Vystupuji jako podnikatel nebo firma[cite: 3]. | Mám značku, profil, faktury[cite: 3]. |
+            | **Vlastní odpovědnost** | Nesu riziko ztráty, reklamací, dluhů[cite: 3]. | Nakoupím materiál, ale nikdo nekoupí[cite: 3]. |
+            """)
 
-            st.write("Podnikání dnes nemusí začínat kanceláří. Může začít mobilem, profilem na sociální síti nebo e-shopem.")
+            st.markdown("<div class='box-yellow'><strong>Tvůj úkol: Je to podnikání?</strong> U každé situace rozhodni, zda jde o koníček, jednorázový přivýdělek, zaměstnání nebo podnikání[cite: 3].</div>", unsafe_allow_html=True)
+            st.selectbox("Student jednou prodá starý mobil[cite: 3]:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"])
+            st.selectbox("Student každý týden prodává vlastnoručně vyráběné náramky[cite: 3]:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"])
 
-        with st.container(border=True):
-            st.markdown("### Tvůj úkol: Je to podnikání?")
-            st.write("U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdelek, zaměstnání, nebo podnikání.")
-
-            ex1 = st.selectbox("1. Student jednou prodá starý mobil:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex1")
-            ex2 = st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram:", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdelek", "Zaměstnání", "Podnikání"], key="p1_ex2")
-
-            if st.button("Uložit vyhodnocení úkolu"):
-                st.success("Odpovědi byly uloženy do vašeho profilu pokroků!")
-
-    # PODKAPITOLA 2
+    # --- 2. Slovníček základních pojmů ---
     elif selected_section == "2. Slovníček základních pojmů":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div>", unsafe_allow_html=True)
-        st.markdown("## 2. Slovníček základních pojmů")
-        
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div><h2>2. Slovníček základních pojmů</h2>", unsafe_allow_html=True)
         with st.container(border=True):
             st.markdown("""
             | Termín | Co znamená | Proč je důležitý |
             | :--- | :--- | :--- |
-            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet. | Pomáhá rozlišit, kdy už nejde jen o koníček. |
-            | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
-            | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
-            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem. | Je častou formou začátku malého podnikání. |
+            | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat např. jako OSVČ[cite: 3]. | Rozdíl mezi člověkem a firmou jako právnickou osobou[cite: 3]. |
+            | **Právnická osoba** | Organizovaný subjekt s právní osobností (např. s.r.o.)[cite: 3]. | Firma může jednat a vlastnit majetek samostatně[cite: 3]. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona[cite: 3]. | Pomáhá určit, jaký typ oprávnění řešíš[cite: 3]. |
+            | **Švarcsystém** | Člověk formálně vystupuje jako podnikatel, ale pracuje jako zaměstnanec[cite: 3]. | Pomáhá rozpoznat nelegální spolupráci[cite: 3]. |
             """)
 
-    # PODKAPITOLA 3
+    # --- 3. OSVČ a živnosti ---
     elif selected_section == "3. OSVČ a živnosti":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 3</div>", unsafe_allow_html=True)
-        st.markdown("## 3. OSVČ a živnosti")
-        
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 3</div><h2>3. OSVČ a živnosti</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("**OSVČ** znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese za své podnikání plnou odpovědnost.")
+            st.write("OSVČ znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese plnou odpovědnost[cite: 3].")
+            st.markdown("<div class='box-red'><strong>Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem[cite: 3].</div>", unsafe_allow_html=True)
             
-            st.markdown("#### Mini simulace OSVČ")
-            st.write("Představ si, že OSVČ za měsíc vyfakturuje **28 000 Kč**. Náklady na software a dopravu jsou **6 000 Kč**.")
-            
-            profit_calc = 28000 - 6000
-            st.markdown(f"**Orientační zisk před daněmi:** **{profit_calc:,} Kč**")
-            reserve_pct = st.slider("Kolik % z tržby by si měla OSVČ odložit na daně a odvody?", min_value=10, max_value=50, value=30, step=5)
-            st.info(f"Při {reserve_pct} % si odložíte: {28000 * (reserve_pct/100):,.0f} Kč.")
+            st.markdown("### Druhy živností[cite: 3]")
+            st.markdown("""
+            * **Volná:** Není potřeba speciální vzdělání (např. E-shop)[cite: 3].
+            * **Řemeslná:** Vyžaduje výuční list nebo praxi (např. Kadeřnictví)[cite: 3].
+            * **Vázaná:** Vyžaduje specifické vzdělání (např. Účetní poradenství)[cite: 3].
+            * **Koncesovaná:** Vyžaduje státní povolení (např. Taxislužba)[cite: 3].
+            """)
+            st.markdown("<div class='box-yellow'><strong>Pravidlo pro začátečníka:</strong> To, co přijde na účet, není celé „moje výplata“. Část peněz patří na náklady, daně, sociální a zdravotní pojištění[cite: 3].</div>", unsafe_allow_html=True)
 
-            st.markdown("<div class='box-red'><strong>Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem.</div>", unsafe_allow_html=True)
-
-    # PODKAPITOLA 4
+    # --- 4. Obchodní korporace ---
     elif selected_section == "4. Obchodní korporace":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div>", unsafe_allow_html=True)
-        st.markdown("## 4. Obchodní korporace")
-        
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div><h2>4. Obchodní korporace</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("Obchodní korporace jsou právnické osoby. Patří mezi ně obchodní společnosti (v.o.s., k.s., s.r.o., a.s.) a družstva.")
+            st.write("Patří sem obchodní společnosti (v.o.s., k.s., s.r.o., a.s.) a družstva[cite: 3].")
             
-            st.markdown("#### Volba právní formy (OSVČ, nebo s.r.o.?)")
-            q1 = st.radio("1️⃣ Plánuješ podnikat sám/sama, nebo v týmu?", ["Spíš OSVČ: Sám", "Spíš s.r.o.: V týmu"], key="q1_full")
-            q2 = st.radio("2️⃣ Hrozí větší finanční závazky a riziko škody?", ["Spíš OSVČ: Ne", "Spíš s.r.o.: Ano"], key="q2_full")
-
-            if st.button("Vyhodnotit rychlý test"):
-                sro_cnt = sum([1 for q in [q1, q2] if "s.r.o." in q])
-                if sro_cnt > 1:
-                    st.success("S.r.o. se jeví jako vhodnější kvůli týmu nebo vyššímu riziku.")
+            st.markdown("### S.r.o. vs OSVČ: Rychlý test[cite: 3]")
+            q1 = st.radio("Plánuješ podnikat sám, nebo v týmu?[cite: 3]", ["Spíš OSVČ: Sám", "Spíš s.r.o.: V týmu"])
+            q2 = st.radio("Hrozí větší finanční závazky?[cite: 3]", ["Spíš OSVČ: Ne", "Spíš s.r.o.: Ano"])
+            if st.button("Vyhodnotit"):
+                if "s.r.o." in q1 and "s.r.o." in q2:
+                    st.success("S.r.o. se jeví vhodnější kvůli týmu a riziku[cite: 3].")
                 else:
-                    st.success("OSVČ je pro rychlý start pravděpodobně vhodnější.")
+                    st.success("Pro začátek se jeví vhodnější rychlý start jako OSVČ[cite: 3].")
 
-    # PODKAPITOLA 5
+    # --- 5. Startup ---
     elif selected_section == "5. Startup: nápad, který hledá byznys":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div>", unsafe_allow_html=True)
-        st.markdown("## 5. Startup: nápad, který hledá funkční byznys")
-        
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div><h2>5. Startup: nápad, který hledá byznys</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("Startup je mladý podnikatelský projekt, který hledá opakovatelný a škálovatelný způsob, jak řešit problém zákazníka. Často začíná nejistotou.")
-            
-            st.markdown("#### 🎯 SIMULACE: Máš nápad na novou aplikaci. Co uděláš jako první?")
-            sim_choice = st.radio("Vyber odpověď:", ["A) Utratím 200 000 Kč za vývoj plné verze", "B) Udělám jednoduchý dotazník a malý web pro zájemce"], key="p5_sim_app")
-            
-            if st.button("Vyhodnotit simulaci"):
-                if "A)" in sim_choice:
-                    st.error("❌ CHYBA! Chybělo ti otestování nápadu.")
-                else:
-                    st.success("🎉 SKVĚLE! Ověřil jsi trh. Můžeš stavět MVP (Minimum Viable Product).")
+            st.write("Startup je mladý projekt, který hledá opakovatelný a škálovatelný způsob, jak řešit problém zákazníka[cite: 3].")
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>MVP (Minimum Viable Product):</strong> Nejmenší verze řešení, která dokáže ověřit důležitou otázku. Nemusí být dokonalá. Musí být dostatečná na učení[cite: 3].
+            </div>
+            """, unsafe_allow_html=True)
+            st.markdown("### Metodika Lean Startup[cite: 3]")
+            st.write("**Základní cyklus:** Vytvoř — Změř — Pouč se (Build — Measure — Learn)[cite: 3].")
 
-    # PODKAPITOLA 6
-    elif selected_section == "6. Podnikatelský záměr":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 6</div>", unsafe_allow_html=True)
-        st.markdown("## 6. Podnikatelský záměr")
-        
+    # --- 6. Lean Canvas ---
+    elif selected_section == "6. Lean Canvas":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 6</div><h2>6. Lean Canvas</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("Záměr pomáhá zjistit, jestli má projekt šanci fungovat. Ukazuje komu projekt pomáhá, za kolik a jaká jsou rizika.")
-            
-            st.markdown("#### 🧮 Kalkulačka bodu zvratu (Break-even point)")
-            st.write("Kolik kusů musíš prodat, abys nebyl/a ve ztrátě?")
-            c1, c2, c3 = st.columns(3)
-            with c1: price_per_unit = st.number_input("Cena za kus (Kč):", value=150)
-            with c2: var_cost_per_unit = st.number_input("Var. náklad na kus (Kč):", value=80)
-            with c3: fixed_costs_total = st.number_input("Měsíční fixní náklady (Kč):", value=2800)
-            
-            margin_per_unit = price_per_unit - var_cost_per_unit
-            if margin_per_unit > 0:
-                break_even_units = fixed_costs_total / margin_per_unit
-                st.success(f"Musíš prodat minimálně {break_even_units:.1f} kusů měsíčně pro pokrytí nákladů!")
-
-    # PODKAPITOLA 7
-    elif selected_section == "7. Lean Canvas":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div>", unsafe_allow_html=True)
-        st.markdown("## 7. Lean Canvas")
-        
-        with st.container(border=True):
-            st.write("Lean Canvas je rychlá mapa podnikatelského nápadu na jedné stránce. Začíná problémem a zákazníkem.")
-            
+            st.write("Lean Canvas je rychlá mapa podnikatelského nápadu[cite: 3]. Začíná problémem a zákazníkem[cite: 3].")
             lc_col1, lc_col2, lc_col3 = st.columns(3)
             with lc_col1:
-                st.markdown("<div class='lc-title'>1. PROBLÉM</div>", unsafe_allow_html=True)
-                st.text_area("Jaké problémy řešíte?", height=100)
+                st.markdown("**1. PROBLÉM**[cite: 3]")
+                st.text_area("Jaké hlavní problémy řešíte?[cite: 3]", height=100)
             with lc_col2:
-                st.markdown("<div class='lc-title'>4. ŘEŠENÍ</div>", unsafe_allow_html=True)
-                st.text_area("Jaké řešení navrhujete?", height=100)
+                st.markdown("**4. ŘEŠENÍ**[cite: 3]")
+                st.text_area("Jaké řešení navrhujete?[cite: 3]", height=100)
             with lc_col3:
-                st.markdown("<div class='lc-title'>2. ZÁKAZNÍCI</div>", unsafe_allow_html=True)
-                st.text_area("Kdo jsou zákazníci?", height=100)
+                st.markdown("**2. ZÁKAZNÍCI**[cite: 3]")
+                st.text_area("Kdo jsou cíloví zákazníci?[cite: 3]", height=100)
 
-    # PODKAPITOLA 8
-    elif selected_section == "8. CSR, etika a odpovědné podnikání":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div>", unsafe_allow_html=True)
-        st.markdown("## 8. CSR, etika a odpovědné podnikání")
-        
+    # --- 7. CSR ---
+    elif selected_section == "7. CSR, etika a odpovědné podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div><h2>7. CSR a ESG</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("CSR (Společenská odpovědnost firem) a ESG (Environmental, Social, Governance). Podnikání nemá sledovat jen zisk, ale i dopady na lidi a prostředí.")
-            st.markdown("<div class='box-red'><strong>Pozor na greenwashing:</strong> Pokud se firma prezentuje jako „zelená“, ale skutečné dopady neřeší, jde o klamavou komunikaci.</div>", unsafe_allow_html=True)
+            st.write("CSR znamená společenská odpovědnost firem. ESG sleduje životní prostředí (E), sociální dopady (S) a řízení firmy (G)[cite: 3].")
+            st.markdown("<div class='box-red'><strong>Pozor na greenwashing:</strong> Odpovědnost nestačí jen tvrdit v reklamě. Firma by měla umět doložit konkrétní data a výsledky[cite: 3].</div>", unsafe_allow_html=True)
 
-    # PODKAPITOLA 9
-    elif selected_section == "9. Rizika podnikání":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div>", unsafe_allow_html=True)
-        st.markdown("## 9. Rizika podnikání")
-        
+    # --- 8. Rizika podnikání ---
+    elif selected_section == "8. Rizika podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div><h2>8. Rizika podnikání</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("Riziko znamená, že výsledek může být jiný, než očekáváme.")
+            st.write("Riziko znamená, že výsledek může být jiný, než očekáváme[cite: 3]. Patří sem tržní riziko, finanční riziko, právní chyba nebo poškození reputace[cite: 3].")
+
+    # --- 9. Švarcsystém ---
+    elif selected_section == "9. Švarcsystém":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div><h2>9. Švarcsystém</h2>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.write("Švarcsystém je situace, kdy člověk formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec[cite: 3].")
+            st.markdown("<div class='box-red'><strong>Znaky:</strong> Pevná pracovní doba, práce na zařízení firmy, nadřízenost, závislost na jednom zadavateli[cite: 3].</div>", unsafe_allow_html=True)
+
+    # --- 10. Ověřování informací ---
+    elif selected_section == "10. Ověřování informací a užitečné zdroje":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div><h2>10. Ověřování informací</h2>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.write("Při podnikání je důležité umět najít spolehlivé zdroje[cite: 3].")
             st.markdown("""
-            * **Tržní riziko:** Zákazníci nebudou mít zájem.
-            * **Právní riziko:** Chyba ve smlouvách nebo pravidlech.
-            * **Kybernetické riziko:** Hackerský útok, ztráta dat.
+            * **BusinessInfo.cz** - Oficiální portál pro podnikatele[cite: 3].
+            * **Justice.cz** - Veřejný rejstřík, kde lze ověřit firmy a jejich historii[cite: 3].
             """)
 
-    # PODKAPITOLA 10
-    elif selected_section == "10. Švarcsystém":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div>", unsafe_allow_html=True)
-        st.markdown("## 10. Švarcsystém")
-        
+    # --- 11. Ukončení podnikání ---
+    elif selected_section == "11. Ukončení podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 11</div><h2>11. Ukončení podnikání</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.markdown("<div class='box-red'><strong>Švarcsystém:</strong> Zastřený pracovněprávní vztah je nelegální. Člověk vystupuje jako OSVČ, ale fakticky pracuje jako zaměstnanec.</div>", unsafe_allow_html=True)
-            st.write("**Znaky:** Pracuje jen pro jednu firmu, v jejích prostorách, s jejím počítačem a pevnou pracovní dobou.")
+            st.write("**Zrušení = proces:** Rozhodnutí, že firma končí. Může následovat likvidace[cite: 3].")
+            st.write("**Zánik = konec:** Definitivní okamžik, kdy firma právně přestává existovat (výmazem z rejstříku)[cite: 3].")
+            st.write("**Insolvence:** Pokud má firma více dluhů než majetku a není schopna závazky splácet, může se dostat do úpadku[cite: 3].")
 
-    # PODKAPITOLA 11
-    elif selected_section == "11. Ověřování informací a užitečné zdroje":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 11</div>", unsafe_allow_html=True)
-        st.markdown("## 11. Ověřování informací")
-        with st.container(border=True):
-            st.write("Při podnikání je důležité umět najít spolehlivé zdroje.")
-            st.markdown("""
-            * **BusinessInfo.cz** - Oficiální portál pro podnikatele.
-            * **Justice.cz** - Veřejný obchodní rejstřík. Lze zde ověřit, kdo firmu vlastní.
-            """)
-
-    # PODKAPITOLA 12
-    elif selected_section == "12. Ukončení podnikání":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 12</div>", unsafe_allow_html=True)
-        st.markdown("## 12. Ukončení podnikání")
-        with st.container(border=True):
-            st.write("**Zrušení:** Rozhodnutí, že firma končí. Může následovat likvidace.")
-            st.write("**Zánik:** Firma právně přestává existovat výmazem z obchodního rejstříku.")
-            st.markdown("<div class='box-red'><strong>Insolvence:</strong> Pokud má firma více dluhů než majetku a není schopna závazky splácet, dostává se do úpadku.</div>", unsafe_allow_html=True)
-
-    # PODKAPITOLA 13
-    elif selected_section == "13. Logická mapa podnikání":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 13</div>", unsafe_allow_html=True)
-        st.markdown("## 13. Logická mapa podnikání")
-        
+    # --- 12. Logická mapa ---
+    elif selected_section == "12. Logická mapa podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 12</div><h2>12. Logická mapa podnikání</h2>", unsafe_allow_html=True)
         with st.container(border=True):
             st.markdown("""
             <div class="mindmap-wrapper">
                 <div class="mm-col">
-                    <div class="mm-node"><div class="mm-title">1. Legislativa a definice</div><ul><li>občanský zákoník</li><li>živnostenský zákon</li><li>ZOK</li></ul></div>
-                    <div class="mm-node"><div class="mm-title">2. Právní formy</div><ul><li>OSVČ, v.o.s., k.s.</li><li>s.r.o., a.s.</li></ul></div>
+                    <div class="mm-node"><div class="mm-title">1. Legislativa a definice</div><ul><li>občanský zákoník[cite: 3]</li><li>živnostenský zákon[cite: 3]</li></ul></div>
+                    <div class="mm-node"><div class="mm-title">2. Právní formy</div><ul><li>OSVČ, v.o.s.[cite: 3]</li><li>s.r.o., a.s.[cite: 3]</li></ul></div>
                 </div>
-                <div class="mm-center">PODNIKÁNÍ<br><span style="font-size:0.9rem; font-weight: 500;">Logická mapa</span></div>
+                <div class="mm-center">PODNIKÁNÍ</div>
                 <div class="mm-col">
-                    <div class="mm-node"><div class="mm-title">3. Finance a Záměr</div><ul><li>Zákazník, problém, řešení</li><li>Náklady a příjmy</li></ul></div>
-                    <div class="mm-node"><div class="mm-title">4. Rizika a Odpovědnost</div><ul><li>Švarcsystém, insolvence</li><li>CSR a etika</li></ul></div>
+                    <div class="mm-node"><div class="mm-title">3. Finance a Záměr</div><ul><li>Zákazník, náklady[cite: 3]</li><li>Lean Canvas[cite: 3]</li></ul></div>
+                    <div class="mm-node"><div class="mm-title">4. Rizika a Odpovědnost</div><ul><li>Švarcsystém[cite: 3]</li><li>CSR a etika[cite: 3]</li></ul></div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-    # PODKAPITOLA 14
-    elif selected_section == "14. Reflexe a sebehodnocení":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 14</div>", unsafe_allow_html=True)
-        st.markdown("## 14. Reflexe a sebehodnocení")
+    # --- 13. Reflexe ---
+    elif selected_section == "13. Reflexe a sebehodnocení":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 13</div><h2>13. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("Zhodnoť si své znalosti.")
-            st.checkbox("Umím vysvětlit, co je podnikání.")
-            st.checkbox("Rozliším OSVČ a s.r.o.")
-            st.checkbox("Dokážu navrhnout Lean Canvas.")
+            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel[cite: 3].")
+            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.[cite: 3]")
+            st.checkbox("Dokážu navrhnout základ podnikatelského záměru a použít Lean Canvas[cite: 3].")
 
-    # PODKAPITOLA 15
-    elif selected_section == "15. Integrované opakování":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 15</div>", unsafe_allow_html=True)
-        st.markdown("## 15. Integrované opakování")
+    # --- 14. Opakování ---
+    elif selected_section == "14. Integrované opakování":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 14</div><h2>14. Integrované opakování</h2>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.write("Propojení celé Kapitoly 1 do praxe.")
-            st.info("Zde si žáci poskládají všechny části: od definice nápadu přes výběr právní formy až k finanční kalkulaci a rizikům.")
-
+            st.write("Závěrečná podnikatelská mise propojuje zákazníka, problém, právní formu, rozpočet, rizika a první ověřitelný test[cite: 3].")
 # ==========================================
 # KAPITOLA 2: FINANCE A OSOBNÍ MANAGEMENT (BEZ CITE TAGŮ)
 # ==========================================
