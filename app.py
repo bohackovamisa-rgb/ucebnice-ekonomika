@@ -208,8 +208,5 @@ elif view == "Kapitola 2":
             st.write("Kryptoměny fungují na technologii blockchain (sdílený digitální záznam transakcí)[cite: 2].")
             st.markdown("<div class='box-red'><strong>Rizika:</strong> Vysoká volatilita (cena prudce kolísá), ztráta přístupu (soukromého klíče), podvody a hacky[cite: 2].</div>", unsafe_allow_html=True)
 
-    else:
-        st.info("Zvolená sekce se připravuje k doplnění.")
-
 else:
     st.info("Tato sekce se teprve připravuje.")
