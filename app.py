@@ -1972,7 +1972,7 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-    # PODKAPITOLA 7 (Původně Lean Canvas, nyní upravená na plný text s post-it plátnem)
+    # PODKAPITOLA 7 - LEAN CANVAS
     elif selected_section == "7. Lean Canvas":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div>", unsafe_allow_html=True)
         st.markdown("## 7. Lean Canvas")
@@ -2181,11 +2181,191 @@ elif view == "Kapitola 1":
             if st.button("💾 Uložit pracovní Lean Canvas", use_container_width=True):
                 st.success("Tento pracovní Lean Canvas byl úspěšně uložen do vašeho profilu pokroků!")
 
+    # PODKAPITOLA 8 (CSR, ETIKA A ODPOVĚDNÉ PODNIKÁNÍ)
     elif selected_section == "8. CSR, etika a odpovědné podnikání":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div>", unsafe_allow_html=True)
         st.markdown("## 8. CSR, etika a odpovědné podnikání")
+        
         with st.container(border=True):
-            st.write("Společenská odpovědnost firem (ESG) a etické rozhodování v praxi.")
+            st.write("""
+            CSR znamená společenská odpovědnost firem. Připomíná, že podnikání nemá sledovat pouze zisk, ale také dopady na zákazníky, zaměstnance, společnost a životní prostředí. V moderní ekonomice se často používá také pojem ESG — tedy odpovědnost v oblasti životního prostředí (Environmental), lidí a společnosti (Social) a řízení firmy (Governance).
+            """)
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>Proč je to důležité:</strong> Podnikání ovlivňuje zákazníky, zaměstnance, dodavatele, společnost i životní prostředí. Legální jednání nemusí být vždy automaticky férové nebo udržitelné, proto je potřeba přemýšlet i o etice a odpovědnosti.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.1 Odpovědnost jako součást podnikatelského rozhodování")
+            st.write("""
+            Moderní zákazník často neřeší jen cenu. Sleduje také původ produktu, pracovní podmínky, obaly, ekologickou stopu, pravdivost reklamy, ochranu dat a chování značky v krizových situacích.
+
+            Odpovědné podnikání neznamená, že firma musí být dokonalá. Znamená, že:
+            * zná své dopady,
+            * umí je měřit,
+            * komunikuje je pravdivě,
+            * nastavuje pravidla,
+            * řeší chyby,
+            * neprodává odpovědnost jen jako marketingový slogan.
+            """)
+
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>🧠 Pointa pro tebe:</strong> Etika není doplněk až „po zisku“. Etika rozhoduje o tom, jestli firma dlouhodobě získá důvěru lidí.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.2 Etické dilema: co když je výhodné něco zamlčet?")
+            st.write("""
+            Podnikatel může být v situaci, kdy krátkodobě vydělá tím, že něco neřekne: neupozorní na omezení produktu, použije zavádějící slevu, schová poplatek, přehání ekologičnost nebo manipuluje recenzemi.
+            """)
+
+            st.markdown("""
+            | Situace | Krátkodobé pokušení | Dlouhodobé riziko | Férovější řešení |
+            | :--- | :--- | :--- | :--- |
+            | **Produkt má omezenou životnost.** | Neříct to zákazníkovi. | Reklamace, špatné recenze, ztráta důvěry. | Uvést reálnou životnost a nabídnout servis. |
+            | **E-shop nabízí slevu.** | Uměle navýšit původní cenu. | Klamavá komunikace a poškození značky. | Ukázat skutečné srovnání ceny. |
+            | **Firma používá ekologický obal.** | Tvrdit, že celý produkt je „eko“. | Greenwashing. | Popisovat konkrétně jen to, co firma opravdu zlepšila. |
+            | **Aplikace sbírá data.** | Schovat souhlas do dlouhých podmínek. | Nedůvěra, právní problém, poškození uživatele. | Vysvětlit jednoduše, jaká data a proč se sbírají. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 8.3 ESG v malém projektu")
+            st.write("""
+            ESG se nemusí týkat jen velkých firem. I školní nebo studentský projekt může přemýšlet:
+            * **E (Environment):** Kolik odpadu vytváříme? Jaké obaly používáme? Jak řešíme dopravu?
+            * **S (Social):** Chováme se férově ke členům týmu, zákazníkům a dodavatelům?
+            * **G (Governance):** Máme jasná pravidla rozhodování, peněz, dat a odpovědnosti?
+            """)
+
+            st.markdown("#### 🌱 Mini audit odpovědnosti projektu")
+            st.write("Vyber vlastní projekt a odpověz:")
+            
+            col_esg1, col_esg2 = st.columns(2)
+            with col_esg1:
+                st.text_input("1. Jaký pozitivní dopad může mít?", placeholder="Pozitiva...", key="esg_pos")
+                st.text_input("2. Jaký negativní dopad může mít?", placeholder="Negativa...", key="esg_neg")
+                st.text_input("3. Jak budeme komunikovat pravdivě?", placeholder="Komunikace...", key="esg_com")
+            with col_esg2:
+                st.text_input("4. Jak budeme chránit osobní údaje?", placeholder="Ochrana dat...", key="esg_data")
+                st.text_input("5. Jak poznáme, že nejde o greenwashing?", placeholder="Důkaz...", key="esg_green")
+                st.text_input("6. Jaké pravidlo férovosti si dáme do týmu?", placeholder="Pravidlo týmu...", key="esg_team")
+
+            if st.button("Uložit mini audit ESG", use_container_width=True):
+                st.success("Tvůj audit odpovědnosti byl uložen!")
+
+            st.text_input("🧩 Interaktivní výzva: Napiš jedno pravidlo férového chování, které by měl tvůj projekt dodržovat vůči zákazníkům nebo zaměstnancům:", placeholder="Moje pravidlo férovosti...", key="p8_fair_rule")
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
+                <i>„Navrhni pro můj projekt jednoduchý etický kodex v pěti bodech.“</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-green'>
+                <strong>Etika v podnikání:</strong> Férový podnikatel nezneužívá švarcsystém, platí daně, jedná poctivě se zákazníky a chová se ohleduplně k zaměstnancům, partnerům i životnímu prostředí.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>Aktuální souvislost k roku 2026:</strong> Udržitelnost už není jen dobrovolná „hezká aktivita“ navíc. Velké firmy a jejich dodavatelé stále častěji sledují data o emisích, spotřebě energií, pracovních podmínkách, bezpečnosti, diverzitě, ochraně osobních údajů a transparentním řízení. Menší firmy se s ESG setkávají hlavně jako dodavatelé větších společností, při žádosti o financování nebo při komunikaci se zákazníky.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.4 Proč CSR řešit")
+            st.text_input("🧩 Interaktivní výzva: Vyber jednu skupinu, kterou tvůj projekt ovlivní, a napiš možný pozitivní i negativní dopad:", placeholder="Skupina a dopady...", key="p8_impact_group")
+
+            st.markdown("""
+            * Firma ovlivňuje své okolí — zákazníky, zaměstnance, dodavatele, obec, krajinu i veřejnou debatu.
+            * Zákazníci často sledují, zda se firma chová férově a zda její reklama odpovídá realitě.
+            * Odpovědné podnikání může posilovat důvěru, pověst značky a dlouhodobou stabilitu firmy.
+            * Etika pomáhá předcházet problémům, které jsou sice někdy krátkodobě „výhodné“, ale dlouhodobě škodí.
+            * Banky, investoři a obchodní partneři stále častěji sledují, zda firma umí řídit i nefinanční rizika.
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 8.5 ESG jednoduše: tři oblasti odpovědnosti")
+            st.markdown("""
+            | Oblast | Co znamená | Příklad z praxe |
+            | :--- | :--- | :--- |
+            | **E — Environment** | Dopad na životní prostředí. | Spotřeba energií, emise CO₂, odpady, obaly, voda, doprava, recyklace. |
+            | **S — Social** | Vztah k lidem. | Bezpečnost práce, férové mzdy, vzdělávání zaměstnanců, diverzita, ochrana zákazníků. |
+            | **G — Governance** | Způsob řízení firmy. | Etický kodex, transparentnost, prevence korupce, ochrana dat, odpovědné rozhodování vedení. |
+            """)
+
+            st.markdown("""
+            <div class='box-red'>
+                <strong>Pozor na greenwashing:</strong> Odpovědnost nestačí jen tvrdit v reklamě. Firma by měla umět doložit konkrétní data, cíle a výsledky. Pokud se prezentuje jako „zelená“, ale skutečné dopady neřeší, může jít o klamavou komunikaci.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.6 Příklady odpovědného podnikání")
+            st.text_input("🧩 Interaktivní výzva: Vyber dva příklady odpovědného podnikání z tohoto seznamu a uprav je na konkrétní pravidla pro svůj projekt:", placeholder="Moje 2 pravidla...", key="p8_resp_examples")
+
+            st.markdown("""
+            * férové zacházení se zaměstnanci,
+            * pravdivá reklama,
+            * odpovědné nakládání s osobními údaji,
+            * ekologičtější výroba,
+            * snižování odpadu a lepší práce s obaly,
+            * bezpečné pracovní prostředí,
+            * podpora místní komunity,
+            * transparentní komunikace se zákazníky,
+            * prevence korupce a střetu zájmů,
+            * odpovědný výběr dodavatelů.
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 8.7 Firmy působící v ČR: aktuální příklady odpovědnosti")
+            st.write("Následující příklady nejsou „žebříček nejhodnějších firem“. Jsou to ukázky firem působících na českém trhu, které veřejně komunikují odpovědnost, ESG, etiku nebo udržitelnost a zveřejňují konkrétní kroky či reporty.")
+
+            st.markdown("""
+            | Firma působící v ČR | Oblast odpovědnosti | Co lze studentům ukázat |
+            | :--- | :--- | :--- |
+            | **Škoda Auto** | ESG strategie, výroba, regionální odpovědnost | Automobilka veřejně komunikuje udržitelnost, řízení dopadů výroby, firemní kulturu, integritu a odpovědnost vůči regionům, kde má závody. |
+            | **ČEZ** | Energetika, ESG data, dekarbonizace | Energetická firma zveřejňuje rozsáhlá ESG data a strategii zaměřenou na transformaci energetiky, emise, bezpečnost a řízení dopadů. |
+            | **O2 Czech Republic** | Digitální bezpečnost, vzdělávání, emise | Telekomunikační firma reportuje ochranu zákazníků v online prostředí, digitální vzdělávání, nadační aktivity a snižování uhlíkové stopy. |
+            | **Coca‑Cola HBC Česko a Slovensko** | Obaly, voda, bezpečnost práce, transparentní reporting | Firma zveřejňuje zprávy o udržitelnosti, řeší obaly, vodu, bezpečnost zaměstnanců a uvádí výsledky v environmentální, sociální i řídicí oblasti. |
+            | **IKEA** | Cirkularita, dostupnost, klima, dodavatelský řetězec | IKEA dlouhodobě komunikuje cíle v oblasti klimatu, dostupnějšího udržitelného bydlení, cirkulární ekonomiky a odpovědného dodavatelského řetězce. |
+            | **Kofola ČeskoSlovensko** | Lokální značka, voda, obaly, vztah ke krajině | Kofola je vhodný příklad pro debatu o tom, jak může potravinářská firma řešit vodní zdroje, obaly, lokální značky a dopady výroby. |
+            | **Albert Česká republika** | Maloobchod, potraviny, odpady, dodavatelé | U obchodního řetězce lze řešit plýtvání potravinami, práci s dodavateli, obaly, zaměstnance a odpovědný prodej. |
+            """)
+
+            st.markdown("#### Jak s příklady pracovat ve výuce?")
+            st.markdown("""
+            * Nehodnoť firmu jen podle reklamy nebo sloganu.
+            * Najdi konkrétní report, výroční zprávu, ESG stránku nebo nezávislé hodnocení.
+            * Rozlišuj mezi tvrzením, cílem a doloženým výsledkem.
+            * Ptej se: Co firma měří? Co zveřejňuje? Co zlepšila? Kde může mít problém?
+            * Porovnej odpovědnost podle oboru — jiná rizika má energetika, jiná maloobchod, automobilka nebo technologická firma.
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 8.8 Mini případová studie: Jak poznat odpovědnou firmu?")
+            st.text_input("🧩 Interaktivní výzva: Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti, ESG report nebo etický kodex. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a:", placeholder="Firma, silná stránka, otázka...", key="p8_mini_case")
+
+            st.markdown("""
+            | Otázka | Co sledovat |
+            | :--- | :--- |
+            | **Má firma konkrétní cíle?** | Například snížení emisí, menší spotřeba vody, méně odpadu, bezpečnost práce. |
+            | **Ukazuje data?** | Čísla za několik let, srovnání, metodika výpočtu, vysvětlení změn. |
+            | **Řeší lidi?** | Zaměstnance, zákazníky, dodavatele, komunity, bezpečnost a férové podmínky. |
+            | **Má pravidla řízení?** | Etický kodex, ochrana dat, protikorupční pravidla, mechanismus pro oznamování problémů. |
+            | **Je komunikace důvěryhodná?** | Nejde jen o hezká slova; firma ukazuje i rizika, limity a oblasti ke zlepšení. |
+            """)
+
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>Pointa pro tebe:</strong> Odpovědné podnikání neznamená, že firma je dokonalá. Znamená to, že zná své dopady, měří je, zveřejňuje informace, nastavuje pravidla a snaží se zlepšovat.
+            </div>
+            """, unsafe_allow_html=True)
 
     elif selected_section == "9. Rizika podnikání":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div>", unsafe_allow_html=True)
