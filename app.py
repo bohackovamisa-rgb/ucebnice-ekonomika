@@ -180,7 +180,7 @@ elif view == "Kapitola 1":
         "2. Slovníček základních pojmů",
         "3. OSVČ a živnosti",
         "4. Obchodní korporace",
-        "5. Startup: nápad, který hledá byznys",
+        "5. Startup: nápad, který hledá funkční byznys",
         "6. Lean Canvas",
         "7. CSR, etika a odpovědné podnikání",
         "8. Rizika podnikání",
@@ -940,7 +940,7 @@ elif view == "Kapitola 1":
             * Pokud podnikání roste do zahraničí, může být důležitá pobočka, odštěpný závod nebo evropská právní forma.
             * Neziskové organizace mohou vykonávat hospodářskou činnost, ale jejich hlavní smysl je jiný než rozdělování zisku vlastníkům.
             * V Evropské unii existují formy, které mají usnadnit přeshraniční podnikání a spolupráci.
-            """) #[cite: 1]
+            """) 
 # --- 5. Startup: nápad, který hledá funkční byznys ---
 elif selected_section == "5. Startup: nápad, který hledá funkční byznys":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div><h2>5. Startup: nápad, který hledá funkční byznys</h2>", unsafe_allow_html=True)
