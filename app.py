@@ -1383,7 +1383,8 @@ elif view == "Kapitola 1":
                 st.text_input("Rozhodnutí po testu (pokračovat / upravit / ukončit):")
             
             st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
-# --- 7. Lean Canvas ---
+
+    # --- 7. Lean Canvas ---
     elif "7. Lean Canvas" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div><h2>7. Lean Canvas</h2>", unsafe_allow_html=True)
         
@@ -1432,7 +1433,7 @@ elif view == "Kapitola 1":
 
         with st.container(border=True):
             st.markdown("### 7.3 Jak poznat dobrou hypotézu")
-            st.write("Hypotéza je předpoklad, který se dá ověřit. Nemá znít jako přání, ale jako tvrzení s testem a měřítkem úspěchu.")
+            st.write("Hypotéza je předpoklad, který se dá ověřit. Nemá znát jako přání, ale jako tvrzení s testem a měřítkem úspěchu.")
             st.markdown("""
             | Slabá domněnka | Ověřitelná hypotéza | Test | Metrika úspěchu |
             | :--- | :--- | :--- | :--- |
@@ -1492,7 +1493,6 @@ elif view == "Kapitola 1":
                 st.text_area("🟠 Zákazník (Kdo to koupí?)", height=150)
                 st.text_area("🔵 Kanály (Kudy k zákazníkovi?)", height=150)
                 st.text_area("🟣 Příjmy (Jak vyděláme?)", height=150)
-
    # --- 8. CSR, etika a odpovědné podnikání ---
     elif "8. CSR, etika a odpovědné podnikání" in selected_section or "Odpovědné podnikání" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div><h2>8. CSR, etika a odpovědné podnikání (ESG)</h2>", unsafe_allow_html=True)
