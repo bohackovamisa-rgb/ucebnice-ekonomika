@@ -941,6 +941,274 @@ elif view == "Kapitola 1":
             * Neziskové organizace mohou vykonávat hospodářskou činnost, ale jejich hlavní smysl je jiný než rozdělování zisku vlastníkům.
             * V Evropské unii existují formy, které mají usnadnit přeshraniční podnikání a spolupráci.
             """) #[cite: 1]
+# --- 5. Startup: nápad, který hledá funkční byznys ---
+    elif selected_section == "5. Startup: nápad, který hledá funkční byznys":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div><h2>5. Startup: nápad, který hledá funkční byznys</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Startup je mladý podnikatelský projekt, který hledá opakovatelný a škálovatelný způsob, jak řešit problém zákazníka. Nejde jen o „malou firmu“. Startup často začíná nejistotou: tým má nápad, ale ještě neví, zda o něj zákazníci opravdu stojí, kolik za něj zaplatí a jak rychle může růst.")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Startupové téma rozvíjí podnikavost, kreativitu, práci s informacemi, digitální kompetence, týmovou spolupráci, finanční uvažování, komunikaci se zákazníkem a schopnost ověřovat nápady před investicí peněz.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.1 Startup pro současnou generaci")
+            st.write("💡 **Co je to vlastně podnikavost?** Je to schopnost vidět příležitosti tam, kde ostatní vidí problémy, a mít odvahu realizovat nápady.")
+            st.write("🎲 **Pilíř 1: Přijímání kalkulovaného rizika:** Podnikatel nehazarduje, ale spočítá si, co nejhoršího se může stát a zda to zvládne.")
+            st.write("🔄 **Pilíř 2: Odolnost vůči nezdaru (Resilience):** Pravidlo 'Fail fast, learn faster'. Chyba není ostuda, ale lekce pro další pokus.")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("""
+                <div class='box-gray'>
+                    <strong>🏛️ Tradiční firma (Pekařství na rohu)</strong><br><br>
+                    <strong>Cíl:</strong> Stabilita a stálý zisk. Cílem tradiční firmy je dlouhodobě fungovat, udržet si zákazníky a vydělávat pravidelně. Pekařství na rohu nepotřebuje během měsíce dobýt celý svět — potřebuje, aby se místní lidé vraceli pro pečivo, byli spokojení a podnik měl jisté příjmy na nájem, mzdy, suroviny a další provoz.<br><br>
+                    <strong>Riziko:</strong> Malé až střední. Riziko je obvykle nižší než u startupu, protože podnik často pracuje s ověřeným modelem: lidé pečivo znají a pravidelně ho kupují. Přesto riziko existuje — mohou zdražit suroviny, přijít konkurence, změnit se nájem nebo klesnout počet zákazníků. Podnikatel proto musí hlídat náklady, kvalitu a vztah se zákazníky.<br><br>
+                    <strong>Trh:</strong> Místní sousedství. Trhem je hlavně okolí provozovny: lidé z ulice, školy, kanceláře nebo sídliště. Úspěch závisí na dobré poloze, pověsti, kvalitě výrobků a pravidelném kontaktu se zákazníky. Pekařství nemusí oslovit miliony lidí — stačí mu stabilní komunita, která se vrací.
+                </div>
+                """, unsafe_allow_html=True)
+            with col2:
+                st.markdown("""
+                <div class='box-green'>
+                    <strong>🚀 Startup (Aplikace na sdílení kol)</strong><br><br>
+                    <strong>Cíl:</strong> Obrovský a rychlý růst do celého světa. Startup nechce jen pomalu provozovat jednu službu v jedné čtvrti. Hledá model, který se dá rychle opakovat ve více městech nebo zemích. Pokud aplikace na sdílení kol funguje v jednom městě, tým chce ověřit, zda ji lze spustit i jinde, získat hodně uživatelů a růst výrazně rychleji než běžná lokální firma.<br><br>
+                    <strong>Riziko:</strong> Extrémně vysoké (buď uspěje, nebo zanikne). Startup pracuje s velkou nejistotou. Nemusí být jasné, jestli lidé službu opravdu použijí, zda za ni zaplatí, jestli město povolí provoz, zda se kola nebudou ztrácet nebo ničit a jestli náklady na údržbu nepřevýší příjmy. Proto může startup rychle vyrůst, ale také rychle skončit, pokud se ukáže, že model nefunguje.<br><br>
+                    <strong>Trh:</strong> Celá planeta. Trh startupu může být mnohem širší než jedno sousedství. Aplikace se dá teoreticky nabídnout ve více městech, státech nebo regionech, pokud se podaří přizpůsobit pravidlům, dopravě a chování zákazníků. Startup proto přemýšlí globálně: hledá problém, který řeší mnoho lidí na různých místech.
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.divider()
+            st.markdown("#### 🎯 SIMULACE: Máš nápad na novou aplikaci. Co uděláš jako první?")
+            sim_choice = st.radio("Vyber si svůj první krok:", ["Vyber...", "A) Utratím 200 000 Kč za vývoj plné verze", "B) Udělám jednoduchý dotazník a jednoduchý web pro zájemce"])
+            
+            if sim_choice == "A) Utratím 200 000 Kč za vývoj plné verze":
+                st.error("❌ CHYBA! Utratil jsi peníze a zbytečně postavil něco, co lidé nechtějí. Chybělo ti otestování nápadu.")
+            elif sim_choice == "B) Udělám jednoduchý dotazník a jednoduchý web pro zájemce":
+                st.success("🎉 SKVĚLE! Získal jsi zdarma 500 zájemců a ověřil trh. Můžeš bezpečně stavět MVP!")
+
+            with st.expander("💡 Dvě otázky pro představivost"):
+                st.write("**Otázka 1: Proč většina startupů selže v prvním roce?**")
+                st.write("*Odpověď:* Vyrobí produkt, který ve skutečnosti nikdo nepotřebuje (neověří si poptávku).")
+                st.write("**Otázka 2: Co znamená zkratka MVP?**")
+                st.write("*Odpověď:* Minimum Viable Product – nejjednodušší verze produktu, která už funguje a dá se testovat na lidech.")
+
+            st.write("Startupová kultura je blízká dnešní generaci, protože spojuje technologie, sociální sítě, AI, komunitu, rychlé testování a možnost tvořit i s malým rozpočtem. Zároveň ale svádí k iluzi, že stačí dobrý nápad, virální video nebo hezká aplikace.")
+            st.write("Ve skutečnosti startup stojí na ověřování:")
+            st.markdown("""
+            * Existuje skutečný problém?
+            * Koho problém bolí natolik, že za řešení zaplatí?
+            * Umíme zákazníka oslovit?
+            * Vyjdou ekonomicky náklady a příjmy?
+            * Umíme růst bez toho, aby se zhroutila kvalita, tým nebo cashflow?
+            """)
+            st.markdown("<div class='box-red'><strong>⚠️ Častý omyl:</strong> „Mám nápad na aplikaci“ ještě neznamená startup. Startup vzniká až tehdy, když existuje problém, zákazník, test, zpětná vazba a možnost opakovaně vytvářet hodnotu.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.2 Startupová hypotéza")
+            st.write("Každý startup začíná předpoklady. Ty je potřeba převést na hypotézy, které se dají ověřit.")
+            st.markdown("""
+            | Nejasný předpoklad | Lepší hypotéza | Jak ji ověřit |
+            | :--- | :--- | :--- |
+            | Lidem se náš nápad bude líbit. | Alespoň 15 studentů z 30 řekne, že by službu použilo každý týden. | Krátký rozhovor nebo dotazník. |
+            | Zákazníci budou platit. | Alespoň 5 lidí si předobjedná produkt za 99 Kč. | Předobjednávkový formulář. |
+            | Marketing na TikToku bude fungovat. | Video získá 1 000 zhlédnutí a 20 kliknutí na formulář. | Testovací příspěvek a měření odkazu. |
+            | Výroba nebude drahá. | Variabilní náklad na kus nepřekročí 60 % prodejní ceny. | Kalkulace dodavatelů a test malého množství. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 5.3 AI-first, ale odpovědně")
+            st.write("AI může startupu pomoci s rešerší trhu, návrhem textů, zákaznickými personami, analýzou zpětné vazby, automatizací podpory nebo tvorbou prototypu. Současně ale přináší rizika:")
+            st.markdown("""
+            * neověřené informace,
+            * generický obsah bez odlišení,
+            * porušení autorských práv,
+            * práce s osobními údaji,
+            * falešný pocit, že AI nahradí kontakt se zákazníkem.
+            """)
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI prompt pro startup:</strong> „Pomoz mi z mého nápadu vytvořit 5 ověřitelných hypotéz. U každé navrhni nejlevnější test, metriku úspěchu a riziko, že si výsledek špatně vyložím.“
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("#### 🚀 Aktivita: Startup za 30 minut")
+            st.write("Ve skupině vyberte jeden problém ze školy nebo běžného života.")
+            st.markdown("""
+            1. Popište problém jednou větou.
+            2. Určete konkrétního zákazníka.
+            3. Navrhněte nejjednodušší řešení.
+            4. Sepište jednu hypotézu.
+            5. Navrhněte test bez velkých nákladů.
+            6. Určete metriku: podle čeho poznáte zájem?
+            """)
+            st.info("**Výstup:** Jedna stránka „nápad → hypotéza → test → metrika“.")
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli jeden problém, který lidé kolem tebe řeší, a napiš, jaké jednoduché řešení by mohlo vzniknout jako startup.</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje odpověď:", key="startup_vymysli_problem")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi převést můj nápad na startupovou hypotézu: problém, zákazník, řešení, cena a první test.“
+            </div>
+            """, unsafe_allow_html=True)
+            st.markdown("<div class='box-blue'><strong>🚀 Jednoduše řečeno:</strong> Startup není hotová firma. Je to pokus najít funkční podnikatelský model, který se dá rychle ověřovat, upravovat a případně zvětšovat.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.4 Jak startup vzniká")
+            st.write("Startup obvykle nevzniká tak, že někdo rovnou napíše dokonalý podnikatelský plán. Častější cesta je postupné ověřování. Tým nejdřív pracuje s nejistotou: má domněnky o zákazníkovi, problému, řešení, ceně a způsobu prodeje. Teprve když získá důkazy, rozhoduje, jestli pokračovat, upravit směr, nebo projekt ukončit.")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden krok z následujícího postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.</div>", unsafe_allow_html=True)
+            st.markdown("""
+            * **Problém:** někdo si všimne potřeby, nespokojenosti nebo neefektivního řešení.
+            * **Zákazník:** tým určí, komu chce pomoci.
+            * **Návrh řešení:** vznikne první jednoduchá verze produktu nebo služby.
+            * **Ověření:** tým mluví se zákazníky, sbírá zpětnou vazbu a testuje zájem.
+            * **Úprava nápadu:** pokud test nevyjde, startup změní řešení, zákazníka, cenu, kanál nebo rozsah.
+            * **Růst:** když se ukáže, že zákazníci mají zájem, startup hledá způsob, jak růst opakovatelně a finančně udržitelně.
+            """)
+            st.markdown("**Příklad vzniku startupu:** Studenti zjistí, že jejich spolužáci často nestíhají plánovat učení. Nevytvoří hned velkou aplikaci, ale nejdřív sdílenou Notion šablonu nebo jednoduchou tabulku. Tu vyzkouší ve třídě, sledují, kdo ji skutečně používá, co studentům chybí a zda by za rozšířenou verzi zaplatili. Pokud ji lidé používají a doporučují dál, tým může řešit cenu, marketing a další rozvoj.")
+
+        with st.container(border=True):
+            st.markdown("### 5.5 Metodika Lean Startup")
+            st.write("Metodika Lean Startup pomáhá začínajícím týmům netrávit měsíce tvorbou produktu, o který nakonec nikdo nestojí. Její základní myšlenka je jednoduchá: nejdřív ověř nejrizikovější předpoklad, potom investuj víc času a peněz.")
+            st.write("Lean Startup vychází z toho, že startup není zmenšená verze velké firmy. Velká firma často ví, kdo je její zákazník, jaký produkt prodává a jak vydělává. Startup to teprve hledá. Proto potřebuje rychlé učení, malé experimenty a ochotu měnit plán podle dat.")
+            st.markdown("<div class='box-blue'><strong>🚀 Jednoduše řečeno:</strong> Lean Startup je způsob práce, při kterém tým rychle vytvoří malý test, získá zpětnou vazbu, změří výsledky a podle nich se rozhodne, co dál.</div>", unsafe_allow_html=True)
+            
+            st.markdown("#### Základní cyklus: vytvoř — změř — pouč se")
+            st.write("Lean Startup se často vysvětluje pomocí cyklu Build — Measure — Learn, česky vytvoř — změř — pouč se.")
+            st.markdown("""
+            | Krok | Co tým dělá | Příklad ve školním startupu | Častá chyba |
+            | :--- | :--- | :--- | :--- |
+            | **Vytvoř** | Tým připraví nejmenší verzi testu nebo prototypu. | Místo celé aplikace vytvoří klikací návrh, formulář, šablonu nebo testovací stánek. | Tým chce hned dokonalý produkt a ztratí týdny přípravou. |
+            | **Změř** | Tým sbírá data, ne pouze dojmy. | Sleduje počet registrací, předobjednávek, rozhovorů, opakovaných použití nebo skutečných plateb. | Tým se spokojí s větou „lidem se to líbilo“. |
+            | **Pouč se** | Tým vyhodnotí, co data znamenají, a rozhodne další krok. | Pokračuje, upraví zákazníka, změní cenu, zjednoduší řešení nebo projekt ukončí. | Tým ignoruje negativní výsledky, protože se do nápadu zamiloval. |
+            """)
+            st.markdown("<div class='box-gray'><strong>🧪 Pravidlo Lean Startup:</strong> Neověřuj všechno najednou. Nejdřív testuj předpoklad, který může projekt nejrychleji zbořit — například zda problém opravdu existuje, zda zákazník zaplatí nebo zda řešení umíte dodat za rozumné náklady.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.6 MVP: minimální životaschopný produkt")
+            st.write("MVP znamená minimum viable product, česky minimální životaschopný produkt. Nejde o nejlevnější ani nejodbytější verzi. Jde o nejmenší verzi, která dokáže ověřit důležitou otázku.")
+            st.write("MVP má odpovědět například:")
+            st.markdown("""
+            * Chce zákazník tento problém řešit?
+            * Rozumí hodnotě řešení?
+            * Je ochoten udělat akci — zapsat se, objednat, zaplatit, přijít, doporučit?
+            * Funguje navržený kanál komunikace?
+            * Umí tým řešení dodat v přijatelné kvalitě?
+            * Vycházejí náklady a čas?
+            """)
+            st.markdown("""
+            | Nápad | Špatný první krok | Lean Startup MVP | Co ověřujeme |
+            | :--- | :--- | :--- | :--- |
+            | **Aplikace na plánování učení** | Programovat kompletní aplikaci s účty a notifikacemi. | Notion šablona nebo Google tabulka pro 20 studentů. | Zda studenti plánovač reálně používají. |
+            | **E-shop se studentským merchem** | Nakoupit sklad a spustit celý e-shop. | Předobjednávka tří návrhů přes formulář. | Zda lidé zaplatí za konkrétní motiv a cenu. |
+            | **ReStart Batoh** | Sbírat desítky batohů bez ověření zájmu. | Testovací série 5–10 kusů s jasným popisem stavu. | Zda lidé koupí použitý upravený batoh. |
+            | **Doučovací služba** | Budovat platformu pro všechny předměty. | Ručně propojit 5 dvojic studentů a měřit spokojenost. | Zda je problém dost silný a zda funguje párování. |
+            """)
+            st.markdown("<div class='box-red'><strong>⚠️ Pozor:</strong> MVP není výmluva pro nekvalitu. I malý test musí být bezpečný, férový a srozumitelný. Pokud prodáváme produkt, zákazník musí vědět, co přesně dostane.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.7 Validované učení")
+            st.write("Cílem Lean Startup není jen „něco zkusit“. Cílem je validované učení — tedy ověřené poznání, které pomůže rozhodnout. Tým musí umět říct: „Mysleli jsme si X, otestovali jsme Y, výsledek byl Z, proto uděláme další krok.“")
+            st.markdown("""
+            | Slabé vyhodnocení | Validované učení |
+            | :--- | :--- |
+            | „Dotazník dopadl dobře.“ | „Z 60 respondentů 42 uvedlo, že problém řeší alespoň jednou týdně, ale pouze 6 by bylo ochotno zaplatit více než 100 Kč. Musíme upravit cenu nebo hodnotu nabídky.“ |
+            | „Příspěvek měl hodně lajků.“ | „Příspěvek měl 180 lajků, ale jen 4 kliknutí na objednávkový formulář. Lajky tedy nejsou důkaz nákupního zájmu.“ |
+            | „Lidem se batohy líbily.“ | „Z 12 testovacích batohů se prodalo 9 během dvou dnů, 3 zákazníci žádali nižší cenu a 1 reklamoval zip. Další série potřebuje lepší kontrolu zipů.“ |
+            """)
+            st.info("**Věta pro vyhodnocení experimentu:** Předpokládali jsme, že… Ověřili jsme to pomocí… Naměřili jsme… Zjistili jsme… Proto teď rozhodujeme, že…")
+
+        with st.container(border=True):
+            st.markdown("### 5.8 Pivot, pokračování nebo ukončení")
+            st.write("Po testu má startup tři základní možnosti:")
+            st.markdown("""
+            | Rozhodnutí | Kdy dává smysl | Příklad |
+            | :--- | :--- | :--- |
+            | **Pokračovat** | Test ukázal jasný zájem a ekonomika dává smysl. | Předobjednávky pokryly náklady a zákazníci doporučují produkt dál. |
+            | **Pivotovat** | Problém existuje, ale řešení, zákazník, cena nebo kanál nefunguje. | Studenti nechtějí aplikaci, ale chtějí hotovou šablonu a krátké připomínky. |
+            | **Ukončit** | Test opakovaně ukazuje slabý zájem nebo neudržitelnou ekonomiku. | Zákazníci nápad chválí, ale nikdo se nezapíše, nezaplatí ani nepoužije prototyp. |
+            """)
+            st.write("Pivot neznamená selhání. Znamená změnu směru na základě učení. Tým může změnit: cílového zákazníka, problém, řešení, cenu, distribuční kanál, způsob monetizace, rozsah produktu.")
+            st.markdown("<div class='box-gray'><strong>🧭 Podnikatelská zralost:</strong> Dobrý tým neobhajuje nápad za každou cenu. Dobrý tým chrání čas, peníze a energii tím, že se umí rozhodnout podle důkazů.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.9 Lean Startup v mini projektu SŠ")
+            st.write("Pro školní projekt stačí Lean Startup použít v jednoduché podobě. Nemusíš znát odborné termíny nazpaměť, důležité je umět pracovat v tomto sledu:")
+            st.markdown("""
+            1. **Najdi problém:** Co někomu vadí, chybí nebo zdržuje?
+            2. **Urči zákazníka:** Komu se to děje nejčastěji?
+            3. **Zapiš hypotézu:** Co si myslíme, že bude pravda?
+            4. **Navrhni MVP:** Jak to ověříme co nejmenším testem?
+            5. **Změř výsledek:** Jaké číslo nebo důkaz rozhodne?
+            6. **Vyhodnoť:** Co jsme se naučili?
+            7. **Rozhodni:** pokračovat, pivotovat, nebo ukončit.
+            """)
+            st.markdown("""
+            | Krok | Výstup studenta | Kontrolní otázka učitele |
+            | :--- | :--- | :--- |
+            | **Problém** | Jedna konkrétní věta o problému. | Je to problém zákazníka, nebo jen nápad týmu? |
+            | **Zákazník** | Konkrétní skupina a situace. | Není skupina příliš široká? |
+            | **Hypotéza** | Věta „Věříme, že…“ s měřitelným výsledkem. | Dá se hypotéza vyvrátit? |
+            | **MVP** | Malý test bez zbytečných nákladů. | Je test dostatečný k učení, ale bezpečný a férový? |
+            | **Metrika** | Číslo nebo pozorování, podle kterého rozhodneme. | Měříme skutečný zájem, nebo jen popularitu? |
+            | **Vyhodnocení** | Krátký závěr: co data znamenají. | Je rozhodnutí opřené o důkaz? |
+            """)
+            st.markdown("<div class='box-yellow'><strong>🧩 Aktivita: Lean Startup sprint na 45 minut</strong><br>Popiš problém, urči zákazníka, napiš hypotézu, navrhni MVP test, urči metriku úspěchu a rozhodni se, co uděláš podle výsledku.</div>", unsafe_allow_html=True)
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Použij metodiku Lean Startup na můj nápad. Pomoz mi určit nejrizikovější hypotézu, navrhni MVP test, metriku úspěchu, možné výsledky a rozhodnutí: pokračovat, pivotovat nebo ukončit.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.10 Kam jít s novým nápadem")
+            st.write("Začínající tým nemusí být na všechno sám. V ČR existuje startupový ekosystém — síť organizací, mentorů, investorů, soutěží, inkubátorů, akcelerátorů a coworkingových center.")
+            st.markdown("""
+            | Kam se obrátit | Co může pomoci získat |
+            | :--- | :--- |
+            | **Inkubátor** | Pomoc v úplném začátku, mentoring, prostor, kontakty. |
+            | **Akcelerátor** | Intenzivní program pro rychlejší rozvoj nápadu, často zakončený prezentací investorům. |
+            | **Coworkingové centrum** | Místo pro práci, networking a setkávání s dalšími podnikavými lidmi. |
+            | **Startupová soutěž nebo hackathon** | Rychlé ověření nápadu, zpětnou vazbu, kontakty a někdy i cenu nebo podporu. |
+            | **Investor nebo business angel** | Kapitál, zkušenosti a kontakty výměnou za podíl nebo jinou formu dohody. |
+            | **Univerzita nebo inovační centrum** | Odborníky, laboratoře, mentoring a propojení s výzkumem. |
+            """)
+            st.markdown("<div class='box-blue'><strong>🔍 Příklady podpory v ČR:</strong> CzechInvest a portál CzechStartups.gov.cz, regionální inovační centra jako JIC v Brně, startupové akcelerátory jako StartupYard, univerzitní inkubátory, podnikatelské soutěže, coworkingová centra a místní podnikatelská centra.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.11 Proč stát a regiony startupy podporují")
+            st.write("Startupy jsou podporované proto, že mohou přinášet nové produkty, pracovní místa, inovace a vyšší konkurenceschopnost ekonomiky. Ne každý startup uspěje, ale úspěšné projekty mohou vyrůst do firem, které platí daně, zaměstnávají lidi a přinášejí řešení využitelná i v zahraničí.")
+            st.markdown("<div class='box-yellow'><strong>💡 Důvod podpory:</strong> Podpora startupů není „dárek zdarma“. Je to investice do nápadů, inovací, podnikavosti a budoucích firem, které mohou posílit ekonomiku.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.12 Moderní startupové pilíře")
+            st.write("Tradiční formy podnikání dnes doplňuje dynamický svět technologických startupů. Pochopení jejich pilířů — škálovatelnosti, inovací, práce s daty, rizikového kapitálu a rychlého ověřování nápadů — pomáhá studentům pochopit moderní digitální ekonomiku a proměny trhu práce.")
+            st.write("Moderní startup dnes často nestaví jen na nápadu a právní formě. Musí umět chytře využívat technologie, pracovat efektivně, komunikovat s komunitou a zároveň myslet na dlouhodobou udržitelnost práce zakladatele.")
+            st.markdown("<div class='box-blue'><strong>🚀 Moderní startupové pilíře:</strong> AI-First, Solopreneurship, Build in Public a Founder Wellbeing pomáhají přemýšlet o tom, jak bude projekt fungovat v praxi — nejen co prodává, ale také jak se tvoří, komunikuje a dlouhodobě zvládá.</div>", unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden pilíř z tabulky a doplň, jak by se mohl projevit ve tvém startupu.</div>", unsafe_allow_html=True)
+            st.markdown("""
+            | Téma | Proč na tom záleží | Jak to implementuji v mém projektu? |
+            | :--- | :--- | :--- |
+            | **AI-First** | Aby projekt nebyl jen „balíček“ běžných služeb, ale chytře využíval AI tam, kde dává smysl. | Zde si napíšeš, jak tvůj projekt využívá AI — například pro analýzu zákazníků, tvorbu obsahu, automatizaci podpory nebo návrh řešení. |
+            | **Solopreneurship** | Efektivita jednoho člověka: i jednotlivec může díky nástrojům, šablonám a automatizacím zvládnout víc práce. | Zde si vypíšeš automatizace, které použiješ — například plánování příspěvků, fakturaci, odpovědi zákazníkům nebo sběr zpětné vazby. |
+            | **Build in Public** | Budování komunity: lidé mohou sledovat vznik projektu, dávat zpětnou vazbu a stát se prvními zákazníky. | Zde si napíšeš plán příspěvků na sítě — co budeš sdílet, jak často a komu tím chceš pomoci. |
+            | **Founder Wellbeing** | Prevence vyhoření: zakladatel projektu je důležitý zdroj energie, nápadů i rozhodování. | Zde si napíšeš své rituály pro psychohygienu — například odpočinek, hranice práce, pohyb, reflexi nebo pravidelné vyhodnocení zátěže. |
+            """)
+            
+            st.write("**Jak s pilíři pracovat v mini projektu:**")
+            st.markdown("""
+            * U každého pilíře napiš jednu konkrétní větu.
+            * Nepiš obecně „budu používat AI“ — napiš k čemu přesně.
+            * U automatizací napiš, co ti ušetří čas.
+            * U Build in Public napiš, komu budeš ukazovat postup a proč.
+            * U Founder Wellbeing napiš, jak poznáš, že je toho na tebe moc.
+            """)
+            
+            st.info("**Je dobré si pamatovat:** Startup začíná hypotézou, ne jistotou. Nejdřív se ověřuje problém a zákazník, potom se řeší velké investice. Podpora může mít podobu rad, kontaktů, prostoru, soutěže, programu nebo financování. I neúspěšný test má hodnotu, protože šetří čas a peníze.")
 # ==========================================
 elif view == "Kapitola 2":
     st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
