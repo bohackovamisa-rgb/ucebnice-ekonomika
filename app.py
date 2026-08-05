@@ -105,9 +105,9 @@ elif view == "Kapitola 2":
         "2.1 Bankovní systém a peníze",
         "2.2 Osobní finance a rozpočet",
         "2.3 Finanční trh a rizika",
-        "2.4 Úvěry a pojištění (Připravuje se)",
-        "2.5 Finanční řízení podniku (Připravuje se)",
-        "2.6 Slovník a aktivity (Připravuje se)"
+        "2.4 Úvěry a pojištění",
+        "2.5 Finanční řízení podniku",
+        "2.6 Slovník a aktivity"
     ]
     vybrana_sekce_k2 = st.selectbox("📌 Vyberte podkapitolu:", sekce_k2)
     st.divider()
