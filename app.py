@@ -2176,13 +2176,13 @@ elif view == "Kapitola 1":
             st.checkbox("Mám navržený test hypotézy (MVP).", key="chk_5")
             st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
             st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
-   # ==========================================
-    # MODUL 2: FINANČNÍ GRAMOTNOST
+# ==========================================
+    # KAPITOLA 2: FINANČNÍ GRAMOTNOST
     # ==========================================
 
-    # --- 2.1 Bankovní systém a peníze v 21. století ---
-    elif "2.1" in selected_section or "Bankovní systém" in selected_section or "Peníze" in selected_section:
-        st.markdown("<div class='sub-section-header'>MODUL 2: FINANČNÍ GRAMOTNOST</div><h2>1. Bankovní systém a peníze v 21. století</h2>", unsafe_allow_html=True)
+    # --- Podkapitola 1: Bankovní systém a peníze v 21. století ---
+    elif "Bankovní systém" in selected_section or "1. Bankovní systém" in selected_section:
+        st.markdown("<div class='sub-section-header'>KAPITOLA 2: FINANČNÍ GRAMOTNOST</div><h2>1. Bankovní systém a peníze v 21. století</h2>", unsafe_allow_html=True)
         
         st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života.")
         
@@ -2197,13 +2197,13 @@ elif view == "Kapitola 1":
                 </ul>
             </div>
             <div class='box-purple'>
-                <strong>🎯 Cíl této sekce:</strong> Nechceme se učit zastaralé definice. Chceme pochopit, jak technologie mění pravidla hry, jaké nástroje máme dnes v kapse a jak je používat tak, aby nám peníze sloužily — a ne naopak.
+                <strong>🎯 Cíl této podkapitoly:</strong> Nechceme se učit zastaralé definice. Chceme pochopit, jak technologie mění pravidla hry, jaké nástroje máme dnes v kapse a jak je používat tak, aby nám peníze sloužily — a ne naopak.
             </div>
             """, unsafe_allow_html=True)
 
-        # 1.1 Peníze jako digitální data a Vývoj peněz
+        # 1.1 Peníze jako digitální data
         with st.container(border=True):
-            st.markdown("### 1.1 Vývoj peněz a digitální data")
+            st.markdown("### 1.1 Peníze jako digitální data a vývoj peněz")
             st.write("Peníze dnes často nevypadají jako mince nebo bankovky. Když platíš kartou, mobilem nebo hodinkami, mění se digitální záznam v bankovním systému.")
             
             st.markdown("""
@@ -2224,7 +2224,7 @@ elif view == "Kapitola 1":
                 st.write("**Nixonův šok (1971):** Americký prezident Richard Nixon pozastavil směnitelnost dolaru za zlato. Svět přešel k tzv. **fiat penězům** – jejich hodnota stojí výhradně na důvěře ve stát a centrální banku.")
 
             st.markdown("#### 🧠 Interaktivní výzva: Zkus zaplatit komoditou!")
-            komodita = st.selectbox("Představ si, že jdeš do kavárny. Čím zkusíš zaplatit?", ["Vyber...", "Krávou 🐄", "Mušlemi 🐚", "Zlatým prachem ✨"], key="komodita_sel")
+            komodita = st.selectbox("Představ si, že jdeš do kavárny. Čím zkusíš zaplatit?", ["Vyber...", "Krávou 🐄", "Mušlemi 🐚", "Zlatým prachem ✨"], key="k2_1_komodita")
             
             if komodita == "Krávou 🐄":
                 st.error("❌ Nepraktické! Kráva se špatně dělí (jak zaplatíš za jedno kafe?) a navíc ji musíš krmit.")
@@ -2239,15 +2239,15 @@ elif view == "Kapitola 1":
             st.markdown("""
             <div class='box-gray'>
                 <strong>Česká národní banka (ČNB):</strong> Centrální banka státu. Neobsluhuje běžné občany. Její hlavní cíl je stabilita měny (hlídá inflaci) a dohled nad trhem. Určuje základní úrokové sazby.<br><br>
-                <strong>Komerční banky:</strong> Běžné banky pro občan a firmy (přijímají vklady, poskytují úvěry a zajišťují platební styk).
+                <strong>Komerční banky:</strong> Běžné banky pro občany a firmy (přijímají vklady, poskytují úvěry a zajišťují platební styk).
             </div>
             """, unsafe_allow_html=True)
 
             st.markdown("#### 🎮 Simulace: Jsi bankovní rada ČNB!")
             st.write("**Situace:** Inflace je vysoká, ceny v obchodech letí nahoru. Co uděláš s úrokovou sazbou?")
-            cnb_action = st.radio("Vaše rozhodnutí:", ["Vyber možnost...", "Zvýšíme sazby", "Snížíme sazby", "Ponecháme sazby beze změny"], key="cnb_sim_main")
+            cnb_action = st.radio("Vaše rozhodnutí:", ["Vyber možnost...", "Zvýšíme sazby", "Snížíme sazby", "Ponecháme sazby beze změny"], key="k2_1_cnb")
             
-            if st.button("Potvrdit rozhodnutí ČNB"):
+            if st.button("Potvrdit rozhodnutí ČNB", key="k2_1_cnb_btn"):
                 if cnb_action == "Zvýšíme sazby":
                     st.success("Správný krok k tlumení inflace! Úvěry zdraží, lidé budou méně utrácet a více spořit. Tlak na růst cen se sníží.")
                 elif cnb_action == "Vyber možnost...":
@@ -2255,7 +2255,7 @@ elif view == "Kapitola 1":
                 else:
                     st.error("Rizikové! Pokud nesnížíte objem peněz v oběhu zdražením úvěrů, inflace může dál růst.")
 
-        # 1.3 Bezpečnost a Phishing Trenažér
+        # 1.3 Bezpečné platby a Phishing Trenažér
         with st.container(border=True):
             st.markdown("### 1.3 Bezpečné platby a Phishing trenažér")
             st.warning("⚠️ **Pravidlo pro běžný život:** Karta, mobil ani hodinky nejsou peníze samy o sobě, ale klíče k tvému účtu. Banka po telefonu ani přes SMS nikdy nechce PIN ani autorizační kód!")
@@ -2265,19 +2265,19 @@ elif view == "Kapitola 1":
             **Od:** bezpecnost@bnka-podpora-klientu.cz  
             **Předmět:** ZABLOKOVANÝ ÚČET - OKAMŽITÁ AKCE!  
             
-            Vážený kliente, vaše karta byla dočasně zablokována. Pro její okamžité odblokování klikněte IHNED na odkaz nižší a přihlaste se:  
+            Vážený kliente, vaše karta byla dočasně zablokována. Pro její okamžité odblokování klikněte IHNED na odkaz níže a přihlaste se:  
             👉 [www.mojebanka-rychle-overeni.com/login](https://#)
             """)
             
             col_ph1, col_ph2 = st.columns(2)
             with col_ph1:
-                ph_1 = st.checkbox("Podezřelá e-mailová adresa (překlepy, podivná doména)", key="p1")
-                ph_2 = st.checkbox("Výzva k nahlášení na Policii", key="p2")
+                ph_1 = st.checkbox("Podezřelá e-mailová adresa (překlepy, podivná doména)", key="k2_1_ph1")
+                ph_2 = st.checkbox("Výzva k nahlášení na Policii", key="k2_1_ph2")
             with col_ph2:
-                ph_3 = st.checkbox("Extrémní tlak na čas a vyvolání strachu", key="p3")
-                ph_4 = st.checkbox("Odkaz, který nevede na oficiální web banky", key="p4")
+                ph_3 = st.checkbox("Extrémní tlak na čas a vyvolání strachu", key="k2_1_ph3")
+                ph_4 = st.checkbox("Odkaz, který nevede na oficiální web banky", key="k2_1_ph4")
                 
-            if st.button("Vyhodnotit hrozbu phishingu"):
+            if st.button("Vyhodnotit hrozbu phishingu", key="k2_1_ph_btn"):
                 if ph_1 and ph_3 and ph_4 and not ph_2:
                     st.success("Skvělá práce! Odhalil jsi přesně 3 hlavní znaky podvodu. Správná reakce je na nic neklikat a e-mail smazat.")
                 else:
@@ -2290,9 +2290,9 @@ elif view == "Kapitola 1":
 
             col_inv1, col_inv2 = st.columns(2)
             with col_inv1:
-                vklad_start = st.slider("Počáteční vklad (Kč):", 0, 50000, 1000, step=500, key="v_start")
-                vklad_mesic = st.slider("Měsíční vklad (Kč):", 100, 10000, 200, step=100, key="v_mesic")
-                roky = st.slider("Doba investování (roky):", 1, 10, 5, key="v_roky")
+                vklad_start = st.slider("Počáteční vklad (Kč):", 0, 50000, 1000, step=500, key="k2_1_vstart")
+                vklad_mesic = st.slider("Měsíční vklad (Kč):", 100, 10000, 200, step=100, key="k2_1_vmesic")
+                roky = st.slider("Doba investování (roky):", 1, 10, 5, key="k2_1_vroky")
             
             celkem_vlozeno = vklad_start + (vklad_mesic * 12 * roky)
             
@@ -2311,7 +2311,7 @@ elif view == "Kapitola 1":
                     "Spořicí účet (Fix 3.5 % ročně) 🏦",
                     "Silně růstový trh (+15 % ročně) 🚀",
                     "Extrémní krypto růst (+30 % ročně) 🔥"
-                ], key="scenar_sel")
+                ], key="k2_1_scenar")
                 
                 if "Pesimistický" in scenar:
                     vysledek = spocitej_zhodnoceni(vklad_start, vklad_mesic, roky, -0.20)
@@ -2326,252 +2326,17 @@ elif view == "Kapitola 1":
                 
                 rozdil = vysledek - celkem_vlozeno
                 st.metric("Orientační hodnota na konci:", f"{vysledek:,.0f} Kč".replace(",", " "), delta=f"{rozdil:,.0f} Kč zisk/ztráta")
-    # --- PODKAPITOLA 2.2 ---
-    elif selected_section_2 == "2.2 Osobní finance a „Algoritmy bohatství“":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2.2</div>", unsafe_allow_html=True)
-        st.markdown("## 2. Osobní finance a „Algoritmy bohatství“")
-        
-        with st.container(border=True):
-            st.markdown("### 2.1 Proč je to dnes těžší, než se zdá")
-            st.write("Osobní finance nejsou jen otázka toho, kolik člověk vydělává. Jsou to každodenní rozhodnutí: za co utratím peníze, co odložím, co si půjčím a jak poznám riziko.") #[cite: 2]
-            st.markdown("""
-            <div class='box-red'>
-                <strong>Současný problém:</strong> Telefon umožňuje nakoupit, objednat, investovat nebo půjčit si během několika sekund. Finanční chyba tak může vzniknout rychleji než dřív.
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
             
-            st.markdown("#### Potřeba vs. Přání")
-            st.write("**Potřeba:** Výdaj, bez kterého se neobejdeš nebo který je nutný pro běžné fungování (jídlo, bydlení, doprava do školy, léky).") #[cite: 2]
-            st.write("**Přání:** Výdaj, který zvyšuje pohodlí, radost nebo status, ale není nezbytný (značkové oblečení, streamovací služby navíc).") #[cite: 2]
+            st.markdown("---")
+            st.markdown("#### 🧩 Závěrečná výzva: Role v investování")
+            st.text_area("Představ si, že jsi vyhrál 20 000 Kč. Jak bys tyto peníze rozdělil mezi spořicí účet (jistota) a kryptoměny (riziko)? Napiš proč:", key="k2_1_rozdeleni")
 
         with st.container(border=True):
-            st.markdown("### 2.2 Rozpočet: Mapa peněz")
-            st.write("Rozpočet není trest ani omezování života. Je to mapa. Pomáhá zjistit, jestli peníze směřují k tomu, co je pro člověka opravdu důležité.") #[cite: 2]
-            st.markdown("""
-            | Typ výdaje | Příklad | Otázka ke kontrole |
-            | :--- | :--- | :--- |
-            | **Fixní** | Nájem, paušál, předplatné, splátka. | Opravdu ho potřebuji každý měsíc? |
-            | **Proměnlivý** | Jídlo, doprava, zábava, drogerie. | Dá se upravit bez zásadního poklesu kvality života? |
-            | **Skrytý** | Automatické předplatné, mikrotransakce. | Vím, kolik mě stojí za rok? |
-            """) #[cite: 2]
-            st.markdown("<div class='box-green'><strong>Model 50–30–20:</strong> 50 % na potřeby, 30 % na přání a 20 % na rezervu nebo splácení dluhů.</div>", unsafe_allow_html=True) #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 2.3 Algoritmy bohatství")
-            st.markdown("""
-            <div class='box-blue'>
-                <strong>Zaplať nejdřív sobě:</strong> Nečekej, co zbyde na konci měsíce. Část peněz si odlož na rezervu hned po přijetí příjmu.
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-            
-            st.markdown("### 2.4 Matematika peněz: Úrok a Inflace")
-            st.markdown("""
-            * **Jednoduché úročení:** Úrok se počítá stále jen z původně vložené nebo půjčené částky.
-            * **Složené úročení:** Úročí se nejen původní částka, ale i již připsané úroky. Peníze vydělávají další peníze.
-            * **Inflace:** Růst cenové hladiny. Za stejnou částku si koupíme méně než dříve.
-            """) #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 2.5 Finanční rezerva: Airbag osobních financí")
-            st.write("Finanční rezerva chrání člověka před tím, aby nečekaná situace (rozbitý telefon, výpadek brigády) skončila dluhem. **Obecné doporučení: 3 až 6 měsíců nutných výdajů.**") #[cite: 2]
-            st.markdown("<div class='box-yellow'><strong>Kde rezervu držet:</strong> Rezerva má být bezpečná a dostupná. Není určena k riskantnímu investování.</div>", unsafe_allow_html=True) #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 2.6 Psychologie utrácení")
-            st.write("Lidé nejsou kalkulačky. Často se rozhodujeme podle emocí, únavy, tlaku okolí, reklamy, strachu, že něco propásneme, nebo podle toho, co nám ukáže aplikace.") #[cite: 2]
-            st.markdown("""
-            * **FOMO (Fear Of Missing Out):** Strach, že mi něco uteče. -> *Obrana: Počkej 24 hodin před nákupem.*
-            * **Sleva:** Pocit úspory, i když kupuji zbytečnost. -> *Obrana: Koupil/a bych to i bez slevy?*
-            * **Odložená platba (BNPL):** Nákup nebolí hned. -> *Obrana: Ber ji jako dluh, ne jako slevu.*
-            """) #[cite: 2]
-
-            st.markdown("#### ⏳ Kalkulačka času: Kolik života stojí nákup")
-            st.write("Cena věci není jen částka v korunách. Dá se přepočítat i na čas, který musí člověk pracovat, aby si ji mohl dovolit.") #[cite: 2]
-            
-            c_time1, c_time2, c_time3 = st.columns(3)
-            with c_time1:
-                item_price = st.number_input("Cena věci (Kč):", value=2400, step=100, key="calc_item_price")
-            with c_time2:
-                hourly_wage = st.number_input("Tvoje čistá hodinová mzda (Kč):", value=150, step=10, key="calc_hourly_wage")
-            with c_time3:
-                if hourly_wage > 0:
-                    hours_needed = item_price / hourly_wage
-                    st.info(f"**Musíš pracovat:**\n### {hours_needed:.1f} hodin")
-
-    # --- PODKAPITOLA 2.3 ---
-    elif selected_section_2 == "2.3 Finanční trh a analýza rizik":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2.3</div>", unsafe_allow_html=True)
-        st.markdown("## 3. Finanční trh a analýza rizik")
-        
-        with st.container(border=True):
-            st.write("Finanční trh přesouvá peníze v čase. Někdo peníze dnes nepotřebuje a chce je zhodnotit. Někdo jiný peníze potřebuje dnes a je ochoten za jejich použití zaplatit úrok nebo podíl na zisku.") #[cite: 2]
-            
-            st.markdown("### 3.2 Investiční trojúhelník")
-            st.markdown("""
-            <div class='box-purple'>
-                <strong>1. Výnos:</strong> To, co získáš navíc (úrok, dividenda, nárůst ceny).<br>
-                <strong>2. Riziko:</strong> Možnost, že výsledek bude jiný (ztráta, kolísání).<br>
-                <strong>3. Likvidita:</strong> Jak snadno lze aktivum proměnit zpět na peníze.
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-            st.warning("Pravidlo: Vyšší možný výnos obvykle znamená vyšší riziko. Vysoký výnos, nulové riziko a okamžitá dostupnost peněz najednou jsou podezřelá kombinace.") #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 3.3 Spoření vs. Investování vs. Spekulace")
-            st.markdown("""
-            | Pojem | Co to je? | Typický příklad | Riziko |
-            | :--- | :--- | :--- | :--- |
-            | **Spoření** | Odkládání peněz s důrazem na bezpečnost a dostupnost. | Spořicí účet, termínovaný vklad. | Nízké, hrozí inflace. |
-            | **Investování** | Vkládání peněz do aktiv s cílem dlouhodobého zhodnocení. | Akcie, dluhopisy, ETF. | Střední až vysoké. |
-            | **Spekulace** | Sázka na krátkodobý pohyb ceny. | Krátkodobé obchody, krypto. | Vysoké. |
-            """) #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 3.4 Základní cenné papíry")
-            st.write("Dnes už má cenný papír většinou elektronickou zaknihovanou podobu, nejde o fyzický papír.") #[cite: 2]
-            
-            st.markdown("""
-            * **Akcie:** Představuje podíl na akciové společnosti. Koupí akcie firmě nepůjčuješ, kupuješ si kousek jejího vlastnictví.
-            * **Dluhopis:** Cenný papír, kterým si emitent (stát, firma) půjčuje peníze. Kupuješ dluh, jsi věřitel a očekáváš úrok.
-            * **Podílové listy / ETF:** Podíl na majetku fondu. Místo jedné akcie kupuješ „košík“ plný různých aktiv, čímž rozkládáš riziko.
-            """) #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 3.6 Kryptoměny a Blockchain")
-            st.write("Kryptoměny jsou digitální aktiva v počítačové síti. Záznamy nejsou vedeny centrální bankou, ale technologií blockchain (sdílenou evidencí).") #[cite: 2]
-            
-            st.markdown("""
-            <div class='box-gray'>
-                <strong>Příklady:</strong><br>
-                • <strong>Bitcoin:</strong> První a nejznámější kryptoměna, digitální vzácné aktivum.<br>
-                • <strong>Ethereum:</strong> Síť umožňující chytré kontrakty a decentralizované aplikace.<br>
-                • <strong>Stablecoiny:</strong> Tokeny navázané např. na dolar.
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-            
-            st.markdown("<div class='box-red'><strong>Největší rizika kryptoměn:</strong> Vysoká volatilita (prudké kolísání ceny), ztráta přístupu (seed phrase), podvody s falešnými tokeny, technická nevratnost a tlak influencerů (FOMO).</div>", unsafe_allow_html=True) #[cite: 2]
-
-    # --- PODKAPITOLA 2.4 ---
-    elif selected_section_2 == "2.4 Úvěry, pojištění a ochrana majetku":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2.4</div>", unsafe_allow_html=True)
-        st.markdown("## 4. Úvěry, pojištění a ochrana majetku")
-        
-        with st.container(border=True):
-            st.write("Úvěr není „peníze zdarma“. Je to závazek, který přesouvá spotřebu nebo investici z budoucnosti do současnosti.") #[cite: 2]
-            
-            st.markdown("### 4.2 Úrok a 4.3 RPSN")
-            st.markdown("""
-            * **Úrok:** Cena za půjčení peněz. Banky s ním často dělají reklamu.
-            * **RPSN (Roční procentní sazba nákladů):** Skutečnější cena úvěru. Ukazuje celkovou cenu úvěru za rok vč. poplatků a pojištění. Při porovnávání úvěrů sleduj vždy RPSN!
-            """) #[cite: 2]
-
-            st.markdown("### Druhy úvěrů")
-            st.markdown("""
-            | Typ | Charakteristika | Riziko |
-            | :--- | :--- | :--- |
-            | **Hypotéka** | Úvěr na bydlení zajištěný nemovitostí. Banka nepůjčí 100 % ceny (sleduje ukazatel LTV). | Dlouhá doba splácení, změna sazeb. |
-            | **Spotřebitelský úvěr** | Často není zajištěný hodnotným majetkem. | Vyšší riziko nesplácení a drahé úroky. |
-            | **Kreditní karta** | Opakovaně dostupný úvěrový limit s bezúročným obdobím. | Vysoký úrok při nesplacení včas. |
-            | **BNPL** | Kup teď, zaplať později (odložená platba). | Psychologicky maskuje dluh jako pohodlnou platbu. |
-            """) #[cite: 2]
-
-            with st.expander("🤔 4.4 Ne každý úvěr dostane"):
-                st.write("Banka musí posoudit, zda dlužník pravděpodobně zvládne splácet. Posuzuje: Věk, příjem, výdaje (děti, nájem), registry dlužníků a u hypotéky zajištění. Zamítnutý úvěr může být signál, že by splácení bylo příliš rizikové.") #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 4.10 Pojištění: Ochrana před finančním nárazem")
-            st.write("Pojištění nezabrání tomu, aby se něco stalo, ale může snížit finanční škodu. Zřizuje se pro případ, kdy by škoda byla finančně těžko zvládnutelná.") #[cite: 2]
-            
             st.markdown("""
             <div class='box-green'>
-                <strong>Životní pojištění:</strong> Chrání před vážným dopadem na příjem domácnosti (smrt, invalidita, vážné onemocnění).<br>
-                <strong>Neživotní pojištění:</strong><br>
-                • <em>Pojištění nemovitosti:</em> Chrání stavbu (zdi, střechu).<br>
-                • <em>Pojištění domácnosti:</em> Chrání vybavení (nábytek, elektroniku).<br>
-                • <em>Pojištění odpovědnosti:</em> Chrání před škodou, kterou způsobíme někomu jinému (vytopení souseda).
+                <strong>✅ Co si z této podkapitoly odnést:</strong> Kryptoměny nejsou jen „internetové peníze“. Jsou kombinací úžasné technologie (blockchain), tržní ceny a vysokého rizika. Ukazují budoucnost financí, ale neměly by nahrazovat tvou základní finanční rezervu v klasické bance.
             </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-            st.error("Pozor na PODPOJIŠTĚNÍ! Pokud je majetek pojištěn na nižší částku, než je jeho skutečná hodnota, pojišťovna může krátit plnění.") #[cite: 2]
-
-    # --- PODKAPITOLA 2.5 ---
-    elif selected_section_2 == "2.5 Finanční řízení podniku":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2.5</div>", unsafe_allow_html=True)
-        st.markdown("## 5. Finanční řízení v podniku — most k podnikavosti")
-        
-        with st.container(border=True):
-            st.write("Firma může mít skvělý produkt, hezký web a plný kalendář zakázek — a přesto může mít finanční problém. Popularita není totéž co zisk a zisk není totéž co peníze na účtu.") #[cite: 2]
-
-            st.markdown("### 5.2 Základní finanční výkazy")
-            st.markdown("""
-            * **Rozvaha:** Fotografie firmy k určitému dni. Ukazuje, co firma vlastní (**Aktiva**) a z čeho je to financované (**Pasiva**).
-            * **Výkaz zisku a ztráty:** Film za určité období. Výnosy minus Náklady. Ukazuje, zda firma generuje zisk.
-            * **Cashflow (Peněžní toky):** Skutečný tok peněz. Firma může být zisková, ale zkrachovat, pokud zákazníci platí pozdě a firmě chybí hotovost na placení mezd.
-            """) #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 5.3 Bod zvratu (Break-even point)")
-            st.write("Ukazuje, kolik musí firma prodat, aby pokryla všechny náklady. Teprve prodeje nad bodem zvratu vytvářejí zisk.") #[cite: 2]
-            
-            st.markdown("""
-            * **Fixní náklady (FN):** Nemění se podle počtu prodaných kusů (nájem, paušální služby).
-            * **Variabilní náklady (VN):** Rostou s každým vyrobeným/prodaným kusem (materiál, doprava).
-            """) #[cite: 2]
-            st.info("**Vzorec:** Bod zvratu v kusech = Fixní náklady ÷ (Cena za kus − Variabilní náklad na kus)") #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 5.5 Finanční analýza: kontrola finančního zdraví")
-            st.write("Pomáhá zjistit, zda je firma zisková, zadlužená, platebně schopná, efektivní a stabilní.") #[cite: 2]
-            
-            st.markdown("""
-            | Co zkoumá | Ukazatel a Vzorec | Příklad významu |
-            | :--- | :--- | :--- |
-            | **Rentabilita** | **ROS** (Zisk ÷ Tržby × 100) | Kolik % z tržeb zůstává jako zisk. |
-            | **Likvidita** | **Běžná likvidita** (Oběžná aktiva ÷ Krátkodobé závazky) | Zda má firma dost prostředků na faktury a splátky. |
-            | **Zadluženost** | **Celková zadluženost** (Cizí zdroje ÷ Aktiva × 100) | Jaká část majetku je financována dluhem. |
-            | **Aktivita** | **Doba inkasa pohledávek** (Pohledávky ÷ Tržby × 365) | Za kolik dní firma průměrně dostává zaplaceno od zákazníků. |
-            """) #[cite: 2]
-
-            with st.expander("🔎 5.6 Case Study: E-shop DropZone (Modelová analýza)"):
-                st.write("E-shop meziročně zvýšil tržby z 800k na 1,2 mil. Kč. Zisk se mu zvedl z 60k na 120k.") #[cite: 2]
-                st.markdown("<div class='box-red'>Na první pohled super. Z finanční analýzy ale zjistíme, že mu klesla okamžitá likvidita (z 0,32 na 0,15) a prodloužila se doba inkasa pohledávek (na 32 dní). Firma sice vydělává, ale může mít problém platit včas!</div>", unsafe_allow_html=True) #[cite: 2]
-
-    # --- PODKAPITOLA 2.6 ---
-    elif selected_section_2 == "2.6 Závěrečné aktivity a Slovník":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2.6</div>", unsafe_allow_html=True)
-        st.markdown("## 6. Interaktivní vrstva a Slovník")
-        
-        with st.container(border=True):
-            st.markdown("### 📚 Slovník cizích pojmů")
-            st.markdown("""
-            <div class='box-gray' style='font-size: 0.85rem;'>
-            <strong>Aktiva:</strong> Majetek firmy nebo člověka; např. peníze, zásoby, stroje.<br>
-            <strong>Pasiva:</strong> Zdroje financování majetku firmy (vlastní kapitál, dluhy).<br>
-            <strong>Akcie:</strong> Cenný papír představující podíl na akciové společnosti.<br>
-            <strong>Dluhopis:</strong> Cenný papír, kterým si emitent půjčuje peníze a slibuje jejich splacení s úrokem.<br>
-            <strong>Blockchain:</strong> Sdílený digitální záznam transakcí, rozdělený do bloků.<br>
-            <strong>Bonita:</strong> Schopnost klienta splácet úvěr, kterou banka posuzuje.<br>
-            <strong>Cashflow:</strong> Tok peněz. Ukazuje, kolik peněz skutečně přišlo a odešlo.<br>
-            <strong>Diverzifikace:</strong> Rozložení peněz do více investic.<br>
-            <strong>Emitent:</strong> Ten, kdo vydává cenný papír (stát, firma).<br>
-            <strong>RPSN:</strong> Roční procentní sazba nákladů úvěru.
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 🎯 Závěrečný Kvíz: Zvládl/a jsi finance v běžném životě?")
-            
-            with st.expander("❓ 1. Jaký je zásadní rozdíl v ručení za dluhy mezi OSVČ a společníkem v s.r.o.?"):
-                st.write("**Odpověď:** OSVČ ručí celým osobním majetkem, společník s.r.o. ručí omezeně. Firma s.r.o. funguje jako oddělená právnická osoba.") #[cite: 2]
-
-            with st.expander("❓ 2. Co přesně znamená zkratka MVP v metodice Lean Startup?"):
-                st.write("**Odpověď:** Minimum Viable Product. Je to nejmenší a nejjednodušší verze produktu, která umožní levně ověřit zájem zákazníků.") #[cite: 2]
-
-            with st.expander("❓ 3. Proč by měla firma sledovat Cashflow, i když je v zisku?"):
-                st.write("**Odpověď:** Zisk je jen účetní rozdíl. Zákazníci mohou platit pozdě. Pokud firma nemá reálnou hotovost (cashflow) na zaplacení účtů, může zkrachovat.") #[cite: 2]
-
-            with st.expander("❓ 4. Který z těchto nástrojů se nejvíce hodí na uchování finanční rezervy? a) Akcie b) Spořicí účet c) Krypto"):
-                st.write("**Odpověď: b) Spořicí účet.** Rezerva musí být bezpečně a rychle dostupná (likvidní). Akcie a krypto jsou příliš rizikové (kolísají).") #[cite: 2]
-
+            """, unsafe_allow_html=True)
 # ==========================================
 # POKROKY A UČITEL
 # ==========================================
