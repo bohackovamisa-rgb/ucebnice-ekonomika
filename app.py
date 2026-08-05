@@ -989,7 +989,7 @@ elif view == "Kapitola 1":
             elif sim_choice == "B) Udělám jednoduchý dotazník a jednoduchý web pro zájemce":
                 st.success("🎉 SKVĚLE! Získal jsi zdarma 500 zájemců a ověřil trh. Můžeš bezpečně stavět MVP!")
 
-            with st.expander("💡 Dvě otázky pro představivost"):
+           with st.expander("💡 Dvě otázky pro představivost"):
                 st.write("**Otázka 1: Proč většina startupů selže v prvním roce?**")
                 st.write("*Odpověď:* Vyrobí produkt, který ve skutečnosti nikdo nepotřebuje (neověří si poptávku).")
                 st.write("**Otázka 2: Co znamená zkratka MVP?**")
