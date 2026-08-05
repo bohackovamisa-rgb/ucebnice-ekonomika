@@ -1742,6 +1742,173 @@ elif view == "Kapitola 1":
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Připrav mi kontrolní seznam pro ověření firmy před spoluprací.“
             </div>
             """, unsafe_allow_html=True)
+# --- Ukončení podnikání ---
+    elif "Ukončení podnikání" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA</div><h2>Ukončení podnikání</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Podnikání může skončit dobrovolně (např. splněním cíle, odchodem do důchodu), rozhodnutím soudu nebo v důsledku finančních problémů (insolvence).")
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš dva varovné signály, podle kterých by podnikatel poznal, že musí změnit plán nebo podnikání ukončit.</div>", unsafe_allow_html=True)
+            st.text_input("Varovný signál 1:")
+            st.text_input("Varovný signál 2:")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Navrhni plán B pro můj startup, pokud první verze nebude fungovat.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### Zrušení vs. zánik firmy")
+            st.write("U právnických osob (např. s.r.o.) je potřeba rozlišovat mezi dvěma fázemi konce firmy:")
+            
+            col_z1, col_z2 = st.columns(2)
+            with col_z1:
+                st.info("**1. Zrušení = proces**\n\nRozhodnutí, že firma končí. Následuje likvidace, vypořádání majetku, zaplacení dluhů a vyrovnání závazků.")
+            with col_z2:
+                st.error("**2. Zánik = konec**\n\nDefinitivní okamžik, kdy firma právně přestává existovat. Obchodní korporace zaniká výmazem z obchodního rejstříku.")
+
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu.</div>", unsafe_allow_html=True)
+            st.text_area("Tvůj příklad:")
+            
+            st.warning("⚠️ **Důležitá poznámka k insolvenci:** Pokud má firma více dluhů než majetku a není schopna své závazky dlouhodobě splácet, dostává se do úpadku. V takovém případě musí podat insolvenční návrh.")
+
+    # --- Logická mapa podnikání ---
+    elif "Logická mapa" in selected_section:
+        st.markdown("<div class='sub-section-header'>PŘEHLED TÉMATU</div><h2>Logická mapa podnikání</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Přehled tématu:</strong> Tato mapa shrnuje hlavní oblasti podnikání od právního rámce přes právní formy až po záměr, rizika a ukončení podnikání.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu větev mapy, která je pro tvůj projekt nejdůležitější, a napiš proč.</div>", unsafe_allow_html=True)
+            nej_vetev = st.selectbox("Nejdůležitější větev pro můj projekt:", [
+                "Legislativa a definice",
+                "Právní formy",
+                "Podnikatelský záměr a Lean Canvas",
+                "CSR a etika",
+                "Rizika",
+                "Zdroje a ukončení podnikání"
+            ])
+            st.text_input(f"Proč je podle tebe nejdůležitější právě '{nej_vetev}'?")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vytvoř mi logickou mapu mého startupu podle oblastí: právo, zákazník, finance, rizika a odpovědnost.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("### 🗺️ Vizuální mapa předmětu")
+        
+        # Mřížka logické mapy (2x3 karty)
+        m_col1, m_col2 = st.columns(2)
+        
+        with m_col1:
+            with st.container(border=True):
+                st.markdown("#### ⚖️ 1. Legislativa a definice")
+                st.markdown("""
+                * Občanský zákoník
+                * Živnostenský zákon
+                * Zákon o obchodních korporacích
+                * Znaky podnikání (soustavnost, vlastní jméno, zisk...)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🚀 3. Podnikatelský záměr a Lean Canvas")
+                st.markdown("""
+                * Zákazník & Problém
+                * Řešení & Unikátní hodnota
+                * Náklady & Příjmy
+                * První test (MVP)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🛡️ 5. Rizika")
+                st.markdown("""
+                * Finanční a tržní riziko
+                * Právní riziko
+                * Švarcsystém (rizika nelegálního zaměstnávání)
+                """)
+
+        with m_col2:
+            with st.container(border=True):
+                st.markdown("#### 🏢 2. Právní formy")
+                st.markdown("""
+                * OSVČ (fyzická osoba)
+                * v.o.s. a k.s. (osobní společnosti)
+                * s.r.o. a a.s. (kapitálové společnosti)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🌱 4. CSR a etika")
+                st.markdown("""
+                * Férové jednání
+                * Odpovědnost vůči zaměstnancům a zákazníkům
+                * Odpovědnost vůči společnosti a životnímu prostředí (ESG)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🏁 6. Zdroje a ukončení")
+                st.markdown("""
+                * Veřejné rejstříky & ověřování firem
+                * Zrušení vs. zánik
+                * Insolvence
+                """)
+
+    # --- Reflexe a sebehodnocení ---
+    elif "Reflexe" in selected_section:
+        st.markdown("<div class='sub-section-header'>ZÁVĚR KURZU</div><h2>Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🔄 Formativní hodnocení:</strong> Nejde o známku. Cílem je zjistit, čemu už rozumíš, co umíš použít v praxi a kde ještě potřebuješ další příklad.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje otázka k nejasnosti:")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vyzkoušej mě z Kapitoly 1 pomocí pěti otázek a potom mi dej zpětnou vazbu.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### ✍️ Otázky k reflexi")
+            st.text_area("1. Co jsem se dnes naučil/a? (Napiš vlastními slovy 3 věci, které si odnášíš):")
+            st.text_area("2. Co umím vysvětlit vlastními slovy? (Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.):")
+            
+            st.markdown("**3. V čem mám ještě nejasnosti?**")
+            st.multiselect("Vyber oblasti, které ti ještě nejsou zcela jasné:", [
+                "Právní formy",
+                "Ručení",
+                "Podnikatelský záměr",
+                "Lean Canvas",
+                "CSR a ESG",
+                "Švarcsystém",
+                "Ukončení podnikání"
+            ])
+            
+            st.text_area("4. Která právní forma by se hodila pro můj nápad a proč?")
+            st.text_area("5. Jaký je můj první praktický krok? (Průzkum konkurence, rozhovor se zákazníkem, ověření firmy v rejstříku nebo vyplnění Lean Canvasu):")
+
+        with st.container(border=True):
+            st.markdown("### ✅ Sebehodnocení")
+            st.write("Zaškrtni dovednosti, které už bezpečně zvládáš:")
+            
+            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel.")
+            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.")
+            st.checkbox("Chápu rozdíl mezi fyzickou a právnickou osobou.")
+            st.checkbox("Dokážu navrhnout základ podnikatelského záměru.")
+            st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
+            st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
+            st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
 # ==========================================
 elif view == "Kapitola 2":
     st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
