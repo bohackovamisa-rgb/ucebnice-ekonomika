@@ -2239,7 +2239,7 @@ elif view == "Kapitola 2":
             st.write("Problém byl v tom, že směna fungovala jen tehdy, když se potkaly dvě potřeby najednou. Tomu se říká **dvojí shoda potřeb**.")
             
             st.info("""
-            **🍞 Příklad dvojí shoda potřeb:**  
+            **🍞 Příklad dvojí shody potřeb:**  
             Pekař chce nové boty. Švec by mu je mohl vyrobit, ale zrovna nepotřebuje chleba. Pekař tedy musí najít někoho dalšího, kdo chce chleba a zároveň má něco, co chce švec. Taková směna je nepraktická, pomalá a omezuje obchod.
             """)
             st.write("Proto se postupně objevily předměty, které lidé přijímali ne proto, že je hned sami potřebovali, ale protože věřili, že je později vymění s někým dalším. Tak vznikl základ peněz.")
@@ -2276,7 +2276,7 @@ elif view == "Kapitola 2":
                 st.error("❌ Kráva se špatně dělí (jak zaplatíš za jedno kafe?) a navíc ji musíš neustále krmit.")
             elif kom_sel == "Mušle 🐚":
                 st.warning("⚠️ Hodnota závisí na zvyklostech. Pokud je kavárník neuznává, kávu ti nedá.")
-            elif komodita == "Zlatý prach ✨":
+            elif kom_sel == "Zlatý prach ✨":
                 st.success("✅ Skvělé k uchování hodnoty, ale barista musí prach u kasy složitě vážit a ověřovat ryzost.")
             
             st.text_area("Slovní obhajoba tvojí volby:", key="k2_1_2_txt")
@@ -2405,7 +2405,7 @@ elif view == "Kapitola 2":
                 * **3D Secure** — dodatečné ověření online platby, často přes bankovní aplikaci, SMS nebo biometrické potvrzení.
                 * **Limity plateb a výběrů** — nastavují maximální částku pro platby, výběry nebo online nákupy. Snižují škodu při zneužití.
                 * **Notifikace z banky** — okamžité upozornění na platbu pomáhá rychle odhalit podezřelou transakci.
-                * **Blokace karty nebo zařízení** — při ztrátě lze kartu, mobilní platby nebo celé zařízení zablokovať v aplikaci, internetovém bankovnictví nebo přes banku.
+                * **Blokace karty nebo zařízení** — při ztrátě lze kartu, mobilní platby nebo celé zařízení zablokovat v aplikaci, internetovém bankovnictví nebo přes banku.
                 """)
             st.warning("⚠️ **Pravidlo pro běžný život:** Pokud ti někdo volá, píše nebo posílá odkaz a chce PIN, heslo, CVC/CVV, autorizační kód nebo potvrzení v aplikaci, je to varovný signál. Banka tyto údaje po telefonu ani přes zprávu nechce.")
 
@@ -2470,7 +2470,7 @@ elif view == "Kapitola 2":
             
             st.markdown("""
             <div class='box-purple'>
-                🧠 <strong>Proč to současnou generaci zajímá:</strong> Kryptoměny jsou propojené s technologiemi, investováním, aplikacemi v mobilu, sociálními sítěmi, influencery i představou rychlého zisku. Právě proto je důležité rozumět nejjen tomu, jak fungují, ale také jejich rizikům.
+                🧠 <strong>Proč to současnou generaci zajímá:</strong> Kryptoměny jsou propojené s technologiemi, investováním, aplikacemi v mobilu, sociálními sítěmi, influencery i představou rychlého zisku. Právě proto je důležité rozumět nejen tomu, jak fungují, ale také jejich rizikům.
             </div>
             """, unsafe_allow_html=True)
 
