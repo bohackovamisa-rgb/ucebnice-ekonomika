@@ -2176,7 +2176,7 @@ elif view == "Kapitola 1":
             st.checkbox("Mám navržený test hypotézy (MVP).", key="chk_5")
             st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
             st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
-# ==========================================
+    # ==========================================
     # MODUL 2: FINANČNÍ GRAMOTNOST
     # ==========================================
 
