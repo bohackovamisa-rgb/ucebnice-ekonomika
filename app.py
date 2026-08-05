@@ -181,7 +181,7 @@ elif view == "Kapitola 1":
         "3. OSVČ a živnosti",
         "4. Obchodní korporace",
         "5. Startup: nápad, který hledá funkční byznys",
-        "6. Podnikatelský záměr"
+        "6. Podnikatelský záměr",
         "7. Lean Canvas",
         "8. CSR, etika a odpovědné podnikání",
         "9. Rizika podnikání",
