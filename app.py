@@ -300,59 +300,59 @@ elif view == "Kapitola 1":
 
             st.info("🤔 **Otázka k zamyšlení:** V čem je podle vás největší rozdíl mezi zaměstnancem a podnikatelem?") #[cite: 1]
 
-    # --- 2. Slovníček základních pojmů ---
+   # --- 2. Slovníček základních pojmů ---
     elif selected_section == "2. Slovníček základních pojmů":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div><h2>2. Slovníček základních pojmů</h2>", unsafe_allow_html=True)
         with st.container(border=True):
             st.markdown("""
-            <div class='box-blue'>
-                <strong>⚖️ Proč jsou definice důležité:</strong> V podnikání nestačí používat pojmy „přibližně“[cite: 1]. Výrazy jako podnikatel, fyzická osoba, právnická osoba nebo živnostenské oprávnění mají oporu v právních předpisech[cite: 1].
+            <div class='box-gray'>
+                <strong>⚖️ Proč jsou definice důležité:</strong> V podnikání nestačí používat pojmy „přibližně“. Výrazy jako podnikatel, fyzická osoba, právnická osoba nebo živnostenské oprávnění mají oporu v právních předpisech.
             </div>
-            """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True) #[cite: 1]
 
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání[cite: 1].</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
             
             st.markdown("""
             <div class='box-purple'>
-                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vysvětli mi tyto pojmy na mém podnikatelském nápadu: podnikatel, fyzická osoba, právnická osoba a živnost.“[cite: 1]
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vysvětli mi tyto pojmy na mém podnikatelském nápadu: podnikatel, fyzická osoba, právnická osoba a živnost.“
             </div>
-            """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True) #[cite: 1]
 
             st.markdown("""
             | Termín | Co znamená | Proč je důležitý |
             | :--- | :--- | :--- |
-            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem dosažení zisku[cite: 1]. | Pomáhá rozlišit, kdy už nejde jen o koníček nebo jednorázový přivýdělek[cite: 1]. |
-            | **Podnikání** | Soustavná samostatná činnost vykonávaná na vlastní odpovědnost za účelem dosažení zisku[cite: 1]. | Je základním pojmem celé kapitoly a určuje, kdy vznikají právní a finanční povinnosti[cite: 1]. |
-            | **Fyzická osoba** | Člověk — jednotlivec[cite: 1]. V podnikání může vystupovat například jako OSVČ[cite: 1]. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou[cite: 1]. |
-            | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost[cite: 1]. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci[cite: 1]. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně[cite: 1]. |
-            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost[cite: 1]. | Je častou formou začátku malého podnikání, freelancingu nebo služeb[cite: 1]. |
-            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky[cite: 1]. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší[cite: 1]. |
-            | **Živnostenské oprávnění** | Právo provozovat živnost[cite: 1]. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese[cite: 1]. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje[cite: 1]. |
-            | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky[cite: 1]. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop[cite: 1]. |
-            | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi[cite: 1]. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace[cite: 1]. |
-            | **Vázaná živnost** | Živnost, která vyžaduje specifické vzdělání, praxi nebo jinou zákonem stanovenou způsobilost[cite: 1]. | Pomáhá pochopit, že u některých služeb stát chrání zákazníka požadavkem na odbornost[cite: 1]. |
-            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncese[cite: 1]. | Typicky jde o regulované nebo rizikovější činnosti[cite: 1]. |
-            | **Obchodní korporace** | Souhrnný pojem pro obchodní společnosti a družstva, například v.o.s., k.s., s.r.o., a.s. a družstvo[cite: 1]. | Pomáhá zařadit základní právní formy podnikání[cite: 1]. |
-            | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty[cite: 1]. | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají[cite: 1]. |
-            | **Živnostenský rejstřík** | Evidence osob podnikajících na základě živnostenského oprávnění[cite: 1]. | Slouží k ověření, zda má podnikatel oprávnění k určité činnosti[cite: 1]. |
-            | **Ručení** | Odpovědnost za dluhy a závazky podnikatele nebo firmy[cite: 1]. | Je klíčové při volbě právní formy, protože OSVČ a některé společnosti nesou vyšší osobní riziko[cite: 1]. |
-            | **Švarcsystém** | Nelegální nastavení, kdy člověk formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec[cite: 1]. | Pomáhá rozpoznat rizikovou spolupráci a rozdíl mezi podnikáním a zaměstnáním[cite: 1]. |
-            | **CSR** | Společenská odpovědnost firem — přístup, kdy firma sleduje nejen zisk, ale i dopady na lidi, společnost a životní prostředí[cite: 1]. | Ukazuje, že podnikání má také etický a společenský rozměr[cite: 1]. |
-            | **Lean Canvas** | Stručná mapa podnikatelského nápadu, která zachycuje problém, zákazníka, řešení, náklady, příjmy a rizika[cite: 1]. | Pomáhá rychle ověřovat nápad dřív, než tým investuje hodně času nebo peněz[cite: 1]. |
-            | **MVP** | Minimální životaschopný produkt — nejmenší verze řešení, která umožní ověřit důležitý předpoklad[cite: 1]. | Učí testovat nápad levně, rychle a bezpečně[cite: 1]. |
-            """)
+            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem dosažení zisku. | Pomáhá rozlišit, kdy už nejde jen o koníček nebo jednorázový přivýdělek. |
+            | **Podnikání** | Soustavná samostatná činnost vykonávaná na vlastní odpovědnost za účelem dosažení zisku. | Je základním pojmem celé kapitoly a určuje, kdy vznikají právní a finanční povinnosti. |
+            | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
+            | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
+            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
+            | **Živnostenské oprávnění** | Právo provozovat živnost. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje. |
+            | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
+            | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
+            | **Vázaná živnost** | Živnost, která vyžaduje specifické vzdělání, praxi nebo jinou zákonem stanovenou způsobilost. | Pomáhá pochopit, že u některých služeb stát chrání zákazníka požadavkem na odbornost. |
+            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncese. | Typicky jde o regulované nebo rizikovější činnosti. |
+            | **Obchodní korporace** | Souhrnný pojem pro obchodní společnosti a družstva, například v.o.s., k.s., s.r.o., a.s. a družstvo. | Pomáhá zařadit základní právní formy podnikání. |
+            | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty. | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají. |
+            | **Živnostenský rejstřík** | Evidence osob podnikajících na základě živnostenského oprávnění. | Slouží k ověření, zda má podnikatel oprávnění k určité činnosti. |
+            | **Ručení** | Odpovědnost za dluhy a závazky podnikatele nebo firmy. | Je klíčové při volbě právní formy, protože OSVČ a některé společnosti nesou vyšší osobní riziko. |
+            | **Švarcsystém** | Nelegální nastavení, kdy člověk formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec. | Pomáhá rozpoznat rizikovou spolupráci a rozdíl mezi podnikáním a zaměstnáním. |
+            | **CSR** | Společenská odpovědnost firem — přístup, kdy firma sleduje nejen zisk, ale i dopady na lidi, společnost a životní prostředí. | Ukazuje, že podnikání má také etický a společenský rozměr. |
+            | **Lean Canvas** | Stručná mapa podnikatelského nápadu, která zachycuje problém, zákazníka, řešení, náklady, příjmy a rizika. | Pomáhá rychle ověřovat nápad dřív, než tým investuje hodně času nebo peněz. |
+            | **MVP** | Minimální životaschopný produkt — nejmenší verze řešení, která umožní ověřit důležitý předpoklad. | Učí testovat nápad levně, rychle a bezpečně. |
+            """) #[cite: 1]
 
             st.markdown("""
             <div class='box-gray'>
-                <strong>📚 Opora v legislativě:</strong> občanský zákoník, živnostenský zákon, zákon o obchodních korporacích a zákon o veřejných rejstřících[cite: 1].
+                <strong>📚 Opora v legislativě:</strong> občanský zákoník, živnostenský zákon, zákon o obchodních korporacích a zákon o veřejných rejstřících.
             </div>
-            """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True) #[cite: 1]
             
             st.markdown("""
             <div class='box-green'>
-                <strong>🌱 Etika v podnikání:</strong> Podnikání není jen o legálnosti[cite: 1]. Férový podnikatel nezneužívá švarcsystém, platí daně, jedná poctivě se zákazníky a chová se ohleduplně k zaměstnancům, partnerům i životnímu prostředí[cite: 1].
+                <strong>🌱 Etika v podnikání:</strong> Podnikání není jen o legálnosti. Férový podnikatel nezneužívá švarcsystém, platí daně, jedná poctivě se zákazníky a chová se ohleduplně k zaměstnancům, partnerům i životnímu prostředí.
             </div>
-            """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True) #[cite: 1]
 
    # --- 3. OSVČ a živnosti ---
     elif selected_section == "3. OSVČ a živnosti":
