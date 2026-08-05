@@ -1383,6 +1383,199 @@ elif view == "Kapitola 1":
                 st.text_input("Rozhodnutí po testu (pokračovat / upravit / ukončit):")
             
             st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
+# --- 7. Lean Canvas ---
+    elif "7. Lean Canvas" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div><h2>7. Lean Canvas</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Lean Canvas je rychlá mapa podnikatelského nápadu. Pomáhá zachytit hlavní předpoklady a rizika dřív, než podnikatel investuje mnoho času nebo peněz. Na rozdíl od klasického podnikatelského plánu je stručný, pracovní a snadno se upravuje.")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Lean Canvas pomáhá řešit problém, pracovat s hypotézami, ověřovat informace, plánovat podnikatelskou aktivitu, posoudit ekonomickou proveditelnost a vyhodnocovat rizika. Podnikání není hádání, ale ověřování předpokladů.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu: „Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…“</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje hypotéza:", key="lean_hypoteza")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi převést můj Lean Canvas na ověřitelné hypotézy. U každé napiš test, metriku úspěchu, riziko špatné interpretace a rozhodnutí, co udělat, když test nevyjde.“
+            </div>
+            """, unsafe_allow_html=True)
+            st.info("🗺️ **Tip:** Lean Canvas není hotový podnikatelský plán. Je to pracovní nástroj pro ověřování nápadu. Největší hodnotu má tehdy, když se po testech mění.")
+
+        with st.container(border=True):
+            st.markdown("### 7.1 Proč Lean Canvas začíná problémem")
+            st.write("Mnoho týmů začíná řešením: aplikací, e-shopem, produktem, logem nebo profilem na sociální síti. Lean Canvas nutí začít otázkou: Jaký problém vlastně řešíme a pro koho?")
+            st.write("Pokud problém není důležitý, zákazník nebude měnit chování. Pokud zákazník není konkrétní, marketing bude obecný. Pokud cena nevychází z hodnoty a nákladů, projekt může být populární, ale ztrátový.")
+
+        with st.container(border=True):
+            st.markdown("### 7.2 Devět bloků Lean Canvasu")
+            st.write("U každého bloku napiš maximálně dvě věty. Kde si nejsi jistý/á, označ to jako hypotézu a navrhni test.")
+            
+            with st.expander("Zobrazit všech 9 bloků a časté chyby"):
+                st.markdown("""
+                | Blok | Co znamená | Dobrá otázka | Častá chyba |
+                | :--- | :--- | :--- | :--- |
+                | **1. Problém** | 1–3 konkrétní problémy zákazníka. | Kdy zákazník problém naposledy řešil? | Popisujeme naše řešení místo zákazníkova problému. |
+                | **2. Zákaznické segmenty** | Konkrétní skupiny lidí, které problém řeší. | Kdo problém cítí nejsilněji? | Píšeme „všichni studenti“ nebo „všichni lidé“. |
+                | **3. Unikátní nabídka hodnoty** | Jasné vysvětlení, proč má zákazník zpozornět. | Proč by si měl vybrat právě nás? | Používáme obecné fráze jako „kvalitní, levné, moderní“. |
+                | **4. Řešení** | Jednoduchý návrh, jak problém řešíme. | Jaká je nejmenší funkční verze? | Navrhujeme příliš složitý produkt hned na začátku. |
+                | **5. Kanály** | Cesty, kterými se dostaneme k zákazníkovi. | Kde zákazník skutečně je? | Vybereme sociální síť bez měření výsledků. |
+                | **6. Příjmy** | Za co zákazník platí a jak často. | Je to jednorázový prodej, předplatné, služba, provize? | Zaměníme popularitu za ochotu platit. |
+                | **7. Náklady** | Co stojí start, provoz a každý prodaný kus. | Který náklad nejčastěji podceňujeme? | Nezapočítáme čas, obaly, dopravu, reklamu a rezervu. |
+                | **8. Klíčové metriky** | Čísla, podle kterých poznáme pokrok. | Které číslo nám pomůže rozhodnout? | Sledujeme lajky místo objednávek nebo opakovaného zájmu. |
+                | **9. Neférová výhoda** | Něco, co konkurence nemůže snadno okopírovat. | Co máme jen my nebo co se těžko napodobuje? | Píšeme běžné věci jako „dobrý nápad“ nebo „nadšení“. |
+                """)
+
+        with st.container(border=True):
+            st.markdown("### 7.3 Jak poznat dobrou hypotézu")
+            st.write("Hypotéza je předpoklad, který se dá ověřit. Nemá znít jako přání, ale jako tvrzení s testem a měřítkem úspěchu.")
+            st.markdown("""
+            | Slabá domněnka | Ověřitelná hypotéza | Test | Metrika úspěchu |
+            | :--- | :--- | :--- | :--- |
+            | Studentům se to bude líbit. | Alespoň 20 z 50 oslovených studentů označí problém za častý a 8 z nich se zapíše k testu. | Rozhovor a registrační formulář. | 20 potvrzených problémů, 8 registrací. |
+            | Lidé za to zaplatí. | Alespoň 10 lidí si předobjedná produkt za 149 Kč. | Předobjednávková stránka nebo formulář. | 10 předobjednávek. |
+            | Instagram bude fungovat. | Testovací příspěvek přivede alespoň 30 kliknutí na formulář a 5 objednávek. | Příspěvek s měřeným odkazem. | 30 kliknutí, 5 objednávek. |
+            | Náklady budou nízké. | Variabilní náklad na kus nepřekročí 60 % plánované prodejní ceny. | Kalkulace a test výroby 5 kusů. | Náklad max. 60 % ceny. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.4 MVP: nejmenší ověřitelná verze")
+            st.write("MVP znamená nejmenší verzi řešení, která dokáže ověřit nejdůležitější předpoklad. Nemusí být dokonalá. Musí být dostatečná na učení.")
+            st.markdown("""
+            | Nápad | Drahý start | MVP test |
+            | :--- | :--- | :--- |
+            | **Aplikace na plánování učení** | Vývoj celé aplikace. | Notion šablona nebo sdílená tabulka pro 20 studentů. |
+            | **E-shop s merchem** | Nákup zásob a spuštění plného e-shopu. | Předobjednávka se třemi návrhy a jasnou cenou. |
+            | **Svačinové boxy** | Pronájem kuchyně a nákup vybavení. | Jeden testovací den s omezeným počtem objednávek. |
+            | **Doučovací platforma** | Programování tržiště s účty a platbami. | Ručně propojit 10 dvojic přes formulář. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.5 – 7.8 Jak pracovat s Lean Canvasem a časté chyby")
+            st.write("**Jak vyhodnotit:** Po vyplnění tým označí políčka jako ověřeno, hypotéza, nebo riziko. Testuj nejprve to, co je nejisté a důležité (zákazník, problém, ochota platit).")
+            
+            st.markdown("#### Případovka: Školní projekt „StudyBites“")
+            with st.expander("Ukázkový Lean Canvas pro StudyBites"):
+                st.markdown("""
+                * **Problém:** Studenti nestíhají kvalitní svačinu mezi výukou a praxí; část studentů nejí vůbec.
+                * **Zákazníci:** Dojíždějící studenti 1.–3. ročníku s dlouhým rozvrhem.
+                * **Unikátní hodnota:** Předem objednaná svačina k vyzvednutí ve škole bez čekání.
+                * **Řešení:** Tři typy boxů, objednávka přes formulář.
+                * **Kanály:** Třídní skupiny, QR plakát, školní IG.
+                * **Příjmy:** Prodej boxu za 65–79 Kč.
+                * **Náklady:** Suroviny, obal, doprava, rezerva.
+                * **Metriky:** Počet předobjednávek, nevyzvednuté kusy.
+                * **Neférová výhoda:** Přímý kontakt se školou.
+                """)
+            
+            st.error("⚠️ **Častá chyba:** Vyplnit Lean Canvas jednou a považovat ho za hotový. Zamilovat se do řešení dřív než do problému. Měřit lajky místo reálných prodejů.")
+            st.success("✅ **Správný postup:** Začni problémem a zákazníkem -> Popiš řešení -> Ověř příjmy a náklady -> Urči metriky a MVP -> Po testování plátno upravuj.")
+
+        with st.container(border=True):
+            st.markdown("### 7.9 Interaktivní Lean Canvas")
+            st.write("Do tohoto plátna si zkus nanečisto zapsat svůj projekt. V praxi se vyplňuje jako post-it lístečky, které můžeš po testování přepisovat.")
+            
+            lc_col1, lc_col2, lc_col3 = st.columns(3)
+            with lc_col1:
+                st.text_area("🔴 Problém (Co řešíme?)", height=150)
+                st.text_area("🟢 Řešení (Jak to řešíme?)", height=150)
+                st.text_area("🌸 Náklady (Co nás to bude stát?)", height=150)
+            with lc_col2:
+                st.text_area("🟡 Unikátní hodnota (Proč my?)", height=150)
+                st.text_area("⚪ Metriky (Jak poznáme úspěch?)", height=150)
+                st.text_area("🟤 Neférová výhoda (Naše eso v rukávu)", height=150)
+            with lc_col3:
+                st.text_area("🟠 Zákazník (Kdo to koupí?)", height=150)
+                st.text_area("🔵 Kanály (Kudy k zákazníkovi?)", height=150)
+                st.text_area("🟣 Příjmy (Jak vyděláme?)", height=150)
+
+    # --- 8. CSR, etika a odpovědné podnikání ---
+    elif "8. CSR, etika a odpovědné podnikání" in selected_section or "Odpovědné podnikání" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div><h2>8. CSR, etika a odpovědné podnikání (ESG)</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("CSR znamená společenská odpovědnost firem. Připomíná, že podnikání nemá sledovat pouze zisk, ale také dopady na zákazníky, zaměstnance, společnost a životní prostředí. V moderní ekonomice se často používá také pojem **ESG** — tedy odpovědnost v oblasti životního prostředí (Environmental), lidí a společnosti (Social) a řízení firmy (Governance).")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Podnikání ovlivňuje zákazníky, zaměstnance, dodavatele, společnost i životní prostředí. Legální jednání nemusí být vždy automaticky férové nebo udržitelné, proto je potřeba přemýšlet i o etice a odpovědnosti.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.1 Odpovědnost jako součást rozhodování")
+            st.write("Moderní zákazník často neřeší jen cenu. Sleduje také původ produktu, pracovní podmínky, obaly, ekologickou stopu, pravdivost reklamy, ochranu dat a chování značky v krizových situacích. Odpovědné podnikání neznamená, že firma musí být dokonalá. Znamená to, že zná své dopady, měří je, komunikuje pravdivě a neprodává odpovědnost jen jako marketingový slogan.")
+            st.info("🧠 **Pointa pro tebe:** Etika není doplněk až „po zisku“. Etika rozhoduje o tom, jestli firma dlouhodobě získá důvěru lidí.")
+
+        with st.container(border=True):
+            st.markdown("### 8.2 Etické dilema: co když je výhodné něco zamlčet?")
+            st.write("Podnikatel může být v situaci, kdy krátkodobě vydělá tím, že něco neřekne. Je to ale dlouhodobě udržitelné?")
+            
+            st.markdown("""
+            | Situace | Krátkodobé pokušení | Dlouhodobé riziko | Férovější řešení |
+            | :--- | :--- | :--- | :--- |
+            | **Produkt má omezenou životnost.** | Neříct to zákazníkovi. | Reklamace, špatné recenze, ztráta důvěry. | Uvést reálnou životnost a nabídnout servis. |
+            | **E-shop nabízí slevu.** | Uměle navýšit původní cenu. | Klamavá komunikace a poškození značky. | Ukázat skutečné srovnání ceny. |
+            | **Firma používá ekologický obal.** | Tvrdit, že celý produkt je „eko“. | Greenwashing. | Popisovat konkrétně jen to, co firma opravdu zlepšila. |
+            | **Aplikace sbírá data.** | Schovat souhlas do dlouhých podmínek. | Nedůvěra, právní problém, poškození uživatele. | Vysvětlit jednoduše, jaká data a proč se sbírají. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 8.3 & 8.4 ESG v malém projektu a Proč CSR řešit")
+            st.write("ESG se nemusí týkat jen velkých firem. I školní nebo studentský projekt by měl přemýšlet o odpadech (E), férovém přístupu v týmu (S) a jasných pravidlech pro peníze (G).")
+            
+            st.markdown("<div class='box-yellow'><strong>🌱 Mini audit odpovědnosti projektu</strong></div>", unsafe_allow_html=True)
+            aud1 = st.text_input("1. Jaký pozitivní i negativní dopad může mít tvůj projekt?")
+            aud2 = st.text_input("2. Jaké pravidlo férového chování si dáte v týmu vůči zákazníkům?")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Navrhni pro můj projekt jednoduchý etický kodex v pěti bodech.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.5 ESG jednoduše: tři oblasti odpovědnosti")
+            
+            col_e, col_s, col_g = st.columns(3)
+            with col_e:
+                st.success("**E — Environment**\n\nDopad na životní prostředí (spotřeba energií, odpady, recyklace, doprava).")
+            with col_s:
+                st.info("**S — Social**\n\nVztah k lidem (bezpečnost práce, férové mzdy, vzdělávání, diverzita).")
+            with col_g:
+                st.warning("**G — Governance**\n\nŘízení firmy (etický kodex, ochrana dat, prevence korupce, transparentnost).")
+                
+            st.error("⚠️ **Pozor na greenwashing:** Odpovědnost nestačí jen tvrdit v reklamě. Firma by měla umět doložit data. Pokud se prezentuje jako „zelená“, ale dopady neřeší, jde o klamavou komunikaci.")
+
+        with st.container(border=True):
+            st.markdown("### 8.6 & 8.7 Příklady odpovědného podnikání v ČR")
+            st.write("Toto nejsou žebříčky „nejhodnějších firem“, ale ukázky toho, co reálné firmy reportují v rámci udržitelnosti. Ve výuce se ptej: Co firma měří? Co zveřejňuje? Kde má ještě problém?")
+            
+            with st.expander("Příklady komunikace ESG ve firmách působících v ČR"):
+                st.markdown("""
+                * **Škoda Auto:** ESG strategie, řízení dopadů výroby, regionální odpovědnost, diverzita.
+                * **ČEZ:** Data o dekarbonizaci, emise, bezpečnost energetiky.
+                * **O2:** Digitální bezpečnost, vzdělávání, snižování uhlíkové stopy.
+                * **IKEA:** Cirkulární ekonomika, klimatické cíle, udržitelný dodavatelský řetězec.
+                * **Kofola / Albert:** Řešení vodních zdrojů, plýtvání potravinami, obalové materiály.
+                """)
+
+        with st.container(border=True):
+            st.markdown("### 8.8 Mini případová studie: Jak poznat odpovědnou firmu?")
+            st.write("Při zkoumání firem se ptej na těchto 5 otázek:")
+            st.markdown("""
+            1. **Má firma konkrétní cíle?** (Snížení emisí, méně odpadu)
+            2. **Ukazuje data?** (Čísla za několik let, srovnání)
+            3. **Řeší lidi?** (Zaměstnance, bezpečnost, komunity)
+            4. **Má pravidla řízení?** (Etický kodex, ochrana dat)
+            5. **Je komunikace důvěryhodná?** (Firma přiznává i limity a oblasti ke zlepšení)
+            """)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.</div>", unsafe_allow_html=True)
+            st.text_input("Tvé hodnocení vybrané firmy:")
 # ==========================================
 elif view == "Kapitola 2":
     st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
