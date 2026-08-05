@@ -505,7 +505,7 @@ elif view == "Kapitola 2":
                 st.write("**Odpověď:** Kryptoměny jsou vysoce volatilní (skáčou nahoru a dolů). Pokud se ti rozbije auto ve chvíli, kdy krypto spadne o 40 %, vybereš si rezervu s obrovskou ztrátou. Rezerva patří na bezpečný spořicí účet.")
 
             with st.expander("2. Banka A ti nabízí úrok 6 % a RPSN 8 %. Banka B nabízí úrok 7 % a RPSN 7,2 %. Co je levnější?"):
-                st.write("**Odpověď:** Levnější je Banka B. Sice má vyšší "reklamní" úrok, ale mnohem nižší vedlejší poplatky, takže celkové RPSN (skutečná cena) je nižší.")
+                st.write("**Odpověď:** Levnější je Banka B. Sice má vyšší 'reklamní' úrok, ale mnohem nižší vedlejší poplatky, takže celkové RPSN (skutečná cena) je nižší.")
 
             with st.expander("3. Rozdíl mezi Pojištěním nemovitosti a domácnosti?"):
                 st.write("**Odpověď:** Nemovitost jsou zdi, střecha, okna. Domácnost je to, co vypadne, když dům obrátíš (TV, gauč, oblečení).")
