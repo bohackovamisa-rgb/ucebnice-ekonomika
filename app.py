@@ -234,6 +234,23 @@ st.markdown("""
         letter-spacing: 0.05em;
         text-transform: uppercase;
     }
+
+    /* KARTY LEAN CANVAS */
+    .lc-card {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+    .lc-title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #4f46e5;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.3rem;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -365,7 +382,7 @@ elif view == "Kapitola 1":
             st.markdown("""
             <div class='box-blue'>
                 <strong>Hlavní definice:</strong><br>
-                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku.
+                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jním, na vlastní odpovědnost, za účelem dosažení zisku.
             </div>
             """, unsafe_allow_html=True)
             
@@ -601,7 +618,7 @@ elif view == "Kapitola 1":
         with st.container(border=True):
             st.markdown("### 3.2 OSVČ a digitální realita")
             st.write("""
-            Dnešní OSVČ často nepotřebuje jen živnostenské oprávnění. Potřebuje také digitální a finanční gramotnost:
+            Dnešní OSVČ často nepotřebuje jen živnostenské oprávnění. PotNeeded také digitální a finanční gramotnost:
             * oddělit osobní a podnikatelské peníze,
             * evidovat příjmy a výdaje,
             * zálohovat doklady,
@@ -973,7 +990,7 @@ elif view == "Kapitola 1":
             * společnost vzniká zápisem do obchodního rejstříku,
             * obchodní firma obvykle obsahuje označení „veřejná obchodní společnost“ nebo zkratku „v.o.s.“,
             * společníci se podílejí na podnikání a ručí osobním majetkem,
-            * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných правил,
+            * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných pravidel,
             * kvůli vysokému ručení je potřeba silná důvěra mezi společníky.
             """)
 
@@ -1105,7 +1122,7 @@ elif view == "Kapitola 1":
             * vzniká zápisem do obchodního rejstříku,
             * obchodní firma obsahuje označení „akciová společnost“ nebo zkratku „a.s.“,
             * základní kapitál je rozvržen na akcie,
-            * minimální základní kapitál je 2 000 000 Kč nebo odpovídající částku v eurech podle zákonných pravidel,
+            * minimální základní kapitál je 2 000 000 Kč nebo odpovídající částku v eurech podle zákonných rules,
             * akcionáři za dluhy společnosti neručí,
             * akcie vyjadřují podíl akcionáře na společnosti a jsou s nimi spojena práva,
             * společnost má složitější strukturu řízení a vyšší administrativní nároky než s.r.o.
@@ -1356,7 +1373,7 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-    # PODKAPITOLA 5 - 100% KOMPLETNÍ TEXT PODLE ZADÁNÍ
+    # PODKAPITOLA 5 - UPRAVENÁ S ROZBALOVACÍMI OTÁZKAMI A INTERAKTIVNÍM LEAN CANVAS
     elif selected_section == "5. Startup: nápad, který hledá byznys":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div>", unsafe_allow_html=True)
         st.markdown("## 5. Startup: nápad, který hledá funkční byznys")
@@ -1413,13 +1430,13 @@ elif view == "Kapitola 1":
                 else:
                     st.markdown("<div class='box-green'>🎉 <strong>SKVĚLE!</strong> Získal jsi zdarma 500 zájemců a ověřil trh. Můžeš bezpečně stavět MVP!</div>", unsafe_allow_html=True)
 
-            st.markdown("""
-            **Dvě otázky pro představivost:**
-            * **Otázka 1:** Proč většina startupů selže v prvním roce?<br>
-              *Odpověď:* Vyrobí produkt, který ve skutečnosti nikdo nepotřebuje (neověří si poptávku).
-            * **Otázka 2:** Co znamená zkratka MVP?<br>
-              *Odpověď:* Minimum Viable Product – nejjednodušší verze produktu, která už funguje a dá se testovat na lidech.
-            """, unsafe_allow_html=True)
+            st.markdown("#### ❓ Dvě otázky pro představivost")
+            
+            with st.expander("❓ Otázka 1: Proč většina startupů selže v prvním roce? (Klikni pro zobrazení odpovědi)"):
+                st.markdown("<div class='box-blue'><strong>Odpověď:</strong> Vyrobí produkt, který ve skutečnosti nikdo nepotřebuje (neověří si poptávku).</div>", unsafe_allow_html=True)
+                
+            with st.expander("❓ Otázka 2: Co znamená zkratka MVP? (Klikni pro zobrazení odpovědi)"):
+                st.markdown("<div class='box-blue'><strong>Odpověď:</strong> Minimum Viable Product – nejjednodušší verze produktu, která už funguje a dá se testovat na lidech.</div>", unsafe_allow_html=True)
 
             st.write("""
             Startupová kultura je blízká dnešní generaci, protože spojuje technologie, sociální sítě, AI, komunitu, rychlé testování a možnost tvořit i s malým rozpočtem. Zároveň ale svádí k iluzi, že stačí dobrý nápad, virální video nebo hezká aplikace.
@@ -1429,7 +1446,7 @@ elif view == "Kapitola 1":
             * Koho problém bolí natolik, že za řešení zaplatí?
             * Umíme zákazníka oslovit?
             * Vyjdou ekonomicky náklady a příjmy?
-            * Umíme růst bez toho, aby se zhrottila kvalita, tým nebo cashflow?
+            * Umíme růst bez toho, aby se zhroutila kvalita, tým nebo cashflow?
             """)
 
             st.markdown("""
@@ -1500,6 +1517,52 @@ elif view == "Kapitola 1":
                 <strong>Jednoduše řečeno:</strong> Startup není hotová firma. Je to pokus najít funkční podnikatelský model, který se dá rychle ověřovat, upravovat a případně zvětšovat.
             </div>
             """, unsafe_allow_html=True)
+
+        # INTERAKTIVNÍ LEAN CANVAS
+        with st.container(border=True):
+            st.markdown("### 📋 Interaktivní Lean Canvas pro tvůj projekt")
+            st.write("Lean Canvas je jednostránkový podnikatelský model. Vyplň si níže své bloky pro vlastní projekt a ulož ho do svého profilu:")
+
+            lc_col1, lc_col2, lc_col3, lc_col4, lc_col5 = st.columns(5)
+            
+            with lc_col1:
+                st.markdown("<div class='lc-title'>1. PROBLÉM</div>", unsafe_allow_html=True)
+                lc_problem = st.text_area("Top 3 problémy zákazníků:", placeholder="Co je trápí...", height=150, key="lc_prob")
+            
+            with lc_col2:
+                st.markdown("<div class='lc-title'>4. ŘEŠENÍ</div>", unsafe_allow_html=True)
+                lc_solution = st.text_area("Top 3 vlastnosti řešení:", placeholder="Jak to vyřešíte...", height=150, key="lc_sol")
+            
+            with lc_col3:
+                st.markdown("<div class='lc-title'>3. UNIKÁTNÍ NABÍDKA</div>", unsafe_allow_html=True)
+                lc_uvp = st.text_area("Proč si vybrat vás:", placeholder="Jasné sdělení...", height=150, key="lc_uvp")
+            
+            with lc_col4:
+                st.markdown("<div class='lc-title'>9. VÝHODA</div>", unsafe_allow_html=True)
+                lc_advantage = st.text_area("Těžko napodobitelná výhoda:", placeholder="Co nelze zkopírovat...", height=150, key="lc_adv")
+            
+            with lc_col5:
+                st.markdown("<div class='lc-title'>2. ZÁKAZNÍCI</div>", unsafe_allow_html=True)
+                lc_customers = st.text_area("Cílová skupina & Raní osvojitelé:", placeholder="Kdo zaplatí nejdřív...", height=150, key="lc_cust")
+
+            lc_row2_1, lc_row2_2 = st.columns(2)
+            with lc_row2_1:
+                st.markdown("<div class='lc-title'>8. KLÍČOVÉ METRIKY</div>", unsafe_allow_html=True)
+                lc_metrics = st.text_area("Čísla, která měříte:", placeholder="Registrace, prodeje...", height=100, key="lc_met")
+            with lc_row2_2:
+                st.markdown("<div class='lc-title'>5. KOMUNIKAČNÍ KANÁLY</div>", unsafe_allow_html=True)
+                lc_channels = st.text_area("Cesta k zákazníkům:", placeholder="Instagram, TikTok, web...", height=100, key="lc_chan")
+
+            lc_row3_1, lc_row3_2 = st.columns(2)
+            with lc_row3_1:
+                st.markdown("<div class='lc-title'>7. STRUKTURA NÁKLADŮ</div>", unsafe_allow_html=True)
+                lc_costs = st.text_area("Fixní a variabilní náklady:", placeholder="Vývoj, materiál, reklama...", height=100, key="lc_cost")
+            with lc_row3_2:
+                st.markdown("<div class='lc-title'>6. ZDROJE PŘÍJMŮ</div>", unsafe_allow_html=True)
+                lc_revenue = st.text_area("Model zisku a ceny:", placeholder="Jednorázově, předplatné...", height=100, key="lc_rev")
+
+            if st.button("💾 Uložit můj kompletní Lean Canvas", use_container_width=True):
+                st.success("Lean Canvas byl úspěšně uložen do vašeho profilu pokroků!")
 
         with st.container(border=True):
             st.markdown("### 5.4 Jak startup vzniká")
