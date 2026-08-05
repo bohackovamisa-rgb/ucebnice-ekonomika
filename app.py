@@ -235,7 +235,6 @@ st.markdown("""
         text-transform: uppercase;
     }
 
-    /* KARTY LEAN CANVAS */
     .lc-card {
         background-color: #ffffff;
         border: 1px solid #cbd5e1;
@@ -357,15 +356,16 @@ elif view == "Kapitola 1":
         "3. OSVČ a živnosti",
         "4. Obchodní korporace",
         "5. Startup: nápad, který hledá byznys",
-        "6. Lean Canvas",
-        "7. CSR, etika a odpovědné podnikání",
-        "8. Rizika podnikání",
-        "9. Švarcsystém",
-        "10. Ověřování informací a užitečné zdroje",
-        "11. Ukončení podnikání",
-        "12. Logická mapa podnikání",
-        "13. Reflexe a sebehodnocení",
-        "14. Integrované opakování"
+        "6. Podnikatelský záměr",
+        "7. Lean Canvas",
+        "8. CSR, etika a odpovědné podnikání",
+        "9. Rizika podnikání",
+        "10. Švarcsystém",
+        "11. Ověřování informací a užitečné zdroje",
+        "12. Ukončení podnikání",
+        "13. Logická mapa podnikání",
+        "14. Reflexe a sebehodnocení",
+        "15. Integrované opakování"
     ]
 
     selected_section = st.selectbox("📌 Přechod na podkapitolu (Vyberte téma):", section_options, index=0)
@@ -618,7 +618,7 @@ elif view == "Kapitola 1":
         with st.container(border=True):
             st.markdown("### 3.2 OSVČ a digitální realita")
             st.write("""
-            Dnešní OSVČ často nepotřebuje jen živnostenské oprávnění. PotNeeded také digitální a finanční gramotnost:
+            Dnešní OSVČ často nepotřebuje jen živnostenské oprávnění. Potřebuje také digitální a finanční gramotnost:
             * oddělit osobní a podnikatelské peníze,
             * evidovat příjmy a výdaje,
             * zálohovat doklady,
@@ -990,7 +990,7 @@ elif view == "Kapitola 1":
             * společnost vzniká zápisem do obchodního rejstříku,
             * obchodní firma obvykle obsahuje označení „veřejná obchodní společnost“ nebo zkratku „v.o.s.“,
             * společníci se podílejí na podnikání a ručí osobním majetkem,
-            * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných pravidel,
+            * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných правил,
             * kvůli vysokému ručení je potřeba silná důvěra mezi společníky.
             """)
 
@@ -1122,7 +1122,7 @@ elif view == "Kapitola 1":
             * vzniká zápisem do obchodního rejstříku,
             * obchodní firma obsahuje označení „akciová společnost“ nebo zkratku „a.s.“,
             * základní kapitál je rozvržen na akcie,
-            * minimální základní kapitál je 2 000 000 Kč nebo odpovídající částku v eurech podle zákonných rules,
+            * minimální základní kapitál je 2 000 000 Kč nebo odpovídající částku v eurech podle zákonných pravidel,
             * akcionáři za dluhy společnosti neručí,
             * akcie vyjadřují podíl akcionáře na společnosti a jsou s nimi spojena práva,
             * společnost má složitější strukturu řízení a vyšší administrativní nároky než s.r.o.
@@ -1373,7 +1373,7 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-    # PODKAPITOLA 5 - UPRAVENÁ S ROZBALOVACÍMI OTÁZKAMI A INTERAKTIVNÍM LEAN CANVAS
+    # PODKAPITOLA 5
     elif selected_section == "5. Startup: nápad, který hledá byznys":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div>", unsafe_allow_html=True)
         st.markdown("## 5. Startup: nápad, který hledá funkční byznys")
@@ -1517,52 +1517,6 @@ elif view == "Kapitola 1":
                 <strong>Jednoduše řečeno:</strong> Startup není hotová firma. Je to pokus najít funkční podnikatelský model, který se dá rychle ověřovat, upravovat a případně zvětšovat.
             </div>
             """, unsafe_allow_html=True)
-
-        # INTERAKTIVNÍ LEAN CANVAS
-        with st.container(border=True):
-            st.markdown("### 📋 Interaktivní Lean Canvas pro tvůj projekt")
-            st.write("Lean Canvas je jednostránkový podnikatelský model. Vyplň si níže své bloky pro vlastní projekt a ulož ho do svého profilu:")
-
-            lc_col1, lc_col2, lc_col3, lc_col4, lc_col5 = st.columns(5)
-            
-            with lc_col1:
-                st.markdown("<div class='lc-title'>1. PROBLÉM</div>", unsafe_allow_html=True)
-                lc_problem = st.text_area("Top 3 problémy zákazníků:", placeholder="Co je trápí...", height=150, key="lc_prob")
-            
-            with lc_col2:
-                st.markdown("<div class='lc-title'>4. ŘEŠENÍ</div>", unsafe_allow_html=True)
-                lc_solution = st.text_area("Top 3 vlastnosti řešení:", placeholder="Jak to vyřešíte...", height=150, key="lc_sol")
-            
-            with lc_col3:
-                st.markdown("<div class='lc-title'>3. UNIKÁTNÍ NABÍDKA</div>", unsafe_allow_html=True)
-                lc_uvp = st.text_area("Proč si vybrat vás:", placeholder="Jasné sdělení...", height=150, key="lc_uvp")
-            
-            with lc_col4:
-                st.markdown("<div class='lc-title'>9. VÝHODA</div>", unsafe_allow_html=True)
-                lc_advantage = st.text_area("Těžko napodobitelná výhoda:", placeholder="Co nelze zkopírovat...", height=150, key="lc_adv")
-            
-            with lc_col5:
-                st.markdown("<div class='lc-title'>2. ZÁKAZNÍCI</div>", unsafe_allow_html=True)
-                lc_customers = st.text_area("Cílová skupina & Raní osvojitelé:", placeholder="Kdo zaplatí nejdřív...", height=150, key="lc_cust")
-
-            lc_row2_1, lc_row2_2 = st.columns(2)
-            with lc_row2_1:
-                st.markdown("<div class='lc-title'>8. KLÍČOVÉ METRIKY</div>", unsafe_allow_html=True)
-                lc_metrics = st.text_area("Čísla, která měříte:", placeholder="Registrace, prodeje...", height=100, key="lc_met")
-            with lc_row2_2:
-                st.markdown("<div class='lc-title'>5. KOMUNIKAČNÍ KANÁLY</div>", unsafe_allow_html=True)
-                lc_channels = st.text_area("Cesta k zákazníkům:", placeholder="Instagram, TikTok, web...", height=100, key="lc_chan")
-
-            lc_row3_1, lc_row3_2 = st.columns(2)
-            with lc_row3_1:
-                st.markdown("<div class='lc-title'>7. STRUKTURA NÁKLADŮ</div>", unsafe_allow_html=True)
-                lc_costs = st.text_area("Fixní a variabilní náklady:", placeholder="Vývoj, materiál, reklama...", height=100, key="lc_cost")
-            with lc_row3_2:
-                st.markdown("<div class='lc-title'>6. ZDROJE PŘÍJMŮ</div>", unsafe_allow_html=True)
-                lc_revenue = st.text_area("Model zisku a ceny:", placeholder="Jednorázově, předplatné...", height=100, key="lc_rev")
-
-            if st.button("💾 Uložit můj kompletní Lean Canvas", use_container_width=True):
-                st.success("Lean Canvas byl úspěšně uložen do vašeho profilu pokroků!")
 
         with st.container(border=True):
             st.markdown("### 5.4 Jak startup vzniká")
@@ -1794,57 +1748,324 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-    elif selected_section == "6. Lean Canvas":
+    # PODKAPITOLA 6 - NOVĚ DOPLNĚNÁ (PODNIKATELSKÝ ZÁMĚR)
+    elif selected_section == "6. Podnikatelský záměr":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 6</div>", unsafe_allow_html=True)
-        st.markdown("## 6. Lean Canvas")
+        st.markdown("## 6. Podnikatelský záměr")
+        
         with st.container(border=True):
-            st.write("Jednostránkový podnikatelský model zaměřený na rychlé testování hypotéz.")
+            st.write("""
+            Podnikatelský záměr je dokument nebo pracovní plán, který pomáhá ověřit, zda má nápad šanci fungovat. Není to slohová práce ani „povinný papír do šuplíku“. Je to mapa rozhodování: ukazuje, komu projekt pomáhá, jakou hodnotu nabízí, kolik bude stát, jak bude vydělávat, jaká má rizika a podle čeho poznáme, že má smysl pokračovat.
+            """)
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>Proč je to důležité:</strong> Podnikatelský záměr pomáhá převést nápad do praktického návrhu, posoudit rizika, spočítat náklady a ověřit, jestli má projekt šanci fungovat. Nejde o opis definice, ale o plán pro konkrétní situaci.
+            </div>
+            """, unsafe_allow_html=True)
 
-    elif selected_section == "7. CSR, etika a odpovědné podnikání":
+            st.text_input("🧩 Interaktivní výzva: Napiš svůj podnikatelský nápad ve formátu:", placeholder="Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit...", key="p6_idea_format")
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
+                <i>„Zkontroluj můj podnikatelský záměr. Najdi nejasného zákazníka, slabé místo v ceně, podceněné náklady, právní riziko a jednu otázku, kterou musím ověřit rozhovorem se zákazníkem.“</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-green'>
+                <strong>Shornutí:</strong> Podnikatelský záměr pomáhá převést nápad do konkrétních rozhodnutí. Dobrý záměr neříká jen „co chceme dělat“, ale také pro koho, proč, za kolik, s jakými náklady, s jakým rizikem a jak ověříme zájem.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 6.1 Proč podnikatelský záměr vzniká")
+            st.write("""
+            Podnikatel často začíná nadšením: má nápad, vidí příležitost a chce rychle začít. Podnikatelský záměr ale nutí tým zpomalit a položit si otázky, které mohou ušetřit čas, peníze i zklamání.
+
+            **Záměr pomáhá:**
+            * ujasnit problém a zákazníka,
+            * oddělit přání od ověřených informací,
+            * zjistit, zda cena pokryje náklady,
+            * připravit první test trhu,
+            * domluvit role v týmu,
+            * odhalit právní, finanční a etická rizika,
+            * vysvětlit projekt učiteli, mentorovi, investorovi, bance nebo spolužákům.
+            """)
+
+            st.markdown("""
+            | Špatný záměr | Lepší záměr |
+            | :--- | :--- |
+            | **„Budeme prodávat moderní doplňky pro mladé.“** | „Budeme testovat prodej reflexních přívěsků na batohy pro žáky 1. ročníku, kteří chodí domů za šera a chtějí levný doplněk do 80 Kč.“ |
+            | **„Cena bude nízká, aby to lidé kupovali.“** | „Cena bude 79 Kč, protože variabilní náklad je 38 Kč, potřebujeme rezervu na neprodané kusy a v dotazníku byla nejčastější ochota platit 60–90 Kč.“ |
+            | **„Budeme ekologičtí.“** | „Použijeme recyklovatelný obal, budeme evidovat množství odpadu a nebudeme používat tvrzení, která neumíme doložit.“ |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.2 Co by měl podnikatelský záměr obsahovat")
+            
+            st.markdown("""
+            | Část záměru | Kontrolní otázka | Co má být výstupem |
+            | :--- | :--- | :--- |
+            | **Vize a nápad** | Co chceme vytvořit a proč? | Jedna srozumitelná věta bez marketingových frází. |
+            | **Zákazník** | Komu přesně pomáháme? | Konkrétní skupina, situace a potřeba. |
+            | **Problém** | Jakou nepříjemnost, potřebu nebo překážku zákazník řeší? | Popis problému z pohledu zákazníka. |
+            | **Hodnota** | Co zákazník získá? | Úspora času, peněz, jistota, pohodlí, bezpečí, styl, zážitek nebo jiný přínos. |
+            | **Konkurence** | Jak zákazník řeší problém dnes? | 3 alternativy a vysvětlení, čím se lišíme. |
+            | **Cena** | Kolik je zákazník ochoten zaplatit a proč? | Návrh ceny opřený o náklady, hodnotu, konkurenci a test. |
+            | **Náklady** | Co bude stát start a provoz? | Jednorázové, fixní a variabilní náklady plus rezerva. |
+            | **Marketing** | Jak se zákazník o nabídce dozví? | Kanály, sdělení, ukázka příspěvku nebo pitch. |
+            | **Právní forma** | Je to jednorázový projekt, OSVČ, nebo firma? | Zdůvodnění podle soustavnosti, rizika a odpovědnosti. |
+            | **Rizika** | Co se může pokazit? | Riziková matice a preventivní opatření. |
+            | **První test** | Jak ověříme zájem levně a rychle? | Rozhovor, dotazník, prototyp, předobjednávka nebo zkušební prodej. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.3 Analýza trhu")
+            st.write("""
+            Než podnikatel začne vyrábět nebo prodávat, musí zjistit, jestli o jeho nabídku někdo stojí. Analýza trhu neznamená jen „vygooglit konkurenci“. Znamená pochopit zákazníka, jeho současné chování a alternativy, ze kterých si vybírá.
+            """)
+
+            st.text_input("🧩 Interaktivní výzva k analýze trhu: Najdi tři podobné firmy nebo alternativní řešení pro tvůj projekt:", placeholder="1. Alternativa, 2. Alternativa, 3. Alternativa...", key="p6_mkt_anal")
+
+            st.markdown("#### Zákazník není „všichni“")
+            st.write("""
+            Častá chyba začínajících projektů je tvrzení: *„Naším zákazníkem jsou všichni studenti.“* Jenže prvák, maturant, student odborného výcviku, rodič a učitel mají jiné potřeby, rozpočet i motivaci.
+
+            **Lepší popis zákazníka:**
+            * konkrétní skupina,
+            * konkrétní situace,
+            * konkrétní problém,
+            * konkrétní důvod, proč by změnila chování.
+
+            *Příklad:* „Studenti prvního ročníku, kteří dojíždějí a potřebují levné, skladné a rychle dostupné svačiny mezi výukou a odpolední praxí.“
+            """)
+
+            st.markdown("#### Konkurence není jen stejný produkt")
+            st.write("""
+            Konkurencí je každé řešení, které zákazník používá místo nás. Pokud prodáváme svačinový box, konkurencí není jen jiný box. Konkurencí je školní bufet, obchod cestou do školy, jídlo z domova, automat, rozvoz nebo rozhodnutí nejíst vůbec.
+            """)
+
+            st.markdown("""
+            | Co zkoumáme | Otázky | Příklad výstupu |
+            | :--- | :--- | :--- |
+            | **Zákazník** | Kdo má problém a kdy ho řeší? | Studenti dojíždějící do školy mají málo času mezi výukou a praxí. |
+            | **Současné řešení** | Jak to řeší dnes? | Kupují si dražší jídlo cestou, nosí svačinu z domova nebo nejí. |
+            | **Konkurence** | Kdo nebo co může nahradit náš produkt? | Bufet, supermarket, automat, donáška, domácí příprava. |
+            | **Odlišení** | Proč by zákazník zvolil nás? | Rychlé vyzvednutí ve škole, jasná cena, možnost předobjednávky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.4 Zakladatelský rozpočet & Kalkulačka bodu zvratu")
+            st.write("""
+            Zakladatelský rozpočet odpovídá na otázku: **Kolik peněz potřebuji na start a kolik mě bude stát provoz?** Nestačí započítat jen materiál. Podnikatel musí myslet i na čas, propagaci, obaly, software, dopravu, rezervu a neprodané kusy.
+            """)
+
+            st.markdown("""
+            | Typ nákladu | Co znamená | Příklad |
+            | :--- | :--- | :--- |
+            | **Jednorázové náklady** | Platí se při startu projektu. | První materiál, jednoduchý web, vybavení, registrace, grafika. |
+            | **Fixní náklady** | Platí se pravidelně bez ohledu na počet prodejů. | Nájem, software, účetnictví, paušální služby, doména. |
+            | **Variabilní náklady** | Rostou s každým kusem nebo zakázkou. | Materiál, obal, doprava, platební poplatek, provize. |
+            | **Rezerva** | Peníze na chyby, zpoždění a nečekané situace. | Reklamace, zmetky, zdražení materiálu, neprodané kusy. |
+            | **Čas práce** | Práce týmu má hodnotu, i když si ji hned nevyplácí. | Příprava, komunikace, balení, focení, sociální sítě, evidence. |
+            """)
+
+            st.markdown("#### 🧮 Interaktivní kalkulačka bodu zvratu (Break-even point)")
+            st.write("Zadej své hodnoty a zjisti, kolik kusů musíš prodat, abys nebyl/a ve ztrátě:")
+
+            col_be1, col_be2, col_be3 = st.columns(3)
+            with col_be1:
+                price_per_unit = st.number_input("Prodejní cena za 1 ks (Kč):", value=150, step=10, key="be_price")
+            with col_be2:
+                var_cost_per_unit = st.number_input("Variabilní náklad na 1 ks (Kč):", value=80, step=5, key="be_var")
+            with col_be3:
+                fixed_costs_total = st.number_input("Měsíční fixní náklady (Kč):", value=2800, step=100, key="be_fix")
+
+            margin_per_unit = price_per_unit - var_cost_per_unit
+
+            if margin_per_unit <= 0:
+                st.error("⚠️ Prodejní cena musí být vyšší než variabilní náklady na 1 kus!")
+            else:
+                break_even_units = fixed_costs_total / margin_per_unit
+                st.markdown(f"""
+                <div class='box-green'>
+                    <strong>Marže na 1 kus:</strong> {margin_per_unit} Kč<br>
+                    <strong>Bod zvratu:</strong> Musíš prodat minimálně <span style='font-size: 1.2rem; font-weight: 800;'>{break_even_units:.1f} kusů</span> (tj. cca <strong>{int(break_even_units if break_even_units == int(break_even_units) else break_even_units + 1)} ks</strong>) měsíčně pro pokrytí fixních nákladů!
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Dynamický graf bodu zvratu
+                units_range = list(range(0, int(break_even_units * 2) + 10, max(1, int(break_even_units / 5))))
+                revenues = [u * price_per_unit for u in units_range]
+                total_costs = [fixed_costs_total + (u * var_cost_per_unit) for u in units_range]
+
+                chart_data = {
+                    "Kusy": units_range,
+                    "Celkové příjmy (Kč)": revenues,
+                    "Celkové náklady (Kč)": total_costs
+                }
+                st.line_chart(chart_data, x="Kusy")
+
+        with st.container(border=True):
+            st.markdown("### 6.5 Marketing a prodej v podnikatelském záměru")
+            st.write("""
+            Marketing není jen reklama. V podnikatelském záměru má ukázat, jak se zákazník dozví o nabídce, proč jí porozumí a proč jí bude důvěřovat.
+
+            **Dobrý marketingový plán odpovídá:**
+            * kde zákazník tráví pozornost,
+            * jakým jazykem mu vysvětlíme hodnotu,
+            * jak ukážeme důkaz kvality,
+            * jak zabráníme přehnaným slibům,
+            * jak budeme měřit, zda marketing funguje.
+            """)
+
+            st.markdown("""
+            | Kanál | Kdy dává smysl | Riziko | Metrika |
+            | :--- | :--- | :--- | :--- |
+            | **Školní Instagram** | Studentský projekt pro školní komunitu. | Lajky nemusí znamenat nákup. | Kliknutí na formulář, rezervace, předobjednávky. |
+            | **Plakát ve škole** | Lokální prodej nebo akce. | Studenti si nemusí zapamatovat detail. | QR skeny, návštěvy stánku. |
+            | **Osobní doporučení** | Malá komunita, důvěra, první zákazníci. | Pomalejší šíření. | Počet doporučení a opakovaných nákupů. |
+            | **Krátké video (TikTok/Reels)** | Produkt jde dobře ukázat vizuálně. | Přehnaný slib nebo povrchní viralita. | Zprávy, poptávky, objednávky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.6 Rizika a plán B")
+            st.write("Podnikatelský záměr má obsahovat i nepříjemné otázky. Silný tým nepůsobí slabě tím, že mluví o rizicích. Naopak ukazuje, že přemýšlí realisticky.")
+
+            st.markdown("""
+            | Riziko | Jak se projeví | Prevence | Plán B |
+            | :--- | :--- | :--- | :--- |
+            | **Nízký zájem** | Málo objednávek, nízká účast, slabá zpětná vazba. | Rozhovory, předobjednávka, test malého množství. | Změnit cílovou skupinu, cenu nebo problém. |
+            | **Podceněné náklady** | Projekt prodává, ale nevydělává. | Kalkulace, rezerva, kontrola dodavatelů. | Zdražit, zjednodušit produkt, snížit rozsah. |
+            | **Konflikt v týmu** | Nerovnoměrná práce, hádky, zpoždění. | Týmová dohoda, role, pravidelná kontrola. | Přerozdělit role nebo zmenšit projekt. |
+            | **Právní problém** | Nejasné oprávnění, reklamace, autorská práva, data. | Ověření pravidel a transparentní podmínky. | Pozastavit prodej a upravit podmínky. |
+            """)
+
+        # 6.7 ŠABLONA JEDNOSTRÁNKOVÉHO PODNIKATELSKÉHO ZÁMĚRU
+        with st.container(border=True):
+            st.markdown("### 📄 6.7 Šablona jednostránkového podnikatelského záměru")
+            st.write("Vyplň si kompletní podnikatelský záměr pro svůj projekt na jednom místě:")
+
+            col_z1, col_z2 = st.columns(2)
+            with col_z1:
+                st.text_input("Název projektu:", placeholder="Název...", key="z_name")
+                st.text_input("Jedna věta projektu:", placeholder="Pomáháme [komu] řešit [jaký problém] pomocí [jakého řešení]...", key="z_one_sentence")
+                st.text_area("Zákazník (komu přesně pomáháme):", placeholder="Cílová skupina...", height=70, key="z_cust")
+                st.text_area("Problém (co zákazníka trápí):", placeholder="Popis problému...", height=70, key="z_prob")
+                st.text_area("Hodnota pro zákazníka:", placeholder="Co tím získá...", height=70, key="z_val")
+                st.text_area("Řešení & Konkurence:", placeholder="Návrh řešení a čím se lišíme...", height=70, key="z_sol")
+            with col_z2:
+                st.text_input("Navržená cena:", placeholder="Cena v Kč...", key="z_price")
+                st.text_input("Odhadované náklady (jednorázové, fixní, variabilní):", placeholder="Náklady...", key="z_costs")
+                st.text_area("První test & Metrika úspěchu:", placeholder="Jak levně ověříte zájem...", height=70, key="z_test")
+                st.text_area("Hlavní riziko & Plán B:", placeholder="Co se může pokazit...", height=70, key="z_risk")
+                st.text_input("Právní forma pro start:", placeholder="OSVČ / s.r.o. / Záměr v rámci školy...", key="z_legal")
+                st.text_input("Etické pravidlo projektu:", placeholder="Pravidlo poctivosti...", key="z_ethics")
+
+            if st.button("💾 Uložit můj podrobný podnikatelský záměr", use_container_width=True):
+                st.success("Podnikatelský záměr byl úspěšně uložen do vašeho profilu pokroků!")
+
+            st.markdown("""
+            <div class='box-green'>
+                <strong>Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.
+            </div>
+            """, unsafe_allow_html=True)
+
+    elif selected_section == "7. Lean Canvas":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div>", unsafe_allow_html=True)
-        st.markdown("## 7. CSR, etika a odpovědné podnikání")
+        st.markdown("## 7. Lean Canvas")
+        
+        with st.container(border=True):
+            st.markdown("### 📋 Interaktivní Lean Canvas pro tvůj projekt")
+            st.write("Lean Canvas je jednostránkový podnikatelský model. Vyplň si níže své bloky pro vlastní projekt a ulož ho do svého profilu:")
+
+            lc_col1, lc_col2, lc_col3, lc_col4, lc_col5 = st.columns(5)
+            
+            with lc_col1:
+                st.markdown("<div class='lc-title'>1. PROBLÉM</div>", unsafe_allow_html=True)
+                lc_problem = st.text_area("Top 3 problémy zákazníků:", placeholder="Co je trápí...", height=150, key="lc_prob")
+            
+            with lc_col2:
+                st.markdown("<div class='lc-title'>4. ŘEŠENÍ</div>", unsafe_allow_html=True)
+                lc_solution = st.text_area("Top 3 vlastnosti řešení:", placeholder="Jak to vyřešíte...", height=150, key="lc_sol")
+            
+            with lc_col3:
+                st.markdown("<div class='lc-title'>3. UNIKÁTNÍ NABÍDKA</div>", unsafe_allow_html=True)
+                lc_uvp = st.text_area("Proč si vybrat vás:", placeholder="Jasné sdělení...", height=150, key="lc_uvp")
+            
+            with lc_col4:
+                st.markdown("<div class='lc-title'>9. VÝHODA</div>", unsafe_allow_html=True)
+                lc_advantage = st.text_area("Těžko napodobitelná výhoda:", placeholder="Co nelze zkopírovat...", height=150, key="lc_adv")
+            
+            with lc_col5:
+                st.markdown("<div class='lc-title'>2. ZÁKAZNÍCI</div>", unsafe_allow_html=True)
+                lc_customers = st.text_area("Cílová skupina & Raní osvojitelé:", placeholder="Kdo zaplatí nejdřív...", height=150, key="lc_cust")
+
+            lc_row2_1, lc_row2_2 = st.columns(2)
+            with lc_row2_1:
+                st.markdown("<div class='lc-title'>8. KLÍČOVÉ METRIKY</div>", unsafe_allow_html=True)
+                lc_metrics = st.text_area("Čísla, která měříte:", placeholder="Registrace, prodeje...", height=100, key="lc_met")
+            with lc_row2_2:
+                st.markdown("<div class='lc-title'>5. KOMUNIKAČNÍ KANÁLY</div>", unsafe_allow_html=True)
+                lc_channels = st.text_area("Cesta k zákazníkům:", placeholder="Instagram, TikTok, web...", height=100, key="lc_chan")
+
+            lc_row3_1, lc_row3_2 = st.columns(2)
+            with lc_row3_1:
+                st.markdown("<div class='lc-title'>7. STRUKTURA NÁKLADŮ</div>", unsafe_allow_html=True)
+                lc_costs = st.text_area("Fixní a variabilní náklady:", placeholder="Vývoj, materiál, reklama...", height=100, key="lc_cost")
+            with lc_row3_2:
+                st.markdown("<div class='lc-title'>6. ZDROJE PŘÍJMŮ</div>", unsafe_allow_html=True)
+                lc_revenue = st.text_area("Model zisku a ceny:", placeholder="Jednorázově, předplatné...", height=100, key="lc_rev")
+
+            if st.button("💾 Uložit můj kompletní Lean Canvas", use_container_width=True):
+                st.success("Lean Canvas byl úspěšně uložen do vašeho profilu pokroků!")
+
+    elif selected_section == "8. CSR, etika a odpovědné podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div>", unsafe_allow_html=True)
+        st.markdown("## 8. CSR, etika a odpovědné podnikání")
         with st.container(border=True):
             st.write("Společenská odpovědnost firem (ESG) a etické rozhodování v praxi.")
 
-    elif selected_section == "8. Rizika podnikání":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div>", unsafe_allow_html=True)
-        st.markdown("## 8. Rizika podnikání")
+    elif selected_section == "9. Rizika podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div>", unsafe_allow_html=True)
+        st.markdown("## 9. Rizika podnikání")
         with st.container(border=True):
             st.write("Identifikace, matice rizik a preventivní opatření.")
 
-    elif selected_section == "9. Švarcsystém":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div>", unsafe_allow_html=True)
-        st.markdown("## 9. Švarcsystém")
+    elif selected_section == "10. Švarcsystém":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div>", unsafe_allow_html=True)
+        st.markdown("## 10. Švarcsystém")
         with st.container(border=True):
             st.markdown("<div class='box-red'><strong>Pozor na švarcsystém:</strong> Zastřený pracovněprávní vztah je nelegální.</div>", unsafe_allow_html=True)
 
-    elif selected_section == "10. Ověřování informací a užitečné zdroje":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div>", unsafe_allow_html=True)
-        st.markdown("## 10. Ověřování informací a užitečné zdroje")
+    elif selected_section == "11. Ověřování informací a užitečné zdroje":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 11</div>", unsafe_allow_html=True)
+        st.markdown("## 11. Ověřování informací a užitečné zdroje")
         with st.container(border=True):
             st.write("Veřejné rejstříky: ARES, Obchodní rejstřík (Justice.cz), Živnostenský rejstřík (RŽP).")
 
-    elif selected_section == "11. Ukončení podnikání":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 11</div>", unsafe_allow_html=True)
-        st.markdown("## 11. Ukončení podnikání")
+    elif selected_section == "12. Ukončení podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 12</div>", unsafe_allow_html=True)
+        st.markdown("## 12. Ukončení podnikání")
         with st.container(border=True):
             st.write("Zrušení, likvidace a zánik podniku.")
 
-    elif selected_section == "12. Logická mapa podnikání":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 12</div>", unsafe_allow_html=True)
-        st.markdown("## 12. Logická mapa podnikání")
+    elif selected_section == "13. Logická mapa podnikání":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 13</div>", unsafe_allow_html=True)
+        st.markdown("## 13. Logická mapa podnikání")
         with st.container(border=True):
             st.write("Přehledná syntéza celé Kapitoly 1.")
 
-    elif selected_section == "13. Reflexe a sebehodnocení":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 13</div>", unsafe_allow_html=True)
-        st.markdown("## 13. Reflexe a sebehodnocení")
+    elif selected_section == "14. Reflexe a sebehodnocení":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 14</div>", unsafe_allow_html=True)
+        st.markdown("## 14. Reflexe a sebehodnocení")
         with st.container(border=True):
             st.write("Vyhodnocení vlastní práce a posunu v kapitole.")
 
-    elif selected_section == "14. Integrované opakování":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 14</div>", unsafe_allow_html=True)
-        st.markdown("## 14. Integrované opakování")
+    elif selected_section == "15. Integrované opakování":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 15</div>", unsafe_allow_html=True)
+        st.markdown("## 15. Integrované opakování")
         with st.container(border=True):
             st.write("Závěrečný test a souhrnné aktivity Kapitoly 1.")
 
