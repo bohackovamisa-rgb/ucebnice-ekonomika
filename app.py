@@ -202,25 +202,37 @@ elif view == "Kapitola 1":
         
         with st.container(border=True):
             st.write("Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            
             st.markdown("""
-            <div class='box-blue'>
-                <strong>⚖️ Přesná zákonná opora:</strong> Podnikatele definuje zákon č. 89/2012 Sb., občanský zákoník, zejména § 420 odst. 1: „Kdo samostatně vykonává na vlastní účet a odpovědnost výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku, je považován se zřetelem k této činnosti za podnikatele.“ <span style='display:none'>[cite: 1]</span><br><br>
+            <div class='box-gray'>
+                <strong>⚖️ Přesná zákonná opora:</strong> Podnikatele definuje zákon č. 89/2012 Sb., občanský zákoník, zejména § 420 odst. 1: <br>„Kdo samostatně vykonává na vlastní účet a odpovědnost výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku, je považován se zřetelem k této činnosti za podnikatele.“ <span style='display:none'>[cite: 1]</span><br><br>
                 Jednoduše řečeno: Podnikatelem je ten, kdo podniká samostatně, na vlastní účet, na vlastní odpovědnost, dělá výdělečnou činnost soustavně a jejím cílem je zisk. <span style='display:none'>[cite: 1]</span>
             </div>
             """, unsafe_allow_html=True)
-            st.write("Možná už máš nápad, něco prodáváš, tvoříš na zakázku nebo si jen přivyděláváš. Tady zjistíš, kdy už se z takové aktivity stává podnikání a proč je důležité poznat rozdíl mezi koníčkem, brigádou, OSVČ a firmou. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Možná už máš nápad, něco prodáváš, tvoříš na zakázku nebo si jen přivyděláváš. Tady zjistíš, kdy už se z takové aktivity stává podnikání a proč je důležité poznat rozdíl mezi koníčkem, brigádou, OSVČ a firmou. <span style='display:none'>[cite: 1]</span>
+            </div>
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
             st.markdown("### 1.1 Podnikatel v realitě současné generace <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
             st.write("Podnikání dnes nemusí začínat kanceláří, provozovnou ani výrobní halou. Může začít mobilem, profilem na sociální síti, prodejem digitální šablony, správou obsahu pro lokální firmu, výrobou merch produktů, doučováním, e-shopem, aplikací, kurzem, grafickou službou, tvorbou videí nebo komunitním projektem. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
             st.write("Právě proto je důležité umět rozpoznat hranici mezi: <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            
             st.markdown("""
             * **koníčkem** — dělám něco pro radost, bez soustavného záměru vydělávat, <span style='display:none'>[cite: 1]</span>
             * **jednorázovým přivýdělkem** — například prodám vlastní staré věci, <span style='display:none'>[cite: 1]</span>
             * **brigádou nebo zaměstnáním** — pracuji podle pokynů zaměstnavatele, <span style='display:none'>[cite: 1]</span>
             * **podnikáním** — samostatně nabízím produkt nebo službu, nesu riziko a chci dlouhodobě vydělávat. <span style='display:none'>[cite: 1]</span>
             """, unsafe_allow_html=True)
-            st.info("📱 Příklad pro dnešní studenty: Když jednou prodáš staré tenisky, nejde obvykle o podnikání. Když ale pravidelně nakupuješ, upravuješ, propaguješ a prodáváš zboží se záměrem vydělat, už se blížíš podnikání a musíš řešit pravidla. <span style='display:none'>[cite: 1]</span>")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📱 Příklad pro dnešní studenty:</strong> Když jednou prodáš staré tenisky, nejde obvykle o podnikání. Když ale pravidelně nakupuješ, upravuješ, propaguješ a prodáváš zboží se záměrem vydělat, už se blížíš podnikání a musíš řešit pravidla. <span style='display:none'>[cite: 1]</span>
+            </div>
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
             st.markdown("### 1.2 Čtyři znaky podnikání na praktických příkladech <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
@@ -235,20 +247,58 @@ elif view == "Kapitola 1":
 
         with st.container(border=True):
             st.markdown("### 1.3 Podnikatel není jen „někdo, kdo vydělává“ <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
-            st.write("Podnikatel vytváří hodnotu pro zákazníka. Peníze jsou důsledkem toho, že někdo považuje produkt nebo službu za užitečnou. Moderní podnikavost proto zahrnuje nejen prodej, ale i schopnost vidět problém, navrhnout řešení, ověřit zájem, komunikovat férově, počítat náklady a cenu, nést odpovědnost, učit se z chyb a používat technologie bezpečně a smysluplně. <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            st.write("Podnikatel vytváří hodnotu pro zákazníka. Peníze jsou důsledkem toho, že někdo považuje produkt nebo službu za užitečnou. Moderní podnikavost proto zahrnuje nejen prodej, ale i schopnost: <span style='display:none'>[cite: 1]</span>", unsafe_allow_html=True)
+            st.markdown("""
+            * vidět problém, <span style='display:none'>[cite: 1]</span>
+            * navrhnout řešení, <span style='display:none'>[cite: 1]</span>
+            * ověřit zájem, <span style='display:none'>[cite: 1]</span>
+            * komunikovat férově, <span style='display:none'>[cite: 1]</span>
+            * počítat náklady a cenu, <span style='display:none'>[cite: 1]</span>
+            * nést odpovědnost, <span style='display:none'>[cite: 1]</span>
+            * učit se z chyb, <span style='display:none'>[cite: 1]</span>
+            * používat technologie bezpečně a smysluplně. <span style='display:none'>[cite: 1]</span>
+            """, unsafe_allow_html=True)
 
+        with st.container(border=True):
             st.markdown("<div class='box-yellow'><strong>🧪 Tvůj úkol: Je to podnikání?</strong><br>U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdělek, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání. <span style='display:none'>[cite: 1]</span></div>", unsafe_allow_html=True)
-            st.selectbox("1. Student jednou prodá starý mobil. <span style='display:none'>[cite: 1]</span>", ["Vyber...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q1")
-            st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram. <span style='display:none'>[cite: 1]</span>", ["Vyber...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q2")
-            st.selectbox("3. Student pracuje v kavárně podle rozpisu směn. <span style='display:none'>[cite: 1]</span>", ["Vyber...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q3")
-            st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu. <span style='display:none'>[cite: 1]</span>", ["Vyber...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q4")
-            st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky. <span style='display:none'>[cite: 1]</span>", ["Vyber...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q5")
+            st.selectbox("1. Student jednou prodá starý mobil. <span style='display:none'>[cite: 1]</span>", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q1")
+            st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram. <span style='display:none'>[cite: 1]</span>", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q2")
+            st.selectbox("3. Student pracuje v kavárně podle rozpisu směn. <span style='display:none'>[cite: 1]</span>", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q3")
+            st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu. <span style='display:none'>[cite: 1]</span>", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q4")
+            st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky. <span style='display:none'>[cite: 1]</span>", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q5")
 
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> „Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.“ <span style='display:none'>[cite: 1]</span>
             </div>
             """, unsafe_allow_html=True)
+
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost. <span style='display:none'>[cite: 1]</span></div>", unsafe_allow_html=True)
+            st.text_area("Tvoje odpověď:", key="p1_idea")
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi rozlišit, jestli je můj nápad spíš jednorázová aktivita, nebo skutečné podnikání.“ <span style='display:none'>[cite: 1]</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📌 Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk. <span style='display:none'>[cite: 1]</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📌 Čtyři pilíře podnikání:</strong> <span style='display:none'>[cite: 1]</span><br>
+                • <strong>Soustavnost:</strong> nejde o jednorázový prodej, ale o činnost vykonávanou opakovaně nebo dlouhodobě. <span style='display:none'>[cite: 1]</span><br>
+                • <strong>Samostatnost:</strong> podnikatel rozhoduje o tom, co dělá, jak pracuje a jak organizuje svou činnost. <span style='display:none'>[cite: 1]</span><br>
+                • <strong>Vlastní jméno:</strong> podnikatel vystupuje vůči zákazníkům, úřadům a partnerům sám za sebe nebo za svou firmu. <span style='display:none'>[cite: 1]</span><br>
+                • <strong>Vlastní odpovědnost:</strong> podnikatel nese následky svých rozhodnutí, včetně rizik, závazků a případných dluhů. <span style='display:none'>[cite: 1]</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.info("🤔 **Otázka k zamyšlení:** V čem je podle vás největší rozdíl mezi zaměstnancem a podnikatelem? <span style='display:none'>[cite: 1]</span>")
 
     # --- 2. Slovníček základních pojmů ---
     elif selected_section == "2. Slovníček základních pojmů":
