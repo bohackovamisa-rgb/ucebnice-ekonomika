@@ -580,6 +580,153 @@ elif view == "Kapitola 1":
                     st.metric(label="Tvůj minimální hodinový tarif", value=f"{hourly_rate:,.0f} Kč/h".replace(",", " "))
                     
                 st.info(f"**Vysvětlení:** Abys měl/a čistého **{target_net} Kč**, musíš si vydělat **{total_gross_needed} Kč** (kvůli nákladům a odvodům). Protože reálně pro klienty pracuješ jen **{billable_hours:.0f} hodin**, musíš si za jednu hodinu účtovat alespoň **{hourly_rate:,.0f} Kč**.")
+# --- 4. Obchodní korporace ---
+    elif selected_section == "4. Obchodní korporace":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div><h2>4. Obchodní korporace</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Obchodní korporace jsou právnické osoby založené podle zákona o obchodních korporacích. Patří mezi ně obchodní společnosti a družstva. V praxi vytvářejí samostatný subjekt — firmu, která má vlastní název, sídlo, majetek, orgány, pravidla rozhodování a odpovědnost.") #[cite: 1]
+            st.write("Je důležité pochopit, že obchodní korporace není jen „větší podnikání“. Je to právní forma, která určuje: kdo podnik vlastní, kdo za něj jedná, jak se ručí za dluhy, jak se vkládají peníze nebo práce, jak se rozhoduje, jak se rozděluje zisk, jak firma vzniká a zaniká a jakou administrativu musí plnit.") #[cite: 1]
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Právní forma podnikání ovlivňuje ručení, povinnosti, daně, administrativu i důvěryhodnost vůči zákazníkům, bankám a partnerům. Nejde o učení paragrafů nazpaměť, ale o pochopení, proč se právní forma volí odpovědně.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.1 Proč právní forma není formalita a 4.2 Co patří mezi korporace") #[cite: 1]
+            st.write("Právní forma rozhoduje o tom, kdo nese riziko, kdo jedná za podnik, jak se rozděluje zisk, jak složitá je administrativa a jak podnik působí na banky, investory, dodavatele i zákazníky. Pro současnou generaci je důležité pochopit, že to není „nudná kolonka ve formuláři“, ale strategické rozhodnutí.") #[cite: 1]
+            st.markdown("<div class='box-gray'><strong>⚖️ Zákonný základ:</strong> Obchodní korporace upravuje zejména zákon o obchodních korporacích. Jejich vznik, zápis a veřejné údaje souvisejí také s občanským zákoníkem, živnostenským zákonem a zákonem o veřejných rejstřících.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            | Skupina | Formy | Typický znak |
+            | :--- | :--- | :--- |
+            | **Osobní společnosti** | v.o.s., k.s. | Důležitá je osobní účast společníků, důvěra a často vyšší míra ručení. |
+            | **Kapitálové společnosti** | s.r.o., a.s. | Důležitý je vklad kapitálu, podíly nebo akcie a oddělení firmy od osobního majetku vlastníků. |
+            | **Družstva** | družstvo, evropská družstevní forma | Důležité je členství, spolupráce a společný prospěch členů. |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.3 Obecné zákonné podmínky vzniku") #[cite: 1]
+            st.markdown("""
+            * **Zakladatelské právní jednání:** Sepsání společenské smlouvy, zakladatelské listiny nebo stanov. Určuje základní pravidla.
+            * **Obchodní firma:** Název, pod kterým korporace vystupuje. Musí být odlišitelný.
+            * **Sídlo:** Adresa zapsaná ve veřejném rejstříku.
+            * **Předmět podnikání:** Vymezení, co bude korporace dělat.
+            * **Vklady:** Peníze nebo jiné hodnoty, které společníci vkládají.
+            * **Orgány korporace:** Osoby nebo skupiny, které rozhodují a jednají za firmu.
+            * **Zápis do obchodního rejstříku:** Obchodní korporace vzniká až tímto zápisem.
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.4 Volba právní formy: OSVČ, nebo s.r.o.?") #[cite: 1]
+            st.write("U každé otázky vyber tu odpověď, která lépe odpovídá tvému projektu. Na konci klikni na vyhodnocení.") #[cite: 1]
+            
+            q1 = st.radio("1️⃣ Plánuješ podnikat sám/sama, nebo v týmu?", ["Spíš OSVČ: Podnikám sám/sama a rozhoduji hlavně za sebe.", "Spíš s.r.o.: Podnikáme v týmu a potřebujeme jasně rozdělit role, odpovědnost a podíly."]) #[cite: 1]
+            q2 = st.radio("2️⃣ Jde hlavně o osobní práci, nebo projekt s růstem?", ["Spíš OSVČ: Nabízím hlavně vlastní práci, službu nebo dovednost.", "Spíš s.r.o.: Projekt má růst, rozšiřovat se a fungovat jako samostatná firma."]) #[cite: 1]
+            q3 = st.radio("3️⃣ Potřebujete řešit podíly a zakladatelskou dohodu?", ["Spíš OSVČ: Zatím nepotřebuji řešit podíly mezi více zakladateli.", "Spíš s.r.o.: Je nás víc a potřebujeme jasně určit, kdo má jaký podíl."]) #[cite: 1]
+            q4 = st.radio("4️⃣ Hrozí větší finanční závazky?", ["Spíš OSVČ: Náklady jsou nízké a projekt lze rychle zastavit bez velkých dluhů.", "Spíš s.r.o.: Projekt vyžaduje větší nákupy, úvěr, sklad, drahé vybavení."]) #[cite: 1]
+            q5 = st.radio("5️⃣ Může vzniknout škoda, reklamace nebo odpovědnost?", ["Spíš OSVČ: Riziko škody nebo reklamací je malé a dobře zvládnutelné.", "Spíš s.r.o.: Chyba může způsobit větší škodu, reklamace nebo právní odpovědnost."]) #[cite: 1]
+            q6 = st.radio("6️⃣ Potřebuješ chránit osobní majetek?", ["Spíš OSVČ: Riziko je malé a nevadí mi vyšší osobní odpovědnost.", "Spíš s.r.o.: Chci lépe oddělit osobní majetek od podnikání."]) #[cite: 1]
+            q7 = st.radio("7️⃣ Budeš potřebovat investora, banku nebo větší partnery?", ["Spíš OSVČ: Nepotřebuji investora ani složitější vlastnickou strukturu.", "Spíš s.r.o.: Chci jednat s investorem, bankou nebo většími partnery."]) #[cite: 1]
+            q8 = st.radio("8️⃣ Chceš rychle otestovat nápad, nebo budovat firmu?", ["Spíš OSVČ: Chci začít jednoduše a nejdřív si ověřit, jestli nápad funguje.", "Spíš s.r.o.: Od začátku počítám s budováním značky, týmu a dlouhodobé firmy."]) #[cite: 1]
+            q9 = st.radio("9️⃣ Bude projekt pracovat s dalšími lidmi?", ["Spíš OSVČ: Většinu práce zvládne jeden člověk nebo občasná spolupráce.", "Spíš s.r.o.: Projekt bude potřebovat tým, zaměstnance, dodavatele."]) #[cite: 1]
+            
+            if st.button("Vyhodnotit test", type="primary"):
+                odpovedi = [q1, q2, q3, q4, q5, q6, q7, q8, q9]
+                sro_body = sum([1 for odpoved in odpovedi if "s.r.o." in odpoved])
+                osvc_body = 9 - sro_body
+                st.write(f"**Skóre:** OSVČ ({osvc_body}/9) | s.r.o. ({sro_body}/9)")
+                if sro_body > osvc_body:
+                    st.success("Tvé odpovědi naznačují, že **s.r.o.** by mohlo být vhodnější (zejména kvůli riziku, týmu a růstu). Nejde o právní radu, ale o pomůcku k rozhodování.") #[cite: 1]
+                else:
+                    st.info("Tvé odpovědi naznačují, že **OSVČ** bude pro rychlý a jednoduchý start pravděpodobně vhodnější.") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.5 Moderní pohled: firma jako důvěryhodná značka") #[cite: 1]
+            st.write("Zákazník dnes často posuzuje firmu podle webu, sociálních sítí, recenzí a transparentnosti. Právní forma může ovlivnit důvěru: zákazník chce vědět, s kým uzavírá smlouvu, dodavatel komu fakturuje, zaměstnanec kdo ho zaměstnává.") #[cite: 1]
+            st.markdown("<div class='box-blue'><strong>🔍 Digitální stopa:</strong> U každého podnikání je dobré ověřit název, IČO, právní formu, osobu jednající za firmu, web a recenze. Důvěryhodnost vzniká i tím, že informace souhlasí napříč zdroji.</div>", unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.6 Osobní společnosti (v.o.s., k.s.)") #[cite: 1]
+            st.write("Stojí hlavně na osobní účasti, důvěře a odpovědnosti společníků.") #[cite: 1]
+            
+            with st.expander("Veřejná obchodní společnost (v.o.s.)"):
+                st.write("Zákonně jde o formu vhodnou spíše pro osoby, které si velmi důvěřují. Důvod je jednoduchý: společníci ručí za dluhy společnosti společně a nerozdílně celým svým majetkem. Věřitel se může domáhat splnění dluhu i po jednom ze společníků.") #[cite: 1]
+                st.markdown("- **Výhoda:** Jednoduché založení a silná důvěra.\n- **Nevýhoda:** Vysoké osobní riziko.\n- *Příklad:* Kaufland Česká republika v.o.s.") #[cite: 1]
+            
+            with st.expander("Komanditní společnost (k.s.)"):
+                st.write("Kombinuje prvky osobní a kapitálové společnosti. Má dva typy společníků:") #[cite: 1]
+                st.markdown("- **Komplementář:** Aktivně řídí, ručí celým majetkem.\n- **Komanditista:** Vkládá kapitál, ručí jen do výše nesplaceného vkladu.") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.7 Kapitálové společnosti a Družstva") #[cite: 1]
+            
+            with st.expander("Společnost s ručením omezeným (s.r.o.)"):
+                st.write("Nejčastější forma. Lépe odděluje podnikání od osobního života. Hodí se pro menší a střední podnikání, e-shopy, služby i týmové projekty.") #[cite: 1]
+                st.markdown("""
+                * **Ručení:** Společníci ručí za dluhy jen do výše nesplněné vkladové povinnosti zapsané v rejstříku.
+                * **Jednatel:** Jedná za firmu navenek.
+                * **Valná hromada:** Nejvyšší orgán (rozhodují společníci).
+                """) #[cite: 1]
+                st.warning("Stačí vklad 1 Kč? Zákon to umožňuje, ale není to bezpečné. Firma bez kapitálu padne při první reklamaci nebo opožděné platbě.") #[cite: 1]
+
+            with st.expander("Akciová společnost (a.s.)"):
+                st.write("Vhodná pro větší projekty, investory a podnikání s významnějším kapitálem. Základní kapitál je rozdělen na akcie.") #[cite: 1]
+                st.markdown("""
+                * **Základní kapitál:** Nejméně 2 000 000 Kč.
+                * **Akcionáři:** Za závazky osobně neručí. Mají právo na podíl ze zisku (dividendu).
+                * **Orgány:** Valná hromada, představenstvo a dozorčí rada (nebo správní rada v monistickém systému).
+                """) #[cite: 1]
+
+            with st.expander("Družstvo"):
+                st.write("Právnická osoba založená na členství. Smyslem není jen zisk, ale společný prospěch členů (např. bydlení, prodej výrobků). Má zpravidla alespoň 3 členy.") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.8 Péče řádného hospodáře") #[cite: 1]
+            st.write("Osoby, které řídí korporaci (např. jednatelé), nesmí rozhodovat libovolně. Musí jednat informovaně, pečlivě a loajálně. Omezené ručení v s.r.o. neznamená nulovou odpovědnost pro jednatele, který firmu zadluží záměrně nebo hrubou nedbalostí.") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.9 Přehled právních forem") #[cite: 1]
+            st.markdown("""
+            | Forma | Administrativa | Riziko / Ručení | Kapitál |
+            | :--- | :--- | :--- | :--- |
+            | **OSVČ** | Nízká | Vysoké (celým majetkem) | Není |
+            | **v.o.s.** | Střední | Vysoké (společníci celým majetkem) | Není |
+            | **k.s.** | Střední | Různé (dle typu společníka) | Vklad komanditisty |
+            | **s.r.o.** | Střední | Nižší (oddělení majetku) | Od 1 Kč (reálně víc) |
+            | **a.s.** | Vysoká | Nižší (akcionáři neručí) | Min. 2 mil. Kč |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.10 - 4.12 Vznik, Rejstřík a Zánik") #[cite: 1]
+            st.write("**Vznik:** Obchodní korporace vzniká až dnem zápisu do obchodního rejstříku (ne pouhým sepsáním smlouvy).") #[cite: 1]
+            st.write("**Rejstřík (Justice.cz):** Zapisuje se název, sídlo, předmět podnikání, orgány, společníci a výše vkladů.") #[cite: 1]
+            st.markdown("""
+            * **Zrušení:** Firma vstoupí do fáze ukončování (rozhodnutím společníků).
+            * **Likvidace:** Vypořádání majetku a zaplacení dluhů.
+            * **Zánik:** Firma právně přestane existovat výmazem z rejstříku.
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.13 Daně a odvody u obchodních korporací (Zjednodušeně)") #[cite: 1]
+            st.write("Firma platí daň z příjmů právnických osob (sazba 21 %) ze svého zisku. Pokud si majitel chce peníze vyplatit (podíl na zisku) nebo se zaměstná, platí se další daně a odvody. Peníze firmy nejsou automaticky peníze majitele.") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.15 Aktivita: Vyber právní formu podle situace") #[cite: 1]
+            c_f1 = st.selectbox("1. Skupina pěti lidí chce společně sdílet vybavení a prodávat výrobky členů.", ["Vyber...", "OSVČ", "s.r.o.", "Družstvo"]) #[cite: 1]
+            c_f2 = st.selectbox("2. Startup hledá investora a plánuje rychlý růst.", ["Vyber...", "OSVČ", "s.r.o. / a.s.", "Družstvo"]) #[cite: 1]
+            c_f3 = st.selectbox("3. Dva společníci chtějí podnikat společně, ale projekt může vytvářet vysoké dluhy.", ["Vyber...", "v.o.s.", "s.r.o.", "OSVČ"]) #[cite: 1]
+            
+            if st.button("Zkontrolovat aktivity"):
+                if c_f1 == "Družstvo" and c_f2 == "s.r.o. / a.s." and c_f3 == "s.r.o.":
+                    st.success("Skvěle! Družstvo je na sdílení, s.r.o./a.s. pro investory a s.r.o. limituje vysoké dluhy společníků.") #[cite: 1]
+                else:
+                    st.warning("Zkus to ještě promyslet, zejména s ohledem na riziko ručení a účel (sdílení vs investoři).") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.16 Jiné formy podnikání v ČR a EU") #[cite: 1]
+            st.write("V praxi existují i formy jako Odštěpný závod (pobočka zahraniční firmy), Spolek/Nadace (neziskové, zisk neslouží k rozdělování) nebo Evropská společnost (SE - pro usnadnění byznysu napříč státy EU).") #[cite: 1]
 # ==========================================
 elif view == "Kapitola 2":
     st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
