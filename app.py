@@ -989,7 +989,7 @@ elif view == "Kapitola 1":
             elif sim_choice == "B) Udělám jednoduchý dotazník a jednoduchý web pro zájemce":
                 st.success("🎉 SKVĚLE! Získal jsi zdarma 500 zájemců a ověřil trh. Můžeš bezpečně stavět MVP!")
 
-          st.markdown("##### 💡 Dvě otázky pro představivost")
+            st.markdown("##### 💡 Dvě otázky pro představivost")
             with st.expander("❓ Otázka 1: Proč většina startupů selže v prvním roce?"):
                 st.success("**Odpověď:** Vyrobí produkt, který ve skutečnosti nikdo nepotřebuje (neověří si poptávku).")
             
