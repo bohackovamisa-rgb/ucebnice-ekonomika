@@ -1909,6 +1909,69 @@ elif view == "Kapitola 1":
             st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
             st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
             st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
+# --- 13. Reflexe a sebehodnocení ---
+    elif "13. Reflexe a sebehodnocení" in selected_section or "Reflexe" in selected_section:
+        st.markdown("<div class='sub-section-header'>KAPITOLA 13</div><h2>13. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🔄 Formativní hodnocení:</strong> Nejde o známku. Cílem je zjistit, čemu už rozumíš, co umíš použít v praxi a kde ještě potřebuješ další příklad.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje otázka pro další konzultaci:")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vyzkoušej mě z Kapitoly 1 pomocí pěti otázek a potom mi dej zpětnou vazbu.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### ✍️ Otázky k reflexi (Doplň)")
+            
+            st.write("**1. Co jsem se dnes naučil/a?**")
+            st.text_area("Napiš vlastními slovy 3 věci, které si z kapitoly odnášíš:", height=100)
+            
+            st.write("**2. Co umím vysvětlit vlastními slovy?**")
+            st.text_area("Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.:", height=100)
+            
+            st.write("**3. V čem mám ještě nejasnosti?**")
+            st.multiselect("Vyber jednu (nebo více) částí, která ti není jasná:", [
+                "Právní formy", 
+                "Ručení", 
+                "Podnikatelský záměr", 
+                "Lean Canvas", 
+                "CSR", 
+                "Švarcsystém", 
+                "Ukončení podnikání"
+            ])
+            
+            st.write("**4. Která právní forma by se hodila pro můj nápad?**")
+            st.text_area("Vysvětli, proč bys zvolil/a právě tuto formu:", height=100)
+            
+            st.write("**5. Jaký je můj první praktický krok?**")
+            st.selectbox("Co udělám jako první?", [
+                "Vyber krok...",
+                "Průzkum konkurence",
+                "Rozhovor se zákazníkem",
+                "Ověření firmy v rejstříku",
+                "Vyplnění Lean Canvasu"
+            ])
+
+        with st.container(border=True):
+            st.markdown("### ✅ Sebehodnocení")
+            st.write("Zaškrtni si dovednosti, které už bezpečně zvládáš:")
+            
+            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel.")
+            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.")
+            st.checkbox("Chápu rozdíl mezi fyzickou a právnickou osobou.")
+            st.checkbox("Dokážu navrhnout základ podnikatelského záměru.")
+            st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
+            st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
+            st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
 # ==========================================
 elif view == "Kapitola 2":
     st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
