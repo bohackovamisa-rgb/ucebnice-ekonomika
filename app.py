@@ -382,7 +382,7 @@ elif view == "Kapitola 1":
             st.markdown("""
             <div class='box-blue'>
                 <strong>Hlavní definice:</strong><br>
-                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jním, na vlastní odpovědnost, za účelem dosažení zisku.
+                Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku.
             </div>
             """, unsafe_allow_html=True)
             
@@ -990,7 +990,7 @@ elif view == "Kapitola 1":
             * společnost vzniká zápisem do obchodního rejstříku,
             * obchodní firma obvykle obsahuje označení „veřejná obchodní společnost“ nebo zkratku „v.o.s.“,
             * společníci se podílejí na podnikání a ručí osobním majetkem,
-            * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných правил,
+            * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných pravidel,
             * kvůli vysokému ručení je potřeba silná důvěra mezi společníky.
             """)
 
@@ -1774,7 +1774,7 @@ elif view == "Kapitola 1":
 
             st.markdown("""
             <div class='box-green'>
-                <strong>Shornutí:</strong> Podnikatelský záměr pomáhá převést nápad do konkrétních rozhodnutí. Dobrý záměr neříká jen „co chceme dělat“, ale také pro koho, proč, za kolik, s jakými náklady, s jakým rizikem a jak ověříme zájem.
+                <strong>Shrnutí:</strong> Podnikatelský záměr pomáhá převést nápad do konkrétních rozhodnutí. Dobrý záměr neříká jen „co chceme dělat“, ale také pro koho, proč, za kolik, s jakými náklady, s jakým rizikem a jak ověříme zájem.
             </div>
             """, unsafe_allow_html=True)
 
@@ -1972,54 +1972,214 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
+    # PODKAPITOLA 7 (Původně Lean Canvas, nyní upravená na plný text s post-it plátnem)
     elif selected_section == "7. Lean Canvas":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div>", unsafe_allow_html=True)
         st.markdown("## 7. Lean Canvas")
         
         with st.container(border=True):
-            st.markdown("### 📋 Interaktivní Lean Canvas pro tvůj projekt")
-            st.write("Lean Canvas je jednostránkový podnikatelský model. Vyplň si níže své bloky pro vlastní projekt a ulož ho do svého profilu:")
+            st.write("""
+            Lean Canvas je rychlá mapa podnikatelského nápadu. Pomáhá zachytit hlavní předpoklady a rizika dřív, než podnikatel investuje mnoho času nebo peněz. Na rozdíl od klasického podnikatelského plánu je stručný, pracovní a snadno se upravuje.
+            """)
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>Proč je to důležité:</strong> Lean Canvas pomáhá řešit problém, pracovat s hypotézami, ověřovat informace, plánovat podnikatelskou aktivitu, posoudit ekonomickou proveditelnost a vyhodnocovat rizika. Podnikání není hádání, ale ověřování předpokladů.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.text_input("🧩 Interaktivní výzva: Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu:", placeholder="Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…", key="p7_hypo_test")
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
+                <i>„Pomoz mi převést můj Lean Canvas na ověřitelné hypotézy. U každé napiš test, metriku úspěchu, riziko špatné interpretace a rozhodnutí, co udělat, když test nevyjde.“</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>Tým pracuje s lístečky na Lean Canvasu:</strong> Lean Canvas není hotový podnikatelský plán. Je to pracovní nástroj pro ověřování nápadu. Největší hodnotu má tehdy, když se po testech mění.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 7.1 Proč Lean Canvas začíná problémem")
+            st.write("""
+            Mnoho týmů začíná řešením: aplikací, e-shopem, produktem, logem nebo profilem na sociální síti. Lean Canvas nutí začít otázkou: **Jaký problém vlastně řešíme a pro koho?**
+
+            Pokud problém není důležitý, zákazník nebude měnit chování. Pokud zákazník není konkrétní, marketing bude obecný. Pokud cena nevychází z hodnoty a nákladů, projekt může být populární, ale ztrátový.
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.2 Devět bloků Lean Canvasu")
+            st.write("U každého bloku bys měl umět napsat maximálně dvě věty. Kde si nejsi jistý/á, označ to jako hypotézu a navrhni test.")
+
+            st.markdown("""
+            | Blok | Co znamená | Dobrá otázka | Častá chyba |
+            | :--- | :--- | :--- | :--- |
+            | **1. Problém** | 1–3 konkrétní problémy zákazníka. | Kdy zákazník problém naposledy řešil? | Popisujeme naše řešení místo zákazníkova problému. |
+            | **2. Zákaznické segmenty** | Konkrétní skupiny lidí, které problém řeší. | Kdo problém cítí nejsilněji? | Píšeme „všichni studenti“ nebo „všichni lidé“. |
+            | **3. Unikátní nabídka hodnoty** | Jasné vysvětlení, proč má zákazník zpozornět. | Proč by si měl vybrat právě nás? | Používáme obecné fráze jako „kvalitní, levné, moderní“. |
+            | **4. Řešení** | Jednoduchý návrh, jak problém řešíme. | Jaká je nejmenší funkční verze? | Navrhujeme příliš složitý produkt hned na začátku. |
+            | **5. Kanály** | Cesty, kterými se dostaneme k zákazníkovi. | Kde zákazník skutečně je? | Vybereme sociální síť bez měření výsledků. |
+            | **6. Příjmy** | Za co zákazník platí a jak často. | Je to jednorázový prodej, předplatné, služba, provize? | Zaměníme popularitu za ochotu platit. |
+            | **7. Náklady** | Co stojí start, provoz a každý prodaný kus. | Který náklad nejčastěji podceňujeme? | Nezapočítáme čas, obaly, dopravu, reklamu a rezervu. |
+            | **8. Klíčové metriky** | Čísla, podle kterých poznáme pokrok. | Které číslo nám pomůže rozhodnout? | Sledujeme lajky místo objednávek nebo opakovaného zájmu. |
+            | **9. Neférová výhoda** | Něco, co konkurence nemůže snadno okopírovat. | Co máme jen my nebo co se těžko napodobuje? | Píšeme běžné věci jako „dobrý nápad“ nebo „nadšení“. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.3 Jak poznat dobrou hypotézu")
+            st.write("Hypotéza je předpoklad, který se dá ověřit. Nemá znít jako přání, ale jako tvrzení s testem a měřítkem úspěchu.")
+
+            st.markdown("""
+            | Slabá domněnka | Ověřitelná hypotéza | Test | Metrika úspěchu |
+            | :--- | :--- | :--- | :--- |
+            | **Studentům se to bude líbit.** | Alespoň 20 z 50 oslovených studentů označí problém za častý a 8 z nich se zapíše k testu. | Rozhovor a registrační formulář. | 20 potvrzených problémů, 8 registrací. |
+            | **Lidé za to zaplatí.** | Alespoň 10 lidí si předobjedná produkt za 149 Kč. | Předobjednávková stránka nebo formulář. | 10 předobjednávek. |
+            | **Instagram bude fungovat.** | Testovací příspěvek přivede alespoň 30 kliknutí na formulář a 5 objednávek. | Příspěvek s měřeným odkazem. | 30 kliknutí, 5 objednávek. |
+            | **Náklady budou nízké.** | Variabilní náklad na kus nepřekročí 60 % plánované prodejní ceny. | Kalkulace a test výroby 5 kusů. | Náklad max. 60 % ceny. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.4 MVP: nejmenší ověřitelná verze")
+            st.write("MVP znamená nejmenší verzi řešení, která dokáže ověřit nejdůležitější předpoklad. Nemusí být dokonalá. Musí být dostatečná na učení.")
+
+            st.markdown("""
+            | Nápad | Drahý start | MVP test |
+            | :--- | :--- | :--- |
+            | **Aplikace na plánování učení** | Vývoj celé aplikace. | Notion šablona nebo sdílená tabulka pro 20 studentů. |
+            | **E-shop s merchem** | Nákup zásob a spuštění plného e-shopu. | Předobjednávka se třemi návrhy a jasnou cenou. |
+            | **Svačinové boxy** | Pronájem kuchyně a nákup vybavení. | Jeden testovací den s omezeným počtem objednávek. |
+            | **Doučovací platforma** | Programování tržiště s účty a platbami. | Ručně propojit 10 dvojic přes formulář. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.5 Jak Lean Canvas vyhodnotit")
+            st.write("""
+            Po vyplnění Canvasu tým označí každé políčko jako:
+            * **ověřeno** — máme data nebo zkušenost,
+            * **hypotéza** — myslíme si to, ale ještě nevíme,
+            * **riziko** — pokud se mýlíme, projekt může selhat.
+            """)
+
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>🧪 Pravidlo:</strong> Nejprve testuj políčka, která jsou zároveň nejistá a důležitá. Typicky problém, zákazník, ochota platit, náklady a kanály.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 7.6 Příklad Lean Canvasu: školní projekt „StudyBites“")
+            
+            st.markdown("""
+            | Blok | Příklad vyplnění |
+            | :--- | :--- |
+            | **Problém** | Studenti nestíhají kvalitní svačinu mezi výukou a praxí; bufet je drahý nebo ve špatný čas; část studentů nejí vůbec. |
+            | **Zákazníci** | Dojíždějící studenti 1.–3. ročníku, kteří mají dlouhý školní den. |
+            | **Unikátní hodnota** | Předem objednaná svačina k vyzvednutí ve škole bez čekání. |
+            | **Řešení** | Tři typy svačinových boxů s objednávkou přes formulář. |
+            | **Kanály** | Třídní skupiny, QR plakát, školní Instagram, osobní doporučení. |
+            | **Příjmy** | Prodej boxu za 65–79 Kč podle varianty. |
+            | **Náklady** | Suroviny, obal, etiketa, doprava, čas přípravy, rezerva na nevyzvednuté kusy. |
+            | **Metriky** | Počet předobjednávek, opakované objednávky, nevyzvednuté kusy, spokojenost. |
+            | **Neférová výhoda** | Přímý kontakt se školní komunitou a přesná znalost rozvrhu studentů. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.7 Nejčastější chyby při práci s Lean Canvasem")
+            st.markdown("""
+            * Tým popíše řešení dřív než problém.
+            * Zákazník je příliš obecný.
+            * Cena je zvolená podle pocitu.
+            * Náklady nezahrnují čas a rezervu.
+            * Marketing měří lajky místo objednávek.
+            * Canvas se po testování neupraví.
+            * Tým se zamiluje do nápadu a ignoruje data.
+            * „Neférová výhoda“ je jen běžná vlastnost, kterou může konkurence snadno okopírovat.
+            """)
+
+            st.markdown("""
+            <div class='box-red'>
+                <strong>Častá chyba:</strong> Vyplnit Lean Canvas jednou a považovat ho za hotový. Canvas je živý dokument. Po každém testu se má upravit.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 7.8 Jak Canvas správně vyplnit")
+            st.markdown("""
+            1. Začni problémem a zákazníkem.
+            2. Teprve potom popiš řešení.
+            3. Zapiš nejistoty jako hypotézy.
+            4. Ověř, zda existují příjmy a zda náklady dávají smysl.
+            5. Urči metriky, které pomohou rozhodnout.
+            6. Navrhni MVP nebo první test.
+            7. Po testování Canvas upravuj.
+            """)
+
+            st.markdown("""
+            <div class='box-green'>
+                <strong>✅ Výstup pro mini projekt:</strong> Máš odevzdat Lean Canvas, jednu ověřitelnou hypotézu, návrh MVP testu, metriku úspěchu a krátké rozhodnutí, co uděláš podle výsledku testu.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # 7.9 INTERAKTIVNÍ LEAN CANVAS - PRACOVNÍ PLÁTNO
+        with st.container(border=True):
+            st.markdown("### 🗂️ 7.9 Od teorie k praxi: Pracovní Lean Canvas")
+            st.write("""
+            Do nového Lean Canvasu zapisuj jednotlivé kartičky jako Post-it lístečky. Začni bloky Problém a Zákazník. Teprve potom doplň Řešení a Unikátní hodnotu. U Příjmů a Nákladů ověř, jestli projekt dává ekonomický smysl. Do Metrik napiš, podle čeho poznáš skutečný zájem.
+            
+            **Jakmile se projekt po testování změní, kartičky uprav!**
+            """)
+
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>🧪 Propojení s databází Hypotézy:</strong> Každý neověřený předpoklad z plátna by se měl proměnit v ověřitelný test.
+            </div>
+            """, unsafe_allow_html=True)
 
             lc_col1, lc_col2, lc_col3, lc_col4, lc_col5 = st.columns(5)
             
             with lc_col1:
-                st.markdown("<div class='lc-title'>1. PROBLÉM</div>", unsafe_allow_html=True)
-                lc_problem = st.text_area("Top 3 problémy zákazníků:", placeholder="Co je trápí...", height=150, key="lc_prob")
+                st.markdown("<div class='lc-title'>🔴 1. PROBLÉM</div>", unsafe_allow_html=True)
+                lc_problem = st.text_area("Jaké hlavní problémy řešíte?", placeholder="Co je trápí...", height=150, key="lc7_prob")
             
             with lc_col2:
-                st.markdown("<div class='lc-title'>4. ŘEŠENÍ</div>", unsafe_allow_html=True)
-                lc_solution = st.text_area("Top 3 vlastnosti řešení:", placeholder="Jak to vyřešíte...", height=150, key="lc_sol")
+                st.markdown("<div class='lc-title'>🟢 4. ŘEŠENÍ</div>", unsafe_allow_html=True)
+                lc_solution = st.text_area("Jaké řešení navrhujete?", placeholder="Jak to vyřešíte...", height=150, key="lc7_sol")
             
             with lc_col3:
-                st.markdown("<div class='lc-title'>3. UNIKÁTNÍ NABÍDKA</div>", unsafe_allow_html=True)
-                lc_uvp = st.text_area("Proč si vybrat vás:", placeholder="Jasné sdělení...", height=150, key="lc_uvp")
+                st.markdown("<div class='lc-title'>🟡 3. UNIKÁTNÍ HODNOTA</div>", unsafe_allow_html=True)
+                lc_uvp = st.text_area("Proč má zákazník zpozornět?", placeholder="Jasné sdělení...", height=150, key="lc7_uvp")
             
             with lc_col4:
-                st.markdown("<div class='lc-title'>9. VÝHODA</div>", unsafe_allow_html=True)
-                lc_advantage = st.text_area("Těžko napodobitelná výhoda:", placeholder="Co nelze zkopírovat...", height=150, key="lc_adv")
+                st.markdown("<div class='lc-title'>🟤 9. NEFÉROVÁ VÝHODA</div>", unsafe_allow_html=True)
+                lc_advantage = st.text_area("Co máte, co konkurence nemá?", placeholder="Těžko napodobitelná výhoda...", height=150, key="lc7_adv")
             
             with lc_col5:
-                st.markdown("<div class='lc-title'>2. ZÁKAZNÍCI</div>", unsafe_allow_html=True)
-                lc_customers = st.text_area("Cílová skupina & Raní osvojitelé:", placeholder="Kdo zaplatí nejdřív...", height=150, key="lc_cust")
+                st.markdown("<div class='lc-title'>🟠 2. ZÁKAZNÍCI</div>", unsafe_allow_html=True)
+                lc_customers = st.text_area("Kdo jsou cíloví zákazníci?", placeholder="Kdo zaplatí nejdřív...", height=150, key="lc7_cust")
 
             lc_row2_1, lc_row2_2 = st.columns(2)
             with lc_row2_1:
-                st.markdown("<div class='lc-title'>8. KLÍČOVÉ METRIKY</div>", unsafe_allow_html=True)
-                lc_metrics = st.text_area("Čísla, která měříte:", placeholder="Registrace, prodeje...", height=100, key="lc_met")
+                st.markdown("<div class='lc-title'>⚪ 8. KLÍČOVÉ METRIKY</div>", unsafe_allow_html=True)
+                lc_metrics = st.text_area("Podle čeho poznáte úspěch?", placeholder="Registrace, prodeje...", height=100, key="lc7_met")
             with lc_row2_2:
-                st.markdown("<div class='lc-title'>5. KOMUNIKAČNÍ KANÁLY</div>", unsafe_allow_html=True)
-                lc_channels = st.text_area("Cesta k zákazníkům:", placeholder="Instagram, TikTok, web...", height=100, key="lc_chan")
+                st.markdown("<div class='lc-title'>🔵 5. KANÁLY</div>", unsafe_allow_html=True)
+                lc_channels = st.text_area("Jak se o vás zákazník dozví?", placeholder="Cesta k zákazníkům...", height=100, key="lc7_chan")
 
             lc_row3_1, lc_row3_2 = st.columns(2)
             with lc_row3_1:
-                st.markdown("<div class='lc-title'>7. STRUKTURA NÁKLADŮ</div>", unsafe_allow_html=True)
-                lc_costs = st.text_area("Fixní a variabilní náklady:", placeholder="Vývoj, materiál, reklama...", height=100, key="lc_cost")
+                st.markdown("<div class='lc-title'>🌸 7. NÁKLADY</div>", unsafe_allow_html=True)
+                lc_costs = st.text_area("Jaké hlavní náklady vzniknou?", placeholder="Vývoj, materiál, reklama...", height=100, key="lc7_cost")
             with lc_row3_2:
-                st.markdown("<div class='lc-title'>6. ZDROJE PŘÍJMŮ</div>", unsafe_allow_html=True)
-                lc_revenue = st.text_area("Model zisku a ceny:", placeholder="Jednorázově, předplatné...", height=100, key="lc_rev")
+                st.markdown("<div class='lc-title'>🟣 6. PŘÍJMY</div>", unsafe_allow_html=True)
+                lc_revenue = st.text_area("Za co a kolik bude zákazník platit?", placeholder="Model zisku a ceny...", height=100, key="lc7_rev")
 
-            if st.button("💾 Uložit můj kompletní Lean Canvas", use_container_width=True):
-                st.success("Lean Canvas byl úspěšně uložen do vašeho profilu pokroků!")
+            st.text_input("🧩 Interaktivní výzva: Navrhni jeden rychlý test zákazníka, který zvládneš provést během 20 minut, a zapiš ho jako kartičku do části Metriky nebo Problém:", placeholder="Váš návrh na 20minutový test...", key="p7_quick_test")
+
+            if st.button("💾 Uložit pracovní Lean Canvas", use_container_width=True):
+                st.success("Tento pracovní Lean Canvas byl úspěšně uložen do vašeho profilu pokroků!")
 
     elif selected_section == "8. CSR, etika a odpovědné podnikání":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div>", unsafe_allow_html=True)
