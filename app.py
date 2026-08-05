@@ -2176,15 +2176,15 @@ elif view == "Kapitola 1":
             st.checkbox("Mám navržený test hypotézy (MVP).", key="chk_5")
             st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
             st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
-    # ==========================================
+   # ==========================================
     # MODUL 2: FINANČNÍ GRAMOTNOST
     # ==========================================
 
-    # --- 1. Bankovní systém a peníze v 21. století ---
-    elif "Bankovní systém" in selected_section or "Peníze" in selected_section:
-        st.markdown("<div class='sub-section-header'>FINANČNÍ GRAMOTNOST</div><h2>1. Bankovní systém a peníze v 21. století</h2>", unsafe_allow_html=True)
+    # --- 2.1 Bankovní systém a peníze v 21. století ---
+    elif "2.1" in selected_section or "Bankovní systém" in selected_section or "Peníze" in selected_section:
+        st.markdown("<div class='sub-section-header'>MODUL 2: FINANČNÍ GRAMOTNOST</div><h2>1. Bankovní systém a peníze v 21. století</h2>", unsafe_allow_html=True)
         
-        st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života. Běží na pozadí každého našeho kliknutí, každého „pípnutí“ mobilem u pokladny a každého online nákupu.")
+        st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života.")
         
         with st.container(border=True):
             st.markdown("""
@@ -2201,32 +2201,30 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-        with st.expander("📌 Co nás čeká v této sekci?"):
+        # 1.1 Peníze jako digitální data a Vývoj peněz
+        with st.container(border=True):
+            st.markdown("### 1.1 Vývoj peněz a digitální data")
+            st.write("Peníze dnes často nevypadají jako mince nebo bankovky. Když platíš kartou, mobilem nebo hodinkami, mění se digitální záznam v bankovním systému.")
+            
             st.markdown("""
-            * Peníze jako digitální data
-            * ČNB vs. komerční banky
-            * Bezpečné platby
-            * Fenomén neobanky
-            * Ochranné prvky bankovek (a kryptoměny)
+            | Období / forma | Co sloužilo jako peníze | Na čem stála důvěra |
+            | :--- | :--- | :--- |
+            | **Naturální směna** | Zboží za zboží | Na přímé dohodě dvou lidí (dvojí shoda potřeb) |
+            | **Komoditní peníze** | Sůl, obilí, dobytek, plátno | Na užitečnosti nebo vzácnosti věci |
+            | **Mince** | Kovové mince | Na kovu, hmotnosti, ryzosti a autoritě vydavatele |
+            | **Bankovky** | Papírové peníze | Na důvěře ve stát, banku a zákonné platidlo |
+            | **Zlatý standard** | Papírové peníze vázané na zlato | Na garanci státu vyměnit bankovky za zlato |
+            | **Fiat peníze** | Dnešní státní měny | Na důvěře v ekonomiku, stát a centrální banku |
+            | **Bezhotovostní peníze**| Zůstatek na účtu | Na bankovním systému, pravidlech a dohledu |
+            | **Kryptoměny** | Distribuovaný záznam (Blockchain) | Na technologii, síti uživatelů a protokolu |
             """)
 
-        # --- 1.1 Peníze jako digitální data ---
-        st.markdown("### 1.1 Peníze jako digitální data")
-        st.write("Peníze dnes často nevypadají jako mince nebo bankovky. Když platíš kartou, mobilem nebo hodinkami, většinou se nepřesouvá žádný fyzický předmět. V bankovním systému se změní digitální záznam: jednomu účtu se částka odečte a druhému připíše.")
-        
-        st.info("💡 **Základní myšlenka:** Peníze nejsou jen „věc“. Jsou to hlavně důvěryhodný záznam hodnoty, kterému lidé, firmy a stát věří. V různých dobách měl tento záznam podobu dobytka, obilí, kovu, mince, bankovky nebo digitální platby.")
+            with st.expander("💡 Přečti si více o Zlatém standardu a Nixonově šoku (1971)"):
+                st.write("**Zlatý standard:** Stát sliboval, že měna je krytá zlatem. Peníze nebyly jen papírky, ale měly navázání na zásoby zlata v bance.")
+                st.write("**Nixonův šok (1971):** Americký prezident Richard Nixon pozastavil směnitelnost dolaru za zlato. Svět přešel k tzv. **fiat penězům** – jejich hodnota stojí výhradně na důvěře ve stát a centrální banku.")
 
-        # Historie peněz
-        with st.container(border=True):
-            st.markdown("#### 1.1.1 Proč peníze vůbec vznikly")
-            st.write("Na úplném začátku lidé používali naturální směnu. Problém byl v tom, že směna fungovala jen tehdy, když se potkaly dvě potřeby najednou. Tomu se říká **dvojí shoda potřeb** (např. pekař chce boty, ale švec zrovna nechce chleba).")
-            
-            st.markdown("#### 1.1.2 Komoditní peníze: hodnota ukrytá ve věci")
-            st.write("První peníze měly podobu komodit (věcí s vlastní hodnotou) - sůl, dobytek, kožešiny.")
-            st.caption("🧵 **Česká stopa:** V českých zemích se v 10. století používaly kousky plátna. Odtud pochází slovo *platit* (dát plátno).")
-            
             st.markdown("#### 🧠 Interaktivní výzva: Zkus zaplatit komoditou!")
-            komodita = st.selectbox("Představ si, že jdeš do kavárny. Čím zkusíš zaplatit?", ["Vyber...", "Krávou 🐄", "Mušlemi 🐚", "Zlatým prachem ✨"])
+            komodita = st.selectbox("Představ si, že jdeš do kavárny. Čím zkusíš zaplatit?", ["Vyber...", "Krávou 🐄", "Mušlemi 🐚", "Zlatým prachem ✨"], key="komodita_sel")
             
             if komodita == "Krávou 🐄":
                 st.error("❌ Nepraktické! Kráva se špatně dělí (jak zaplatíš za jedno kafe?) a navíc ji musíš krmit.")
@@ -2235,84 +2233,69 @@ elif view == "Kapitola 1":
             elif komodita == "Zlatým prachem ✨":
                 st.success("✅ Skvělé k uchování hodnoty! Ale barista musí u kasy prach složitě vážit a ověřovat jeho ryzost.")
 
-        # Zlatý standard a Fiat peníze
+        # 1.2 ČNB a komerční banky
         with st.container(border=True):
-            st.markdown("#### Od mincí k Fiat penězům")
-            st.write("**1.1.3 Mince** přinesly standardizaci (hmotnost, kov, tvar). **1.1.4 Papírové peníze** pak fungovaly jako potvrzení o uloženém kovu. Hodnota už nestála na papíru, ale na důvěře.")
-            
-            st.markdown("**1.1.5 Zlatý standard** znamenal, že bankovky byly směnitelné za zlato. Po druhé světové válce vznikl **1.1.6 Brettonwoodský systém** (světové měny navázané na dolar, ten na zlato).")
-            
-            st.error("📉 **1.1.7 Nixonův šok (1971):** USA pozastavily směnitelnost dolaru za zlato. Svět přešel k tzv. **fiat penězům** (peníze s nuceným oběhem). Jejich hodnota nestojí na zlatě, ale na důvěře v ekonomiku a stát.")
+            st.markdown("### 1.2 ČNB a komerční banky")
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>Česká národní banka (ČNB):</strong> Centrální banka státu. Neobsluhuje běžné občany. Její hlavní cíl je stabilita měny (hlídá inflaci) a dohled nad trhem. Určuje základní úrokové sazby.<br><br>
+                <strong>Komerční banky:</strong> Běžné banky pro občan a firmy (přijímají vklady, poskytují úvěry a zajišťují platební styk).
+            </div>
+            """, unsafe_allow_html=True)
 
-            st.markdown("#### 🧩 Aktivita: Zlatý standard vs. Dnešní peníze")
-            st.write("Je lepší mít peníze kryté zlatem (pevné, ale nepružné), nebo fiat peníze (pružné pro řešení krizí, ale náchylné k inflaci)?")
-            volba_meny = st.radio("Který systém ti dává větší smysl?", ["Zlatý standard", "Fiat peníze (dnešní systém)"])
-            st.text_area(f"Obhaj, proč sis vybral {volba_meny}:", key="obhajoba_meny")
+            st.markdown("#### 🎮 Simulace: Jsi bankovní rada ČNB!")
+            st.write("**Situace:** Inflace je vysoká, ceny v obchodech letí nahoru. Co uděláš s úrokovou sazbou?")
+            cnb_action = st.radio("Vaše rozhodnutí:", ["Vyber možnost...", "Zvýšíme sazby", "Snížíme sazby", "Ponecháme sazby beze změny"], key="cnb_sim_main")
+            
+            if st.button("Potvrdit rozhodnutí ČNB"):
+                if cnb_action == "Zvýšíme sazby":
+                    st.success("Správný krok k tlumení inflace! Úvěry zdraží, lidé budou méně utrácet a více spořit. Tlak na růst cen se sníží.")
+                elif cnb_action == "Vyber možnost...":
+                    st.warning("Musíš vybrat jednu z možností.")
+                else:
+                    st.error("Rizikové! Pokud nesnížíte objem peněz v oběhu zdražením úvěrů, inflace může dál růst.")
 
-        # Bezpečnost a digitální platby
+        # 1.3 Bezpečnost a Phishing Trenažér
         with st.container(border=True):
-            st.markdown("#### 1.1.10 Platební karta a bezpečnost")
-            st.write("Karta, mobil nebo hodinky nejsou „peníze samy o sobě“. Jsou to vstupní brány k tvému účtu.")
-            
-            with st.expander("🛡️ Jaké technologie platbu chrání?"):
-                st.markdown("""
-                * **PIN** — číselný kód, který zná jen držitel.
-                * **Biometrie** — otisk prstu nebo obličej (často u mobilu).
-                * **Tokenizace** — při platbě mobilem se obchodníkovi neposílá skutečné číslo karty, ale náhradní 'token'.
-                * **3D Secure** — dodatečné ověření online platby přes aplikaci banky.
-                """)
-            
-            st.warning("⚠️ **Pravidlo pro běžný život:** Pokud ti někdo volá, píše nebo posílá odkaz a chce PIN, heslo nebo potvrzení v aplikaci, **je to podvod**. Banka tyto údaje nikdy takto nechce!")
+            st.markdown("### 1.3 Bezpečné platby a Phishing trenažér")
+            st.warning("⚠️ **Pravidlo pro běžný život:** Karta, mobil ani hodinky nejsou peníze samy o sobě, ale klíče k tvému účtu. Banka po telefonu ani přes SMS nikdy nechce PIN ani autorizační kód!")
 
             st.markdown("#### 🚨 Trenažér: Odhal podvodný e-mail (Phishing)")
-            st.write("Dostal jsi e-mail, který vypadá jako od tvé banky. Najdi na něm varovné signály:")
-            
             st.info("""
-            **Od:** bezpecnost@bnka-podpora-klientu.cz
-            **Předmět:** ZABLOKOVANÝ ÚČET - OKAMŽITÁ AKCE!
+            **Od:** bezpecnost@bnka-podpora-klientu.cz  
+            **Předmět:** ZABLOKOVANÝ ÚČET - OKAMŽITÁ AKCE!  
             
-            Vážený kliente, zaznamenali jsme podezřelý pohyb na vašem účtu. Aby nedošlo k trvalé blokaci vašich prostředků, klikněte IHNED na odkaz níže a přihlaste se.
-            
+            Vážený kliente, vaše karta byla dočasně zablokována. Pro její okamžité odblokování klikněte IHNED na odkaz nižší a přihlaste se:  
             👉 [www.mojebanka-rychle-overeni.com/login](https://#)
             """)
             
-            col_phish1, col_phish2 = st.columns(2)
-            with col_phish1:
-                ph_1 = st.checkbox("Podezřelá e-mailová adresa (překlepy, podivná doména)")
-                ph_2 = st.checkbox("Výzva k nahlášení na Policii")
-            with col_phish2:
-                ph_3 = st.checkbox("Extrémní tlak na čas a vyvolání strachu")
-                ph_4 = st.checkbox("Odkaz, který nevede na oficiální web banky")
+            col_ph1, col_ph2 = st.columns(2)
+            with col_ph1:
+                ph_1 = st.checkbox("Podezřelá e-mailová adresa (překlepy, podivná doména)", key="p1")
+                ph_2 = st.checkbox("Výzva k nahlášení na Policii", key="p2")
+            with col_ph2:
+                ph_3 = st.checkbox("Extrémní tlak na čas a vyvolání strachu", key="p3")
+                ph_4 = st.checkbox("Odkaz, který nevede na oficiální web banky", key="p4")
                 
-            if st.button("Vyhodnotit hrozbu"):
+            if st.button("Vyhodnotit hrozbu phishingu"):
                 if ph_1 and ph_3 and ph_4 and not ph_2:
-                    st.success("Skvělá práce! Odhalil jsi přesně ty 3 hlavní znaky phishingu. Správná reakce je na nic neklikat a e-mail smazat.")
+                    st.success("Skvělá práce! Odhalil jsi přesně 3 hlavní znaky podvodu. Správná reakce je na nic neklikat a e-mail smazat.")
                 else:
                     st.error("Zkus to znovu. Najdi přesně tři znaky typické pro podvodníky z e-mailu výše.")
 
-        # Kryptoměny a Blockchain
+        # 1.4 Kryptoměny a investiční kalkulačka
         with st.container(border=True):
-            st.markdown("### 1.1.13 Kryptoměny a blockchain")
-            st.write("Kryptoměny používají technologii **blockchain** – sdílený digitální záznam (účetní knihu), který nevede jedna centrální banka, ale síť tisíců počítačů. Transakce se skládají do bloků tvořících nezměnitelný řetězec.")
-            
-            st.markdown("""
-            <div class='box-purple'>
-                <strong>🔑 Bezpečnostní pravidlo kryptoměn:</strong> Nikdy nikomu neposílej seed frázi, soukromý klíč nebo heslo. Kdo získá přístup k tvé peněžence, může prostředky nenávratně převést pryč!
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("#### 🧮 Interaktivní model: Pravidelné investování (DCA)")
-            st.write("Kryptoměny mají obrovské výkyvy. Tento model ti ukáže, jak moc se může lišit výsledek stejného vkladu při různých scénářích.")
-            
+            st.markdown("### 1.4 Kryptoměny a pravidelné investování (DCA)")
+            st.write("Kryptoměny využívají **blockchain** (sdílenou účetní knihu). Jsou vysoce rizikové a jejich cena výrazně kolísá.")
+
             col_inv1, col_inv2 = st.columns(2)
             with col_inv1:
-                vklad_start = st.slider("Počáteční vklad (Kč):", 0, 50000, 1000, step=500)
-                vklad_mesic = st.slider("Měsíční vklad (Kč):", 100, 10000, 200, step=100)
-                roky = st.slider("Doba investování (roky):", 1, 10, 5)
+                vklad_start = st.slider("Počáteční vklad (Kč):", 0, 50000, 1000, step=500, key="v_start")
+                vklad_mesic = st.slider("Měsíční vklad (Kč):", 100, 10000, 200, step=100, key="v_mesic")
+                roky = st.slider("Doba investování (roky):", 1, 10, 5, key="v_roky")
             
             celkem_vlozeno = vklad_start + (vklad_mesic * 12 * roky)
             
-            # Jednoduchý složený úrok (orientační aproximace měsíčního úročení)
             def spocitej_zhodnoceni(vklad_s, vklad_m, r, urok_rocne):
                 mesicni_urok = urok_rocne / 12
                 zustatek = vklad_s
@@ -2322,14 +2305,13 @@ elif view == "Kapitola 1":
 
             with col_inv2:
                 st.metric("Celkem vložíš ze svého:", f"{celkem_vlozeno:,.0f} Kč".replace(",", " "))
-                
                 scenar = st.selectbox("Vyber vývoj trhu pro simulaci:", [
                     "Pesimistický (Propad -20 % ročně) 📉",
                     "Nulový (0 % ročně) ⚖️",
                     "Spořicí účet (Fix 3.5 % ročně) 🏦",
                     "Silně růstový trh (+15 % ročně) 🚀",
                     "Extrémní krypto růst (+30 % ročně) 🔥"
-                ])
+                ], key="scenar_sel")
                 
                 if "Pesimistický" in scenar:
                     vysledek = spocitej_zhodnoceni(vklad_start, vklad_mesic, roky, -0.20)
@@ -2344,91 +2326,6 @@ elif view == "Kapitola 1":
                 
                 rozdil = vysledek - celkem_vlozeno
                 st.metric("Orientační hodnota na konci:", f"{vysledek:,.0f} Kč".replace(",", " "), delta=f"{rozdil:,.0f} Kč zisk/ztráta")
-                
-            st.caption("Pamatuj: Spořicí účet nebo termínovaný vklad jsou jistota pro rezervu. Kryptoměny (a akcie) nesou šanci na vysoký zisk, ale i riziko obrovské ztráty. Minulé výnosy nezaručují budoucí!")
-
-            st.markdown("#### 🧩 Závěrečná výzva: Role v investování")
-            st.text_area("Představ si, že jsi vyhrál 20 000 Kč. Jak bys tyto peníze rozdělil mezi spořicí účet (jistota) a kryptoměny (riziko)? Napiš proč:", key="rozdeleni_penez")
-
-        with st.container(border=True):
-            st.markdown("""
-            <div class='box-green'>
-                <strong>✅ Co si z této sekce odnést:</strong> Kryptoměny nejsou jen „internetové peníze“. Jsou kombinací úžasné technologie (blockchain), tržní ceny a vysokého rizika. Ukazují budoucnost financí, ale neměly by nahrazovat tvou základní finanční rezervu v klasické bance.
-            </div>
-            """, unsafe_allow_html=True)
-
-    # --- PODKAPITOLA 2.1 ---
-    if selected_section_2 == "2.1 Bankovní systém a peníze v 21. století":
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2.1</div>", unsafe_allow_html=True)
-        st.markdown("## 1. Bankovní systém a peníze v 21. století")
-        
-        with st.container(border=True):
-            st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Peníze dnes často nevypadají jako mince nebo bankovky. Jsou to data.") #[cite: 2]
-            st.markdown("""
-            <div class='box-blue'>
-                <strong>Základní myšlenka:</strong> Peníze nejsou jen „věc“. Jsou to hlavně důvěryhodný záznam hodnoty, kterému lidé, firmy a stát věří.
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-            
-            st.markdown("### 1.1 Vývoj peněz v čase")
-            st.markdown("""
-            | Období / forma | Co sloužilo jako peníze | Na čem stála důvěra |
-            | :--- | :--- | :--- |
-            | **Naturální směna** | Zboží za zboží | Na přímé dohodě dvou lidí |
-            | **Komoditní peníze** | Sůl, obilí, dobytek, kovy | Na užitečnosti nebo vzácnosti věci |
-            | **Mince** | Kovové mince | Na kovu, hmotnosti, ryzosti a autoritě vydavatele |
-            | **Bankovky** | Papírové peníze | Na důvěře ve stát, banku a zákonné platidlo |
-            | **Zlatý standard** | Papírové peníze vázané na zlato | Na garanci státu vyměnit bankovky za zlato |
-            | **Bezhotovostní peníze**| Zůstatek na účtu | Na bankovním systému, pravidlech a dohledu |
-            | **Digitální platby** | Data v bankovních systémech | Na ověření identity, zabezpečení a infrastruktuře |
-            | **Kryptoměny** | Distribuovaný záznam (Blockchain) | Na technologii, síti uživatelů a protokolu |
-            """) #[cite: 2]
-
-            with st.expander("💡 Přečti si více o Zlatém standardu a Nixonově šoku"):
-                st.write("**Zlatý standard:** Stát sliboval, že měna je krytá zlatem. Peníze nebyly jen papírky. Měly být navázané na zásoby zlata, které měl stát k dispozici.") #[cite: 2]
-                st.write("**Brettonwoodský systém a Nixonův šok:** Po 2. světové válce byl dolar navázán na zlato. V roce 1971 ale americký prezident Richard Nixon pozastavil směnitelnost dolaru za zlato. Svět se přesunul k „fiat penězům“ – jejich hodnota stojí hlavně na důvěře ve stát a centrální banku.") #[cite: 2]
-
-            st.text_input("🧩 Interaktivní výzva: Vyber jednu komoditu (např. obilí, sůl), která by mohla sloužit jako peníze. V čem by byla praktická a v čem by selhávala?", placeholder="Tvoje odpověď...", key="komodita_vyzva") #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 1.2 ČNB a komerční banky")
-            st.markdown("""
-            <div class='box-gray'>
-                <strong>Česká národní banka (ČNB):</strong> Je centrální banka státu. Neobsluhuje běžné občany. Její hlavní cíl je stabilita měny (hlídá inflaci) a dohled nad trhem. Zasahuje do ekonomiky určováním základních úrokových sazeb (např. dvoutýdenní repo sazba).<br><br>
-                <strong>Komerční banky:</strong> Subjekty, se kterými běžně pracujeme (např. KB, ČSOB). Přijímají vklady (pasivní operace), poskytují úvěry (aktivní operace) a zajišťují platby (neutrální operace).
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-
-            with st.expander("🎮 Simulace: Jsi bankovní rada ČNB!"):
-                st.write("**Situace:** Inflace je vysoká, ceny v obchodech letí nahoru. Firmám i lidem se zdražuje život. Co uděláte s úrokovou sazbou?") #[cite: 2]
-                cnb_action = st.radio("Vaše rozhodnutí:", ["Vyber možnost...", "Zvýšíme sazby", "Snížíme sazby", "Ponecháme sazby beze změny"], key="cnb_sim")
-                if st.button("Potvrdit rozhodnutí"):
-                    if cnb_action == "Zvýšíme sazby":
-                        st.success("Správný krok k tlumení inflace! Úvěry zdraží, lidé budou méně utrácet a více spořit. Tlak na růst cen se sníží.") #[cite: 2]
-                    elif cnb_action == "Vyber možnost...":
-                        st.warning("Musíš vybrat jednu z možností.")
-                    else:
-                        st.error("Rizikové! Pokud nesnížíte objem peněz v oběhu (zdražením úvěrů), inflace může dál růst.") #[cite: 2]
-
-        with st.container(border=True):
-            st.markdown("### 1.3 Platební styk a Fintech revoluce")
-            st.write("Platební styk je infrastruktura důvěry. Umožňuje bezpečně přesouvat peníze. Pokud posíláš peníze v ČR mezi DVĚMA RŮZNÝMI bankami, platba musí projít přes systém **CERTIS**, který provozuje ČNB.") #[cite: 2]
-            
-            st.markdown("#### Fintech a Neobanky")
-            st.write("Služby jako **Revolut** nebo **Wise** mění svět financí. Uživatel očekává rychlost, okamžité notifikace a nízké poplatky. Ne každá finanční aplikace ale má plnou bankovní licenci a pojištění vkladů (do 100 000 EUR).") #[cite: 2]
-
-            st.markdown("#### Digitální bezpečnost")
-            st.markdown("""
-            <div class='box-red'>
-                Karta, mobil nebo hodinky nejsou „peníze samy o sobě“. Jsou to vstupní brány k penězům. Banka po telefonu ani přes SMS nikdy nechce PIN ani autorizační kód!
-            </div>
-            """, unsafe_allow_html=True) #[cite: 2]
-
-            with st.expander("🚨 Phishing Escape Room: Odhal podvod"):
-                st.write("Přečti si e-mail, který ti právě přišel:")
-                st.info("„Vážený kliente, vaše karta byla dočasně zablokována z bezpečnostních důvodů. Pro její okamžité odblokování klikněte na tento odkaz a přihlaste se: www.bezpecnabanka-cz.net/login“") #[cite: 2]
-                st.markdown("**Správná reakce:** Neklikat na odkaz, nic nevyplňovat! Podvodníci vytvářejí falešný pocit naléhavosti. Situaci ověř přímo ve své oficiální bankovní aplikaci.") #[cite: 2]
-
     # --- PODKAPITOLA 2.2 ---
     elif selected_section_2 == "2.2 Osobní finance a „Algoritmy bohatství“":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 2.2</div>", unsafe_allow_html=True)
