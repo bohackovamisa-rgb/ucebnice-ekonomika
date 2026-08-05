@@ -942,7 +942,7 @@ elif view == "Kapitola 1":
             * V Evropské unii existují formy, které mají usnadnit přeshraniční podnikání a spolupráci.
             """) #[cite: 1]
 # --- 5. Startup: nápad, který hledá funkční byznys ---
-    elif selected_section == "5. Startup: nápad, který hledá funkční byznys":
+elif selected_section == "5. Startup: nápad, který hledá funkční byznys":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div><h2>5. Startup: nápad, který hledá funkční byznys</h2>", unsafe_allow_html=True)
         
         with st.container(border=True):
