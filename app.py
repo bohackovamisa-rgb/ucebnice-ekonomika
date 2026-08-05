@@ -2177,11 +2177,22 @@ elif view == "Kapitola 1":
             st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
             st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
             # ==========================================
-            # KAPITOLA 2: FINANČNÍ GRAMOTNOST
-            # ==========================================
+# KAPITOLA 2: FINANCE A OSOBNÍ MANAGEMENT
+# ==========================================
+elif view == "Kapitola 2":
+    st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
+    st.title("Finance a osobní management")
+    st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>Bankovní systém, osobní rozpočet, investování a finanční gramotnost v 21. století.</p>", unsafe_allow_html=True)
+    
+    section_options_2 = [
+        "1. Bankovní systém a peníze v 21. století",
+        # Sem postupně přidáš další podkapitoly Kapitoly 2
+    ]
+    selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
+    st.divider()
 
     # --- Podkapitola 1: Bankovní systém a peníze v 21. století ---
-    elif "Bankovní systém" in selected_section or "1. Bankovní systém" in selected_section:
+    if selected_section_2 == "1. Bankovní systém a peníze v 21. století":
         st.markdown("<div class='sub-section-header'>KAPITOLA 2: FINANČNÍ GRAMOTNOST</div><h2>1. Bankovní systém a peníze v 21. století</h2>", unsafe_allow_html=True)
         
         st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života.")
