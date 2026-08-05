@@ -1972,9 +1972,9 @@ elif view == "Kapitola 1":
             st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
             st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
             st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
-# --- 14. Integrované opakování ---
-    elif "14. Integrované opakování" in selected_section or "Integrované" in selected_section:
-        st.markdown("<div class='sub-section-header'>ZÁVĚREČNÝ MODUL</div><h2>14. Integrované opakování: od nápadu k odpovědnému podnikání</h2>", unsafe_allow_html=True)
+# --- 15. Integrované opakování ---
+    elif "15. Integrované opakování" in selected_section or "Integrované" in selected_section:
+        st.markdown("<div class='sub-section-header'>ZÁVĚREČNÝ MODUL</div><h2>15. Integrované opakování: od nápadu k odpovědnému podnikání</h2>", unsafe_allow_html=True)
         
         with st.container(border=True):
             st.markdown("""
@@ -1982,13 +1982,13 @@ elif view == "Kapitola 1":
                 <strong>📘 Proč je tato část důležitá:</strong> Tady si neposkládáš další nové definice, ale propojíš celou učebnici do jedné praktické cesty. Půjdeš od prvního nápadu přes zákazníka, právní formu, finance, ověřování startupu, Lean Canvas, marketing, rizika a etiku až k závěrečnému rozhodnutí, jestli má projekt smysl rozvíjet.
             </div>
             <div class='box-purple'>
-                <strong>🧭 Jak s touto částí pracować:</strong> Ber ji jako závěrečný pracovní modul. Postupně si ověříš, co už umíš, a převedeš to do vlastního podnikatelského rozhodnutí.
+                <strong>🧭 Jak s touto částí pracovat:</strong> Ber ji jako závěrečný pracovní modul. Postupně si ověříš, co už umíš, a převedeš to do vlastního podnikatelského rozhodnutí.
             </div>
             """, unsafe_allow_html=True)
 
-        # 14.1 Mapa modulu
+        # 15.1 Mapa modulu
         with st.container(border=True):
-            st.markdown("### 🗺️ 14.1 Mapa závěrečného modulu")
+            st.markdown("### 🗺️ 15.1 Mapa závěrečného modulu")
             st.markdown("""
             | Část | Na co navazuje | Co máš vytvořit nebo rozhodnout |
             | :--- | :--- | :--- |
@@ -2013,9 +2013,9 @@ elif view == "Kapitola 1":
                 st.text_input("4. Co bych musel/a zjistit, než bych začal/a?", key="posun_4")
                 st.text_input("5. Podle čeho poznám, že můj nápad má smysl?", key="posun_5")
 
-        # 14.2 & 14.3 Podnikatel očima různých lidí
+        # 15.2 & 15.3 Podnikatel očima různých lidí
         with st.container(border=True):
-            st.markdown("### 👥 14.2 Podnikatel očima různých lidí")
+            st.markdown("### 👥 15.2 Podnikatel očima různých lidí")
             st.write("Podnikání není jen 'mít nápad a vydělat'. Je to schopnost převést nápad do odpovědného systému. Jedna firma vypadá jinak podle toho, kdo se na ni dívá:")
             
             st.markdown("""
@@ -2032,9 +2032,9 @@ elif view == "Kapitola 1":
             st.markdown("#### 🎭 Aktivita: Jedna firma, osm pohledů")
             st.text_area("Vyber si jeden nápad a napiš 3 klíčové otázky, které by položily různé role (např. Zákazník, Investor, Stát):", key="akt_8pohledu")
 
-        # 14.4 & 14.5 Praxe OSVČ a Obchodních korporací
+        # 15.4 & 15.5 Praxe OSVČ a Obchodních korporací
         with st.container(border=True):
-            st.markdown("### 💼 14.3 OSVČ vs. Obchodní korporace v praxi")
+            st.markdown("### 💼 15.3 OSVČ vs. Obchodní korporace v praxi")
             
             st.warning("⚠️ **Pozor u OSVČ:** Vyfakturovaná částka není čistý zisk! V ceně musí být započítán i neplacený čas (administrativa, marketing) a náklady na odvody, vybavení a rezervy.")
             
@@ -2062,9 +2062,9 @@ elif view == "Kapitola 1":
             st.markdown("#### 🤝 Aktivita: Zakladatelská dohoda společníků (s.r.o.)")
             st.text_area("Napiš 3 nejdůležitější pravidla do zakladatelské dohody (např. co se stane, když jeden společník nepracuje nebo chce odejít):", key="dohoda_spolecniku")
 
-        # 14.6 - 14.10 Lean Canvas, Finance & Ekonomika sdílení
+        # 15.6 - 15.10 Lean Canvas, Finance & Ekonomika sdílení
         with st.container(border=True):
-            st.markdown("### 📊 14.4 Lean Canvas, Finance a Ekonomika sdílení")
+            st.markdown("### 📊 15.4 Lean Canvas, Finance a Ekonomika sdílení")
             
             st.markdown("""
             | Častá chyba v záměru | Jak vypadá | Jak ji opravit |
@@ -2091,9 +2091,9 @@ elif view == "Kapitola 1":
             </div>
             """, unsafe_allow_html=True)
 
-        # 14.11 - 14.16 Marketing, Etika, Rizika a Švarcsystém
+        # 15.11 - 15.16 Marketing, Etika, Rizika a Švarcsystém
         with st.container(border=True):
-            st.markdown("### 🛡️ 14.5 Rizika, Etika, Švarcsystém a Ověřování firem")
+            st.markdown("### 🛡️ 15.5 Rizika, Etika, Švarcsystém a Ověřování firem")
             
             col_r1, col_r2 = st.columns(2)
             with col_r1:
@@ -2104,18 +2104,18 @@ elif view == "Kapitola 1":
             with col_r2:
                 st.markdown("#### 🕵️ Detektiv Švarcsystému")
                 st.write("Posouzení pracovního vztahu:")
-                svarc_check = st.checkbox("Pracovník používá počítač a e-mail firmy, chodí na pevnost stanovenou pracovní dobu a má jediného klienta.")
+                svarc_check = st.checkbox("Pracovník používá počítač a e-mail firmy, chodí na pevně stanovenou pracovní dobu a má jediného klienta.")
                 if svarc_check:
                     st.error("🚨 VYSOKÉ RIZIKO ŠVARCSYSTÉMU! Vztah vykazuje známky závislé práce a měl by být řešen pracovní smlouvou.")
 
             st.markdown("---")
             st.markdown("#### 🔍 Ověřování firem v rejstřících")
-            st.text_input("Zadej název nebo IČO firmy, kterou chceš prověřit:", key="prověrka_ico")
+            st.text_input("Zadej název nebo IČO firmy, kterou chceš prověřit:", key="proverka_ico")
             st.caption("Při prověřování firmy vždy kontroluj: ARES/Obchodní rejstřík, Insolvenční rejstřík, Registr plátců DPH a reálné recenze.")
 
-        # 14.17 - 14.22 Case Studies & Velká Podnikatelská Mise
+        # 15.17 - 15.22 Case Studies & Velká Podnikatelská Mise
         with st.container(border=True):
-            st.markdown("### 🎒 14.6 Případová studie: Projekt 'ReStart Batoh'")
+            st.markdown("### 🎒 15.6 Případová studie: Projekt 'ReStart Batoh'")
             st.write("Studenti sbírají starší použitelné batohy, vyčistí je, opraví, personalizují a prodávají za dostupnou cenu.")
             
             with st.expander("📦 Zobrazit kalkulaci a pravidla projektu ReStart Batoh"):
@@ -2162,7 +2162,6 @@ elif view == "Kapitola 1":
                 st.write("Prodejní cena obalu = 200 Kč | Variabilní náklady = 120 Kč | Měsíční fixní náklady = 2 400 Kč")
                 odpoved_bv = st.number_input("Kolik kusů obalů musíš měsíčně prodat, aby byl projekt na nule (v bodu zvratu)?", min_value=0, step=1, key="bv_input")
                 if st.button("Zkontrolovat výpočet bodu zvratu"):
-                    # Marže = 200 - 120 = 80 Kč. Bod zvratu = 2400 / 80 = 30 kusů.
                     if odpoved_bv == 30:
                         st.success("🎉 Skvěle! Marže na kus je 80 Kč (200 - 120). Fixní náklady 2 400 / 80 = přesně 30 kusů!")
                     else:
