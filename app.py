@@ -4,12 +4,10 @@ from kapitoly import kapitola1, kapitola2
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
-    page_title="Učebnice Ekonomiky",
-    page_icon="📖",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="Učebnice ekonomiky",
+    page_icon="📚",
+    layout="wide"
 )
-
 # --- PŘIHLAŠOVACÍ BRÁNA ---
 def check_password():
     app_pwd = st.secrets.get("APP_PASSWORD")
