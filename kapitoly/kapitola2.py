@@ -1968,11 +1968,12 @@ def render():
             
             st.success("🧭 **Jednoduché pravidlo:** Nouzová rezerva patří do bezpečných a dostupných nástrojů. Investice s vyšším rizikem patří až k penězům, které člověk nepotřebuje na běžné výdaje ani na krizové situace.")
 
-    # =========================================================================
+   # =========================================================================
     # 3.3 SPOŘENÍ, INVESTOVÁNÍ A SPEKULACE
     # =========================================================================
     elif "3.3 Spoření" in selected_section_2:
         st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.3 Spoření, investování a spekulace</h2>", unsafe_allow_html=True)
+        
         st.write("Tato tři slova se často pletou, ale znamenají rozdílné chování.")
 
         with st.container(border=True):
@@ -1985,7 +1986,6 @@ def render():
             """)
             
             st.warning("🧠 **Otázka před každým nákupem investice:** Kupuješ aktivum proto, že rozumíš jeho principu a riziku, nebo proto, že máš strach, že ti „ujede vlak“?")
-
     # =========================================================================
     # 3.4 CENNÉ PAPÍRY V TEORII I PRAXI
     # =========================================================================
