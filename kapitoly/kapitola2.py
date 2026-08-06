@@ -2432,16 +2432,18 @@ def render():
                 elif odpoved_lab == "Zatím nevím":
                     st.write("Nevadí. Zkušenost se buduje postupně, ideálně s malými částkami.")
 
-        # 🚀 Simulátor
+        # 🚀 Simulátor (PROPOJENÍ NA NOVOU STRÁNKU)
         with st.container(border=True):
             st.markdown("### 🚀 SPUSTIT ŠKOLNÍ INVESTIČNÍ SIMULÁTOR")
             st.markdown("#### Otevřít simulátor akcií a bitcoinu")
             st.write("Interaktivní aktivita: Vyzkoušej si modelové investování nanečisto — bez skutečných peněz a bez rizika. Sleduj, jak se může měnit hodnota akcií a bitcoinu v čase.")
             
-            # Prominentní tlačítko
-            if st.button("🚀 PŘEJÍT DO SIMULÁTORU", type="primary", key="k3_sim_btn"):
-                st.info("Zde by se spustila samotná aplikace simulátoru (nebo by tě přesměrovala na příslušnou stránku ve Streamlitu).")
+            st.write("") # drobná mezera pro hezčí vzhled
             
+            # TADY JE TEN ODKAZ NA NOVÝ SOUBOR:
+            st.page_link("pages/simulator.py", label="🚀 PŘEJÍT DO SIMULÁTORU", use_container_width=True)
+            
+            st.write("")
             st.caption("Důležité: Simulátor je pouze vzdělávací pomůcka. Nejde o investiční doporučení.")
 
         # 3.5.1
