@@ -4168,3 +4168,179 @@ def render():
             
             if st.button("Uložit mé zamyšlení", type="primary"):
                 st.success("✅ Skvělá úvaha! Takhle funguje ekonomický ekosystém. Finanční problém jedné firmy se jako domino šíří k desítkám dalších lidí.")
+# =========================================================================
+    # 5.2 ZÁKLADNÍ FINANČNÍ VÝKAZY: MAPA FIRMY V ČÍSLECH
+    # =========================================================================
+    elif selected_section_2.startswith("5.2 "):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.2 Základní finanční výkazy: mapa firmy v číslech")
+        
+        st.write(
+            "Aby šlo firmu bezpečně řídit, nestačí říct „daří se nám“ nebo „nějak to funguje“. Firma potřebuje přesná čísla. "
+            "Základní finanční výkazy fungují jako palubní deska v autě — ukazují, co firma vlastní, co dluží, kolik vydělala, kolik utratila a jak se pohybovaly peníze."
+        )
+
+        st.markdown("""
+        <div class="box-blue">
+            <b>🧭 Jednoduché přirovnání:</b><br>
+            📸 <b>Rozvaha</b> je <i>fotografie</i> firmy k určitému dni (státický stav majetku a dluhů).<br>
+            🎬 <b>Výkaz zisku a ztráty</b> je <i>film</i> za určité období (jak hospodařila od 1. 1. do 31. 12.).<br>
+            💧 <b>Cashflow</b> ukazuje, kudy reálně tekly peníze v peněžence/na účtu.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # =========================================================================
+        # 5.2.1 ROZVAHA: CO FIRMA MÁ A Z ČEHO TO FINANCUJE
+        # =========================================================================
+        st.markdown("### 5.2.1 Rozvaha: co firma má a z čeho to financuje")
+        st.write(
+            "Rozvaha ukazuje majetek firmy (**Aktiva**) a současně zdroje, ze kterých je tento majetek financovaný (**Pasiva**). "
+            "V rozvaze musí vždy platit základní rovnováha:"
+        )
+
+        st.markdown("""
+        <div class="box-purple" style="text-align: center; font-size: 1.2em;">
+            <b>AKTIVA (Majetek) = PASIVA (Zdroje financování)</b><br>
+            <small><i>Majetek firmy = Vlastní kapitál + Cizí zdroje (úvěry, dluhy)</i></small>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### ⚖️ Interaktivní balancér rozvahy studentského e-shopu")
+        st.write("Sestav rozvahu pro e-shop. Vyzkoušej si, jak každé pořízení majetku musí mít svůj finanční zdroj!")
+
+        with st.container(border=True):
+            col_a, col_p = st.columns(2)
+            
+            with col_a:
+                st.markdown("#### 📦 AKTIVA (Co firma má)")
+                penize = st.number_input("Peníze na účtu a v pokladně (Kč):", value=25000, step=5000)
+                zasoby = st.number_input("Zásoby zboží na skladě (Kč):", value=30000, step=5000)
+                vybaveni = st.number_input("Notebook a balicí technika (Kč):", value=15000, step=5000)
+                aktiva_celkem = penize + zasoby + vybaveni
+                st.metric("Aktiva Celkem", f"{aktiva_celkem:,} Kč".replace(",", " "))
+
+            with col_p:
+                st.markdown("#### 💳 PASIVA (Z čeho to zaplatila)")
+                vklad = st.number_input("Vlastní vklad majitele (Kč):", value=40000, step=5000)
+                uver = st.number_input("Bankovní úvěr (Kč):", value=20000, step=5000)
+                zavazky = st.number_input("Nezaplacené faktury dodavatelům (Kč):", value=10000, step=5000)
+                pasiva_celkem = vklad + uver + zavazky
+                st.metric("Pasiva Celkem", f"{pasiva_celkem:,} Kč".replace(",", " "))
+
+            # Vyhodnocení bilanční rovnováhy
+            diference = aktiva_celkem - pasiva_celkem
+            if diference == 0:
+                st.success("✅ **Rozvaha je v rovnováze! (Aktiva = Pasiva)** E-shop má majetek za 70 000 Kč. Část financoval majitel ze svého, část úvěrem a část tím, že ještě nezaplatil dodavatelům.")
+            elif diference > 0:
+                st.error(f"❌ **Rozvaha nevychází!** Mas o {diference:,} Kč více majetku (Aktiva) než zdrojů (Pasiva). Kde jsi vzal/a peníze na tento majetek?".replace(",", " "))
+            else:
+                st.error(f"❌ **Rozvaha nevychází!** Zdroje (Pasiva) přesahují majetek o {abs(diference):,} Kč. Kde jsou ty peníze?".replace(",", " "))
+
+        st.divider()
+
+        # =========================================================================
+        # 5.2.2 VÝKAZ ZISKU A ZTRÁTY: VYDĚLÁVÁ FIRMA?
+        # =========================================================================
+        st.markdown("### 5.2.2 Výkaz zisku a ztráty: vydělává firma?")
+        st.write(
+            "Výkaz zisku a ztráty (tzv. *Výsledovka*) ukazuje výnosy, náklady a výsledek hospodaření za dané období (např. za měsíc nebo rok)."
+        )
+
+        st.markdown("""
+        <div class="box-green">
+            <b>Základní logika výsledovky:</b><br>
+            <b>Výnosy − Náklady = Výsledek hospodaření</b><br>
+            • Výnosy > Náklady ➔ <b>ZISK</b> (Firma vydělala více, než spotřebovala)<br>
+            • Náklady > Výnosy ➔ <b>ZTRÁTA</b> (Firma spotřebovala více, než vydělala)
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### 📊 Výsledovka e-shopu v praxi")
+        st.write("Vyzkoušej si změnit tržby nebo náklady a sleduj, jak se mění Hrubý zisk a Zisk před zdaněním.")
+
+        with st.container(border=True):
+            col_v1, col_v2 = st.columns(2)
+            with col_v1:
+                trzby = st.slider("Tržby za prodej zboží (Výnosy):", 10000, 200000, 80000, step=5000)
+                naklady_zbozi = st.slider("Nákupní cena prodaného zboží:", 5000, 100000, 42000, step=2000)
+            
+            hruby_zisk = trzby - naklady_zbozi
+
+            with col_v2:
+                reklama = st.slider("Marketing a reklama:", 0, 30000, 8000, step=1000)
+                doprava = st.slider("Doprava a balicí materiál:", 0, 20000, 6000, step=1000)
+                software = st.slider("Software a doména e-shopu:", 0, 10000, 2000, step=500)
+                ostatni_op = st.slider("Ostatní provozní náklady:", 0, 15000, 4000, step=500)
+
+            provozni_naklady_celkem = reklama + doprava + software + ostatni_op
+            zisk_pred_zdanenim = hruby_zisk - provozni_naklady_celkem
+
+            st.divider()
+            c_m1, c_m2, c_m3 = st.columns(3)
+            c_m1.metric("Celkové Tržby", f"{trzby:,} Kč".replace(",", " "))
+            c_m2.metric("Hrubý zisk (Tržby - Zboží)", f"{hruby_zisk:,} Kč".replace(",", " "))
+            
+            if zisk_pred_zdanenim >= 0:
+                c_m3.metric("Zisk před zdaněním", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), delta="Ziskový měsíc", delta_color="normal")
+            else:
+                c_m3.metric("Výsledek hospodaření", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), delta="Ztrátový měsíc!", delta_color="inverse")
+
+        st.markdown("""
+        <div class="box-red">
+            <b>⚠️ Pozor — Důležitý chyták:</b> Výnos není vždy totéž co přijaté peníze na účtu! Firma může vystavit fakturu a ihned mít výnos (účtuje se okamžikem prodeje), ale zákazník jí zaplatí až za 60 dní. Proto samotný zisk nestačí a musíme sledovat Cashflow!
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # =========================================================================
+        # 5.2.3 CASHFLOW: PENÍZE JSOU KYSLÍK FIRMY
+        # =========================================================================
+        st.markdown("### 5.2.3 Cashflow: peníze jsou kyslík firmy")
+        st.write(
+            "Cashflow znamená **reálný tok peněz**. Ukazuje, kolik peněz do firmy fyzicky přiteklo (na účet nebo do pokladny) "
+            "a kolik z ní odešlo."
+        )
+
+        st.markdown("""
+        <div class="box-gray">
+            <b>💧 Cashflow jednoduše:</b> Zisk ukazuje, jestli podnikání dává dlouhodobý ekonomický smysl. Cashflow ukazuje, jestli má firma peníze na zaplacení nájmu a mezd příští úterý!
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### 🚨 Příběh ze života: Jak zkrachovala papírově úspěšná firma")
+        
+        with st.container(border=True):
+            st.markdown("##### 📅 Případová studie: Vývojářská agentura 'CodeCraft'")
+            st.write(
+                "• **1. ledna:** Agentura dokončila aplikaci pro velkého klienta a vystavila fakturu na **120 000 Kč** se splatností 60 dní. Ve výsledovce má zisk 60 000 Kč!<br>"
+                "• **15. ledna:** Musí zaplatit 30 000 Kč nájem kanceláře a 40 000 Kč mzdy grafikovi.<br>"
+                "• **1. února:** Na účtu jí zbývá 5 000 Kč. Klient ještě nezaplatil (má čas do 1. března).<br>"
+                "• **15. února:** Přichází další mzdy a nájem (70 000 Kč). Bankovní účet jde na 0 Kč, dodavatelé hrozí soudem.<br>"
+                "• **Konec únoru:** Firma vyhlašuje insolvenci a krachuje, i když je 'papírově' v zisku!"
+            , unsafe_allow_html=True)
+            
+            st.info("💡 **Poučení:** Firma nespravovala své Cashflow. Zákazníkům nabídla příliš dlouhou splatnost (60 dní), zatímco své vlastní výdaje musela platit hned.")
+
+        st.divider()
+
+        # =========================================================================
+        # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
+        # =========================================================================
+        st.markdown("### 5.3 Náklady, výnosy a bod zvratu")
+        st.write(
+            "Aby firma věděla, zda se jí podnikání vyplatí a kdy začne reálně vydělávat, musí dokonale rozumět svým nákladům. "
+            "Nestačí si říct: *„Koupím tričko za 200 Kč a prodám ho za 400 Kč, takže vydělám 200 Kč.“*"
+        )
+        st.write(
+            "Firma musí do nákladů započítat i **nájem skladu, cenu software, reklamu na síti, balicí pásky, svůj čas, poplatky bankám a platebním branám, daně a neprodané zásoby**."
+        )
+
+        st.markdown("""
+        | Typ Nákladu | Co zahrnuje | Příklad u e-shopu |
+        | :--- | :--- | :--- |
+        | **Přímé (variabilní) náklady** | Rostou s každým prodaným kusem zboží. | Nákupní cena zboží, poštovné, krabice, provize platební bráně. |
+        | **Režijní (fixní) náklady** | Platí se stále, i když firma neprodá ani jediný kus. | Nájem skladu, předplatné e-shopové platformy, mzda účetní. |
+        """)
