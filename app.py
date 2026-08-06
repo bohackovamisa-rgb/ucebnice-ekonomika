@@ -2208,12 +2208,25 @@ elif view == "Kapitola 1":
             st.checkbox("Mám navržený test hypotézy (MVP).", key="chk_5")
             st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
             st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
-            # ==========================================
-            # KAPITOLA 2: FINANČNÍ GRAMOTNOST
-            # ==========================================
+           # ==========================================
+# KAPITOLA 2: FINANČNÍ GRAMOTNOST
+# ==========================================
+elif view == "Kapitola 2":
+    st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
+    st.title("2. Finance a osobní management")
+    
+    # Samostatné menu pro 2. kapitolu (neplést s selected_section z 1. kapitoly)
+    section_options_2 = [
+        "1. Bankovní systém a peníze v 21. století",
+        "1.2 ČNB a komerční banky",
+        "1.3 Bezpečné platby a Phishing Trenažér",
+        "1.4 Kryptoměny a investiční kalkulačka"
+    ]
+    selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
+    st.divider()
 
-    # --- Podkapitola 1: Bankovní systém a peníze v 21. století ---
-    elif "Bankovní systém" in selected_section or "1. Bankovní systém" in selected_section:
+    # --- PODKAPITOLA 1 ---
+    if "Bankovní systém" in selected_section_2 or "1. Bankovní systém" in selected_section_2:
         st.markdown("<div class='sub-section-header'>KAPITOLA 2: FINANČNÍ GRAMOTNOST</div><h2>1. Bankovní systém a peníze v 21. století</h2>", unsafe_allow_html=True)
         
         st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života.")
