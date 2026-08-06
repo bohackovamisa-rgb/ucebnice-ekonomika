@@ -5265,3 +5265,203 @@ def render():
                 <b>🧠 Poučení z analýzy:</b> Influencer musí mít vytvořenou finanční rezervu (alespoň na 3–6 měsíců života) a nesmí být závislý jen na jedné sociální síti nebo jednom sponzorovi.
             </div>
             """, unsafe_allow_html=True)
+# =========================================================================
+    # 5.10 DIGITÁLNÍ GENERACE A FINANČNÍ ŘÍZENÍ
+    # =========================================================================
+    elif selected_section_2.startswith("5.10"):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.10 Digitální generace a finanční řízení")
+        
+        st.write(
+            "Dnešní podnikání je neuvěřitelně rychlé, řízené daty a často absolutně závislé na digitálních platformách. "
+            "To přináší obrovské příležitosti k raketovému růstu, ale i zcela nová finanční rizika, která dřívější podnikatelé neznali."
+        )
+
+        st.markdown("### 🔍 Detektor skrytých rizik")
+        st.write("Vyber si moderní byznysovou situaci, která na první pohled vypadá jako splněný sen, a odhal, jaké temné finanční riziko se za ní skrývá.")
+
+        scenare = {
+            "🚀 E-shop raketově roste díky virálu na TikToku": {
+                "otazka": "Má firma dost zásob a peněz na masivní expedici?",
+                "riziko": "Růst objednávek může předběhnout cashflow (firma musí platit za dodávky, krabice a poštu dřív, než jí dorazí všechny peníze z dobírek). Úspěch ji může paradoxně přivést k bankrotu!"
+            },
+            "📸 Influencer získal obří exkluzivní spolupráci": {
+                "otazka": "Co když značka za půl roku smlouvu neprodlouží?",
+                "riziko": "Extrémní závislost na jednom zdroji příjmu. Pokud influencer přizpůsobí své fixní výdaje (hypotéka, drahé auto) tomuto příjmu, výpadek ho okamžitě zničí."
+            },
+            "🦄 Aplikace (Startup) získala miliony od investora": {
+                "otazka": "Jak dlouho vydrží peníze při současném tempu utrácení (tzv. Burn rate)?",
+                "riziko": "Rychlé spálení kapitálu za drahé kanceláře a marketing bez odpovídajícího růstu tržeb. Až peníze dojdou, investor už další nedá."
+            },
+            "☕ Hipster kavárna má neustále plno": {
+                "otazka": "Kolik peněz skutečně zůstane po zaplacení nájmu, baristů, energií a prémiové kávy?",
+                "riziko": "Vysoké tržby nemusí znamenat vysoký zisk. Nízké marže u produktů s vysokými fixními náklady znamenají, že se majitel dře, ale firma nevydělává."
+            },
+            "🏢 Firma dodává velké korporaci na fakturu": {
+                "otazka": "Kdy peníze skutečně dorazí na účet?",
+                "riziko": "Pozdní platby. Korporace mají často splatnost 60 až 90 dní. Malá firma tak úvěruje obří korporaci a sama nemá na výplaty pro své lidi."
+            }
+        }
+
+        vybrany_scenar = st.selectbox("Vyber situaci k analýze:", ["Vyber situaci..."] + list(scenare.keys()))
+
+        if vybrany_scenar != "Vyber situaci...":
+            data_scenare = scenare[vybrany_scenar]
+            st.markdown(f"#### Analýza: {vybrany_scenar}")
+            st.info(f"🤔 **Finanční otázka manažera:** {data_scenare['otazka']}")
+            st.error(f"🚨 **Skryté riziko:** {data_scenare['riziko']}")
+
+
+    # =========================================================================
+    # 5.11 PRAKTICKÁ AKTIVITA: FINANČNÍ MANAŽER NA 45 MINUT
+    # =========================================================================
+    elif selected_section_2.startswith("5.11"):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.11 Praktická aktivita: Finanční manažer na 45 minut")
+        
+        st.markdown("""
+        <div class="box-purple">
+            <b>🧪 Aktivita: Audit finančního zdraví podniku</b><br>
+            Pracujte ve dvojici nebo skupině. Vaším úkolem je navrhnout modelovou firmu (nebo si vzít existující projekt) a provést její kompletní audit. Využijte tento digitální pracovní sešit.
+        </div>
+        """, unsafe_allow_html=True)
+
+        tab1, tab2, tab3, tab4 = st.tabs(["📝 Krok 1: Podnik", "🔢 Krok 2: Čísla", "🧮 Krok 3: Výpočty", "📄 Krok 4: Závěr"])
+
+        with tab1:
+            st.markdown("### Krok 1: Popište svůj podnik")
+            st.write("Vyberte si modelovou firmu (např. e-shop, kavárnu, barber shop, grafické studio, studentský merch, fitness trenéra, food truck, youtubera nebo aplikaci).")
+            
+            p_nazev = st.text_input("Název vaší firmy:")
+            p_co = st.text_input("Co přesně prodáváte?")
+            p_komu = st.text_input("Komu to prodáváte (cílová skupina)?")
+            p_prijmy = st.text_input("Jak z toho máte příjmy (jednorázový prodej, předplatné, reklama)?")
+            p_naklady = st.text_area("Jaké jsou vaše 3 největší náklady?")
+
+        with tab2:
+            st.markdown("### Krok 2: Doplňte finanční čísla")
+            st.write("Dohodněte se na odhadovaných číslech pro 1 kalendářní rok. Zkuste být realističtí.")
+            
+            c1, c2 = st.columns(2)
+            with c1:
+                st.markdown("**Výsledovka**")
+                v_trzby = st.number_input("Tržby celkem [Kč]", value=500000, step=50000)
+                v_naklady = st.number_input("Náklady celkem [Kč]", value=400000, step=50000)
+                v_zisk = v_trzby - v_naklady
+                st.metric("Automatický Zisk [Kč]", f"{v_zisk:,}".replace(",", " "))
+            
+            with c2:
+                st.markdown("**Rozvaha a Cashflow**")
+                v_aktiva = st.number_input("Aktiva (Celkový majetek) [Kč]", value=300000, step=10000)
+                v_vk = st.number_input("Vlastní kapitál [Kč]", value=200000, step=10000)
+                v_cz = st.number_input("Cizí zdroje (Dluhy) [Kč]", value=100000, step=10000)
+                
+                st.divider()
+                v_oa = st.number_input("Oběžná aktiva celkem [Kč]", value=150000, step=10000)
+                v_penize = st.number_input("Z toho Peníze na účtu [Kč]", value=50000, step=5000)
+                v_pohl = st.number_input("Z toho Pohledávky [Kč]", value=40000, step=5000)
+                v_kz = st.number_input("Krátkodobé závazky [Kč]", value=80000, step=5000)
+
+        with tab3:
+            st.markdown("### Krok 3: Automatické výpočty (Analýza)")
+            st.write("Aplikace za vás nyní spočítá klíčové ukazatele na základě zadaných čísel z Kroku 2.")
+            
+            def safe_div(a, b):
+                return a / b if b != 0 else 0
+                
+            ros = safe_div(v_zisk, v_trzby) * 100
+            roa = safe_div(v_zisk, v_aktiva) * 100
+            roe = safe_div(v_zisk, v_vk) * 100
+            bl = safe_div(v_oa, v_kz)
+            ol = safe_div(v_penize, v_kz)
+            zadl = safe_div(v_cz, v_aktiva) * 100
+            inkaso = safe_div(v_pohl, v_trzby) * 365
+            
+            col_a1, col_a2 = st.columns(2)
+            col_a1.metric("ROS (Rentabilita tržeb)", f"{ros:.1f} %")
+            col_a1.metric("ROA (Rentabilita aktiv)", f"{roa:.1f} %")
+            col_a1.metric("ROE (Rentabilita vl. kapitálu)", f"{roe:.1f} %")
+            
+            col_a2.metric("Běžná likvidita", f"{bl:.2f}")
+            col_a2.metric("Okamžitá likvidita", f"{ol:.2f}")
+            col_a2.metric("Celková zadluženost", f"{zadl:.1f} %")
+            col_a2.metric("Doba inkasa pohledávek", f"{inkaso:.0f} dní")
+
+        with tab4:
+            st.markdown("### Krok 4: Manažerský závěr")
+            st.write("Prohlédněte si spočítané ukazatele a napište slovní hodnocení vaší firmy.")
+            
+            z_silna = st.text_area("1. Co je podle čísel silná stránka firmy?")
+            z_slaba = st.text_area("2. Co je naopak slabina nebo problém?")
+            z_riziko = st.text_area("3. Jaké riziko hrozí do 3 měsíců (např. ohledně hotovosti)?")
+            z_doporuceni = st.text_area("4. Jaké jedno opatření byste doporučili vedení firmy udělat ihned?")
+            
+            if st.button("Generovat finální report pro učitele/investora"):
+                st.success("Tento report si můžete zkopírovat nebo přečíst třídě:")
+                st.markdown(f"""
+                **Analýza firmy:** {p_nazev if p_nazev else 'Nezadáno'}  
+                **Byznys model:** Prodáváme {p_co} pro {p_komu}.
+                
+                **Klíčové metriky:** ROS = {ros:.1f} %, Zadluženost = {zadl:.1f} %, Likvidita = {bl:.2f}.
+                
+                **Manažerské shrnutí:**  
+                Silnou stránkou je *{z_silna if z_silna else '...'}*. Naopak bojujeme s *{z_slaba if z_slaba else '...'}*.
+                V nejbližších měsících si musíme dát pozor na *{z_riziko if z_riziko else '...'}*.
+                Naše doporučení pro majitele zní: **{z_doporuceni if z_doporuceni else '...'}**
+                """)
+
+
+    # =========================================================================
+    # 5.12 SHRNUTÍ A AI MENTORING
+    # =========================================================================
+    elif selected_section_2.startswith("5.12"):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.12 Shrnutí: co si odnést")
+        
+        st.write("Finanční řízení je mozek celé firmy. Zhodnoť si, co už ovládáš. Odškrtni si vše, co jsi z této kapitoly pochopil/a.")
+
+        # Interaktivní checklist pokroku
+        points = [
+            "Finanční řízení pomáhá firmě přežít, růst a rozhodovat podle dat.",
+            "Zisk NEZNAMENÁ automaticky peníze na účtu (Cashflow je král).",
+            "Rozvaha ukazuje, co firma má a z čeho to financuje (Zdroje).",
+            "Výkaz zisku a ztráty ukazuje, zda firma vůbec vydělává.",
+            "Finanční analýza převádí účetní čísla na srozumitelné závěry o zdraví firmy.",
+            "Nejčastější ukazatele sledují rentabilitu (zisk), likviditu (hotovost), zadluženost a aktivitu.",
+            "Finanční zdraví firmy zajímá všechny: majitele, banky, investory i zaměstnance.",
+            "Smyslem analýzy není „vyplnit vzorce“, ale pochopit, co se ve firmě děje a jak se rozhodnout dál."
+        ]
+        
+        checked_count = 0
+        for i, point in enumerate(points):
+            if st.checkbox(point, key=f"sum_{i}"):
+                checked_count += 1
+                
+        progress = int((checked_count / len(points)) * 100)
+        st.progress(checked_count / len(points))
+        st.caption(f"Tvé mistrovství ve financích: {progress} %")
+        
+        if progress == 100:
+            st.balloons()
+            st.success("Skvělá práce! Rozumíš základům finančního řízení jako pravý CFO.")
+
+        st.divider()
+
+        st.markdown("### 🤖 AI Mentoring: Tvůj osobní analytik")
+        st.write(
+            "Chceš si finanční analýzu procvičit na další firmě, ale nechce se ti to počítat? Zkopíruj si tento prompt "
+            "a vlož ho do ChatGPT, Clauda nebo Gemini. AI se stane tvým osobním tutorem."
+        )
+
+        ai_prompt = """Pomoz mi udělat jednoduchou finanční analýzu fiktivní firmy. 
+Nejdřív se mě zeptej na tržby, náklady, zisk, aktiva, vlastní kapitál, cizí zdroje, peníze, zásoby, pohledávky a krátkodobé závazky. 
+Až ti data zadám, spočítej ROS, ROA, ROE, běžnou likviditu, okamžitou likviditu, celkovou zadluženost a dobu inkasa pohledávek. 
+Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno opatření."""
+
+        st.code(ai_prompt, language="text")
+        
+        st.markdown("""
+        <div style="font-size: 0.9em; color: #555;">
+            <i>Tip: Stačí kliknout na ikonku kopírování vpravo nahoře v rámečku a můžeš prompt rovnou vložit do svého oblíbeného AI nástroje.</i>
+        </div>
+        """, unsafe_allow_html=True)
