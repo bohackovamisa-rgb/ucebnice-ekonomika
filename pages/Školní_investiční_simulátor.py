@@ -6,13 +6,8 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime
 
-# 1. Konfigurace stránky
-st.set_page_config(
-    page_title="Školní Investiční Simulátor",
-    page_icon="📈",
-    layout="centered",
-    initial_sidebar_state="collapsed"
-)
+# 1. Konfigurace stránky (Vypnuto - nastavuje hlavní soubor učebnice app.py)
+# st.set_page_config(...) 
 
 # 2. Vylepšený High-Tech CSS Styling s vysokým kontrastem
 HIGH_TECH_CSS = """
@@ -24,6 +19,14 @@ HIGH_TECH_CSS = """
         background-color: #0d1117;
         color: #ffffff !important;
         font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* FIX PRO LEVÝ PANEL: Světlý text v navigaci učebnice */
+    [data-testid="stSidebar"] * {
+        color: #f0f6fc !important;
+    }
+    [data-testid="stSidebar"] {
+        background-color: #161b22 !important;
     }
 
     /* Schovat výchozí lišty Streamlitu */
@@ -161,7 +164,6 @@ if "prihlasen" not in st.session_state:
 def pripojit_databazi():
     raw_creds = st.secrets["google_credentials"]
     
-    # Bezpečné rozlišení textového JSONu od TOML slovníku
     if isinstance(raw_creds, str):
         tajemstvi = json.loads(raw_creds)
     else:
