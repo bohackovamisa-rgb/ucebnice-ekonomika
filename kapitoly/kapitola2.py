@@ -3602,3 +3602,142 @@ def render():
                         st.warning("⚠️ **Riziko:** Sice to možná zaplatíš, ale hraješ ruskou ruletu. Nemáš rezervu a spoléháš, že se příští měsíc nic nepokazí. Co když onemocníš? Raději počkej, až peníze reálně naspoříš.")
                     else:
                         st.info("💡 **Výsledek k zamyšlení:** Tvé odpovědi jsou na pomezí. Než klikneš na 'Koupit', dej si pravidlo 24 hodin. Vrať se k tomu zítra – často zjistíš, že už tu věc vlastně nechceš.")
+# =========================================================================
+    # 4.10 POJIŠTĚNÍ: OCHRANA PŘED FINANČNÍM NÁRAZEM
+    # =========================================================================
+    elif "4.10" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>10. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.10 Pojištění: ochrana před finančním nárazem")
+        
+        st.write("Pojištění je nástroj, který pomáhá zvládnout finanční dopady nepříjemné události. Nezabrání tomu, aby se něco stalo (pojištění domu nezabrání požáru), ale může radikálně snížit finanční škodu, kterou to způsobí.")
+        
+        st.markdown("""
+        <div class="box-green">
+            <b>🛟 Pojištění jednoduše:</b> Mnoho lidí platí menší částky do společného systému. Když někoho z nich potká pojistná událost, pojišťovna mu podle smlouvy vyplatí peníze. Smyslem není „na pojištění vydělat“, ale ochránit se před škodou, která by zničila tvůj rozpočet.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.write("Pojištění úzce souvisí i s úvěry. U hypotéky banka často vyžaduje pojištění nemovitosti, protože dům je pro ni zástava. U běžných úvěrů se nabízí tzv. pojištění schopnosti splácet. To může pomoci při nemoci nebo ztrátě příjmu, ale je nutné pečlivě číst podmínky a výluky.")
+
+        st.divider()
+
+        st.markdown("### 4.10.1 Proč si pojištění zřizujeme")
+        st.write("Zlaté pravidlo zní: Pojištění má smysl hlavně tehdy, když by škoda byla pro tebe nebo tvou rodinu **finančně těžko zvládnutelná**.")
+        
+        st.markdown("""
+        <div class="box-purple">
+            <b>🧠 Dobrá otázka:</b> <i>Kdyby se tahle událost stala zítra, zvládnu ji zaplatit ze své úsporné rezervy?</i> Pokud ne, může dávat velký smysl se proti ní pojistit. Pokud ano (např. rozbitý displej u mobilu), pojištění bývá zbytečně drahé.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # --- AKTIVITA: SIMULÁTOR NÁRAZU ---
+        st.markdown("### 💥 Aktivita: Simulátor finančního nárazu")
+        st.write("Vyzkoušej si, jak by tvůj rozpočet ustál různé životní situace. Nastav si svou pomyslnou finanční rezervu a vyber událost.")
+
+        with st.container(border=True):
+            rezerva = st.slider("Jak velkou máš naspořenou rezervu na účtu?", 0, 500000, 50000, step=10000, format="%d Kč")
+            
+            udalost = st.selectbox("Co se ti právě stalo?", [
+                "Vyber událost...",
+                "Rozbil se mi displej u mobilu (Škoda: 4 000 Kč)",
+                "Ukradli mi starší kolo z garáže (Škoda: 15 000 Kč)",
+                "Vytopil jsem sousedy pod sebou (Škoda: 180 000 Kč)",
+                "Měl jsem vážný úraz a rok nebudu pracovat (Ztráta: 400 000 Kč)",
+                "Dům mi lehl popelem (Škoda: 6 000 000 Kč)"
+            ])
+
+            if udalost != "Vyber událost...":
+                # Extrakce škody z textu
+                skoda = int(udalost.split(":")[-1].replace(" Kč)", "").replace(" ", ""))
+                zustatek = rezerva - skoda
+                
+                col1, col2 = st.columns(2)
+                col1.metric("Tvoje rezerva", f"{rezerva:,} Kč".replace(",", " "))
+                col2.metric("Finanční škoda", f"-{skoda:,} Kč".replace(",", " "))
+                
+                if zustatek >= 0:
+                    st.success(f"✅ **Tohle zvládneš!** Po zaplacení škody ti zbude {zustatek:,} Kč. Tuto věc (pokud to není zákonná povinnost) nutně pojišťovat nemusíš, zvládneš to pokrýt z vlastních peněz.".replace(",", " "))
+                else:
+                    st.error(f"🚨 **Kritický náraz!** Tvá rezerva nestačí. Chybělo by ti {abs(zustatek):,} Kč. Dostal/a by ses do tvrdých dluhů nebo bys přišel/a o střechu nad hlavou. **Toto je přesně situace, kterou by mělo krýt pojištění.**".replace(",", " "))
+
+
+    # =========================================================================
+    # 4.11 ŽIVOTNÍ POJIŠTĚNÍ (+ 4.11.1)
+    # =========================================================================
+    elif "4.11" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>11. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.11 Životní pojištění")
+        
+        st.write("Životní pojištění se vztahuje k životu, zdraví, pracovní schopnosti a tvému příjmu. **Nemá být automaticky bráno jako „spoření“.** Jeho hlavní smysl je ochrana před situací, která by měla vážný a dlouhodobý dopad na příjem tvé domácnosti.")
+
+        st.markdown("### Co může životní pojištění krýt:")
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.info("⚰️ Smrt pojištěného")
+            st.info("♿ Invaliditu")
+        with c2:
+            st.info("🏥 Vážné onemocnění")
+            st.info("🛌 Dlouhodobou pracovní neschopnost")
+        with c3:
+            st.info("🤕 Trvalé následky úrazu")
+            st.info("🩹 Denní odškodné při nemoci/úrazu")
+
+        st.markdown("""
+        <div class="box-red">
+            <b>⚠️ Pozor:</b> Životní pojištění není automaticky výhodná investice. Je obrovský rozdíl mezi <b>rizikovým</b> životním pojištěním (platíš čistě za ochranu) a <b>investičním</b> životním pojištěním (kombinuje pojištění a investování, často se skrytými poplatky a složitými podmínkami, což se většinou nevyplatí).
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.divider()
+
+        # --- AKTIVITA: OSOBNÍ ANALYZÁTOR ---
+        st.markdown("### 🧭 Analyzátor: Potřebuji životní pojištění?")
+        st.write("Ne každý potřebuje platit tisíce měsíčně za životko. Odpověz na 3 otázky a zjisti svou situaci:")
+
+        with st.container(border=True):
+            a1 = st.checkbox("1. Živím někoho dalšího (děti, partner/ka na mateřské, závislý rodič).")
+            a2 = st.checkbox("2. Mám hypotéku nebo jiný vysoký úvěr, který bych nedokázal/a splatit najednou.")
+            a3 = st.checkbox("3. Kdybych zítra přišel/a o příjem, NEMÁM majetek nebo rezervu na přežití delší než 1 rok.")
+            
+            if st.button("Vyhodnotit mou situaci", type="primary"):
+                skore = sum([a1, a2, a3])
+                
+                if skore == 0:
+                    st.success("✅ **Spíše nepotřebuješ.** Nikoho neživíš, nemáš dluhy a máš rezervy. Pro tebe může dávat smysl maximálně základní pojištění trvalých následků úrazu, ale drahé komplexní životní pojištění by pro tebe teď byly vyhozené peníze.")
+                elif skore == 1:
+                    st.warning("⚠️ **Stojí za zvážení.** Máš alespoň jeden rizikový faktor. Ztráta tvé schopnosti pracovat by bolela, měl/a bys zvážit pokrytí těch nejvážnějších rizik (invalidita, vážné nemoci).")
+                else:
+                    st.error("🚨 **Kritická potřeba!** Tvá rodina nebo tvé bydlení je existenčně závislé na tom, že jsi zdravý/á a vyděláváš. Kvalitní životní pojištění kryjící invaliditu, smrt a dlouhodobý výpadek příjmu by pro tebe mělo být absolutní prioritou.")
+
+        st.divider()
+
+        # --- 4.11.1 POJIŠTĚNÍ SCHOPNOSTI SPLÁCET ---
+        st.markdown("### 4.11.1 Pojištění schopnosti splácet")
+        st.write("Toto pojištění se velmi často nabízí přímo v bance k úvěrům (hypotékám i spotřebitelským úvěrům). Může krýt pracovní neschopnost, invaliditu, ztrátu zaměstnání nebo smrt. Může pomoci, ale **rozhodně to není magický štít**.")
+
+        st.write("Před podpisem je absolutně nutné ověřit následující (zda není lepší vyřešit to přes své vlastní životní pojištění):")
+        st.markdown("- Co přesně pojištění kryje a jaké má výluky?")
+        st.markdown("- Od kdy pojišťovna reálně plní? (Tzv. karenční doba – např. až po 60 dnech nemoci).")
+        st.markdown("- Jak dlouho bude splátky hradit? (Někdy to je omezeno jen na 12 měsíců).")
+        st.markdown("- Platí pojištění i pro OSVČ, nebo jen pro zaměstnance s trvalou smlouvou?")
+        
+        # --- AKTIVITA: DETEKTIV VÝLUK ---
+        st.markdown("#### 🕵️‍♂️ Hra na detektiva: Najdi skrytý háček (Výluky)")
+        st.write("Pojišťovny mají ve smlouvách tzv. **výluky** = situace, kdy ti nezaplatí ani korunu, i když jsi poctivě platil. Přečti si příběh a zkus uhodnout, proč pojišťovna peníze nedala.")
+
+        tab_v1, tab_v2, tab_v3 = st.tabs(["Případ 1: Ztráta práce", "Případ 2: Bolest zad", "Případ 3: Úraz o víkendu"])
+        
+        with tab_v1:
+            st.markdown("**Situace:** Tomáš si vzal úvěr s pojištěním proti ztrátě zaměstnání. Za měsíc ho vyhodili v rámci zkušební doby. Nahlásil to pojišťovně, ale ta mu splátky nezaplatila. Proč?")
+            with st.expander("Zobrazit řešení"):
+                st.error("❌ **Výluka:** Ztráta práce ve zkušební době, ukončení dohodou nebo výpověď pro hrubé porušení kázně jsou téměř vždy ve výlukách. Pojištění funguje většinou jen tehdy, pokud dostaneš výpověď pro nadbytečnost z klasické smlouvy.")
+                
+        with tab_v2:
+            st.markdown("**Situace:** Jana má pojištění dlouhodobé pracovní neschopnosti. Už třetí měsíc je doma s těžkými bolestmi zad (chronické problémy s páteří). Pojišťovna plnění zamítla. Proč?")
+            with st.expander("Zobrazit řešení"):
+                st.error("❌ **Výluka:** Bolesti zad a psychická onemocnění (vyhoření, deprese) bývají u mnoha pojišťoven vyloučeny, nebo je jejich plnění silně omezeno, protože se těžko objektivně prokazují.")
+                
+        with tab_v3:
+            st.markdown("**Situace:** Martin si při amatérském adrenalinovém závodě na horských kolech (downhill) zlomil obě nohy. Pojišťovna mu úrazové plnění krátila o 50 %. Proč?")
+            with st.expander("Zobrazit řešení"):
+                st.error("❌ **Výluka:** Extrémní a rizikové sporty vyžadují speciální připojištění. Běžná pojistka tě kryje při rekreačním sportu, ale ne při závodech s vysokým rizikem zranění. Pojišťovna může plnění také krátit, pokud byl v krvi alkohol.")
