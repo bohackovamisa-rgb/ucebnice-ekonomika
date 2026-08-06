@@ -2315,31 +2315,67 @@ def render():
             """)
             st.info("🧠 **Důležité rozlišení:** Když nakupuje fyzická osoba pro sebe, jde o osobní investiční rozhodnutí. Když nakupuje firma, jde o rozhodnutí v rámci podnikání, které může ovlivnit účetnictví, daně, likviditu a odpovědnost vedení.")
 
-        # 3.4.18 (Aktivita) a 3.4.19
+# =========================================================================
+        # 3.4.18 Praktická aktivita
+        # =========================================================================
         with st.container(border=True):
             st.markdown("### 3.4.18 Praktická aktivita: pitva cenného papíru")
-            st.write("🔎 **Pitva cenného papíru: co přesně kupuji?**")
-            st.write("Vyber si jeden příklad: akcii, dluhopis, podílový fond nebo ETF. Neřeš, jestli je „dobrý“, ale zjisti, co přesně představuje.")
+            st.write("🔎 **Co přesně kupuji?** V textu máš za úkol vybrat si cenný papír a sestavit mu „rodný list“. Zde si můžeš interaktivně prohlédnout, jak by takový správně vypracovaný úkol měl vypadat v praxi.")
             
-            cp_vyber = st.selectbox("Vyber si aktivum pro pitvu:", ["Akcie", "Dluhopis", "Podílový fond", "ETF"], key="k3_pitva_aktivita")
+            cp_vyber = st.selectbox(
+                "Vyber si aktivum a podívej se na jeho vygenerovaný rodný list:", 
+                ["Vyber ukázku...", "Akcie (např. ČEZ a.s.)", "Státní dluhopis ČR", "Globální ETF fond (např. S&P 500)"], 
+                key="k3_pitva_generator"
+            )
             
-            st.write("**Zjisti a odpověz si na tyto otázky:**")
-            st.markdown("""
-            * Kdo je emitent nebo správce?
-            * Je to podíl na firmě, půjčka, nebo podíl ve fondu?
-            * Jaký výnos může přinášet?
-            * Jaké jsou hlavní druhy rizika?
-            * Je obchodovaný na burze, nebo se nakupuje přímo u fondu?
-            * V jaké měně je vedený?
-            * Jaké má poplatky?
-            * Jak rychle ho lze prodat?
-            * Je vhodný spíš pro krátký, nebo dlouhý horizont?
-            * Co by se muselo stát, aby investor prodělal?
-            """)
-            
-            if st.button("Vygenerovat zadání výstupu", key="k3_pitva_zadani_btn"):
-                st.success(f"📄 **Tvůj výstup pro cenný papír {cp_vyber}:** Vytvoř jednu stránku „rodný list cenného papíru“ se všemi těmito zjištěnými informacemi.")
+            if cp_vyber == "Akcie (např. ČEZ a.s.)":
+                st.info("""
+                📄 **RODNÝ LIST: Akcie ČEZ, a.s.**
+                * **Kdo je emitent?** Energetická společnost ČEZ, a.s.
+                * **Podstata:** Podíl na firmě (stáváš se spolumajitelem).
+                * **Výnos:** Dividenda (podíl na zisku) + případný růst ceny akcie.
+                * **Hlavní rizika:** Tržní (cena akcií klesne), specifické (problémy v energetice, změna zákonů).
+                * **Kde se obchoduje:** Na burze (např. Burza cenných papírů Praha).
+                * **Měna:** CZK (koruna).
+                * **Poplatky:** Poplatek brokerovi za nákup/prodej.
+                * **Likvidita (jak rychle ho prodám):** Velmi vysoká, lze prodat na burze okamžitě.
+                * **Horizont:** Dlouhý (ideálně 5 a více let).
+                * **Jak prodělám?** Když cena akcie trvale spadne a firma přestane vyplácet dividendy.
+                """)
+                
+            elif cp_vyber == "Státní dluhopis ČR":
+                st.success("""
+                📄 **RODNÝ LIST: Státní dluhopis ČR**
+                * **Kdo je emitent?** Česká republika (zastoupená Ministerstvem financí).
+                * **Podstata:** Půjčka státu (stáváš se věřitelem státu).
+                * **Výnos:** Předem daný roční úrok (kupón).
+                * **Hlavní rizika:** Inflační (inflace může být vyšší než úrok). Úvěrové riziko státu je velmi nízké.
+                * **Kde se obchoduje:** Přes distributory nebo na sekundárním trhu.
+                * **Měna:** CZK (koruna).
+                * **Poplatky:** Žádné nebo naprosto minimální.
+                * **Likvidita (jak rychle ho prodám):** Střední (dají se vybrat/odprodat v určených termínech).
+                * **Horizont:** Střední (často 3 až 6 let).
+                * **Jak prodělám?** Peníze se ti vrátí, ale můžeš reálně prodělat, pokud inflace sežere hodnotu vydělaných úroků.
+                """)
+                
+            elif cp_vyber == "Globální ETF fond (např. S&P 500)":
+                st.warning("""
+                📄 **RODNÝ LIST: Globální ETF (S&P 500)**
+                * **Kdo je správce?** Investiční společnost (např. iShares, Vanguard).
+                * **Podstata:** Podíl v košíku, který obsahuje akcie 500 největších firem v USA.
+                * **Výnos:** Růst světové ekonomiky a reinvestované dividendy firem v košíku.
+                * **Hlavní rizika:** Tržní (přijde globální ekonomická krize), měnové (pokud fond není zajištěn proti výkyvům koruny).
+                * **Kde se obchoduje:** Na burze jako běžná akcie.
+                * **Měna:** Obvykle USD nebo EUR.
+                * **Poplatky:** Velmi nízký správcovský poplatek (TER) + poplatek za nákup u brokera.
+                * **Likvidita (jak rychle ho prodám):** Velmi vysoká.
+                * **Horizont:** Velmi dlouhý (10 a více let).
+                * **Jak prodělám?** Když přijde krize, trh se propadne o 30 % a ty v panice vše prodáš ve ztrátě, místo abys počkal/a na zotavení.
+                """)
 
+        # =========================================================================
+        # 3.4.19 Srovnání základních produktů
+        # =========================================================================
         with st.container(border=True):
             st.markdown("### 3.4.19 Srovnání základních produktů")
             st.markdown("""
