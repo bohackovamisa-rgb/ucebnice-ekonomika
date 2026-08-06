@@ -42,6 +42,12 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 html, body, [class*="css"] { font-family: 'Montserrat', -apple-system, sans-serif !important; }
 .stApp { background-color: #f8fafc; color: #0f172a; }
+
+/* Skryje výchozí šedou navigaci Streamlitu s textem 'app' */
+[data-testid="stSidebarNav"] {
+    display: none !important;
+}
+
 .main .block-container { max-width: 940px !important; padding-top: 2rem !important; padding-bottom: 5rem !important; }
 div[data-testid="stVerticalBlockBorderWrapper"] { background-color: #ffffff !important; border-radius: 12px !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px 0 rgba(15, 23, 42, 0.02) !important; padding: 1.75rem !important; margin-bottom: 1.25rem !important; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
 div[data-testid="stVerticalBlockBorderWrapper"]:hover { border-color: #cbd5e1 !important; box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05) !important; }
