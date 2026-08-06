@@ -23,7 +23,7 @@ def render():
     st.divider()
 
     # =========================================================================
-    # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA (1.1.1 AŽ 1.1.15)
+    # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA 
     # =========================================================================
     if selected_section_2 == "1.1 Peníze jako digitální data (1.1.1 - 1.1.15)":
         st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.1 Peníze jako digitální data</h2>", unsafe_allow_html=True)
