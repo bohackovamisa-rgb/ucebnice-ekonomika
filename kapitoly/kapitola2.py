@@ -4483,3 +4483,228 @@ def render():
                 "💡 *Vysvětlivka: Plocha označená červeně představuje ztrátu, zelená zisk. "
                 "Modrá přerušovaná čára ukazuje vývoj zisku (pod nulou je podnik ve ztrátě, v bodě zvratu protíná nulu a roste do zisku).*"
             )
+            # =========================================================================
+    # 5.4 ZDROJE FINANCOVÁNÍ PODNIKU
+    # =========================================================================
+    elif selected_section_2.startswith("5.4 "):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.4 Zdroje financování podniku")
+        
+        st.write("Firma potřebuje peníze na start, provoz i růst. Tyto zdroje financování se dělí hlavně na **vlastní** (tvé peníze) a **cizí** (cizí peníze, které musíš vrátit).")
+
+        st.markdown("### 🏦 Přehled zdrojů financování")
+        
+        zdroje = {
+            "Vlastní kapitál": {"co": "Peníze majitele nebo společníků vložené do firmy.", "vyhoda": "Není nutné splácet jako úvěr.", "riziko": "Majitel riskuje vlastní peníze."},
+            "Bootstrapping": {"co": "Firma roste čistě z vlastních tržeb a úspor bez cizí pomoci.", "vyhoda": "Majitel si drží 100% kontrolu.", "riziko": "Růst může být velmi pomalý a vyčerpávající."},
+            "Zisk ponechaný ve firmě": {"co": "Firma nevyplatí zisk majitelům, ale použije ho na rozvoj.", "vyhoda": "Nejlevnější financování z vlastního výkonu.", "riziko": "Majitelé si nemohou peníze hned užít."},
+            "Bankovní úvěr": {"co": "Banka nebo věřitel půjčí peníze za úrok.", "vyhoda": "Majitel neztrácí podíl ve firmě.", "riziko": "Úvěr se musí splácet i v měsících, kdy nejsou tržby."},
+            "Leasing": {"co": "Pronájem a financování auta, stroje nebo vybavení.", "vyhoda": "Firma nemusí platit obrovskou částku najednou.", "riziko": "Celkové přeplacené náklady mohou být vyšší."},
+            "Investor (Business Angel/VC)": {"co": "Investor vloží peníze výměnou za podíl ve firmě.", "vyhoda": "Přinese velký kapitál, kontakty a cenné know-how.", "riziko": "Majitel ztrácí část kontroly a budoucího zisku."},
+            "Dotace a granty": {"co": "Finanční podpora z veřejných programů (EU, stát).", "vyhoda": "Často se nemusí vracet (peníze zdarma).", "riziko": "Pekelná administrativa, přísná pravidla a nejistota."}
+        }
+
+        # Interaktivní zobrazení zdrojů pomocí expanderů
+        for nazev, data in zdroje.items():
+            with st.expander(f"**{nazev}**"):
+                st.write(f"📖 **Co to znamená:** {data['co']}")
+                st.success(f"✅ **Výhoda:** {data['vyhoda']}")
+                st.warning(f"⚠️ **Riziko / Nevýhoda:** {data['riziko']}")
+
+        st.markdown("""
+        <div class="box-red">
+            <b>⚖️ Důležité rozhodnutí:</b> Rychlý růst není vždy zdravý. Firma může získat ohromné množství objednávek, ale pokud nemá peníze na nákup zásob, platy lidí a drahou dopravu, může ji paradoxně samotný růst poslat do krachu (ukončení cashflow).
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        st.markdown("### 🎮 Mini-scénář: Jak bys financoval/a tento projekt?")
+        st.write("Máš úspěšný malý e-shop. Získal jsi nečekanou nabídku dodávat své produkty do velké sítě supermarketů. Potřebuješ ale okamžitě **1 000 000 Kč** na výrobu první obří várky. Nemáš je. Co uděláš?")
+        
+        volba_finance = st.radio("Vyber si strategii:", [
+            "Vyber možnost...",
+            "Vezmu si bankovní úvěr (Půjčka na 1 milion Kč).",
+            "Najdu investora a dám mu 30 % firmy za 1 milion Kč.",
+            "Odmítnu to. Pojedu si dál svůj malý e-shop a bootstrapping."
+        ])
+
+        if volba_finance == "Vezmu si bankovní úvěr (Půjčka na 1 milion Kč).":
+            st.info("🏦 **Cesta dluhu:** Zůstane ti 100 % firmy! Pokud se prodeje v supermarketu uchytí, vyděláš balík. Ale pozor – pokud supermarket zboží neprodá a vrátí ti ho, zůstane ti na krku dluh, který tě může zničit.")
+        elif volba_finance == "Najdu investora a dám mu 30 % firmy za 1 milion Kč.":
+            st.info("🤝 **Cesta partnerství:** Chytré sdílení rizika. Pokud to nevyjde, investor přijde o peníze, ale ty nebudeš v dluzích. Pokud to ale bude hit, právě jsi navždy odevzdal/a 30 % všech svých budoucích zisků někomu jinému.")
+        elif volba_finance == "Odmítnu to. Pojedu si dál svůj malý e-shop a bootstrapping.":
+            st.info("🐢 **Cesta bezpečí:** Nulové finanční riziko. Zůstaneš svým pánem a v klidu spíš. Z byznysového hlediska jsi ale možná právě zahodil/a životní šanci na raketový růst.")
+
+
+    # =========================================================================
+    # 5.5 FINANČNÍ ANALÝZA: KONTROLA FINANČNÍHO ZDRAVÍ
+    # =========================================================================
+    elif selected_section_2.startswith("5.5 "):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.5 Finanční analýza: kontrola finančního zdraví")
+        
+        st.write(
+            "Finanční analýza je práce s čísly, která pomáhá posoudit zdraví podniku. Nejde jen o slepé dosazování do vzorců. "
+            "Důležité je umět výsledky interpretovat: co číslo znamená, proč vzniklo a co by měla firma udělat dál."
+        )
+
+        st.markdown("""
+        <div class="box-blue">
+            <b>🔍 K čemu je to dobré:</b> Pomáhá zjistit, zda je firma zisková, zadlužená, platebně schopná, efektivní a stabilní. Sama o sobě firmu nezachrání, ale funguje jako rentgen – včas ukáže, kde přesně to hoří.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 5.5.1 KROK ZA KROKEM
+        with st.expander("🛠️ 5.5.1 Jak se finanční analýza sestavuje krok za krokem"):
+            st.markdown("""
+            1. **Vyber firmu** – Reálný nebo fiktivní podnik.
+            2. **Získej data** – Tržby, náklady, zisk, aktiva, vlastní kapitál, závazky, peníze.
+            3. **Uprav data** – Do přehledné tabulky ve stejných jednotkách (např. v tisících Kč).
+            4. **Spočítej ukazatele** – Rentabilita, likvidita, zadluženost, aktivita.
+            5. **Porovnej v čase** – Jeden rok nestačí. Sleduj trend (zlepšuje se to?).
+            6. **Vysvětli výsledky** – Zkus odhalit příběh za čísly.
+            7. **Navrhni opatření** – Snížit náklady? Změnit ceny? Vymáhat pohledávky?
+            8. **Upozorni na limity** – Čísla bez znalosti situace na trhu mohou klamat.
+            """)
+            st.markdown("""
+            <div class="box-green">
+                <b>🧠 Nejdůležitější věta:</b> Finanční analýza není opisování vzorců. Je to příběh firmy vyprávěný čísly.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # 5.5.2 AŽ 5.5.6 - INTERAKTIVNÍ DASHBOARD
+        st.markdown("### 🎛️ Palubní deska finančního ředitele (Ukazatele v praxi)")
+        st.write("Vlož základní data své firmy a nech si v záložkách spočítat a analyzovat všech pět hlavních skupin ukazatelů: Rentabilitu (5.5.3), Likviditu (5.5.4), Zadluženost (5.5.5) a Aktivitu (5.5.6).")
+
+        # Vstupní data pro simulátor
+        with st.container(border=True):
+            st.markdown("#### 📥 Zadej data o firmě (v Kč)")
+            c1, c2, c3, c4 = st.columns(4)
+            trzby = c1.number_input("Celkové Tržby", value=1000000, step=100000)
+            zisk = c2.number_input("Čistý zisk", value=80000, step=10000)
+            aktiva = c3.number_input("Aktiva (Majetek)", value=2000000, step=100000)
+            vlastni_kapital = c4.number_input("Vlastní kapitál", value=1100000, step=100000)
+
+            c5, c6, c7, c8 = st.columns(4)
+            cizi_zdroje = c5.number_input("Cizí zdroje (Dluhy)", value=900000, step=100000)
+            obezna_aktiva = c6.number_input("Oběžná aktiva", value=500000, step=50000)
+            kratkodobe_zavazky = c7.number_input("Krátk. závazky (do roka)", value=300000, step=50000)
+            penize = c8.number_input("Peníze v hotovosti/na účtu", value=150000, step=10000)
+
+        # Prevence dělení nulou
+        trzby = max(trzby, 1)
+        aktiva = max(aktiva, 1)
+        vlastni_kapital = max(vlastni_kapital, 1)
+        kratkodobe_zavazky = max(kratkodobe_zavazky, 1)
+
+        # Záložky pro jednotlivé skupiny
+        tab_rent, tab_likv, tab_zadl, tab_akt = st.tabs(["📈 Rentabilita (Ziskovost)", "💧 Likvidita (Platební schopnost)", "💳 Zadluženost", "⚙️ Aktivita"])
+
+        # --- 5.5.3 RENTABILITA ---
+        with tab_rent:
+            st.markdown("#### 5.5.3 Ukazatele rentability: Vydělává podnik dost?")
+            st.write("Rentabilita ukazuje, jak dobře firma vytváří zisk.")
+            
+            ros = (zisk / trzby) * 100
+            roa = (zisk / aktiva) * 100
+            roe = (zisk / vlastni_kapital) * 100
+
+            col_r1, col_r2, col_r3 = st.columns(3)
+            col_r1.metric("ROS (Rentabilita tržeb)", f"{ros:.1f} %")
+            col_r1.latex(r"\frac{\text{Zisk}}{\text{Tržby}} \times 100")
+            col_r1.caption(f"Z každých 100 Kč tržeb zbývá {ros:.1f} Kč zisku.")
+
+            col_r2.metric("ROA (Rentabilita aktiv)", f"{roa:.1f} %")
+            col_r2.latex(r"\frac{\text{Zisk}}{\text{Aktiva}} \times 100")
+            col_r2.caption("Jak efektivně majetek generuje zisk.")
+
+            col_r3.metric("ROE (Rent. vl. kapitálu)", f"{roe:.1f} %")
+            col_r3.latex(r"\frac{\text{Zisk}}{\text{Vlastní kapitál}} \times 100")
+            col_r3.caption("Jaké je zhodnocení vložených peněz majitele.")
+
+        # --- 5.5.4 LIKVIDITA ---
+        with tab_likv:
+            st.markdown("#### 5.5.4 Ukazatele likvidity: Zvládne podnik platit včas?")
+            st.write("Mít majetek neznamená mít peníze. Likvidita měří schopnost platit faktury.")
+            
+            bezna_likvidita = obezna_aktiva / kratkodobe_zavazky
+            okamzita_likvidita = penize / kratkodobe_zavazky
+
+            col_l1, col_l2 = st.columns(2)
+            col_l1.metric("Běžná likvidita", f"{bezna_likvidita:.2f}")
+            col_l1.latex(r"\frac{\text{Oběžná aktiva}}{\text{Krátkodobé závazky}}")
+            if bezna_likvidita < 1:
+                col_l1.error("🚨 Pod 1,0: Firma nemá dost aktiv na zaplacení dluhů!")
+            elif bezna_likvidita > 2.5:
+                col_l1.warning("⚠️ Nad 2,5: Firma drží moc majetku ladem a neinvestuje ho.")
+            else:
+                col_l1.success("✅ Ideální hodnota (kolem 1,5 – 2,5).")
+
+            col_l2.metric("Okamžitá likvidita", f"{okamzita_likvidita:.2f}")
+            col_l2.latex(r"\frac{\text{Peníze}}{\text{Krátkodobé závazky}}")
+            col_l2.caption("Kolik dluhů umí zaplatit IHNED z účtu.")
+            
+            st.markdown("""
+            <div class="box-red">
+                <b>⚠️ Pozor:</b> Příliš nízká likvidita znamená riziko krachu. Příliš vysoká znamená, že peníze leží ladem a ztrácejí hodnotu.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # --- 5.5.5 ZADLUŽENOST ---
+        with tab_zadl:
+            st.markdown("#### 5.5.5 Ukazatele zadluženosti: Kolik firma dluží?")
+            st.write("Dluh není špatný, pokud pomáhá růst. Problém je, když ho firma neutáhne.")
+            
+            celkova_zadluzenost = (cizi_zdroje / aktiva) * 100
+            mira_zadluzenosti = cizi_zdroje / vlastni_kapital
+
+            col_z1, col_z2 = st.columns(2)
+            col_z1.metric("Celková zadluženost", f"{celkova_zadluzenost:.1f} %")
+            col_z1.latex(r"\frac{\text{Cizí zdroje}}{\text{Aktiva}} \times 100")
+            if celkova_zadluzenost > 70:
+                col_z1.error("🚨 Extrémní zadlužení! Firma je v rukou věřitelů.")
+            elif celkova_zadluzenost < 30:
+                col_z1.success("✅ Nízká zadluženost (možná firma nevyužívá potenciál úvěru k růstu).")
+            else:
+                col_z1.info("Odpovídající zadlužení.")
+
+            col_z2.metric("Míra zadluženosti", f"{mira_zadluzenosti:.2f}")
+            col_z2.latex(r"\frac{\text{Cizí zdroje}}{\text{Vlastní kapitál}}")
+            col_z2.caption("Kolik cizích peněz připadá na 1 Kč vlastních.")
+
+        # --- 5.5.6 AKTIVITA ---
+        with tab_akt:
+            st.markdown("#### 5.5.6 Ukazatele aktivity: Nezasekávají se peníze?")
+            st.write("Tyto ukazatele měří rychlost oběhu. Dosaď sem hodnoty zásob a pohledávek pro výpočet dní.")
+            
+            c_a1, c_a2 = st.columns(2)
+            zasoby = c_a1.number_input("Hodnota zásob na skladě", value=200000, step=10000)
+            pohledavky = c_a2.number_input("Pohledávky (Zákazníci dluží nám)", value=150000, step=10000)
+            
+            obrat_aktiv = trzby / aktiva
+            doba_zasob = (zasoby / trzby) * 365
+            doba_inkasa = (pohledavky / trzby) * 365
+            doba_splatnosti = (kratkodobe_zavazky / trzby) * 365
+            
+            st.divider()
+            c_m1, c_m2, c_m3 = st.columns(3)
+            
+            c_m1.metric("Obrat aktiv", f"{obrat_aktiv:.2f}x")
+            c_m1.caption("Kolikrát do roka se majetek 'otočí' v tržbách.")
+            
+            c_m2.metric("Doba inkasa (čekání na platbu)", f"{doba_inkasa:.0f} dní")
+            if doba_inkasa > doba_splatnosti:
+                c_m2.error("🚨 Čekáš na peníze déle, než máš na zaplacení vlastních dluhů!")
+            else:
+                c_m2.success("✅ Peníze inkasuješ rychleji.")
+                
+            c_m3.metric("Doba splatnosti (tvých faktur)", f"{doba_splatnosti:.0f} dní")
+            
+            st.markdown("""
+            <div class="box-purple">
+                <b>💡 Praktický význam:</b> Pokud firma čeká na peníze od zákazníků 60 dní (Doba inkasa), ale dodavatelům musí platit do 14 dní (Doba splatnosti), vyčerpá si hotovost a může zkrachovat na cashflow problém, i když je zisková!
+            </div>
+            """, unsafe_allow_html=True)
