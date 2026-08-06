@@ -1645,16 +1645,53 @@ def render():
 # =========================================================================
     # 3. FINANČNÍ TRH A ANALÝZA RIZIK
     # =========================================================================
+import streamlit as st
+
+def render():
+    st.markdown("<span class='hero-badge'>Kapitola 3</span>", unsafe_allow_html=True)
+    st.title("3. Finanční trh a analýza rizik")
     
-    # Aktualizovaný seznam sekcí pro Kapitolu 3
+    with st.container(border=True):
+        st.markdown("""
+        <div class='box-blue'>
+            📈 <strong>Pointa kapitoly:</strong> Finanční trh přesouvá peníze v čase. Cílem je umět rozlišit spoření, investování a spekulaci, chápat princip akcií, dluhopisů a fondů a pracovat s rizikem.
+        </div>
+        """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # 📌 ROZCESTNÍK / NAVIGACE KAPITOLY 3 (SEM VLOŽIT)
+    # =========================================================================
     section_options_3 = [
         "3.1 Co je to finanční trh a burza",
-        "3.2 & 3.3 Výnos, riziko, likvidita a typy chování",
-        "3.4 Cenné papíry: Akcie, dluhopisy a fondy",
+        "3.2 Výnos, riziko, likvidita a časový horizont",
+        "3.3 Spoření, investování a spekulace",
+        "3.4 Cenné papíry v teorii i praxi",
         "3.5 Analýza dat a Školní investiční simulátor",
         "3.6 Kryptoměny: technologie, spekulace a riziko",
-        "3.7–3.10 Ochrana spotřebitele, aktivity a shrnutí"
+        "3.7 Ochrana spotřebitele a investiční reklama",
+        "3.8 Interaktivní aktivity a cvičebnice",
+        "3.9 Shrnutí: Co si z finančního trhu odnést",
+        "3.10 Právní a etický disclaimer"
     ]
+    selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_3, index=0)
+    st.divider()
+
+    # =========================================================================
+    # LOGIKA ZOBRAZENÍ PODKAPITOL
+    # =========================================================================
+    if "3.1 Co je" in selected_section_2:
+        # kód pro 3.1
+        pass
+
+    elif "3.2 Výnos" in selected_section_2:
+        # kód pro 3.2
+        pass
+
+    elif "3.3 Spoření" in selected_section_2:
+        # kód pro 3.3
+        pass
+
+    # ... a tak dále až po 3.10
     
 # =========================================================================
     # 3.1 CO JE TO FINANČNÍ TRH A BURZA
