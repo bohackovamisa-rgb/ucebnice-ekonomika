@@ -4035,3 +4035,141 @@ def render():
         
         st.code(prompt_text, language="text")
         st.caption("💡 Tip: Můžeš AI požádat, aby ti položila 3 kontrolní otázky z této kapitoly!")
+# =========================================================================
+    # 5.1 PROČ PODNIK ŘEŠÍ FINANCE
+    # =========================================================================
+    elif selected_section_2.startswith("5.1 "):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.1 Proč podnik řeší finance")
+        
+        st.write(
+            "Finanční řízení podniku není jen práce účetní nebo „něco pro majitele firmy“. Je to způsob, jak firma zjišťuje, "
+            "jestli dokáže přežít, růst, platit své závazky, zvládat rizika a dělat rozhodnutí podle dat místo pouhých pocitů."
+        )
+        st.write(
+            "Pro dnešní generaci je to důležité i proto, že podnikání už nemusí vypadat jako obří továrna nebo kancelářský komplex. "
+            "Firma může být **e-shop z pokoje, freelance tvorba grafiky, streamovací kanál, kosmetické studio, food truck, vývoj aplikace, "
+            "školní projekt nebo profil influencera.** V každém případě ale platí stejná základní otázka: *přichází do podnikání víc hodnoty, než z něj odchází?*"
+        )
+
+        st.markdown("""
+        <div class="box-blue">
+            <b>📊 Základní myšlenka:</b> Finanční řízení pomáhá odpovědět na otázky: Kolik firma vydělává? Kolik skutečně utrácí? Má peníze na účtu? Zvládne splácet? Vyplatí se růst? Není příliš zadlužená? A pozná včas, že se blíží průšvih?
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.expander("📘 Informace pro vyučující (Vazba na RVP)"):
+            st.write(
+                "Tato část rozvíjí ekonomické myšlení, finanční gramotnost, podnikavost, odpovědné rozhodování, práci s daty, orientaci v nákladech, výnosech, výsledku hospodaření, cashflow, zdrojích financování a základních ukazatelích finanční analýzy. Studenti se učí posoudit finanční zdraví podniku a chápat, proč finanční informace zajímají vlastníky, zaměstnance, banky, investory, stát, dodavatele i zákazníky."
+            )
+
+        st.divider()
+
+        st.markdown("### ⚠️ Paradox: Skvělý produkt ≠ Úspěšná firma")
+        st.write("Firma může mít skvělý produkt, tisíce sledujících, hezký web a plný kalendář zakázek — a přesto může mít obří finanční problém. Důvod je jednoduchý: **popularita není totéž co zisk a zisk není totéž co peníze na účtu.**")
+
+        # Interaktivní demo: Paradox ziskovosti
+        with st.container(border=True):
+            st.markdown("#### 🧪 Mini-simulátor: Proč zkrachoval úspěšný Food Truck?")
+            st.write("Představ si food truck prodávající prémiové burgery. Místní ho milují, fronta je až za roh!")
+            
+            prodejni_cena = st.slider("Prodejní cena burgeru (Kč):", 100, 300, 180, step=10)
+            naklady_suroviny = 110 # Suroviny
+            ostatni_naklady_na_burger = 80 # Mzdy, nájem auta, elektřina rozpočtená na 1 ks
+            
+            celkove_naklady = naklady_suroviny + ostatni_naklady_na_burger
+            zisk_na_kus = prodejni_cena - celkove_naklady
+
+            col_sim1, col_sim2 = st.columns(2)
+            col_sim1.metric("Celkové náklady na 1 burger", f"{celkove_naklady} Kč")
+            
+            if zisk_na_kus < 0:
+                col_sim2.metric("Zisk / Ztráta na 1 burger", f"{zisk_na_kus} Kč", delta="Kráčíš ke krachu!", delta_color="inverse")
+                st.error(f"🚨 **Katastrofa!** I když prodáš 10 000 burgerů měsíčně a všichni tě chválí, na každém burgeru proděláváš {abs(zisk_na_kus)} Kč. Čím více prodáváš, tím větší díru do rozpočtu děláš!")
+            else:
+                col_sim2.metric("Zisk / Ztráta na 1 burger", f"{zisk_na_kus} Kč", delta="Firma generuje zisk", delta_color="normal")
+                st.success(f"✅ **Super!** Na každém burgeru vyděláš {zisk_na_kus} Kč. Pokud ti zákazníci zaplatí včas, firma se udrží v zisku.")
+
+        st.markdown("""
+        <div class="box-green">
+            <b>🧠 Pointa pro studenty:</b> Finanční řízení není o tom „být posedlý penězi“. Je o odpovědnosti. Pokud firma neumí řídit finance, může ohrozit nejen majitele, ale i zaměstnance, zákazníky, dodavatele a další lidi, kteří jsou na jejím fungování závislí.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # =========================================================================
+        # 5.1.1 KOHO ZAJÍMÁ FINANČNÍ ZDRAVÍ PODNIKU
+        # =========================================================================
+        st.markdown("### 5.1.1 Koho zajímá finanční zdraví podniku")
+        st.write("Finanční zdraví neřeší jen majitel. Zajímá mnoho skupin v okolí firmy (tzv. *stakeholderů*), protože každá z nich nese jiné riziko a pokládá si jiné otázky.")
+
+        st.markdown("#### 👥 Proklikni si optiku jednotlivých aktérů:")
+
+        # Interaktivní výběr stakeholderů
+        aktéri = {
+            "👑 Majitelé a společníci": {
+                "důvod": "Chtějí vědět, zda firma vydělává, roste a neztrácí hodnotu.",
+                "otázka": "„Vyplatí se v tomto podnikání pokračovat, nebo peníze raději vytáhnout?“",
+                "riziko": "Ztráta vloženého kapitálu a času."
+            },
+            "👔 Management": {
+                "důvod": "Potřebuje řídit ceny, náklady, investice, zásoby a lidi na denní bázi.",
+                "otázka": "„Kde přesně nám utíkají peníze a co musíme od příštího měsíce změnit?“",
+                "riziko": "Špatná rozhodnutí a ztráta konkurenceschopnosti."
+            },
+            "👷 Zaměstnanci": {
+                "důvod": "Zajímá je stabilita práce, pravidelné výplaty a budoucnost firmy.",
+                "otázka": "„Bude mít firma příští měsíc na mé mzdy, nebo si mám hledat novou práci?“",
+                "riziko": "Ztráta zaměstnání a neproplacené mzdy."
+            },
+            "🏦 Banka": {
+                "důvod": "Posuzuje, zda firma zvládne bezpečně splácet úvěr i s úroky.",
+                "otázka": "„Má firma dostatečně stabilní cashflow na měsíční splátky?“",
+                "riziko": "Nesplacení půjčky a vznik nespláceného dluhu."
+            },
+            "🚀 Investor": {
+                "důvod": "Hledá potenciál rychlého růstu, vysokou návratnost a míru rizika.",
+                "otázka": "„Má tato firma šanci desetinásobně vyrůst a ovládnout trh?“",
+                "riziko": "Investice do podniku, který zkrachuje."
+            },
+            "🚚 Dodavatelé": {
+                "důvod": "Řeší, jestli firma zaplatí vystavené faktury včas a v plné výši.",
+                "otázka": "„Není riziko dodat jim zboží na fakturu se splatností 30 dní?“",
+                "riziko": "Druhotná platební neschopnost (nedostanou zaplaceno za své zboží)."
+            },
+            "🛒 Zákazníci": {
+                "důvod": "U dlouhodobých služeb a záruk potřebují jistotu, že firma ze dne na den nezmizí.",
+                "otázka": "„Bude tato služba nebo garance fungovat i za rok?“",
+                "riziko": "Ztráta zaplacené zálohy nebo nefunkční záruka."
+            },
+            "🏛️ Stát a Obec": {
+                "důvod": "Zajímá je řádné placení daní, pojistného, tvorba pracovních míst a rozvoj regionu.",
+                "otázka": "„Plní firma své zákonné povinnosti a podporuje lokální ekonomiku?“",
+                "riziko": "Daňové úniky nebo růst nezaměstnanosti v regionu."
+            }
+        }
+
+        vybrany_akter = st.selectbox("Vyber skupinu, jejíž pohled tě zajímá:", list(aktéri.keys()))
+
+        if vybrany_akter:
+            data = aktéri[vybrany_akter]
+            with st.container(border=True):
+                st.markdown(f"### {vybrany_akter}")
+                st.write(f"**Proč je to zajímá:** {data['důvod']}")
+                st.info(f"❓ **Typická otázka:** {data['otázka']}")
+                st.warning(f"⚠️ **Největší riziko pro ně:** {data['riziko']}")
+
+        st.divider()
+
+        # --- AKTIVITA PODKAPITOLY ---
+        st.markdown("### 🧩 Aktivita: Domino efekt v tvém okolí")
+        st.write("Vyber si libovolnou firmu z okolí své školy nebo bydliště (např. lokální kavárnu, autoservis, e-shop nebo tělocvičnu) a zkus se zamyslet nad řetězovou reakcí.")
+
+        with st.container(border=True):
+            st.text_input("Napiš název/typ vybrané firmy z okolí:", placeholder="Např. Kavárna U Školáka / Lokální autoservis Procházka")
+            st.text_area("Co všechno by se stalo a kdo by utrpěl škodu, kdyby tato firma přestala ze dne na den platit své závazky?", 
+                         placeholder="Např. Zaměstnanci by nedostali výplatu a nemohli zaplatit nájem. Dodavatel kávy by přišel o velkého odběratele...")
+            
+            if st.button("Uložit mé zamyšlení", type="primary"):
+                st.success("✅ Skvělá úvaha! Takhle funguje ekonomický ekosystém. Finanční problém jedné firmy se jako domino šíří k desítkám dalších lidí.")
