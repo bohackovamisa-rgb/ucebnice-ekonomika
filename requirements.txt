@@ -3,3 +3,5 @@ gspread
 yfinance
 plotly
 pandas
+matplotlib
+numpy
