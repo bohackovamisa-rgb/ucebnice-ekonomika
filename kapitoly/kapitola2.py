@@ -3245,7 +3245,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # =========================================================================
+# =========================================================================
     # 4.4 NE KAŽDÝ ÚVĚR DOSTANE
     # =========================================================================
     elif "4.4" in selected_section_2:
@@ -3274,16 +3274,35 @@ def render():
         </div>
         """, unsafe_allow_html=True)
         
+        st.divider()
+
+        # --- NOVÝ BLOK: SPECIFICKÉ LIMITY ---
+        st.markdown("### 🧮 Zlatá pravidla: Kolik mi banka reálně půjčí?")
+        st.write("Neexistuje jedna univerzální částka, protože každý má jiný plat a jiné výdaje. Banky se ale řídí přísnými matematickými vzorci (často podle doporučení České národní banky). Tady je orientační přehled toho, co musíš splňovat:")
+
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.metric(label="Max. splátky k platu", value="45 – 50 %", delta="Z čistého příjmu", delta_color="off")
+            st.write("Všechny tvé měsíční splátky dohromady (včetně té nové) by nikdy neměly spolknout víc než polovinu tvého čistého měsíčního platu. Pokud bereš 30 000 Kč čistého, tvé splátky nesmí přesáhnout zhruba 15 000 Kč.")
+        with col_m2:
+            st.metric(label="Zůstatek pro život", value="Životní min.", delta="+ Běžné výdaje", delta_color="off")
+            st.write("Po odečtení všech splátek ti musí na účtu zůstat dostatek peněz na zákonné životní minimum a základní chod domácnosti (nájem, jídlo, poplatky). Pokud ti po splátce nezbude na jídlo, banka úvěr zamítne.")
+        with col_m3:
+            st.metric(label="Vlastní úspory", value="10 – 20 %", delta="Nutné u hypoték", delta_color="off")
+            st.write("U hypoték (úvěrů na bydlení) banka ze zákona nesmí půjčit 100 % ceny. Pokud chceš koupit byt za 5 milionů Kč, musíš mít na svém účtu naspořeno alespoň 500 000 až 1 000 000 Kč z vlastních peněz.")
+
+        st.divider()
+        
         st.markdown("### 4.4.1 Proč mi nepůjčí tolik, kolik chci")
         st.write("Častý omyl zní: *„Když zvládnu měsíční splátku podle sebe, banka mi musí půjčit.“* Nemusí. Banka musí pracovat s přísnými pravidly a odpovědným posouzením schopnosti splácet.")
         
         st.write("**Banka může půjčit méně, nebo vůbec, protože:**")
         st.markdown("""
-        * Tvůj oficiální příjem nestačí na požadovanou splátku.
-        * Máš už jiné závazky (byť je právě nesplácíš, např. nepoužívanou kreditní kartu – ta se také počítá jako dluh).
-        * Tvůj příjem je nepravidelný (např. jsi OSVČ s výkyvy) nebo jsi ve zkušební/výpovědní lhůtě.
+        * Tvůj oficiální čistý příjem nestačí na požadovanou splátku podle pravidla výše.
+        * Máš už jiné závazky (byť je právě nesplácíš, např. nepoužívanou kreditní kartu – i ta se počítá jako dluh a snižuje tvůj limit).
+        * Tvůj příjem je nepravidelný (např. jsi OSVČ s výkyvy), pracuješ na brigády, nebo jsi ve zkušební/výpovědní lhůtě.
         * Máš škraloup v registrech dlužníků (třeba i za pozdě zaplacený paušál za telefon).
-        * Nemovitost, kterou chceš koupit, má podle odhadce nižší hodnotu, než za ni chceš zaplatit.
-        * Nemáš žádné vlastní naspořené peníze (banky nerady půjčují 100 % částky).
+        * Nemovitost, kterou chceš koupit, má podle odhadce banky nižší hodnotu, než za ni chceš zaplatit prodejci.
+        * Nemáš dostatek vlastních naspořených peněz pro základ vkladu.
         """)
         
