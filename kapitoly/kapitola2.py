@@ -2944,25 +2944,38 @@ def render():
                 st.info("💡 **Tvá reakce:** Skvělý přístup! Propady vnímáš jako výprodej a příležitost. Pozor jen na to, abys nekupoval/a 'padající nůž' u pochybných projektů bez vnitřní hodnoty.")
             else:
                 st.info("💡 **Tvá reakce:** Klidný střed. Nechceš dělat ukvapené závěry, držíš se svého plánu a nejednáš impulzivně. To je pro dlouhodobého investora ten nejdůležitější stav mysli.")
-    # =========================================================================
+# =========================================================================
     # 3.9 SHRNUTÍ: CO SI Z FINANČNÍHO TRHU ODNÉST
     # =========================================================================
-    elif "3.9 Shrnutí" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.9 Shrnutí: co si z finančního trhu odnést</h2>", unsafe_allow_html=True)
+    if "3.9 Shrnutí" in selected_section_2:  # Zkontroluj název podle tvého selectboxu
+        st.markdown("<div class='sub-section-header'>9. SHRNUTÍ KAPITOLY</div>", unsafe_allow_html=True)
+        
+        st.markdown("## 3.9 Shrnutí: co si z finančního trhu odnést")
 
-        with st.container(border=True):
-            st.markdown("""
-            ✅ **Klíčové věty:**
-            * Vyšší možný výnos obvykle znamená vyšší riziko.
-            * Spoření, investování a spekulace nejsou totéž.
-            * Diverzifikace snižuje závislost na jednom aktivu, ale neruší riziko.
-            * Historický výnos není slib budoucího výnosu.
-            * Kryptoměny je nutné chápat jako vysoce rizikové digitální aktivum, ne jako jistý recept na zbohatnutí.
-            * Pokud nerozumím produktu, poplatkům, rizikům a zdroji výnosu, neměl/a bych do něj vkládat peníze.
-            """)
-            
-            st.info("🤖 **AI mentoring:** Zkopíruj tento prompt do AI asistenta: *„Vysvětli mi rozdíl mezi spořením, investováním a spekulací na příkladu studenta, který má 10 000 Kč. U každé možnosti popiš výnos, riziko, likviditu a vhodný časový horizont.“*")
+        st.markdown("""
+        <div class="box-green">
+            <b>✅ Klíčové věty:</b>
+            <ul>
+                <li>Vyšší možný výnos obvykle znamená vyšší riziko.</li>
+                <li>Spoření, investování a spekulace nejsou totéž.</li>
+                <li>Diverzifikace snižuje závislost na jednom aktivu, ale neruší riziko.</li>
+                <li>Historický výnos není slib budoucího výnosu.</li>
+                <li>Kryptoměny je nutné chápat jako vysoce rizikové digitální aktivum, ne jako jistý recept na zbohatnutí.</li>
+                <li>Pokud nerozumím produktu, poplatkům, rizikům a zdroji výnosu, neměl/a bych do něj vkládat peníze.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
+        st.markdown("""
+        <div class="box-purple">
+            <b>🤖 AI mentoring:</b> Zkopíruj tento prompt do AI asistenta (např. ChatGPT nebo Claude):
+            <br><br>
+            <i>„Vysvětli mi rozdíl mezi spořením, investováním a spekulací na příkladu studenta, který má 10 000 Kč. U každé možnosti popiš výnos, riziko, likviditu a vhodný časový horizont.“</i>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.write("") # prázdný řádek pro vizuální oddělení
+        st.success("🎉 Gratuluji k dokončení kapitoly o finančních trzích! Nyní jsi připraven/a využít tyto znalosti v praxi.")
     # =========================================================================
     # 3.10 PRÁVNÍ A ETICKÝ DISCLAIMER
     # =========================================================================
