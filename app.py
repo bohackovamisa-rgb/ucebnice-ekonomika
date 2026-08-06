@@ -1,8 +1,5 @@
 import streamlit as st
 import math
-# Předpokládám, že tvé kapitoly mají nějakou hlavní funkci, např. show() nebo render()
-# Zde si je importuješ (odkomentuj/uprav podle toho, jak to máš v souborech)
-# from kapitoly import kapitola1, kapitola2
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
@@ -46,7 +43,7 @@ st.markdown("""
 html, body, [class*="css"] { font-family: 'Montserrat', -apple-system, sans-serif !important; }
 .stApp { background-color: #f8fafc; color: #0f172a; }
 
-/* Skryje výchozí šedou navigaci Streamlitu s textem 'app' */
+/* Skryje výchozí šedou navigaci Streamlitu */
 [data-testid="stSidebarNav"] {
     display: none !important;
 }
@@ -70,10 +67,6 @@ p, li, td, th { font-family: 'Montserrat', sans-serif !important; color: #334155
 .stButton > button:hover { border-color: #4f46e5 !important; color: #4f46e5 !important; background-color: #f5f3ff !important; }
 section[data-testid="stSidebar"] { background-color: #ffffff !important; border-right: 1px solid #e2e8f0 !important; }
 .sidebar-section-title { font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1.4rem; margin-bottom: 0.5rem; }
-.sub-section-header { color: #4f46e5; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; }
-.legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 12px; margin-top: 12px; }
-.legend-card { padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(0,0,0,0.04); }
-.badge-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -121,6 +114,63 @@ with st.sidebar:
     if st.button("Odhlásit se", use_container_width=True):
         st.session_state["password_correct"] = False
         st.rerun()
+
+# =========================================================================
+# HLAVNÍ OBSAH STRÁNKY PODLE VÝBĚRU V MENU
+# =========================================================================
+
+# --- ÚVODNÍ STRÁNKA ---
+if st.session_state["current_view"] == "Uvod":
+    
+    st.title("Ekonomika, která dává smysl")
+    
+    st.markdown("""
+    <div class="box-gray">
+        📚 <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="box-green">
+        🎯 <b>Cíl učebnice</b><br>
+        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # --- Sekce: Jak s učebnicí pracovat ---
+    st.markdown("### 📖 Jak s učebnicí pracovat")
+    st.markdown("""
+    1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
+    2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
+    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
+    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které ti pomohou s vysvětlením, kontrolou nebo rozvojem tvého projektu.
+    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
+    6. **Závěrečný projekt.** Na úplném konci propojíš všechno dohromady a vytvoříš návrh vlastního odpovědného projektu.
+    """)
+    
+    st.divider()
+    
+    # --- Legenda ---
+    st.markdown("### 🧩 Legenda učebnice")
+    st.markdown("""
+    <div class="box-blue"><b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
+    <div class="box-yellow"><b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-purple"><b>Fialová:</b> AI mentoring a práce s asistencí</div>
+    <div class="box-green"><b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
+    <div class="box-red"><b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
+    <div class="box-gray"><b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
+    """, unsafe_allow_html=True)
+
+# --- OSTATNÍ KAPITOLY ---
+elif st.session_state["current_view"] == "Kapitola 1":
+    st.title("1. Podnikavost a startupy")
+    st.info("Obsah 1. kapitoly...")
+
+elif st.session_state["current_view"] == "Kapitola 2":
+    st.title("2. Finance a osobní management")
+    st.info("Obsah 2. kapitoly...")
 
 # =========================================================================
 # HLAVNÍ OBSAH STRÁNKY PODLE VÝBĚRU V MENU
