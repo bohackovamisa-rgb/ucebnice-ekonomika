@@ -4905,23 +4905,22 @@ def render():
                 st.info("Firma je stabilní, zkus si pohrát s hodnotami a najít ideální poměr mezi ziskem a hotovostí.")
                 
 # =========================================================================
-    # 5.7 A 5.8 ŠABLONA A ZÁVĚR FINANČNÍ ANALÝZY
+    # 5.7 PRÁZDNÁ ŠABLONA FINANČNÍ ANALÝZY
     # =========================================================================
-    elif selected_section_2.startswith("5.7") or selected_section_2.startswith("5.8"):
+    elif selected_section_2.startswith("5.7"):
         import pandas as pd
-        import numpy as np
-
+        
         st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
-        st.markdown("## 5.7 Prázdná šablona finanční analýzy (Sandbox)")
+        st.markdown("## 5.7 Prázdná šablona finanční analýzy (Interaktivní cvičení)")
         st.write(
             "Tuto šablonu můžeš využít pro svůj vlastní školní projekt, fiktivní studentskou firmu nebo rychlou analýzu reálného podniku. "
             "Nemusíš nic složitě počítat na kalkulačce – stačí vyplnit vstupní data a aplikace se o zbytek postará sama!"
         )
 
         st.markdown("### 📝 Krok 1: Zadej data svého projektu")
-        st.write("💡 *Klikni přímo do buněk tabulky ve sloupcích **Rok 1** a **Rok 2** a přepiš ukázková čísla na svá vlastní. Výpočty dole se okamžitě aktualizují.*")
+        st.info("💡 **Návod k tabulce:** Dvakrát klikni na jakékoliv číslo ve sloupcích **Rok 1** a **Rok 2**, přepiš ho na své vlastní a stiskni **Enter**. Výpočty dole se hned aktualizují.")
 
-        # Výchozí data (ukázkový startup, aby tam nebyly nuly a nepadaly chyby dělení)
+        # Výchozí data (čistá čísla bez formátování měny, aby šla snadno přepisovat)
         vstupy = {
             "Položka": [
                 "Tržby", "Náklady celkem", "Zisk", "Aktiva celkem", "Vlastní kapitál", 
@@ -4934,21 +4933,16 @@ def render():
                 "Krátkodobý majetek", "Zboží na skladě", "Hotovost a peníze v bance", 
                 "Faktury k zaplacení do 1 roku", "Peníze, které dluží zákazníci nám"
             ],
-            "Rok 1 (Kč)": [500000, 450000, 50000, 300000, 200000, 100000, 150000, 50000, 40000, 80000, 60000],
-            "Rok 2 (Kč)": [750000, 650000, 100000, 450000, 300000, 150000, 250000, 80000, 70000, 120000, 100000]
+            "Rok 1": [500000, 450000, 50000, 300000, 200000, 100000, 150000, 50000, 40000, 80000, 60000],
+            "Rok 2": [750000, 650000, 100000, 450000, 300000, 150000, 250000, 80000, 70000, 120000, 100000]
         }
         df_vstupy = pd.DataFrame(vstupy).set_index("Položka")
 
-        # Interaktivní tabulka
+        # Interaktivní tabulka (zakážeme úpravu pouze sloupce s nápovědou)
         edited_df = st.data_editor(
             df_vstupy,
-            column_config={
-                "Nápověda k položce": st.column_config.TextColumn("Komentář", disabled=True),
-                "Rok 1 (Kč)": st.column_config.NumberColumn("Rok 1 (Kč)", min_value=0, step=1000, format="%d Kč"),
-                "Rok 2 (Kč)": st.column_config.NumberColumn("Rok 2 (Kč)", min_value=0, step=1000, format="%d Kč")
-            },
-            use_container_width=True,
-            hide_index=False
+            disabled=["Nápověda k položce"],
+            use_container_width=True
         )
 
         st.divider()
@@ -4966,18 +4960,18 @@ def render():
                 return 0.0
 
         # Získání dat pro oba roky
-        y1 = {k: get_val("Rok 1 (Kč)", k) for k in df_vstupy.index}
-        y2 = {k: get_val("Rok 2 (Kč)", k) for k in df_vstupy.index}
+        y1 = {k: get_val("Rok 1", k) for k in df_vstupy.index}
+        y2 = {k: get_val("Rok 2", k) for k in df_vstupy.index}
 
         tab_r, tab_l, tab_z = st.tabs(["📈 Ziskovost (Rentabilita)", "💧 Likvidita (Hotovost)", "⚙️ Zadluženost a Aktivita"])
 
         with tab_r:
             c1, c2, c3 = st.columns(3)
-            # Výpočty Rok 2
+            # Výpočty
             ros_2 = safe_div(y2["Zisk"], y2["Tržby"]) * 100
             roa_2 = safe_div(y2["Zisk"], y2["Aktiva celkem"]) * 100
             roe_2 = safe_div(y2["Zisk"], y2["Vlastní kapitál"]) * 100
-            # Výpočty Rok 1 pro zjištění rozdílu
+            
             ros_1 = safe_div(y1["Zisk"], y1["Tržby"]) * 100
             roa_1 = safe_div(y1["Zisk"], y1["Aktiva celkem"]) * 100
             roe_1 = safe_div(y1["Zisk"], y1["Vlastní kapitál"]) * 100
@@ -5031,18 +5025,22 @@ def render():
 
         st.markdown("""
         <div class="box-blue">
-            <b>✍️ Úkol pro tebe:</b> Vyplň tabulku pro fiktivní podnik. Prohlédni si výsledky a zamysli se: 
+            <b>✍️ Úkol pro tebe:</b> Vyplň tabulku pro fiktivní podnik. Prohlédni si výsledky nahoře a zamysli se: 
             <i>Co se firmě daří? Kde číhá největší riziko? Jaké JEDNO konkrétní opatření bys majiteli poradil/a?</i>
         </div>
         """, unsafe_allow_html=True)
 
-        st.divider()
 
-        # --- 5.8 JAK NAPSAT ZÁVĚR ---
+    # =========================================================================
+    # 5.8 JAK NAPSAT ZÁVĚR FINANČNÍ ANALÝZY
+    # =========================================================================
+    elif selected_section_2.startswith("5.8"):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
         st.markdown("## 5.8 Jak napsat závěr finanční analýzy")
+        
         st.write(
             "Samotné výpočty nestačí. Dobrý závěr finanční analýzy (manažerské shrnutí) má být **krátký, konkrétní a srozumitelný** "
-            "i pro člověka, který není účetní. Pokud vysypeš na šéfa jen procenta, nepochopí tě. Musíš vyprávět příběh."
+            "i pro člověka, který není účetní. Pokud vysypeš na šéfa nebo investora jen procenta, nepochopí tě. Musíš vyprávět příběh čísel."
         )
 
         st.markdown("""
@@ -5056,7 +5054,7 @@ def render():
 
         with st.container(border=True):
             st.markdown("#### 🤖 Generátor profi závěru")
-            st.write("Vyber si aktuální stav tvé fiktivní firmy a podívej se, jak by tvé hodnocení zapsal profesionální finanční ředitel.")
+            st.write("Vyber si aktuální stav tvé fiktivní firmy (třeba z předchozí kapitoly) a podívej se, jak by tvé hodnocení zapsal profesionální finanční ředitel.")
             
             col_g1, col_g2 = st.columns(2)
             with col_g1:
