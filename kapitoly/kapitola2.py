@@ -2385,46 +2385,71 @@ def render():
             | **Fond / ETF** | Podíl v portfoliu více aktiv. | Podle vývoje aktiv. | Tržní pokles, poplatky. | Začátečník i dlouhodobý investor. |
             | **Kryptoměna** | Digitální aktivum v síti. | Růst ceny, případně jiné výnosy podle služby. | Vysoká volatilita, ztráta přístupu, podvod, regulace. | Pouze pro člověka, který chápe technologii a unese ztrátu. |
             """)
+# =========================================================================
+    # 3.5 ANALÝZA DAT: INVESTIČNÍ LABORATOŘ
     # =========================================================================
-    # 3.5 ANALÝZA DAT A ŠKOLNÍ INVESTIČNÍ SIMULÁTOR
-    # =========================================================================
-    elif "3.5 Analýza" in selected_section_2:
+    elif "3.5 Analýza dat" in selected_section_2:
         st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.5 Analýza dat: investiční laboratoř</h2>", unsafe_allow_html=True)
-        st.write("Investiční rozhodování nemá stát na větě „kamarád říkal“ nebo videu z TikToku. Důležitá je práce s daty.")
         
-        st.warning("⚠️ **Varování před grafem:** Historická data jsou užitečná, ale nejsou zárukou budoucnosti. Graf začínající ve vhodně vybraném roce může vypadat skvěle, ale skrývat velký předchozí propad.")
+        st.write("Investiční rozhodování nemá stát na větě „kamarád říkal“ nebo „viděl/a jsem video na TikToku“. Důležitá je práce s daty, ale i schopnost chápat jejich limity.")
+        
+        st.write("**Studenti by měli umět sledovat:**")
+        st.markdown("""
+        * dlouhodobý vývoj ceny,
+        * největší propady,
+        * délku zotavení po propadu,
+        * rozdíl mezi nominálním a reálným výnosem,
+        * vliv inflace,
+        * poplatky,
+        * riziko krátkého časového horizontu.
+        """)
 
+        # 🔬 Analytická laboratoř
+        with st.container(border=True):
+            st.markdown("### 🔬 Analytická laboratoř")
+            st.write("Vyber jedno aktivum nebo index — například akciový index, státní dluhopisový fond, zlato nebo kryptoměnu. Najdi si (např. na Google Finance) graf jeho vývoje za delší období. Označ si největší propad, období růstu a období stagnace.")
+            
+            lab_vyber = st.selectbox(
+                "Otestuj svou psychologii. Vyber si aktivum:", 
+                ["...", "Akciový index (např. S&P 500)", "Státní dluhopisový fond", "Zlato", "Kryptoměna (např. Bitcoin)"], 
+                key="k3_lab_vyber"
+            )
+            
+            if lab_vyber != "...":
+                st.info(f"📊 **Představ si, že se graf pro {lab_vyber} propadne o 30 % až 50 % své hodnoty.**")
+                st.write("**Otázka k zamyšlení:** Vydržel/a bych psychicky držet tuto investici i v době takového propadu?")
+                
+                odpoved_lab = st.radio(
+                    "Vyber upřímnou odpověď:", 
+                    ["Vyber...", "Ano, nepanikařil/a bych a čekal/a na zotavení", "Asi ne, raději bych to se ztrátou prodal/a", "Zatím nevím"], 
+                    key="k3_lab_radio"
+                )
+                
+                if odpoved_lab == "Ano, nepanikařil/a bych a čekal/a na zotavení":
+                    st.success("Skvělý přístup! Ale pamatuj, že na papíře to bolí mnohem méně, než když vidíš mizet své skutečné peníze.")
+                elif odpoved_lab == "Asi ne, raději bych to se ztrátou prodal/a":
+                    st.warning("To je naprosto upřímné a racionální. Právě proto je důležité znát svou toleranci k riziku a nedávat všechny úspory do příliš kolísavých aktiv.")
+                elif odpoved_lab == "Zatím nevím":
+                    st.write("Nevadí. Zkušenost se buduje postupně, ideálně s malými částkami.")
+
+        # 🚀 Simulátor
         with st.container(border=True):
             st.markdown("### 🚀 SPUSTIT ŠKOLNÍ INVESTIČNÍ SIMULÁTOR")
-            st.write("Vyzkoušej si modelové investování nanečisto — bez skutečných peněz a bez rizika. Sleduj, jak se může měnit hodnota portfolia v čase.")
-
-            sim_mesicne = st.number_input("Měsíční pravidelná úspora (Kč):", value=1000, step=500, key="k3_sim_m")
-            sim_roky = st.slider("Doba investování (roky):", min_value=1, max_value=30, value=10, key="k3_sim_r")
+            st.markdown("#### Otevřít simulátor akcií a bitcoinu")
+            st.write("Interaktivní aktivita: Vyzkoušej si modelové investování nanečisto — bez skutečných peněz a bez rizika. Sleduj, jak se může měnit hodnota akcií a bitcoinu v čase.")
             
-            st.write("**Rozdělení portfolia (%):**")
-            col1, col2, col3 = st.columns(3)
-            p_etf = col1.number_input("Akcie/ETF (oč. 7% p.a.)", value=70, min_value=0, max_value=100, step=10, key="k3_sim_e")
-            p_bond = col2.number_input("Dluhopisy (oč. 3% p.a.)", value=20, min_value=0, max_value=100, step=10, key="k3_sim_b")
-            p_krypto = col3.number_input("Krypto (spekulace 12% p.a.)", value=10, min_value=0, max_value=100, step=10, key="k3_sim_k")
+            # Prominentní tlačítko
+            if st.button("🚀 PŘEJÍT DO SIMULÁTORU", type="primary", key="k3_sim_btn"):
+                st.info("Zde by se spustila samotná aplikace simulátoru (nebo by tě přesměrovala na příslušnou stránku ve Streamlitu).")
+            
+            st.caption("Důležité: Simulátor je pouze vzdělávací pomůcka. Nejde o investiční doporučení.")
 
-            if p_etf + p_bond + p_krypto != 100:
-                st.error("⚠️ Součet musí být přesně 100 %!")
-            else:
-                avg_rate = (p_etf * 0.07 + p_bond * 0.03 + p_krypto * 0.12) / 100.0
-                r_m = avg_rate / 12.0
-                n_months = sim_roky * 12
-                
-                total_dep = sim_mesicne * n_months
-                total_val = 0.0
-                for _ in range(n_months):
-                    total_val = (total_val + sim_mesicne) * (1 + r_m)
-
-                c1, c2, c3 = st.columns(3)
-                c1.metric("Celkem vloženo", f"{total_dep:,.0f} Kč".replace(",", " "))
-                c2.metric("Hodnota na konci", f"{total_val:,.0f} Kč".replace(",", " "))
-                c3.metric("Zisk z trhu", f"+{(total_val - total_dep):,.0f} Kč".replace(",", " "))
-                st.caption("Poznámka: Simulátor je pouze vzdělávací pomůcka a počítá s teoretickým průměrem. Nejde o investiční doporučení.")
-
+        # 3.5.1
+        with st.container(border=True):
+            st.markdown("### 3.5.1 Historický výnos není slib")
+            st.write("Historická data jsou užitečná, ale nejsou zárukou budoucnosti. Pokud nějaké aktivum v minulosti rostlo, neznamená to, že poroste dál. Trh se mění, firmy krachují, technologie zastarávají, regulace se mění a nálada investorů může být extrémně proměnlivá.")
+            
+            st.warning("⚠️ **Varování před grafem:** Graf začínající ve vhodně vybraném roce může vypadat skvěle. Jiný začátek může ukázat dlouhé období ztráty. Proto je nutné ptát se: Kdo graf vybral? Proč právě toto období? Co v grafu není vidět?")
     # =========================================================================
     # 3.6 KRYPTOMĚNY: TECHNOLOGIE, SPEKULACE A RIZIKO
     # =========================================================================
