@@ -3120,4 +3120,170 @@ def render():
                     st.balloons()
                 else:
                     st.error("❌ Někde je chybka. Zkus to ještě jednou. Nápovědu najdeš ve slovníčku výše.")
+                    # =========================================================================
+    # 4.2 ÚROK: CENA PŮJČENÝCH PENĚZ
+    # =========================================================================
+    elif "4.2" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.2 Úrok: cena půjčených peněz")
+        
+        st.write(
+            "Úrok je odměna věřiteli za to, že dlužník může používat jeho peníze. Úrok zároveň kompenzuje riziko, "
+            "že dlužník nesplatí, a čas, po který věřitel peníze nemůže využít jinak."
+        )
+        st.write("Úroková sazba se obvykle uvádí v procentech za rok. Pokud je úroková sazba **10 % p. a.**, znamená to „per annum“, tedy ročně.")
+        
+        # Tabulka pojmů
+        st.markdown("### 📊 Základní pojmy v číslech")
+        st.markdown("""
+        | Pojem | Co to znamená | Příklad |
+        | :--- | :--- | :--- |
+        | **Jistina** | Půjčená částka. | 100 000 Kč |
+        | **Úroková sazba** | Procento, podle kterého se počítá úrok. | 8 % ročně |
+        | **Úrok** | Částka zaplacená navíc za půjčení peněz. | 8 000 Kč za rok (při jednoduchém úročení) |
+        | **Splátka** | Částka pravidelně placená věřiteli. | např. 3 200 Kč měsíčně |
+        """)
+        
+        st.write("**Výši úroku v praxi ovlivňuje:** výše půjčené částky, úroková sazba, délka splácení, způsob splácení, rizikovost klienta, typ úvěru, zajištění a situace na trhu (sazby v ekonomice).")
+        
+        st.divider()
+        
+        st.markdown("### 4.2.1 Proč je úrok u různých úvěrů jiný")
+        st.write("Ne každý úvěr má stejnou úrokovou sazbu. Banka posuzuje riziko. Čím vyšší riziko, tím vyšší cena úvěru obvykle bývá.")
+        
+        with st.expander("🏠 Hypotéka"):
+            st.write("Je zajištěná nemovitostí, proto bývá levnější než nezajištěný úvěr.")
+            st.warning("**Typické riziko:** Dlouhá doba splácení, změna úrokových sazeb, pokles příjmu během desítek let.")
+            
+        with st.expander("🚗 Spotřebitelský úvěr"):
+            st.write("Často není zajištěný hodnotným majetkem.")
+            st.warning("**Typické riziko:** Vyšší riziko nesplácení, peníze se často utratí za věci s klesající hodnotou.")
+            
+        with st.expander("💳 Kreditní karta & Kontokorent"):
+            st.write("**Kreditní karta:** Jde o rychle dostupný úvěrový rámec. **Kontokorent:** Krátkodobé přečerpání účtu do mínusu.")
+            st.warning("**Typické riziko:** Snadné zvyknutí si na život „v mínusu“ a extrémně vysoký úrok, pokud peníze nevrátíš v bezúročném období.")
+            
+        with st.expander("🏢 Podnikatelský úvěr"):
+            st.write("Závisí na stabilitě podnikání, cashflow a zajištění.")
+            st.warning("**Typické riziko:** Nejisté tržby, sezónnost, celkové podnikatelské riziko (firma může zkrachovat).")
+
+        st.divider()
+        
+        # --- AKTIVITA: INTERAKTIVNÍ KALKULAČKA ---
+        st.markdown("### 🧮 Interaktivní zóna: Jak délka úvěru prodražuje půjčku")
+        st.write("Vyzkoušej si, co se stane, když si půjčíš 100 000 Kč s úrokem 8 % a budeš měnit dobu splácení.")
+        
+        doba_splaceni = st.slider("Doba splácení (v letech):", min_value=1, max_value=10, value=5)
+        
+        # Jednoduchý anuitní výpočet pro ukázku
+        sazba_mesicni = 0.08 / 12
+        pocet_splatek = doba_splaceni * 12
+        jistina = 100000
+        # Vzorec pro anuitní splátku
+        splatka = jistina * (sazba_mesicni * (1 + sazba_mesicni)**pocet_splatek) / ((1 + sazba_mesicni)**pocet_splatek - 1)
+        celkem_zaplaceno = splatka * pocet_splatek
+        preplatek = celkem_zaplaceno - jistina
+        
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Měsíční splátka", f"{int(splatka):,} Kč".replace(",", " "))
+        col2.metric("Celkem zaplatíš", f"{int(celkem_zaplaceno):,} Kč".replace(",", " "))
+        col3.metric("Přeplatek (čistý úrok)", f"{int(preplatek):,} Kč".replace(",", " "), delta_color="inverse")
+        
+        st.info("💡 **Všimni si:** Čím déle splácíš, tím je sice měsíční splátka menší (vypadá to lákavě), ale tím víc peněz celkově vyhodíš oknem na úrocích!")
+
+    # =========================================================================
+    # 4.3 RPSN: SKUTEČNĚJŠÍ CENA ÚVĚRU
+    # =========================================================================
+    elif "4.3" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>3. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.3 RPSN: skutečnější cena úvěru")
+        
+        st.write("Úroková sazba neříká celou pravdu. Úvěr může mít kromě úroku také poplatky, pojištění, náklady na vyřízení, vedení úvěrového účtu nebo jiné povinné platby. Proto existuje **RPSN — roční procentní sazba nákladů**.")
+        st.write("RPSN ukazuje, kolik úvěr stojí za rok v procentech, když se započítají **nejen úroky, ale i další povinné náklady** související s úvěrem.")
+        
+        st.markdown("""
+        <div class="box-green">
+            <b>🔎 RPSN jednoduše:</b> Úrok je jen část ceny. RPSN se snaží ukázat celkovou cenu úvěru. Když porovnáváš dvě půjčky, samotný úrok nestačí — dívej se hlavně na RPSN a celkovou částku, kterou zaplatíš.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("### 4.3.1 Proč může být nízký úrok drahý")
+        st.write("Představ si dvě nabídky na stejnou částku. Kterou by sis vybral/a, kdyby ses díval/a jen na úrok?")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.info("**Nabídka A (Férová)**\n* Úrok: **7 %**\n* Poplatky: Nízké\n* **RPSN: 7,5 %**\n\n*Úrok i celkové náklady jsou si velmi podobné.*")
+        with col2:
+            st.error("**Nabídka B (Chyták)**\n* Úrok: **5 %**\n* Poplatky: Extrémně vysoké\n* **RPSN: 12 %**\n\n*Nízký úrok je jen marketing, úvěr je reálně mnohem dražší.*")
+
+        st.markdown("""
+        <div class="box-red">
+            <b>⚠️ Pozor na reklamu:</b> Věta „úrok od 4,9 %“ neznamená, že přesně takový úvěr dostane každý. Slovo „od“ znamená nejlepší možnou sazbu pro vybrané, dokonalé klienty. Skutečná nabídka závisí na tvém příjmu, závazcích a historii.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.divider()
+        
+        st.markdown("### 4.3.2 Předletová kontrola: Co sledovat u každého úvěru")
+        st.write("Před podpisem jakékoliv smlouvy bys měl/a znát odpovědi na všechny tyto body. Zkus si je odškrtat!")
+        
+        # Interaktivní checklist
+        c1 = st.checkbox("Vím, kolik si půjčuji a kolik přesně celkem vrátím.")
+        c2 = st.checkbox("Znám výši měsíční splátky a vím, jak dlouho budu splácet.")
+        c3 = st.checkbox("Znám nejen úrokovou sazbu, ale hlavně RPSN.")
+        c4 = st.checkbox("Vím o všech dalších poplatcích (za vedení, sjednání atd.).")
+        c5 = st.checkbox("Vím, zda je úvěr zajištěný mým majetkem (a o co můžu přijít).")
+        c6 = st.checkbox("Vím, jaké jsou sankce, když se se splátkou opozdím.")
+        c7 = st.checkbox("Vím, zda a za kolik můžu úvěr splatit předčasně.")
+        
+        if c1 and c2 and c3 and c4 and c5 and c6 and c7:
+            st.success("✅ Výborně! Jsi zodpovědný spotřebitel. Takhle by měla vypadat tvá kontrola před každým podpisem.")
+            
+        st.markdown("""
+        <div class="box-blue">
+            <b>🧮 Pravidlo bezpečné splátky:</b> Splátka nemá být nastavena tak, že člověk přežije jen v ideálním měsíci. Musí počítat i s nemocí, výpadkem brigády, zdražením energií nebo nečekanou opravou.
+        </div>
+        """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # 4.4 NE KAŽDÝ ÚVĚR DOSTANE
+    # =========================================================================
+    elif "4.4" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>4. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.4 Ne každý úvěr dostane")
+        
+        st.write("Banky a další věřitelé neposkytují úvěr automaticky každému. Musí posoudit, zda dlužník pravděpodobně zvládne splácet. Smyslem není jen ochrana banky, ale také ochrana klienta před nebezpečným předlužením.")
+        
+        st.markdown("### Co banka posuzuje (Scoring klienta):")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("- **Věk:** Dosažení 18 let a u dlouhých úvěrů max. věk při doplacení.")
+            st.markdown("- **Příjem:** Zda je dostatečný a hlavně pravidelný.")
+            st.markdown("- **Výdaje:** Nájem, energie, děti, životní minimum.")
+            st.markdown("- **Stávající dluhy:** Kreditky, kontokorent, jiné úvěry.")
+        with col2:
+            st.markdown("- **Platební historie:** Zda člověk v minulosti splácel včas.")
+            st.markdown("- **Registry dlužníků:** Databáze, kde banky vidí všechny tvé dluhy a průšvihy.")
+            st.markdown("- **Typ zaměstnání:** Stabilita práce (smlouva na neurčito vs. zkušební doba).")
+            st.markdown("- **Zajištění a účel:** Co bance ručíš a na co peníze chceš.")
+            
+        st.markdown("""
+        <div class="box-gray">
+            <b>🚦 Důležité:</b> Zamítnutý úvěr nemusí být „nespravedlnost“. Může to být signál, že by splácení bylo příliš rizikové. Pokud banka nepůjčí, často tím říká: podle matematiky by tohle tvůj rozpočet už nemusel unést.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("### 4.4.1 Proč mi nepůjčí tolik, kolik chci")
+        st.write("Častý omyl zní: *„Když zvládnu měsíční splátku podle sebe, banka mi musí půjčit.“* Nemusí. Banka musí pracovat s přísnými pravidly a odpovědným posouzením schopnosti splácet.")
+        
+        st.write("**Banka může půjčit méně, nebo vůbec, protože:**")
+        st.markdown("""
+        * Tvůj oficiální příjem nestačí na požadovanou splátku.
+        * Máš už jiné závazky (byť je právě nesplácíš, např. nepoužívanou kreditní kartu – ta se také počítá jako dluh).
+        * Tvůj příjem je nepravidelný (např. jsi OSVČ s výkyvy) nebo jsi ve zkušební/výpovědní lhůtě.
+        * Máš škraloup v registrech dlužníků (třeba i za pozdě zaplacený paušál za telefon).
+        * Nemovitost, kterou chceš koupit, má podle odhadce nižší hodnotu, než za ni chceš zaplatit.
+        * Nemáš žádné vlastní naspořené peníze (banky nerady půjčují 100 % částky).
+        """)
         
