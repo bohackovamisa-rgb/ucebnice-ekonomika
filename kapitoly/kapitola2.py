@@ -1656,10 +1656,10 @@ def render():
         "3.7–3.10 Ochrana spotřebitele, aktivity a shrnutí"
     ]
     
-    # -------------------------------------------------------------------------
+# =========================================================================
     # 3.1 CO JE TO FINANČNÍ TRH A BURZA
-    # -------------------------------------------------------------------------
-    if "3.1 Co je to" in selected_section_2 or "3.1" in selected_section_2:
+    # =========================================================================
+    if "3.1 Co je" in selected_section_2:
         st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.1 Co je to finanční trh a burza</h2>", unsafe_allow_html=True)
         st.write("Finanční trh je místo — dnes často hlavně digitální systém — kde se potkávají ti, kdo mají volné peníze, s těmi, kdo peníze potřebují. Nejde jen o burzu a „vlky z Wall Street“. Finanční trh se týká i běžného člověka: spořicí účet, penzijní produkt, podílový fond, státní dluhopis, akcie v investiční aplikaci nebo kryptoměna v telefonu jsou různé způsoby, jak se člověk dostává do světa finančního trhu.")
 
@@ -1676,8 +1676,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        st.write("Finanční trh umožňuje, aby se peníze přesouvaly od těch, kteří je mají k dispozici, k těm, kteří je chtějí využít. Může jít o domácnosti, firmy, banky, investory, stát, obce, fondy nebo mezinárodní instituce.")
-        st.write("Představ si to jednoduše:")
+        st.write("Finanční trh umožňuje, aby se peníze přesouvaly od těch, kteří je mají k dispozici, k těm, kteří je chtějí využít.")
         st.markdown("""
         * člověk má úspory a nechce, aby mu jen ležely na účtu,
         * firma potřebuje peníze na rozšíření výroby,
@@ -1692,7 +1691,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-        # 3.1.1
+        # 3.1.1 až 3.1.3
         with st.container(border=True):
             st.markdown("### 3.1.1 Hlavní funkce finančního trhu")
             st.markdown("""
@@ -1705,93 +1704,48 @@ def render():
             | **Likvidita** | Některá aktiva lze rychleji prodat a proměnit zpět na peníze. | Akcii velké firmy lze často prodat rychleji než nemovitost. |
             """)
 
-        # 3.1.2
         with st.container(border=True):
             st.markdown("### 3.1.2 Primární a sekundární trh")
             st.markdown("""
             | Typ trhu | Co se děje | Příklad |
             | :--- | :--- | :--- |
-            | **Primární trh** | Cenný papír se prodává poprvé. Peníze získává emitent — tedy ten, kdo cenný papír vydává. | Firma vydá nové akcie nebo stát vydá nový dluhopis. |
+            | **Primární trh** | Cenný papír se prodává poprvé. Peníze získává emitent. | Firma vydá nové akcie nebo stát vydá nový dluhopis. |
             | **Sekundární trh** | Investoři obchodují mezi sebou už dříve vydané cenné papíry. | Investor prodá akcii jiné osobě přes burzu. |
             """)
-            st.info("💡 **Příklad ze života:** Když si koupíš nově vydaný státní dluhopis přímo při emisi, jde o primární trh. Když později koupíš akcii od jiného investora přes burzu, firma už peníze z této konkrétní koupě nedostává — jde o sekundární trh.")
+            st.info("💡 **Příklad ze života:** Když si koupíš nově vydaný státní dluhopis přímo při emisi, jde o primární trh. Když později koupíš akcii od jiného investora přes burzu, jde o sekundární trh.")
 
-        # 3.1.3 až 3.1.7
         with st.container(border=True):
-            st.markdown("### 3.1.3 Burza, broker a investiční platforma")
-            st.write("**Burza** je organizovaný trh, kde se obchoduje podle pravidel. Neznamená to nutně hlučný sál s lidmi v oblecích. Dnes velká část obchodování probíhá elektronicky.")
-            st.write("**Broker** je zprostředkovatel, přes kterého může investor nakupovat a prodávat investiční nástroje.")
-            st.write("**Investiční aplikace** je uživatelské rozhraní, které může působit jednoduše jako e-shop. Právě proto je nutné zpomalit: to, že investici koupíš jedním klikem, neznamená, že jí rozumíš.")
-
+            st.markdown("### 3.1.3 až 3.1.7 Jak funguje burza")
+            st.write("**Burza** je organizovaný a regulovaný trh, kde se podle jasných pravidel obchoduje s investičními nástroji. **Broker** je zprostředkovatel a **investiční aplikace** je uživatelské rozhraní.")
+            
             st.markdown("""
             <div class='box-red'>
-                📱 <strong>Moderní riziko:</strong> Investiční aplikace umí vytvořit pocit hry. Grafy, notifikace, zelená čísla a rychlé nákupy mohou člověka tlačit k impulzivnímu obchodování. Finanční gramotnost dnes znamená umět poznat, kdy aplikace pomáhá — a kdy manipuluje chováním.
+                📱 <strong>Moderní riziko:</strong> Investiční aplikace umí vytvořit pocit hry. Grafy, notifikace, zelená čísla a rychlé nákupy mohou člověka tlačit k impulzivnímu obchodování.
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("### 3.1.4 Burza: organizované tržiště pro cenné papíry")
-            st.write("Burza plní několik důležitých funkčních úloh:")
+            st.write("**Průběh obchodu na burze:**")
             st.markdown("""
-            * **umožňuje obchodování** — investoři mohou nakupovat a prodávat cenné papíry,
-            * **pomáhá tvořit cenu** — cena vzniká střetem nabídky a poptávky,
-            * **zvyšuje likviditu** — investor má větší šanci najít kupce nebo prodávajícího,
-            * **zvyšuje transparentnost** — u regulovaných trhů jsou pravidla, zveřejňování informací a dohled,
-            * **umožňuje firmám získat kapitál** — například při vstupu na burzu nebo vydání dluhopisů,
-            * **poskytuje signál o důvěře trhu** — vývoj cen může ukazovat očekávání investorů.
+            1. Investor zadá pokyn (market / limitní / stop pokyn) u brokera.
+            2. Broker odešle pokyn na trh.
+            3. Obchodní systém sparuje nabídku (Ask) a poptávku (Bid).
+            4. Proběhne vypořádání a převod cenných papírů.
             """)
 
-            st.markdown("### 3.1.5 Jak burza funguje krok za krokem")
-            st.write("Zjednodušený průběh obchodu:")
-            st.markdown("""
-            1. Investor zadá pokyn k nákupu nebo prodeji u brokera.
-            2. Broker pokyn odešle na příslušný trh nebo obchodní místo.
-            3. Obchodní systém hledá protistranu — někoho, kdo chce prodat nebo koupit za odpovídající cenu.
-            4. Pokud se pokyny potkají, obchod se uzavře.
-            5. Následuje vypořádání — převedou se peníze a cenné papíry.
-            6. Investor vidí cenný papír na svém účtu a peníze se odečtou nebo připíšou.
-            """)
-
-            st.write("**Základní pojmy burzovního obchodu:**")
-            st.markdown("""
-            * **nákupní cena / bid** — cena, za kterou jsou kupující ochotni nakupovat,
-            * **prodejní cena / ask** — cena, za kterou jsou prodávající ochotni prodávat,
-            * **spread** — rozdíl mezi nákupní a prodejní cenou,
-            * **objem obchodů** — kolik kusů nebo jaká hodnota se zobchodovala,
-            * **likvidita** — jak snadno lze instrument koupit nebo prodat bez velkého pohybu ceny,
-            * **vypořádání** — technické dokončení obchodu, tedy převod peněz a cenných papírů.
-            """)
-
-            st.markdown("### 3.1.6 a 3.1.7 Kdo na burze obchoduje a dohlíží")
-            st.write("Běžný občan většinou neobchoduje přímo na burze jako člen burzy. Obchoduje přes zprostředkovatele — například banku, obchodníka s cennými papíry nebo brokera.")
-            st.write("V České republice vykonává dohled nad finančním trhem **Česká národní banka (ČNB)**. Dohlíží na pravidla, instituce, ochranu trhu a férové fungování finančního systému.")
-
-        # 3.1.8 a 3.1.9 Český trh
         with st.container(border=True):
-            st.markdown("### 3.1.8 Burza cenných papírů Praha (BCPP) & 3.1.9 RM-SYSTÉM")
-            st.write("**BCPP** je hlavní regulovaný akciový trh v ČR. Obchodují se zde akcie významných společností na trzích Prime Market, Standard Market, Free Market a START Market pro menší a střední firmy.")
-            st.write("**RM-SYSTÉM** je česká burza cenných papírů s historickým zaměřením na širší veřejnost a zaměřením na české prostředí.")
-
-        # 3.1.10 a 3.1.11 Světové burzy a indexy
-        with st.container(border=True):
-            st.markdown("### 3.1.10 Světové burzy a 3.1.11 Burzovní indexy")
+            st.markdown("### 3.1.8 až 3.1.13 Burzy, indexy a účastníci")
+            st.write("**České trhy:** Burza cenných papírů Praha (BCPP) s trhy Prime, Standard, Free a START a RM-SYSTÉM.")
+            st.write("**Světové burzy a indexy:**")
             st.markdown("""
-            | Burza / Trh | Země / Město | Čím je známá / Hlavní index |
+            | Trh / Burza | Město | Významné indexy |
             | :--- | :--- | :--- |
-            | **NYSE** | USA, New York | Největší burza tradičních firem (Dow Jones, S&P 500) |
-            | **Nasdaq** | USA | Technologické firmy a inovace (Nasdaq Composite) |
-            | **LSE** | Velká Británie, Londýn | Evropské finanční centrum (FTSE 100) |
-            | **TSE** | Japonsko, Tokio | Hlavní asijská burza (Nikkei 225) |
-            | **Deutsche Börse** | Německo, Frankfurt | Hlavní trh eurozóny (DAX) |
-            | **BCPP** | Česko, Praha | Hlavní český regulovaný trh (PX) |
+            | **NYSE** | New York, USA | S&P 500, Dow Jones Industrial Average |
+            | **Nasdaq** | USA | Nasdaq Composite (technologický sektor) |
+            | **BCPP** | Praha, ČR | PX index |
+            | **Deutsche Börse** | Frankfurt, Německo | DAX |
             """)
-
-            st.markdown("### 3.1.12 a 3.1.13 Účastníci a rozdíl oproti kasinu")
-            st.write("Na burze se potkávají drobný investor, trader, investiční a penzijní fondy, banky, emitenti a market makeři.")
-            st.write("**Proč burza není kasino?** Cenné papíry představují reálná práva (podíl ve firmě, pohledávku, podíl ve fondu). Kasino se z burzy stává jen tehdy, když člověk nakupuje bez porozumění, podle emocí nebo s penězi, které si nemůže dovolit ztratit.")
 
             st.markdown("#### 🎮 Aktivita: Staň se burzovním reportérem")
-            st.write("Připrav si podklady pro ekonomický report o vybraném trhu:")
-
             rep_market = st.selectbox("Zvol trh/burzu pro report:", ["BCPP (Praha)", "NYSE (New York)", "Nasdaq (USA)", "Deutsche Börse (Frankfurt)", "RM-SYSTÉM"], key="k3_rep_mkt")
             rep_firm = st.text_input("Zadej známou firmu nebo titul z této burzy:", value="ČEZ / Apple / SAP", key="k3_rep_firm")
             rep_risk = st.text_input("Jaké hlavní riziko by měl investor znát?", value="Měnové riziko, propad odvětví", key="k3_rep_risk")
@@ -1799,12 +1753,13 @@ def render():
             if st.button("Vygenerovat text reportáže", key="k3_rep_btn"):
                 st.success(f"🎙️ **Podcastový report z trhu {rep_market}:** „Vítáme vás u ekonomického přehledu! Dnes sledovaný trh {rep_market} přitahuje pozornost investorů. Hlavním titulem je např. {rep_firm}. Pozor však na klíčová rizika: {rep_risk}. Investujte s chladnou hlavou!“")
 
-    # -------------------------------------------------------------------------
-    # 3.2 & 3.3 VÝNOS, RIZIKO, LIKVIDITA A TYPY CHOVÁNÍ
-    # -------------------------------------------------------------------------
-    elif "3.2 & 3.3" in selected_section_2 or "3.2" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.2 & 3.3 Výnos, riziko, likvidita a typy chování</h2>", unsafe_allow_html=True)
-        
+    # =========================================================================
+    # 3.2 VÝNOS, RIZIKO, LIKVIDITA A ČASOVÝ HORIZONT
+    # =========================================================================
+    elif "3.2 Výnos" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.2 Výnos, riziko, likvidita a časový horizont</h2>", unsafe_allow_html=True)
+        st.write("Než se člověk začne bavit o konkrétních produktech, musí chápat čtyři základní otázky: Jaký může být výnos? Jaké nesu riziko? Jak rychle se dostanu k penězům? Na jak dlouho peníze odkládám?")
+
         with st.container(border=True):
             st.markdown("""
             <div class='box-blue'>
@@ -1812,12 +1767,14 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        # 3.2.1 až 3.2.4
         with st.container(border=True):
             st.markdown("### 3.2.1 Výnos")
-            st.write("Výnos je to, co investor získá navíc oproti původně vložené částce (úrok, dividenda, růst ceny aktiva, nájemné, kurzový zisk).")
+            st.write("Výnos je to, co investor získá navíc oproti původně vložené částce. Může mít podobu úroku, dividendy, růstu ceny aktiva, nájemného nebo kurzového zisku.")
 
-            st.markdown("### 3.2.2 Druhy rizik")
+        with st.container(border=True):
+            st.markdown("### 3.2.2 Riziko a jeho druhy")
+            st.write("Riziko znamená možnost, že výsledek bude jiný, než člověk očekával — od nižšího výnosu až po ztrátu celého vkladu.")
+
             st.markdown("""
             | Druh rizika | Co znamená | Příklad |
             | :--- | :--- | :--- |
@@ -1826,17 +1783,29 @@ def render():
             | **Likviditní riziko** | Aktivum nejde rychle prodat za rozumnou cenu. | Nelikvidní token nebo nemovitost nemá kupce. |
             | **Měnové riziko** | Změna kurzu měny ovlivní výsledek v domácí měně. | Investice v USD klesne kvůli posílení CZK. |
             | **Inflační riziko** | Výnos nestačí pokrýt růst cenové hladiny. | Úrok na účtu 3 % při inflaci 6 %. |
-            | **Regulační riziko** | Změna zákonů ovlivní daný trh. | Zpřísnění pravidel pro kryptoměnové burzy. |
+            | **Regulační riziko** | Změna zákonů ovlivní daný trh. | Zpřísnění rules pro kryptoměnové burzy. |
             | **Technologické riziko** | Selže systém, aplikace nebo úschova. | Ztráta přístupu k privátnímu klíči. |
             """)
 
-            st.markdown("### 3.2.3 Likvidita a 3.2.4 Časový horizont")
-            st.write("**Likvidita** vyjadřuje, jak rychle lze aktivum proměnit na peníze bez velké ztráty hodnoty.")
-            st.write("**Časový horizont** určuje doba, po kterou peníze nepotřebujeme. Krátký horizont se nehodí pro vysoce kolísavá aktiva.")
-
-        # 3.3
         with st.container(border=True):
-            st.markdown("### 3.3 Spoření, investování a spekulace")
+            st.markdown("### 3.2.3 Likvidita & 3.2.4 Časový horizont")
+            st.write("**Likvidita** znamená, jak snadno lze aktivum proměnit zpět na peníze. Hotovost je velmi likvidní, nemovitost méně likvidní.")
+            st.write("**Časový horizont** je doba, po kterou plánujeme peníze nechat investované. Krátký horizont se nehodí pro vysoce kolísavé investice.")
+
+            st.markdown("""
+            <div class='box-gray'>
+                🧭 <strong>Jednoduché pravidlo:</strong> Nouzová rezerva patří do bezpečných a dostupných nástrojů. Investice s vyšším rizikem patří až k penězům, které člověk nepotřebuje na běžné výdaje ani na krizové situace.
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # 3.3 SPOŘENÍ, INVESTOVÁNÍ A SPEKULACE
+    # =========================================================================
+    elif "3.3 Spoření" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.3 Spoření, investování a spekulace</h2>", unsafe_allow_html=True)
+        st.write("Tato tři slova se často pletou, ale znamenají rozdílné chování a přístup k penězům.")
+
+        with st.container(border=True):
             st.markdown("""
             | Pojem | Co znamená | Typický příklad | Úroveň rizika |
             | :--- | :--- | :--- | :--- |
@@ -1847,20 +1816,20 @@ def render():
 
             st.markdown("""
             <div class='box-purple'>
-                🧠 <strong>Otázka před nákupem:</strong> Kupuješ aktivum proto, že rozumíš jeho principu a riziku, nebo proto, že máš strach, že ti „ujede vlak“ (FOMO)?
+                🧠 <strong>Otázka před každým nákupem:</strong> Kupuješ aktivum proto, že rozumíš jeho principu a riziku, nebo proto, že máš strach, že ti „ujede vlak“ (FOMO)?
             </div>
             """, unsafe_allow_html=True)
 
-    # -------------------------------------------------------------------------
-    # 3.4 CENNÉ PAPÍRY: AKCIE, DLUHOPISY A FONDY
-    # -------------------------------------------------------------------------
-    elif "3.4 Cenné papíry" in selected_section_2 or "3.4" in selected_section_2:
+    # =========================================================================
+    # 3.4 CENNÉ PAPÍRY V TEORII I PRAXI
+    # =========================================================================
+    elif "3.4 Cenné papíry" in selected_section_2:
         st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.4 Cenné papíry v teorii i praxi</h2>", unsafe_allow_html=True)
         st.write("Cenný papír je listina nebo digitální záznam, se kterým jsou spojena určitá práva (podíl ve firmě, splacení dluhu, úrok, dividenda nebo podíl na majetku fondu). Dnes je většina cenných papírů zaknihovaná — existují v elektronické evidenci.")
 
         # 3.4.1 až 3.4.6 Akcie
         with st.container(border=True):
-            st.markdown("### 3.4.2 až 3.4.6 Akcie: podíl na firmě")
+            st.markdown("### 3.4.1 až 3.4.6 Akcie: podíl na firmě")
             st.write("Koupí akcie se investor stává **spoluvlastníkem** (akcionářem) firmy. Získává právo na dividendu, hlasování na valné hromadě a podíl na likvidačním zůstatku.")
 
             st.markdown("""
@@ -1876,7 +1845,7 @@ def render():
         # 3.4.7 až 3.4.10 Dluhopisy
         with st.container(border=True):
             st.markdown("### 3.4.7 až 3.4.10 Dluhopisy: půjčka se slibem splacení")
-            st.write("Koupí dluhopisu se investor **nestává vlastním firmou**, ale jejím **věřitelem**. Emitent (stát, firma, obec) si půjčuje peníze a zavazuje se vyplácet kupón (úrok) a vrátit jmenovitou hodnotu při splatnosti.")
+            st.write("Koupí dluhopisu se investor **nestává vlastníkem firmy**, ale jejím **věřitelem**. Emitent (stát, firma, obec) si půjčuje peníze a zavazuje se vyplácet kupón (úrok) a vrátit jmenovitou hodnotu při splatnosti.")
 
             st.markdown("""
             | Druh dluhopisu | Emitent / Princip | Hlavní riziko |
@@ -1892,9 +1861,9 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        # 3.4.11 až 3.4.14 Fondy
+        # 3.4.11 až 3.4.17 Fondy a využití firmami
         with st.container(border=True):
-            st.markdown("### 3.4.11 až 3.4.14 Podílové fondy a ETF")
+            st.markdown("### 3.4.11 až 3.4.17 Podílové fondy, ETF a firemní využití")
             st.write("Podílové listy představují podíl na kolektivním majetku fondu. Místo nákupu jedné akcie investor kupuje „košík“ plný desítek až tisíců cenných papírů, což zajišťuje **diverzifikaci**.")
 
             st.markdown("""
@@ -1905,11 +1874,9 @@ def render():
             | **Nemovitostní fond** | Budovy, komerční parky, nájmy. | Závisí na trhu nemovitostí a likviditě. |
             """)
 
-        # 3.4.18 Pitva cenného papíru (Interaktivní)
+        # 3.4.18 Pitva cenného papíru
         with st.container(border=True):
             st.markdown("#### 🔎 Pitva cenného papíru: Rodný list investice")
-            st.write("Vyber cenný papír a sestav jeho profil:")
-
             cp_type = st.selectbox("Typ cenného papíru:", ["Akcie ČEZ", "Státní dluhopis ČR", "Globální akciové ETF (S&P 500)", "Firemní dluhopis start-upu"], key="k3_cp_type")
             cp_horizon = st.select_slider("Doporučený horizont:", options=["1 rok", "3 roky", "5 let", "10+ let"], value="5 let", key="k3_cp_horiz")
             cp_risk = st.radio("Úroveň rizika:", ["Nízká", "Střední", "Vysoká", "Extrémní"], key="k3_cp_risk")
@@ -1930,10 +1897,10 @@ def render():
             | **Kryptoměna** | Digitální token | Spekulativní růst | Extrémní volatilita, ztráta | Spekulace, pouze volné zdroje |
             """)
 
-    # -------------------------------------------------------------------------
+    # =========================================================================
     # 3.5 ANALÝZA DAT A ŠKOLNÍ INVESTIČNÍ SIMULÁTOR
-    # -------------------------------------------------------------------------
-    elif "3.5 Analýza" in selected_section_2 or "3.5" in selected_section_2:
+    # =========================================================================
+    elif "3.5 Analýza" in selected_section_2:
         st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.5 Analýza dat a Školní investiční simulátor</h2>", unsafe_allow_html=True)
         st.write("Investiční rozhodnutí nemá stát na doporučení z TikToku. Sleduj dlouhodobý vývoj, historické propady a délku zotavení trhu. Pamatuj: **Historický výnos není zárukou výnosu budoucího!**")
 
@@ -1953,12 +1920,10 @@ def render():
             if p_etf + p_bond + p_crypto != 100:
                 st.warning("⚠️ Součet procent v portfoliu musí dát přesně 100 %!")
             else:
-                # Výpočet váženého výnosu
                 avg_rate = (p_etf * 0.07 + p_bond * 0.03 + p_crypto * 0.12) / 100.0
                 r_m = avg_rate / 12.0
                 n_months = sim_years * 12
                 
-                # Výpočet naspořené částky bez úroků a se složeným úročením
                 total_deposited = sim_monthly * n_months
                 total_val = 0.0
                 for _ in range(n_months):
@@ -1971,10 +1936,10 @@ def render():
 
                 st.caption("Poznámka: Simulátor počítá s průměrným teoretickým výnosem. V reálném světě trhy kolísají a minulý výnos nezaručuje budoucí zisk.")
 
-    # -------------------------------------------------------------------------
+    # =========================================================================
     # 3.6 KRYPTOMĚNY: TECHNOLOGIE, SPEKULACE A RIZIKO
-    # -------------------------------------------------------------------------
-    elif "3.6 Kryptoměny" in selected_section_2 or "3.6" in selected_section_2:
+    # =========================================================================
+    elif "3.6 Kryptoměny" in selected_section_2:
         st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.6 Kryptoměny: technologie, peníze, spekulace i riziko</h2>", unsafe_allow_html=True)
         st.write("Kryptoměny jsou pro současnou generaci atraktivní, protože spojují technologie, možnost zisku i internetovou kulturu. Je ale nutné chápat rozdíl mezi novou technologií a cenovou spekulací.")
 
@@ -1988,12 +1953,10 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        # 3.6.1 a 3.6.2
         with st.container(border=True):
             st.markdown("### 3.6.1 a 3.6.2 Proč vznikly a co je Blockchain")
-            st.write("Kryptoměny řeší tzv. **problém dvojí útraty** bez nutnosti centrální banky. **Blockchain** je distribuovaná účetní kniha, jejíž kopie drží tisíce počítačů v síti. Pokus o změnu minulého záznamu síť odmítne.")
+            st.write("Kryptoměny řeší **problém dvojí útraty** bez nutnosti centrální banky. **Blockchain** je distribuovaná účetní kniha, jejíž kopie drží tisíce počítačů v síti.")
 
-        # 3.6.3 Peněženky a klíče
         with st.container(border=True):
             st.markdown("### 3.6.3 Peněženky, adresy a klíče")
             st.markdown("""
@@ -2006,35 +1969,30 @@ def render():
 
             st.markdown("""
             <div class='box-red'>
-                🔐 <strong>Nejdůležitější pravidlo bezpečnosti:</strong> Kdo zná tvoji seed phrase, ovládat tvoje peníze. Banka ti ztracený soukromý klíč NEZOBNOEVÍ!
+                🔐 <strong>Nejdůležitější pravidlo bezpečnosti:</strong> Kdo zná tvoji seed phrase, ovládá tvoje peníze. Banka ti ztracený soukromý klíč NEZOBNOEVÍ!
             </div>
             """, unsafe_allow_html=True)
 
-        # 3.6.4 až 3.6.8 Typy a rizika
         with st.container(border=True):
-            st.markdown("### 3.6.4 až 3.6.8 Typy kryptoměn a rizika")
+            st.markdown("### 3.6.4 až 3.6.11 Typy kryptoměn, rizik a daní")
             st.markdown("""
-            * **Bitcoin (BTC):** První digitální vzácné aktivum (Proof of Work).
+            * **Bitcoin (BTC):** První a nejznámější kryptoměna (Proof of Work).
             * **Ethereum (ETH):** Síť pro smart kontrakty a aplikace (Proof of Stake).
-            * **Stablecoiny (USDT/USDC):** Tokeny navázané na kurz doláru.
-            * **Meme coiny:** Spekulativní tokeny postavené jen na internetovém vtipu.
+            * **Stablecoiny:** Tokeny navázané na kurz doláru.
+            * **Meme coiny:** Spekulativní tokeny postavené na vtipu a virálním trendu.
             """)
 
             st.markdown("##### 🚨 Varovné signály krypto podvodů:")
             st.markdown("""
             * Slib **„garantovaného výnosu“** bez rizika.
             * Tlak na **okamžité rozhodnutí** a posílání peněz.
-            * Někdo po tobě vyžaduje **seed phrase** nebo vzdálený přístup k PC.
-            * Výnosy závisí výhradně na náboru dalších členů.
+            * Vyžadování **seed phrase** nebo vzdáleného přístupu k PC.
             """)
 
-        # 3.6.12 Krypto detektiv
         with st.container(border=True):
             st.markdown("#### 🧪 Krypto detektiv: Semafor rizika")
-            st.write("Ověř libovolný projekt před nákupem:")
-
             k_name = st.text_input("Název kryptoměny / projektu:", value="SuperCoin", key="k3_k_name")
-            k_team = st.selectbox("Má projekt známý a ověřitelný vývojový tým?", ["Ano, známé tváře a historie", "Ne, zcela anonymní vyvojáři"], key="k3_k_team")
+            k_team = st.selectbox("Má projekt známý a ověřitelný vývojový tým?", ["Ano, známé tváře a historie", "Ne, zcela anonymní vývojáři"], key="k3_k_team")
             k_promise = st.selectbox("Slibuje projekt garantovaný denní zisk?", ["Ne, zisk závisí na trhu", "Ano, slibují 2 % denně jistě"], key="k3_k_promise")
 
             if st.button("Vyhodnotit krypto projekt", key="k3_k_btn"):
@@ -2043,21 +2001,39 @@ def render():
                 else:
                     st.error(f"🔴 **SEMAFOR: ČERVENÁ! (VYSOKÉ RIZIKO PODVODU)** Projekt {k_name} obsahuje kritické varovné signály. Ruce pryč!")
 
-    # -------------------------------------------------------------------------
-    # 3.7–3.10 OCHRANA SPOTŘEBITELE, AKTIVITY A SHRNUTÍ
-    # -------------------------------------------------------------------------
-    elif "3.7–3.10" in selected_section_2 or "3.7" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.7–3.10 Ochrana spotřebitele a závěrečné aktivity</h2>", unsafe_allow_html=True)
-        
-        # 3.7
-        with st.container(border=True):
-            st.markdown("### 3.7 Ochrana spotřebitele a investiční reklama")
-            st.write("Investiční reklamy míří na emoce: rychlé zbohatnutí, luxusní auto, svoboda. Pozor na věty typu „Získej pasivní příjem hned“, „Garantovaný výnos 20 %“ nebo „Banka nechce, abys toto věděl/a“. Ochranu tvoří tvoje kritické myšlení.")
+    # =========================================================================
+    # 3.7 OCHRANA SPOTŘEBITELE A INVESTIČNÍ REKLAMA
+    # =========================================================================
+    elif "3.7 Ochrana" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.7 Ochrana spotřebitele a investiční reklama</h2>", unsafe_allow_html=True)
+        st.write("Finanční produkty se často prodávají jazykem emocí. Reklama může zdůraznit svobodu, rychlý zisk, strach z inflace, strach z promarněné šance nebo společenský status.")
 
-        # 3.8 Aktivity
         with st.container(border=True):
-            st.markdown("### 3.8 Cvičebnice: Třídění finančních operací")
-            st.write("Urči správnou kategorii pro každou položku:")
+            st.write("**Typické věty, u kterých je potřeba zpozornět:**")
+            st.markdown("""
+            * „Začni vydělávat pasivně hned.“
+            * „Tuhle příležitost nesmíš propásnout.“
+            * „Garantovaný výnos.“
+            * „Vydělávají na tom všichni.“
+            * „Stačí kopírovat moje obchody.“
+            * „Banky nechtějí, abys to věděl/a.“
+            """)
+
+            st.markdown("""
+            <div class='box-purple'>
+                🛡️ <strong>Ochrana spotřebitele začíná otázkou:</strong> Kdo mi to nabízí, jak na tom vydělává, jaké riziko mi neříká a proč mám rozhodnout právě teď?
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # 3.8 INTERAKTIVNÍ AKTIVITY A CVIČEBNICE
+    # =========================================================================
+    elif "3.8 Interaktivní" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.8 Interaktivní aktivity k finančnímu trhu</h2>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 🧩 Třídění: Spoření, investice, spekulace, hazard")
+            st.write("Rozděl položky do správných kategorií:")
 
             t_q1 = st.selectbox("1. Spořicí účet v české bance:", ["Vyber...", "Spoření", "Investování", "Spekulace", "Hazard"], key="k3_t1")
             t_q2 = st.selectbox("2. Pravidelný nákup globálního ETF fondu na 15 let:", ["Vyber...", "Spoření", "Investování", "Spekulace", "Hazard"], key="k3_t2")
@@ -2069,23 +2045,44 @@ def render():
                 if t_q1=="Spoření" and t_q2=="Investování" and t_q3=="Spekulace" and t_q4=="Hazard" and t_q5=="Spoření":
                     st.success("🎉 Skvělé! Všechny položky jsi roztřídil/a zcela přesně.")
                 else:
-                    st.error("Některé položky jsou zařazeny špatně. Zkontroluj tabulku ze sekce 3.3!")
+                    st.error("Některé položky jsou zařazeny špatně. Zkontroluj definice ze sekce 3.3!")
 
-        # 3.9 Shrnutí
         with st.container(border=True):
-            st.markdown("### 3.9 Shrnutí: Co si zapamatovat")
+            st.markdown("### 📉 Investiční počasí & Čtení grafu")
+            st.write("Napiš reakci informovaného investora na situaci, kdy trh spadl o 30 %:")
+            st.text_area("Co udělá začátečník a co udělá rozvážný investor?", key="k3_weather_text")
+
+    # =========================================================================
+    # 3.9 SHRNUTÍ: CO SI Z FINANČNÍHO TRHU ODNÉST
+    # =========================================================================
+    elif "3.9 Shrnutí" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.9 Shrnutí: co si z finančního trhu odnést</h2>", unsafe_allow_html=True)
+
+        with st.container(border=True):
             st.markdown("""
             <div class='box-blue'>
-                ✅ <strong>Klíčové zásady investování:</strong><br>
-                1. Vyšší výnos = Vyšší riziko.<br>
-                2. Spoření chrání rezervu, investice buduje majetek, spekulace riskuje zisk.<br>
-                3. Diverzifikuj (nevsázej vše na jednu kartu).<br>
-                4. Pokud nerozumíš produktu a jeho poplatkům, nevkládej do něj peníze.<br>
-                5. Kryptoměny jsou vysoce rizikové spekulativní aktivum.
+                ✅ <strong>Klíčové věty k zapamatování:</strong><br><br>
+                • Vyšší možný výnos obvykle znamená vyšší riziko.<br>
+                • Spoření, investování a spekulace nejsou totéž.<br>
+                • Diverzifikace snižuje závislost na jednom aktivu, ale neruší riziko.<br>
+                • Historický výnos není slib budoucího výnosu.<br>
+                • Kryptoměny je nutné chápat jako vysoce rizikové digitální aktivum, ne jako jistý recept na zbohatnutí.<br>
+                • Pokud nerozumím produktu, poplatkům, rizikům a zdroji výnosu, neměl/a bych do něj vkládat peníze.
             </div>
             """, unsafe_allow_html=True)
 
-        # 3.10 Disclaimer
+            st.markdown("""
+            <div class='box-purple'>
+                🤖 <strong>AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
+                <em>„Vysvětli mi rozdíl mezi spořením, investováním a spekulací na příkladu studenta, který má 10 000 Kč. U každé možnosti popiš výnos, riziko, likviditu a vhodný časový horizont.“</em>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # 3.10 PRÁVNÍ A ETICKÝ DISCLAIMER
+    # =========================================================================
+    elif "3.10 Právní" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.10 Právní a etický disclaimer</h2>", unsafe_allow_html=True)
+
         with st.container(border=True):
-            st.markdown("### 3.10 Právní a etický disclaimer")
-            st.caption("Všechny příklady, výpočty a scénáře v této kapitole slouží výhradně ke vzdělávacím účelům. Nejedná se o investiční doporučení ani výzvu k nákupu konkrétních aktiv. Každá investice nese riziko ztráty.")
+            st.caption("Všechny příklady, výpočty, grafy a scénáře v této kapitole slouží pouze ke vzdělávání. Nejde o investiční doporučení, investiční poradenství ani výzvu k nákupu nebo prodeji konkrétního aktiva. Každý finanční produkt má rizika a každý člověk má jinou životní situaci, rezervu, příjem, cíle a schopnost snášet ztrátu.")
