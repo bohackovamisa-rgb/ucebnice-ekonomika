@@ -4329,6 +4329,11 @@ def render():
     # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
     # =========================================================================
     elif selected_section_2.startswith("5.3"):
+        import math
+        import numpy as np
+        import pandas as pd
+        import matplotlib.pyplot as plt
+
         st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
         st.markdown("## 5.3 Náklady, výnosy a bod zvratu")
         
@@ -4373,63 +4378,108 @@ def render():
         </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("#### Vzorec:")
-        st.latex(r"BEP_{kusy} = \frac{Fixní\ náklady}{(Cena\ za\ kus - Variabilní\ náklad\ na\ kus)}")
-
         st.divider()
 
-        st.markdown("### 🎢 Interaktivní simulátor Bodu zvratu: Školní merch")
-        st.write("Studenti se rozhodli prodávat školní trička. Pomoz jim zjistit, kolik triček musí prodat, aby neprodělali kalhoty.")
+        st.markdown("### 🎢 Interaktivní kalkulačka Bodu zvratu a zisku")
+        st.write("Zadej hodnoty níže. Graf a výpočty se okamžitě přizpůsobí, abys viděl/a, kdy přesně firma začne vydělávat.")
 
         with st.container(border=True):
-            col_b1, col_b2 = st.columns(2)
-            with col_b1:
-                st.markdown("#### ⚙️ Nastavení byznysu")
-                cena_ks = st.slider("Prodejní cena trička (Kč):", 200, 600, 350, step=10, key="bep_cena")
-                var_naklad_ks = st.slider("Variabilní náklad na 1 tričko (Kč):", 100, 400, 210, step=10, key="bep_vn")
-                fixni_naklady = st.slider("Fixní náklady (e-shop, grafika) (Kč):", 2000, 15000, 7000, step=500, key="bep_fn")
-                
-            with col_b2:
-                st.markdown("#### 🧮 Výpočet")
-                marze_ks = cena_ks - var_naklad_ks
-                st.metric("Marže na 1 kus (Cena - VN)", f"{marze_ks} Kč", delta="Příspěvek na fixní náklady", delta_color="normal")
-                
-                if marze_ks > 0:
-                    bep_ks = fixni_naklady / marze_ks
-                    bep_ks_rounded = int(bep_ks) if bep_ks.is_integer() else int(bep_ks) + 1
-                    bep_trzby = bep_ks_rounded * cena_ks
-                    
-                    st.metric("Bod zvratu (v kusech)", f"{bep_ks_rounded} triček", delta="Nutné minimum", delta_color="off")
-                    st.success(f"✅ **Aby studenti nebyli ve ztrátě, musí prodat {bep_ks_rounded} triček** (což odpovídá tržbám {bep_trzby:,} Kč). Od {bep_ks_rounded + 1}. trička začínají tvořit čistý zisk!".replace(",", " "))
-                else:
-                    st.error("🚨 **Kritická chyba!** Variabilní náklady jsou vyšší nebo rovné ceně. Bod zvratu neexistuje, s každým prodaným tričkem firma prodělává víc a víc peněz!")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                fixni = st.number_input("Fixní náklady [Kč]", min_value=0, value=50000, step=1000)
+            with col2:
+                variabilni = st.number_input("Variabilní náklady/ks [Kč]", min_value=0, value=200, step=10)
+            with col3:
+                cena = st.number_input("Prodejní cena/ks [Kč]", min_value=0, value=400, step=10)
 
-        st.markdown("#### 📈 Graf Bodu zvratu (Jak se protínají náklady a tržby)")
-        
-        # Generování dat pro graf (pokud dává byznys smysl)
-        if marze_ks > 0:
-            import pandas as pd
-            import numpy as np
+            marze = cena - variabilni
+
+            st.divider()
+
+            if marze <= 0:
+                st.error("⚠️ **Chyba:** Prodejní cena musí být vyšší než variabilní náklady, jinak s každým kusem prohlubuješ ztrátu!")
+            else:
+                # Matematický výpočet
+                bep_ks = fixni / marze
+                bep_kc = bep_ks * cena
+                
+                # Výpočet prvního kusu, který generuje zisk
+                prvni_ziskovy_kus = math.floor(bep_ks) + 1
+                
+                # Formátování čísel pro hezké zobrazení v češtině (mezery místo tisíců)
+                bep_ks_str = f"{bep_ks:,.1f}".replace(",", " ").replace(".0", "")
+                bep_kc_str = f"{bep_kc:,.0f}".replace(",", " ")
+                marze_str = f"{marze:,.0f}".replace(",", " ")
+
+                st.success(f"🎯 **Bod zvratu (zisk = 0):** {bep_ks_str} ks (Tržby: {bep_kc_str} Kč)")
+                
+                # Vysvětlení pro studenty, odkdy generují zisk
+                st.markdown(f"""
+                **💡 Co to přesně znamená?**
+                * Při prodeji **{bep_ks_str} ks** jste přesně na nule (pokryli jste všechny náklady).
+                * 🚀 **Firma začne generovat čistý zisk až od prodeje {prvni_ziskovy_kus}. kusu!**
+                * Z každého dalšího kusu získáte čistý zisk **{marze_str} Kč** (což je vaše hrubá marže / krycí příspěvek).
+                """)
+
+        # Generování grafu pouze pokud je byznys logicky nastaven (marže > 0)
+        if marze > 0:
+            st.markdown("#### 📈 Graf vývoje nákladů, tržeb a zisku")
             
-            bep_exact = fixni_naklady / marze_ks
-            max_x = max(100, int(bep_exact * 2)) # Os X natáhneme za bod zvratu
+            # Příprava dat pro graf
+            max_ks = int(bep_ks * 2) if bep_ks > 0 else 100
+            x = np.linspace(0, max_ks, 100)
+            naklady = fixni + (variabilni * x)
+            trzby = cena * x
+            zisk = trzby - naklady
+
+            fig, ax = plt.subplots(figsize=(10, 6))
             
-            x_values = np.linspace(0, max_x, 50)
-            trzby_y = cena_ks * x_values
-            fixni_y = [fixni_naklady] * 50
-            celkove_naklady_y = fixni_naklady + (var_naklad_ks * x_values)
+            # Černá osa pro nulu
+            ax.axhline(y=0, color='black', linewidth=1)
+
+            # Hlavní přímky s jemnějšími barvami
+            ax.plot(x, naklady, label='Celkové náklady', color='#e74c3c', linewidth=3)
+            ax.plot(x, trzby, label='Tržby', color='#2ecc71', linewidth=3)
+            ax.plot(x, zisk, label='Vývoj zisku', color='#3498db', linewidth=2, linestyle='--')
+
+            if bep_ks > 0 and bep_ks < max_ks:
+                ax.axhline(y=bep_kc, color='gray', linestyle=':')
+                ax.axvline(x=bep_ks, color='gray', linestyle=':')
+                
+                # Tečka v bodu zvratu
+                ax.scatter(bep_ks, bep_kc, color='black', s=100, label='Bod zvratu', zorder=5)
+                # Tečka, kde zisk protíná osu nula
+                ax.scatter(bep_ks, 0, color='#3498db', s=70, zorder=5)
+
+                # Výrazná textová šipka přímo v grafu!
+                y_offset = - (cena * max_ks * 0.15)
+                ax.annotate(f'Zisk od {prvni_ziskovy_kus}. ks', 
+                            xy=(bep_ks, 0), xytext=(bep_ks + (max_ks*0.05), y_offset),
+                            arrowprops=dict(facecolor='#3498db', shrink=0.05, width=1.5, headwidth=7, edgecolor='none'),
+                            fontsize=11, color='#3498db', fontweight='bold',
+                            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="#3498db", lw=1))
+
+            # Barevné šrafování zón
+            ax.fill_between(x, naklady, trzby, where=(naklady > trzby), interpolate=True, color='#e74c3c', alpha=0.15, label='Zóna ztráty')
+            ax.fill_between(x, naklady, trzby, where=(naklady < trzby), interpolate=True, color='#2ecc71', alpha=0.15, label='Zóna zisku')
+
+            # Nastavení popisků os
+            ax.set_xlabel('Počet prodaných kusů [ks]', fontsize=12)
+            ax.set_ylabel('Částka [Kč]', fontsize=12)
+            ax.set_title('Zóna zisku a ztráty', fontsize=14, fontweight='bold')
             
-            chart_data = pd.DataFrame({
-                "Počet triček (ks)": x_values,
-                "Tržby (Kč)": trzby_y,
-                "Celkové náklady (Kč)": celkove_naklady_y,
-                "Fixní náklady (Kč)": fixni_y
-            }).set_index("Počet triček (ks)")
-            
-            st.line_chart(chart_data, color=["#2ecc71", "#e74c3c", "#95a5a6"])
-            
-            st.markdown("""
-            <div style="font-size: 0.9em; color: #555;">
-                <b>Jak číst graf:</b> 🟢 Zelená čára (Tržby) začíná na nule. 🔴 Červená čára (Celkové náklady) nezačíná na nule, ale na úrovni fixních nákladů. <b>Místo, kde se zelená a červená kříží, je Bod zvratu!</b> Vlevo od něj je ztráta, vpravo zisk.
-            </div>
-            """, unsafe_allow_html=True)
+            # Legenda odsunuta vlevo nahoru, aby nepřekážela křivkám
+            ax.legend(loc='upper left', fontsize=10)
+            ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
+
+            # Formátování čísel os na tisíce s mezerou
+            ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda val, p: format(int(val), ',').replace(',', ' ')))
+            ax.get_xaxis().set_major_formatter(plt.FuncFormatter(lambda val, p: format(int(val), ',').replace(',', ' ')))
+
+            # Zobrazení grafu
+            st.pyplot(fig)
+
+            st.write(
+                "💡 *Vysvětlivka: Plocha označená červeně představuje ztrátu, zelená zisk. "
+                "Modrá přerušovaná čára ukazuje vývoj zisku (pod nulou je podnik ve ztrátě, v bodě zvratu protíná nulu a roste do zisku).*"
+            )
