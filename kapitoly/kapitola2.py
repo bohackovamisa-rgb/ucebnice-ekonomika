@@ -13,11 +13,13 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
+    # 📌 AKTUALIZOVANÁ NABÍDKA SEZNAMU PODKAPITOL
     section_options_2 = [
         "1.1 Peníze jako digitální data",
         "1.2 ČNB a komerční banky",
         "1.3 Platební styk",
-        "1.4 Fintech revoluce"
+        "1.4 Fintech revoluce",
+        "2. Osobní finance a „Algoritmy bohatství“"
     ]
     selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
     st.divider()
