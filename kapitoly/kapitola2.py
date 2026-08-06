@@ -294,15 +294,15 @@ def render():
             st.markdown("""
             <div class='box-blue'>
                 🏦 <strong>Základní rozlišení:</strong><br>
-                • <strong>Česká národní banka (ČNB):</strong> Centrální banka České republiky. Nejde o běžnou banku pro občany. Je to instituce, která hlídá stabilitu měny, finančního systému a pravidla pro banky.<br>
-                • <strong>Komerční banky:</strong> Banky, se kterými běžně pracují lidé, firmy a obce. Vedou účty, přijímají vklady, poskytují úvěry, vydávají platební karty a zajišťují platby.
+                • <strong>Česká národní banka (ČNB):</strong> Česká národní banka (ČNB) je centrální banka České republiky. Nejde o běžnou banku pro občany. Je to instituce, která hlídá stabilitu měny, finančního systému a pravidla pro banky.<br>
+                • <strong>Komerční banky:</strong> Komerční banky jsou banky, se kterými běžně pracují lidé, firmy a obce. Vedou účty, přijímají vklady, poskytují úvěry, vydávají platební karty a zajišťují platby.
             </div>
             <div class='box-purple'>
                 🧠 <strong>Pointa pro běžný život:</strong> Když platíš kartou, bereš si hypotéku, dostáváš výplatu na účet nebo sleduješ inflaci, nepřímo se setkáváš s rozhodnutími centrální banky i se službami komerčních bank.
             </div>
             """, unsafe_allow_html=True)
 
-        # 1.2.1 Postavení ČNB v České republice
+        # 1.2.1
         with st.container(border=True):
             st.markdown("### 1.2.1 Postavení ČNB v České republice")
             st.write("Česká národní banka je centrální banka České republiky. Její postavení je zakotveno v právním řádu ČR a její činnost upravuje zejména zákon o České národní bance. ČNB je veřejnoprávní instituce se zvláštním postavením: není komerční firmou, neusiluje o zisk jako běžný podnik a neposkytuje běžné bankovní služby občanům.")
@@ -322,7 +322,7 @@ def render():
                 st.write("**Konkrétní modelový příklad rozdílu:** Představ si, že v Česku je inflace vyšší než v eurozóně a česká ekonomika potřebuje brzdit zdražování. Pokud má ČR vlastní korunu, může ČNB zvýšit úrokové sazby výrazněji — například na 6–7 %. Tím zdraží úvěry, hypotéky i půjčky, ale zároveň podpoří spoření a může pomoci tlumit inflaci. Pokud by ČR už platila eurem, sazby by se nastavovaly pro celou eurozónu. ECB by se dívala na průměrnou situaci mnoha zemí, například Německa, Francie, Itálie, Slovenska nebo Španělska. Kdyby eurozóna jako celek potřebovala mírnější politiku, mohly by být sazby třeba jen 3–4 %, i když by Česku samostatně vyhovovaly vyšší sazby.")
                 st.write("**Co by to znamenalo v běžném životě:** Po přijetí eura by úrokové sazby v ČR mohly být v některých obdobích nižší, než jaké by nastavila samostatná ČNB. To by mohlo zlevnit hypotéky a úvěry, ale zároveň by to mohlo méně brzdit inflaci, pokud by české ceny rostly rychleji než v eurozóně. Výhoda eura je větší měnová stabilita a jednodušší obchodování v eurozóně. Nevýhoda je menší možnost přizpůsobit měnovou politiku jen české ekonomice.")
                 
-                euro_sim = st.radio("Vyzkoušej simulovaný dopad vysoké české inflace:", [
+                euro_sim = st.radio("Zvol simulovaný režim při vysoké české inflaci:", [
                     "Vlastní měna (CZK) — ČNB zvýší sazby na 7 %",
                     "Společné Euro (EUR) — ECB drží sazby na 3,5 %"
                 ], key="k2_1_2_1_euro_sim")
@@ -331,17 +331,17 @@ def render():
                 else:
                     st.warning("⚠️ **Společné Euro (ECB):** Zůstávají levnější úvěry, ale inflace v ČR může trvat déle a více znehodnocovat kupní sílu.")
 
-        # 1.2.2 Hlavní cíl ČNB
+        # 1.2.2
         with st.container(border=True):
             st.markdown("### 1.2.2 Hlavní cíl ČNB")
-            st.write("Hlavním cílem ČNB je **péče o cenovou stabilitu**. Jinými slovy: ČNB se snaží, aby peníze neztrácely hodnotu příliš rychle a aby inflace nebyla dlouhodobě příliš vysoká ani nebezpečně nízká.")
+            st.write("Hlavním cílem ČNB je péče o cenovou stabilitu. Jinými slovy: ČNB se snaží, aby peníze neztrácely hodnotu příliš rychle a aby inflace nebyla dlouhodobě příliš vysoká ani nebezpečně nízká.")
             
             st.markdown("""
             <div class='box-gray'>
                 🎯 <strong>Cenová stabilita jednoduše:</strong> Neznamená, že se nikdy nic nezdraží. Znamená, že růst cen má být dlouhodobě předvídatelný a zvládnutelný. Když je inflace příliš vysoká, lidem klesá kupní síla, firmám se hůř plánuje a ekonomika ztrácí stabilitu.
             </div>
             """, unsafe_allow_html=True)
-            st.write("ČNB v praxi používá inflační cílování. To znamená, že sleduje vývoj inflace a nastavuje nástroje měnové politiky tak, aby se inflace ve střednědobém horizontu pohybovala kolem stanoveného cíle (2 %).")
+            st.write("ČNB v praxi používá inflační cílování. To znamená, že sleduje vývoj inflace a nastavuje nástroje měnové politiky tak, aby se inflace ve střednědobém horizontu pohybovala kolem stanoveného cíle.")
 
             st.markdown("#### 🎮 Interaktivní simulace: Jsi bankovní rada ČNB")
             st.write("**Situace:** Inflace je vysoká, lidé si stěžují na zdražování, hypotéky jsou drahé a firmy říkají, že zákazníci méně utrácejí. Tvoje skupina představuje bankovní radu ČNB.")
@@ -354,23 +354,17 @@ def render():
                 "budete zvažovat devizové intervence"
             ], key="k2_1_2_2_rada_act")
 
-            st.write("**Musíte zdůvodnit své rozhodnutí:**")
+            st.write("**Musíte zdůvodnit:**")
             q1 = st.text_input("1. Co se stane s úvěry?", key="k2_q1_uvery")
             q2 = st.text_input("2. Co se stane se spořením?", key="k2_q2_sporeni")
             q3 = st.text_input("3. Jaký může být dopad na inflaci?", key="k2_q3_inflace")
             q4 = st.text_input("4. Komu vaše rozhodnutí pomůže a komu může zkomplikovat život?", key="k2_q4_komu")
             q5 = st.text_input("5. Jaké riziko vznikne, pokud se rozhodnete špatně?", key="k2_q5_riziko")
 
-            if st.button("Vyhlásit tiskovou konferenci (1 minuta)", key="k2_1_2_2_rada_btn"):
+            if st.button("Výstup: Jedna minuta tiskové konference", key="k2_1_2_2_rada_btn"):
                 st.markdown(f"**Tiskové prohlášení Bankovní rady:** „ČNB dnes rozhodla, že {c_rada_action}...“")
-                if "zvýšíte" in c_rada_action:
-                    st.success("✅ **Dopad:** Dražší úvěry brzdí poptávku, zvyšují výnos spoření a tlumí inflaci. Nevýhoda: Dražší hypotéky a zpomalení investic.")
-                elif "snížíte" in c_rada_action:
-                    st.error("❌ **Dopad:** Levnější úvěry povzbudí utrácení, což může ještě více zrychlit inflaci.")
-                else:
-                    st.info("ℹ️ **Dopad:** Stabilní prostředí pro čekání na další makroekonomická data.")
 
-        # 1.2.3 Co přesně ČNB dělá
+        # 1.2.3
         with st.container(border=True):
             st.markdown("### 1.2.3 Co přesně ČNB dělá")
             st.write("ČNB má několik klíčových funkčních oblastí. Každá z nich se týká jiné části ekonomiky, ale dohromady tvoří systém důvěry v peníze.")
@@ -387,7 +381,7 @@ def render():
             | **Banka státu** | Vede účty státu a poskytuje vybrané služby veřejnému sektoru. | Souvisí s pohybem peněz státu, například při placení výdajů veřejných institucí. |
             """)
 
-        # 1.2.4 Hotovost a ochranné prvky
+        # 1.2.4
         with st.container(border=True):
             st.markdown("### 1.2.4 Hotovost, ochranné prvky bankovek a důvěra v peníze")
             st.write("Jednou z viditelných činností ČNB je péče o hotovostní oběh. ČNB vydává české bankovky a mince, stahuje z oběhu poškozené nebo neplatné peníze a stará se o to, aby hotovost byla důvěryhodná. Právě sem patří také ochranné prvky bankovek.")
@@ -409,31 +403,31 @@ def render():
             """)
 
             st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz")
-            st.write("Prohlédni si níže jednotlivé kategorie ochranných prvků české bankovky:")
+            st.write("Prohlédni si bankovku a najdi její ochranné prvky:")
             
-            p_sel = st.selectbox("Vyber ochranný prvek pro detailní popis:", [
-                "Vodoznak (pohledem proti světlu)",
+            p_sel = st.selectbox("Zvol ochranný prvek pro zobrazení popisu:", [
+                "Vodoznak (pohledem)",
                 "Ochranný proužek s mikrotextem (pohledem)",
                 "Reliéfní tisk (hmatem)",
                 "Opticky proměnlivá barva (naklopením)",
                 "Soutisková značka (pohledem)",
-                "UV prvek (pomůckou)"
+                "UV prvky (pomůckami)"
             ], key="k2_1_2_4_bankovka_sel")
 
             if "Vodoznak" in p_sel:
-                st.info("💧 **Vodoznak:** Zřetelný portrét osobnosti zobrazené na bankovce, který je viditelný z obou stran při pohledu proti světlu v nepotištěném okraji.")
+                st.info("💧 **Vodoznak:** Zřetelný portrét osobnosti viditelný z obou stran při pohledu proti světlu.")
             elif "Ochranný proužek" in p_sel:
-                st.info("📏 **Ochranný proužek:** Metalický proužek zapuštěný do papíru. Při pohledu proti světlu je vidět jako tmavý souvislý pás s negativním mikrotextem označujícím nominální hodnotu.")
+                st.info("📏 **Ochranný proužek:** Tmavý souvislý pás s negativním mikrotextem nominální hodnoty viditelný proti světlu.")
             elif "Reliéfní tisk" in p_sel:
-                st.info("🖐️ **Reliéfní tisk:** Hmatatelně vystoupený povrch hlubotisku na portrétu, číselném označení hodnoty a státním znaku na lícové straně.")
+                st.info("🖐️ **Reliéfní tisk:** Vystoupený povrch hlubotisku nahmatatelný na lícové straně.")
             elif "Opticky proměnlivá barva" in p_sel:
-                st.info("🎨 **Opticky proměnlivá barva:** Tisk speciální barvou, která při naklonění bankovky mění svůj odstín (např. ze zelené na zlatavou).")
+                st.info("🎨 **Opticky proměnlivá barva:** Mění barvu při naklonění bankovky (např. ze zelené na zlatou).")
             elif "Soutisková značka" in p_sel:
-                st.info("🧩 **Soutisková značka:** Prvek tištěný částečně z lícové a částečně z rubové strany. Proti světlu se obě části přesně doplňují v celistvý symbol (např. značku ČNB).")
+                st.info("🧩 **Soutisková značka:** Oboustranný tisk, který se proti světlu přesně doplňuje v celistvý symbol.")
             else:
-                st.info("🔦 **UV prvky:** Vlákna a tiskové motivy, které se rozsvítí pouze pod ultrafialovým světlem u pokladen a v bankách.")
+                st.info("🔦 **UV prvky:** Svítící vlákna a tiskové motivy viditelné pod UV lampou.")
 
-        # 1.2.5 Kdo ČNB řídí
+        # 1.2.5
         with st.container(border=True):
             st.markdown("### 1.2.5 Kdo ČNB řídí")
             st.write("Nejvyšším řídicím orgánem ČNB je **bankovní rada**. Ta rozhoduje například o měnové politice, úrokových sazbách a dalších zásadních otázkách fungování ČNB.")
@@ -443,7 +437,7 @@ def render():
             * dva viceguvernéři,
             * čtyři další členové bankovní rady.
             """)
-            st.write("Členy bankovní rady jmenuje prezident republiky. V čele ČNB stojí guvernér, který reprezentuje ČNB navenek a řídí jednání bankovní rady. V současnosti je guvernérem ČNB Aleš Michl.")
+            st.write("Členy bankovní rady jmenuje prezident republiky. V čele ČNB stojí guvernér. Guvernér reprezentuje ČNB navenek a řídí jednání bankovní rady. V současnosti je guvernérem ČNB Aleš Michl.")
             
             st.markdown("""
             <div class='box-gray'>
@@ -451,7 +445,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        # 1.2.6 Jak ČNB zasahuje do ekonomiky
+        # 1.2.6
         with st.container(border=True):
             st.markdown("### 1.2.6 Jak ČNB zasahuje do ekonomiky")
             st.write("ČNB neřídí ekonomiku příkazem typu „zdražte“ nebo „zlevněte“. Ovlivňuje ekonomiku hlavně nepřímo — přes cenu peněz, důvěru a pravidla finančního trhu.")
@@ -500,7 +494,7 @@ def render():
 
             st.write("**Úkol:** Vyber částku 20 000 Kč na spořicím účtu a půjčku 100 000 Kč. Spočítej orientačně, jak se změní roční úrok při sazbě 3 %, 5 % a 7 %:")
             
-            c_sazba = st.select_slider("Zvol roční úrokovou sazbu:", options=[3.0, 5.0, 7.0], value=5.0, key="k2_exact_repo_slider")
+            c_sazba = st.select_slider("Zvol úrokovou sazbu:", options=[3.0, 5.0, 7.0], value=5.0, key="k2_exact_repo_slider")
             
             calc_vynos = 20000 * (c_sazba / 100)
             calc_urok = 100000 * (c_sazba / 100)
@@ -514,7 +508,7 @@ def render():
             st.write("**Příklad: co se stane, když ČNB zvýší úrokové sazby?** Vyšší sazby obvykle zdražují půjčky. Domácnosti a firmy si proto mohou méně půjčovat a méně utrácet. Zároveň může být výhodnější spořit. Tlak na růst cen se tím může snížit. Nevýhodou je, že dražší úvěry mohou zpomalit investice firem, hypotéky nebo spotřebu.")
 
             st.markdown("#### 🧮 Simulace: Vyšší sazby, inflace a hypotéka")
-            st.write("Situace: ČNB drží měnovou politiku přísnější, aby brzdila inflaci. V roce 2026 byla repo sazba ČNB kolem 3,5 %, průměrné hypoteční sazby se u nových hypoték pohybovaly přibližně okolo 5 % p.a. a nižší inflaci budeme v modelu počítat jako 2 %, protože přibližně kolem této hodnoty se pohybuje dlouhodobý inflační cíl ČNB.")
+            st.write("Situace: ČNB drží měnovou politiku přísnější, aby brzdila inflaci. V roce 2026 byla repo sazba ČNB kolem 3,5 %, průměrné hypoteční sazby se u nových hypoték pohybovaly přibližně okolo 5 % p.a. a nižší inflaci budeme v modelu počítat jako 2 %, protože přibližně kolem této hodnoty se pohybujeme v dlouhodobém inflačním cíli ČNB.")
             st.write("Aby to bylo na první pohled: Porovnáme jednu domácnost ve dvou světech. V obou světech má stejnou hypotéku 3 000 000 Kč na 25 let a stejné běžné měsíční výdaje 40 000 Kč bez hypotéky. Liší se jen úroky a inflace.")
 
             with st.expander("Co znamená „koš 40 000 Kč“ (Detailní rozpis)"):
@@ -801,7 +795,7 @@ def render():
 
             st.markdown("""
             <div class='box-blue'>
-                🛟 <strong>Do jaké výše jsou vklady pojištěny:</strong> V České republice jsou pojištěné vklady u bank, družstevních záložen a stavebních spořitelen chráněny zpravidla do výše 100 000 EUR na jednoho klienta u jedné banky. V přepočtu jde přibližně o 2,4–2,5 milionu Kč, podle aktuálního kurzu. Pokud má člověk u jedné banky více účtů, limit se obvykle počítá dohromady za daného klienta u dané banky, ne zvlášť za každý účet.
+                🛟 <strong>Do jaké výše jsou vklady pojištěny:</strong> V České republice jsou pojištěné vklady u bank, družstevních záložen a stavebních spořitelen chráněny zpravidla do výše 100 000 EUR na jednoho klienta u jedné banky. V přepočtu jde přibližně o 2,4–2,5 milionu Kč, podle aktuálního kurzu. Pokud má človek u jedné banky více účtů, limit se obvykle počítá dohromady za daného klienta u dané banky, ne zvlášť za každý účet.
             </div>
             """, unsafe_allow_html=True)
 
@@ -822,7 +816,7 @@ def render():
             st.markdown("""
             | Typ výběru | Jak to běžně funguje | Na co si dát pozor |
             | :--- | :--- | :--- |
-            | **Výběr z bankomatu** | Řídí se limitem platební karty a limitem konkrétního bankomatu. | Limit si člověk často nastavuje v aplikaci, ale bankomat může mít i vlastní technické omezení. |
+            | **Výběr z bankomatu** | Řídí se limitem platební karty a limitem konkrétního bankomatu. | Limit si človek často nastavuje v aplikaci, ale bankomat může mít i vlastní technické omezení. |
             | **Menší výběr na pobočce** | Obvykle lze vybrat bez předchozího objednání, pokud má pobočka hotovost k dispozici. | Každá banka může mít vlastní pravidla a limity. |
             | **Větší hotovostní výběr** | Často je vhodné nebo nutné oznámit ho bance předem, ale hranice se mezi bankami výrazně liší. | Například u ČSOB je podle zveřejněných informací potřeba předem objednat až částku převyšující 300 000 Kč; u KB se naopak uvádí hlášení už nad 100 000 Kč. |
             | **Velmi vysoký výběr** | Banka může požadovat písemné oznámení, objednání hotovosti nebo vysvětlení účelu. | Nejde o zvědavost pokladníka, ale o provozní a zákonné povinnosti banky. |
@@ -1054,7 +1048,7 @@ def render():
 
             if st.button("Vyhodnotit Phishing Escape Room", key="k2_er_eval_btn"):
                 if er1=="Podezřelá / Nebezpečná (Phishing)" and er2=="Podezřelá / Nebezpečná (Vishing)" and er3=="Podezřelá / Nebezpečná (Podvod)" and er4=="Podezřelá / Nebezpečná (Phishing)" and er5=="Standardní funkce platební brány":
-                    st.success("🎉 Skvěle! Bezpečně jsi rozpoznal/a všechna rizika digitálního světa.")
+                    st.success("🎉 Skvělé! Bezpečně jsi rozpoznal/a všechna rizika digitálního světa.")
                 else:
                     st.error("Některá zpráva byla vyhodnocena špatně. Pozor na falešný tlak na čas a žádosti o kódy!")
 
