@@ -72,6 +72,11 @@ st.markdown("""
     .mm-title { font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
     .mm-node ul { margin: 0; padding-left: 1.2rem; font-size: 0.85rem; color: #475569; }
     .mm-node li { margin-bottom: 0.3rem; }
+    
+    /* LEGENDA CSS */
+    .legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 12px; margin-top: 12px; }
+    .legend-card { padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(0,0,0,0.04); }
+    .badge-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -167,6 +172,39 @@ if view == "Uvod":
         6. **V závěrečném projektu propojíš všechno dohromady.** Výstupem učebnice je návrh odpovědného ekonomického nebo podnikatelského projektu.
         """)
 
+    # --- ZDE JE VLOŽENA LEGENDA UČEBNICE ---
+    with st.container(border=True):
+        st.markdown("## 🎨 Legenda učebnice")
+        st.write("Barevné odlišení v textu ti pomůže okamžitě rozpoznat typ obsahu:")
+
+        st.markdown("""
+        <div class="legend-grid">
+            <div class="legend-card" style="background: #f0f9ff; border-left: 4px solid #0284c7;">
+                <span class="badge-dot" style="background: #0284c7;"></span>
+                <div><strong style="color: #0369a1;">Modrá:</strong> Výklad, struktura, důležité vysvětlení</div>
+            </div>
+            <div class="legend-card" style="background: #fefce8; border-left: 4px solid #eab308;">
+                <span class="badge-dot" style="background: #eab308;"></span>
+                <div><strong style="color: #854d0e;">Žlutá:</strong> Úkol, otázka, aktivita, procvičení</div>
+            </div>
+            <div class="legend-card" style="background: #faf5ff; border-left: 4px solid #a855f7;">
+                <span class="badge-dot" style="background: #a855f7;"></span>
+                <div><strong style="color: #6b21a8;">Fialová:</strong> AI mentoring a práce s asistencí</div>
+            </div>
+            <div class="legend-card" style="background: #f0fdf4; border-left: 4px solid #22c55e;">
+                <span class="badge-dot" style="background: #22c55e;"></span>
+                <div><strong style="color: #15803d;">Zelená:</strong> Praxe, doporučení, dobrý postup</div>
+            </div>
+            <div class="legend-card" style="background: #fef2f2; border-left: 4px solid #ef4444;">
+                <span class="badge-dot" style="background: #ef4444;"></span>
+                <div><strong style="color: #991b1b;">Oranžová / Červená:</strong> Riziko, varování, problém</div>
+            </div>
+            <div class="legend-card" style="background: #f8fafc; border-left: 4px solid #64748b;">
+                <span class="badge-dot" style="background: #64748b;"></span>
+                <div><strong style="color: #334155;">Šedá:</strong> Zdroje, ověřování, poznámky</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 # ==========================================
 # KAPITOLA 1: PODNIKAVOST A STARTUPY
 # ==========================================
