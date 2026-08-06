@@ -3028,3 +3028,96 @@ def render():
             <b>🎓 Závěrečná rada:</b> Než začneš na skutečném trhu investovat své reálné peníze, ujisti se, že máš vybudovanou <b>dostatečnou finanční rezervu na bezpečně dostupném místě</b> (např. spořicí účet). Pro složitá životní rozhodnutí se neboj využít služeb nezávislého odborníka, který je placený přímo tebou za radu, nikoliv z tajných provizí za prodej konkrétních produktů.
         </div>
         """, unsafe_allow_html=True)
+        # =========================================================================
+    # 4.1 CO JE ÚVĚR
+    # =========================================================================
+    elif "4.1" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>1. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.1 Co je úvěr")
+        
+        # Úvod k celé kapitole 4
+        st.write(
+            "Úvěr není „peníze zdarma“. Je to závazek, který přesouvá spotřebu nebo investici z budoucnosti "
+            "do současnosti. Díky úvěru může člověk bydlet dříve, než by našetřil celou cenu nemovitosti, "
+            "firma může koupit stroj dříve, než na něj vydělá, a domácnost může překlenout dočasný nedostatek peněz."
+        )
+        st.write(
+            "Zároveň ale úvěr vytváří povinnost splácet — i tehdy, když se změní příjem, zdraví, ceny energií "
+            "nebo tvá životní situace."
+        )
+        
+        # Designové boxy pro Asides
+        st.markdown("""
+        <div class="box-blue">
+            <b>💳 Základní myšlenka:</b> Úvěr může být užitečný nástroj, pokud financuje smysluplnou potřebu a člověk rozumí ceně, riziku a splácení. Stejný úvěr se ale může stát pastí, pokud vznikne impulzivně, bez rezervy nebo jen proto, že aplikace umožní kliknout na „koupit teď“.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Nenápadný box pro učitele/RVP
+        with st.expander("📘 Informace pro vyučující (Vazba na RVP)"):
+            st.write("Tato část rozvíjí finanční gramotnost, odpovědné spotřebitelské rozhodování, orientaci ve finančních produktech, schopnost posoudit cenu úvěru, porovnat nabídky, rozpoznat riziko zadlužení a pochopit význam pojištění pro ochranu osoby, domácnosti i podnikání.")
+            
+        st.divider()
+        
+        # Podstata úvěru
+        st.markdown("### Jak úvěr funguje?")
+        st.write("Úvěr je situace, kdy věřitel poskytne dlužníkovi peníze a dlužník se zaváže, že je v budoucnu vrátí. Obvykle vrací nejen půjčenou částku, ale také úrok a další náklady.")
+        
+        st.markdown("""
+        <div class="box-green">
+            <b>🧠 Jednoduše:</b> Když si půjčíš, nekupuješ jen věc. Kupuješ si také čas. A za čas se ve financích platí.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("### 📖 Slovníček základních pojmů")
+        st.write("Proklikni si jednotlivé karty a seznam se s pojmy, které tě budou světem úvěrů provázet. Budeš je potřebovat v aktivitě níže!")
+        
+        # Interaktivní layout pro slovníček
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            with st.expander("Věřitel & Dlužník"):
+                st.write("**Věřitel:** Ten, kdo půjčuje peníze (např. banka nebo nebankovní společnost).")
+                st.write("**Dlužník:** Ten, kdo si půjčuje (např. ty).")
+        with col2:
+            with st.expander("Jistina & Úrok"):
+                st.write("**Jistina:** Původně půjčená částka (kolik sis reálně odnesl/a).")
+                st.write("**Úrok:** Cena za půjčení peněz (odměna věřiteli).")
+        with col3:
+            with st.expander("Splátka & Splatnost"):
+                st.write("**Splátka:** Pravidelná částka, kterou dlužník platí (např. každý měsíc).")
+                st.write("**Splatnost:** Doba, za kterou má být celý úvěr splacen.")
+                
+        col4, col5 = st.columns(2)
+        with col4:
+            with st.expander("Zajištění & Ručitel"):
+                st.write("**Zajištění:** Majetek nebo jiná jistota pro věřitele (např. byt u hypotéky – když neplatíš, věřitel ho prodá).")
+                st.write("**Ručitel:** Osoba, která na sebe bere povinnost splácet, pokud dlužník přestane.")
+        with col5:
+            with st.expander("RPSN (Nejdůležitější zkratka!)"):
+                st.write("**RPSN = Roční procentní sazba nákladů.**")
+                st.write("Nejdůležitější ukazatel! Vyjadřuje *celkovou* cenu úvěru za rok, včetně úplně všech poplatků (za vedení, za schválení atd.). Samotný úrok může být klamavý, RPSN říká celou pravdu.")
+        
+        st.divider()
+        
+        # --- AKTIVITA: ROZKLÍČUJ ÚVĚR V PRAXI ---
+        st.markdown("### 🧩 Aktivita: Úvěr v praxi")
+        st.write("Přečti si následující situaci a zkus správně zařadit pojmy k číslům.")
+        
+        with st.container(border=True):
+            st.info("Příběh: **Klára (25)** potřebuje auto na dojíždění do práce. Půjčí si **200 000 Kč** od **Banky XY**. Dohodnou se, že Klára bude platit **4 500 Kč** každý měsíc po dobu **5 let**. Celková cena úvěru se všemi poplatky vychází na **8,5 % ročně**.")
+            
+            # Kvíz
+            q1 = st.selectbox("Kdo je v tomto příběhu VĚŘITEL?", ["Vyber odpověď...", "Klára", "Banka XY", "Prodejce aut"])
+            q2 = st.selectbox("Co představuje částka 200 000 Kč?", ["Vyber odpověď...", "Jistinu", "Úrok", "RPSN"])
+            q3 = st.selectbox("Co představuje hodnota 8,5 %?", ["Vyber odpověď...", "Splatnost", "Jistinu", "RPSN"])
+            q4 = st.selectbox("Co představuje doba 5 let?", ["Vyber odpověď...", "Splatnost", "Zajištění", "Splátku"])
+            
+            if st.button("Zkontrolovat mé odpovědi", type="primary"):
+                if "Vyber odpověď..." in [q1, q2, q3, q4]:
+                    st.warning("⚠️ Nejdříve vyber všechny odpovědi!")
+                elif q1 == "Banka XY" and q2 == "Jistinu" and q3 == "RPSN" and q4 == "Splatnost":
+                    st.success("✅ Výborně! Všechny pojmy jsi správně zařadil/a. Můžeme pokračovat dál.")
+                    st.balloons()
+                else:
+                    st.error("❌ Někde je chybka. Zkus to ještě jednou. Nápovědu najdeš ve slovníčku výše.")
+        
