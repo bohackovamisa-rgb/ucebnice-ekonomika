@@ -5632,20 +5632,23 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                     st.success(f"🎯 **Tvá marže je {marze} Kč z každého kusu.**")
                     st.info(f"🚀 **Bod zvratu:** Musíš prodat **{bep_kusy} kusů** ({produkt}), abys pokryl/a fixní náklady. Od kusu číslo {bep_kusy + 1} začínáš generovat čistý zisk!")
 
-        # --- AKTIVITA 6: EXIT TICKET (OPRAVENO) ---
+# --- AKTIVITA 6: EXIT TICKET (ZABALENO DO FORMULÁŘE) ---
         elif workbook_section == "✅ Exit ticket (Co si odnáším)":
             st.markdown("### ✅ Exit ticket: Závěrečná reflexe")
             st.write("Představ si, že bys měl/a předstoupit před třídu a shrnout, co sis z financí odnesl/a. Vyplň tyto body:")
 
-            # Oprava: Přidány unikátní klíče (key), aby formulář neztratil paměť po kliknutí na tlačítko
-            t1 = st.text_area("1. Jedna věc, kterou jsem pochopil/a nově:", key="et_text1")
-            t2 = st.text_area("2. Jedno finanční rozhodnutí, u kterého příště zpomalím:", key="et_text2")
-            t3 = st.text_area("3. Jedna otázka, kterou bych položil/a finančnímu poradci nebo podnikateli:", key="et_text3")
+            # Zabalíme to do st.form – tím se zabrání nechtěnému načítání stránky
+            with st.form("exit_ticket_form"):
+                t1 = st.text_area("1. Jedna věc, kterou jsem pochopil/a nově:")
+                t2 = st.text_area("2. Jedno finanční rozhodnutí, u kterého příště zpomalím:")
+                t3 = st.text_area("3. Jedna otázka, kterou bych položil/a finančnímu poradci nebo podnikateli:")
 
-            if st.button("Uložit moji reflexi", key="btn_save_et"):
-                # Kontrolujeme, zda po smazání prázdných mezer zbyl nějaký text
-                if t1.strip() != "" and t2.strip() != "" and t3.strip() != "":
-                    st.balloons()
-                    st.success("Tvá reflexe je uložená. Gratulujeme k úspěšnému absolvování vzdělávacího bloku o financích!")
-                else:
-                    st.warning("Zkus prosím vyplnit všechna tři pole. Reflexe ti pomůže si věci lépe zapamatovat.")
+                # Tlačítko pro odeslání formuláře
+                submitted = st.form_submit_button("Uložit moji reflexi")
+
+                if submitted:
+                    if t1.strip() != "" and t2.strip() != "" and t3.strip() != "":
+                        st.balloons()
+                        st.success("Tvá reflexe je úspěšně uložená. Gratulujeme k úspěšnému absolvování bloku o financích!")
+                    else:
+                        st.warning("Zkus prosím vyplnit všechna tři pole, ať je tvá reflexe kompletní.")
