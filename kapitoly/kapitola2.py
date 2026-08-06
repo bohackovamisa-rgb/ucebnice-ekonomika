@@ -2320,59 +2320,56 @@ def render():
         # =========================================================================
         with st.container(border=True):
             st.markdown("### 3.4.18 Praktická aktivita: pitva cenného papíru")
-            st.write("🔎 **Co přesně kupuji?** V textu máš za úkol vybrat si cenný papír a sestavit mu „rodný list“. Zde si můžeš interaktivně prohlédnout, jak by takový správně vypracovaný úkol měl vypadat v praxi.")
+            st.write("🔎 **Pitva cenného papíru: co přesně kupuji?**")
+            st.write("Vyber si jeden příklad: akcii, dluhopis, podílový fond nebo ETF. Neřeš, jestli je „dobrý“, ale zjisti, co přesně představuje.")
             
             cp_vyber = st.selectbox(
-                "Vyber si aktivum a podívej se na jeho vygenerovaný rodný list:", 
-                ["Vyber ukázku...", "Akcie (např. ČEZ a.s.)", "Státní dluhopis ČR", "Globální ETF fond (např. S&P 500)"], 
-                key="k3_pitva_generator"
+                "Vyber si aktivum pro pitvu:", 
+                ["...", "Akcie", "Dluhopis", "Podílový fond", "ETF"], 
+                key="k3_pitva_aktivita"
             )
             
-            if cp_vyber == "Akcie (např. ČEZ a.s.)":
-                st.info("""
-                📄 **RODNÝ LIST: Akcie ČEZ, a.s.**
-                * **Kdo je emitent?** Energetická společnost ČEZ, a.s.
-                * **Podstata:** Podíl na firmě (stáváš se spolumajitelem).
-                * **Výnos:** Dividenda (podíl na zisku) + případný růst ceny akcie.
-                * **Hlavní rizika:** Tržní (cena akcií klesne), specifické (problémy v energetice, změna zákonů).
-                * **Kde se obchoduje:** Na burze (např. Burza cenných papírů Praha).
-                * **Měna:** CZK (koruna).
-                * **Poplatky:** Poplatek brokerovi za nákup/prodej.
-                * **Likvidita (jak rychle ho prodám):** Velmi vysoká, lze prodat na burze okamžitě.
-                * **Horizont:** Dlouhý (ideálně 5 a více let).
-                * **Jak prodělám?** Když cena akcie trvale spadne a firma přestane vyplácet dividendy.
-                """)
-                
-            elif cp_vyber == "Státní dluhopis ČR":
-                st.success("""
-                📄 **RODNÝ LIST: Státní dluhopis ČR**
-                * **Kdo je emitent?** Česká republika (zastoupená Ministerstvem financí).
-                * **Podstata:** Půjčka státu (stáváš se věřitelem státu).
-                * **Výnos:** Předem daný roční úrok (kupón).
-                * **Hlavní rizika:** Inflační (inflace může být vyšší než úrok). Úvěrové riziko státu je velmi nízké.
-                * **Kde se obchoduje:** Přes distributory nebo na sekundárním trhu.
-                * **Měna:** CZK (koruna).
-                * **Poplatky:** Žádné nebo naprosto minimální.
-                * **Likvidita (jak rychle ho prodám):** Střední (dají se vybrat/odprodat v určených termínech).
-                * **Horizont:** Střední (často 3 až 6 let).
-                * **Jak prodělám?** Peníze se ti vrátí, ale můžeš reálně prodělat, pokud inflace sežere hodnotu vydělaných úroků.
-                """)
-                
-            elif cp_vyber == "Globální ETF fond (např. S&P 500)":
-                st.warning("""
-                📄 **RODNÝ LIST: Globální ETF (S&P 500)**
-                * **Kdo je správce?** Investiční společnost (např. iShares, Vanguard).
-                * **Podstata:** Podíl v košíku, který obsahuje akcie 500 největších firem v USA.
-                * **Výnos:** Růst světové ekonomiky a reinvestované dividendy firem v košíku.
-                * **Hlavní rizika:** Tržní (přijde globální ekonomická krize), měnové (pokud fond není zajištěn proti výkyvům koruny).
-                * **Kde se obchoduje:** Na burze jako běžná akcie.
-                * **Měna:** Obvykle USD nebo EUR.
-                * **Poplatky:** Velmi nízký správcovský poplatek (TER) + poplatek za nákup u brokera.
-                * **Likvidita (jak rychle ho prodám):** Velmi vysoká.
-                * **Horizont:** Velmi dlouhý (10 a více let).
-                * **Jak prodělám?** Když přijde krize, trh se propadne o 30 % a ty v panice vše prodáš ve ztrátě, místo abys počkal/a na zotavení.
-                """)
+            st.write("**Zjisti a odpověz si na tyto otázky:**")
+            st.markdown("""
+            * Kdo je emitent nebo správce?
+            * Je to podíl na firmě, půjčka, nebo podíl ve fondu?
+            * Jaký výnos může přinášet?
+            * Jaké jsou hlavní druhy rizika?
+            * Je obchodovaný na burze, nebo se nakupuje přímo u fondu?
+            * V jaké měně je vedený?
+            * Jaké má poplatky?
+            * Jak rychle ho lze prodat?
+            * Je vhodný spíš pro krátký, nebo dlouhý horizont?
+            * Co by se muselo stát, aby investor prodělal?
+            """)
 
+            # Jakmile student vybere aktivum, otevře se mu prostor pro vypracování
+            if cp_vyber != "...":
+                st.markdown(f"📄 **Tvůj výstup pro cenný papír: {cp_vyber}**")
+                
+                # Skutečné interaktivní pole pro vypracování úkolu
+                student_odpoved = st.text_area(
+                    "Vytvoř jednu stránku „rodný list cenného papíru“ se všemi těmito zjištěnými informacemi:", 
+                    height=250, 
+                    key="k3_pitva_odpoved"
+                )
+                
+                if st.button("Uložit / Odevzdat rodný list", key="k3_pitva_btn"):
+                    if student_odpoved.strip() == "":
+                        st.error("Musíš nejdřív něco napsat, než úkol odevzdáš!")
+                    else:
+                        st.success(f"✅ Výborně! Tvůj rodný list pro **{cp_vyber}** byl úspěšně uložen.")
+                
+                # Zlepšovák: Skrytá ukázka, kterou si student může rozbalit po vypracování
+                with st.expander("💡 Nevíš si rady? Zobrazit vzorový rodný list pro kontrolu"):
+                    if cp_vyber == "Akcie":
+                        st.info("**Ukázka - Akcie ČEZ, a.s.**\n* **Emitent:** ČEZ, a.s.\n* **Podstata:** Podíl na firmě.\n* **Výnos:** Dividenda a růst ceny akcie.\n* **Rizika:** Tržní a specifická (změna zákonů, cena elektřiny).\n* **Kde se obchoduje:** Burza cenných papírů Praha.\n* **Měna:** CZK.\n* **Poplatky:** Poplatek brokerovi za provedení transakce.\n* **Likvidita:** Velmi rychlá (na burze prodáš okamžitě).\n* **Horizont:** Dlouhý (ideálně 5+ let).\n* **Jak prodělám:** Klesne tržní cena akcie a firma přestane vyplácet dividendy.")
+                    elif cp_vyber == "Dluhopis":
+                        st.info("**Ukázka - Státní dluhopis ČR**\n* **Emitent:** Ministerstvo financí ČR.\n* **Podstata:** Půjčka státu (jsi věřitel).\n* **Výnos:** Předem daný roční úrok (kupón).\n* **Rizika:** Inflační riziko.\n* **Kde se obchoduje:** Přes banky nebo na sekundárním trhu.\n* **Měna:** CZK.\n* **Poplatky:** Žádné nebo minimální.\n* **Likvidita:** Střední (lze vybrat v určitých termínech).\n* **Horizont:** Střední (např. 3-6 let).\n* **Jak prodělám:** Inflace znehodnotí peníze rychleji, než ti vydělá úrok.")
+                    elif cp_vyber == "Podílový fond":
+                        st.info("**Ukázka - Akciový podílový fond v bance**\n* **Správce:** Investiční společnost tvé banky.\n* **Podstata:** Podíl ve fondu.\n* **Výnos:** Podle zhodnocení košíku držených akcií.\n* **Rizika:** Tržní riziko (pokles trhů).\n* **Kde se obchoduje:** Přímo u tvé banky/fondu.\n* **Měna:** CZK.\n* **Poplatky:** Vstupní poplatek (cca 2-3 %) + průběžný (cca 1,5 % ročně).\n* **Likvidita:** Dobrá (peníze dorazí za pár dní).\n* **Horizont:** Dlouhý.\n* **Jak prodělám:** Trh se propadne v krizi a ty ze strachu vše odprodáš ve ztrátě dřív, než se trh srovná.")
+                    elif cp_vyber == "ETF":
+                        st.info("**Ukázka - Globální ETF (S&P 500)**\n* **Správce:** Vanguard / iShares (BlackRock).\n* **Podstata:** Podíl ve fondu (indexu největších firem).\n* **Výnos:** Růst hodnoty amerického trhu a dividendy.\n* **Rizika:** Tržní a měnové.\n* **Kde se obchoduje:** Přímo na mezinárodní burze.\n* **Měna:** USD nebo EUR.\n* **Poplatky:** Velmi nízké správcovské (cca 0,07 % ročně) + poplatek brokerovi.\n* **Likvidita:** Velmi rychlá (okamžitě přes aplikaci).\n* **Horizont:** Velmi dlouhý (10+ let).\n* **Jak prodělám:** Trh se propadne v krizi a ty ze strachu vše odprodáš ve ztrátě dřív, než se trh srovná.")
         # =========================================================================
         # 3.4.19 Srovnání základních produktů
         # =========================================================================
