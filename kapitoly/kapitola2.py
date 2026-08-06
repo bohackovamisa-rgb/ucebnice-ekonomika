@@ -3455,3 +3455,150 @@ def render():
         | **Zajištění** | Většinou bez zajištění | Zástavní právo k nemovitosti |
         | **Posouzení** | Příjem, výdaje, registry | To samé + hodnota nemovitosti, vlastní zdroje a LTV |
         """)
+# =========================================================================
+    # 4.7 PODNIKATELSKÉ ÚVĚRY
+    # =========================================================================
+    elif "4.7" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>7. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.7 Podnikatelské úvěry")
+        
+        st.write("Podnikatelé a firmy si nepůjčují jen na osobní spotřebu. Úvěr může sloužit k rozjezdu podnikání, nákupu stroje, zásob, auta, vybavení provozovny, překlenutí období mezi fakturací a zaplacením nebo k celkové expanzi.")
+
+        st.markdown("""
+        <div class="box-blue">
+            <b>🏭 Podnikatelský rozdíl:</b> U domácnosti se banka ptá hlavně: <i>„Zvládne člověk splácet ze svého stabilního příjmu?“</i> U firmy se ale ptá: <i>„Bude toto podnikání vytvářet dost peněz (cashflow), aby úvěr samo splatilo?“</i>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("### Možnosti financování firmy")
+        st.write("Klikni na jednotlivé kategorie a podívej se, jaké nástroje firmy využívají:")
+        
+        tab1, tab2, tab3 = st.tabs(["Klasické úvěry", "Provoz a cashflow", "Alternativy k dluhu"])
+        with tab1:
+            st.info("**Provozní úvěr:** Financování běžného chodu firmy, nákupu zásob, mezd nebo nezaplacených faktur.\n\n**Investiční úvěr:** Nákup drahých strojů, technologií, vozidel, vybavení nebo nemovitostí.\n\n**Hypoteční úvěr pro podnikání:** Financování podnikatelské nemovitosti (haly, kanceláře).")
+        with tab2:
+            st.info("**Kontokorent pro podnikatele:** Krátkodobé přečerpání podnikatelského účtu pro vyrovnání výkyvů.\n\n**Faktoring:** Firma získá peníze od banky dříve, než jí reálně zaplatí její zákazníci za vystavené faktury.\n\n**Bankovní záruka:** Banka nepůjčí peníze, ale ručí obchodnímu partnerovi za to, že firma splní svůj závazek.")
+        with tab3:
+            st.info("**Leasing:** Financování auta, stroje nebo vybavení (stroj často patří leasingovce, dokud se nesplatí).\n\n**Úvěr se zárukou:** Například s podporou státní záruční instituce (pro začínající podnikatele).\n\n**Investor místo úvěru:** Firma nevytvoří dluh, ale prodá část svého podílu investorovi (získá peníze za část vlastnictví).")
+
+        st.divider()
+
+        st.markdown("### 4.7.1 Co banka řeší u podnikatele")
+        st.write("Při žádosti o firemní úvěr banka posuzuje spoustu věcí. Není to jen o jednom platu jako u zaměstnance.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("- **Historie podnikání:** Jak dlouho firma funguje.")
+            st.markdown("- **Účetnictví:** Daňová přiznání nebo účetní výkazy.")
+            st.markdown("- **Tržby a zisk:** Kolik firma prodá a co jí zbyde.")
+            st.markdown("- **Cashflow:** Reálný tok peněz (viz box níže!).")
+            st.markdown("- **Stávající dluhy a zajištění:** Čím může firma ručit.")
+        with col2:
+            st.markdown("- **Obor a sezónnost:** Zda firma prodává jen v létě/v zimě.")
+            st.markdown("- **Účel úvěru:** Dává nákup stroje matematický smysl?")
+            st.markdown("- **Podnikatelský plán:** Jaké má firma vyhlídky do budoucna.")
+            st.markdown("- **Osobní ručení majitele:** Někdy musí majitel ručit i svým domem.")
+            st.markdown("- **Odolnost:** Schopnost přežít horší období (krize).")
+
+        st.markdown("""
+        <div class="box-gray">
+            <b>📊 Cashflow je klíč:</b> Firma může být na papíře (v účetnictví) zisková. Ale pokud jí zákazníci platí faktury se zpožděním 3 měsíce a ona musí každý měsíc platit mzdy, nájem a dodavatele, reálně nemá na účtu peníze a může zkrachovat i přesto, že je „zisková“.
+        </div>
+        """, unsafe_allow_html=True)
+
+
+    # =========================================================================
+    # 4.8 KDYŽ SE SPLÁCENÍ POKAZÍ
+    # =========================================================================
+    elif "4.8" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>8. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.8 Když se splácení pokazí")
+        
+        st.write("Problém se splácením není dobré ignorovat. Ztráta práce, nemoc nebo náhlé výdaje mohou potkat každého.")
+        
+        st.error("💀 **Nejhorší možná strategie:** Přestat komunikovat, hrát „mrtvého brouka“, neotvírat dopisy, smazat bankovní aplikaci a doufat, že se dluh vyřeší sám. Nevyřeší. Jen neuvěřitelně naroste o sankce a soudní poplatky.")
+
+        with st.container(border=True):
+            st.markdown("### 🚑 Záchranný plán: Co dělat, když hrozí problém")
+            st.write("Odškrtni si kroky, které bys měl okamžitě podniknout:")
+            st.checkbox("Zastavit jakékoliv další zadlužování (žádné nové půjčky na zaplacení starých!).")
+            st.checkbox("Spočítat si krutě upřímný a reálný měsíční rozpočet (kde můžu osekat výdaje).")
+            st.checkbox("Kontaktovat věřitele co nejdříve (banky preferují lidi, kteří problém hlásí předem).")
+            st.checkbox("Požádat banku o úpravu splátek, odklad nebo restrukturalizaci (pokud to jde).")
+            st.checkbox("Vyhledat odbornou pomoc zdarma (např. Poradna při finanční tísni, občanská poradna).")
+
+        st.divider()
+
+        st.markdown("### ⚠️ Rizika nesplácení")
+        st.write("Pokud situaci neřešíš, banka po určité době přistoupí k tvrdým krokům:")
+        
+        col_r1, col_r2 = st.columns(2)
+        with col_r1:
+            st.markdown("1. **Upomínky a sankce** (dluh se prodražuje).")
+            st.markdown("2. **Zápis v registrech dlužníků** (na roky zničená úvěrová historie).")
+            st.markdown("3. **Zesplatnění úvěru** (banka chce doplatit zbytek dluhu okamžitě celý).")
+        with col_r2:
+            st.markdown("4. **Ztráta majetku** (u zajištěných úvěrů - banka prodá dům/auto).")
+            st.markdown("5. **Soud a Exekuce** (exekutor ti zablokuje účty a srazí peníze z platu).")
+            st.markdown("6. **Dlouhodobý psychický stres** (často končící rozpadem rodiny).")
+
+
+    # =========================================================================
+    # 4.9 PAST JMÉNEM „KUP TEĎ, ZAPLAŤ POZDĚJI“
+    # =========================================================================
+    elif "4.9" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>9. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.9 Past jménem „Kup teď, zaplať později“ (BNPL)")
+        
+        st.write("**BNPL (Buy Now, Pay Later)** je pro současnou generaci extrémně lákavá věc. Tváří se totiž jako moderní, pohodlná platební funkce v e-shopu (Twisto, Klarna, Skip Pay, Apple Pay Later), nikoliv jako dluh. Člověk dostane věc hned a placení se posune do budoucnosti (obvykle o 14 až 30 dní).")
+
+        st.markdown("""
+        <div class="box-red">
+            <b>📱 Hlavní psychologický problém:</b> BNPL odstraňuje „bolest z placení“. Když musíš vytáhnout z peněženky 3 tisíce, bolí to. Když klikneš na „zaplatit za měsíc“, tvůj mozek má pocit, že je nákup zadarmo, protože peníze z účtu neodešly.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("### Co ti u BNPL hrozí:")
+        st.markdown("""
+        * **Ztráta přehledu:** Máš 5 různých odložených plateb v různých e-shopech a zapomeneš na ně.
+        * **Efekt sněhové koule:** Drobné částky (jídlo, tričko, kosmetika) se na konci měsíce poskládají do obřího dluhu.
+        * **Impulzivita:** Koupíš si věc, kterou vlastně nepotřebuješ a na kterou reálně nemáš peníze.
+        * **Poplatky:** Jakmile platbu nestihneš doplatit včas, naskáčou ti obrovské sankční poplatky.
+        """)
+
+        st.divider()
+
+        # --- AKTIVITA: ANALYZÁTOR NÁKUPU ---
+        st.markdown("### 🧩 Aktivita: Je to potřeba, přání, nebo dluhová past?")
+        st.write("Vyber si jeden z typických nákupů mladých lidí na odloženou platbu. Odpověz upřímně na otázky a zjisti svůj výsledek.")
+
+        nakup = st.selectbox("Vyber nákup, který bys chtěl/a zaplatit přes BNPL:", 
+                             ["Vyber...", 
+                              "Značkové tenisky (4 000 Kč)", 
+                              "Lístky na letní festival s kamarády (3 500 Kč)", 
+                              "Objednávka jídla na večerní párty (1 500 Kč)",
+                              "Nový herní doplněk / skiny (1 000 Kč)",
+                              "Rozbitý mobil, bez kterého nemůžu fungovat do školy/práce (5 000 Kč)"])
+
+        if nakup != "Vyber...":
+            with st.container(border=True):
+                st.markdown(f"**Tvůj nákup:** {nakup}")
+                
+                q1 = st.radio("1. Je to pro tebe objektivní POTŘEBA, nebo spíš PŘÁNÍ?", 
+                              ["Je to potřeba (základ k fungování/přežití)", "Je to přání (chci to pro radost, status nebo zážitek)"], key="bnpl_1")
+                
+                q2 = st.radio("2. Koupil/a bys to teď, kdybys to musel/a zaplatit na dřevo v HOTOVOSTI?", 
+                              ["Ano, peníze na to reálně mám už teď", "Ne, tolik peněz bych z peněženky prostě nedal/a (nebo je teď nemám)"], key="bnpl_2")
+                
+                q3 = st.radio("3. Co se stane, když ti výplata/brigáda za měsíc nepřijde nebo přijde nižší?", 
+                              ["Mám železnou rezervu, doplatím to z ní", "Budu mít velký problém a nezbude mi na nájem/jídlo"], key="bnpl_3")
+
+                if st.button("Vyhodnotit nákup", type="primary"):
+                    if "potřeba" in q1.lower() and "Ano" in q2 and "rezervu" in q3:
+                        st.success("✅ **Zelená:** Jde o promyšlený nákup. Máš rezervu a jde o potřebu. Odloženou platbu můžeš bezpečně využít jako nástroj pro cashflow.")
+                    elif "přání" in q1.lower() and "Ne" in q2:
+                        st.error("🚨 **Kritické varování:** Chceš si vzít dluh na něco, co nepotřebuješ, a maskuješ si to tím, že peníze neplatíš hned. Toto je definice dluhové pasti. Nákup zruš!")
+                    elif "problém" in q3:
+                        st.warning("⚠️ **Riziko:** Sice to možná zaplatíš, ale hraješ ruskou ruletu. Nemáš rezervu a spoléháš, že se příští měsíc nic nepokazí. Co když onemocníš? Raději počkej, až peníze reálně naspoříš.")
+                    else:
+                        st.info("💡 **Výsledek k zamyšlení:** Tvé odpovědi jsou na pomezí. Než klikneš na 'Koupit', dej si pravidlo 24 hodin. Vrať se k tomu zítra – často zjistíš, že už tu věc vlastně nechceš.")
