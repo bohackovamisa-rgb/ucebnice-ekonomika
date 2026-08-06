@@ -2441,7 +2441,7 @@ def render():
             st.write("") # drobná mezera pro hezčí vzhled
             
             # TADY JE TEN ODKAZ NA NOVÝ SOUBOR:
-            st.page_link("pages/simulator.py", label="🚀 PŘEJÍT DO SIMULÁTORU", use_container_width=True)
+            st.page_link("pages/Školní_investiční_simulátor.py", label="🚀 PŘEJÍT DO SIMULÁTORU", use_container_width=True)
             
             st.write("")
             st.caption("Důležité: Simulátor je pouze vzdělávací pomůcka. Nejde o investiční doporučení.")
