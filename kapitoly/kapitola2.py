@@ -14,7 +14,7 @@ def render():
         """, unsafe_allow_html=True)
 
     section_options_2 = [
-        "1.1 Peníze jako digitální data (1.1.1 - 1.1.15)",
+        "1.1 Peníze jako digitální data",
         "1.2 ČNB a komerční banky",
         "1.3 Platební styk",
         "1.4 Fintech revoluce"
