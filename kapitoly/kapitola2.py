@@ -4748,3 +4748,142 @@ def render():
                 <b>💡 Praktický význam:</b> Pokud firma čeká na peníze od zákazníků 60 dní (Doba inkasa), ale dodavatelům musí platit do 14 dní (Doba splatnosti), vyčerpá si hotovost a může zkrachovat na cashflow problém, i když je zisková!
             </div>
             """, unsafe_allow_html=True)
+# =========================================================================
+    # 5.6 MODELOVÁ FINANČNÍ ANALÝZA: E-SHOP DROPZONE
+    # =========================================================================
+    elif selected_section_2.startswith("5.6"):
+        import pandas as pd
+        
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.6 Modelová finanční analýza: e-shop „DropZone“")
+        
+        st.write(
+            "Představ si úspěšný studentský e-shop **DropZone**, který prodává vlastní limitovaný streetwear merch. "
+            "Na první pohled firma raketově roste. Je ale opravdu finančně zdravá? Pojďme se podívat pod pokličku "
+            "pomocí finanční analýzy."
+        )
+
+        st.divider()
+
+        # Vstupní data (uložená ve slovnících pro snadnou manipulaci)
+        data_y1 = {
+            "Tržby": 800000, "Náklady": 740000, "Zisk": 60000,
+            "Aktiva": 500000, "Vlastní kapitál": 250000, "Cizí zdroje": 250000,
+            "Oběžná aktiva": 220000, "Zásoby": 120000, "Peníze": 45000,
+            "Krátkodobé závazky": 140000, "Pohledávky": 55000
+        }
+        
+        data_y2 = {
+            "Tržby": 1200000, "Náklady": 1080000, "Zisk": 120000,
+            "Aktiva": 700000, "Vlastní kapitál": 300000, "Cizí zdroje": 400000,
+            "Oběžná aktiva": 310000, "Zásoby": 170000, "Peníze": 35000,
+            "Krátkodobé závazky": 230000, "Pohledávky": 105000
+        }
+
+        # Dramatický graf úvodu - Zisk vs Peníze
+        st.markdown("### 📊 První pohled analytika: Úspěch, nebo past?")
+        st.write("Podívej se na vývoj čistého zisku a reálných peněz na účtu. Vidíš ten problém?")
+        
+        chart_data = pd.DataFrame(
+            {
+                "Čistý zisk": [data_y1["Zisk"], data_y2["Zisk"]],
+                "Peníze na účtu": [data_y1["Peníze"], data_y2["Peníze"]]
+            },
+            index=["Rok 1", "Rok 2"]
+        )
+        st.bar_chart(chart_data, color=["#2ecc71", "#e74c3c"])
+        
+        st.markdown("""
+        <div style="text-align: center; font-size: 0.9em; color: #555; margin-bottom: 20px;">
+            <i>Zatímco zisk se meziročně zdvojnásobil (zelené sloupce), hotovost na účtu klesla (červené sloupce). Kde ty peníze jsou?</i>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("### 🕵️‍♂️ Hloubková analýza")
+        tab_vstupy, tab_rentabilita, tab_likvidita, tab_aktivita, tab_zaver = st.tabs([
+            "📋 1. Vstupní data", 
+            "📈 2. Ziskovost", 
+            "💧 3. Likvidita", 
+            "⚙️ 4. Aktivita & Dluh", 
+            "🚨 5. Finální verdikt"
+        ])
+
+        with tab_vstupy:
+            st.markdown("#### Srovnávací rozvaha a výsledovka (Rok 1 vs. Rok 2)")
+            df_vstupy = pd.DataFrame({
+                "Položka": list(data_y1.keys()),
+                "Rok 1 (Kč)": [f"{v:,}".replace(",", " ") for v in data_y1.values()],
+                "Rok 2 (Kč)": [f"{v:,}".replace(",", " ") for v in data_y2.values()]
+            }).set_index("Položka")
+            st.dataframe(df_vstupy, use_container_width=True)
+
+        with tab_rentabilita:
+            st.markdown("#### Ukazatele rentability (Ziskovosti)")
+            st.write("Firma vypadá z pohledu ziskovosti naprosto fantasticky.")
+            c1, c2, c3 = st.columns(3)
+            
+            c1.metric("ROS (Rentabilita tržeb)", "10,0 %", "2,5 % (z 7,5 %)")
+            c1.caption("Z 120 000 ÷ 1 200 000")
+            
+            c2.metric("ROA (Rentabilita aktiv)", "17,1 %", "5,1 % (z 12,0 %)")
+            c2.caption("Z 120 000 ÷ 700 000")
+            
+            c3.metric("ROE (Rent. vl. kapitálu)", "40,0 %", "16,0 % (z 24,0 %)")
+            c3.caption("Z 120 000 ÷ 300 000")
+            
+            st.success("✅ Všechny ukazatele rostou. Firma generuje skvělou marži a investorům se peníze zhodnocují o obřích 40 %.")
+
+        with tab_likvidita:
+            st.markdown("#### Ukazatele likvidity (Schopnost platit)")
+            st.write("Tady začíná příběh drhnout. Sleduj, co se děje s platební schopností, když firma roste na dluh.")
+            c1, c2, c3 = st.columns(3)
+            
+            # Používáme delta_color="inverse", protože pokles likvidity je špatný (červený)
+            c1.metric("Běžná likvidita", "1,35", "-0,22 (z 1,57)", delta_color="inverse")
+            c1.caption("Oběžná aktiva ÷ Krátk. závazky")
+            
+            c2.metric("Pohotová likvidita", "0,61", "-0,10 (z 0,71)", delta_color="inverse")
+            c2.caption("Bez zásob")
+            
+            c3.metric("Okamžitá likvidita", "0,15", "-0,17 (z 0,32)", delta_color="inverse")
+            c3.caption("Peníze ÷ Krátk. závazky")
+            
+            st.error("🚨 Likvidita se zhoršuje napříč celým spektrem. Peněz na účtu je méně, zatímco krátkodobé závazky (faktury k zaplacení) vzrostly ze 140 na 230 tisíc!")
+
+        with tab_aktivita:
+            st.markdown("#### Ukazatele aktivity a zadluženosti")
+            st.write("Kde tedy peníze uvízly? Odpověď najdeme zde.")
+            c1, c2, c3 = st.columns(3)
+            
+            c1.metric("Celková zadluženost", "57,1 %", "7,1 % (z 50,0 %)", delta_color="inverse")
+            c2.metric("Obrat aktiv", "1,71x", "0,11x (z 1,6x)")
+            c3.metric("Doba inkasa pohledávek", "32 dní", "7 dní (z 25 dní)", delta_color="inverse")
+            
+            st.warning("⚠️ Zákazníci platí e-shopu o týden pomaleji (32 dní místo 25). Růst firmy je navíc částečně financován růstem dluhu (cizí zdroje stouply o 150 000 Kč).")
+
+        with tab_zaver:
+            st.markdown("#### 📝 Závěrečná zpráva finančního ředitele")
+            
+            st.markdown("""
+            <div class="box-green">
+                <b>✅ Co vypadá dobře:</b> Tržby raketově rostou, zisk se zdvojnásobil, rentabilita tržeb se zlepšila a firma využívá aktiva o něco efektivněji. Na první pohled podnik roste a vydělává spoustu peněz.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div class="box-red">
+                <b>⚠️ Co je varovný signál (Červené vlajky):</b> Likvidita se prudce zhoršuje. Peněz na účtu je reálně méně než loni, zato krátkodobé závazky tvrdě rostou. Doba inkasa pohledávek se prodlužuje. Firma sice papírově vydělává, ale brzy může mít existenční problém zaplatit vlastní faktury! Zisk se „rozpustil“ ve větším skladu (zásoby stouply o 50 000 Kč) a v nezaplacených fakturách (pohledávky stouply o 50 000 Kč).
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div class="box-blue">
+                <b>🛠️ Možná opatření:</b> 
+                <ul>
+                    <li>Lépe řídit zásoby (neobjednávat tolik zboží na sklad dopředu).</li>
+                    <li>Zkrátit dobu splatnosti faktur pro zákazníky nebo vymáhat dluhy rychleji.</li>
+                    <li>Posílit hotovostní rezervu.</li>
+                    <li>Nezvyšovat dál zadluženost, dokud se nestabilizuje cashflow.</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
