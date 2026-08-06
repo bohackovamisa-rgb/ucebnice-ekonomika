@@ -4325,10 +4325,111 @@ def render():
             st.info("💡 **Poučení:** Firma nespravovala své Cashflow. Zákazníkům nabídla příliš dlouhou splatnost (60 dní), zatímco své vlastní výdaje musela platit hned.")
 
 
-    # =========================================================================
-    # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU (Až budeš posílat text pro 5.3)
+# =========================================================================
+    # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
     # =========================================================================
     elif selected_section_2.startswith("5.3 "):
         st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
         st.markdown("## 5.3 Náklady, výnosy a bod zvratu")
-        st.info("Zde budeme pokračovat podkapitolou 5.3...")
+        
+        st.write(
+            "Aby firma věděla, zda se jí podnikání vůbec vyplatí, musí dokonale rozumět svým nákladům. "
+            "Nestačí si říct: *„Prodávám za víc, než nakupuji.“* Firma musí započítat i nájem, software, "
+            "reklamu, dopravu, svůj čas, daně, poplatky, vybavení a riziko neprodaných zásob."
+        )
+
+        st.markdown("### 5.3.1 Fixní a variabilní náklady")
+        st.write("Náklady dělíme do dvou hlavních skupin podle toho, jak se chovají, když firma zvyšuje výrobu nebo prodej.")
+
+        # Tabulka nákladů
+        st.markdown("""
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Typ nákladu</th>
+                    <th>Co znamená</th>
+                    <th>Příklad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Fixní náklady (FN)</b></td>
+                    <td>Nemění se přímo podle počtu prodaných kusů. Platí se, i když firma neprodá nic.</td>
+                    <td>Nájem, software, účetní, paušální služby, základní část mezd.</td>
+                </tr>
+                <tr>
+                    <td><b>Variabilní náklady (VN)</b></td>
+                    <td>Rostou nebo klesají přímo úměrně podle objemu výroby nebo prodeje.</td>
+                    <td>Materiál, nákupní cena zboží, obaly, provize bráně, doprava za kus.</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="box-blue">
+            <b>🧮 Bod zvratu (Break-Even Point - BEP):</b> Ukazuje, kolik přesně musí firma prodat kusů (nebo utržit peněz), aby pokryla všechny své fixní i variabilní náklady. Teprve prodeje NAD bodem zvratu vytvářejí zisk!
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("#### Vzorec:")
+        st.latex(r"BEP_{kusy} = \frac{Fixní\ náklady}{(Cena\ za\ kus - Variabilní\ náklad\ na\ kus)}")
+
+        st.divider()
+
+        st.markdown("### 🎢 Interaktivní simulátor Bodu zvratu: Školní merch")
+        st.write("Studenti se rozhodli prodávat školní trička. Pomoz jim zjistit, kolik triček musí prodat, aby neprodělali kalhoty.")
+
+        with st.container(border=True):
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                st.markdown("#### ⚙️ Nastavení byznysu")
+                cena_ks = st.slider("Prodejní cena trička (Kč):", 200, 600, 350, step=10, key="bep_cena")
+                var_naklad_ks = st.slider("Variabilní náklad na 1 tričko (Kč):", 100, 400, 210, step=10, key="bep_vn")
+                fixni_naklady = st.slider("Fixní náklady (e-shop, grafika) (Kč):", 2000, 15000, 7000, step=500, key="bep_fn")
+                
+            with col_b2:
+                st.markdown("#### 🧮 Výpočet")
+                marze_ks = cena_ks - var_naklad_ks
+                st.metric("Marže na 1 kus (Cena - VN)", f"{marze_ks} Kč", delta="Příspěvek na fixní náklady", delta_color="normal")
+                
+                if marze_ks > 0:
+                    bep_ks = fixni_naklady / marze_ks
+                    bep_ks_rounded = int(bep_ks) if bep_ks.is_integer() else int(bep_ks) + 1
+                    bep_trzby = bep_ks_rounded * cena_ks
+                    
+                    st.metric("Bod zvratu (v kusech)", f"{bep_ks_rounded} triček", delta="Nutné minimum", delta_color="off")
+                    st.success(f"✅ **Aby studenti nebyli ve ztrátě, musí prodat {bep_ks_rounded} triček** (což odpovídá tržbám {bep_trzby:,} Kč). Od {bep_ks_rounded + 1}. trička začínají tvořit čistý zisk!".replace(",", " "))
+                else:
+                    st.error("🚨 **Kritická chyba!** Variabilní náklady jsou vyšší nebo rovné ceně. Bod zvratu neexistuje, s každým prodaným tričkem firma prodělává víc a víc peněz!")
+
+        st.markdown("#### 📈 Graf Bodu zvratu (Jak se protínají náklady a tržby)")
+        
+        # Generování dat pro graf (pokud dává byznys smysl)
+        if marze_ks > 0:
+            import pandas as pd
+            import numpy as np
+            
+            bep_exact = fixni_naklady / marze_ks
+            max_x = max(100, int(bep_exact * 2)) # Os X natáhneme za bod zvratu
+            
+            x_values = np.linspace(0, max_x, 50)
+            trzby_y = cena_ks * x_values
+            fixni_y = [fixni_naklady] * 50
+            celkove_naklady_y = fixni_naklady + (var_naklad_ks * x_values)
+            
+            chart_data = pd.DataFrame({
+                "Počet triček (ks)": x_values,
+                "Tržby (Kč)": trzby_y,
+                "Celkové náklady (Kč)": celkove_naklady_y,
+                "Fixní náklady (Kč)": fixni_y
+            }).set_index("Počet triček (ks)")
+            
+            st.line_chart(chart_data, color=["#2ecc71", "#e74c3c", "#95a5a6"])
+            
+            st.markdown("""
+            <div style="font-size: 0.9em; color: #555;">
+                <b>Jak číst graf:</b> 🟢 Zelená čára (Tržby) začíná na nule. 🔴 Červená čára (Celkové náklady) nezačíná na nule, ale na úrovni fixních nákladů. <b>Místo, kde se zelená a červená kříží, je Bod zvratu!</b> Vlevo od něj je ztráta, vpravo zisk.
+            </div>
+            """, unsafe_allow_html=True)
