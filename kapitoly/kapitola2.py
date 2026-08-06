@@ -5098,3 +5098,170 @@ def render():
                 doporuceni = "✅ **Doporučení pro růst:** Firma je ve výborné kondici. Doporučuji udržet stávající kurz, volnou hotovost reinvestovat do marketingu a zvážit bezpečné využití úvěru pro rychlejší expanzi."
 
             st.info(f"**Shrnutí:** {report_text}\n\n{doporuceni}")
+# =========================================================================
+    # 5.9 CASE STUDY: INFLUENCER JAKO FIRMA
+    # =========================================================================
+    elif selected_section_2.startswith("5.9"):
+        import pandas as pd
+
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.9 Case study: Influencer jako firma")
+        
+        st.write(
+            "Influencer, streamer, youtuber, tvůrce podcastu nebo správce komunitního profilu může na první pohled působit "
+            "jen jako „člověk, co se točí na internetu“. Ve skutečnosti je to ale plnohodnotné podnikání s příjmy, náklady, "
+            "smlouvami, daněmi a velkými riziky."
+        )
+
+        st.divider()
+
+        tab_sim, tab_dane, tab_rizika = st.tabs([
+            "🎮 1. Simulátor byznysu", 
+            "⚖️ 2. Hra na účetního (Daně)", 
+            "🔥 3. Zkouška ohněm (Rizika)"
+        ])
+
+        # --- TAB 1: SIMULÁTOR BYZNYSU ---
+        with tab_sim:
+            st.markdown("### 🎛️ Sestav si svůj online byznys")
+            st.write("Nastav si měsíční příjmy a výdaje svého fiktivního profilu. Sleduj, jak se ti mění zisk.")
+
+            col_p, col_n, col_v = st.columns(3)
+
+            with col_p:
+                st.markdown("#### 💰 Příjmy (Kč/měsíc)")
+                p_spoluprace = st.slider("Placené spolupráce (Sponzoři)", 0, 150000, 45000, step=5000, key="inf_p1")
+                p_reklama = st.slider("Reklama z platforem (YouTube/Twitch)", 0, 50000, 10000, step=1000, key="inf_p2")
+                p_affil = st.slider("Affiliate odkazy (Provize z prodeje)", 0, 30000, 8000, step=1000, key="inf_p3")
+                p_subs = st.slider("Předplatné (Herohero, Patreon)", 0, 100000, 12000, step=2000, key="inf_p4")
+                p_merch = st.slider("Prodej vlastního merche/kurzů", 0, 80000, 0, step=5000, key="inf_p5")
+                
+                prijmy_celkem = p_spoluprace + p_reklama + p_affil + p_subs + p_merch
+
+            with col_n:
+                st.markdown("#### 💸 Náklady (Kč/měsíc)")
+                n_technika = st.slider("Technika a software (Kamera, střih)", 0, 30000, 8000, step=1000, key="inf_n1")
+                n_produkce = st.slider("Produkce (Studio, editor videa, cesty)", 0, 50000, 14000, step=1000, key="inf_n2")
+                n_reklama = st.slider("Vlastní reklama a propagace", 0, 20000, 5000, step=1000, key="inf_n3")
+                n_sluzby = st.slider("Účetní a právní služby", 0, 10000, 3000, step=500, key="inf_n4")
+                
+                naklady_celkem = n_technika + n_produkce + n_reklama + n_sluzby
+
+            with col_v:
+                st.markdown("#### 📊 Výsledovka")
+                zisk_pred_zdanenim = prijmy_celkem - naklady_celkem
+                
+                st.metric("Celkové příjmy", f"{prijmy_celkem:,} Kč".replace(",", " "))
+                st.metric("Celkové náklady", f"- {naklady_celkem:,} Kč".replace(",", " "))
+                
+                st.divider()
+                if zisk_pred_zdanenim > 0:
+                    st.metric("Zisk (Před zdaněním!)", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), "Ziskový měsíc")
+                    st.success("Tohle vypadá jako solidní byznys. Nezapomeň ale, že z této částky ještě musíš zaplatit daně, sociální a zdravotní pojištění!")
+                else:
+                    st.metric("Zisk (Před zdaněním)", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), "- Ztráta", delta_color="inverse")
+                    st.error("Jsi ve ztrátě! Takhle to dlouho nevydrží. Musíš buď získat víc sponzorů, nebo osekat náklady.")
+
+            # Vizualizace struktury příjmů
+            if prijmy_celkem > 0:
+                st.markdown("##### Odkud plynou tvé peníze? (Diverzifikace)")
+                chart_data = pd.DataFrame(
+                    [p_spoluprace, p_reklama, p_affil, p_subs, p_merch],
+                    index=["Spolupráce", "Reklama z videí", "Affiliate", "Předplatné", "Merch"],
+                    columns=["Kč"]
+                )
+                st.bar_chart(chart_data.T)
+
+        # --- TAB 2: HRA NA ÚČETNÍHO ---
+        with tab_dane:
+            st.markdown("### ⚖️ Daňová past: Co si mohu dát do nákladů?")
+            st.write(
+                "Ne každý osobní výdaj je automaticky nákladem podnikání. Aby šlo o daňově uznatelný náklad, "
+                "musí **souviset s dosažením, zajištěním nebo udržením příjmů**. Zkus rozhodnout, co by ti u finančního úřadu prošlo."
+            )
+
+            with st.container(border=True):
+                q1 = st.radio("1. Koupil sis nový iPhone za 35 000 Kč. Točíš na něj 90 % svých videí na TikTok.", 
+                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."])
+                if q1 == "Ano, je to uznatelný náklad.":
+                    st.success("✅ Správně. Slouží k tvorbě tvého produktu (obsahu).")
+                elif q1 == "Ne, je to osobní spotřeba.":
+                    st.error("❌ Špatně. Pokud ho prokazatelně používáš k tvorbě obsahu, do nákladů (nebo do majetku) jít může.")
+
+                st.divider()
+
+                q2 = st.radio("2. Koupil sis herní konzoli za 15 000 Kč, abys na ní hrál o víkendu po večerech s kamarády. Nejsi herní streamer (děláš fitness).", 
+                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."])
+                if q2 == "Ne, je to osobní spotřeba.":
+                    st.success("✅ Přesně tak! Finanční úřad by ti to vyhodil. Nesouvisí to s tvým fitness podnikáním.")
+                elif q2 == "Ano, je to uznatelný náklad.":
+                    st.error("❌ Kdepak. Fitness streamer těžko obhájí nákup herní konzole pro volný čas jako nutnost pro svůj byznys.")
+                
+                st.divider()
+
+                q3 = st.radio("3. Zaplatil jsi 5 000 Kč za kampaň na Instagramu, která láká lidi na tvůj nový e-book.", 
+                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."])
+                if q3 == "Ano, je to uznatelný náklad.":
+                    st.success("✅ Ano! Je to klasický výdaj na reklamu a propagaci za účelem dosažení zisku.")
+                elif q3 == "Ne, je to osobní spotřeba.":
+                    st.error("❌ Špatně. Reklama propagující tvůj komerční produkt je jasný uznatelný náklad.")
+
+            st.markdown("""
+            <div class="box-red">
+                <b>⚠️ Důležité:</b> Mnoho začínajících tvůrců míchá firemní a osobní peníze. Když si z firemního účtu platí osobní obědy a dovolené (které nevydávají za tvorbu obsahu), zadělávají si na obrovský problém s finančním úřadem.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # --- TAB 3: ZKOUŠKA OHNĚM ---
+        with tab_rizika:
+            st.markdown("### 🔥 Finanční stabilita pod palbou")
+            st.write(
+                "Nyní otestujeme tvůj byznys (ten, co sis naklikal v první záložce). Co se stane, když přijde krize? "
+                "Je tvůj příjem stabilní, nebo visí na vlásku jediné spolupráce?"
+            )
+
+            scenar = st.selectbox("Vyber krizový scénář:", [
+                "Všechno běží podle plánu (Základní stav)",
+                "Scénář A: Změna algoritmu YouTube/Tiktoku (Ztráta dosahu)",
+                "Scénář B: Hlavní sponzor odstoupil",
+                "Scénář C: Vyhoření (Burnout) – měsíc netvoříš"
+            ])
+
+            # Původní hodnoty ze simulátoru
+            krizovy_prijem = prijmy_celkem
+            krizovy_naklad = naklady_celkem
+            popis_krize = ""
+
+            if scenar == "Scénář A: Změna algoritmu YouTube/Tiktoku (Ztráta dosahu)":
+                krizovy_prijem = p_spoluprace + (p_reklama * 0.2) + (p_affil * 0.3) + p_subs + (p_merch * 0.5)
+                popis_krize = "Algoritmus tě přestal doporučovat. Zhlédnutí klesla o 80 %. Příjmy z platformových reklam a affiliate prokliků se propadly. Merch se prodává hůř, protože na něj nekouká tolik lidí. Předplatitelé a dlouhodobí sponzoři tě naštěstí zatím drží."
+            
+            elif scenar == "Scénář B: Hlavní sponzor odstoupil":
+                krizovy_prijem = (p_spoluprace * 0.1) + p_reklama + p_affil + p_subs + p_merch
+                popis_krize = "Tvůj hlavní partner změnil marketingovou strategii a neprodloužil smlouvu. Přišel jsi o 90 % příjmů ze spoluprací ze dne na den. Ostatní příjmy zůstávají."
+            
+            elif scenar == "Scénář C: Vyhoření (Burnout) – měsíc netvoříš":
+                krizovy_prijem = 0 + 0 + (p_affil * 0.5) + (p_subs * 0.8) + (p_merch * 0.3)
+                # Náklady ale běží dál!
+                popis_krize = "Nemůžeš natáčet. Spolupráce stojí, nová reklama nenabíhá. Zůstávají ti jen pasivní příjmy (staré affiliate odkazy) a věrní předplatitelé (i když jich 20 % odešlo kvůli neaktivitě). ALE POZOR: Fixní náklady (nájem studia, software, účetní) musíš zaplatit stejně!"
+
+            novy_zisk = krizovy_prijem - krizovy_naklad
+
+            st.info(f"**Co se stalo:** {popis_krize}" if popis_krize else "Zatím je klid a peníze se sypou.")
+
+            col_k1, col_k2, col_k3 = st.columns(3)
+            col_k1.metric("Příjmy po krizi", f"{krizovy_prijem:,.0f} Kč".replace(",", " "))
+            col_k2.metric("Náklady (zůstávají)", f"- {krizovy_naklad:,.0f} Kč".replace(",", " "))
+            
+            if novy_zisk > 0:
+                col_k3.metric("Nový zisk", f"{novy_zisk:,.0f} Kč".replace(",", " "), f"{novy_zisk - zisk_pred_zdanenim:,.0f} Kč (Oproti plánu)")
+                st.success("✅ Přežil jsi! Tvůj byznys je dostatečně diverzifikovaný (stojí na více nohách), abys ustál i velký výpadek.")
+            else:
+                col_k3.metric("Nový zisk", f"{novy_zisk:,.0f} Kč".replace(",", " "), f"{novy_zisk - zisk_pred_zdanenim:,.0f} Kč", delta_color="inverse")
+                st.error("🚨 Zkrachoval jsi! Tvé příjmy nedokázaly pokrýt ani běžné náklady. Pokud nemáš finanční rezervu vytvořenou z minulých měsíců, končíš s podnikáním.")
+
+            st.markdown("""
+            <div class="box-purple">
+                <b>🧠 Poučení z analýzy:</b> Influencer musí mít vytvořenou finanční rezervu (alespoň na 3–6 měsíců života) a nesmí být závislý jen na jedné sociální síti nebo jednom sponzorovi.
+            </div>
+            """, unsafe_allow_html=True)
