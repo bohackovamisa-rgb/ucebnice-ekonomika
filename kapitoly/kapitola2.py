@@ -2464,15 +2464,15 @@ def vykreslit_kapitolu_3_6():
 
     st.markdown("""
     <div class="box-blue">
-        <b>🪙 Kryptoměna jednoduše:</b> Kryptoměna je digitální aktivum, které existuje v počítačové síti. "
-        "Záznamy o vlastnictví a převodech nejsou vedeny jednou běžnou bankou, ale pomocí technologie, která umožňuje sdílenou evidenci transakcí.
+        <b>🪙 Kryptoměna jednoduše:</b> Kryptoměna je digitální aktivum, které existuje v počítačové síti.
+        Záznamy o vlastnictví a převodech nejsou vedeny jednou běžnou bankou, ale pomocí technologie, která umožňuje sdílenou evidenci transakcí.
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
     <div class="box-red">
-        <b>🚫 Důležité:</b> Tato kapitola není investiční doporučení. Cílem není přesvědčit tě, abys kryptoměny kupoval/a nebo odmítal/a. "
-        "Cílem je rozumět principu, rizikům, reklamním trikům a rozdílu mezi technologií a spekulací.
+        <b>🚫 Důležité:</b> Tato kapitola není investiční doporučení. Cílem není přesvědčit tě, abys kryptoměny kupoval/a nebo odmítal/a.
+        Cílem je rozumět principu, rizikům, reklamním trikům a rozdílu mezi technologií a spekulací.
     </div>
     """, unsafe_allow_html=True)
 
@@ -2516,8 +2516,8 @@ def vykreslit_kapitolu_3_6():
 
     st.markdown("""
     <div class="box-yellow">
-        <b>📒 Přirovnání:</b> Představ si třídní účetní knihu, kterou nemá jen jeden pokladník, ale kopii má mnoho lidí. "
-        "Když někdo zapíše novou platbu, ostatní kontrolují, zda zápis dává smysl. Pokud by jeden člověk chtěl zápis podvést, ostatní kopie ho mohou odhalit.
+        <b>📒 Přirovnání:</b> Představ si třídní účetní knihu, kterou nemá jen jeden pokladník, ale kopii má mnoho lidí.
+        Když někdo zapíše novou platbu, ostatní kontrolují, zda zápis dává smysl. Pokud by jeden člověk chtěl zápis podvést, ostatní kopie ho mohou odhalit.
     </div>
     """, unsafe_allow_html=True)
 
@@ -2537,8 +2537,8 @@ def vykreslit_kapitolu_3_6():
 
     st.markdown("""
     <div class="box-red">
-        <b>🔐 Nejdůležitější bezpečnostní pravidlo:</b> Kdo zná tvůj soukromý klíč nebo seed phrase, může získat přístup ke kryptoměnám. "
-        "Banka ti ztracený soukromý klíč neobnoví jako heslo do internetového bankovnictví.
+        <b>🔐 Nejdůležitější bezpečnostní pravidlo:</b> Kdo zná tvůj soukromý klíč nebo seed phrase, může získat přístup ke kryptoměnám.
+        Banka ti ztracený soukromý klíč neobnoví jako heslo do internetového bankovnictví.
     </div>
     """, unsafe_allow_html=True)
 
@@ -2570,14 +2570,14 @@ def vykreslit_kapitolu_3_6():
 
     # --- 3.6.6 ---
     st.markdown("## 3.6.6 Chytré kontrakty, DeFi a NFT")
-    st.write("**Chytrý kontrakt** je program běžící na blockchainu, který může automaticky provádět určité kroky podle pravidel. Neznamená to, že je právně „chytrý“ nebo bezpečný. Znamená to, že jde o kód.")
+    st.write("**Chytrý kontrakt** je program běžící na blockchainu, který může automaticky provádět určité kroky podle rules. Neznamená to, že je právně „chytrý“ nebo bezpečný. Znamená to, že jde o kód.")
     st.write("**DeFi** znamená decentralizované finance. Jde o služby, které se snaží napodobit finanční produkty — půjčování, směnu, úročení — bez klasické banky.")
     st.write("**NFT** je unikátní token, který může odkazovat na digitální objekt, členství, herní předmět nebo jiný záznam.")
 
     st.markdown("""
     <div class="box-purple">
-        <b>⚠️ Pozor na slovo „decentralizované“:</b> To, že služba používá blockchain, neznamená, že je bezpečná, férová nebo bez prostředníků. "
-        "Rizikem může být chyba v kódu, podvodný tým, manipulace trhu, falešná likvidita nebo nejasná odpovědnost.
+        <b>⚠️ Pozor na slovo „decentralizované“:</b> To, že služba používá blockchain, neznamená, že je bezpečná, férová nebo bez prostředníků.
+        Rizikem může být chyba v kódu, podvodný tým, manipulace trhu, falešná likvidita nebo nejasná odpovědnost.
     </div>
     """, unsafe_allow_html=True)
 
@@ -2610,8 +2610,8 @@ def vykreslit_kapitolu_3_6():
 
     st.markdown("""
     <div class="box-blue">
-        <b>🎢 Volatilita lidsky:</b> Pokud aktivum může za měsíc vyrůst o desítky procent, může také o desítky procent spadnout. "
-        "Vysoký pohyb nahoru a dolů není chyba systému — u kryptoměn je to běžná vlastnost trhu.
+        <b>🎢 Volatilita lidsky:</b> Pokud aktivum může za měsíc vyrůst o desítky procent, může také o desítky procent spadnout.
+        Vysoký pohyb nahoru a dolů není chyba systému — u kryptoměn je to běžná vlastnost trhu.
     </div>
     """, unsafe_allow_html=True)
 
@@ -2659,9 +2659,9 @@ def vykreslit_kapitolu_3_6():
     st.markdown("""
     | Otázka | Běžné peníze na účtu | Kryptoměny |
     | :--- | :--- | :--- |
-    | **Kdo vede záznam?** | Banka a platební systém. | Síť podle pravidel protokols. |
+    | **Kdo vede záznam?** | Banka a platební systém. | Síť podle pravidel protokolu. |
     | **Kdo ručí za systém?** | Stát, regulace, banky, dohled, právní pravidla. | Kód, síť, komunita, ekonomická motivace účastníků. |
-    | **Je hodnota stabilní?** | U korun se řeší hlavně inflace a měnová stimulace. | Cena většiny kryptoměn silně kolísá. |
+    | **Je hodnota stabilní?** | U korun se řeší hlavně inflace a měnová stabilita. | Cena většiny kryptoměn silně kolísá. |
     | **Lze transakci reklamovat?** | U bankovních služeb existují reklamační postupy. | Transakce bývají nevratné nebo velmi obtížně řešitelné. |
     | **Kdo obnoví přístup?** | Banka může pomoci s heslem nebo kartou. | Ztracený soukromý klíč znamená trvalou ztrátu. |
     | **Je to vhodné na rezervu?** | Běžný/spořicí účet je vhodný pro rezervu. | Kvůli volatilitě nevhodné pro nouzovou rezervu. |
@@ -2676,8 +2676,8 @@ def vykreslit_kapitolu_3_6():
 
     st.markdown("""
     <div class="box-gray">
-        <b>📄 Praktická poznámka:</b> „Mám to v aplikaci“ neznamená, že to není skutečná finanční operace. "
-        "U kryptoměn je důležité vést si přehled nákupů, prodejů, směn, poplatků a případných zisků nebo ztrát.
+        <b>📄 Praktická poznámka:</b> „Mám to v aplikaci“ neznamená, že to není skutečná finanční operace.
+        U kryptoměn je důležité vést si přehled nákupů, prodejů, směn, poplatků a případných zisků nebo ztrát.
     </div>
     """, unsafe_allow_html=True)
 
@@ -2700,9 +2700,9 @@ def vykreslit_kapitolu_3_6():
 
     st.markdown("""
     <div class="box-green">
-        <b>🧠 Rozumný závěr:</b> Blockchain může být zajímavá technologie. Kryptoměny mohou být inovace i spekulativní aktivum. "
-        "Ale žádná technologie neruší základní pravidla finanční gramotnosti: rozumět riziku, nevěřit garantovaným výnosům, "
-        "chránit přístupové údaje a neinvestovat peníze, které si nemůžeš dovolit ztratit.
+        <b>🧠 Rozumný závěr:</b> Blockchain může být zajímavá technologie. Kryptoměny mohou být inovace i spekulativní aktivum.
+        Ale žádná technologie neruší základní pravidla finanční gramotnosti: rozumět riziku, nevěřit garantovaným výnosům,
+        chránit přístupové údaje a neinvestovat peníze, které si nemůžeš dovolit ztratit.
     </div>
     """, unsafe_allow_html=True)
 
