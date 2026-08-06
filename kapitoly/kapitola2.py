@@ -4603,7 +4603,7 @@ def render():
         # Záložky pro jednotlivé skupiny
         tab_rent, tab_likv, tab_zadl, tab_akt = st.tabs(["📈 Rentabilita (Ziskovost)", "💧 Likvidita (Platební schopnost)", "💳 Zadluženost", "⚙️ Aktivita"])
 
-        # --- 5.5.3 RENTABILITA ---
+# --- 5.5.3 RENTABILITA ---
         with tab_rent:
             st.markdown("#### 5.5.3 Ukazatele rentability: Vydělává podnik dost?")
             st.write("Rentabilita ukazuje, jak dobře firma vytváří zisk.")
@@ -4613,17 +4613,57 @@ def render():
             roe = (zisk / vlastni_kapital) * 100
 
             col_r1, col_r2, col_r3 = st.columns(3)
-            col_r1.metric("ROS (Rentabilita tržeb)", f"{ros:.1f} %")
-            col_r1.latex(r"\frac{\text{Zisk}}{\text{Tržby}} \times 100")
-            col_r1.caption(f"Z každých 100 Kč tržeb zbývá {ros:.1f} Kč zisku.")
+            
+            # --- ROS ---
+            with col_r1:
+                st.metric("ROS (Rentabilita tržeb)", f"{ros:.1f} %")
+                st.latex(r"\frac{\text{Zisk}}{\text{Tržby}} \times 100")
+                st.caption(f"Z každých 100 Kč tržeb zbývá {ros:.1f} Kč zisku.")
+                
+                if ros < 0:
+                    st.error("🚨 **Ztráta:** Z každého prodeje firma prodělává.")
+                elif ros < 5:
+                    st.warning("⚠️ **Nízká marže:** Běžné u supermarketů (žijí z objemu), ale u jiných oborů je to rizikové.")
+                elif ros <= 15:
+                    st.success("✅ **Zdravý výsledek:** Firma má dostatečnou ziskovost.")
+                else:
+                    st.info("🏆 **Skvělé:** Extrémně ziskový byznys (typické pro IT, služby nebo luxusní zboží).")
 
-            col_r2.metric("ROA (Rentabilita aktiv)", f"{roa:.1f} %")
-            col_r2.latex(r"\frac{\text{Zisk}}{\text{Aktiva}} \times 100")
-            col_r2.caption("Jak efektivně majetek generuje zisk.")
+            # --- ROA ---
+            with col_r2:
+                st.metric("ROA (Rentabilita aktiv)", f"{roa:.1f} %")
+                st.latex(r"\frac{\text{Zisk}}{\text{Aktiva}} \times 100")
+                st.caption("Jak efektivně majetek generuje zisk.")
+                
+                if roa < 0:
+                    st.error("🚨 **Špatné:** Majetek negeneruje žádný zisk.")
+                elif roa < 4:
+                    st.warning("⚠️ **Nízká efektivita:** Majetek leží ladem nebo je ho zbytečně moc na to, kolik vydělává.")
+                elif roa <= 10:
+                    st.success("✅ **Dobrý standard:** Firma efektivně využívá to, co vlastní.")
+                else:
+                    st.info("🏆 **Výborné:** Firma dokáže s málem majetku vydělat spoustu peněz.")
 
-            col_r3.metric("ROE (Rent. vl. kapitálu)", f"{roe:.1f} %")
-            col_r3.latex(r"\frac{\text{Zisk}}{\text{Vlastní kapitál}} \times 100")
-            col_r3.caption("Jaké je zhodnocení vložených peněz majitele.")
+            # --- ROE ---
+            with col_r3:
+                st.metric("ROE (Rent. vl. kapitálu)", f"{roe:.1f} %")
+                st.latex(r"\frac{\text{Zisk}}{\text{Vlastní kapitál}} \times 100")
+                st.caption("Jaké je zhodnocení vložených peněz majitele.")
+                
+                if roe < 0:
+                    st.error("🚨 **Kritické:** Majitel prodělává své vlastní peníze.")
+                elif roe < 5:
+                    st.warning("⚠️ **Slabé:** Majitel by udělal lépe, kdyby firmu zavřel a peníze dal na bezpečný spořicí účet v bance.")
+                elif roe <= 15:
+                    st.success("✅ **Slušné:** Zhodnocení je lepší než v bance, investor je spokojený.")
+                else:
+                    st.info("🏆 **Skvělé:** Vysoce atraktivní zhodnocení. Taková čísla lákají další investory!")
+
+            st.markdown("""
+            <div class="box-gray">
+                <b>💡 Důležitý kontext pro analytiky:</b> Co je „dobré“ a „špatné“ číslo, vždy závisí na oboru! Supermarket může mít ROS pouhá 2 % a je to skvělé (protože denně prodá tuny zboží). Softwarová firma má běžně ROS i 30 %. Proto se finanční analýza <b>vždy porovnává s konkurencí v oboru</b>.
+            </div>
+            """, unsafe_allow_html=True)
 
         # --- 5.5.4 LIKVIDITA ---
         with tab_likv:
