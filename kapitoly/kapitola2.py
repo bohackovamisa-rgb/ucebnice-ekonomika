@@ -3865,3 +3865,154 @@ def render():
                 col_a.metric("Škoda na střeše", f"{skoda:,} Kč".replace(",", " "))
                 col_b.metric("Pojišťovna zaplatí", f"{skoda:,} Kč".replace(",", " "))
                 st.success("✅ **Vše v pořádku.** Pojistná částka odpovídá reálné hodnotě domu. Pojišťovna zaplatí celou škodu na střeše (mínus případná spoluúčast).")
+# =========================================================================
+    # 4.14 PRAKTICKÉ ROZHODNŮVÁNÍ: ÚVĚR A POJIŠTĚNÍ DOHROMADY
+    # =========================================================================
+    elif "4.14" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>14. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.14 Praktické rozhodování: úvěr a pojištění dohromady")
+        
+        st.write("Úvěry a pojištění spolu neoddělitelně souvisí. Čím větší finanční závazek na sobě máš, tím více musíš řešit, co se stane při výpadku příjmu, nemoci, požáru nebo jiné životní krizi.")
+
+        with st.container(border=True):
+            st.markdown("### 👨‍👩‍👧‍👦 Modelový příklad z praxe:")
+            st.write("- **Situace:** Rodina si vzala hypotéku na dům 4 000 000 Kč. Mají jedno malé dítě.")
+            st.write("- **Příjem:** Rodina spoléhá převážně na jeden hlavní příjem otce (45 000 Kč), matka je na rodičovské (10 000 Kč).")
+            st.write("- **Závazek:** Měsíční splátka hypotéky činí 22 000 Kč. Dům je zastaven bance.")
+            st.warning("⚠️ **Riziko:** Pokud hlavní živitel dlouhodobě onemocní nebo utrpí úraz, rodina do 2 měsíců nedokáže platit splátku a hrozí jí ztráta střechy nad hlavou!")
+            st.success("💡 **Řešení:** Vhodná kombinace: 1) Životní pojištění živitele (kryjící invaliditu a smrt), 2) Pojištění nemovitosti (zástava pro banku), 3) Finanční rezerva ve výši 6 splátek na spořicím účtu.")
+
+        st.divider()
+
+        # --- SIMULACE 1: BANKÉŘEM NA ZKOUŠKU ---
+        st.markdown("### 🧪 Finanční simulace: Dostane žadatel úvěr?")
+        st.write("Vžij se do role bankovního risk manažera. Vyber si profil žadatele, posuď jeho situaci a rozhodni, zda mu půjčíš!")
+
+        profil = st.selectbox("Vyber profil žadatele o úvěr:", [
+            "Vyber žadatele...",
+            "Žadatel A: Petr (22 let) – První auto na úvěr (150 000 Kč)",
+            "Žadatelka B: Eva a Martin (30 let) – Hypotéka na byt (5 000 000 Kč)",
+            "Žadatel C: Pavel (35 let) – Spotřebitelský úvěr na dovolenou (60 000 Kč)"
+        ])
+
+        if profil.startswith("Žadatel A"):
+            with st.container(border=True):
+                st.markdown("#### 📋 Profil: Petr (22 let)")
+                st.markdown("- **Požadavek:** 150 000 Kč na auto")
+                st.markdown("- **Čistý příjem:** 24 000 Kč/měsíc (pracuje 4 měsíce, po zkušební době)")
+                st.markdown("- **Výdaje a nájem:** 14 000 Kč/měsíc")
+                st.markdown("- **Stávající dluhy:** Žádné")
+                st.markdown("- **Vlastní úspory:** 5 000 Kč")
+                
+                sim_a1 = st.radio("1. Jak vyhodnotíš bonitu a schválení?", ["Schválit v plné výši", "Zamítnout nebo nabídnout nižší částku", "Schválit 100% částku bez doložení"], key="sim_a1")
+                sim_a2 = st.radio("2. Jaké je pro Petra největší riziko?", ["Pokles ceny auta", "Ztráta práce / nemoc bez finanční rezervy", "Zvýšení úrokových sazeb u hypotéky"], key="sim_a2")
+                
+                if st.button("Vyhodnotit jako banka"):
+                    if "Zamítnout" in sim_a1 and "Ztráta práce" in sim_a2:
+                        st.success("✅ **Správně!** Petr má extrémně nízkou rezervu (jen 5 000 Kč). Měsíčně mu po výdajích zbývá 10 000 Kč, ze kterých by splátka auta vzala většinu. Banka mu buď nabídne nižší částku, nebo doporučí nejdříve naspořit rezervu.")
+                    else:
+                        st.error("❌ **Chybně.** Jako bankéř bys riskoval/a. Petr nemá téměř žádné úspory a v případě nemoci by hned v prvním měsíci spadl do nesplácení.")
+
+        elif profil.startswith("Žadatelka B"):
+            with st.container(border=True):
+                st.markdown("#### 📋 Profil: Eva a Martin (30 let)")
+                st.markdown("- **Požadavek:** Hypotéka 4 500 000 Kč na byt v hodnotě 5 000 000 Kč (LTV 90 %)")
+                st.markdown("- **Čistý příjem:** Společně 65 000 Kč/měsíc (smlouvy na neurčito)")
+                st.markdown("- **Výdaje:** 25 000 Kč/měsíc")
+                st.markdown("- **Vlastní úspory:** 600 000 Kč")
+                
+                sim_b1 = st.radio("1. Kolik vlastních peněz musí dát ze svého?", ["Alespoň 10–20 % (tj. min. 500 000 Kč)", "Nemusí dát nic, banka půjčí 100 %", "Musí mít naspořeno 50 %"], key="sim_b1")
+                sim_b2 = st.radio("2. Jaké pojištění by měli absolutně prioritně sjednat?", ["Pojištění displeje mobilu", "Pojištění nemovitosti + Životní pojištění pro případ invalidity/smrti", "Havarijní pojištění auta"], key="sim_b2")
+                
+                if st.button("Vyhodnotit jako banka"):
+                    if "10–20 %" in sim_b1 and "Pojištění nemovitosti" in sim_b2:
+                        st.success("✅ **Výborně!** Žadatelé mají dostatečný příjem i vlastní úspory na LTV 90 %. Pojištění nemovitosti bude vyžadovat sama banka jako zástavu a životní pojištění ochrání jejich společný rozpočet.")
+                    else:
+                        st.error("❌ **Chyba v posouzení.** U hypotéky je nutný vlastní základ a krytí životních rizik při takto velkém dluhu.")
+
+        elif profil.startswith("Žadatel C"):
+            with st.container(border=True):
+                st.markdown("#### 📋 Profil: Pavel (35 let)")
+                st.markdown("- **Požadavek:** 60 000 Kč na luxusní dovolenou v Karibiku")
+                st.markdown("- **Čistý příjem:** 32 000 Kč/měsíc")
+                st.markdown("- **Stávající dluhy:** Splácí už kontokorent (20 000 Kč) a kreditku (30 000 Kč)")
+                
+                if st.button("Vyhodnotit jako banka"):
+                    st.error("🚨 **ZAMÍTNUTO!** Pavel vykazuje jasné známky předlužení (kumuluje spotřebitelské dluhy) a chce si půjčit na zážitek/spotřebu, která nemá žádnou trvalou hodnotu. Banka úvěr zamítne z důvodu ochrany spotřebitele i vysokého rizika dlužníka.")
+
+        st.divider()
+
+        # --- AKTIVITA 2: SROVNÁVAČ DVE PŮJČEK ---
+        st.markdown("### 🧾 Aktivita: Porovnej dvě nabídky půjčky")
+        st.write("Potřebuješ si půjčit **50 000 Kč** na nový notebook do školy/práce se splatností na **2 roky (24 měsíců)**. Prohlédni si dvě nabídky:")
+
+        col_n1, col_n2 = st.columns(2)
+        with col_n1:
+            st.info("""
+            **Nabídka A (Tradiční banka)**
+            * **Úroková sazba:** 6,9 % p. a.
+            * **RPSN:** 7,2 %
+            * **Měsíční splátka:** 2 236 Kč
+            * **Poplatek za sjednání:** 0 Kč
+            * **Pojištění:** Volitelné (100 Kč/měs)
+            * **Celkem zaplatíš:** ~53 664 Kč
+            """)
+        with col_n2:
+            st.error("""
+            **Nabídka B (Rychlá nebankovní půjčka)**
+            * **Úroková sazba:** 4,9 % p. a. *(Lákavá reklama!)*
+            * **RPSN:** 28,5 %
+            * **Měsíční splátka:** 2 720 Kč
+            * **Poplatek za sjednání:** 3 500 Kč
+            * **Správa úvěru:** 150 Kč / měsíčně
+            * **Celkem zaplatíš:** ~65 280 Kč
+            """)
+
+        rozhodnuti = st.radio("Kterou možnost bysis vybral/a?", [
+            "Vyber možnost...",
+            "Zvolil/a bych Nabídku A",
+            "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)",
+            "Nepůjčil/a bych si vůbec – našetřil/a bych nebo koupil/a levnější repasovaný notebook"
+        ])
+
+        if rozhodnuti == "Zvolil/a bych Nabídku A":
+            st.success("✅ **Dobrá volba spotřebitele:** Nabídka A má sice o něco vyšší udávaný úrok, ale díky nízkému RPSN a absenci skrytých poplatků tě celkově stojí o 11 616 Kč MÉNĚ než Nabídka B.")
+        elif rozhodnuti == "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)":
+            st.error("❌ **Skočil/a jsi na marketingový trik!** Nízký úrok 4,9 % je jen návnada. Kvůli obřím poplatkům za sjednání a vedení účtu je RPSN celých 28,5 % a přeplatíš o více než 11 tisíc korun navíc!")
+        elif "Nepůjčil/a bych si vůbec" in rozhodnuti:
+            st.success("🏆 **Nejlepší finanční rozhodnutí!** Na věci běžné spotřeby nebo elektroniku je vždy nejbezpečnější si našetřit z vlastních zdrojů nebo zvolit dostupnější alternativu bez zadlužování.")
+
+
+    # =========================================================================
+    # 4.15 SHRNUTÍ: CO SI ODNÉST
+    # =========================================================================
+    elif "4.15" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>15. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.15 Shrnutí kapitoly: Co si odnést")
+        
+        st.write("Gratulujeme! Prošel/prošla jsi celou kapitolu o úvěrech, hypotékách a pojištění. Zde jsou nejdůležitější pravidla pro tvůj finanční život:")
+
+        st.markdown("""
+        <div class="box-green">
+            <h3>✅ Klíčová pravidla pro život:</h3>
+            <ul>
+                <li><b>Úvěr není peníze navíc:</b> Je to jen přesun tvé budoucí spotřeby do přítomnosti, za který vždy zaplatíš úrokem a časem.</li>
+                <li><b>RPSN je tvůj nejlepší přítel:</b> Samotný úrok nestačí. Vždy porovnávej <b>RPSN</b> a <b>celkovou zaplacenou částku</b>.</li>
+                <li><b>Dostatečná rezerva:</b> Splátka úvěru musí být nastavena tak, abys dokázal/a žít a tvořit si rezervu i při výpadku příjmu.</li>
+                <li><b>Hypotéka vyžaduje přípravu:</b> Bez vlastních úspor (10–20 % LTV) a dobré platební historie ti banka na bydlení nepůjčí.</li>
+                <li><b>Pozor na impulzivní dlužení:</b> Služby typu <i>BNPL (Kup teď, zaplať později)</i> nebo kontokorenty odbourávají pocit z placení a vedou do dluhové pasti.</li>
+                <li><b>Pojištění chrání před katastrofou:</b> Pojišťuj věci, které by zničily tvůj rozpočet (invalidita, ztráta domu, obří škoda třetí osobě). Drobnosti zvládni z vlastní rezervy.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # --- AI MENTORING BOX ---
+        st.markdown("### 🤖 Vyzkoušej AI Mentora")
+        st.write("Chceš si téma ještě lépe upevnit nebo se zeptat na cokoliv, co ti nebylo jasné? Zkopíruj tento text a vlož ho do svého oblíbeného AI asistenta:")
+
+        prompt_text = "Vysvětli mi rozdíl mezi úrokem a RPSN na jednoduchém příkladu půjčky. Potom mi ukaž, jak banka posuzuje, jestli člověk dostane spotřebitelský úvěr nebo hypotéku."
+        
+        st.code(prompt_text, language="text")
+        st.caption("💡 Tip: Můžeš AI požádat, aby ti položila 3 kontrolní otázky z této kapitoly!")
