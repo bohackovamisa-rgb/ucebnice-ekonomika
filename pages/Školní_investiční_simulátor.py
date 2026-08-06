@@ -29,10 +29,11 @@ HIGH_TECH_CSS = """
         background-color: #161b22 !important;
     }
 
-    /* Schovat výchozí lišty Streamlitu */
+/* Schovat výchozí lišty Streamlitu */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
+    [data-testid="stSidebarNav"] {visibility: hidden;}
 
     /* Nadpisy */
     h1, h2, h3, h4 {
