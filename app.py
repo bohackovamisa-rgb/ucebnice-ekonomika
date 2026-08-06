@@ -1,4 +1,5 @@
 import streamlit as st
+import math
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
@@ -63,15 +64,10 @@ st.markdown("""
     .sidebar-section-title { font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1.4rem; margin-bottom: 0.5rem; }
     .sub-section-header { color: #4f46e5; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; }
     
-    /* MIND MAPA CSS */
-    .mindmap-wrapper { display: flex; justify-content: center; align-items: center; padding: 2rem 1rem; flex-wrap: wrap; gap: 2rem; background: #f1f5f9; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem; }
-    .mm-col { display: flex; flex-direction: column; gap: 1.5rem; }
-    .mm-center { background: #ef4444; color: white; padding: 1.8rem 2.5rem; border-radius: 20px; font-weight: 800; font-size: 1.5rem; text-align: center; box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3); border: 3px solid #b91c1c; z-index: 2; }
-    .mm-node { background: #ffffff; border: 2px solid #cbd5e1; padding: 1rem; border-radius: 16px; width: 260px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); position: relative; transition: all 0.2s ease; }
-    .mm-node:hover { border-color: #6366f1; box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.2); transform: translateY(-2px); }
-    .mm-title { font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
-    .mm-node ul { margin: 0; padding-left: 1.2rem; font-size: 0.85rem; color: #475569; }
-    .mm-node li { margin-bottom: 0.3rem; }
+    /* LEGENDA CSS */
+    .legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 12px; margin-top: 12px; }
+    .legend-card { padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(0,0,0,0.04); }
+    .badge-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -136,6 +132,9 @@ with st.sidebar:
 # --- HLAVNÍ OBSAHOVÁ PLOCHA ---
 view = st.session_state["current_view"]
 
+# ==========================================
+# ÚVODNÍ STRÁNKA
+# ==========================================
 if view == "Uvod":
     st.markdown("<span class='hero-badge'>Digitální Učebnice</span>", unsafe_allow_html=True)
     st.title("Ekonomika, která dává smysl")
@@ -166,6 +165,39 @@ if view == "Uvod":
         5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
         6. **V závěrečném projektu propojíš všechno dohromady.** Výstupem učebnice je návrh odpovědného ekonomického nebo podnikatelského projektu.
         """)
+
+    with st.container(border=True):
+        st.markdown("## 🎨 Legenda učebnice")
+        st.write("Barevné odlišení v textu ti pomůže okamžitě rozpoznat typ obsahu:")
+
+        st.markdown("""
+        <div class="legend-grid">
+            <div class="legend-card" style="background: #f0f9ff; border-left: 4px solid #0284c7;">
+                <span class="badge-dot" style="background: #0284c7;"></span>
+                <div><strong style="color: #0369a1;">Modrá:</strong> Výklad, struktura, důležité vysvětlení</div>
+            </div>
+            <div class="legend-card" style="background: #fefce8; border-left: 4px solid #eab308;">
+                <span class="badge-dot" style="background: #eab308;"></span>
+                <div><strong style="color: #854d0e;">Žlutá:</strong> Úkol, otázka, aktivita, procvičení</div>
+            </div>
+            <div class="legend-card" style="background: #faf5ff; border-left: 4px solid #a855f7;">
+                <span class="badge-dot" style="background: #a855f7;"></span>
+                <div><strong style="color: #6b21a8;">Fialová:</strong> AI mentoring a práce s asistencí</div>
+            </div>
+            <div class="legend-card" style="background: #f0fdf4; border-left: 4px solid #22c55e;">
+                <span class="badge-dot" style="background: #22c55e;"></span>
+                <div><strong style="color: #15803d;">Zelená:</strong> Praxe, doporučení, dobrý postup</div>
+            </div>
+            <div class="legend-card" style="background: #fef2f2; border-left: 4px solid #ef4444;">
+                <span class="badge-dot" style="background: #ef4444;"></span>
+                <div><strong style="color: #991b1b;">Oranžová / Červená:</strong> Riziko, varování, problém</div>
+            </div>
+            <div class="legend-card" style="background: #f8fafc; border-left: 4px solid #64748b;">
+                <span class="badge-dot" style="background: #64748b;"></span>
+                <div><strong style="color: #334155;">Šedá:</strong> Zdroje, ověřování, poznámky</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
 # ==========================================
 # KAPITOLA 1: PODNIKAVOST A STARTUPY
