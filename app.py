@@ -95,7 +95,35 @@ with st.sidebar:
     if st.button("Úvodní stránka", key="nav_uvod", use_container_width=True, type="primary" if is_uvod else "secondary"):
         st.session_state["current_view"] = "Uvod"
         st.rerun()
+# ==========================================
+# LEGENDA UČEBNICE (Přidat na Úvodní stránku)
+# ==========================================
+with st.container(border=True):
+    st.subheader("🎨 Legenda učebnice")
+    st.write("Pro snazší orientaci v textu využíváme barevné odlišení jednotlivých typů obsahu:")
 
+    st.markdown("""
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+        <div style="background-color: #e0f2fe; border-left: 5px solid #0284c7; padding: 12px 16px; border-radius: 6px; color: #0369a1;">
+            <strong>🟦 Modrá:</strong> Výklad, struktura, důležité vysvětlení
+        </div>
+        <div style="background-color: #fef9c3; border-left: 5px solid #eab308; padding: 12px 16px; border-radius: 6px; color: #854d0e;">
+            <strong>🟨 Žlutá:</strong> Úkol, otázka, aktivita, procvičení
+        </div>
+        <div style="background-color: #f3e8ff; border-left: 5px solid #a855f7; padding: 12px 16px; border-radius: 6px; color: #6b21a8;">
+            <strong>🟪 Fialová:</strong> AI mentoring a práce s asistencí
+        </div>
+        <div style="background-color: #dcfce7; border-left: 5px solid #22c55e; padding: 12px 16px; border-radius: 6px; color: #15803d;">
+            <strong>🟩 Zelená:</strong> Praxe, doporučení, dobrý postup
+        </div>
+        <div style="background-color: #ffedd5; border-left: 5px solid #f97316; padding: 12px 16px; border-radius: 6px; color: #9a3412;">
+            <strong>🟧 / 🟥 Oranžová a Červená:</strong> Riziko, varování, právní nebo etický problém
+        </div>
+        <div style="background-color: #f1f5f9; border-left: 5px solid #64748b; padding: 12px 16px; border-radius: 6px; color: #334155;">
+            <strong>⬜ Šedá:</strong> Zdroje, ověřování, učitelské nebo organizační poznámky
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     # KAPITOLY KURZU
     st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
     chapters = {
