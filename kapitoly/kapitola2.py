@@ -5652,3 +5652,161 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                         st.success("Tvá reflexe je úspěšně uložená. Gratulujeme k úspěšnému absolvování bloku o financích!")
                     else:
                         st.warning("Zkus prosím vyplnit všechna tři pole, ať je tvá reflexe kompletní.")
+# =========================================================================
+    # KAPITOLA 7: AKTIVITA - OPTIMALIZACE VÝDAJŮ
+    # =========================================================================
+    elif selected_section_2.startswith("7"):
+        st.markdown("<div class='sub-section-header'>7. PRAKTICKÁ AKTIVITA</div>", unsafe_allow_html=True)
+        st.markdown("## 7. Aktivita: Optimalizace rozpočtu")
+        
+        st.write(
+            "Finanční zdraví nezačíná tím, že přestaneš utrácet za všechno, co tě baví. "
+            "Jde o to najít místa, kde peníze unikají zbytečně. Zkusíme si to na tvém (nebo fiktivním) rozpočtu."
+        )
+
+        st.markdown("""
+        <div class="box-purple">
+            <b>✍️ Mini úkol:</b> Sepiš tři pravidelné výdaje, které by šly snížit bez výrazného poklesu kvality života. U každého navrhni konkrétní změnu a podívej se, co to udělá s tvým rozpočtem za celý rok.
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.form("form_uspory"):
+            c1, c2, c3, c4 = st.columns([3, 2, 3, 2])
+            c1.markdown("**Název výdaje** (např. Předplatné, Káva)")
+            c2.markdown("**Původní cena měsíčně**")
+            c3.markdown("**Jak to změním?** (např. Zruším, udělám doma)")
+            c4.markdown("**Nová cena měsíčně**")
+
+            # Položka 1
+            v1_nazev = c1.text_input("Výdaj 1", key="v1_n", label_visibility="collapsed")
+            v1_stara = c2.number_input("Cena 1", min_value=0, value=300, step=50, key="v1_s", label_visibility="collapsed")
+            v1_zmena = c3.text_input("Změna 1", key="v1_z", label_visibility="collapsed")
+            v1_nova = c4.number_input("Nová cena 1", min_value=0, value=0, step=50, key="v1_no", label_visibility="collapsed")
+
+            # Položka 2
+            v2_nazev = c1.text_input("Výdaj 2", key="v2_n", label_visibility="collapsed")
+            v2_stara = c2.number_input("Cena 2", min_value=0, value=800, step=50, key="v2_s", label_visibility="collapsed")
+            v2_zmena = c3.text_input("Změna 2", key="v2_z", label_visibility="collapsed")
+            v2_nova = c4.number_input("Nová cena 2", min_value=0, value=400, step=50, key="v2_no", label_visibility="collapsed")
+
+            # Položka 3
+            v3_nazev = c1.text_input("Výdaj 3", key="v3_n", label_visibility="collapsed")
+            v3_stara = c2.number_input("Cena 3", min_value=0, value=1200, step=50, key="v3_s", label_visibility="collapsed")
+            v3_zmena = c3.text_input("Změna 3", key="v3_z", label_visibility="collapsed")
+            v3_nova = c4.number_input("Nová cena 3", min_value=0, value=800, step=50, key="v3_no", label_visibility="collapsed")
+
+            submitted = st.form_submit_button("Spočítat moji roční úsporu")
+
+            if submitted:
+                uspora_mesic = (v1_stara - v1_nova) + (v2_stara - v2_nova) + (v3_stara - v3_nova)
+                uspora_rok = uspora_mesic * 12
+
+                st.divider()
+                if uspora_rok > 0:
+                    st.success("Tohle je síla drobných změn! 🎉")
+                    col_a, col_b = st.columns(2)
+                    col_a.metric("Měsíční úspora", f"{uspora_mesic:,} Kč".replace(",", " "))
+                    col_b.metric("Ušetřeno za 1 rok", f"{uspora_rok:,} Kč".replace(",", " "))
+                    st.info(f"💡 Za ušetřených **{uspora_rok:,} Kč** už by se dalo pořídit něco mnohem hodnotnějšího (investice, cestování, vzdělání), než byly původní výdaje.")
+                else:
+                    st.warning("Zatím to nevypadá na žádnou úsporu. Zkus navrhnout radikálnější změnu v kolonce 'Nová cena'.")
+
+    # =========================================================================
+    # KAPITOLA 8: SLOVNÍK CIZÍCH POJMŮ
+    # =========================================================================
+    elif selected_section_2.startswith("8"):
+        import pandas as pd
+        import random
+        
+        st.markdown("<div class='sub-section-header'>8. ZÁVĚREČNÝ PŘEHLED</div>", unsafe_allow_html=True)
+        st.markdown("## 8. Slovník cizích pojmů")
+        
+        st.write(
+            "Finanční svět má svůj vlastní jazyk. Tady najdeš rychlý překlad do lidštiny. "
+            "Pojmy si můžeš vyhledat v tabulce, nebo si níže vyzkoušet generátor kartiček."
+        )
+
+        slovnik_data = [
+            {"Pojem": "Aktiva", "Vysvětlení": "Majetek firmy nebo člověka; například peníze, zásoby, budovy, stroje, pohledávky nebo investice."},
+            {"Pojem": "Akcie", "Vysvětlení": "Cenný papír představující podíl na akciové společnosti. Vlastník akcie se stává akcionářem."},
+            {"Pojem": "Akcionář", "Vysvětlení": "Vlastník akcie, tedy člověk nebo instituce, která vlastní podíl ve firmě."},
+            {"Pojem": "Bankovní licence", "Vysvětlení": "Povolení, které musí mít instituce, aby mohla působit jako banka."},
+            {"Pojem": "Blockchain", "Vysvětlení": "Sdílený digitální záznam transakcí, který je rozdělen do bloků a zabezpečen pravidly sítě."},
+            {"Pojem": "Bonita", "Vysvětlení": "Schopnost klienta splácet úvěr. Banka ji posuzuje podle příjmů, výdajů, dluhů a platební historie."},
+            {"Pojem": "Broker", "Vysvětlení": "Zprostředkovatel, přes kterého může investor nakupovat a prodávat investiční nástroje."},
+            {"Pojem": "Burza", "Vysvětlení": "Organizovaný trh, kde se podle pravidel obchoduje například s akciemi, dluhopisy nebo fondy."},
+            {"Pojem": "Cashflow", "Vysvětlení": "Tok peněz. Ukazuje, kolik peněz skutečně přišlo a odešlo."},
+            {"Pojem": "Cenný papír", "Vysvětlení": "Listina nebo digitální záznam, se kterým jsou spojena určitá práva (podíl ve firmě, splacení dluhu)."},
+            {"Pojem": "ČNB", "Vysvětlení": "Česká národní banka. Centrální banka ČR, která pečuje o měnovou a finanční stabilitu."},
+            {"Pojem": "Deficit", "Vysvětlení": "Schodek. Situace, kdy výdaje převyšují příjmy."},
+            {"Pojem": "Diverzifikace", "Vysvětlení": "Rozložení peněz do více investic, aby člověk nebyl závislý jen na jednom aktivu (Nedávej všechna vejce do jednoho košíku)."},
+            {"Pojem": "Dluhopis", "Vysvětlení": "Cenný papír, kterým si emitent půjčuje peníze od investorů a slibuje jejich splacení + úrok."},
+            {"Pojem": "Emitent", "Vysvětlení": "Ten, kdo vydává cenný papír, například stát, obec, banka nebo firma."},
+            {"Pojem": "Fintech", "Vysvětlení": "Spojení financí a technologií. Moderní finanční služby a aplikace."},
+            {"Pojem": "Fixní náklady", "Vysvětlení": "Náklady, které se nemění přímo podle počtu prodaných kusů, například nájem nebo licence na software."},
+            {"Pojem": "Inflace", "Vysvětlení": "Růst cenové hladiny. Za stejnou částku si člověk koupí méně než dříve."},
+            {"Pojem": "Investice", "Vysvětlení": "Vložení peněz do aktiva s očekáváním budoucího výnosu, ale s určitým rizikem."},
+            {"Pojem": "Jistina", "Vysvětlení": "Původně půjčená nebo vložená částka, ze které se počítá úrok."},
+            {"Pojem": "Kryptoměna", "Vysvětlení": "Digitální aktivum fungující v počítačové síti, často bez jedné centrální banky."},
+            {"Pojem": "Likvidita", "Vysvětlení": "Schopnost rychle proměnit aktivum na peníze nebo schopnost firmy včas platit své závazky."},
+            {"Pojem": "LTV", "Vysvětlení": "Poměr výše úvěru k hodnotě nemovitosti (Loan to Value). Používá se hlavně u hypoték."},
+            {"Pojem": "Neobanka", "Vysvětlení": "Moderní banka nebo finanční služba zaměřená hlavně na mobilní prostředí (např. Revolut)."},
+            {"Pojem": "Pasiva", "Vysvětlení": "Zdroje financování majetku firmy, například vlastní kapitál, úvěry nebo závazky."},
+            {"Pojem": "Pohledávka", "Vysvětlení": "Částka, kterou má někdo dostat zaplacenou. (Firma čeká, až jí zákazník zaplatí)."},
+            {"Pojem": "Repo sazba", "Vysvětlení": "Důležitá úroková sazba ČNB, která ovlivňuje cenu (úroky) peněz v celé ekonomice."},
+            {"Pojem": "Rentabilita", "Vysvětlení": "Ziskovost. Ukazuje, jak dobře firma vytváří zisk vzhledem k tržbám, majetku nebo kapitálu."},
+            {"Pojem": "Rezerva", "Vysvětlení": "Peníze odložené stranou pro nečekané situace (finanční airbag)."},
+            {"Pojem": "Riziko", "Vysvětlení": "Možnost, že výsledek bude jiný, než člověk očekával — například ztráta peněz."},
+            {"Pojem": "RPSN", "Vysvětlení": "Roční procentní sazba nákladů. Ukazuje CELKOVÉ roční náklady úvěru (úrok + všechny poplatky)."},
+            {"Pojem": "Složené úročení", "Vysvětlení": "Úročení, při kterém se úročí nejen původní částka, ale i dříve připsané úroky (úroky z úroků)."},
+            {"Pojem": "Spekulace", "Vysvětlení": "Sázka na krátkodobý pohyb ceny s vysokým rizikem (vs. dlouhodobé investování)."},
+            {"Pojem": "Token", "Vysvětlení": "Digitální jednotka v kryptoměnovém nebo blockchainovém prostředí."},
+            {"Pojem": "Úrok", "Vysvětlení": "Cena za půjčení peněz (když platíš bance) nebo odměna za jejich uložení (když banka platí tobě)."},
+            {"Pojem": "Variabilní náklady", "Vysvětlení": "Náklady, které rostou nebo klesají přímo podle objemu výroby/prodeje (např. nákup surovin)."},
+            {"Pojem": "Volatilita", "Vysvětlení": "Kolísání ceny aktiva. Vysoká volatilita = cena lítá prudce nahoru a dolů."},
+            {"Pojem": "Závazek", "Vysvětlení": "Částka nebo povinnost, kterou musí člověk nebo firma zaplatit někomu jinému (Dluh)."}
+        ]
+        
+        df_slovnik = pd.DataFrame(slovnik_data)
+
+        tab_db, tab_flash = st.tabs(["📚 Databáze pojmů", "🧠 Trénink (Flashcards)"])
+
+        with tab_db:
+            st.markdown("### Prohledávatelný slovník")
+            st.dataframe(
+                df_slovnik, 
+                use_container_width=True, 
+                hide_index=True,
+                column_config={
+                    "Pojem": st.column_config.TextColumn("Pojem", width="medium"),
+                    "Vysvětlení": st.column_config.TextColumn("Jednoduché vysvětlení", width="large")
+                }
+            )
+
+        with tab_flash:
+            st.markdown("### Otestuj se: Dokážeš to vysvětlit ze života?")
+            st.write("Skutečné porozumění poznáš tak, že dokážeš odborný pojem vysvětlit na příkladu z běžného života. Vylosuj si pojem a zkus to!")
+            
+            # Inicializace session state pro uchování vylosovaného pojmu
+            if 'random_term' not in st.session_state:
+                st.session_state['random_term'] = random.choice(slovnik_data)
+
+            if st.button("🎲 Vylosovat nový pojem", key="btn_losuj"):
+                st.session_state['random_term'] = random.choice(slovnik_data)
+                
+            vybrany_pojem = st.session_state['random_term']
+
+            with st.container(border=True):
+                st.markdown(f"#### Tvé slovo je: **{vybrany_pojem['Pojem']}**")
+                
+                with st.form("flashcard_form", clear_on_submit=False):
+                    priklad = st.text_input("Napiš sem svůj vlastní příklad ze života (např. 'Je to jako když...'):")
+                    ukazat_odpoved = st.form_submit_button("Zkontrolovat správnou definici")
+                    
+                    if ukazat_odpoved:
+                        st.divider()
+                        st.info(f"**Učebnicová definice:** {vybrany_pojem['Vysvětlení']}")
+                        if len(priklad) > 5:
+                            st.success("Skvěle! Pokud se tvůj příklad shoduje s logikou výše, právě jsi tento pojem dokonale pochopil/a.")
+                        else:
+                            st.warning("Zkus příště napsat reálný příklad, víc si to tak zapamatuješ!")
