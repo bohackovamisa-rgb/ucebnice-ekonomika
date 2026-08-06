@@ -3305,4 +3305,153 @@ def render():
         * Nemovitost, kterou chceš koupit, má podle odhadce banky nižší hodnotu, než za ni chceš zaplatit prodejci.
         * Nemáš dostatek vlastních naspořených peněz pro základ vkladu.
         """)
+        # =========================================================================
+    # 4.5 POSTUP POSKYTNUTÍ SPOTŘEBITELSKÉHO ÚVĚRU
+    # =========================================================================
+    elif "4.5" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>5. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.5 Postup poskytnutí spotřebitelského úvěru")
         
+        st.write("Spotřebitelský úvěr je úvěr pro fyzickou osobu — spotřebitele. Může sloužit například na vybavení domácnosti, auto, elektroniku, rekonstrukci, studium nebo konsolidaci dluhů.")
+        st.write("**Základní pravidlo:** Úvěr by nikdy neměl sloužit k zakrývání dlouhodobého problému, kdy člověk pravidelně utrácí víc, než vydělává.")
+
+        st.markdown("""
+        <div class="box-purple">
+            <b>📱 Současná realita:</b> Úvěr lze dnes někdy sjednat v mobilu za pár minut. Rychlost ale nesmí nahradit přemýšlení. Čím rychlejší je tlačítko „půjčit si“, tím pomalejší by mělo být tvé rozhodnutí.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.divider()
+
+        # --- INTERAKTIVNÍ ČASOVÁ OSA ---
+        st.markdown("### ⏱️ Typický postup (Časová osa)")
+        st.write("Posouvej jezdcem a podívej se, čím vším musíš projít, než peníze opravdu dostaneš.")
+        
+        faze = st.select_slider(
+            "Fáze úvěru:",
+            options=["1. Výběr", "2. Žádost", "3. Ověření", "4. Posouzení", "5. Smlouva", "6. Čerpání a splácení"]
+        )
+
+        with st.container(border=True):
+            if faze == "1. Výběr":
+                st.info("**1. Výběr nabídky**\n\nKlient porovná úrok, RPSN, splátku, celkovou zaplacenou částku a podmínky u různých bank.")
+            elif faze == "2. Žádost":
+                st.info("**2. Žádost o úvěr**\n\nVyplníš údaje o sobě, svých příjmech, výdajích a dalších závazcích (jiné úvěry, děti, nájem).")
+            elif faze == "3. Ověření":
+                st.info("**3. Ověření totožnosti a doložení příjmu**\n\nBanka si tě prověří (online nebo osobně). Bude chtít potvrzení od zaměstnavatele nebo výpisy z účtu za poslední měsíce.")
+            elif faze == "4. Posouzení":
+                st.info("**4. Kontrola registrů a posouzení schopnosti splácet**\n\nVěřitel ověřuje tvou úvěrovou historii (zda nedlužíš jinde) a matematicky vyhodnotí, zda tvůj rozpočet úvěr unese.")
+            elif faze == "5. Smlouva":
+                st.info("**5. Nabídka podmínek a podpis smlouvy**\n\nDostaneš finální nabídku (skutečná sazba se může lišit od reklamy!). Po podpisu se zavazuješ splácet.")
+            elif faze == "6. Čerpání a splácení":
+                st.info("**6. Čerpání peněz a splácení**\n\nPeníze přijdou na tvůj účet (nebo přímo obchodníkovi). Začíná platit splátkový kalendář.")
+
+        st.divider()
+
+        st.markdown("### 4.5.1 Druhy spotřebitelských úvěrů")
+        
+        st.markdown("""
+        | Druh | Jak to funguje | Typické riziko |
+        | :--- | :--- | :--- |
+        | **Účelový úvěr** | Peníze jsou určeny na konkrétní věc (auto, rekonstrukce). | Menší flexibilita, ale často získáš lepší podmínky a nižší úrok. |
+        | **Neúčelový úvěr** | Klient nemusí přesně dokládat, na co peníze použije. | Volnost může svádět k financování hloupostí a zbytečností. |
+        | **Kreditní karta** | Opakovaně dostupný limit s bezúročným obdobím. | Extrémně vysoký úrok při nesplacení včas. |
+        | **Kontokorent** | Možnost jít na svém běžném účtu do mínusu. | Člověk si snadno zvykne žít z peněz, které nemá, a uvízne v pasti. |
+        | **Konsolidace** | Sloučení více malých úvěrů do jednoho velkého. | Může sice snížit měsíční splátku, ale často prodlouží splácení a zvýší celkové náklady. |
+        | **Odložená platba (BNPL)** | „Kup teď, zaplať později“ (např. v e-shopu). | Psychologicky maskuje dluh jako pohodlnou platbu. |
+        """)
+
+
+    # =========================================================================
+    # 4.6 HYPOTÉKA: ÚVĚR NA BYDLENÍ
+    # =========================================================================
+    elif "4.6" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>6. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.6 Hypotéka: úvěr na bydlení")
+        
+        st.write("Hypotéka je dlouhodobý úvěr, obvykle **zajištěný nemovitostí**. Používá se hlavně na koupi, výstavbu nebo rekonstrukci bydlení. Protože jde často o milionové částky a splácení na desítky let, patří mezi nejvážnější finanční rozhodnutí v životě.")
+
+        st.markdown("""
+        <div class="box-green">
+            <b>🏠 Hypotéka jednoduše:</b> Banka ti půjčí peníze na dům, ale jako zajištění má k němu zástavní právo. Pokud bys dlouhodobě nesplácel/a, banka může svou pohledávku řešit tím, že nemovitost prodá.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.divider()
+
+        # --- LTV KALKULAČKA ---
+        st.markdown("### 4.6.1 Proč banka nepůjčí 100 % ceny (Ukazatel LTV)")
+        st.write("U hypotéky musí mít žadatel zpravidla část vlastních peněz. Pokud by cena nemovitosti v krizi klesla a klient přestal splácet, banka by při prodeji nemusela získat zpět celou půjčenou částku.")
+        st.write("Základním metrikou je **LTV (Loan to Value)** — poměr výše úvěru k odhadní hodnotě nemovitosti. Banky standardně půjčují maximálně 80 % (pro mladé do 36 let někdy 90 %).")
+
+        with st.container(border=True):
+            st.markdown("#### 🧮 Otestuj si LTV")
+            cena_nemovitosti = st.slider("Hodnota nemovitosti (Kč):", 1000000, 10000000, 4000000, step=100000)
+            vlastni_penize = st.slider("Tvé vlastní úspory (Kč):", 0, 5000000, 800000, step=50000)
+            
+            pozadovany_uver = cena_nemovitosti - vlastni_penize
+            
+            if cena_nemovitosti > 0:
+                ltv = (pozadovany_uver / cena_nemovitosti) * 100
+            else:
+                ltv = 0
+
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Banka ti půjčí", f"{pozadovany_uver:,} Kč".replace(",", " "))
+            col2.metric("Tvé peníze", f"{vlastni_penize:,} Kč".replace(",", " "))
+            
+            if ltv > 90:
+                col3.metric("LTV", f"{ltv:.1f} %", delta="Zamítnuto (nad 90 %)", delta_color="inverse")
+                st.error("❌ Takto hypotéku nedostaneš. LTV je příliš vysoké. Musíš buď naspořit více vlastních peněz, nebo si vybrat levnější nemovitost.")
+            elif ltv > 80:
+                col3.metric("LTV", f"{ltv:.1f} %", delta="Hraniční (80 - 90 %)", delta_color="off")
+                st.warning("⚠️ LTV mezi 80 % a 90 % banky schvalují jen výjimečně, většinou jen žadatelům do 36 let a s přísnějšími podmínkami.")
+            else:
+                col3.metric("LTV", f"{ltv:.1f} %", delta="Ideální (pod 80 %)", delta_color="normal")
+                st.success("✅ Tvé LTV je v bezpečné zóně. Z tohoto pohledu by banka úvěr schválila.")
+
+        st.markdown("""
+        <div class="box-red">
+            <b>⚠️ Pozor na skryté náklady:</b> Vlastní peníze nejsou jen „část kupní ceny“. Jako kupující musíš mít rezervu na právní služby, odhad nemovitosti, stěhování, provizi realitce, rekonstrukci nebo nábytek! Tyto věci z hypotéky většinou nezaplatíš.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        st.markdown("### 4.6.2 Postup získání hypotéky")
+        st.write("Proces je mnohem složitější a delší než u běžného úvěru v mobilu. Zahrnuje:")
+        
+        st.markdown("""
+        1. **Předběžné posouzení:** Zjištění, jakou splátku tvůj rozpočet snese.
+        2. **Kontrola vlastních peněz:** Kolik máš a kolik musí zbýt jako rezerva.
+        3. **Výběr nemovitosti:** Nalezení vysněného bydlení.
+        4. **Odhad nemovitosti:** Odhadce banky posoudí hodnotu (často bývá nižší než kupní cena v inzerátu!).
+        5. **Žádost o hypotéku:** Doložení hromady papírů o příjmech a nemovitosti.
+        6. **Posouzení bonity:** Banka hodnotí schopnost splácet na dekády dopředu.
+        7. **Podpis dokumentace:** Úvěrová smlouva a zástavní právo (řeší se přes katastr nemovitostí).
+        8. **Čerpání a splácení.**
+        """)
+
+        st.divider()
+
+        st.markdown("### 4.6.3 Fixace úrokové sazby")
+        st.write("U hypotéky se úrok sjednává na dobu určitou (fixace). Během této doby se ti nemůže zvednout splátka, ani kdyby byla na trhu krize. Po skončení fixace ti banka nabídne úrok nový.")
+
+        col4, col5 = st.columns(2)
+        with col4:
+            st.info("**Kratší fixace (např. 1 - 3 roky)**\n\n**Výhoda:** Možnost dříve reagovat, pokud úroky na trhu klesají.\n\n**Riziko:** Splátka ti může rychle zdražit, pokud sazby na trhu vzrostou.")
+        with col5:
+            st.info("**Delší fixace (např. 7 - 10 let)**\n\n**Výhoda:** Jistota a klidný spánek, splátka se dlouho nezmění.\n\n**Riziko:** Nemusíš využít případný pokles sazeb na trhu a předčasné splacení může mít podmínky.")
+
+        st.divider()
+
+        st.markdown("### 4.6.4 Hypotéka vs. Spotřebitelský úvěr")
+        st.markdown("""
+        | Vlastnost | Spotřebitelský úvěr | Hypotéka |
+        | :--- | :--- | :--- |
+        | **Účel** | Auto, elektronika, spotřeba | Bydlení, nemovitost, výstavba |
+        | **Výše částky** | Desítky až stovky tisíc Kč | Často miliony Kč |
+        | **Doba splácení** | Měsíce až jednotky let | Desítky let (např. 25–30 let) |
+        | **Zajištění** | Většinou bez zajištění | Zástavní právo k nemovitosti |
+        | **Posouzení** | Příjem, výdaje, registry | To samé + hodnota nemovitosti, vlastní zdroje a LTV |
+        """)
