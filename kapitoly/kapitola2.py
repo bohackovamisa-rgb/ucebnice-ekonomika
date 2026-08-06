@@ -2821,44 +2821,77 @@ def render():
                     """)
         
         st.divider()
-
-        # --- AKTIVITA 2: INVESTIČNÍ POČASÍ ---
+# --- AKTIVITA 2: INVESTIČNÍ POČASÍ (VYLEPŠENÁ VERZE) ---
         st.markdown("### 📉 Aktivita 2: Investiční počasí")
-        st.write("Trh se neustále mění a vyvolává v lidech silné emoce. Vyber si jednu z tržních situací a porovnej chování začátečníka a profesionála.")
-        
-        situace = st.selectbox(
-            "Vyber situaci na trhu:", 
-            [
-                "Vyber situaci...",
-                "Trh roste a všichni mluví o rychlém zisku",
-                "Trh spadl o 30 %",
-                "Inflace je vysoká",
-                "Úrokové sazby rostou",
-                "Influencer doporučuje nový token",
-                "Kamarád říká, že „tohle nemůže spadnout“"
-            ]
-        )
-        
-        if situace != "Vyber situaci...":
-            col_zac, col_inv = st.columns(2)
-            with col_zac:
-                user_zacatecnik = st.text_area("Co by v této situaci udělal impulzivní začátečník?", height=150)
-            with col_inv:
-                user_investor = st.text_area("Co by udělal informovaný investor?", height=150)
-                
-            if st.button("Ukázat pohled psychologie trhu"):
-                if situace == "Trh roste a všichni mluví o rychlém zisku":
-                    st.info("**Expert:** Začátečník podlehne FOMO (strach z propásnutí), nakoupí na vrcholu a poruší svá pravidla. Investor zůstává v klidu, drží se svého plánu a nepanikaří, i když ostatní 'rychle bohatnou'.")
-                elif situace == "Trh spadl o 30 %":
-                    st.info("**Expert:** Začátečník se vyděsí, prodá se ztrátou a z trhu uteče. Investor ví, že propady jsou normální, rebalancuje portfolio nebo využije 'slevu' k dalším nákupům.")
-                elif situace == "Inflace je vysoká":
-                    st.info("**Expert:** Začátečník nechá peníze ležet na běžném účtu (kde ztrácejí hodnotu) nebo v panice nakoupí nesmysly. Investor se ujistí, že má diverzifikované portfolio s reálnými aktivy (akcie, nemovitosti), která dlouhodobě inflaci poráží.")
-                elif situace == "Úrokové sazby rostou":
-                    st.info("**Expert:** Začátečník si bere drahé úvěry. Investor ví, že teď lépe vydělávají spořicí účty a dluhopisy, a upraví podle toho svou konzervativní složku.")
-                elif situace == "Influencer doporučuje nový token":
-                    st.info("**Expert:** Začátečník ihned nakoupí, protože věří autoritě a slibu zisku. Investor ví, že influencer už je pravděpodobně zaplacený nebo nakoupil dávno předtím. Hledá varovné signály.")
-                elif situace == "Kamarád říká, že „tohle nemůže spadnout“":
-                    st.info("**Expert:** Začátečník mu uvěří a vsadí všechno na jednu kartu. Investor ví, že jakmile si trh myslí, že něco nemůže spadnout, riziko je obvykle nejvyšší (bublina).")
+        st.write("Jak reagují lidé na výkyvy trhu? Vyber situaci a zkus správně přiřadit, jak se zachová **Impulzivní začátečník** a jak **Informovaný investor**.")
+
+        scenare = {
+            "Vyber situaci...": None,
+            "Trh raketově roste a všichni mluví o rychlém zisku": {
+                "reakce_A": "Okamžitě nakupuje za jakoukoliv cenu, protože má strach, že mu ujede vlak (FOMO).",
+                "reakce_B": "Zůstává v klidu, drží se svého dlouhodobého plánu a nepanikaří, i když ostatní 'rychle bohatnou'.",
+                "zacatecnik": "A",
+                "vysvetleni": "Když trh strmě roste, začátečníci často naskakují na vrcholu bubliny, protože vnímají jen nadšení zisků. Investor ví, že stromy nerostou do nebe."
+            },
+            "Trh nečekaně spadl o 30 %": {
+                "reakce_A": "Ví, že propady jsou normální. Ujistí se, že firmy/aktiva neztratily svou skutečnou hodnotu, a případně využije 'slevu' k dalším nákupům.",
+                "reakce_B": "Vyděsí se, že přijde o všechno, prodá v panice se ztrátou a z trhu definitivně uteče.",
+                "zacatecnik": "B",
+                "vysvetleni": "Nejhorší investiční chybou je nakupovat draze (v euforii) a prodávat levně (v panice). Investor využívá propady jako příležitost, začátečník jako důvod k útěku."
+            },
+            "Influencer doporučuje na TikToku 'zaručený' nový token": {
+                "reakce_A": "Uvědomí si, že influencer už pravděpodobně nakoupil levně dřív a teď jen potřebuje fanoušky, kteří mu nákupem zvednou cenu (exit liquidity).",
+                "reakce_B": "Bez rozmýšlení nakoupí, protože influencer má luxusní auto, statisíce sledujících a slibuje zisk 1000 %.",
+                "zacatecnik": "B",
+                "vysvetleni": "Pokud má někdo 'zaručený' tip na bohatství, nepotřebuje ho křičet do světa na sociálních sítích. Ti, kteří tak činí, většinou potřebují tebe jako svůj zdroj peněz."
+            },
+            "Centrální banky zvedají úrokové sazby": {
+                "reakce_A": "Ignoruje to a diví se, že se mu prodražuje hypotéka a splátky za auto, které si zrovna vzal na dluh.",
+                "reakce_B": "Upraví své portfolio — ví, že teď lépe ponesou konzervativní nástroje jako spořicí účty a státní dluhopisy, a zlevní se hypotéky pro budoucí nákup nemovitosti.",
+                "zacatecnik": "A",
+                "vysvetleni": "Úrokové sazby určují 'cenu peněz'. Když rostou, dluhy jsou dražší a bezpečné spoření výhodnější. Investor s těmito cykly aktivně pracuje."
+            }
+        }
+
+        vybrana_situace = st.selectbox("Vyber situaci na trhu:", list(scenare.keys()))
+
+        if vybrana_situace != "Vyber situaci...":
+            data = scenare[vybrana_situace]
+            
+            st.markdown(f"**Tvá situace:** *{vybrana_situace}*")
+            st.markdown("Přečti si následující dvě reakce a rozhodni, komu patří:")
+            
+            # Karty s reakcemi a výběrem
+            with st.container(border=True):
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.info(f"**Reakce A:**\n\n{data['reakce_A']}")
+                    odpoved_A = st.radio("Kdo podle tebe provede Akci A?", ["Vyber...", "Impulzivní začátečník", "Informovaný investor"], key="rad_A")
+                    
+                with col2:
+                    st.warning(f"**Reakce B:**\n\n{data['reakce_B']}")
+                    odpoved_B = st.radio("Kdo podle tebe provede Akci B?", ["Vyber...", "Impulzivní začátečník", "Informovaný investor"], key="rad_B")
+            
+            if st.button("Vyhodnotit moje skóre", type="primary"):
+                if odpoved_A == "Vyber..." or odpoved_B == "Vyber...":
+                    st.error("⚠️ Nejdřív přiřaď k oběma reakcím příslušného člověka.")
+                elif odpoved_A == odpoved_B:
+                    st.error("⚠️ Nemůžou oba udělat to samé! Jeden je začátečník, druhý investor.")
+                else:
+                    # Zjistíme, jestli se uživatel trefil podle našeho klíče
+                    spravne_A = odpoved_A == "Impulzivní začátečník" if data["zacatecnik"] == "A" else odpoved_A == "Informovaný investor"
+                    spravne_B = odpoved_B == "Impulzivní začátečník" if data["zacatecnik"] == "B" else odpoved_B == "Informovaný investor"
+                    
+                    if spravne_A and spravne_B:
+                        st.success("✅ Přesně tak! Skvěle jsi prokoukl/a psychologii obou přístupů.")
+                    else:
+                        st.error("❌ Tady ses trochu nechal/a nachytat. Pojďme se podívat proč.")
+                        
+                    st.markdown(f"""
+                    <div class="box-blue">
+                        <b>💡 Co si z toho odnést:</b><br>{data['vysvetleni']}
+                    </div>
+                    """, unsafe_allow_html=True)
 
         st.divider()
 
