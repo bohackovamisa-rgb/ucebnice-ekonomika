@@ -294,15 +294,15 @@ def render():
             st.markdown("""
             <div class='box-blue'>
                 🏦 <strong>Základní rozlišení:</strong><br>
-                • <strong>Česká národní banka (ČNB):</strong> Česká národní banka (ČNB) je centrální banka České republiky. Nejde o běžnou banku pro občany. Je to instituce, která hlídá stabilitu měny, finančního systému a pravidla pro banky.<br>
-                • <strong>Komerční banky:</strong> Komerční banky jsou banky, se kterými běžně pracují lidé, firmy a obce. Vedou účty, přijímají vklady, poskytují úvěry, vydávají platební karty a zajišťují platby.
+                • <strong>Česká národní banka (ČNB):</strong> Centrální banka České republiky. Nejde o běžnou banku pro občany. Je to instituce, která hlídá stabilitu měny, finančního systému a pravidla pro banky.<br>
+                • <strong>Komerční banky:</strong> Banky, se kterými běžně pracují lidé, firmy a obce. Vedou účty, přijímají vklady, poskytují úvěry, vydávají platební karty a zajišťují platby.
             </div>
             <div class='box-purple'>
                 🧠 <strong>Pointa pro běžný život:</strong> Když platíš kartou, bereš si hypotéku, dostáváš výplatu na účet nebo sleduješ inflaci, nepřímo se setkáváš s rozhodnutími centrální banky i se službami komerčních bank.
             </div>
             """, unsafe_allow_html=True)
 
-        # 1.2.1
+        # 1.2.1 Postavení ČNB v ČR
         with st.container(border=True):
             st.markdown("### 1.2.1 Postavení ČNB v České republice")
             st.write("Česká národní banka je centrální banka České republiky. Její postavení je zakotveno v právním řádu ČR a její činnost upravuje zejména zákon o České národní bance. ČNB je veřejnoprávní instituce se zvláštním postavením: není komerční firmou, neusiluje o zisk jako běžný podnik a neposkytuje běžné bankovní služby občanům.")
@@ -331,7 +331,7 @@ def render():
                 else:
                     st.warning("⚠️ **Společné Euro (ECB):** Zůstávají levnější úvěry, ale inflace v ČR může trvat déle a více znehodnocovat kupní sílu.")
 
-        # 1.2.2
+        # 1.2.2 Hlavní cíl ČNB
         with st.container(border=True):
             st.markdown("### 1.2.2 Hlavní cíl ČNB")
             st.write("Hlavním cílem ČNB je péče o cenovou stabilitu. Jinými slovy: ČNB se snaží, aby peníze neztrácely hodnotu příliš rychle a aby inflace nebyla dlouhodobě příliš vysoká ani nebezpečně nízká.")
@@ -364,7 +364,7 @@ def render():
             if st.button("Výstup: Jedna minuta tiskové konference", key="k2_1_2_2_rada_btn"):
                 st.markdown(f"**Tiskové prohlášení Bankovní rady:** „ČNB dnes rozhodla, že {c_rada_action}...“")
 
-        # 1.2.3
+        # 1.2.3 Co přesně ČNB dělá
         with st.container(border=True):
             st.markdown("### 1.2.3 Co přesně ČNB dělá")
             st.write("ČNB má několik klíčových funkčních oblastí. Každá z nich se týká jiné části ekonomiky, ale dohromady tvoří systém důvěry v peníze.")
@@ -381,7 +381,7 @@ def render():
             | **Banka státu** | Vede účty státu a poskytuje vybrané služby veřejnému sektoru. | Souvisí s pohybem peněz státu, například při placení výdajů veřejných institucí. |
             """)
 
-        # 1.2.4
+        # 1.2.4 Hotovost a ochranné prvky
         with st.container(border=True):
             st.markdown("### 1.2.4 Hotovost, ochranné prvky bankovek a důvěra v peníze")
             st.write("Jednou z viditelných činností ČNB je péče o hotovostní oběh. ČNB vydává české bankovky a mince, stahuje z oběhu poškozené nebo neplatné peníze a stará se o to, aby hotovost byla důvěryhodná. Právě sem patří také ochranné prvky bankovek.")
@@ -415,7 +415,7 @@ def render():
             ], key="k2_1_2_4_bankovka_sel")
 
             if "Vodoznak" in p_sel:
-                st.info("💧 **Vodoznak:** Zřetelný portrét osobnosti viditelný z obou stran při pohledu proti světlu.")
+                st.info("💧 **Vodoznak:** Zřetelný portrét osobnosti viditelný z obou stran při pohledu proti světlu v nepotištěném okraji.")
             elif "Ochranný proužek" in p_sel:
                 st.info("📏 **Ochranný proužek:** Tmavý souvislý pás s negativním mikrotextem nominální hodnoty viditelný proti světlu.")
             elif "Reliéfní tisk" in p_sel:
@@ -427,7 +427,7 @@ def render():
             else:
                 st.info("🔦 **UV prvky:** Svítící vlákna a tiskové motivy viditelné pod UV lampou.")
 
-        # 1.2.5
+        # 1.2.5 Kdo ČNB řídí
         with st.container(border=True):
             st.markdown("### 1.2.5 Kdo ČNB řídí")
             st.write("Nejvyšším řídicím orgánem ČNB je **bankovní rada**. Ta rozhoduje například o měnové politice, úrokových sazbách a dalších zásadních otázkách fungování ČNB.")
@@ -445,7 +445,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        # 1.2.6
+        # 1.2.6 Jak ČNB zasahuje do ekonomiky
         with st.container(border=True):
             st.markdown("### 1.2.6 Jak ČNB zasahuje do ekonomiky")
             st.write("ČNB neřídí ekonomiku příkazem typu „zdražte“ nebo „zlevněte“. Ovlivňuje ekonomiku hlavně nepřímo — přes cenu peněz, důvěru a pravidla finančního trhu.")
@@ -795,7 +795,7 @@ def render():
 
             st.markdown("""
             <div class='box-blue'>
-                🛟 <strong>Do jaké výše jsou vklady pojištěny:</strong> V České republice jsou pojištěné vklady u bank, družstevních záložen a stavebních spořitelen chráněny zpravidla do výše 100 000 EUR na jednoho klienta u jedné banky. V přepočtu jde přibližně o 2,4–2,5 milionu Kč, podle aktuálního kurzu. Pokud má človek u jedné banky více účtů, limit se obvykle počítá dohromady za daného klienta u dané banky, ne zvlášť za každý účet.
+                🛟 <strong>Do jaké výše jsou vklady pojištěny:</strong> V České republice jsou pojištěné vklady u bank, družstevních záložen a stavebních spořitelen chráněny zpravidla do výše 100 000 EUR na jednoho klienta u jedné banky. V přepočtu jde přibližně o 2,4–2,5 milionu Kč, podle aktuálního kurzu. Pokud má člověk u jedné banky více účtů, limit se obvykle počítá dohromady za daného klienta u dané banky, ne zvlášť za každý účet.
             </div>
             """, unsafe_allow_html=True)
 
@@ -816,7 +816,7 @@ def render():
             st.markdown("""
             | Typ výběru | Jak to běžně funguje | Na co si dát pozor |
             | :--- | :--- | :--- |
-            | **Výběr z bankomatu** | Řídí se limitem platební karty a limitem konkrétního bankomatu. | Limit si človek často nastavuje v aplikaci, ale bankomat může mít i vlastní technické omezení. |
+            | **Výběr z bankomatu** | Řídí se limitem platební karty a limitem konkrétního bankomatu. | Limit si člověk často nastavuje v aplikaci, ale bankomat může mít i vlastní technické omezení. |
             | **Menší výběr na pobočce** | Obvykle lze vybrat bez předchozího objednání, pokud má pobočka hotovost k dispozici. | Každá banka může mít vlastní pravidla a limity. |
             | **Větší hotovostní výběr** | Často je vhodné nebo nutné oznámit ho bance předem, ale hranice se mezi bankami výrazně liší. | Například u ČSOB je podle zveřejněných informací potřeba předem objednat až částku převyšující 300 000 Kč; u KB se naopak uvádí hlášení už nad 100 000 Kč. |
             | **Velmi vysoký výběr** | Banka může požadovat písemné oznámení, objednání hotovosti nebo vysvětlení účelu. | Nejde o zvědavost pokladníka, ale o provozní a zákonné povinnosti banky. |
