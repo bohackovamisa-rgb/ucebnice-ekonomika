@@ -1986,71 +1986,372 @@ def render():
             """)
             
             st.warning("🧠 **Otázka před každým nákupem investice:** Kupuješ aktivum proto, že rozumíš jeho principu a riziku, nebo proto, že máš strach, že ti „ujede vlak“?")
-    # =========================================================================
+# =========================================================================
     # 3.4 CENNÉ PAPÍRY V TEORII I PRAXI
     # =========================================================================
     elif "3.4 Cenné" in selected_section_2:
         st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.4 Cenné papíry v teorii i praxi</h2>", unsafe_allow_html=True)
-        st.write("Cenný papír je listina nebo digitální záznam, se kterým jsou spojena určitá práva (podíl ve firmě, splacení dluhu, úrok). Dnes je většina cenných papírů v praxi zaknihovaná — existuje jako elektronický záznam.")
         
+        st.write("Cenný papír je listina nebo digitální záznam, se kterým jsou spojena určitá práva. Může jít například o právo na podíl ve firmě, právo na splacení dluhu, právo na úrok, právo na dividendu nebo právo podílet se na majetku fondu. Dříve si lidé pod cenným papírem představili hlavně fyzický papír s názvem firmy, hodnotou, podpisy a ochrannými prvky. Dnes je většina cenných papírů v praxi zaknihovaná — existuje jako elektronický záznam v evidenci.")
+        
+        st.info("🧾 **Cenný papír jednoduše:** Není důležité jen to, jak „vypadá“. Důležité je, jaké právo představuje. U akcie jde o vlastnictví části firmy. U dluhopisu jde o půjčku. U podílového listu jde o podíl na majetku fondu.")
+        
+        st.write("**Cenné papíry používají:**")
+        st.markdown("""
+        * **domácnosti a drobní investoři** — ke spoření, investování a tvorbě majetku,
+        * **podnikatelé a firmy** — k uložení volných peněz, získání kapitálu, řízení likvidity nebo financování rozvoje,
+        * **banky, pojišťovny a fondy** — k profesionálnímu řízení peněz a rizik,
+        * **stát a obce** — hlavně prostřednictvím dluhopisů k financování svých potřeb,
+        * **velké korporace** — při emisích akcií, dluhopisů, akvizicích, fúzích a správě firemní hotovosti.
+        """)
+
+        # 3.4.1
         with st.container(border=True):
             st.markdown("### 3.4.1 Jak cenný papír vypadá dnes")
+            st.write("Cenný papír může mít dvě základní podoby:")
             st.markdown("""
             | Podoba | Jak vypadá | Příklad |
             | :--- | :--- | :--- |
-            | **Listinný** | Fyzická listina (název, hodnota, práva, podpisy). | Historická akcie, směnka. |
-            | **Zaknihovaný** | Elektronický záznam v evidenci. | Moderní akcie na burze, ETF. |
+            | **Listinný cenný papír** | Fyzická listina. Může obsahovat název emitenta, hodnotu, práva vlastníka, datum vydání, podpisy, razítka nebo ochranné prvky. | Historická akcie, listinný dluhopis, směnka. |
+            | **Zaknihovaný cenný papír** | Elektronický záznam v evidenci. Investor ho vidí na investičním účtu nebo v aplikaci. | Moderní akcie obchodovaná na burze, státní dluhopis, ETF. |
             """)
-
-        with st.container(border=True):
-            st.markdown("### 3.4.2 - 3.4.6 Akcie: podíl na firmě")
-            st.write("Koupí akcie se stáváš akcionářem, tedy spoluvlastníkem malé části firmy.")
+            
+            st.write("**U cenného papíru nebo v jeho elektronickém záznamu se obvykle uvádí:**")
             st.markdown("""
-            * **Kmenová akcie:** Běžná akcie (hlasovací právo, podíl na zisku).
-            * **Prioritní akcie:** Přednostní dividenda, ale často omezené hlasování.
+            * emitent — kdo cenný papír vydal,
+            * druh cenného papíru — akcie, dluhopis, podílový list atd.,
+            * jmenovitá hodnota nebo počet kusů,
+            * práva vlastníka,
+            * datum vydání,
+            * měna,
+            * identifikátor — často například ISIN,
+            * u dluhopisu také úrok, splatnost a emisní podmínky,
+            * u akcie také druh akcie a hlasovací práva,
+            * u fondu také správce, strategie, poplatky a riziková kategorie.
             """)
-            st.write("**Jmenovitá hodnota vs. tržní cena:** Jmenovitá je účetní hodnota (např. 100 Kč), tržní je cena na burze (např. 850 Kč).")
+            st.info("📱 **Jak to vidí student v aplikaci:** Obvykle nevidí papírovou listinu, ale název instrumentu, ticker, ISIN, aktuální cenu, měnu, graf, počet kusů, hodnotu pozice, poplatky a tlačítko koupit/prodat.")
 
+        # 3.4.2 až 3.4.4
         with st.container(border=True):
-            st.markdown("### 3.4.7 - 3.4.10 Dluhopis: půjčka se slibem splacení")
-            st.write("Koupí dluhopisu se nestáváš vlastníkem firmy, ale jejím věřitelem.")
+            st.markdown("### 3.4.2 Akcie: podíl na firmě")
+            st.write("Akcie představuje podíl na akciové společnosti. Když investor koupí akcii, stává se akcionářem, tedy spoluvlastníkem malé části firmy. Neznamená to, že může přijít do firmy a odnést si počítač nebo židli. Znamená to, že má určitá práva podle zákona, stanov společnosti a druhu akcie.")
+            st.write("Firma vydává akcie hlavně proto, aby získala vlastní kapitál. Na rozdíl od úvěru nebo dluhopisu tyto peníze nemusí klasicky splatit. Na oplátku ale přijímá akcionáře — tedy vlastníky, kteří očekávají růst hodnoty firmy, dividendy nebo vliv na rozhodování.")
+            
+            st.info("🏢 **Akcie v jedné větě:** Koupí akcie firmě nepůjčuješ. Kupuješ si kousek jejího vlastnictví a podílíš se na jejím úspěchu i neúspěchu.")
+            
+            st.write("**Akcionář může mít:**")
+            st.markdown("""
+            * právo na dividendu, pokud ji firma vyplácí,
+            * hlasovací právo na valné hromadě, pokud ho daný druh akcie obsahuje,
+            * právo na informace podle pravidel společnosti,
+            * právo podílet se na likvidačním zůstatku, pokud firma zaniká a po zaplacení dluhů něco zůstane,
+            * možnost akcii prodat, pokud je převoditelná a existuje kupec.
+            """)
+
+            st.markdown("### 3.4.3 Druhy akcií")
+            st.write("Akcie nejsou všechny stejné. Liší se podle práv, podoby i způsobu obchodování.")
+            st.markdown("""
+            | Druh akcie | Co znamená | Jak to vysvětlit studentům |
+            | :--- | :--- | :--- |
+            | **Kmenová akcie** | Nejběžnější akcie. Obvykle dává právo hlasovat a podílet se na zisku. | Klasický „kousek firmy“. |
+            | **Prioritní akcie** | Může dávat přednostní právo na dividendu, ale někdy omezuje hlasovací právo. | Investor může mít přednost u výnosu, ale menší vliv. |
+            | **Akcie na jméno** | Je spojena s konkrétním vlastníkem zapsaným v evidenci. | Firma ví, kdo je akcionářem. |
+            | **Akcie na majitele** | Vlastník je určen evidencí nebo držením podle právní úpravy; moderně jde často o zaknihovanou podobu. | Dnes nerozhoduje „papír v ruce“, ale evidence. |
+            | **Zaknihovaná akcie** | Existuje jako elektronický záznam. | Nejběžnější forma u akcií na burze. |
+            | **Listinná akcie** | Má podobu fyzické listiny. | Dnes méně běžná, ale dobře ukazuje původ pojmu cenný papír. |
+            | **Veřejně obchodovaná akcie** | Obchoduje se na burze nebo regulovaném trhu. | Má veřejně dostupnou cenu a obvykle vyšší likviditu. |
+            | **Neveřejně obchodovaná akcie** | Není běžně dostupná na burze. | Prodej může být složitější a méně transparentní. |
+            """)
+
+            st.markdown("### 3.4.4 Co je napsáno na akcii")
+            st.write("**Na listinné akcii nebo v elektronickém záznamu akcie bývá uvedeno:**")
+            st.markdown("""
+            * název akciové společnosti,
+            * sídlo a identifikační údaje společnosti,
+            * druh a forma akcie,
+            * jmenovitá hodnota,
+            * počet akcií nebo označení konkrétní akcie,
+            * datum emise,
+            * údaje o převoditelnosti,
+            * podpisy nebo potvrzení vydání u listinné podoby,
+            * identifikátor cenného papíru.
+            """)
+            
+            st.write("**Jmenovitá hodnota vs. tržní cena akcie**")
+            st.write("Jmenovitá hodnota je účetní nebo právní hodnota uvedená na akcii nebo ve stanovách. Tržní cena je cena, za kterou se akcie aktuálně prodává na trhu. Tyto částky se mohou výrazně lišit. Akcie může mít jmenovitou hodnotu 100 Kč, ale na trhu se může obchodovat za 850 Kč nebo za 40 Kč.")
+
+        # 3.4.5 a 3.4.6
+        with st.container(border=True):
+            st.markdown("### 3.4.5 Jak se akcie kupují a prodávají")
+            st.write("Běžný člověk si většinou nekupuje akcie přímo od firmy. Nejčastěji je kupuje přes banku, brokera, obchodníka s cennými papíry nebo investiční platformu.")
+            st.write("**Typický postup u fyzické osoby nepodnikatele:**")
+            st.markdown("""
+            1. Vybere si regulovanou banku, brokera nebo investiční platformu.
+            2. Ověří totožnost.
+            3. Vyplní investiční dotazník.
+            4. Pošle peníze na investiční účet.
+            5. Vyhledá akcii podle názvu, tickeru nebo ISIN.
+            6. Zadá pokyn k nákupu.
+            7. Po vypořádání obchodu vidí akcii na svém účtu.
+            """)
+            
+            st.write("**Základní typy pokynů:**")
+            st.markdown("""
+            * **market pokyn** — nákup nebo prodej za aktuální dostupnou cenu,
+            * **limitní pokyn** — investor stanoví maximální nákupní nebo minimální prodejní cenu,
+            * **stop pokyn** — aktivuje se až po dosažení určité ceny.
+            """)
+            st.warning("⚠️ **Pozor:** To, že lze akcii koupit během pár sekund, neznamená, že je rozhodnutí jednoduché. Investor by měl vědět, co firma dělá, jak vydělává, jaké má dluhy, konkurenci, rizika, měnu obchodování a poplatky.")
+
+            st.markdown("### 3.4.6 Jak akcie používají firmy a velké společnosti")
+            st.write("**Firmy používají akcie hlavně k financování a změnám vlastnické struktury:**")
+            st.markdown("""
+            * **založení akciové společnosti** — vlastníci vloží kapitál a získají akcie,
+            * **navýšení kapitálu** — firma vydá nové akcie a získá peníze,
+            * **IPO** — první veřejná nabídka akcií, tedy vstup firmy na burzu,
+            * **další emise akcií** — firma později vydá nové akcie,
+            * **akvizice** — firma může použít vlastní akcie při koupi jiné firmy,
+            * **zaměstnanecké akcie a opce** — motivace zaměstnanců podílem na růstu firmy,
+            * **zpětný odkup akcií** — firma nakupuje vlastní akcie z trhu.
+            """)
+            st.write("Velké firmy s akciemi neobchodují jako student v aplikaci. Často využívají investiční banky, právní poradce, makléře, burzy, blokové obchody a neveřejné transakce. Řeší nejen cenu, ale také vlastnickou kontrolu, dopad na kurz akcie, pověst, regulaci a vztahy s investory.")
+
+        # 3.4.7 až 3.4.10
+        with st.container(border=True):
+            st.markdown("### 3.4.7 Dluhopis: půjčka se slibem splacení")
+            st.write("Dluhopis je cenný papír, kterým si emitent půjčuje peníze. Emitentem může být stát, obec, banka nebo firma. Investor dluhopis koupí a tím emitentovi půjčí. Emitent se zavazuje, že peníze vrátí a obvykle zaplatí úrok.")
+            st.info("💸 **Dluhopis v jedné větě:** Koupí dluhopisu se nestáváš vlastníkem firmy. Stáváš se jejím věřitelem.")
+            
+            st.write("**Základní logika dluhopisu:**")
+            st.markdown("""
+            1. Emitent potřebuje peníze.
+            2. Vydá dluhopisy.
+            3. Investor dluhopis koupí.
+            4. Emitent vyplácí úrok nebo jiný výnos.
+            5. Na konci splatnosti vrátí jmenovitou hodnotu, pokud je schopný splácet.
+            """)
+            
+            st.markdown("""
+            | Pojem | Význam |
+            | :--- | :--- |
+            | **Emitent** | Ten, kdo dluhopis vydává a půjčuje si peníze. |
+            | **Jmenovitá hodnota** | Částka, kterou má emitent při splatnosti vrátit. |
+            | **Kupón** | Úrok nebo pravidelný výnos vyplácený investorovi. |
+            | **Splatnost** | Datum, kdy má být dluhopis splacen. |
+            | **Emisní kurz** | Cena, za kterou se dluhopis prodává při vydání. |
+            | **Výnos do splatnosti** | Celkový výnos, pokud investor drží dluhopis do splatnosti a emitent splní závazky. |
+            | **Rating** | Hodnocení schopnosti emitenta splácet závazky. |
+            """)
+
+            st.markdown("### 3.4.8 Druhy dluhopisů")
+            st.write("Dluhopisy se liší podle emitenta, výnosu, splatnosti a rizika.")
             st.markdown("""
             | Druh dluhopisu | Co znamená | Typické riziko |
             | :--- | :--- | :--- |
-            | **Státní** | Vydává stát. | Závisí na důvěryhodnosti státu. |
-            | **Firemní** | Vydává firma. | Firma nemusí vydělat na splacení. |
-            | **Hypoteční zástavní list** | Krytý hypotečními úvěry. | Kvalita zajištění. |
+            | **Státní dluhopis** | Vydává ho stát. | Riziko závisí na důvěryhodnosti státu. |
+            | **Municipální dluhopis** | Vydává ho obec, město nebo kraj. | Schopnost samosprávy splácet. |
+            | **Firemní dluhopis** | Vydává ho firma. | Firma nemusí vydělat dost peněz na splacení. |
+            | **Bankovní dluhopis** | Vydává ho banka. | Závisí na stabilitě banky a typu dluhopisu. |
+            | **Hypoteční zástavní list** | Speciální dluhopis krytý pohledávkami z hypotečních úvěrů. | Kvalita zajištění a hypotečního portfolia. |
+            | **Dluhopis s pevným kupónem** | Vyplácí předem daný úrok. | Při růstu tržních sazeb může jeho tržní cena klesnout. |
+            | **Dluhopis s pohyblivým kupónem** | Úrok se mění podle referenční sazby. | Výnos není dopředu úplně jistý. |
+            | **Bezkuponový dluhopis** | Neplatí průběžný úrok; prodává se levněji a při splatnosti vyplatí jmenovitou hodnotu. | Investor čeká na výnos až do konce. |
+            | **Konvertibilní dluhopis** | Lze ho za určitých podmínek vyměnit za akcie. | Kombinuje riziko dluhu a akcií. |
+            | **Podřízený dluhopis** | Při problémech emitenta se splácí až po jiných věřitelích. | Vyšší riziko, často vyšší výnos. |
             """)
-            st.error("⚠️ **Pozor:** Dluhopis není automaticky bezpečný. Vysoký úrok často znamená vyšší riziko nesplacení.")
+            st.warning("⚠️ **Pozor:** Dluhopis není automaticky bezpečný. Státní dluhopis stabilní země má jiné riziko než firemní dluhopis neznámé společnosti slibující vysoký úrok. Vysoký úrok často znamená vyšší riziko.")
 
-        with st.container(border=True):
-            st.markdown("### 3.4.11 - 3.4.14 Podílové listy a fondy")
-            st.write("Místo jedné konkrétní akcie kupuješ „košík“ investic. Fond shromažďuje peníze investorů a investuje podle strategie.")
+            st.markdown("### 3.4.9 Co je napsáno na dluhopisu")
+            st.write("**U dluhopisu nebo v jeho emisních podmínkách bývá uvedeno:**")
             st.markdown("""
-            * **Akciový fond:** Akcie firem (vyšší kolísání).
-            * **Dluhopisový fond:** Dluhopisy (úrokové a úvěrové riziko).
-            * **ETF (Exchange Traded Fund):** Fond obchodovaný na burze, často sleduje index.
+            * název emitenta,
+            * celkový objem emise,
+            * jmenovitá hodnota jednoho dluhopisu,
+            * měna,
+            * datum vydání,
+            * datum splatnosti,
+            * výše kupónu nebo způsob výpočtu úroku,
+            * termíny výplaty úroku,
+            * způsob splacení,
+            * zajištění, pokud existuje,
+            * pořadí uspokojení věřitelů,
+            * rizikové faktory,
+            * ISIN,
+            * informace, zda je dluhopis obchodovaný na trhu.
+            """)
+            st.write("**Proč číst emisní podmínky**")
+            st.write("Reklama může ukazovat hlavně úrok, například „8 % ročně“. Emisní podmínky ale říkají, kdo si půjčuje, na co peníze použije, kdy má splácet, zda je dluhopis zajištěný a co se stane při problémech.")
+
+            st.markdown("### 3.4.10 Jak se dluhopisy kupují")
+            st.write("**Fyzická osoba nepodnikatel může dluhopisy koupit:**")
+            st.markdown("""
+            * přes banku,
+            * přes obchodníka s cennými papíry,
+            * přes brokera,
+            * přímo v některých emisích,
+            * nepřímo přes dluhopisový fond nebo ETF.
+            """)
+            st.write("**Podnikatel nebo firma může dluhopisy:**")
+            st.markdown("""
+            * koupit jako uložení volných peněz,
+            * použít k řízení likvidity,
+            * držet jako konzervativnější část portfolia,
+            * vydat vlastní dluhopisy jako zdroj financování.
+            """)
+            st.write("Velké firmy a instituce obchodují dluhopisy často ve velkých objemech přes banky, dealingová oddělení, investiční banky a specializované trhy. Sledují úrokové sazby, rating, splatnost, likviditu, měnu, účetnictví a riziko protistrany.")
+
+        # 3.4.11 až 3.4.14
+        with st.container(border=True):
+            st.markdown("### 3.4.11 Podílové listy: podíl na majetku fondu")
+            st.write("Podílový list vyjadřuje podíl investora na majetku podílového fondu. Investor tedy nekupuje přímo jednu konkrétní akcii nebo jeden dluhopis, ale kupuje podíl ve fondu, který drží celé portfolio.")
+            st.write("Fond shromažďuje peníze mnoha investorů a investuje je podle předem popsané strategie. Může investovat do akcií, dluhopisů, nástrojů peněžního trhu, nemovitostí nebo kombinace aktiv.")
+            st.info("🧺 **Podílový fond jednoduše:** Místo jedné položky kupuješ košík. V košíku mohou být desítky, stovky nebo tisíce investic podle strategie fondu.")
+
+            st.markdown("### 3.4.12 Druhy podílových fondů a podílových listů")
+            st.write("Podílové fondy se liší podle toho, do čeho investují a jak fungují.")
+            st.markdown("""
+            | Druh fondu | Do čeho investuje | Typické riziko |
+            | :--- | :--- | :--- |
+            | **Fond peněžního trhu** | Krátkodobé a relativně konzervativní nástroje. | Nižší riziko, nižší očekávaný výnos. |
+            | **Dluhopisový fond** | Dluhopisy států, firem nebo bank. | Úrokové a úvěrové riziko. |
+            | **Akciový fond** | Akcie firem. | Vyšší kolísání hodnoty. |
+            | **Smíšený fond** | Kombinace akcií, dluhopisů a dalších aktiv. | Riziko podle poměru jednotlivých složek. |
+            | **Nemovitostní fond** | Nemovitosti nebo firmy spojené s nemovitostmi. | Riziko trhu nemovitostí a nižší likvidita. |
+            | **Indexový fond** | Sleduje vybraný index. | Kopíruje vývoj trhu, který sleduje. |
+            | **ETF** | Fond obchodovaný na burze, často sleduje index. | Tržní riziko, měnové riziko, poplatky. |
+            """)
+            st.write("**Podílové listy mohou mít různé třídy:**")
+            st.markdown("""
+            * **akumulační třída** — výnosy se nevyplácejí, ale zůstávají ve fondu,
+            * **distribuční třída** — výnosy se vyplácejí investorům,
+            * **měnově zajištěná třída** — snaží se omezit dopad změny kurzu,
+            * **měnově nezajištěná třída** — investor nese i měnové riziko.
             """)
 
+            st.markdown("### 3.4.13 Co je uvedeno u podílového listu nebo fondu")
+            st.write("**Investor by měl sledovat:**")
+            st.markdown("""
+            * název fondu,
+            * správce fondu,
+            * depozitáře,
+            * investiční strategii,
+            * rizikovou kategorii,
+            * měnu fondu,
+            * vstupní, výstupní a průběžné poplatky,
+            * historický vývoj hodnoty,
+            * složení portfolia,
+            * pravidla pro nákup a odkup,
+            * dokument s klíčovými informacemi,
+            * zda fond výnosy vyplácí, nebo reinvestuje.
+            """)
+            st.info("🔍 **Otázka před nákupem fondu:** Vím, do čeho fond investuje, kolik stojí na poplatcích, jak moc může kolísat a za jak dlouho se dostanu zpět k penězům?")
+
+            st.markdown("### 3.4.14 Jak se podílové listy kupují")
+            st.write("**Fyzická osoba nepodnikatel může koupit podílové listy:**")
+            st.markdown("""
+            * v bance,
+            * u investiční společnosti,
+            * přes finančního zprostředkovatele,
+            * přes obchodníka s cennými papíry,
+            * přes investiční platformu,
+            * pravidelnou investicí menších částek.
+            """)
+            st.write("**Podnikatel nebo firma může fondy využít:**")
+            st.markdown("""
+            * pro zhodnocení dočasně volných peněz,
+            * jako diverzifikovanou část finančních rezerv,
+            * jako součást dlouhodobého finančního plánování,
+            * přes firemní investiční účet,
+            * s ohledem na účetnictví, daně, likviditu a investiční politiku firmy.
+            """)
+            st.write("U podílového fondu investor obvykle podílový list nakupuje od fondu a při prodeji ho fondu odprodává zpět. U ETF je to jiné: ETF se obchoduje na burze podobně jako akcie, takže ho investor kupuje a prodává přes brokera za tržní cenu.")
+
+        # 3.4.15 až 3.4.17
+        with st.container(border=True):
+            st.markdown("### 3.4.15 Které cenné papíry se používají při obchodování firem")
+            st.write("Firmy nepoužívají cenné papíry jen jako investici. V podnikové praxi mohou sloužit k financování, placení, zajištění i řízení rizik.")
+            st.markdown("""
+            | Cenný papír / nástroj | Jak ho firmy používají | Příklad |
+            | :--- | :--- | :--- |
+            | **Akcie** | Získání vlastního kapitálu, změna vlastnické struktury, vstup na burzu, akvizice. | Firma vydá nové akcie a získá peníze na expanzi. |
+            | **Dluhopisy** | Získání cizího kapitálu bez klasického bankovního úvěru. | Firma vydá dluhopisy na financování nové technologie. |
+            | **Směnka** | Písemný slib nebo příkaz zaplatit určitou částku v určité době. | Firma použije směnku při obchodním financování. |
+            | **Šek** | Příkaz bance zaplatit určitou částku; v ČR dnes méně běžný. | Historicky používaný platební nástroj v obchodě. |
+            | **Skladní list / náložný list** | Dokládá právo ke zboží nebo jeho přepravě. | V mezinárodním obchodě může dokument představovat nárok na zboží. |
+            | **Podílové listy a fondy** | Uložení nebo diverzifikace volných prostředků. | Firma uloží část rezervy do konzervativního fondu podle své investiční politiky. |
+            """)
+            st.info("🏭 **Firemní pohled:** Domácnost řeší hlavně bezpečnost, výnos a dostupnost peněz. Firma navíc řeší cashflow, účetnictví, daně, kurzové riziko, vztahy s bankami, rating, pověst a odpovědnost vedení.")
+
+            st.markdown("### 3.4.16 Jak obchodují velké firmy a instituce")
+            st.write("Velké firmy, banky, pojišťovny, penzijní fondy a investiční fondy obchodují ve větších objemech než běžný investor. Proto řeší i věci, které student v běžné aplikaci nevidí:")
+            st.markdown("""
+            * likviditu trhu,
+            * protistranu obchodu,
+            * regulaci a interní pravidla,
+            * účetní dopady,
+            * daňové dopady,
+            * měnové zajištění,
+            * úrokové riziko,
+            * reputační riziko,
+            * schvalovací procesy uvnitř firmy.
+            """)
+            st.write("**Příklad rozdílu:**")
+            st.markdown("""
+            * Drobný investor koupí 2 akcie přes aplikaci.
+            * Firma může nakupovat dluhopisy za miliony korun jako součást řízení likvidity.
+            * Investiční fond může přesouvat peníze mezi stovkami titulů.
+            * Korporace může vydat dluhopis, aby získala kapitál na výstavbu nové továrny.
+            * Velká společnost může použít akcie při koupi jiné firmy.
+            """)
+
+            st.markdown("### 3.4.17 Kde může nakupovat fyzická osoba a kde podnikatel")
+            st.markdown("""
+            | Kdo nakupuje | Kde může nakupovat | Na co si dát pozor |
+            | :--- | :--- | :--- |
+            | **Fyzická osoba nepodnikatel** | Banka, broker, obchodník s cennými papíry, investiční platforma, investiční společnost. | Poplatky, riziko, regulace, měna, daně, investiční horizont, ochrana účtu. |
+            | **OSVČ / podnikatel** | Podobně jako fyzická osoba, ale musí řešit, zda investuje soukromé, nebo podnikatelské peníze. | Oddělení osobních a podnikatelských financí, účetnictví, daně, likvidita pro podnikání. |
+            | **Právnická osoba / firma** | Firemní investiční účet, banka, broker, treasury oddělení, investiční banka. | Schválení vedením, investiční politika, účetní zachycení, rizikové limity, cashflow. |
+            | **Velká korporace** | Investiční banky, kapitálové trhy, burzy, neveřejné transakce, emise vlastních cenných papírů. | Dopad na cenu, regulace, rating, vztahy s investory, reputace, strategické cíle. |
+            """)
+            st.info("🧠 **Důležité rozlišení:** Když nakupuje fyzická osoba pro sebe, jde o osobní investiční rozhodnutí. Když nakupuje firma, jde o rozhodnutí v rámci podnikání, které může ovlivnit účetnictví, daně, likviditu a odpovědnost vedení.")
+
+        # 3.4.18 (Aktivita) a 3.4.19
         with st.container(border=True):
             st.markdown("### 3.4.18 Praktická aktivita: pitva cenného papíru")
-            cp_typ = st.selectbox("Vyber aktivum:", ["Akcie ČEZ", "Státní dluhopis ČR", "Podílový fond", "S&P 500 ETF"], key="k3_pitva1")
-            cp_riziko = st.radio("Zvol odhadované riziko:", ["Nízké", "Střední", "Vysoké"], horizontal=True, key="k3_pitva2")
+            st.write("🔎 **Pitva cenného papíru: co přesně kupuji?**")
+            st.write("Vyber si jeden příklad: akcii, dluhopis, podílový fond nebo ETF. Neřeš, jestli je „dobrý“, ale zjisti, co přesně představuje.")
             
-            if st.button("Vygenerovat rodný list", key="k3_pitva_btn"):
-                st.success(f"🔎 **Rodný list:** Vybral jsi {cp_typ}. Tvé odhadované riziko: {cp_riziko}. Vždy si zjisti emitenta, poplatky a likviditu před nákupem!")
+            cp_vyber = st.selectbox("Vyber si aktivum pro pitvu:", ["Akcie", "Dluhopis", "Podílový fond", "ETF"], key="k3_pitva_aktivita")
+            
+            st.write("**Zjisti a odpověz si na tyto otázky:**")
+            st.markdown("""
+            * Kdo je emitent nebo správce?
+            * Je to podíl na firmě, půjčka, nebo podíl ve fondu?
+            * Jaký výnos může přinášet?
+            * Jaké jsou hlavní druhy rizika?
+            * Je obchodovaný na burze, nebo se nakupuje přímo u fondu?
+            * V jaké měně je vedený?
+            * Jaké má poplatky?
+            * Jak rychle ho lze prodat?
+            * Je vhodný spíš pro krátký, nebo dlouhý horizont?
+            * Co by se muselo stát, aby investor prodělal?
+            """)
+            
+            if st.button("Vygenerovat zadání výstupu", key="k3_pitva_zadani_btn"):
+                st.success(f"📄 **Tvůj výstup pro cenný papír {cp_vyber}:** Vytvoř jednu stránku „rodný list cenného papíru“ se všemi těmito zjištěnými informacemi.")
 
         with st.container(border=True):
             st.markdown("### 3.4.19 Srovnání základních produktů")
             st.markdown("""
-            | Produkt | Možný výnos | Hlavní riziko | Pro koho se hodí |
-            | :--- | :--- | :--- | :--- |
-            | **Spořicí účet** | Úrok | Inflace | Rezerva, krátkodobé cíle |
-            | **Dluhopis** | Úrok / kupón | Emitent nesplatí | Znalý investor |
-            | **Akcie** | Růst ceny, dividenda | Pokles ceny firmy/trhu | Dlouhodobý investor |
-            | **ETF fond** | Podle vývoje trhu | Tržní pokles | Začátečník i pokročilý |
+            | Produkt | Co kupuji | Možný výnos | Hlavní riziko | Pro koho se může hodit |
+            | :--- | :--- | :--- | :--- | :--- |
+            | **Spořicí účet** | Vklad u banky. | Úrok. | Inflace může být vyšší než úrok. | Rezerva a krátkodobé cíle. |
+            | **Termínovaný vklad** | Vklad na určitou dobu. | Úrok. | Nižší dostupnost peněz. | Peníze, které chvíli nepotřebuji. |
+            | **Dluhopis** | Půjčku emitentovi. | Úrok nebo rozdíl ceny. | Emitent nemusí splatit. | Investor, který rozumí emitentovi a riziku. |
+            | **Akcie** | Podíl na firmě. | Růst ceny, dividenda. | Pokles ceny firmy nebo trhu. | Dlouhodobý investor. |
+            | **Fond / ETF** | Podíl v portfoliu více aktiv. | Podle vývoje aktiv. | Tržní pokles, poplatky. | Začátečník i dlouhodobý investor. |
+            | **Kryptoměna** | Digitální aktivum v síti. | Růst ceny, případně jiné výnosy podle služby. | Vysoká volatilita, ztráta přístupu, podvod, regulace. | Pouze pro člověka, který chápe technologii a unese ztrátu. |
             """)
-
     # =========================================================================
     # 3.5 ANALÝZA DAT A ŠKOLNÍ INVESTIČNÍ SIMULÁTOR
     # =========================================================================
