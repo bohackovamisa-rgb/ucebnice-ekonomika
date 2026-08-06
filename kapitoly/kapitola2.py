@@ -4326,22 +4326,9 @@ def render():
 
 
     # =========================================================================
-    # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
+    # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU (Až budeš posílat text pro 5.3)
     # =========================================================================
     elif selected_section_2.startswith("5.3 "):
         st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
         st.markdown("## 5.3 Náklady, výnosy a bod zvratu")
-        st.write(
-            "Aby firma věděla, zda se jí podnikání vyplatí a kdy začne reálně vydělávat, musí dokonale rozumět svým nákladům. "
-            "Nestačí si říct: *„Koupím tričko za 200 Kč a prodám ho za 400 Kč, takže vydělám 200 Kč.“*"
-        )
-        st.write(
-            "Firma musí do nákladů započítat i **nájem skladu, cenu software, reklamu na síti, balicí pásky, svůj čas, poplatky bankám a platebním branám, daně a neprodané zásoby**."
-        )
-
-        st.markdown("""
-        | Typ Nákladu | Co zahrnuje | Příklad u e-shopu |
-        | :--- | :--- | :--- |
-        | **Přímé (variabilní) náklady** | Rostou s každým prodaným kusem zboží. | Nákupní cena zboží, poštovné, krabice, provize platební bráně. |
-        | **Režijní (fixní) náklady** | Platí se stále, i když firma neprodá ani jediný kus. | Nájem skladu, předplatné e-shopové platformy, mzda účetní. |
-        """)
+        st.info("Zde budeme pokračovat podkapitolou 5.3...")
