@@ -1,5 +1,4 @@
 import streamlit as st
-import math
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
@@ -64,10 +63,15 @@ st.markdown("""
     .sidebar-section-title { font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1.4rem; margin-bottom: 0.5rem; }
     .sub-section-header { color: #4f46e5; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; }
     
-    /* LEGENDA CSS */
-    .legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 12px; margin-top: 12px; }
-    .legend-card { padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(0,0,0,0.04); }
-    .badge-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    /* MIND MAPA CSS */
+    .mindmap-wrapper { display: flex; justify-content: center; align-items: center; padding: 2rem 1rem; flex-wrap: wrap; gap: 2rem; background: #f1f5f9; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem; }
+    .mm-col { display: flex; flex-direction: column; gap: 1.5rem; }
+    .mm-center { background: #ef4444; color: white; padding: 1.8rem 2.5rem; border-radius: 20px; font-weight: 800; font-size: 1.5rem; text-align: center; box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3); border: 3px solid #b91c1c; z-index: 2; }
+    .mm-node { background: #ffffff; border: 2px solid #cbd5e1; padding: 1rem; border-radius: 16px; width: 260px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); position: relative; transition: all 0.2s ease; }
+    .mm-node:hover { border-color: #6366f1; box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.2); transform: translateY(-2px); }
+    .mm-title { font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
+    .mm-node ul { margin: 0; padding-left: 1.2rem; font-size: 0.85rem; color: #475569; }
+    .mm-node li { margin-bottom: 0.3rem; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -132,9 +136,6 @@ with st.sidebar:
 # --- HLAVNÍ OBSAHOVÁ PLOCHA ---
 view = st.session_state["current_view"]
 
-# ==========================================
-# ÚVODNÍ STRÁNKA
-# ==========================================
 if view == "Uvod":
     st.markdown("<span class='hero-badge'>Digitální Učebnice</span>", unsafe_allow_html=True)
     st.title("Ekonomika, která dává smysl")
@@ -166,39 +167,6 @@ if view == "Uvod":
         6. **V závěrečném projektu propojíš všechno dohromady.** Výstupem učebnice je návrh odpovědného ekonomického nebo podnikatelského projektu.
         """)
 
-    with st.container(border=True):
-        st.markdown("## 🎨 Legenda učebnice")
-        st.write("Barevné odlišení v textu ti pomůže okamžitě rozpoznat typ obsahu:")
-
-        st.markdown("""
-        <div class="legend-grid">
-            <div class="legend-card" style="background: #f0f9ff; border-left: 4px solid #0284c7;">
-                <span class="badge-dot" style="background: #0284c7;"></span>
-                <div><strong style="color: #0369a1;">Modrá:</strong> Výklad, struktura, důležité vysvětlení</div>
-            </div>
-            <div class="legend-card" style="background: #fefce8; border-left: 4px solid #eab308;">
-                <span class="badge-dot" style="background: #eab308;"></span>
-                <div><strong style="color: #854d0e;">Žlutá:</strong> Úkol, otázka, aktivita, procvičení</div>
-            </div>
-            <div class="legend-card" style="background: #faf5ff; border-left: 4px solid #a855f7;">
-                <span class="badge-dot" style="background: #a855f7;"></span>
-                <div><strong style="color: #6b21a8;">Fialová:</strong> AI mentoring a práce s asistencí</div>
-            </div>
-            <div class="legend-card" style="background: #f0fdf4; border-left: 4px solid #22c55e;">
-                <span class="badge-dot" style="background: #22c55e;"></span>
-                <div><strong style="color: #15803d;">Zelená:</strong> Praxe, doporučení, dobrý postup</div>
-            </div>
-            <div class="legend-card" style="background: #fef2f2; border-left: 4px solid #ef4444;">
-                <span class="badge-dot" style="background: #ef4444;"></span>
-                <div><strong style="color: #991b1b;">Oranžová / Červená:</strong> Riziko, varování, problém</div>
-            </div>
-            <div class="legend-card" style="background: #f8fafc; border-left: 4px solid #64748b;">
-                <span class="badge-dot" style="background: #64748b;"></span>
-                <div><strong style="color: #334155;">Šedá:</strong> Zdroje, ověřování, poznámky</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
 # ==========================================
 # KAPITOLA 1: PODNIKAVOST A STARTUPY
 # ==========================================
@@ -209,6 +177,7 @@ elif view == "Kapitola 1":
 
     section_options = [
         "1. Podnikatel a základní pojmy",
+        "2. Slovníček základních pojmů",
         "3. OSVČ a živnosti",
         "4. Obchodní korporace",
         "5. Startup: nápad, který hledá funkční byznys",
@@ -217,61 +186,2026 @@ elif view == "Kapitola 1":
         "8. CSR, etika a odpovědné podnikání",
         "9. Rizika podnikání",
         "10. Švarcsystém",
-        "11. Ověřování informací a užitečné zdroje"
+        "11. Ověřování informací a užitečné zdroje",
+        "12. Ukončení podnikání",
+        "13. Logická mapa podnikání",
+        "14. Reflexe a sebehodnocení",
+        "15. Integrované opakování"
     ]
+
     selected_section = st.selectbox("📌 Přechod na podkapitolu:", section_options, index=0)
     st.divider()
 
+# --- 1. Podnikatel a základní pojmy ---
     if selected_section == "1. Podnikatel a základní pojmy":
-        st.write("Obsah sekce 1 je připraven na vložení.")
-    else:
-        st.write(f"Zvolená sekce: {selected_section} (Připraveno na doplnění)")
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 1</div>", unsafe_allow_html=True)
+        st.markdown("## 1. Podnikatel a základní pojmy") #[cite: 1]
+        
+        with st.container(border=True):
+            st.write("Zákon chápe podnikání jako soustavnou činnost prováděnou samostatně, vlastním jménem, na vlastní odpovědnost, za účelem dosažení zisku.") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>⚖️ Přesná zákonná opora:</strong> Podnikatele definuje zákon č. 89/2012 Sb., občanský zákoník, zejména § 420 odst. 1: <br>„Kdo samostatně vykonává na vlastní účet a odpovědnost výdělečnou činnost živnostenským nebo obdobným způsobem se záměrem činit tak soustavně za účelem dosažení zisku, je považován se zřetelem k této činnosti za podnikatele.“<br><br>
+                Jednoduše řečeno: Podnikatelem je ten, kdo podniká samostatně, na vlastní účet, na vlastní odpovědnost, dělá výdělečnou činnost soustavně a jejím cílem je zisk.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Možná už máš nápad, něco prodáváš, tvoříš na zakázku nebo si jen přivyděláváš. Tady zjistíš, kdy už se z takové aktivity stává podnikání a proč je důležité poznat rozdíl mezi koníčkem, brigádou, OSVČ a firmou.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
 
+        with st.container(border=True):
+            st.markdown("### 1.1 Podnikatel v realitě současné generace") #[cite: 1]
+            st.write("Podnikání dnes nemusí začínat kanceláří, provozovnou ani výrobní halou. Může začít mobilem, profilem na sociální síti, prodejem digitální šablony, správou obsahu pro lokální firmu, výrobou merch produktů, doučováním, e-shopem, aplikací, kurzem, grafickou službou, tvorbou videí nebo komunitním projektem.") #[cite: 1]
+            st.write("Právě proto je důležité umět rozpoznat hranici mezi:") #[cite: 1]
+            
+            st.markdown("""
+            * **koníčkem** — dělám něco pro radost, bez soustavného záměru vydělávat,
+            * **jednorázovým přivýdělkem** — například prodám vlastní staré věci,
+            * **brigádou nebo zaměstnáním** — pracuji podle pokynů zaměstnavatele,
+            * **podnikáním** — samostatně nabízím produkt nebo službu, nesu riziko a chci dlouhodobě vydělávat.
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📱 Příklad pro dnešní studenty:</strong> Když jednou prodáš staré tenisky, nejde obvykle o podnikání. Když ale pravidelně nakupuješ, upravuješ, propaguješ a prodáváš zboží se záměrem vydělat, už se blížíš podnikání a musíš řešit pravidla.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
 
-# ==========================================
-# KAPITOLA 2: FINANCE A OSOBNÍ MANAGEMENT
-# ==========================================
-elif view == "Kapitola 2":
-    st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
-    st.title("Finance v běžném životě: peníze, rozhodování a odpovědnost")
-    st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>Osobní finance, bankovní systém, finanční trh a finanční řízení podniku v souvislostech.</p>", unsafe_allow_html=True)
-    
-    with st.container(border=True):
-        st.markdown("""
-        <div class='box-blue'>
-            <strong>🪙 Pointa kapitoly:</strong> Finanční gramotnost není jen znalost pojmů. Je to schopnost rozumět penězům jako systému, bezpečně se rozhodovat, vyhodnocovat rizika a plánovat osobní i podnikové finance tak, aby člověk dokázal reagovat na běžné i krizové situace.
-        </div>
-        """, unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("### 1.2 Čtyři znaky podnikání na praktických příkladech") #[cite: 1]
+            st.markdown("""
+            | Znak podnikání | Co znamená | Příklad ze současnosti | Otázka pro žáka |
+            | :--- | :--- | :--- | :--- |
+            | **Soustavnost** | Činnost se opakuje nebo je plánovaná dlouhodobě. | Každý měsíc prodávám vlastní digitální plánovače. | Dělám to jednou, nebo z toho chci pravidelný příjem? |
+            | **Samostatnost** | Sám/sama rozhoduji o ceně, zákaznících, způsobu práce a organizaci. | Nabízím správu sociálních sítí lokálním podnikům. | Kdo určuje, jak, kdy a pro koho pracuji? |
+            | **Vlastní jméno** | Vystupuji vůči zákazníkům a úřadům jako podnikatel nebo firma. | Mám značku, profil, faktury, obchodní podmínky nebo IČO. | Kdo nese odpovědnost před zákazníkem? |
+            | **Vlastní odpovědnost**| Nesu riziko ztráty, reklamací, dluhů a špatných rozhodnutí. | Nakoupím materiál na merch, ale nikdo si ho nekoupí. | Co se stane, když plán nevyjde? |
+            """, unsafe_allow_html=True) #[cite: 1]
 
-    section_options_2 = [
-        "1.1 Peníze jako digitální data a vývoj peněz",
-        "1.2 ČNB a komerční banky",
-        "1.3 Bezpečné platby a Phishing Trenažér",
-        "1.4 Kryptoměny a investiční kalkulačka"
-    ]
-    selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
-    st.divider()
+        with st.container(border=True):
+            st.markdown("### 1.3 Podnikatel není jen „někdo, kdo vydělává“") #[cite: 1]
+            st.write("Podnikatel vytváří hodnotu pro zákazníka. Peníze jsou důsledkem toho, že někdo považuje produkt nebo službu za užitečnou. Moderní podnikavost proto zahrnuje nejen prodej, ale i schopnost:") #[cite: 1]
+            st.markdown("""
+            * vidět problém,
+            * navrhnout řešení,
+            * ověřit zájem,
+            * komunikovat férově,
+            * počítat náklady a cenu,
+            * nést odpovědnost,
+            * učit se z chyb,
+            * používat technologie bezpečně a smysluplně.
+            """, unsafe_allow_html=True) #[cite: 1]
 
-    # -------------------------------------------------------------------------
-    # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA
-    # -------------------------------------------------------------------------
-    if selected_section_2 == "1.1 Peníze jako digitální data a vývoj peněz":
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.1 Peníze jako digitální data a vývoj peněz</h2>", unsafe_allow_html=True)
-        st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu.")
+        with st.container(border=True):
+            st.markdown("<div class='box-yellow'><strong>🧪 Tvůj úkol: Je to podnikání?</strong><br>U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdělek, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.selectbox("1. Student jednou prodá starý mobil.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q1") #[cite: 1]
+            st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q2") #[cite: 1]
+            st.selectbox("3. Student pracuje v kavárně podle rozpisu směn.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q3") #[cite: 1]
+            st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q4") #[cite: 1]
+            st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q5") #[cite: 1]
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> „Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.“
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.text_area("Tvoje odpověď:", key="p1_idea") #[cite: 1]
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi rozlišit, jestli je můj nápad spíš jednorázová aktivita, nebo skutečné podnikání.“
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📌 Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📌 Čtyři pilíře podnikání:</strong><br>
+                • <strong>Soustavnost:</strong> nejde o jednorázový prodej, ale o činnost vykonávanou opakovaně nebo dlouhodobě.<br>
+                • <strong>Samostatnost:</strong> podnikatel rozhoduje o tom, co dělá, jak pracuje a jak organizuje svou činnost.<br>
+                • <strong>Vlastní jméno:</strong> podnikatel vystupuje vůči zákazníkům, úřadům a partnerům sám za sebe nebo za svou firmu.<br>
+                • <strong>Vlastní odpovědnost:</strong> podnikatel nese následky svých rozhodnutí, včetně rizik, závazků a případných dluhů.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.info("🤔 **Otázka k zamyšlení:** V čem je podle vás největší rozdíl mezi zaměstnancem a podnikatelem?") #[cite: 1]
+
+   # --- 2. Slovníček základních pojmů ---
+    elif selected_section == "2. Slovníček základních pojmů":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div><h2>2. Slovníček základních pojmů</h2>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>⚖️ Proč jsou definice důležité:</strong> V podnikání nestačí používat pojmy „přibližně“. Výrazy jako podnikatel, fyzická osoba, právnická osoba nebo živnostenské oprávnění mají oporu v právních předpisech.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vysvětli mi tyto pojmy na mém podnikatelském nápadu: podnikatel, fyzická osoba, právnická osoba a živnost.“
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.markdown("""
+            | Termín | Co znamená | Proč je důležitý |
+            | :--- | :--- | :--- |
+            | **Podnikatel** | Osoba, která samostatně vykonává výdělečnou činnost na vlastní účet a odpovědnost se záměrem dělat ji soustavně za účelem dosažení zisku. | Pomáhá rozlišit, kdy už nejde jen o koníček nebo jednorázový přivýdělek. |
+            | **Podnikání** | Soustavná samostatná činnost vykonávaná na vlastní odpovědnost za účelem dosažení zisku. | Je základním pojmem celé kapitoly a určuje, kdy vznikají právní a finanční povinnosti. |
+            | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
+            | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
+            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
+            | **Živnostenské oprávnění** | Právo provozovat živnost. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje. |
+            | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
+            | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
+            | **Vázaná živnost** | Živnost, která vyžaduje specifické vzdělání, praxi nebo jinou zákonem stanovenou způsobilost. | Pomáhá pochopit, že u některých služeb stát chrání zákazníka požadavkem na odbornost. |
+            | **Koncesovaná živnost** | Živnost, kterou lze provozovat až po udělení státního povolení — koncese. | Typicky jde o regulované nebo rizikovější činnosti. |
+            | **Obchodní korporace** | Souhrnný pojem pro obchodní společnosti a družstva, například v.o.s., k.s., s.r.o., a.s. a družstvo. | Pomáhá zařadit základní právní formy podnikání. |
+            | **Obchodní rejstřík** | Veřejný seznam, ve kterém se zapisují obchodní korporace a další zákonem stanovené subjekty. | Slouží k ověření firmy, její právní formy, sídla a osob, které za ni jednají. |
+            | **Živnostenský rejstřík** | Evidence osob podnikajících na základě živnostenského oprávnění. | Slouží k ověření, zda má podnikatel oprávnění k určité činnosti. |
+            | **Ručení** | Odpovědnost za dluhy a závazky podnikatele nebo firmy. | Je klíčové při volbě právní formy, protože OSVČ a některé společnosti nesou vyšší osobní riziko. |
+            | **Švarcsystém** | Nelegální nastavení, kdy člověk formálně vystupuje jako podnikatel, ale fakticky pracuje jako zaměstnanec. | Pomáhá rozpoznat rizikovou spolupráci a rozdíl mezi podnikáním a zaměstnáním. |
+            | **CSR** | Společenská odpovědnost firem — přístup, kdy firma sleduje nejen zisk, ale i dopady na lidi, společnost a životní prostředí. | Ukazuje, že podnikání má také etický a společenský rozměr. |
+            | **Lean Canvas** | Stručná mapa podnikatelského nápadu, která zachycuje problém, zákazníka, řešení, náklady, příjmy a rizika. | Pomáhá rychle ověřovat nápad dřív, než tým investuje hodně času nebo peněz. |
+            | **MVP** | Minimální životaschopný produkt — nejmenší verze řešení, která umožní ověřit důležitý předpoklad. | Učí testovat nápad levně, rychle a bezpečně. |
+            """) #[cite: 1]
+
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>📚 Opora v legislativě:</strong> občanský zákoník, živnostenský zákon, zákon o obchodních korporacích a zákon o veřejných rejstřících.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🌱 Etika v podnikání:</strong> Podnikání není jen o legálnosti. Férový podnikatel nezneužívá švarcsystém, platí daně, jedná poctivě se zákazníky a chová se ohleduplně k zaměstnancům, partnerům i životnímu prostředí.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+   # --- 3. OSVČ a živnosti ---
+    elif selected_section == "3. OSVČ a živnosti":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 3</div><h2>3. OSVČ a živnosti</h2>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.write("OSVČ znamená osoba samostatně výdělečně činná. Jde o podnikání fyzické osoby — tedy člověka, který podniká vlastním jménem a nese za své podnikání odpovědnost.") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Podnikání jako OSVČ vypadá jednoduše, ale má právní, daňové a sociální důsledky. Je proto důležité znát základní podmínky živnostenského podnikání, povinnosti vůči státu a riziko osobního ručení.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 3.1 OSVČ jako nejčastější start malé podnikavosti") #[cite: 1]
+            st.write("OSVČ je pro mnoho lidí nejjednodušší cesta, jak začít. Hodí se pro malé služby, freelancing, řemeslo, doučování, správu sociálních sítí, grafiku, fotografování, tvorbu webů, e-shop v menším rozsahu nebo lokální podnikání.") #[cite: 1]
+            st.write("Výhoda je rychlý start a menší administrativa než u firmy. Nevýhoda je vyšší osobní riziko: OSVČ obvykle ručí za závazky celým svým majetkem.") #[cite: 1]
+            
+            st.markdown("""
+            | Situace | Proč může OSVČ dávat smysl | Na co si dát pozor |
+            | :--- | :--- | :--- |
+            | **Student spravuje sociální sítě lokální kavárně.** | Nízké vstupní náklady, služba založená na dovednosti. | Smlouva, fakturace, daně, autorská práva k obsahu. |
+            | **Grafik tvoří loga a šablony.** | Lze začít s notebookem a portfoliem. | Licenční podmínky, termíny, reklamace, komunikace s klientem. |
+            | **Kadeřník nebo kosmetička chce pracovat samostatně.** | Vlastní zákazníci, možnost budovat značku. | Odborná způsobilost, hygiena, provozovna, odpovědnost. |
+            | **Malý e-shop prodává vlastní produkty.** | Jednoduchý start a přímý kontakt se zákazníkem. | Obchodní podmínky, reklamace, sklad, ochrana spotřebitele. |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 3.2 OSVČ a digitální realita") #[cite: 1]
+            st.write("Dnešní OSVČ často nepotřebuje jen živnostenské oprávnění. Potřebuje také digitální a finanční gramotnost:") #[cite: 1]
+            st.markdown("""
+            * oddělit osobní a podnikatelské peníze,
+            * evidovat příjmy a výdaje,
+            * zálohovat doklady,
+            * chránit osobní údaje zákazníků,
+            * nepoužívat cizí fotografie, hudbu a texty bez práv,
+            * komunikovat transparentně cenu, dodání a podmínky,
+            * počítat s daněmi a odvody dřív, než peníze utratí.
+            """) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>💡 Pravidlo pro začátečníka:</strong> To, co přijde na účet, není celé „moje výplata“. Část peněz patří na náklady, daně, sociální a zdravotní pojištění, rezervu a budoucí investice.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.markdown("#### 🧮 Mini simulace OSVČ") #[cite: 1]
+            st.write("Představ si, že OSVČ za měsíc vyfakturuje 28 000 Kč. Náklady na software, dopravu, materiál a reklamu jsou 6 000 Kč.") #[cite: 1]
+            
+            zisk_osvc = 28000 - 6000
+            st.info(f"**Orientační zisk před daněmi a odvody:** {zisk_osvc} Kč") #[cite: 1]
+            
+            reserve_pct = st.slider("Navrhni, kolik procent by si měla OSVČ odložit stranou:", 0, 50, 30, 5) #[cite: 1]
+            st.write(f"Při {reserve_pct} % si odložíte: {28000 * (reserve_pct/100):.0f} Kč.") #[cite: 1]
+            st.write("Vysvětli, proč není bezpečné utratit celých 28 000 Kč.") #[cite: 1]
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš, jestli by se tvůj projekt dal na začátku provozovat jako OSVČ, a uveď jedno hlavní riziko.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.text_input("Tvoje odpověď:", key="osvc_vyzva") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Podívej se na můj nápad a navrhni, jaký typ živnosti by mohl připadat v úvahu a co si mám ověřit.“
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            st.markdown("""
+            <div class='box-red'>
+                <strong>⚠️ Hlavní riziko OSVČ:</strong> OSVČ ručí za závazky z podnikání celým svým osobním majetkem. Jednoduchý start tedy neznamená nulové riziko.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 3.3 Podmínky pro podnikání jako OSVČ") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vypiš, které podmínky by musel splnit začínající podnikatel ve tvém příkladu.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.write("**Co musí splnit začínající OSVČ?**") #[cite: 1]
+            st.markdown("""
+            * dosažení věku 18 let,
+            * svéprávnost,
+            * bezúhonnost,
+            * případně odbornou způsobilost podle druhu živnosti.
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 3.4 Druhy živností") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Zařaď svůj nápad k volné, řemeslné, vázané nebo koncesované živnosti a napiš, proč.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            | Druh živnosti | Co znamená | Příklad |
+            | :--- | :--- | :--- |
+            | **Volná živnost** | Není potřeba speciální vzdělání ani praxe. Stačí splnit všeobecné podmínky. | E-shop, marketingové služby, správa sociálních sítí. |
+            | **Řemeslná živnost** | Vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Truhlářství, kadeřnictví, opravy strojů. |
+            | **Vázaná živnost** | Vyžaduje specifické vzdělání, praxi nebo zkoušku. | Účetní poradenství, průvodcovská činnost, masérské služby. |
+            | **Koncesovaná živnost** | Vyžaduje státní povolení — koncesi. Jde o více regulované nebo rizikovější činnosti. | Taxislužba, provozování střelnice, prodej zbraní. |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 3.5 Jak si zařídit živnost") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Sepiš první tři kroky, které bys udělal/a před ohlášením živnosti.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            1. Rozhodnout se, o jaký typ živnosti jde.
+            2. Ověřit podmínky — všeobecné i případné zvláštní.
+            3. Vyplnit Jednotný registrační formulář – nové podání.
+            4. Ohlásit živnost nebo požádat o koncesi.
+            5. Ověřit daňové, zdravotní a sociální povinnosti.
+            """) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🌍 Digitální praxe:</strong> Portál živnostenského podnikání a veřejné rejstříky slouží k ověřování údajů, podávání žádostí a kontrole obchodních partnerů.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 3.6 Povinnosti živnostníka: legislativní minimum") #[cite: 1]
+            st.write("Živnostník neřeší jen zákazníky a cenu. Musí také splnit základní registrační, daňové a pojistné povinnosti.") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>⚖️ Legislativní minimum pro OSVČ:</strong> Přesné částky a termíny se mohou měnit, proto je potřeba ověřovat aktuální informace na stránkách Finanční správy, ČSSZ, zdravotní pojišťovny a Portálu živnostenského podnikání.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.write("**Co musí živnostník typicky dělat?**") #[cite: 1]
+            st.markdown("""
+            * **Ohlásit živnost nebo požádat o koncesi:** podle druhu činnosti na živnostenském úřadě, často přes Jednotný registrační formulář. Ten může zároveň pomoci s oznámením vůči finančnímu úřadu, ČSSZ a zdravotní pojišťovně.
+            * **Platit daň z příjmů fyzických osob:** běžně se podává daňové přiznání po skončení roku. Základní lhůta je do 3 měsíců po skončení zdaňovacího období; při elektronickém podání se lhůta prodlužuje na 4 měsíce a při využití daňového poradce zpravidla na 6 měsíců.
+            * **Zvážit paušální daň:** OSVČ může za splnění zákonných podmínek vstoupit do paušálního režimu. V jedné měsíční platbě pak řeší daň z příjmů, sociální pojištění i zdravotní pojištění. Paušální režim se nehodí pro každého, proto je nutné ověřit podmínky a pásmo.
+            * **Platit sociální pojištění:** OSVČ obvykle platí měsíční zálohy a po skončení roku podává přehled o příjmech a výdajích pro ČSSZ.
+            * **Platit zdravotní pojištění:** OSVČ obvykle platí měsíční zálohy a po skončení roku podává přehled své zdravotní pojišťovně.
+            * **Vést evidenci:** podle situace může jít o daňovou evidenci, účetnictví nebo evidenci příjmů při uplatnění výdajů procentem z příjmů. Smyslem je prokázat příjmy, výdaje a základ daně.
+            * **Hlásit důležité změny:** například změnu adresy, přerušení nebo ukončení činnosti, změnu zdravotní pojišťovny nebo skutečnosti důležité pro sociální a zdravotní pojištění.
+            """) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>💡 Praktické pravidlo:</strong> Živnostník by si měl od každé přijaté platby odkládat část peněz na daň, sociální a zdravotní pojištění. To, co přijde na účet, ještě není čistý příjem.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 3.7 Daně a odvody OSVČ úplně jednoduše") #[cite: 1]
+            st.write("OSVČ neřeší jen zákazníky a cenu. Musí také počítat s tím, že část vydělaných peněz odvede státu a pojišťovnám.") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-red'>
+                <strong>⚠️ Důležité zjednodušení:</strong> Přesné částky se každý rok mění. V první kapitole stačí pochopit princip: OSVČ platí daň z příjmů a odvody na sociální a zdravotní pojištění.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.write("**Co OSVČ typicky platí?**") #[cite: 1]
+            st.markdown("""
+            * **Daň z příjmů fyzických osob:** základní sazba je 15 % ze základu daně; u velmi vysokých příjmů se používá vyšší sazba.
+            * **Sociální pojištění:** slouží hlavně na důchodový systém a další dávky.
+            * **Zdravotní pojištění:** slouží na financování zdravotní péče.
+            * **Zálohy:** OSVČ obvykle platí během roku měsíční zálohy a po skončení roku podá daňové přiznání a přehledy pro pojišťovny.
+            """) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>🧮 Jednoduchý příklad:</strong> Jana má za rok příjmy 300 000 Kč a výdaje 120 000 Kč. Její zisk je tedy 180 000 Kč. Z tohoto zisku se teprve počítá daň a pojistné. Neznamená to, že si může celých 180 000 Kč nechat bez dalších povinností.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+            with st.expander("🧮 Konkrétní příklad odvodů OSVČ v roce 2026"):
+                st.write("Příklad počítá s OSVČ na hlavní činnost, která není plátcem DPH, má roční příjmy 300 000 Kč, skutečné výdaje 120 000 Kč a zisk 180 000 Kč. Částky jsou zjednodušené pro pochopení principu a je potřeba je vždy ověřit podle aktuálního roku.") #[cite: 1]
+                st.markdown("""
+                | Varianta | Jak se platí | Co je v částce zahrnuto | Orientační částka |
+                | :--- | :--- | :--- | :--- |
+                | **Bez paušální daně** | OSVČ řeší platby zvlášť. | Daň z příjmů vyjde v tomto příkladu po základní slevě 0 Kč: 15 % ze zisku 180 000 Kč je 27 000 Kč, ale základní sleva na poplatníka je vyšší než vypočtená daň, takže daň k zaplacení vyjde nulová. Neznamená to ale, že OSVČ nic neplatí — pořád musí řešit sociální a zdravotní pojištění. K tomu se platí minimální sociální pojištění 5 005 Kč měsíčně a minimální zdravotní pojištění 3 306 Kč měsíčně. | přibližně 8 311 Kč měsíčně, tedy 99 732 Kč ročně |
+                | **S paušální daní — I. pásmo** | OSVČ posílá jednu pravidelnou platbu. | V jedné částce je zahrnutá daň z příjmů, sociální pojištění i zdravotní pojištění. | 9 162 Kč měsíčně, tedy 109 944 Kč ročně |
+                """) #[cite: 1]
+                st.write("**Co z příkladu plyne:** Bez paušální daně se jednotlivé platby počítají a řeší odděleně, proto je důležité rozlišit daň, sociální a zdravotní pojištění. Paušální daň je jednodušší administrativně, protože se platí jednou částkou, ale nemusí být automaticky levnější.") #[cite: 1]
+                st.write("**Kdy se může paušální daň vyplatit:** Představ si OSVČ v roce 2026, která má roční příjmy 1 000 000 Kč a používá 60% výdajový paušál. To znamená, že do daňového výpočtu nemusí vypisovat každou účtenku za notebook, telefon, dopravu nebo reklamu. Místo toho stát dovolí odečíst výdaje jednoduše procentem z příjmů. V tomto příkladu jsou výdaje paušálem 600 000 Kč, základ pro výpočet je tedy 400 000 Kč. Daň před slevou je 15 % z 400 000 Kč, tedy 60 000 Kč. Po základní slevě na poplatníka vyjde daň přibližně 29 160 Kč. K tomu se připočítá sociální a zdravotní pojištění. V takové situaci může být paušální daň v I. pásmu 9 162 Kč měsíčně, tedy 109 944 Kč ročně, výhodná nejen administrativně, ale i finančně.") #[cite: 1]
+                st.write("**Jednoduše:** Paušální daň se často vyplatí tehdy, když má OSVČ vyšší příjmy, nižší skutečné výdaje a splní podmínky pro příslušné pásmo. Naopak u nízkého zisku nemusí být výhodná.") #[cite: 1]
+                st.write("**Kde ověřit aktuální částky:** ČSSZ — OSVČ v paušálním režimu, Finanční správa — paušální daň a zdravotní pojišťovna OSVČ.") #[cite: 1]
+
+            st.markdown("""
+            | Krok | Jednoduché vysvětlení |
+            | :--- | :--- |
+            | **Příjmy** | Kolik OSVČ vyfakturovala zákazníkům. |
+            | **Výdaje** | Kolik ji stálo podnikání — materiál, software, doprava, reklama. |
+            | **Zisk / základ pro výpočet** | Příjmy minus výdaje. Z něj se řeší daň a pojistné. |
+            | **Zálohy** | Pravidelné platby během roku, aby OSVČ neplatila všechno najednou až po skončení roku. |
+            """) #[cite: 1]
+
+            st.markdown("""
+            <div class='box-yellow'>
+                <strong>💡 Praktické pravidlo pro začátečníka:</strong> Když OSVČ dostane zaplaceno, neměla by všechno utratit. Část peněz si musí odložit na daň, sociální a zdravotní pojištění.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        # --- NOVÁ KALKULAČKA HODINOVÉ SAZBY ---
+        with st.container(border=True):
+            st.markdown("### 🧮 Kalkulačka hodinové sazby OSVČ")
+            st.write("Spousta začínajících freelancerů si špatně nastaví hodinovou sazbu, protože zapomenou, že ne každá pracovní hodina je placená (fakturovatelná) a že z příjmů musí platit daně, odvody a provozní náklady.")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("#### Tvoje potřeby a náklady")
+                target_net = st.number_input("Cílový čistý měsíční příjem (Kč):", value=35000, step=1000)
+                monthly_expenses = st.number_input("Provozní měsíční náklady (Kč) (software, účetní, doprava):", value=5000, step=500)
+                taxes_insurance = st.number_input("Odhad měsíčních odvodů a daní (Kč) (např. min. zálohy):", value=9000, step=500)
+                
+            with col2:
+                st.markdown("#### Tvůj pracovní čas")
+                total_hours = st.number_input("Kolik hodin celkem měsíčně chceš pracovat?", value=160, step=10)
+                billable_percent = st.slider("Kolik % času reálně fakturuješ klientovi? (zbytek je administrativa, schůzky, marketing)", min_value=10, max_value=100, value=60, step=5)
+            
+            st.divider()
+            
+            if total_hours > 0 and billable_percent > 0:
+                total_gross_needed = target_net + monthly_expenses + taxes_insurance
+                billable_hours = total_hours * (billable_percent / 100)
+                hourly_rate = total_gross_needed / billable_hours
+                
+                c_res1, c_res2, c_res3 = st.columns(3)
+                with c_res1:
+                    st.metric(label="Nutný hrubý měsíční příjem", value=f"{total_gross_needed:,.0f} Kč".replace(",", " "))
+                with c_res2:
+                    st.metric(label="Fakturovatelné hodiny (měsíčně)", value=f"{billable_hours:.0f} h")
+                with c_res3:
+                    st.metric(label="Tvůj minimální hodinový tarif", value=f"{hourly_rate:,.0f} Kč/h".replace(",", " "))
+                    
+                st.info(f"**Vysvětlení:** Abys měl/a čistého **{target_net} Kč**, musíš si vydělat **{total_gross_needed} Kč** (kvůli nákladům a odvodům). Protože reálně pro klienty pracuješ jen **{billable_hours:.0f} hodin**, musíš si za jednu hodinu účtovat alespoň **{hourly_rate:,.0f} Kč**.")
+# --- 4. Obchodní korporace ---
+    elif selected_section == "4. Obchodní korporace":
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div><h2>4. Obchodní korporace</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Obchodní korporace jsou právnické osoby založené podle zákona o obchodních korporacích. Patří mezi ně obchodní společnosti a družstva. V praxi vytvářejí samostatný subjekt — firmu, která má vlastní název, sídlo, majetek, orgány, pravidla rozhodování a odpovědnost.") #[cite: 1]
+            st.write("Je důležité pochopit, že obchodní korporace není jen „větší podnikání“. Je to právní forma, která určuje:") #[cite: 1]
+            st.markdown("""
+            * kdo podnik vlastní,
+            * kdo za něj jedná,
+            * jak se ručí za dluhy,
+            * jak se vkládají peníze nebo práce,
+            * jak se rozhoduje,
+            * jak se rozděluje zisk,
+            * jak firma vzniká a zaniká,
+            * jakou administrativu musí plnit.
+            """) #[cite: 1]
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Právní forma podnikání ovlivňuje ručení, povinnosti, daně, administrativu i důvěryhodnost vůči zákazníkům, bankám a partnerům. Nejde o učení paragrafů nazpaměť, ale o pochopení, proč se právní forma volí odpovědně.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.1 Proč právní forma není formalita") #[cite: 1]
+            st.write("Právní forma rozhoduje o tom, kdo nese riziko, kdo jedná za podnik, jak se rozděluje zisk, jak složitá je administrativa a jak podnik působí na banky, investory, dodavatele i zákazníky.") #[cite: 1]
+            st.write("Pro současnou generaci je důležité pochopit, že právní forma není „nudná kolonka ve formuláři“. Je to bezpečnostní a strategické rozhodnutí.") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>⚖️ Zákonný základ:</strong> Obchodní korporace upravuje zejména zákon o obchodních korporacích. Jejich vznik, zápis a veřejné údaje souvisejí také s občanským zákoníkem, živnostenským zákonem, zákonem o veřejných rejstřících a daňovými předpisy.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            | Otázka | Proč je důležitá | Příklad |
+            | :--- | :--- | :--- |
+            | **Kolik riskuji?** | Určuje, zda podnikatel ohrožuje i osobní majetek. | OSVČ ručí jinak než společník v s.r.o. |
+            | **Podnikám sám/sama, nebo v týmu?** | Ovlivňuje rozhodování, podíly a odpovědnost. | Dva zakladatelé e-shopu potřebují jasná pravidla. |
+            | **Potřebuji investora?** | Investor obvykle chce přehlednou vlastnickou strukturu. | Startup může kvůli investorovi zvolit s.r.o. nebo a.s. |
+            | **Jak moc poroste podnikání?** | Růst zvyšuje rizika, počet smluv, zaměstnance a finance. | Malý freelancing zvládne OSVČ, větší tým spíš firma. |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.2 Co patří mezi obchodní korporace") #[cite: 1]
+            st.write("Obchodní korporace se dělí na obchodní společnosti a družstva. Obchodní společnosti se dále dělí na osobní společnosti (v.o.s., k.s.) a kapitálové společnosti (s.r.o., a.s.).") #[cite: 1]
+            
+            st.markdown("""
+            | Skupina | Formy | Typický znak |
+            | :--- | :--- | :--- |
+            | **Osobní společnosti** | v.o.s., k.s. | Důležitá je osobní účast společníků, důvěra a často vyšší míra ručení. |
+            | **Kapitálové společnosti** | s.r.o., a.s. | Důležitý je vklad kapitálu, podíly nebo akcie a oddělení firmy od osobního majetku vlastníků. |
+            | **Družstva** | družstvo, evropská družstevní forma | Důležité je členství, spolupráce a společný prospěch členů. |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.3 Obecné zákonné podmínky vzniku obchodní korporace") #[cite: 1]
+            st.write("Každá obchodní korporace má svá specifická pravidla, ale některé kroky se opakují u většiny forem.") #[cite: 1]
+            
+            st.markdown("""
+            | Krok | Co znamená | Proč je důležitý |
+            | :--- | :--- | :--- |
+            | **Zakladatelské právní jednání** | Sepsání společenské smlouvy, zakladatelské listiny nebo stanov podle typu korporace. | Určuje základní pravidla firmy: název, sídlo, společníky, vklady, orgány a rozhodování. |
+            | **Obchodní firma** | Název, pod kterým korporace vystupuje. | Musí být odlišitelný a nesmí být klamavý. Zákazník má vědět, s kým jedná. |
+            | **Sídlo** | Adresa zapsaná ve veřejném rejstříku. | Slouží pro kontakt, doručování a identifikaci firmy. |
+            | **Předmět podnikání nebo činnosti** | Vymezení, co bude korporace dělat. | Často je potřeba živnostenské oprávnění nebo jiné povolení. |
+            | **Vklady** | Peníze nebo jiné hodnoty, které společníci nebo členové do korporace vkládají. | Ukazují majetkovou účast a mohou ovlivnit podíl na zisku i hlasování. |
+            | **Orgány korporace** | Osoby nebo skupiny, které rozhodují a jednají za firmu. | Bez jasných orgánů není zřejmé, kdo firmu řídí a kdo ji zastupuje navenek. |
+            | **Zápis do obchodního rejstříku** | Veřejný zápis základních údajů o korporaci. | Obchodní korporace zpravidla vzniká až zápisem do obchodního rejstříku. |
+            """) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>🔍 Praktická poznámka pro tebe:</strong> Firma nezačíná jen logem a Instagramem. Nejdřív musí být jasné, kdo ji zakládá, za jakým účelem, jak ručí, kdo rozhoduje a jaké údaje budou veřejně dohledatelné.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.4 Volba právní formy podle situace") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧭 9 otázek: OSVČ, nebo s.r.o.?</strong><br>U každé otázky zaškrtni tu odpověď, která lépe odpovídá tvému projektu. Na konci se podívej, kterých odpovědí máš víc.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            q1 = st.radio("1️⃣ Plánuješ podnikat sám/sama, nebo v týmu?", ["Spíš OSVČ: Podnikám sám/sama a rozhoduji hlavně za sebe.", "Spíš s.r.o.: Podnikáme v týmu a potřebujeme jasně rozdělit role, odpovědnost a podíly."], key="kviz_q1") #[cite: 1]
+            q2 = st.radio("2️⃣ Jde hlavně o osobní práci, nebo projekt s růstem?", ["Spíš OSVČ: Nabízím hlavně vlastní práci, službu nebo dovednost.", "Spíš s.r.o.: Projekt má růst, rozšiřovat se a fungovat jako samostatná firma."], key="kviz_q2") #[cite: 1]
+            q3 = st.radio("3️⃣ Potřebujete řešit podíly a zakladatelskou dohodu?", ["Spíš OSVČ: Zatím nepotřebuji řešit podíly mezi více zakladateli.", "Spíš s.r.o.: Je nás víc a potřebujeme jasně určit, kdo má jaký podíl a kdo o čem rozhoduje."], key="kviz_q3") #[cite: 1]
+            q4 = st.radio("4️⃣ Hrozí větší finanční závazky?", ["Spíš OSVČ: Náklady jsou nízké a projekt lze rychle zastavit bez velkých dluhů.", "Spíš s.r.o.: Projekt vyžaduje větší nákupy, úvěr, sklad, drahé vybavení nebo dlouhodobé smlouvy."], key="kviz_q4") #[cite: 1]
+            q5 = st.radio("5️⃣ Může vzniknout škoda, reklamace nebo odpovědnost vůči zákazníkům?", ["Spíš OSVČ: Riziko škody nebo reklamací je malé a dobře zvládnutelné.", "Spíš s.r.o.: Chyba může způsobit větší škodu, reklamace nebo právní odpovědnost."], key="kviz_q5") #[cite: 1]
+            q6 = st.radio("6️⃣ Potřebuješ chránit osobní majetek?", ["Spíš OSVČ: Riziko je malé a nevadí mi vyšší osobní odpovědnost.", "Spíš s.r.o.: Chci lépe oddělit osobní majetek od podnikání."], key="kviz_q6") #[cite: 1]
+            q7 = st.radio("7️⃣ Budeš potřebovat investora, banku nebo větší partnery?", ["Spíš OSVČ: Nepotřebuji investora ani složitější vlastnickou strukturu.", "Spíš s.r.o.: Chci jednat s investorem, bankou nebo většími obchodními partnery."], key="kviz_q7") #[cite: 1]
+            q8 = st.radio("8️⃣ Chceš rychle otestovat nápad, nebo budovat firmu?", ["Spíš OSVČ: Chci začít jednoduše a nejdřív si ověřit, jestli nápad funguje.", "Spíš s.r.o.: Od začátku počítám s budováním značky, týmu a dlouhodobé firmy."], key="kviz_q8") #[cite: 1]
+            q9 = st.radio("9️⃣ Bude projekt pracovat s dalšími lidmi?", ["Spíš OSVČ: Většinu práce zvládne jeden člověk nebo občasná jednoduchá spolupráce.", "Spíš s.r.o.: Projekt bude potřebovat tým, zaměstnance, dodavatele nebo jasnější řízení spolupráce."], key="kviz_q9") #[cite: 1]
+            
+            if st.button("Vyhodnotit test"):
+                odpovedi = [q1, q2, q3, q4, q5, q6, q7, q8, q9]
+                sro_body = sum([1 for odpoved in odpovedi if "s.r.o." in odpoved])
+                osvc_body = 9 - sro_body
+                st.write(f"**Skóre:** OSVČ ({osvc_body}/9) | s.r.o. ({sro_body}/9)")
+                st.info("💡 **Jak si výsledek vyložit:** Pokud převažují zaškrtnuté odpovědi Spíš OSVČ, bude pro začátek pravděpodobně vhodnější OSVČ. Pokud převažují zaškrtnuté odpovědi Spíš s.r.o., bude pro projekt pravděpodobně vhodnější uvažovat o s.r.o. Nejde o právní radu, ale o pomůcku k rozhodování podle rizika, týmu, růstu a odpovědnosti.") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.5 Moderní pohled: firma jako důvěryhodná značka") #[cite: 1]
+            st.write("Zákazník dnes často posuzuje firmu podle webu, sociálních sítí, recenzí a transparentnosti. Právní forma může ovlivnit důvěru: zákazník chce vědět, s kým uzavírá smlouvu, dodavatel chce vědět, kdo zaplatí fakturu, banka chce vědět, kdo ručí, investor chce vědět, kdo vlastní podíly, zaměstnanec chce vědět, kdo ho zaměstnává.") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-gray'>
+                <strong>🔍 Digitální stopa firmy:</strong> U každého podnikání je dobré ověřit název, IČO, právní formu, osobu jednající za firmu, web, recenze a veřejné rejstříky. Důvěryhodnost dnes vzniká i tím, že informace souhlasí napříč zdroji.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Rozhodni, jestli by tvému projektu pomohlo oddělit firmu od osobního majetku zakladatele. Napiš jeden důvod.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.text_input("Tvoje odpověď:", key="firma_vyzva_oddělení") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Porovnej pro můj projekt OSVČ, s.r.o. a a.s. podle rizika, administrativy a růstu.“
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📚 Jednoduše řečeno:</strong> Právní forma je „kabát“, ve kterém podnikání vystupuje navenek. Jinak se podniká jako jednotlivec na živnost a jinak jako firma.<br><br>
+                <strong>🔍 Proč to souvisí s důvěryhodností:</strong> Zákazník, dodavatel i investor se podle právní formy lépe orientují v tom, s kým jednají, kdo rozhoduje a kdo nese odpovědnost.
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.6 Osobní společnosti") #[cite: 1]
+            st.write("Osobní společnosti stojí hlavně na osobní účasti, důvěře a odpovědnosti společníků.") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš, kdy by ve tvém projektu dávalo smysl podnikat s další osobou na základě vysoké důvěry.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            with st.expander("Veřejná obchodní společnost (v.o.s.)"):
+                st.write("Veřejná obchodní společnost je osobní společnost, ve které podnikají alespoň dvě osoby pod společnou firmou. Zákonně jde o formu vhodnou spíše pro osoby, které si velmi důvěřují. Důvod je jednoduchý: společníci ručí za dluhy společnosti společně a nerozdílně celým svým majetkem. To znamená, že věřitel se může domáhat splnění dluhu i po jednom ze společníků, a ten si potom případně vypořádává vztahy s ostatními.") #[cite: 1]
+                st.write("**Zákonné a praktické znaky v.o.s.:**") #[cite: 1]
+                st.markdown("""
+                * zakládají ji alespoň dvě osoby,
+                * společnost vzniká zápisem do obchodního rejstříku,
+                * obchodní firma obvykle obsahuje označení „veřejná obchodní společnost“ nebo zkratku „v.o.s.“,
+                * společníci se podílejí na podnikání a ručí osobním majetkem,
+                * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných pravidel,
+                * kvůli vysokému ručení je potřeba silná důvěra mezi společníky.
+                """) #[cite: 1]
+                st.markdown("<div class='box-red'><strong>⚠️ Hlavní nevýhoda v.o.s.:</strong> vysoké osobní riziko společníků.</div>", unsafe_allow_html=True) #[cite: 1]
+                st.markdown("<div class='box-green'><strong>✅ Hlavní výhoda v.o.s.:</strong> jednoduché založení a silná osobní důvěra mezi společníky.</div>", unsafe_allow_html=True) #[cite: 1]
+                st.write("🏪 *Příklad z praxe — v.o.s.: Jako veřejná obchodní společnost v ČR působí například Kaufland Česká republika v.o.s. Právní formu je vždy nejlepší ověřit podle přesného názvu nebo IČO v obchodním rejstříku.*") #[cite: 1]
+
+            with st.expander("Komanditní společnost (k.s.)"):
+                st.write("Komanditní společnost kombinuje prvky osobní a kapitálové společnosti. Vždy v ní vystupují dva typy společníků:") #[cite: 1]
+                st.markdown("""
+                | Role | Komplementář | Komanditista |
+                | :--- | :--- | :--- |
+                | **Postavení** | Aktivně řídí společnost. | Spíše vkládá kapitál. |
+                | **Ručení** | Ručí celým svým majetkem. | Ručí do výše nesplaceného vkladu. |
+                | **Typická role** | „Ten, kdo podnik řídí.“ | „Ten, kdo přináší kapitál.“ |
+                """) #[cite: 1]
+                st.write("**Zákonné a praktické znaky k.s.:**") #[cite: 1]
+                st.markdown("""
+                * musí mít alespoň jednoho komplementáře a alespoň jednoho komanditistu,
+                * komplementář řídí společnost a ručí za její dluhy celým svým majetkem,
+                * komanditista vkládá kapitál a ručí omezeně, typicky podle výše nesplaceného vkladu zapsaného v obchodním rejstříku,
+                * společnost vzniká zápisem do obchodního rejstříku,
+                * obchodní firma obsahuje označení „komanditní společnost“ nebo zkratku „k.s.“,
+                * hodí se pro situace, kdy jeden člověk projekt aktivně řídí a druhý spíše poskytuje kapitál.
+                """) #[cite: 1]
+                st.markdown("<div class='box-gray'><strong>⚖️ Riziko pro komplementáře:</strong> Komplementář je v k.s. v podobné rizikové pozici jako společník v.o.s. Pokud projekt vytváří vysoké závazky, je potřeba velmi dobře zvážit, zda je tato forma bezpečná.</div>", unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.7 Kapitálové společnosti") #[cite: 1]
+            st.write("Kapitálové společnosti stojí více na vloženém kapitálu než na osobní účasti společníků. Typicky lépe oddělují firmu od osobního majetku vlastníků.") #[cite: 1]
+            
+            with st.expander("Společnost s ručením omezeným (s.r.o.)"):
+                st.write("Společnost s ručením omezeným je jednou z nejčastějších forem podnikání v ČR. Je oblíbená proto, že umožňuje poměrně dostupné založení firmy a zároveň lépe odděluje podnikání od osobního života zakladatele. S.r.o. je vhodná pro menší a střední podnikání, rodinné firmy, startupy, e-shopy, služby i týmové projekty.") #[cite: 1]
+                st.write("**Zákonné a praktické podmínky s.r.o.:**") #[cite: 1]
+                st.markdown("""
+                * může ji založit jedna nebo více osob,
+                * zakládá se společenskou smlouvou nebo zakladatelskou listinou,
+                * vzniká zápisem do obchodního rejstříku,
+                * obchodní firma obsahuje označení „společnost s ručením omezeným“, „spol. s r.o.“ nebo „s.r.o.“,
+                * základní kapitál je tvořen vklady společníků,
+                * minimální výše vkladu společníka může být podle zákona 1 Kč, pokud společenská smlouva neurčí více,
+                * zákon tedy sice umožňuje založit s.r.o. s velmi nízkým vkladem, ale v praxi to nemusí být bezpečné: firma pak nemá téměř žádnou finanční rezervu na první náklady, chyby, reklamace nebo období bez příjmů,
+                * společníci ručí za dluhy společnosti jen do výše, v jaké nesplnili vkladovou povinnost podle zápisu v obchodním rejstříku,
+                * statutárním orgánem je jeden nebo více jednatelů,
+                * nejvyšším orgánem je valná hromada, případně jediný společník vykonává její působnost.
+                """) #[cite: 1]
+                st.markdown("""
+                | Otázka u s.r.o. | Co máš pochopit |
+                | :--- | :--- |
+                | **Stačí vklad 1 Kč?** | Zákon to umožňuje, ale pro podnikatele to není příliš bezpečný start. Firma s vkladem 1 Kč nemá téměř žádný vlastní kapitál, takže i běžné počáteční náklady, zpožděné platby nebo reklamace mohou rychle vytvořit problém. Bezpečnější je počítat s reálnou finanční rezervou. |
+                | **Ručí společník osobním majetkem?** | Společník obvykle neručí jako OSVČ celým majetkem, ale musí splnit vkladovou povinnost. Odpovědnost jednatele je samostatné téma. |
+                | **Kdo jedná za firmu?** | Jednatel. Je zapsaný v obchodním rejstříku a má povinnost jednat s péčí řádného hospodáře. |
+                | **Kdo rozhoduje o důležitých věcech?** | Valná hromada společníků nebo jediný společník. Rozhoduje například o zásadních otázkách, změnách smlouvy nebo rozdělení zisku. |
+                """) #[cite: 1]
+                st.markdown("<div class='box-yellow'><strong>💡 Praktické pravidlo:</strong> OSVČ bývá jednodušší pro start. S.r.o. dává větší smysl tehdy, když podnikání roste, přibývají rizika, vzniká tým nebo je potřeba oddělit osobní majetek od podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
+
+            with st.expander("Akciová společnost (a.s.)"):
+                st.write("Akciová společnost je kapitálová společnost vhodná spíše pro větší projekty, investory a podnikání s významnějším kapitálem. Její základní kapitál je rozdělen na akcie.") #[cite: 1]
+                st.write("**Zákonné a praktické podmínky a.s.:**") #[cite: 1]
+                st.markdown("""
+                * zakládá se přijetím stanov,
+                * vzniká zápisem do obchodního rejstříku,
+                * obchodní firma obsahuje označení „akciová společnost“ nebo zkratku „a.s.“,
+                * základní kapitál je rozvržen na akcie,
+                * minimální základní kapitál je 2 000 000 Kč nebo odpovídající částka v eurech podle zákonných pravidel,
+                * akcionáři za dluhy společnosti neručí,
+                * akcie vyjadřují podíl akcionáře na společnosti a jsou s nimi spojena práva,
+                * společnost má složitější strukturu řízení a vyšší administrativní nároky než s.r.o.,
+                * hodí se pro větší podnikání, investory, významnější kapitál a projekty s ambicí růstu.
+                """) #[cite: 1]
+                st.write("**Orgány a.s. a dva systémy řízení:**") #[cite: 1]
+                st.markdown("""
+                * **Nejvyšší orgán:** valná hromada — rozhodují na ní akcionáři.
+                * **Dualistický systém:** statutární orgán je představenstvo a kontrolní orgán je dozorčí rada. Řízení a kontrola jsou oddělené.
+                * **Monistický systém:** statutárním orgánem je správní rada. V praxi soustřeďuje řízení a kontrolu blíže k jednomu orgánu.
+                * **Zisk:** rozděluje se až po zdanění daní z příjmů právnických osob a po schválení valnou hromadou. Podíl akcionáře na zisku se nazývá dividenda.
+                """) #[cite: 1]
+                st.info("💡 Jednoduše: A.s. není vhodná pro většinu malých školních projektů. Je důležitá hlavně proto, abys pochopil/a svět větších firem, investorů, akcií, dividend a řízení kapitálové společnosti.") #[cite: 1]
+
+            with st.expander("Družstvo"):
+                st.write("Družstvo je právnická osoba založená na členství. Jeho smyslem není jen zisk pro vlastníky, ale také společný prospěch členů — například bydlení, práce, prodej výrobků nebo společné využívání služeb.") #[cite: 1]
+                st.write("**Zákonné a praktické znaky družstva:**") #[cite: 1]
+                st.markdown("""
+                * je založeno na členství,
+                * má zpravidla alespoň tři členy,
+                * vzniká zápisem do obchodního rejstříku,
+                * obchodní firma obsahuje označení „družstvo“,
+                * členové se podílejí na činnosti družstva,
+                * orgány družstva typicky zahrnují členskou schůzi, představenstvo a kontrolní komisi; u menších družstev mohou být pravidla jednodušší podle zákonných možností,
+                * smyslem může být podnikání i zajišťování potřeb členů,
+                * hodí se tam, kde je důležitá spolupráce a společný prospěch.
+                """) #[cite: 1]
+                st.markdown("<div class='box-blue'><strong>👥 Funkce družstva:</strong> Družstvo umožňuje lidem spojit síly, sdílet náklady, společně rozhodovat a řešit potřebu, kterou by jednotlivec zvládal obtížněji.</div>", unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.8 Povinnosti členů orgánů: péče řádného hospodáře") #[cite: 1]
+            st.write("Osoby, které řídí obchodní korporaci nebo za ni jednají, nemohou rozhodovat libovolně. Musí jednat informovaně, pečlivě, loajálně a v zájmu korporace. Tento princip se označuje jako péče řádného hospodáře. Pro tebe je to důležité hlavně u jednatele s.r.o., členů představenstva a dalších osob ve vedení. Pokud někdo firmu řídí nezodpovědně, může nést právní následky.") #[cite: 1]
+            
+            st.markdown("""
+            | Situace | Odpovědné jednání | Rizikové jednání |
+            | :--- | :--- | :--- |
+            | **Firma podepisuje velkou smlouvu.** | Vedení si ověří cenu, rizika, závazky a schopnost plnit. | Podepíše smlouvu bez čtení, jen proto, že „to vypadá dobře“. |
+            | **Firma má finanční problémy.** | Vedení sleduje cashflow, jedná s věřiteli a řeší situaci včas. | Ignoruje dluhy a objednává další služby, i když ví, že nezaplatí. |
+            | **Firma pracuje s daty zákazníků.** | Nastaví přístupy, ochranu dat a jasná pravidla. | Sdílí zákaznická data v nechráněné tabulce bez pravidel. |
+            """) #[cite: 1]
+            st.markdown("<div class='box-gray'><strong>⚖️ Didaktická pointa:</strong> Omezené ručení neznamená nulovou odpovědnost. Společník, jednatel, člen představenstva nebo člen družstva musí chápat svou roli a rozhodovat odpovědně.</div>", unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.9 Přehled právních forem") #[cite: 1]
+            st.markdown("""
+            | Forma | Administrativní náročnost | Míra rizika | Kapitál | Typický znak |
+            | :--- | :--- | :--- | :--- | :--- |
+            | **OSVČ** | Nízká | Vysoká — ručení celým majetkem | Není vyžadován | Rychlý a jednoduchý start |
+            | **v.o.s.** | Střední | Vysoká — společníci ručí celým majetkem | Není vyžadován | Osobní důvěra společníků |
+            | **k.s.** | Střední | Různé ručení komplementářů a komanditistů | Vklad komanditisty | Kombinace aktivního společníka a investora |
+            | **s.r.o.** | Střední | Nižší — oddělení firmy od osobního majetku | Od 1 Kč, reálně více nákladů | Dostupná firemní forma |
+            | **a.s.** | Vysoká | Nižší — akcionáři osobně neručí | Vyšší základní kapitál | Akcie, investoři, větší kapitál |
+            | **družstvo** | Střední | Záleží na pravidlech a situaci družstva | Členské vklady | Společný prospěch členů |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.10 Vznik obchodní korporace") #[cite: 1]
+            st.write("Založení právnické osoby, například s.r.o. nebo a.s., je formální proces. Obvykle vyžaduje součinnost s notářem a zápis do obchodního rejstříku.") #[cite: 1]
+            st.markdown("""
+            1. Sepsání společenské smlouvy nebo zakladatelské listiny.
+            2. Splacení vkladu nebo základního kapitálu.
+            3. Získání živnostenského oprávnění, pokud je potřeba.
+            4. Zápis do obchodního rejstříku.
+            """) #[cite: 1]
+            st.markdown("<div class='box-blue'><strong>🏛️ Důležité pravidlo:</strong> Obchodní korporace vzniká až dnem zápisu do obchodního rejstříku.</div>", unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.11 Co se zapisuje do obchodního rejstříku") #[cite: 1]
+            st.write("Obchodní rejstřík je veřejný seznam. Díky němu si může zákazník, dodavatel, banka, úřad nebo budoucí zaměstnanec ověřit základní údaje o firmě.") #[cite: 1]
+            st.write("Typicky se zapisuje: název firmy, sídlo, právní forma, identifikační číslo osoby, předmět podnikání nebo činnosti, statutární orgán a způsob jednání, společníci, výše vkladů, základní kapitál, změny, zrušení, likvidace.") #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.12 Zrušení, likvidace a zánik obchodní korporace") #[cite: 1]
+            st.write("Obchodní korporace nemusí existovat navždy. Může být zrušena dobrovolně, rozhodnutím orgánu společnosti, uplynutím doby, splněním účelu, rozhodnutím soudu nebo z jiných zákonných důvodů.") #[cite: 1]
+            st.markdown("""
+            | Pojem | Jednoduché vysvětlení | Příklad |
+            | :--- | :--- | :--- |
+            | **Zrušení** | Firma vstoupí do fáze ukončování. | Společníci rozhodnou, že s.r.o. už nebude pokračovat. |
+            | **Likvidace** | Firma vypořádá majetek, dluhy a pohledávky. | Prodá vybavení, zaplatí závazky a rozdělí zbytek podle pravidel. |
+            | **Zánik** | Firma právně přestane existovat. | Po výmazu z obchodního rejstříku už korporace neexistuje. |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.13 Daně a odvody u obchodních korporací úplně jednoduše") #[cite: 1]
+            st.write("U obchodních korporací je důležité rozlišit firmu a člověka, který z ní dostává peníze. Firma může platit daň ze svého zisku. Pokud má zaměstnance, řeší také mzdy, sociální a zdravotní pojištění za zaměstnance. Když si vlastník vyplácí podíl na zisku, řeší se další zdanění podle pravidel pro daný typ příjmu.") #[cite: 1]
+            st.markdown("<div class='box-red'><strong>⚠️ Důležité zjednodušení:</strong> V první kapitole nejde o přesný výpočet účetnictví. Cílem je pochopit, že s.r.o. nebo a.s. není „bez daní“. Jen se peníze daní jinak než u OSVČ.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            st.write("**Co může platit například s.r.o.?**") #[cite: 1]
+            st.markdown("""
+            * **Daň z příjmů právnických osob:** platí ji firma ze svého zisku; sazba je 21 %.
+            * **Sociální a zdravotní pojištění za zaměstnance:** pokud firma zaměstnává lidi, odvádí za ně pojistné a část strhává ze mzdy.
+            * **Daň ze mzdy:** pokud si zakladatel vyplácí mzdu jako zaměstnanec nebo jednatel, řeší se zdanění mzdy.
+            * **Zdanění podílu na zisku:** pokud si společník vyplácí zisk, nejde o běžnou tržbu, ale o výplatu podílu na zisku.
+            """) #[cite: 1]
+            
+            st.markdown("""
+            | Situace | Kdo platí | Co je pointa |
+            | :--- | :--- | :--- |
+            | **OSVČ vydělá peníze** | Podnikatel jako fyzická osoba | Řeší daň z příjmů, sociální a zdravotní pojištění. |
+            | **s.r.o. vytvoří zisk** | Firma jako právnická osoba | Firma platí daň ze zisku. |
+            | **s.r.o. má zaměstnance** | Firma jako zaměstnavatel | Řeší mzdu, daň ze mzdy a odvody na sociální a zdravotní pojištění. |
+            | **Společník si vyplatí zisk** | Společník / firma podle pravidel výplaty | Nejde o totéž jako tržba. Výplata zisku má vlastní daňová pravidla. |
+            """) #[cite: 1]
+            
+            st.markdown("<div class='box-yellow'><strong>💡 Praktické srovnání:</strong> OSVČ bývá jednodušší na start, ale ručí osobním majetkem. Společnost s ručením omezeným lépe odděluje firmu od osobního života, ale má složitější administrativu, účetnictví a pravidla pro daně.</div>", unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.14 Srovnání OSVČ a s.r.o. pro tvůj projekt") #[cite: 1]
+            st.markdown("""
+            | Otázka | OSVČ | s.r.o. |
+            | :--- | :--- | :--- |
+            | **Jak rychle lze začít?** | Obvykle jednodušší a rychlejší. | Složitější založení, zápis a administrativa. |
+            | **Ručení** | Podnikatel typicky ručí celým osobním majetkem. | Společník ručí omezeně podle nesplaceného vkladu; firma má vlastní majetek. |
+            | **Důvěryhodnost pro větší partnery** | Může stačit pro menší služby. | Často působí vhodněji pro tým, investora nebo větší zakázky. |
+            | **Administrativa** | Jednodušší evidence podle situace. | Vyšší nároky, účetnictví, orgány, zápisy a rozhodování. |
+            | **Vhodné pro** | Freelancing, malé služby, start jednotlivce. | Rostoucí projekt, tým, vyšší rizika, investice nebo potřeba oddělit majetek. |
+            """) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.15 Aktivita: Vyber právní formu podle situace") #[cite: 1]
+            st.write("U každé situace rozhodni, která právní forma dává největší smysl na začátku. Své rozhodnutí zdůvodni podle ručení, administrativy, počtu osob, kapitálu a rizika.") #[cite: 1]
+            st.selectbox("Student nabízí grafické služby třem lokálním firmám.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_1") #[cite: 1]
+            st.selectbox("Dva kamarádi chtějí dlouhodobě provozovat e-shop s vlastní značkou.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_2") #[cite: 1]
+            st.selectbox("Skupina pěti lidí chce společně sdílet vybavení a prodávat výrobky členů.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_3") #[cite: 1]
+            st.selectbox("Startup hledá investora a plánuje rychlý růst.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_4") #[cite: 1]
+            st.selectbox("Dva společníci chtějí podnikat společně, ale projekt může vytvářet vysoké dluhy.", ["Vyber odpověď...", "v.o.s.", "s.r.o.", "Družstvo", "OSVČ"], key="pf_5") #[cite: 1]
+            st.selectbox("Tým studentů chce jednorázově prodávat výrobky na školní akci.", ["Vyber odpověď...", "Jednorázová aktivita bez ŽL (do limitu)", "OSVČ", "s.r.o.", "a.s."], key="pf_6") #[cite: 1]
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Porovnej pro můj projekt OSVČ, s.r.o., v.o.s., k.s., a.s. a družstvo. U každé formy napiš výhodu, riziko, zákonný znak a otázku, kterou si musím ověřit.“
+            </div>
+            """, unsafe_allow_html=True) #[cite: 1]
+
+        with st.container(border=True):
+            st.markdown("### 4.16 Jiné formy podnikání v ČR a v rámci EU") #[cite: 1]
+            st.write("Vedle OSVČ a obchodních korporací existují i další způsoby, jak může podnikání fungovat. Některé jsou běžné v českém prostředí, jiné pomáhají podnikat napříč státy Evropské unie.") #[cite: 1]
+            st.markdown("<div class='box-blue'><strong>🌍 Proč to znát:</strong> V praxi se podnikání nemusí vždy vejít jen do jednoduchého rozdělení OSVČ vs. s.r.o. Firma může mít pobočku, podnikatel může spolupracovat smluvně s dalšími osobami, nezisková organizace může vykonávat doplňkovou hospodářskou činnost a větší podniky mohou využívat evropské právní formy.</div>", unsafe_allow_html=True) #[cite: 1]
+            
+            st.markdown("""
+            | Forma | Kde se používá | Jednoduché vysvětlení | Na co si dát pozor |
+            | :--- | :--- | :--- | :--- |
+            | **Odštěpný závod / pobočka** | ČR i zahraničí | Část podniku, která vystupuje navenek jako organizační jednotka. Zahraniční firma tak může podnikat v ČR bez založení nové české společnosti. | Nejde o samostatnou právnickou osobu jako s.r.o.; důležitý je zápis a odpovědnost mateřské firmy. |
+            | **Tiché společenství** | ČR | Tichý společník poskytne podnikateli vklad a podílí se na výsledku podnikání, ale navenek obvykle nevystupuje. | Je to smluvní forma spolupráce, ne samostatná obchodní korporace. |
+            | **Smluvní spolupráce více osob** | ČR | Více osob může spolupracovat na základě smlouvy, aniž by hned zakládaly novou firmu. | Je nutné jasně upravit odpovědnost, rozdělení nákladů, příjmů a vlastnictví výsledků práce. |
+            | **Spolek, ústav, nadace** | ČR | Neziskové právnické osoby. Jejich hlavním účelem není podnikání, ale mohou mít doplňkovou hospodářskou činnost, pokud podporuje jejich hlavní smysl. | Zisk se obvykle nemá rozdělovat jako u obchodní společnosti; má sloužit k naplňování účelu organizace. |
+            | **Státní podnik** | ČR | Podnik založený státem pro plnění veřejného nebo strategického zájmu. | Není běžnou volbou pro začínajícího podnikatele. |
+            | **Evropská společnost (SE)** | EU | Akciová společnost evropského typu, která může usnadnit podnikání ve více členských státech EU. | Hodí se spíše pro větší podniky; má vyšší nároky na kapitál, správu a přeshraniční fungování. |
+            | **Evropské hospodářské zájmové sdružení (EHZS)** | EU | Forma spolupráce podnikatelů nebo firem z různých států EU. Pomáhá členům rozvíjet jejich činnost, například společný projekt, výzkum, nákup nebo obchod. | Smyslem není samostatně nahrazovat podnikání členů, ale podporovat jejich spolupráci. |
+            | **Evropské družstvo (SCE)** | EU | Družstvo evropského typu, které umožňuje členům podnikat nebo spolupracovat přes hranice členských států. | Je vhodné hlavně pro přeshraniční družstevní projekty, ne pro běžný malý start. |
+            """) #[cite: 1]
+
+            st.write("**Co si z toho odnést?**") #[cite: 1]
+            st.markdown("""
+            * Pro běžný začátek podnikání v ČR se nejčastěji řeší OSVČ nebo s.r.o.
+            * Pokud podnikání roste do zahraničí, může být důležitá pobočka, odštěpný závod nebo evropská právní forma.
+            * Neziskové organizace mohou vykonávat hospodářskou činnost, ale jejich hlavní smysl je jiný než rozdělování zisku vlastníkům.
+            * V Evropské unii existují formy, které mají usnadnit přeshraniční podnikání a spolupráci.
+            """) 
+# --- 5. Startup: nápad, který hledá funkční byznys ---
+    elif "5. Startup" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div><h2>5. Startup: nápad, který hledá funkční byznys</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Startup je mladý podnikatelský projekt, který hledá opakovatelný a škálovatelný způsob, jak řešit problém zákazníka. Nejde jen o „malou firmu“. Startup často začíná nejistotou: tým má nápad, ale ještě neví, zda o něj zákazníci opravdu stojí, kolik za něj zaplatí a jak rychle může růst.")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Startupové téma rozvíjí podnikavost, kreativitu, práci s informacemi, digitální kompetence, týmovou spolupráci, finanční uvažování, komunikaci se zákazníkem a schopnost ověřovat nápady před investicí peněz.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.1 Startup pro současnou generaci")
+            st.write("💡 **Co je to vlastně podnikavost?** Je to schopnost vidět příležitosti tam, kde ostatní vidí problémy, a mít odvahu realizovat nápady.")
+            st.write("🎲 **Pilíř 1: Přijímání kalkulovaného rizika:** Podnikatel nehazarduje, ale spočítá si, co nejhoršího se může stát a zda to zvládne.")
+            st.write("🔄 **Pilíř 2: Odolnost vůči nezdaru (Resilience):** Pravidlo 'Fail fast, learn faster'. Chyba není ostuda, ale lekce pro další pokus.")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("""
+                <div class='box-gray'>
+                    <strong>🏛️ Tradiční firma (Pekařství na rohu)</strong><br><br>
+                    <strong>Cíl:</strong> Stabilita a stálý zisk. Cílem tradiční firmy je dlouhodobě fungovat, udržet si zákazníky a vydělávat pravidelně. Pekařství na rohu nepotřebuje během měsíce dobýt celý svět — potřebuje, aby se místní lidé vraceli pro pečivo, byli spokojení a podnik měl jisté příjmy na nájem, mzdy, suroviny a další provoz.<br><br>
+                    <strong>Riziko:</strong> Malé až střední. Riziko je obvykle nižší než u startupu, protože podnik často pracuje s ověřeným modelem: lidé pečivo znají a pravidelně ho kupují. Přesto riziko existuje — mohou zdražit suroviny, přijít konkurence, změnit se nájem nebo klesnout počet zákazníků. Podnikatel proto musí hlídat náklady, kvalitu a vztah se zákazníky.<br><br>
+                    <strong>Trh:</strong> Místní sousedství. Trhem je hlavně okolí provozovny: lidé z ulice, školy, kanceláře nebo sídliště. Úspěch závisí na dobré poloze, pověsti, kvalitě výrobků a pravidelném kontaktu se zákazníky. Pekařství nemusí oslovit miliony lidí — stačí mu stabilní komunita, která se vrací.
+                </div>
+                """, unsafe_allow_html=True)
+            with col2:
+                st.markdown("""
+                <div class='box-green'>
+                    <strong>🚀 Startup (Aplikace na sdílení kol)</strong><br><br>
+                    <strong>Cíl:</strong> Obrovský a rychlý růst do celého světa. Startup nechce jen pomalu provozovat jednu službu v jedné čtvrti. Hledá model, který se dá rychle opakovat ve více městech nebo zemích. Pokud aplikace na sdílení kol funguje v jednom městě, tým chce ověřit, zda ji lze spustit i jinde, získat hodně uživatelů a růst výrazně rychleji než běžná lokální firma.<br><br>
+                    <strong>Riziko:</strong> Extrémně vysoké (buď uspěje, nebo zanikne). Startup pracuje s velkou nejistotou. Nemusí být jasné, jestli lidé službu opravdu použijí, zda za ni zaplatí, jestli město povolí provoz, zda se kola nebudou ztrácet nebo ničit a jestli náklady na údržbu nepřevýší příjmy. Proto může startup rychle vyrůst, ale také rychle skončit, pokud se ukáže, že model nefunguje.<br><br>
+                    <strong>Trh:</strong> Celá planeta. Trh startupu může být mnohem širší než jedno sousedství. Aplikace se dá teoreticky nabídnout ve více městech, státech nebo regionech, pokud se podaří přizpůsobit pravidlům, dopravě a chování zákazníků. Startup proto přemýšlí globálně: hledá problém, který řeší mnoho lidí na různých místech.
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.divider()
+            st.markdown("#### 🎯 SIMULACE: Máš nápad na novou aplikaci. Co uděláš jako první?")
+            sim_choice = st.radio("Vyber si svůj první krok:", ["Vyber...", "A) Utratím 200 000 Kč za vývoj plné verze", "B) Udělám jednoduchý dotazník a jednoduchý web pro zájemce"])
+            
+            if sim_choice == "A) Utratím 200 000 Kč za vývoj plné verze":
+                st.error("❌ CHYBA! Utratil jsi peníze a zbytečně postavil něco, co lidé nechtějí. Chybělo ti otestování nápadu.")
+            elif sim_choice == "B) Udělám jednoduchý dotazník a jednoduchý web pro zájemce":
+                st.success("🎉 SKVĚLE! Získal jsi zdarma 500 zájemců a ověřil trh. Můžeš bezpečně stavět MVP!")
+
+            st.markdown("##### 💡 Dvě otázky pro představivost")
+            with st.expander("❓ Otázka 1: Proč většina startupů selže v prvním roce?"):
+                st.success("**Odpověď:** Vyrobí produkt, který ve skutečnosti nikdo nepotřebuje (neověří si poptávku).")
+            
+            with st.expander("❓ Otázka 2: Co znamená zkratka MVP?"):
+                st.success("**Odpověď:** Minimum Viable Product – nejjednodušší verze produktu, která už funguje a dá se testovat na lidech.")
+
+            st.write("Startupová kultura je blízká dnešní generaci, protože spojuje technologie, sociální sítě, AI, komunitu, rychlé testování a možnost tvořit i s malým rozpočtem. Zároveň ale svádí k iluzi, že stačí dobrý nápad, virální video nebo hezká aplikace.")
+            st.write("Ve skutečnosti startup stojí na ověřování:")
+            st.markdown("""
+            * Existuje skutečný problém?
+            * Koho problém bolí natolik, že za řešení zaplatí?
+            * Umíme zákazníka oslovit?
+            * Vyjdou ekonomicky náklady a příjmy?
+            * Umíme růst bez toho, aby se zhroutila kvalita, tým nebo cashflow?
+            """)
+            st.markdown("<div class='box-red'><strong>⚠️ Častý omyl:</strong> „Mám nápad na aplikaci“ ještě neznamená startup. Startup vzniká až tehdy, když existuje problém, zákazník, test, zpětná vazba a možnost opakovaně vytvářet hodnotu.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.2 Startupová hypotéza")
+            st.write("Každý startup začíná předpoklady. Ty je potřeba převést na hypotézy, které se dají ověřit.")
+            st.markdown("""
+            | Nejasný předpoklad | Lepší hypotéza | Jak ji ověřit |
+            | :--- | :--- | :--- |
+            | Lidem se náš nápad bude líbit. | Alespoň 15 studentů z 30 řekne, že by službu použilo každý týden. | Krátký rozhovor nebo dotazník. |
+            | Zákazníci budou platit. | Alespoň 5 lidí si předobjedná produkt za 99 Kč. | Předobjednávkový formulář. |
+            | Marketing na TikToku bude fungovat. | Video získá 1 000 zhlédnutí a 20 kliknutí na formulář. | Testovací příspěvek a měření odkazu. |
+            | Výroba nebude drahá. | Variabilní náklad na kus nepřekročí 60 % prodejní ceny. | Kalkulace dodavatelů a test malého množství. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 5.3 AI-first, ale odpovědně")
+            st.write("AI může startupu pomoci s rešerší trhu, návrhem textů, zákaznickými personami, analýzou zpětné vazby, automatizací podpory nebo tvorbou prototypu. Současně ale přináší rizika:")
+            st.markdown("""
+            * neověřené informace,
+            * generický obsah bez odlišení,
+            * porušení autorských práv,
+            * práce s osobními údaji,
+            * falešný pocit, že AI nahradí kontakt se zákazníkem.
+            """)
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI prompt pro startup:</strong> „Pomoz mi z mého nápadu vytvořit 5 ověřitelných hypotéz. U každé navrhni nejlevnější test, metriku úspěchu a riziko, že si výsledek špatně vyložím.“
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("#### 🚀 Aktivita: Startup za 30 minut")
+            st.write("Ve skupině vyberte jeden problém ze školy nebo běžného života.")
+            st.markdown("""
+            1. Popište problém jednou větou.
+            2. Určete konkrétního zákazníka.
+            3. Navrhněte nejjednodušší řešení.
+            4. Sepište jednu hypotézu.
+            5. Navrhněte test bez velkých nákladů.
+            6. Určete metriku: podle čeho poznáte zájem?
+            """)
+            st.info("**Výstup:** Jedna stránka „nápad → hypotéza → test → metrika“.")
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli jeden problém, který lidé kolem tebe řeší, a napiš, jaké jednoduché řešení by mohlo vzniknout jako startup.</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje odpověď:", key="startup_vymysli_problem")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi převést můj nápad na startupovou hypotézu: problém, zákazník, řešení, cena a první test.“
+            </div>
+            """, unsafe_allow_html=True)
+            st.markdown("<div class='box-blue'><strong>🚀 Jednoduše řečeno:</strong> Startup není hotová firma. Je to pokus najít funkční podnikatelský model, který se dá rychle ověřovat, upravovat a případně zvětšovat.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.4 Jak startup vzniká")
+            st.write("Startup obvykle nevzniká tak, že někdo rovnou napíše dokonalý podnikatelský plán. Častější cesta je postupné ověřování. Tým nejdřív pracuje s nejistotou: má domněnky o zákazníkovi, problému, řešení, ceně a způsobu prodeje. Teprve když získá důkazy, rozhoduje, jestli pokračovat, upravit směr, nebo projekt ukončit.")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden krok z následujícího postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.</div>", unsafe_allow_html=True)
+            st.markdown("""
+            * **Problém:** někdo si všimne potřeby, nespokojenosti nebo neefektivního řešení.
+            * **Zákazník:** tým určí, komu chce pomoci.
+            * **Návrh řešení:** vznikne první jednoduchá verze produktu nebo služby.
+            * **Ověření:** tým mluví se zákazníky, sbírá zpětnou vazbu a testuje zájem.
+            * **Úprava nápadu:** pokud test nevyjde, startup změní řešení, zákazníka, cenu, kanál nebo rozsah.
+            * **Růst:** když se ukáže, že zákazníci mají zájem, startup hledá způsob, jak růst opakovatelně a finančně udržitelně.
+            """)
+            st.markdown("**Příklad vzniku startupu:** Studenti zjistí, že jejich spolužáci často nestíhají plánovat učení. Nevytvoří hned velkou aplikaci, ale nejdřív sdílenou Notion šablonu nebo jednoduchou tabulku. Tu vyzkouší ve třídě, sledují, kdo ji skutečně používá, co studentům chybí a zda by za rozšířenou verzi zaplatili. Pokud ji lidé používají a doporučují dál, tým může řešit cenu, marketing a další rozvoj.")
+
+        with st.container(border=True):
+            st.markdown("### 5.5 Metodika Lean Startup")
+            st.write("Metodika Lean Startup pomáhá začínajícím týmům netrávit měsíce tvorbou produktu, o který nakonec nikdo nestojí. Její základní myšlenka je jednoduchá: nejdřív ověř nejrizikovější předpoklad, potom investuj víc času a peněz.")
+            st.write("Lean Startup vychází z toho, že startup není zmenšená verze velké firmy. Velká firma často ví, kdo je její zákazník, jaký produkt prodává a jak vydělává. Startup to teprve hledá. Proto potřebuje rychlé učení, malé experimenty a ochotu měnit plán podle dat.")
+            st.markdown("<div class='box-blue'><strong>🚀 Jednoduše řečeno:</strong> Lean Startup je způsob práce, při kterém tým rychle vytvoří malý test, získá zpětnou vazbu, změří výsledky a podle nich se rozhodne, co dál.</div>", unsafe_allow_html=True)
+            
+            st.markdown("#### Základní cyklus: vytvoř — změř — pouč se")
+            st.write("Lean Startup se často vysvětluje pomocí cyklu Build — Measure — Learn, česky vytvoř — změř — pouč se.")
+            st.markdown("""
+            | Krok | Co tým dělá | Příklad ve školním startupu | Častá chyba |
+            | :--- | :--- | :--- | :--- |
+            | **Vytvoř** | Tým připraví nejmenší verzi testu nebo prototypu. | Místo celé aplikace vytvoří klikací návrh, formulář, šablonu nebo testovací stánek. | Tým chce hned dokonalý produkt a ztratí týdny přípravou. |
+            | **Změř** | Tým sbírá data, ne pouze dojmy. | Sleduje počet registrací, předobjednávek, rozhovorů, opakovaných použití nebo skutečných plateb. | Tým se spokojí s větou „lidem se to líbilo“. |
+            | **Pouč se** | Tým vyhodnotí, co data znamenají, a rozhodne další krok. | Pokračuje, upraví zákazníka, změní cenu, zjednoduší řešení nebo projekt ukončí. | Tým ignoruje negativní výsledky, protože se do nápadu zamiloval. |
+            """)
+            st.markdown("<div class='box-gray'><strong>🧪 Pravidlo Lean Startup:</strong> Neověřuj všechno najednou. Nejdřív testuj předpoklad, který může projekt nejrychleji zbořit — například zda problém opravdu existuje, zda zákazník zaplatí nebo zda řešení umíte dodat za rozumné náklady.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.6 MVP: minimální životaschopný produkt")
+            st.write("MVP znamená minimum viable product, česky minimální životaschopný produkt. Nejde o nejlevnější ani nejodbytější verzi. Jde o nejmenší verzi, která dokáže ověřit důležitou otázku.")
+            st.write("MVP má odpovědět například:")
+            st.markdown("""
+            * Chce zákazník tento problém řešit?
+            * Rozumí hodnotě řešení?
+            * Je ochoten udělat akci — zapsat se, objednat, zaplatit, přijít, doporučit?
+            * Funguje navržený kanál komunikace?
+            * Umí tým řešení dodat v přijatelné kvalitě?
+            * Vycházejí náklady a čas?
+            """)
+            st.markdown("""
+            | Nápad | Špatný první krok | Lean Startup MVP | Co ověřujeme |
+            | :--- | :--- | :--- | :--- |
+            | **Aplikace na plánování učení** | Programovat kompletní aplikaci s účty a notifikacemi. | Notion šablona nebo Google tabulka pro 20 studentů. | Zda studenti plánovač reálně používají. |
+            | **E-shop se studentským merchem** | Nakoupit sklad a spustit celý e-shop. | Předobjednávka tří návrhů přes formulář. | Zda lidé zaplatí za konkrétní motiv a cenu. |
+            | **ReStart Batoh** | Sbírat desítky batohů bez ověření zájmu. | Testovací série 5–10 kusů s jasným popisem stavu. | Zda lidé koupí použitý upravený batoh. |
+            | **Doučovací služba** | Budovat platformu pro všechny předměty. | Ručně propojit 5 dvojic studentů a měřit spokojenost. | Zda je problém dost silný a zda funguje párování. |
+            """)
+            st.markdown("<div class='box-red'><strong>⚠️ Pozor:</strong> MVP není výmluva pro nekvalitu. I malý test musí být bezpečný, férový a srozumitelný. Pokud prodáváme produkt, zákazník musí vědět, co přesně dostane.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.7 Validované učení")
+            st.write("Cílem Lean Startup není jen „něco zkusit“. Cílem je validované učení — tedy ověřené poznání, které pomůže rozhodnout. Tým musí umět říct: „Mysleli jsme si X, otestovali jsme Y, výsledek byl Z, proto uděláme další krok.“")
+            st.markdown("""
+            | Slabé vyhodnocení | Validované učení |
+            | :--- | :--- |
+            | „Dotazník dopadl dobře.“ | „Z 60 respondentů 42 uvedlo, že problém řeší alespoň jednou týdně, ale pouze 6 by bylo ochotno zaplatit více než 100 Kč. Musíme upravit cenu nebo hodnotu nabídky.“ |
+            | „Příspěvek měl hodně lajků.“ | „Příspěvek měl 180 lajků, ale jen 4 kliknutí na objednávkový formulář. Lajky tedy nejsou důkaz nákupního zájmu.“ |
+            | „Lidem se batohy líbily.“ | „Z 12 testovacích batohů se prodalo 9 během dvou dnů, 3 zákazníci žádali nižší cenu a 1 reklamoval zip. Další série potřebuje lepší kontrolu zipů.“ |
+            """)
+            st.info("**Věta pro vyhodnocení experimentu:** Předpokládali jsme, že… Ověřili jsme to pomocí… Naměřili jsme… Zjistili jsme… Proto teď rozhodujeme, že…")
+
+        with st.container(border=True):
+            st.markdown("### 5.8 Pivot, pokračování nebo ukončení")
+            st.write("Po testu má startup tři základní možnosti:")
+            st.markdown("""
+            | Rozhodnutí | Kdy dává smysl | Příklad |
+            | :--- | :--- | :--- |
+            | **Pokračovat** | Test ukázal jasný zájem a ekonomika dává smysl. | Předobjednávky pokryly náklady a zákazníci doporučují produkt dál. |
+            | **Pivotovat** | Problém existuje, ale řešení, zákazník, cena nebo kanál nefunguje. | Studenti nechtějí aplikaci, ale chtějí hotovou šablonu a krátké připomínky. |
+            | **Ukončit** | Test opakovaně ukazuje slabý zájem nebo neudržitelnou ekonomiku. | Zákazníci nápad chválí, ale nikdo se nezapíše, nezaplatí ani nepoužije prototyp. |
+            """)
+            st.write("Pivot neznamená selhání. Znamená změnu směru na základě učení. Tým může změnit: cílového zákazníka, problém, řešení, cenu, distribuční kanál, způsob monetizace, rozsah produktu.")
+            st.markdown("<div class='box-gray'><strong>🧭 Podnikatelská zralost:</strong> Dobrý tým neobhajuje nápad za každou cenu. Dobrý tým chrání čas, peníze a energii tím, že se umí rozhodnout podle důkazů.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.9 Lean Startup v mini projektu SŠ")
+            st.write("Pro školní projekt stačí Lean Startup použít v jednoduché podobě. Nemusíš znát odborné termíny nazpaměť, důležité je umět pracovat v tomto sledu:")
+            st.markdown("""
+            1. **Najdi problém:** Co někomu vadí, chybí nebo zdržuje?
+            2. **Urči zákazníka:** Komu se to děje nejčastěji?
+            3. **Zapiš hypotézu:** Co si myslíme, že bude pravda?
+            4. **Navrhni MVP:** Jak to ověříme co nejmenším testem?
+            5. **Změř výsledek:** Jaké číslo nebo důkaz rozhodne?
+            6. **Vyhodnoť:** Co jsme se naučili?
+            7. **Rozhodni:** pokračovat, pivotovat, nebo ukončit.
+            """)
+            st.markdown("""
+            | Krok | Výstup studenta | Kontrolní otázka učitele |
+            | :--- | :--- | :--- |
+            | **Problém** | Jedna konkrétní věta o problému. | Je to problém zákazníka, nebo jen nápad týmu? |
+            | **Zákazník** | Konkrétní skupina a situace. | Není skupina příliš široká? |
+            | **Hypotéza** | Věta „Věříme, že…“ s měřitelným výsledkem. | Dá se hypotéza vyvrátit? |
+            | **MVP** | Malý test bez zbytečných nákladů. | Je test dostatečný k učení, ale bezpečný a férový? |
+            | **Metrika** | Číslo nebo pozorování, podle kterého rozhodneme. | Měříme skutečný zájem, nebo jen popularitu? |
+            | **Vyhodnocení** | Krátký závěr: co data znamenají. | Je rozhodnutí opřené o důkaz? |
+            """)
+            st.markdown("<div class='box-yellow'><strong>🧩 Aktivita: Lean Startup sprint na 45 minut</strong><br>Popiš problém, urči zákazníka, napiš hypotézu, navrhni MVP test, urči metriku úspěchu a rozhodni se, co uděláš podle výsledku.</div>", unsafe_allow_html=True)
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Použij metodiku Lean Startup na můj nápad. Pomoz mi určit nejrizikovější hypotézu, navrhni MVP test, metriku úspěchu, možné výsledky a rozhodnutí: pokračovat, pivotovat nebo ukončit.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.10 Kam jít s novým nápadem")
+            st.write("Začínající tým nemusí být na všechno sám. V ČR existuje startupový ekosystém — síť organizací, mentorů, investorů, soutěží, inkubátorů, akcelerátorů a coworkingových center.")
+            st.markdown("""
+            | Kam se obrátit | Co může pomoci získat |
+            | :--- | :--- |
+            | **Inkubátor** | Pomoc v úplném začátku, mentoring, prostor, kontakty. |
+            | **Akcelerátor** | Intenzivní program pro rychlejší rozvoj nápadu, často zakončený prezentací investorům. |
+            | **Coworkingové centrum** | Místo pro práci, networking a setkávání s dalšími podnikavými lidmi. |
+            | **Startupová soutěž nebo hackathon** | Rychlé ověření nápadu, zpětnou vazbu, kontakty a někdy i cenu nebo podporu. |
+            | **Investor nebo business angel** | Kapitál, zkušenosti a kontakty výměnou za podíl nebo jinou formu dohody. |
+            | **Univerzita nebo inovační centrum** | Odborníky, laboratoře, mentoring a propojení s výzkumem. |
+            """)
+            st.markdown("<div class='box-blue'><strong>🔍 Příklady podpory v ČR:</strong> CzechInvest a portál CzechStartups.gov.cz, regionální inovační centra jako JIC v Brně, startupové akcelerátory jako StartupYard, univerzitní inkubátory, podnikatelské soutěže, coworkingová centra a místní podnikatelská centra.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.11 Proč stát a regiony startupy podporují")
+            st.write("Startupy jsou podporované proto, že mohou přinášet nové produkty, pracovní místa, inovace a vyšší konkurenceschopnost ekonomiky. Ne každý startup uspěje, ale úspěšné projekty mohou vyrůst do firem, které platí daně, zaměstnávají lidi a přinášejí řešení využitelná i v zahraničí.")
+            st.markdown("<div class='box-yellow'><strong>💡 Důvod podpory:</strong> Podpora startupů není „dárek zdarma“. Je to investice do nápadů, inovací, podnikavosti a budoucích firem, které mohou posílit ekonomiku.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 5.12 Moderní startupové pilíře")
+            st.write("Tradiční formy podnikání dnes doplňuje dynamický svět technologických startupů. Pochopení jejich pilířů — škálovatelnosti, inovací, práce s daty, rizikového kapitálu a rychlého ověřování nápadů — pomáhá studentům pochopit moderní digitální ekonomiku a proměny trhu práce.")
+            st.write("Moderní startup dnes často nestaví jen na nápadu a právní formě. Musí umět chytře využívat technologie, pracovat efektivně, komunikovat s komunitou a zároveň myslet na dlouhodobou udržitelnost práce zakladatele.")
+            st.markdown("<div class='box-blue'><strong>🚀 Moderní startupové pilíře:</strong> AI-First, Solopreneurship, Build in Public a Founder Wellbeing pomáhají přemýšlet o tom, jak bude projekt fungovat v praxi — nejen co prodává, ale také jak se tvoří, komunikuje a dlouhodobě zvládá.</div>", unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden pilíř z tabulky a doplň, jak by se mohl projevit ve tvém startupu.</div>", unsafe_allow_html=True)
+            st.markdown("""
+            | Téma | Proč na tom záleží | Jak to implementuji v mém projektu? |
+            | :--- | :--- | :--- |
+            | **AI-First** | Aby projekt nebyl jen „balíček“ běžných služeb, ale chytře využíval AI tam, kde dává smysl. | Zde si napíšeš, jak tvůj projekt využívá AI — například pro analýzu zákazníků, tvorbu obsahu, automatizaci podpory nebo návrh řešení. |
+            | **Solopreneurship** | Efektivita jednoho člověka: i jednotlivec může díky nástrojům, šablonám a automatizacím zvládnout víc práce. | Zde si vypíšeš automatizace, které použiješ — například plánování příspěvků, fakturaci, odpovědi zákazníkům nebo sběr zpětné vazby. |
+            | **Build in Public** | Budování komunity: lidé mohou sledovat vznik projektu, dávat zpětnou vazbu a stát se prvními zákazníky. | Zde si napíšeš plán příspěvků na sítě — co budeš sdílet, jak často a komu tím chceš pomoci. |
+            | **Founder Wellbeing** | Prevence vyhoření: zakladatel projektu je důležitý zdroj energie, nápadů i rozhodování. | Zde si napíšeš své rituály pro psychohygienu — například odpočinek, hranice práce, pohyb, reflexi nebo pravidelné vyhodnocení zátěže. |
+            """)
+            
+            st.write("**Jak s pilíři pracovat v mini projektu:**")
+            st.markdown("""
+            * U každého pilíře napiš jednu konkrétní větu.
+            * Nepiš obecně „budu používat AI“ — napiš k čemu přesně.
+            * U automatizací napiš, co ti ušetří čas.
+            * U Build in Public napiš, komu budeš ukazovat postup a proč.
+            * U Founder Wellbeing napiš, jak poznáš, že je toho na tebe moc.
+            """)
+            
+            st.info("**Je dobré si pamatovat:** Startup začíná hypotézou, ne jistotou. Nejdřív se ověřuje problém a zákazník, potom se řeší velké investice. Podpora může mít podobu rad, kontaktů, prostoru, soutěže, programu nebo financování. I neúspěšný test má hodnotu, protože šetří čas a peníze.")
+# --- 6. Podnikatelský záměr ---
+    elif "6. Podnikatelský záměr" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 6</div><h2>6. Podnikatelský záměr</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Podnikatelský záměr je dokument nebo pracovní plán, který pomáhá ověřit, zda má nápad šanci fungovat. Není to slohová práce ani „povinný papír do šuplíku“. Je to mapa rozhodování: ukazuje, komu projekt pomáhá, jakou hodnotu nabízí, kolik bude stát, jak bude vydělávat, jaká má rizika a podle čeho poznáme, že má smysl pokračovat.")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je důležité:</strong> Podnikatelský záměr pomáhá převést nápad do praktického návrhu, posoudit rizika, spočítat náklady a ověřit, jestli má projekt šanci fungovat. Nejde o opis definice, ale o plán pro konkrétní situaci.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš svůj podnikatelský nápad ve formátu: „Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit.“</div>", unsafe_allow_html=True)
+            st.text_input("Tvůj nápad:", key="zamer_napad")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Zkontroluj můj podnikatelský záměr. Najdi nejasného zákazníka, slabé místo v ceně, podceněné náklady, právní riziko a jednu otázku, kterou musím ověřit rozhovorem se zákazníkem.“
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-green'><strong>🧭 Navigace:</strong> Podnikatelský záměr pomáhá převést nápad do konkrétních rozhodnutí. Dobrý záměr neříká jen „co chceme dělat“, ale také pro koho, proč, za kolik, s jakými náklady, s jakým rizikem a jak ověříme zájem.</div>", unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 6.1 Proč podnikatelský záměr vzniká")
+            st.write("Podnikatel často začíná nadšením: má nápad, vidí příležitost a chce rychle začít. Podnikatelský záměr ale nutí tým zpomalit a položit si otázky, které mohou ušetřit čas, peníze i zklamání.")
+            st.write("**Záměr pomáhá:**")
+            st.markdown("""
+            * ujasnit problém a zákazníka,
+            * oddělit přání od ověřených informací,
+            * zjistit, zda cena pokryje náklady,
+            * připravit první test trhu,
+            * domluvit role v týmu,
+            * odhalit právní, finanční a etická rizika,
+            * vysvětlit projekt učiteli, mentorovi, investorovi, bance nebo spolužákům.
+            """)
+            
+            st.markdown("""
+            | Špatný záměr | Lepší záměr |
+            | :--- | :--- |
+            | „Budeme prodávat moderní doplňky pro mladé.“ | „Budeme testovat prodej reflexních přívěsků na batohy pro tebe 1. ročníku, kteří chodí domů za šera a chtějí levný doplněk do 80 Kč.“ |
+            | „Cena bude nízká, aby to lidé kupovali.“ | „Cena bude 79 Kč, protože variabilní náklad je 38 Kč, potřebujeme rezervu na neprodané kusy a v dotazníku byla nejčastější ochota platit 60–90 Kč.“ |
+            | „Budeme ekologičtí.“ | „Použijeme recyklovatelný obal, budeme evidovat množství odpadu a nebudeme používat tvrzení, která neumíme doložit.“ |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.2 Co by měl podnikatelský záměr obsahovat")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyplň ke svému nápadu zákazníka, problém, hodnotu, konkurenci, cenu, náklady, rizika, právní formu a první test.</div>", unsafe_allow_html=True)
+            
+            with st.expander("Zobrazit strukturu podnikatelského záměru"):
+                st.markdown("""
+                | Část záměru | Kontrolní otázka | Co má být výstupem |
+                | :--- | :--- | :--- |
+                | **Vize a nápad** | Co chceme vytvořit a proč? | Jedna srozumitelná věta bez marketingových frází. |
+                | **Zákazník** | Komu přesně pomáháme? | Konkrétní skupina, situace a potřeba. |
+                | **Problém** | Jakou nepříjemnost, potřebu nebo překážku zákazník řeší? | Popis problému z pohledu zákazníka. |
+                | **Hodnota** | Co zákazník získá? | Úspora času, peněz, jistota, pohodlí, bezpečí, styl, zážitek nebo jiný přínos. |
+                | **Konkurence** | Jak zákazník řeší problém dnes? | 3 alternativy a vysvětlení, čím se lišíme. |
+                | **Cena** | Kolik je zákazník ochoten zaplatit a proč? | Návrh ceny opřený o náklady, hodnotu, konkurenci a test. |
+                | **Náklady** | Co bude stát start a provoz? | Jednorázové, fixní a variabilní náklady plus rezerva. |
+                | **Marketing** | Jak se zákazník o nabídce dozví? | Kanály, sdělení, ukázka příspěvku nebo pitch. |
+                | **Právní forma** | Je to jednorázový projekt, OSVČ, nebo firma? | Zdůvodnění podle soustavnosti, rizika a odpovědnosti. |
+                | **Rizika** | Co se může pokazit? | Riziková matice a preventivní opatření. |
+                | **První test** | Jak ověříme zájem levně a rychle? | Rozhovor, dotazník, prototyp, předobjednávka nebo zkušební prodej. |
+                """)
+
+        with st.container(border=True):
+            st.markdown("### 6.3 Analýza trhu")
+            st.write("Než podnikatel začne vyrábět nebo prodávat, musí zjistit, jestli o jeho nabídku někdo stojí. Analýza trhu neznamená jen „vygooglit konkurenci“. Znamená pochopit zákazníka, jeho současné chování a alternativy, ze kterých si vybírá.")
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Najdi tři podobné firmy, produkty nebo náhradní řešení. U každého napiš cenu, výhodu, slabinu a příležitost pro tvůj projekt.</div>", unsafe_allow_html=True)
+            
+            st.markdown("#### Zákazník není „všichni“")
+            st.write("Častá chyba začínajících projektů je tvrzení: „Naším zákazníkem jsou všichni studenti.“ Jenže prvák, maturant, student odborného výcviku, rodič a učitel mají jiné potřeby, rozpočet i motivaci.")
+            st.write("**Lepší popis zákazníka:** konkrétní skupina, konkrétní situace, konkrétní problém, konkrétní důvod, proč by změnila chování.")
+            st.info("**Příklad:** „Studenti prvního ročníku, kteří dojíždějí a potřebují levné, skladné a rychle dostupné svačiny mezi výukou a odpolední praxí.“")
+            
+            st.markdown("#### Konkurence není jen stejný produkt")
+            st.write("Konkurencí je každé řešení, které zákazník používá místo nás. Pokud prodáváme svačinový box, konkurencí není jen jiný box. Konkurencí je školní bufet, obchod cestou do školy, jídlo z domova, automat, rozvoz nebo rozhodnutí nejíst vůbec.")
+
+            st.markdown("""
+            | Co zkoumáme | Otázky | Příklad výstupu |
+            | :--- | :--- | :--- |
+            | **Zákazník** | Kdo má problém a kdy ho řeší? | Studenti dojíždějící do školy mají málo času mezi výukou a praxí. |
+            | **Současné řešení** | Jak to řeší dnes? | Kupují si dražší jídlo cestou, nosí svačinu z domova nebo nejí. |
+            | **Konkurence** | Kdo nebo co může nahradit náš produkt? | Bufet, supermarket, automat, donáška, domácí příprava. |
+            | **Odlišení** | Proč by zákazník zvolil nás? | Rychlé vyzvednutí ve škole, jasná cena, možnost předobjednávky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.4 Zakladatelský rozpočet")
+            st.write("Zakladatelský rozpočet odpovídá na otázku: Kolik peněz potřebuji na start a kolik mě bude stát provoz? Nestačí započítat jen materiál. Podnikatel musí myslet i na čas, propagaci, obaly, software, dopravu, rezervu a neprodané kusy.")
+            
+            st.markdown("""
+            | Typ nákladu | Co znamená | Příklad |
+            | :--- | :--- | :--- |
+            | **Jednorázové náklady** | Platí se při startu projektu. | První materiál, jednoduchý web, vybavení, registrace, grafika. |
+            | **Fixní náklady** | Platí se pravidelně bez ohledu na počet prodejů. | Nájem, software, účetnictví, paušální služby, doména. |
+            | **Variabilní náklady** | Rostou s každým kusem nebo zakázkou. | Materiál, obal, doprava, platební poplatek, provize. |
+            | **Rezerva** | Peníze na chyby, zpoždění a nečekané situace. | Reklamace, zmetky, zdražení materiálu, neprodané kusy. |
+            | **Čas práce** | Práce týmu má hodnotu, i když si ji hned nevyplácí. | Příprava, komunikace, balení, focení, sociální sítě, evidence. |
+            """)
+
+            st.markdown("#### 🧮 Interaktivní kalkulačka bodu zvratu")
+            st.write("Spočítej si, kolik kusů musíš prodat, aby projekt nebyl ve ztrátě.")
+            
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                cena = st.number_input("Prodejní cena za kus (Kč):", value=150)
+                var_naklad = st.number_input("Variabilní náklad na kus (Kč):", value=80)
+            with col_b2:
+                fix_naklad = st.number_input("Fixní náklady za měsíc (Kč):", value=2800)
+            
+            if cena > var_naklad:
+                marze = cena - var_naklad
+                bod_zvratu = fix_naklad / marze
+                import math
+                st.success(f"**Marže na kus:** {marze} Kč. **Bod zvratu:** Musíš prodat alespoň **{math.ceil(bod_zvratu)} kusů**, abys pokryl fixní náklady. Teprve další prodeje tvoří zisk.")
+            else:
+                st.error("Prodejní cena musí být vyšší než variabilní náklad, jinak s každým kusem proděláváš!")
+
+        with st.container(border=True):
+            st.markdown("### 6.5 Marketing a prodej v podnikatelském záměru")
+            st.write("Marketing není jen reklama. V podnikatelském záměru má ukázat, jak se zákazník dozví o nabídce, proč jí porozumí a proč jí bude důvěřovat.")
+            st.write("Dobrý marketingový plán odpovídá: kde zákazník tráví pozornost, jakým jazykem mu vysvětlíme hodnotu, jak ukážeme důkaz kvality, jak zabráníme přehnaným slibům, jak budeme měřit, zda marketing funguje.")
+            
+            st.markdown("""
+            | Kanál | Kdy dává smysl | Riziko | Metrika |
+            | :--- | :--- | :--- | :--- |
+            | **Školní Instagram** | Studentský projekt pro školní komunitu. | Lajky nemusí znamenat nákup. | Kliknutí na formulář, rezervace, předobjednávky. |
+            | **Plakát ve škole** | Lokální prodej nebo akce. | Studenti si nemusí zapamatovat detail. | QR skeny, návštěvy stánku. |
+            | **Osobní doporučení** | Malá komunita, důvěra, první zákazníci. | Pomalejší šíření. | Počet doporučení a opakovaných nákupů. |
+            | **Krátké video** | Produkt jde dobře ukázat vizuálně. | Přehnaný slib nebo povrchní viralita. | Zprávy, poptávky, objednávky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.6 Rizika a plán B")
+            st.write("Podnikatelský záměr má obsahovat i nepříjemné otázky. Silný tým nepůsobí slabě tím, že mluví o rizicích. Naopak ukazuje, že přemýšlí realisticky.")
+            
+            st.markdown("""
+            | Riziko | Jak se projeví | Prevence | Plán B |
+            | :--- | :--- | :--- | :--- |
+            | **Nízký zájem** | Málo objednávek, nízká účast, slabá zpětná vazba. | Rozhovory, předobjednávka, test malého množství. | Změnit cílovou skupinu, cenu nebo problém. |
+            | **Podceněné náklady** | Projekt prodává, ale nevydělává. | Kalkulace, rezerva, kontrola dodavatelů. | Zdražit, zjednodušit produkt, snížit rozsah. |
+            | **Konflikt v týmu** | Nerovnoměrná práce, hádky, zpoždění. | Týmová dohoda, role, pravidelná kontrola. | Přerozdělit role nebo zmenšit projekt. |
+            | **Právní problém** | Nejasné oprávnění, reklamace, autorská práva, data. | Ověření pravidel a transparentní podmínky. | Pozastavit prodej a upravit podmínky. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 6.7 Šablona jednostránkového podnikatelského záměru")
+            st.write("Vyplň si základní osnovu svého projektu.")
+            
+            c_s1, c_s2 = st.columns(2)
+            with c_s1:
+                st.text_input("Název projektu:")
+                st.text_area("Jedna věta projektu (Pomáháme komu, s čím, jak):")
+                st.text_input("Zákazník:")
+                st.text_input("Problém:")
+                st.text_input("Hodnota pro zákazníka:")
+                st.text_input("Řešení:")
+                st.text_input("Konkurence / alternativy:")
+            with c_s2:
+                st.text_input("Cena:")
+                st.text_input("Jednorázové náklady:")
+                st.text_input("Fixní náklady:")
+                st.text_input("Variabilní náklady:")
+                st.text_input("První test & Metrika úspěchu:")
+                st.text_input("Rizika & Právní forma:")
+                st.text_input("Rozhodnutí po testu (pokračovat / upravit / ukončit):")
+            
+            st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
+
+    # --- 7. Lean Canvas ---
+    elif "7. Lean Canvas" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div><h2>7. Lean Canvas</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Lean Canvas je rychlá mapa podnikatelského nápadu. Pomáhá zachytit hlavní předpoklady a rizika dřív, než podnikatel investuje mnoho času nebo peněz. Na rozdíl od klasického podnikatelského plánu je stručný, pracovní a snadno se upravuje.")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Lean Canvas pomáhá řešit problém, pracovat s hypotézami, ověřovat informace, plánovat podnikatelskou aktivitu, posoudit ekonomickou proveditelnost a vyhodnocovat rizika. Podnikání není hádání, ale ověřování předpokladů.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu: „Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…“</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje hypotéza:", key="lean_hypoteza")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi převést můj Lean Canvas na ověřitelné hypotézy. U každé napiš test, metriku úspěchu, riziko špatné interpretace a rozhodnutí, co udělat, když test nevyjde.“
+            </div>
+            """, unsafe_allow_html=True)
+            st.info("🗺️ **Tip:** Lean Canvas není hotový podnikatelský plán. Je to pracovní nástroj pro ověřování nápadu. Největší hodnotu má tehdy, když se po testech mění.")
+
+        with st.container(border=True):
+            st.markdown("### 7.1 Proč Lean Canvas začíná problémem")
+            st.write("Mnoho týmů začíná řešením: aplikací, e-shopem, produktem, logem nebo profilem na sociální síti. Lean Canvas nutí začít otázkou: Jaký problém vlastně řešíme a pro koho?")
+            st.write("Pokud problém není důležitý, zákazník nebude měnit chování. Pokud zákazník není konkrétní, marketing bude obecný. Pokud cena nevychází z hodnoty a nákladů, projekt může být populární, ale ztrátový.")
+
+        with st.container(border=True):
+            st.markdown("### 7.2 Devět bloků Lean Canvasu")
+            st.write("U každého bloku napiš maximálně dvě věty. Kde si nejsi jistý/á, označ to jako hypotézu a navrhni test.")
+            
+            with st.expander("Zobrazit všech 9 bloků a časté chyby"):
+                st.markdown("""
+                | Blok | Co znamená | Dobrá otázka | Častá chyba |
+                | :--- | :--- | :--- | :--- |
+                | **1. Problém** | 1–3 konkrétní problémy zákazníka. | Kdy zákazník problém naposledy řešil? | Popisujeme naše řešení místo zákazníkova problému. |
+                | **2. Zákaznické segmenty** | Konkrétní skupiny lidí, které problém řeší. | Kdo problém cítí nejsilněji? | Píšeme „všichni studenti“ nebo „všichni lidé“. |
+                | **3. Unikátní nabídka hodnoty** | Jasné vysvětlení, proč má zákazník zpozornět. | Proč by si měl vybrat právě nás? | Používáme obecné fráze jako „kvalitní, levné, moderní“. |
+                | **4. Řešení** | Jednoduchý návrh, jak problém řešíme. | Jaká je nejmenší funkční verze? | Navrhujeme příliš složitý produkt hned na začátku. |
+                | **5. Kanály** | Cesty, kterými se dostaneme k zákazníkovi. | Kde zákazník skutečně je? | Vybereme sociální síť bez měření výsledků. |
+                | **6. Příjmy** | Za co zákazník platí a jak často. | Je to jednorázový prodej, předplatné, služba, provize? | Zaměníme popularitu za ochotu platit. |
+                | **7. Náklady** | Co stojí start, provoz a každý prodaný kus. | Který náklad nejčastěji podceňujeme? | Nezapočítáme čas, obaly, dopravu, reklamu a rezervu. |
+                | **8. Klíčové metriky** | Čísla, podle kterých poznáme pokrok. | Které číslo nám pomůže rozhodnout? | Sledujeme lajky místo objednávek nebo opakovaného zájmu. |
+                | **9. Neférová výhoda** | Něco, co konkurence nemůže snadno okopírovat. | Co máme jen my nebo co se těžko napodobuje? | Píšeme běžné věci jako „dobrý nápad“ nebo „nadšení“. |
+                """)
+
+        with st.container(border=True):
+            st.markdown("### 7.3 Jak poznat dobrou hypotézu")
+            st.write("Hypotéza je předpoklad, který se dá ověřit. Nemá znát jako přání, ale jako tvrzení s testem a měřítkem úspěchu.")
+            st.markdown("""
+            | Slabá domněnka | Ověřitelná hypotéza | Test | Metrika úspěchu |
+            | :--- | :--- | :--- | :--- |
+            | Studentům se to bude líbit. | Alespoň 20 z 50 oslovených studentů označí problém za častý a 8 z nich se zapíše k testu. | Rozhovor a registrační formulář. | 20 potvrzených problémů, 8 registrací. |
+            | Lidé za to zaplatí. | Alespoň 10 lidí si předobjedná produkt za 149 Kč. | Předobjednávková stránka nebo formulář. | 10 předobjednávek. |
+            | Instagram bude fungovat. | Testovací příspěvek přivede alespoň 30 kliknutí na formulář a 5 objednávek. | Příspěvek s měřeným odkazem. | 30 kliknutí, 5 objednávek. |
+            | Náklady budou nízké. | Variabilní náklad na kus nepřekročí 60 % plánované prodejní ceny. | Kalkulace a test výroby 5 kusů. | Náklad max. 60 % ceny. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.4 MVP: nejmenší ověřitelná verze")
+            st.write("MVP znamená nejmenší verzi řešení, která dokáže ověřit nejdůležitější předpoklad. Nemusí být dokonalá. Musí být dostatečná na učení.")
+            st.markdown("""
+            | Nápad | Drahý start | MVP test |
+            | :--- | :--- | :--- |
+            | **Aplikace na plánování učení** | Vývoj celé aplikace. | Notion šablona nebo sdílená tabulka pro 20 studentů. |
+            | **E-shop s merchem** | Nákup zásob a spuštění plného e-shopu. | Předobjednávka se třemi návrhy a jasnou cenou. |
+            | **Svačinové boxy** | Pronájem kuchyně a nákup vybavení. | Jeden testovací den s omezeným počtem objednávek. |
+            | **Doučovací platforma** | Programování tržiště s účty a platbami. | Ručně propojit 10 dvojic přes formulář. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 7.5 – 7.8 Jak pracovat s Lean Canvasem a časté chyby")
+            st.write("**Jak vyhodnotit:** Po vyplnění tým označí políčka jako ověřeno, hypotéza, nebo riziko. Testuj nejprve to, co je nejisté a důležité (zákazník, problém, ochota platit).")
+            
+            st.markdown("#### Případovka: Školní projekt „StudyBites“")
+            with st.expander("Ukázkový Lean Canvas pro StudyBites"):
+                st.markdown("""
+                * **Problém:** Studenti nestíhají kvalitní svačinu mezi výukou a praxí; část studentů nejí vůbec.
+                * **Zákazníci:** Dojíždějící studenti 1.–3. ročníku s dlouhým rozvrhem.
+                * **Unikátní hodnota:** Předem objednaná svačina k vyzvednutí ve škole bez čekání.
+                * **Řešení:** Tři typy boxů, objednávka přes formulář.
+                * **Kanály:** Třídní skupiny, QR plakát, školní IG.
+                * **Příjmy:** Prodej boxu za 65–79 Kč.
+                * **Náklady:** Suroviny, obal, doprava, rezerva.
+                * **Metriky:** Počet předobjednávek, nevyzvednuté kusy.
+                * **Neférová výhoda:** Přímý kontakt se školou.
+                """)
+            
+            st.error("⚠️ **Častá chyba:** Vyplnit Lean Canvas jednou a považovat ho za hotový. Zamilovat se do řešení dřív než do problému. Měřit lajky místo reálných prodejů.")
+            st.success("✅ **Správný postup:** Začni problémem a zákazníkem -> Popiš řešení -> Ověř příjmy a náklady -> Urči metriky a MVP -> Po testování plátno upravuj.")
+
+        with st.container(border=True):
+            st.markdown("### 7.9 Interaktivní Lean Canvas")
+            st.write("Do tohoto plátna si zkus nanečisto zapsat svůj projekt. V praxi se vyplňuje jako post-it lístečky, které můžeš po testování přepisovat.")
+            
+            lc_col1, lc_col2, lc_col3 = st.columns(3)
+            with lc_col1:
+                st.text_area("🔴 Problém (Co řešíme?)", height=150)
+                st.text_area("🟢 Řešení (Jak to řešíme?)", height=150)
+                st.text_area("🌸 Náklady (Co nás to bude stát?)", height=150)
+            with lc_col2:
+                st.text_area("🟡 Unikátní hodnota (Proč my?)", height=150)
+                st.text_area("⚪ Metriky (Jak poznáme úspěch?)", height=150)
+                st.text_area("🟤 Neférová výhoda (Naše eso v rukávu)", height=150)
+            with lc_col3:
+                st.text_area("🟠 Zákazník (Kdo to koupí?)", height=150)
+                st.text_area("🔵 Kanály (Kudy k zákazníkovi?)", height=150)
+                st.text_area("🟣 Příjmy (Jak vyděláme?)", height=150)
+   # --- 8. CSR, etika a odpovědné podnikání ---
+    elif "8. CSR, etika a odpovědné podnikání" in selected_section or "Odpovědné podnikání" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div><h2>8. CSR, etika a odpovědné podnikání (ESG)</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("CSR znamená společenská odpovědnost firem. Připomíná, že podnikání nemá sledovat pouze zisk, ale také dopady na zákazníky, zaměstnance, společnost a životní prostředí. V moderní ekonomice se často používá také pojem **ESG** — tedy odpovědnost v oblasti životního prostředí (Environmental), lidí a společnosti (Social) a řízení firmy (Governance).")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Podnikání ovlivňuje zákazníky, zaměstnance, dodavatele, společnost i životní prostředí. Legální jednání nemusí být vždy automaticky férové nebo udržitelné, proto je potřeba přemýšlet i o etice a odpovědnosti.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.1 Odpovědnost jako součást rozhodování")
+            st.write("Moderní zákazník často neřeší jen cenu. Sleduje také původ produktu, pracovní podmínky, obaly, ekologickou stopu, pravdivost reklamy, ochranu dat a chování značky v krizových situacích. Odpovědné podnikání neznamená, že firma musí být dokonalá. Znamená to, že zná své dopady, měří je, komunikuje pravdivě a neprodává odpovědnost jen jako marketingový slogan.")
+            st.info("🧠 **Pointa pro tebe:** Etika není doplněk až „po zisku“. Etika rozhoduje o tom, jestli firma dlouhodobě získá důvěru lidí.")
+
+        with st.container(border=True):
+            st.markdown("### 8.2 Etické dilema: co když je výhodné něco zamlčet?")
+            st.write("Podnikatel může být v situaci, kdy krátkodobě vydělá tím, že něco neřekne. Je to ale dlouhodobě udržitelné?")
+            
+            st.markdown("""
+            | Situace | Krátkodobé pokušení | Dlouhodobé riziko | Férovější řešení |
+            | :--- | :--- | :--- | :--- |
+            | **Produkt má omezenou životnost.** | Neříct to zákazníkovi. | Reklamace, špatné recenze, ztráta důvěry. | Uvést reálnou životnost a nabídnout servis. |
+            | **E-shop nabízí slevu.** | Uměle navýšit původní cenu. | Klamavá komunikace a poškození značky. | Ukázat skutečné srovnání ceny. |
+            | **Firma používá ekologický obal.** | Tvrdit, že celý produkt je „eko“. | Greenwashing. | Popisovat konkrétně jen to, co firma opravdu zlepšila. |
+            | **Aplikace sbírá data.** | Schovat souhlas do dlouhých podmínek. | Nedůvěra, právní problém, poškození uživatele. | Vysvětlit jednoduše, jaká data a proč se sbírají. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 8.3 & 8.4 ESG v malém projektu a Proč CSR řešit")
+            st.write("ESG se nemusí týkat jen velkých firem. I školní nebo studentský projekt by měl přemýšlet o odpadech (E), férovém přístupu v týmu (S) a jasných pravidlech pro peníze (G).")
+            
+            st.markdown("<div class='box-yellow'><strong>🌱 Mini audit odpovědnosti projektu</strong></div>", unsafe_allow_html=True)
+            aud1 = st.text_input("1. Jaký pozitivní i negativní dopad může mít tvůj projekt?")
+            aud2 = st.text_input("2. Jaké pravidlo férového chování si dáte v týmu vůči zákazníkům?")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Navrhni pro můj projekt jednoduchý etický kodex v pěti bodech.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 8.5 ESG jednoduše: tři oblasti odpovědnosti")
+            
+            col_e, col_s, col_g = st.columns(3)
+            with col_e:
+                st.success("**E — Environment**\n\nDopad na životní prostředí (spotřeba energií, odpady, recyklace, doprava).")
+            with col_s:
+                st.info("**S — Social**\n\nVztah k lidem (bezpečnost práce, férové mzdy, vzdělávání, diverzita).")
+            with col_g:
+                st.warning("**G — Governance**\n\nŘízení firmy (etický kodex, ochrana dat, prevence korupce, transparentnost).")
+                
+            st.error("⚠️ **Pozor na greenwashing:** Odpovědnost nestačí jen tvrdit v reklamě. Firma by měla umět doložit data. Pokud se prezentuje jako „zelená“, ale dopady neřeší, jde o klamavou komunikaci.")
+
+        with st.container(border=True):
+            st.markdown("### 8.6 & 8.7 Příklady odpovědného podnikání v ČR")
+            st.write("Toto nejsou žebříčky „nejhodnějších firem“, ale ukázky toho, co reálné firmy reportují v rámci udržitelnosti. Ve výuce se ptej: Co firma měří? Co zveřejňuje? Kde má ještě problém?")
+            
+            with st.expander("Příklady komunikace ESG ve firmách působících v ČR"):
+                st.markdown("""
+                * **Škoda Auto:** ESG strategie, řízení dopadů výroby, regionální odpovědnost, diverzita.
+                * **ČEZ:** Data o dekarbonizaci, emise, bezpečnost energetiky.
+                * **O2:** Digitální bezpečnost, vzdělávání, snižování uhlíkové stopy.
+                * **IKEA:** Cirkulární ekonomika, klimatické cíle, udržitelný dodavatelský řetězec.
+                * **Kofola / Albert:** Řešení vodních zdrojů, plýtvání potravinami, obalové materiály.
+                """)
+
+        with st.container(border=True):
+            st.markdown("### 8.8 Mini případová studie: Jak poznat odpovědnou firmu?")
+            st.write("Při zkoumání firem se ptej na těchto 5 otázek:")
+            st.markdown("""
+            1. **Má firma konkrétní cíle?** (Snížení emisí, méně odpadu)
+            2. **Ukazuje data?** (Čísla za několik let, srovnání)
+            3. **Řeší lidi?** (Zaměstnance, bezpečnost, komunity)
+            4. **Má pravidla řízení?** (Etický kodex, ochrana dat)
+            5. **Je komunikace důvěryhodná?** (Firma přiznává i limity a oblasti ke zlepšení)
+            """)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.</div>", unsafe_allow_html=True)
+            st.text_input("Tvé hodnocení vybrané firmy:")
+
+    # --- 9. Rizika podnikání ---
+    elif "9. Rizika podnikání" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 9</div><h2>9. Rizika podnikání</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Podnikání vždy obsahuje nejistotu. Podnikatel musí umět přemýšlet nejen o příležitostech, ale i o tom, co se může pokazit.")
+            
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je to důležité:</strong> Důležité je umět rizika pojmenovat, posoudit jejich dopad, navrhnout preventivní opatření a rozhodovat se odpovědně finančně, právně i eticky.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 9.1 Riziko není důvod nepodnikat — je to důvod plánovat")
+            st.write("Riziko znamená, že výsledek může být jiný, než očekáváme. Podnikatel riziko neignoruje, ale pracuje s ním: odhaduje pravděpodobnost, dopad a možnosti prevence.")
+            st.write("Současná generace často začíná projekty rychle (profil, landing page, předobjednávka). Rychlý start je výhoda, ale může vytvořit rychlé chyby: špatně nastavená cena, podceněné náklady, chybějící obchodní podmínky, nejasné autorství obsahu, nezvládnuté reklamace, neověřený dodavatel nebo ztráta účtu na sociální síti.")
+
+        with st.container(border=True):
+            st.markdown("### 9.2 Matice rizik")
+            st.markdown("""
+            | Riziko | Pravděpodobnost | Dopad | Preventivní opatření |
+            | :--- | :--- | :--- | :--- |
+            | **Nízký zájem zákazníků** | Střední až vysoká | Vysoký | Ověřit problém rozhovory a předobjednávkou. |
+            | **Vyšší náklady než plán** | Střední | Vysoký | Přidat rezervu, spočítat bod zvratu, porovnat dodavatele. |
+            | **Právní chyba** | Střední | Vysoký | Ověřit živnost, smlouvy, obchodní podmínky a ochranu spotřebitele. |
+            | **Závislost na 1 platformě**| Vysoká | Střední až vysoký | Budovat vlastní databázi kontaktů, web, e-mail a více kanálů. |
+            | **Konflikt v týmu** | Střední | Střední až vysoký | Dohodnout role, podíly, rozhodování a pravidla předem. |
+            | **Poškození reputace** | Střední | Vysoký | Pravdivá komunikace, rychlé řešení reklamací, etický kodex. |
+            """)
+
+        with st.container(border=True):
+            st.markdown("### 9.3 Rizika digitálního podnikání")
+            st.write("Digitální podnikání má svá specifika. Účet může být zablokován, algoritmus sníží dosah, zákaznická data mohou uniknout nebo platební brána vypadne. AI může navíc vytvořit chybný obsah.")
+            st.warning("🔐 **Digitální bezpečnost:** Hesla, dvoufázové ověření, zálohy, přístupy v týmu a ochrana zákaznických dat jsou součást podnikatelského rizika, ne „IT detail“.")
+            
+            st.markdown("<div class='box-yellow'><strong>🧯 Aktivita: Krizový plán startupu</strong><br>Vyber jedno riziko a připrav si krizový plán.</div>", unsafe_allow_html=True)
+            kriz_riziko = st.text_input("Jaké riziko řešíš?")
+            
+            c_k1, c_k2 = st.columns(2)
+            with c_k1:
+                st.text_input("Jak poznáme, že problém nastal?")
+                st.text_input("Koho se problém dotkne?")
+            with c_k2:
+                st.text_input("Co uděláme během prvních 24 hodin?")
+                st.text_input("Jak budeme komunikovat se zákazníky?")
+                
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Udělej mi rizikovou analýzu mého startupu a seřaď rizika podle dopadu.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 9.4 Typická podnikatelská rizika (Interakce)")
+            st.write("Vyber, které z následujících rizik je pro tvůj nápad to **nejpravděpodobnější**:")
+            nej_riziko = st.selectbox("Vyber největší riziko:", [
+                "Zákazníci nebudou mít o produkt zájem",
+                "Náklady budou vyšší než očekávané",
+                "Konkurence nabídne lepší řešení",
+                "Podnikatel podcení daně a odvody",
+                "Vzniknou právní nebo reklamační problémy",
+                "Firma nebude mít dost peněz na provoz"
+            ])
+            st.text_input(f"Jaký je tvůj první preventivní krok proti riziku: '{nej_riziko}'?")
+            
+            st.success("🧩 **Praktické minimum pro start:** Počítat s daněmi a odvody, odlišit jednorázový přivýdělek od soustavné činnosti, znát základní pravidla ochrany spotřebitele a nakládat odpovědně s daty.")
+
+    # --- 10. Švarcsystém ---
+    elif "10. Švarcsystém" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div><h2>10. Švarcsystém</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Švarcsystém je situace, kdy človek formálně vystupuje jako podnikatel (má živnost/IČO), ale fakticky pracuje jako zaměstnanec.")
+            
+            st.error("⚠️ **Riziko Švarcsystému:** Je to nelegální nastavení spolupráce, které může vést k vysokým pokutám, doměření odvodů a dalším problémům jak pro zadavatele, tak pro OSVČ.")
+            
+            st.markdown("**Jak poznat rizikové nastavení spolupráce?**")
+            st.markdown("""
+            * pracovník pracuje jen pro jednu firmu,
+            * dostává pravidelné pokyny jako zaměstnanec (nadřízenost),
+            * má pevně určenou pracovní dobu,
+            * pracuje v prostorách firmy a používá její vybavení,
+            * vystupuje jménem firmy (firemní e-mail, vizitky).
+            """)
+
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli příklad spolupráce, která je férová, a příklad, který už by mohl připomínat švarcsystém.</div>", unsafe_allow_html=True)
+            st.text_area("Tvůj příklad obou situací:")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Zkontroluj modelovou spolupráci a vysvětli, jestli v ní hrozí znaky švarcsystému.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### 10.1 Mini-hra: Švarc-detektiv 🕵️")
+            st.write("Zahraj si na inspektora práce. Přečti si situaci a v hlavě (nebo se spolužákem) rozhodni, o co jde. Poté rozklikni verdikt!")
+            
+            # Případ 1
+            st.markdown("#### 🕵️ Případ 1: Programátor v kanceláři")
+            st.write("**Situace:** Petr má živnostenský list, ale každý den od 8:00 do 16:30 sedí v kanceláři firmy XYZ, používá firemní notebook, nosí firemní tričko a dovolenou hlásí šéfovi.")
+            with st.expander("💡 Klikni pro odhalení verdiktu detektiva"):
+                st.error("**Odpověď: ŠVARCSYSTÉM!**\n\nZnaky: pevná pracovní doba, práce na zařízení firmy, nadřízenost, vystupování jako součást firmy a závislost na jednom zadavateli. Hrozí pokuta od úřadu práce.")
+            
+            # Případ 2
+            st.markdown("#### 🕵️ Případ 2: Grafik s více klienty")
+            st.write("**Situace:** Grafik pracuje z vlastního studia, má pět různých klientů, sám si určuje cenu, termíny i způsob práce a fakturuje za konkrétní zakázky.")
+            with st.expander("💡 Klikni pro odhalení verdiktu detektiva"):
+                st.success("**Odpověď: FÉROVÝ FREELANCING.**\n\nZnaky: samostatnost, více klientů, vlastní vybavení, vlastní organizace práce a podnikatelské riziko.")
+
+            # Případ 3
+            st.markdown("#### 🕵️ Případ 3: „OSVČ“ s firemním e-mailem")
+            st.write("**Situace:** Člověk má IČO, ale používá e-mail firmy, vybavení firmy, pracuje podle pokynů manažera a o volnu musí žádat stejně jako zaměstnanci.")
+            with st.expander("💡 Klikni pro odhalení verdiktu detektiva"):
+                st.warning("**Odpověď: PRAVDĚPODOBNĚ ŠVARCSYSTÉM.**\n\nZnaky: podřízenost, práce podle pokynů, využívání firemního vybavení, začlenění do firmy a omezená samostatnost.")
+
+            # Případ 4
+            st.markdown("#### 🕵️ Případ 4: Fotograf na zakázku")
+            st.write("**Situace:** Fotograf fotí pro různé klienty, používá vlastní techniku, domlouvá si cenu za konkrétní focení a sám rozhoduje, kdy a jak práci provede.")
+            with st.expander("💡 Klikni pro odhalení verdiktu detektiva"):
+                st.success("**Odpověď: FÉROVÝ FREELANCING.**\n\nZnaky: vlastní vybavení, více zakázek, samostatné rozhodování, výsledek práce místo řízené pracovní doby.")
+            
+            st.info("💡 **K zamyšlení:** Proč stát rozlišuje mezi zaměstnancem a podnikatelem? Koho tím chrání?")
+
+    # --- 11. Ověřování informací a užitečné zdroje ---
+    elif "11. Ověřování informací a užitečné zdroje" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 11</div><h2>11. Ověřování informací a užitečné zdroje</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Při podnikání je důležité umět najít spolehlivé zdroje a ověřovat aktuální informace. Zde jsou základní portály, které by měl znát každý podnikatel:")
+            
+            st.markdown("""
+            | Zdroj | K čemu slouží |
+            | :--- | :--- |
+            | **[BusinessInfo.cz](https://www.businessinfo.cz/)** | Oficiální portál pro podnikatele (návody, novinky, formuláře). |
+            | **[Portál živnostenského podnikání](https://www.rzp.cz/)** | Vyhledávání živností a informace k podnikání na živnost (rzp.cz). |
+            | **[Justice.cz (Veřejný rejstřík)](https://or.justice.cz/)** | Veřejný rejstřík, kde lze ověřit firmy a jejich historii. |
+            | **[Zákony pro lidi](https://www.zakonyprolidi.cz/)** | Aktuální znění zákonů. |
+            | **[Moje daně](https://www.mojedane.cz/)** | Portál Finanční správy pro správu daňových povinností (mojedane.cz). |
+            """)
+
+            st.markdown("#### 🔍 Jak ověřit firmu krok za krokem:")
+            st.markdown("""
+            1. Najdi firmu podle názvu nebo IČO (např. na Justice.cz nebo ARES).
+            2. Ověř právní formu (s.r.o., a.s., OSVČ).
+            3. Zjisti, kdo za firmu reálně jedná (jednatelé).
+            4. Podívej se, zda je firma aktivní, v likvidaci nebo v insolvenci.
+            5. Zjisti, zda nezatajuje účetní závěrky.
+            """)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Ověř jednu existující firmu (např. svou oblíbenou značku) v online rejstříku (Justice.cz).</div>", unsafe_allow_html=True)
+            c_f1, c_f2 = st.columns(2)
+            with c_f1:
+                st.text_input("Název ověřované firmy:")
+                st.text_input("Její právní forma (s.r.o., a.s...):")
+            with c_f2:
+                st.text_input("Kdo za firmu jedná (jméno jednatele)?")
+                st.text_input("Vysvětli, proč je tato kontrola důležitá před spoluprací:")
+
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Připrav mi kontrolní seznam pro ověření firmy před spoluprací.“
+            </div>
+            """, unsafe_allow_html=True)
+# --- Ukončení podnikání ---
+    elif "Ukončení podnikání" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA</div><h2>Ukončení podnikání</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.write("Podnikání může skončit dobrovolně (např. splněním cíle, odchodem do důchodu), rozhodnutím soudu nebo v důsledku finančních problémů (insolvence).")
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš dva varovné signály, podle kterých by podnikatel poznal, že musí změnit plán nebo podnikání ukončit.</div>", unsafe_allow_html=True)
+            st.text_input("Varovný signál 1:")
+            st.text_input("Varovný signál 2:")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Navrhni plán B pro můj startup, pokud první verze nebude fungovat.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### Zrušení vs. zánik firmy")
+            st.write("U právnických osob (např. s.r.o.) je potřeba rozlišovat mezi dvěma fázemi konce firmy:")
+            
+            col_z1, col_z2 = st.columns(2)
+            with col_z1:
+                st.info("**1. Zrušení = proces**\n\nRozhodnutí, že firma končí. Následuje likvidace, vypořádání majetku, zaplacení dluhů a vyrovnání závazků.")
+            with col_z2:
+                st.error("**2. Zánik = konec**\n\nDefinitivní okamžik, kdy firma právně přestává existovat. Obchodní korporace zaniká výmazem z obchodního rejstříku.")
+
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu.</div>", unsafe_allow_html=True)
+            st.text_area("Tvůj příklad:")
+            
+            st.warning("⚠️ **Důležitá poznámka k insolvenci:** Pokud má firma více dluhů než majetku a není schopna své závazky dlouhodobě splácet, dostává se do úpadku. V takovém případě musí podat insolvenční návrh.")
+
+    # --- Logická mapa podnikání ---
+    elif "Logická mapa" in selected_section:
+        st.markdown("<div class='sub-section-header'>PŘEHLED TÉMATU</div><h2>Logická mapa podnikání</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Přehled tématu:</strong> Tato mapa shrnuje hlavní oblasti podnikání od právního rámce přes právní formy až po záměr, rizika a ukončení podnikání.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu větev mapy, která je pro tvůj projekt nejdůležitější, a napiš proč.</div>", unsafe_allow_html=True)
+            nej_vetev = st.selectbox("Nejdůležitější větev pro můj projekt:", [
+                "Legislativa a definice",
+                "Právní formy",
+                "Podnikatelský záměr a Lean Canvas",
+                "CSR a etika",
+                "Rizika",
+                "Zdroje a ukončení podnikání"
+            ])
+            st.text_input(f"Proč je podle tebe nejdůležitější právě '{nej_vetev}'?")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vytvoř mi logickou mapu mého startupu podle oblastí: právo, zákazník, finance, rizika a odpovědnost.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("### 🗺️ Vizuální mapa předmětu")
+        
+        # Mřížka logické mapy (2x3 karty)
+        m_col1, m_col2 = st.columns(2)
+        
+        with m_col1:
+            with st.container(border=True):
+                st.markdown("#### ⚖️ 1. Legislativa a definice")
+                st.markdown("""
+                * Občanský zákoník
+                * Živnostenský zákon
+                * Zákon o obchodních korporacích
+                * Znaky podnikání (soustavnost, vlastní jméno, zisk...)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🚀 3. Podnikatelský záměr a Lean Canvas")
+                st.markdown("""
+                * Zákazník & Problém
+                * Řešení & Unikátní hodnota
+                * Náklady & Příjmy
+                * První test (MVP)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🛡️ 5. Rizika")
+                st.markdown("""
+                * Finanční a tržní riziko
+                * Právní riziko
+                * Švarcsystém (rizika nelegálního zaměstnávání)
+                """)
+
+        with m_col2:
+            with st.container(border=True):
+                st.markdown("#### 🏢 2. Právní formy")
+                st.markdown("""
+                * OSVČ (fyzická osoba)
+                * v.o.s. a k.s. (osobní společnosti)
+                * s.r.o. a a.s. (kapitálové společnosti)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🌱 4. CSR a etika")
+                st.markdown("""
+                * Férové jednání
+                * Odpovědnost vůči zaměstnancům a zákazníkům
+                * Odpovědnost vůči společnosti a životnímu prostředí (ESG)
+                """)
+                
+            with st.container(border=True):
+                st.markdown("#### 🏁 6. Zdroje a ukončení")
+                st.markdown("""
+                * Veřejné rejstříky & ověřování firem
+                * Zrušení vs. zánik
+                * Insolvence
+                """)
+
+    # --- Reflexe a sebehodnocení ---
+    elif "Reflexe" in selected_section:
+        st.markdown("<div class='sub-section-header'>ZÁVĚR KURZU</div><h2>Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🔄 Formativní hodnocení:</strong> Nejde o známku. Cílem je zjistit, čemu už rozumíš, co umíš použít v praxi a kde ještě potřebuješ další příklad.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje otázka k nejasnosti:")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vyzkoušej mě z Kapitoly 1 pomocí pěti otázek a potom mi dej zpětnou vazbu.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### ✍️ Otázky k reflexi")
+            st.text_area("1. Co jsem se dnes naučil/a? (Napiš vlastními slovy 3 věci, které si odnášíš):")
+            st.text_area("2. Co umím vysvětlit vlastními slovy? (Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.):")
+            
+            st.markdown("**3. V čem mám ještě nejasnosti?**")
+            st.multiselect("Vyber oblasti, které ti ještě nejsou zcela jasné:", [
+                "Právní formy",
+                "Ručení",
+                "Podnikatelský záměr",
+                "Lean Canvas",
+                "CSR a ESG",
+                "Švarcsystém",
+                "Ukončení podnikání"
+            ])
+            
+            st.text_area("4. Která právní forma by se hodila pro můj nápad a proč?")
+            st.text_area("5. Jaký je můj první praktický krok? (Průzkum konkurence, rozhovor se zákazníkem, ověření firmy v rejstříku nebo vyplnění Lean Canvasu):")
+
+        with st.container(border=True):
+            st.markdown("### ✅ Sebehodnocení")
+            st.write("Zaškrtni dovednosti, které už bezpečně zvládáš:")
+            
+            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel.")
+            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.")
+            st.checkbox("Chápu rozdíl mezi fyzickou a právnickou osobou.")
+            st.checkbox("Dokážu navrhnout základ podnikatelského záměru.")
+            st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
+            st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
+            st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
+# --- 13. Reflexe a sebehodnocení ---
+    elif "13. Reflexe a sebehodnocení" in selected_section or "Reflexe" in selected_section:
+        st.markdown("<div class='sub-section-header'>KAPITOLA 13</div><h2>13. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-green'>
+                <strong>🔄 Formativní hodnocení:</strong> Nejde o známku. Cílem je zjistit, čemu už rozumíš, co umíš použít v praxi a kde ještě potřebuješ další příklad.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje otázka pro další konzultaci:")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vyzkoušej mě z Kapitoly 1 pomocí pěti otázek a potom mi dej zpětnou vazbu.“
+            </div>
+            """, unsafe_allow_html=True)
+
+        with st.container(border=True):
+            st.markdown("### ✍️ Otázky k reflexi (Doplň)")
+            
+            st.write("**1. Co jsem se dnes naučil/a?**")
+            st.text_area("Napiš vlastními slovy 3 věci, které si z kapitoly odnášíš:", height=100)
+            
+            st.write("**2. Co umím vysvětlit vlastními slovy?**")
+            st.text_area("Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.:", height=100)
+            
+            st.write("**3. V čem mám ještě nejasnosti?**")
+            st.multiselect("Vyber jednu (nebo více) částí, která ti není jasná:", [
+                "Právní formy", 
+                "Ručení", 
+                "Podnikatelský záměr", 
+                "Lean Canvas", 
+                "CSR", 
+                "Švarcsystém", 
+                "Ukončení podnikání"
+            ])
+            
+            st.write("**4. Která právní forma by se hodila pro můj nápad?**")
+            st.text_area("Vysvětli, proč bys zvolil/a právě tuto formu:", height=100)
+            
+            st.write("**5. Jaký je můj první praktický krok?**")
+            st.selectbox("Co udělám jako první?", [
+                "Vyber krok...",
+                "Průzkum konkurence",
+                "Rozhovor se zákazníkem",
+                "Ověření firmy v rejstříku",
+                "Vyplnění Lean Canvasu"
+            ])
+
+        with st.container(border=True):
+            st.markdown("### ✅ Sebehodnocení")
+            st.write("Zaškrtni si dovednosti, které už bezpečně zvládáš:")
+            
+            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel.")
+            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.")
+            st.checkbox("Chápu rozdíl mezi fyzickou a právnickou osobou.")
+            st.checkbox("Dokážu navrhnout základ podnikatelského záměru.")
+            st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
+            st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
+            st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
+# --- 15. Integrované opakování ---
+    elif "15. Integrované opakování" in selected_section or "Integrované" in selected_section:
+        st.markdown("<div class='sub-section-header'>ZÁVĚREČNÝ MODUL</div><h2>15. Integrované opakování: od nápadu k odpovědnému podnikání</h2>", unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-blue'>
+                <strong>📘 Proč je tato část důležitá:</strong> Tady si neposkládáš další nové definice, ale propojíš celou učebnici do jedné praktické cesty. Půjdeš od prvního nápadu přes zákazníka, právní formu, finance, ověřování startupu, Lean Canvas, marketing, rizika a etiku až k závěrečnému rozhodnutí, jestli má projekt smysl rozvíjet.
+            </div>
+            <div class='box-purple'>
+                <strong>🧭 Jak s touto částí pracovat:</strong> Ber ji jako závěrečný pracovní modul. Postupně si ověříš, co už umíš, a převedeš to do vlastního podnikatelského rozhodnutí.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # 15.1 Mapa modulu
+        with st.container(border=True):
+            st.markdown("### 🗺️ 15.1 Mapa závěrečného modulu")
+            st.markdown("""
+            | Část | Na co navazuje | Co máš vytvořit nebo rozhodnout |
+            | :--- | :--- | :--- |
+            | **1. Podnikavé uvažování** | Podnikatel, znaky, odpovědnost | Rozlišit koníček, přivýdělek, zaměstnání a podnikání. |
+            | **2. Zákazník a hodnota** | Startup, Lean Canvas, záměr | Popsat konkrétní problém, zákazníka a hodnotu řešení. |
+            | **3. Právní rámec** | OSVČ, korporace, švarcsystém | Zdůvodnit vhodnou formu pro start projektu. |
+            | **4. Finance a proveditelnost** | Cena, náklady, marže, bod zvratu | Sestavit kalkulaci a posoudit ekonomický smysl. |
+            | **5. Ověřování a rozhodování** | Lean Startup, MVP, hypotézy | Navrhnout první test a vyhodnotit výsledky. |
+            | **6. Marketing a důvěra** | Digitální podnikání, reputace | Připravit pravdivé sdělení a pravidla práce s daty. |
+            | **7. Etika, CSR a rizika** | Odpovědné podnikání, ESG, rizika | Navrhnout etická pravidla a rizikovou matici. |
+            | **8. Podnikatelská mise** | Celá učebnice | Propojit všechny části do obhajitelného návrhu. |
+            """)
+
+            st.markdown("#### 🎯 Aktivita: Můj posun v podnikavosti")
+            st.write("Odpověz na tyto otázky a porovnej si své uvažování na začátku a na konci kurzu:")
+            col_a1, col_a2 = st.columns(2)
+            with col_a1:
+                st.text_input("1. Co podle mě znamená podnikat?", key="posun_1")
+                st.text_input("2. Čeho bych se při podnikání nejvíc bál/a?", key="posun_2")
+                st.text_input("3. Jaký problém bych chtěl/a řešit?", key="posun_3")
+            with col_a2:
+                st.text_input("4. Co bych musel/a zjistit, než bych začal/a?", key="posun_4")
+                st.text_input("5. Podle čeho poznám, že můj nápad má smysl?", key="posun_5")
+
+        # 15.2 & 15.3 Podnikatel očima různých lidí
+        with st.container(border=True):
+            st.markdown("### 👥 15.2 Podnikatel očima různých lidí")
+            st.write("Podnikání není jen 'mít nápad a vydělat'. Je to schopnost převést nápad do odpovědného systému. Jedna firma vypadá jinak podle toho, kdo se na ni dívá:")
+            
+            st.markdown("""
+            | Kdo se dívá | Co ho zajímá | Proč je to důležité |
+            | :--- | :--- | :--- |
+            | **Zákazník** | Cena, kvalita, důvěryhodnost, reklamace | Rozhoduje, jestli firma získá tržby. |
+            | **Podnikatel** | Zisk, náklady, čas, riziko, růst | Nese plné následky rozhodnutí. |
+            | **Zaměstnanec** | Mzda, podmínky, jistota, férovost | Bez lidí firma nedokáže růst. |
+            | **Stát** | Daně, odvody, zákonnost, ochrana spotřebitele | Nastavuje právní a daňový rámec. |
+            | **Banka / Investor**| Cashflow, stabilita, návratnost, riziko | Posuzují riziko financování a růstový potenciál. |
+            | **Společnost** | Etika, udržitelnost, ekologie, dopad | Firma vytváří hodnotu, ale může tvořit i škody. |
+            """)
+            
+            st.markdown("#### 🎭 Aktivita: Jedna firma, osm pohledů")
+            st.text_area("Vyber si jeden nápad a napiš 3 klíčové otázky, které by položily různé role (např. Zákazník, Investor, Stát):", key="akt_8pohledu")
+
+        # 15.4 & 15.5 Praxe OSVČ a Obchodních korporací
+        with st.container(border=True):
+            st.markdown("### 💼 15.3 OSVČ vs. Obchodní korporace v praxi")
+            
+            st.warning("⚠️ **Pozor u OSVČ:** Vyfakturovaná částka není čistý zisk! V ceně musí být započítán i neplacený čas (administrativa, marketing) a náklady na odvody, vybavení a rezervy.")
+            
+            st.markdown("#### 🧮 Aktivita: Reálná hodinová sazba OSVČ")
+            st.write("Chceš jako OSVČ vydělat **35 000 Kč měsíčně** před zdaněním. Reálně můžeš fakturovat jen **80 hodin měsíčně** (zbytek zabere režie).")
+            
+            prijem_cil = 35000
+            fakt_hodiny = 80
+            zakladni_sazba = prijem_cil / fakt_hodiny
+            
+            st.info(f"👉 Základní čistá hodinová sazba: **{zakladni_sazba:.0f} Kč / hod**")
+            
+            col_calc1, col_calc2 = st.columns(2)
+            with col_calc1:
+                rezerva_naklady = st.number_input("Přidej % na provozní náklady (nájem, počítač, licence a software):", value=20)
+                rezerva_vypadky = st.number_input("Přidej % na rezervu (nemoc, období bez zakázek):", value=15)
+            
+            doporucena_sazba = zakladni_sazba * (1 + (rezerva_naklady + rezerva_vypadky) / 100)
+            
+            with col_calc2:
+                st.metric("Doporučená reálná hodinová sazba", f"{doporucena_sazba:.0f} Kč / hod")
+                st.caption("Tuhle částku musíš účtovat zákazníkovi, aby ti po odečtení nákladů a rizik zůstalo 35 000 Kč.")
+
+            st.markdown("---")
+            st.markdown("#### 🤝 Aktivita: Zakladatelská dohoda společníků (s.r.o.)")
+            st.text_area("Napiš 3 nejdůležitější pravidla do zakladatelské dohody (např. co se stane, když jeden společník nepracuje nebo chce odejít):", key="dohoda_spolecniku")
+
+        # 15.6 - 15.10 Lean Canvas, Finance & Ekonomika sdílení
+        with st.container(border=True):
+            st.markdown("### 📊 15.4 Lean Canvas, Finance a Ekonomika sdílení")
+            
+            st.markdown("""
+            | Častá chyba v záměru | Jak vypadá | Jak ji opravit |
+            | :--- | :--- | :--- |
+            | **Příliš obecný zákazník** | „Naši zákazníci jsou všichni mladí lidé.“ | Popiš konkrétní skupinu, situaci a potřebu. |
+            | **Neověřený problém** | „Myslíme si, že to lidé chtějí.“ | Udělej rozhovory, dotazník nebo předobjednávku. |
+            | **Podceněné náklady** | Počítá se jen materiál, ne čas a reklama. | Sepiš všechny skryté a fixní náklady. |
+            """)
+
+            st.markdown("#### 📈 Aktivita: Lajk, nebo zákazník? (Vanity vs. Reálné metriky)")
+            col_m1, col_m2 = st.columns(2)
+            with col_m1:
+                st.text_area("apiš 3 'vanity metriky' (čísla, která vypadají hezky, ale nepřinášejí reálný zisk):", placeholder="např. počet lajků, zhlédnutí...", key="metriky_vanity")
+            with col_m2:
+                st.text_area("Napiš 3 metriky reálného zájmu:", placeholder="např. předobjednávka, zaplacená záloha...", key="metriky_realne")
+
+            st.markdown("#### 🏠 Ekonomika sdílení (Airbnb, Uber, Coworking)")
+            st.write("Ekonomika sdílení využívá nevyužité kapacity. Není to ale 'peníze zadarmo' — i zde vznikají skryté náklady (amortizace, úklid, provize platformě, daně).")
+            
+            st.markdown("""
+            <div class='box-purple'>
+                <strong>🤖 AI mentoring prompt:</strong><br>
+                <em>„Vysvětli mi ekonomiku sdílení na příkladu Airbnb nebo Uberu. Rozepiš příjmy, fixní náklady, variabilní náklady, skryté náklady a rizika závislosti na platformě.“</em>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # 15.11 - 15.16 Marketing, Etika, Rizika a Švarcsystém
+        with st.container(border=True):
+            st.markdown("### 🛡️ 15.5 Rizika, Etika, Švarcsystém a Ověřování firem")
+            
+            col_r1, col_r2 = st.columns(2)
+            with col_r1:
+                st.markdown("#### 🧯 Rizikový semafor")
+                st.text_input("Vysoké riziko projektu:", placeholder="Nízká poptávka / Únik dat / Chybějící peníze", key="riziko_1")
+                st.text_input("Preventivní opatření:", placeholder="Jak tomuto riziku předejít?", key="opatreni_1")
+            
+            with col_r2:
+                st.markdown("#### 🕵️ Detektiv Švarcsystému")
+                st.write("Posouzení pracovního vztahu:")
+                svarc_check = st.checkbox("Pracovník používá počítač a e-mail firmy, chodí na pevně stanovenou pracovní dobu a má jediného klienta.")
+                if svarc_check:
+                    st.error("🚨 VYSOKÉ RIZIKO ŠVARCSYSTÉMU! Vztah vykazuje známky závislé práce a měl by být řešen pracovní smlouvou.")
+
+            st.markdown("---")
+            st.markdown("#### 🔍 Ověřování firem v rejstřících")
+            st.text_input("Zadej název nebo IČO firmy, kterou chceš prověřit:", key="proverka_ico")
+            st.caption("Při prověřování firmy vždy kontroluj: ARES/Obchodní rejstřík, Insolvenční rejstřík, Registr plátců DPH a reálné recenze.")
+
+        # 15.17 - 15.22 Case Studies & Velká Podnikatelská Mise
+        with st.container(border=True):
+            st.markdown("### 🎒 15.6 Případová studie: Projekt 'ReStart Batoh'")
+            st.write("Studenti sbírají starší použitelné batohy, vyčistí je, opraví, personalizují a prodávají za dostupnou cenu.")
+            
+            with st.expander("📦 Zobrazit kalkulaci a pravidla projektu ReStart Batoh"):
+                st.markdown("""
+                * **Náklady na 1 batoh:** Čištění (20 Kč) + Oprava (30 Kč) + Personalizace (25 Kč) + Propagace (10 Kč) + Rezerva (15 Kč) = **100 Kč/kus**
+                * **Prodejní cena:** 180 Kč až 250 Kč podle stavu.
+                * **Férovost (Anti-Greenwashing):** U každého batohu je jasně uveden jeho původní stav a co na něm bylo opraveno. Netvrdíme 'zachraňujeme planetu', ale 'prodlužujeme životnost konkrétního věci'.
+                """)
+
+            st.markdown("#### 🎤 Aktivita: Pitch ve 3 verzích")
+            st.markdown("> **Šablona:** Pomáháme *[komu]* řešit *[jaký problém]* pomocí *[jakého řešení]*, které je jiné tím, že *[odlišení]*.")
+            st.text_input("Pitch pro spolužáka (neformální):", key="pitch_spoluzak")
+            st.text_input("Pitch pro zákazníka (zaměřeno na užitek):", key="pitch_zakaznik")
+            st.text_input("Pitch pro investora/učitele (zaměřeno na čísla a logiku):", key="pitch_investor")
+
+        # Závěrečný Kvíz & Sebehodnocení
+        with st.container(border=True):
+            st.markdown("### 🧠 Závěrečné integrované testování")
+            st.write("Ověř si své znalosti z celé učebnice:")
+
+            # Kvízové otázky přes expandery
+            with st.expander("1. Student prodává náramky a sám nese riziko neprodaných zásob. O který znak podnikání jde?"):
+                q1 = st.radio("Vyber odpověď:", ["Soustavnost", "Vlastní odpovědnost", "Vlastní jméno", "Dosažení 18 let"], key="q1")
+                if st.button("Zkontrolovat Otázku 1"):
+                    if q1 == "Vlastní odpovědnost":
+                        st.success("Správně! Podnikatel nese riziko ztráty nebo špatných rozhodnutí sám.")
+                    else:
+                        st.error("Špatně. Jedná se o Vlastní odpovědnost.")
+
+            with st.expander("2. Jaký je hlavní rozdíl v ručení mezi OSVČ a společníkem s.r.o.?"):
+                q2 = st.radio("Vyber odpověď:", [
+                    "OSVČ neručí vůbec.",
+                    "Obě formy ručí úplně stejně.",
+                    "OSVČ ručí celým osobním majetkem, společník s.r.o. primárně do výše nesplaceného vkladu.",
+                    "OSVČ ručí pouze do 100 000 Kč."
+                ], key="q2")
+                if st.button("Zkontrolovat Otázku 2"):
+                    if "OSVČ ručí celým osobním majetkem" in q2:
+                        st.success("Správně! OSVČ nerozděluje osobní a firemní majetek.")
+                    else:
+                        st.error("Špatně. Správná je odpověď s ručením celým osobním majetkem u OSVČ.")
+
+            with st.expander("3. Rychlá kalkulace: Bod zvratu (Break-even point)"):
+                st.write("Prodejní cena obalu = 200 Kč | Variabilní náklady = 120 Kč | Měsíční fixní náklady = 2 400 Kč")
+                odpoved_bv = st.number_input("Kolik kusů obalů musíš měsíčně prodat, aby byl projekt na nule (v bodu zvratu)?", min_value=0, step=1, key="bv_input")
+                if st.button("Zkontrolovat výpočet bodu zvratu"):
+                    if odpoved_bv == 30:
+                        st.success("🎉 Skvěle! Marže na kus je 80 Kč (200 - 120). Fixní náklady 2 400 / 80 = přesně 30 kusů!")
+                    else:
+                        st.error("Zkus to znovu. Nápověda: Nejdřív spočítej marži na 1 kus (Cena - Variabilní náklady) a pak jí vyděl fixní náklady.")
+
+            st.markdown("---")
+            st.markdown("#### ✅ Kontrolní checklist odpovědného podnikatele")
+            st.checkbox("Umím popsat problém i zákazníka jedním odstavcem.", key="chk_1")
+            st.checkbox("Mám alespoň jeden reálný důkaz zájmu (rozhovor, předobjednávka).", key="chk_2")
+            st.checkbox("Spočítal/a jsem si základní náklady, cenu a bod zvratu.", key="chk_3")
+            st.checkbox("Rozumím rozdílu mezi OSVČ a s.r.o. a umím si vybrat.", key="chk_4")
+            st.checkbox("Mám navržený test hypotézy (MVP).", key="chk_5")
+            st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
+            st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
+            # ==========================================
+            # KAPITOLA 2: FINANČNÍ GRAMOTNOST
+            # ==========================================
+
+    # --- Podkapitola 1: Bankovní systém a peníze v 21. století ---
+    elif "Bankovní systém" in selected_section or "1. Bankovní systém" in selected_section:
+        st.markdown("<div class='sub-section-header'>KAPITOLA 2: FINANČNÍ GRAMOTNOST</div><h2>1. Bankovní systém a peníze v 21. století</h2>", unsafe_allow_html=True)
+        
+        st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života.")
         
         with st.container(border=True):
             st.markdown("""
             <div class='box-blue'>
                 <strong>💡 Proč je to důležité právě teď?</strong>
                 <ul>
-                    <li><strong>Technologie jako hybatel:</strong> Od okamžitých mezinárodních plateb až po investování pár korun z mobilu.</li>
-                    <li><strong>Nekonečné možnosti a nová rizika:</strong> Peníze už nejsou papírky, jsou to data vyžadující novou digitální gramotnost.</li>
+                    <li><strong>Technologie jako hybatel:</strong> Máme přístup k nástrojům, o kterých se našim rodičům nesnilo — od okamžitých plateb až po investování v mobilu.</li>
+                    <li><strong>Nekonečné možnosti a nová rizika:</strong> Peníze už nejsou jen papírky, jsou to data. Vyžadují novou úroveň digitální gramotnosti.</li>
+                    <li><strong>Bankovnictví 2.0:</strong> Tradiční banky soupeří s fintech startupy. Výsledkem jsou lepší služby, ale i potřeba se umět orientovat.</li>
                 </ul>
+            </div>
+            <div class='box-purple'>
+                <strong>🎯 Cíl této podkapitoly:</strong> Nechceme se učit zastaralé definice. Chceme pochopit, jak technologie mění pravidla hry, jaké nástroje máme dnes v kapse a jak je používat tak, aby nám peníze sloužily — a ne naopak.
             </div>
             """, unsafe_allow_html=True)
 
+        # 1.1 Peníze jako digitální data
         with st.container(border=True):
-            st.markdown("### Vývoj peněz a směny")
+            st.markdown("### 1.1 Peníze jako digitální data a vývoj peněz")
+            st.write("Peníze dnes často nevypadají jako mince nebo bankovky. Když platíš kartou, mobilem nebo hodinkami, mění se digitální záznam v bankovním systému.")
+            
             st.markdown("""
             | Období / forma | Co sloužilo jako peníze | Na čem stála důvěra |
             | :--- | :--- | :--- |
@@ -285,8 +2219,13 @@ elif view == "Kapitola 2":
             | **Kryptoměny** | Distribuovaný záznam (Blockchain) | Na technologii, síti uživatelů a protokolu |
             """)
 
+            with st.expander("💡 Přečti si více o Zlatém standardu a Nixonově šoku (1971)"):
+                st.write("**Zlatý standard:** Stát sliboval, že měna je krytá zlatem. Peníze nebyly jen papírky, ale měly navázání na zásoby zlata v bance.")
+                st.write("**Nixonův šok (1971):** Americký prezident Richard Nixon pozastavil směnitelnost dolaru za zlato. Svět přešel k tzv. **fiat penězům** – jejich hodnota stojí výhradně na důvěře ve stát a centrální banku.")
+
             st.markdown("#### 🧠 Interaktivní výzva: Zkus zaplatit komoditou!")
             komodita = st.selectbox("Představ si, že jdeš do kavárny. Čím zkusíš zaplatit?", ["Vyber...", "Krávou 🐄", "Mušlemi 🐚", "Zlatým prachem ✨"], key="k2_1_komodita")
+            
             if komodita == "Krávou 🐄":
                 st.error("❌ Nepraktické! Kráva se špatně dělí (jak zaplatíš za jedno kafe?) a navíc ji musíš krmit.")
             elif komodita == "Mušlemi 🐚":
@@ -294,14 +2233,9 @@ elif view == "Kapitola 2":
             elif komodita == "Zlatým prachem ✨":
                 st.success("✅ Skvělé k uchování hodnoty! Ale barista musí u kasy prach složitě vážit a ověřovat jeho ryzost.")
 
-    # -------------------------------------------------------------------------
-    # 1.2 ČNB A KOMERČNÍ BANKY
-    # -------------------------------------------------------------------------
-    elif selected_section_2 == "1.2 ČNB a komerční banky":
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.2 ČNB a komerční banky</h2>", unsafe_allow_html=True)
-        st.write("Bankovní systém není jen síť poboček a bankomatů. Je to jeden z nejdůležitějších „nervových systémů“ ekonomiky.")
-
+        # 1.2 ČNB a komerční banky
         with st.container(border=True):
+            st.markdown("### 1.2 ČNB a komerční banky")
             st.markdown("""
             <div class='box-gray'>
                 <strong>Česká národní banka (ČNB):</strong> Centrální banka státu. Neobsluhuje běžné občany. Její hlavní cíl je stabilita měny (hlídá inflaci) a dohled nad trhem. Určuje základní úrokové sazby.<br><br>
@@ -309,60 +2243,32 @@ elif view == "Kapitola 2":
             </div>
             """, unsafe_allow_html=True)
 
-        with st.container(border=True):
             st.markdown("#### 🎮 Simulace: Jsi bankovní rada ČNB!")
             st.write("**Situace:** Inflace je vysoká, ceny v obchodech letí nahoru. Co uděláš s úrokovou sazbou?")
             cnb_action = st.radio("Vaše rozhodnutí:", ["Vyber možnost...", "Zvýšíme sazby", "Snížíme sazby", "Ponecháme sazby beze změny"], key="k2_1_cnb")
             
             if st.button("Potvrdit rozhodnutí ČNB", key="k2_1_cnb_btn"):
                 if cnb_action == "Zvýšíme sazby":
-                    st.success("✅ Správný krok k tlumení inflace! Úvěry zdraží, lidé budou méně utrácet a více spořit. Tlak na růst cen se sníží.")
+                    st.success("Správný krok k tlumení inflace! Úvěry zdraží, lidé budou méně utrácet a více spořit. Tlak na růst cen se sníží.")
                 elif cnb_action == "Vyber možnost...":
                     st.warning("Musíš vybrat jednu z možností.")
                 else:
-                    st.error("❌ Rizikové! Pokud nesnížíte objem peněz v oběhu zdražením úvěrů, inflace může dál růst.")
+                    st.error("Rizikové! Pokud nesnížíte objem peněz v oběhu zdražením úvěrů, inflace může dál růst.")
 
+        # 1.3 Bezpečné platby a Phishing Trenažér
         with st.container(border=True):
-            st.markdown("### 1.2.4 Jak ČNB ovlivňuje ekonomiku: 2T repo sazba")
-            st.write("Nejdůležitějším nástrojem ČNB je **2T repo sazba** (dvoutýdenní repo sazba). Za tuto sazbu si komerční banky ukládají své přebytečné peníze u ČNB na 2 týdny.")
-
-            st.markdown("##### 🎛️ Interaktivní simulátor: Změna úrokové sazby ČNB")
-            sim_repo = st.slider("2T repo sazba ČNB (%):", min_value=0.5, max_value=10.0, value=4.75, step=0.25, key="k2_1_2_repo")
-            
-            col_s1, col_s2, col_s3 = st.columns(3)
-            hypo_rate = round(sim_repo + 2.1, 2)
-            spor_rate = round(max(0.1, sim_repo - 1.5), 2)
-            
-            col_s1.metric("Odhad sazby hypotéky", f"{hypo_rate} % p.a.")
-            col_s2.metric("Odhad spořicího účtu", f"{spor_rate} % p.a.")
-            
-            if sim_repo >= 6.0:
-                col_s3.metric("Dopad na inflaci", "Zpomaluje 📉", delta="- Vysoké úroky")
-                st.warning("⚠️ **Dopad:** Hypotéky jsou velmi drahé. Lidé odkládají nákupy nemovitostí. Trh chladne, firmy méně investují.")
-            elif sim_repo <= 2.0:
-                col_s3.metric("Dopad na inflaci", "Roste 📈", delta="+ Rychlé půjčky")
-                st.info("💡 **Dopad:** Hypotéky jsou velmi levné a dostupné. Ceny nemovitostí i zboží prudce rostou, investice vzkvétají.")
-            else:
-                col_s3.metric("Dopad na inflaci", "Stabilizovaná ⚖️", delta="Neutralita")
-                st.success("✅ **Dopad:** Měnová politika je v rovnováze. Úvěry jsou dostupné a inflace se blíží cíli.")
-
-    # -------------------------------------------------------------------------
-    # 1.3 BEZPEČNÉ PLATBY (PHISHING)
-    # -------------------------------------------------------------------------
-    elif selected_section_2 == "1.3 Bezpečné platby a Phishing Trenažér":
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.3 Bezpečné platby a Phishing trenažér</h2>", unsafe_allow_html=True)
-        
-        with st.container(border=True):
+            st.markdown("### 1.3 Bezpečné platby a Phishing trenažér")
             st.warning("⚠️ **Pravidlo pro běžný život:** Karta, mobil ani hodinky nejsou peníze samy o sobě, ale klíče k tvému účtu. Banka po telefonu ani přes SMS nikdy nechce PIN ani autorizační kód!")
-            
+
             st.markdown("#### 🚨 Trenažér: Odhal podvodný e-mail (Phishing)")
             st.info("""
             **Od:** bezpecnost@bnka-podpora-klientu.cz  
             **Předmět:** ZABLOKOVANÝ ÚČET - OKAMŽITÁ AKCE!  
+            
             Vážený kliente, vaše karta byla dočasně zablokována. Pro její okamžité odblokování klikněte IHNED na odkaz níže a přihlaste se:  
             👉 [www.mojebanka-rychle-overeni.com/login](https://#)
             """)
-
+            
             col_ph1, col_ph2 = st.columns(2)
             with col_ph1:
                 ph_1 = st.checkbox("Podezřelá e-mailová adresa (překlepy, podivná doména)", key="k2_1_ph1")
@@ -370,28 +2276,26 @@ elif view == "Kapitola 2":
             with col_ph2:
                 ph_3 = st.checkbox("Extrémní tlak na čas a vyvolání strachu", key="k2_1_ph3")
                 ph_4 = st.checkbox("Odkaz, který nevede na oficiální web banky", key="k2_1_ph4")
-
+                
             if st.button("Vyhodnotit hrozbu phishingu", key="k2_1_ph_btn"):
                 if ph_1 and ph_3 and ph_4 and not ph_2:
                     st.success("Skvělá práce! Odhalil jsi přesně 3 hlavní znaky podvodu. Správná reakce je na nic neklikat a e-mail smazat.")
                 else:
                     st.error("Zkus to znovu. Najdi přesně tři znaky typické pro podvodníky z e-mailu výše.")
 
-    # -------------------------------------------------------------------------
-    # 1.4 KRYPTOMĚNY A INVESTICE
-    # -------------------------------------------------------------------------
-    elif selected_section_2 == "1.4 Kryptoměny a investiční kalkulačka":
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.4 Kryptoměny a pravidelné investování (DCA)</h2>", unsafe_allow_html=True)
-        st.write("Kryptoměny využívají **blockchain** (sdílenou účetní knihu). Jsou vysoce rizikové a jejich cena výrazně kolísá.")
-
+        # 1.4 Kryptoměny a investiční kalkulačka
         with st.container(border=True):
+            st.markdown("### 1.4 Kryptoměny a pravidelné investování (DCA)")
+            st.write("Kryptoměny využívají **blockchain** (sdílenou účetní knihu). Jsou vysoce rizikové a jejich cena výrazně kolísá.")
+
             col_inv1, col_inv2 = st.columns(2)
             with col_inv1:
                 vklad_start = st.slider("Počáteční vklad (Kč):", 0, 50000, 1000, step=500, key="k2_1_vstart")
                 vklad_mesic = st.slider("Měsíční vklad (Kč):", 100, 10000, 200, step=100, key="k2_1_vmesic")
                 roky = st.slider("Doba investování (roky):", 1, 10, 5, key="k2_1_vroky")
-                celkem_vlozeno = vklad_start + (vklad_mesic * 12 * roky)
-
+            
+            celkem_vlozeno = vklad_start + (vklad_mesic * 12 * roky)
+            
             def spocitej_zhodnoceni(vklad_s, vklad_m, r, urok_rocne):
                 mesicni_urok = urok_rocne / 12
                 zustatek = vklad_s
@@ -408,7 +2312,7 @@ elif view == "Kapitola 2":
                     "Silně růstový trh (+15 % ročně) 🚀",
                     "Extrémní krypto růst (+30 % ročně) 🔥"
                 ], key="k2_1_scenar")
-
+                
                 if "Pesimistický" in scenar:
                     vysledek = spocitej_zhodnoceni(vklad_start, vklad_mesic, roky, -0.20)
                 elif "Nulový" in scenar:
@@ -422,15 +2326,17 @@ elif view == "Kapitola 2":
                 
                 rozdil = vysledek - celkem_vlozeno
                 st.metric("Orientační hodnota na konci:", f"{vysledek:,.0f} Kč".replace(",", " "), delta=f"{rozdil:,.0f} Kč zisk/ztráta")
+            
+            st.markdown("---")
+            st.markdown("#### 🧩 Závěrečná výzva: Role v investování")
+            st.text_area("Představ si, že jsi vyhrál 20 000 Kč. Jak bys tyto peníze rozdělil mezi spořicí účet (jistota) a kryptoměny (riziko)? Napiš proč:", key="k2_1_rozdeleni")
 
-
-# ==========================================
-# OSTATNÍ KAPITOLY
-# ==========================================
-elif view in ["Kapitola 3", "Kapitola 4", "Kapitola 5", "Kapitola 6"]:
-    st.title(view)
-    st.write("Tato sekce je připravena pro budoucí obsah.")
-
+        with st.container(border=True):
+            st.markdown("""
+            <div class='box-green'>
+                <strong>✅ Co si z této podkapitoly odnést:</strong> Kryptoměny nejsou jen „internetové peníze“. Jsou kombinací úžasné technologie (blockchain), tržní ceny a vysokého rizika. Ukazují budoucnost financí, ale neměly by nahrazovat tvou základní finanční rezervu v klasické bance.
+            </div>
+            """, unsafe_allow_html=True)
 # ==========================================
 # POKROKY A UČITEL
 # ==========================================
@@ -438,10 +2344,28 @@ elif view == "Pokroky":
     st.markdown("<span class='hero-badge'>Studentská zóna</span>", unsafe_allow_html=True)
     st.title("Moje pokroky")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Přehled dokončených kapitol a úkolů.</p>", unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        with st.container(border=True): st.metric(label="Dokončené kapitoly", value="2 / 6", delta="33 %")
+    with c2:
+        with st.container(border=True): st.metric(label="Test právní formy", value="Hotovo", delta="OSVČ vs s.r.o.")
+    with c3:
+        with st.container(border=True): st.metric(label="Aktivní kalkulace", value="Bod zvratu", delta="Dokončeno")
 
 elif view == "Ucitel":
     st.markdown("<span class='hero-badge'>Metodik & Dashboard</span>", unsafe_allow_html=True)
     st.title("Učitelská základna")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Metodické pokyny a sledování práce jednotlivých žáků podle tříd.</p>", unsafe_allow_html=True)
-
-
+    tab_prehled, tab_metodika = st.tabs(["Přehled žáků a tříd", "Metodické plány do hodin"])
+    with tab_prehled:
+        with st.container(border=True):
+            col_treda, col_zak = st.columns(2)
+            with col_treda: selected_class = st.selectbox("Vyberte třídu:", ["3.A", "3.B", "4.A"])
+            with col_zak: selected_student = st.selectbox("Vyberte žáka:", ["Jan Novák", "Ema Dvořáková"])
+            st.divider()
+            st.subheader(f"Karta žáka: {selected_student}")
+            st.markdown("**Vyplněné úkoly (KAP 1 a 2):**\n- Podnikatelský záměr\n- Výpočet hodinové sazby OSVČ\n- Bod zvratu")
+    with tab_metodika:
+        with st.container(border=True):
+            st.write("1. Analýza firem v rejstříku (Justice.cz)")
+            st.write("2. Skupinová práce na výpočtu Cashflow modelové firmy.")
