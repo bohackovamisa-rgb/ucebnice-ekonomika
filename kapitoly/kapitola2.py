@@ -41,7 +41,7 @@ def render():
         "3.7 Ochrana spotřebitele a investiční reklama",
         "3.8 Interaktivní aktivity a cvičebnice",
         "3.9 Shrnutí: Co si z finančního trhu odnést",
-        "3.10 Právní a etický disclaimer"
+        "3.10 Právní a etický disclaimer",
 
         # Sekce 4: Úvěry, pojištění a ochrana majetku
         "4.1 Co je úvěr",
