@@ -1682,8 +1682,10 @@ def render():
         
         st.info("🧠 **Finanční trh není kasino** — ale může se tak chovat, pokud člověk neví, co dělá. Rozdíl mezi odpovědným investováním a hazardem není jen v produktu, ale hlavně v informovanosti, riziku, časovém horizontu a chování člověka.")
 
+        # 3.1.1
         with st.container(border=True):
             st.markdown("### 3.1.1 Hlavní funkce finančního trhu")
+            st.write("Finanční trh má několik důležitých funkcí:")
             st.markdown("""
             | Funkce | Co znamená | Příklad |
             | :--- | :--- | :--- |
@@ -1694,62 +1696,221 @@ def render():
             | **Likvidita** | Některá aktiva lze rychleji prodat a proměnit zpět na peníze. | Akcii velké firmy lze často prodat rychleji než nemovitost. |
             """)
 
+        # 3.1.2
         with st.container(border=True):
             st.markdown("### 3.1.2 Primární a sekundární trh")
+            st.write("Finanční trh se často dělí na primární a sekundární.")
             st.markdown("""
             | Typ trhu | Co se děje | Příklad |
             | :--- | :--- | :--- |
             | **Primární trh** | Cenný papír se prodává poprvé. Peníze získává emitent — tedy ten, kdo cenný papír vydává. | Firma vydá nové akcie nebo stát vydá nový dluhopis. |
             | **Sekundární trh** | Investoři obchodují mezi sebou už dříve vydané cenné papíry. | Investor prodá akcii jiné osobě přes burzu. |
             """)
-            st.write("**Příklad ze života:** Když si koupíš nově vydaný státní dluhopis přímo při emisi, jde o primární trh. Když později koupíš akcii od jiného investora přes burzu, firma už peníze z této konkrétní koupě nedostává — jde o sekundární trh.")
+            st.write("**Příklad ze života**")
+            st.write("Když si koupíš nově vydaný státní dluhopis přímo při emisi, jde o primární trh. Když později koupíš akcii od jiného investora přes burzu, firma už peníze z této konkrétní koupě nedostává — jde o sekundární trh.")
 
+        # 3.1.3
         with st.container(border=True):
-            st.markdown("### 3.1.3 a 3.1.4 Burza, broker a investiční platforma")
-            st.write("**Burza** je organizovaný a regulovaný trh, kde se podle jasných pravidel obchoduje s investičními nástroji. Dnes je většina obchodování elektronická.")
+            st.markdown("### 3.1.3 Burza, broker a investiční platforma")
+            st.write("**Burza** je organizovaný trh, kde se obchoduje podle pravidel. Neznamená to nutně hlučný sál s lidmi v oblecích. Dnes velká část obchodování probíhá elektronicky.")
             st.write("**Broker** je zprostředkovatel, přes kterého může investor nakupovat a prodávat investiční nástroje.")
             st.write("**Investiční aplikace** je uživatelské rozhraní, které může působit jednoduše jako e-shop. Právě proto je nutné zpomalit: to, že investici koupíš jedním klikem, neznamená, že jí rozumíš.")
-            
-            st.warning("📱 **Moderní riziko:** Investiční aplikace umí vytvořit pocit hry. Grafy, notifikace, zelená čísla a rychlé nákupy mohou člověka tlačit k impulzivnímu obchodování.")
+            st.warning("📱 **Moderní riziko:** Investiční aplikace umí vytvořit pocit hry. Grafy, notifikace, zelená čísla a rychlé nákupy mohou člověka tlačit k impulzivnímu obchodování. Finanční gramotnost dnes znamená umět poznat, kdy aplikace pomáhá — a kdy manipuluje chováním.")
 
+        # 3.1.4
+        with st.container(border=True):
+            st.markdown("### 3.1.4 Burza: organizované tržiště pro cenné papíry")
+            st.write("Burza je organizovaný a regulovaný trh, kde se podle jasných pravidel obchoduje s investičními nástroji — nejčastěji s akciemi, dluhopisy, ETF, deriváty nebo komoditními nástroji. Burzu si mnoho lidí představuje jako hlučný sál plný makléřů, kteří křičí a mávají papíry. Tak to historicky opravdu někde vypadalo. Dnes je ale většina obchodování elektronická: objednávky se zadávají přes obchodní systémy, párují se automaticky a vypořádávají se přes specializované instituce.")
+            st.info("🏛️ **Burza jednoduše:** Burza je jako přísně hlídané digitální tržiště. Neprodává se tam ovoce nebo oblečení, ale cenné papíry a další finanční nástroje. Aby obchodování fungovalo, musí mít pravidla, dohled, evidenci a systém, který určuje, kdo co koupil, za kolik a kdy se obchod vypořádá.")
+            st.write("**Burza plní několik důležitých funkcí:**")
+            st.markdown("""
+            * umožňuje obchodování — investoři mohou nakupovat a prodávat cenné papíry,
+            * pomáhá tvořit cenu — cena vzniká střetem nabídky a poptávky,
+            * zvyšuje likviditu — investor má větší šanci najít kupce nebo prodávajícího,
+            * zvyšuje transparentnost — u regulovaných trhů jsou pravidla, zveřejňování informací a dohled,
+            * umožňuje firmám získat kapitál — například při vstupu na burzu nebo vydání dluhopisů,
+            * poskytuje signál o důvěře trhu — vývoj cen může ukazovat očekávání investorů.
+            """)
+
+        # 3.1.5
         with st.container(border=True):
             st.markdown("### 3.1.5 Jak burza funguje krok za krokem")
+            st.write("Když investor koupí akcii přes aplikaci, na obrazovce to vypadá jako jednoduché kliknutí. Ve skutečnosti za tím stojí celý řetězec institucí a pravidel.")
+            st.write("**Zjednodušený průběh obchodu:**")
             st.markdown("""
             1. Investor zadá pokyn k nákupu nebo prodeji u brokera.
-            2. Broker pokyn odešle na příslušný trh.
-            3. Obchodní systém hledá protistranu.
+            2. Broker pokyn odešle na příslušný trh nebo obchodní místo.
+            3. Obchodní systém hledá protistranu — někoho, kdo chce prodat nebo koupit za odpovídající cenu.
             4. Pokud se pokyny potkají, obchod se uzavře.
             5. Následuje vypořádání — převedou se peníze a cenné papíry.
+            6. Investor vidí cenný papír na svém účtu a peníze se odečtou nebo připíšou.
             """)
-            st.write("**Základní pojmy ceny:** nákupní cena (bid), prodejní cena (ask), spread, objem obchodů, likvidita, vypořádání.")
+            st.write("**Nabídka, poptávka a cena**")
+            st.write("Cena na burze nevzniká tak, že ji někdo „od stolu“ vyhlásí jako cenu rohlíku v obchodě. Vzniká tím, že se potkávají kupující a prodávající. Pokud chce hodně lidí akcii koupit a málo lidí ji prodává, cena může růst. Pokud mnoho investorů prodává a málo kupuje, cena může klesat.")
+            st.write("**Základní pojmy:**")
+            st.markdown("""
+            * **nákupní cena / bid** — cena, za kterou jsou kupující ochotni nakupovat,
+            * **prodejní cena / ask** — cena, za kterou jsou prodávající ochotni prodávat,
+            * **spread** — rozdíl mezi nákupní a prodejní cenou,
+            * **objem obchodů** — kolik kusů nebo jaká hodnota se zobchodovala,
+            * **likvidita** — jak snadno lze instrument koupit nebo prodat bez velkého pohybu ceny,
+            * **vypořádání** — technické dokončení obchodu, tedy převod peněz a cenných papírů.
+            """)
 
+        # 3.1.6
         with st.container(border=True):
-            st.markdown("### 3.1.8 - 3.1.10 České a světové burzy")
-            st.write("**Burza cenných papírů Praha (BCPP):** Hlavní regulovaný akciový trh v ČR. Trhy: Prime, Standard, Free, START.")
-            st.write("**RM-SYSTÉM:** Český trh dostupný i občanům, historicky spojený s kupónovou privatizací.")
-            
+            st.markdown("### 3.1.6 Může na burze obchodovat každý?")
+            st.write("Běžný občan většinou neobchoduje přímo na burze jako člen burzy. Obchoduje přes zprostředkovatele — například banku, obchodníka s cennými papíry nebo brokera. Tito zprostředkovatelé mají technický a právní přístup na trh nebo využívají další napojené instituce.")
+            st.info("🚪 **Důležité rozlišení:** Občan může investovat do cenných papírů obchodovaných na burze, ale obvykle nevstupuje přímo do burzovního systému. Používá brokera, podobně jako cestující používá dopravce, neřídí celé nádraží.")
+            st.write("**Co potřebuje běžný investor:**")
+            st.markdown("""
+            * vybrat regulovaného brokera, banku nebo obchodníka s cennými papíry,
+            * ověřit totožnost,
+            * vyplnit investiční dotazník,
+            * poslat peníze na investiční účet,
+            * rozumět poplatkům, měně, riziku a daňovým dopadům,
+            * zadávat pokyny k nákupu nebo prodeji.
+            """)
+            st.write("**Kdo může obchodovat přímo jako člen burzy:**")
+            st.markdown("""
+            * banky,
+            * obchodníci s cennými papíry,
+            * specializované finanční instituce,
+            * členové burzy splňující pravidla daného trhu.
+            """)
+
+        # 3.1.7
+        with st.container(border=True):
+            st.markdown("### 3.1.7 Kdo burzu spravuje a kdo na ni dohlíží")
+            st.write("Burza není chaotická skupina investorů. Má provozovatele, pravidla, členy, dohled a technickou infrastrukturu.")
+            st.write("**Na fungování burzy se podílí:**")
+            st.markdown("""
+            * **provozovatel burzy** — organizuje trh a nastavuje pravidla obchodování,
+            * **členové burzy** — instituce oprávněné přímo obchodovat,
+            * **emitenti** — firmy, státy nebo instituce, jejichž cenné papíry se obchodují,
+            * **investoři** — domácnosti, firmy, fondy, banky, pojišťovny a další,
+            * **clearingové a vypořádací instituce** — zajišťují dokončení obchodů,
+            * **centrální depozitář** — vede evidenci zaknihovaných cenných papírů,
+            * **regulátor** — dohlíží, zda trh dodržuje pravidla a chrání investory.
+            """)
+            st.write("V České republice hraje významnou roli Česká národní banka, která vykonává dohled nad finančním trhem. To neznamená, že ČNB určuje, za kolik má stát konkrétní akcie. Znamená to, že dohlíží na pravidla, instituce, ochranu trhu a férové fungování finančního systému.")
+
+        # 3.1.8
+        with st.container(border=True):
+            st.markdown("### 3.1.8 Burza cenných papírů Praha")
+            st.write("Burza cenných papírů Praha, zkráceně BCPP, je hlavní regulovaný akciový trh v České republice. Obchodují se zde například akcie významných českých nebo ve střední Evropě působících společností, dluhopisy a další investiční nástroje.")
+            st.info("🇨🇿 **BCPP jednoduše:** Pražská burza je hlavní české organizované místo pro obchodování s cennými papíry. Pro české studenty je důležitá proto, že ukazuje, že kapitálový trh není jen Wall Street, ale existuje i v českém prostředí.")
+            st.write("**Na pražské burze se lze setkat například s těmito pojmy:**")
+            st.markdown("""
+            * **Prime Market** — trh pro největší a nejvýznamnější emise,
+            * **Standard Market** — trh pro další obchodované cenné papíry,
+            * **Free Market** — trh s jednoduššími pravidly přijetí,
+            * **START Market** — trh zaměřený na menší a střední firmy, které chtějí získat kapitál.
+            """)
+            st.write("**Pro firmy může být vstup na burzu způsobem, jak:**")
+            st.markdown("""
+            * získat kapitál na růst,
+            * zvýšit důvěryhodnost a viditelnost,
+            * umožnit investorům obchodovat s jejich akciemi,
+            * vytvořit tržní ocenění firmy,
+            * nabídnout akcie investorům nebo zaměstnancům.
+            """)
+            st.write("Pro investory burza znamená možnost koupit nebo prodat cenné papíry za tržní cenu. Zároveň ale platí, že i akcie známé firmy může klesnout. Známé jméno firmy není záruka výnosu.")
+
+        # 3.1.9
+        with st.container(border=True):
+            st.markdown("### 3.1.9 RM-SYSTÉM: český trh dostupný i občanům")
+            st.write("V českém prostředí existuje také RM-SYSTÉM, česká burza cenných papírů. Historicky navazuje na období kupónové privatizace a dlouhou dobu byl spojován s možností obchodování pro širší veřejnost. Dnes už nepůsobí tak moderně nebo mediálně výrazně jako velké investiční aplikace, ale stále jde o existující organizovaný trh, na kterém lze obchodovat vybrané cenné papíry.")
+            st.info("🇨🇿 **Proč RM-SYSTÉM zmínit:** Ukazuje, že český kapitálový trh nemá jen pražskou burzu. RM-SYSTÉM je důležitý i historicky, protože byl spojen s přístupem drobných investorů k obchodování s českými akciemi.")
+            st.write("**Jak RM-SYSTÉM funguje zjednodušeně:**")
+            st.markdown("""
+            * je to český trh pro obchodování s vybranými cennými papíry,
+            * investor může obchodovat prostřednictvím oprávněného obchodníka nebo napojené služby,
+            * obchoduje se elektronicky,
+            * nabídka instrumentů je omezenější než na největších světových burzách,
+            * pro běžného občana může být srozumitelnější tím, že je zaměřen na české prostředí,
+            * i zde platí rizika investování, poplatky, kolísání cen a nutnost rozumět tomu, co člověk kupuje.
+            """)
+            st.warning("⚠️ **Pozor:** To, že je trh dostupný občanům, neznamená, že je bez rizika. Přístupnost není totéž co bezpečnost. I na českém trhu může investor prodělat, pokud kupuje bez znalostí, podle emocí nebo bez diverzifikace.")
+
+        # 3.1.10
+        with st.container(border=True):
+            st.markdown("### 3.1.10 Nejznámější světové burzy")
+            st.write("Světové burzy propojují firmy a investory v globálním měřítku. Některé jsou známé hlavně akciemi technologických firem, jiné širokým spektrem společností, jiné komoditami nebo deriváty.")
             st.markdown("""
             | Burza | Země / město | Čím je známá |
             | :--- | :--- | :--- |
-            | **NYSE** | USA, New York | Jedna z největších, velké tradiční firmy. |
-            | **Nasdaq** | USA | Silně spojený s technologickými firmami. |
-            | **London Stock Exchange** | Velká Británie | Významné globální centrum. |
-            | **Deutsche Börse** | Německo, Frankfurt | Významný evropský trh (index DAX). |
+            | **New York Stock Exchange / NYSE** | USA, New York | Jedna z největších světových burz, obchodují se zde akcie mnoha velkých tradičních firem. |
+            | **Nasdaq** | USA | Silně spojený s technologickými firmami a elektronickým obchodováním. |
+            | **London Stock Exchange / LSE** | Velká Británie, Londýn | Významné evropské a globální finanční centrum. |
+            | **Tokyo Stock Exchange / TSE** | Japonsko, Tokio | Hlavní japonská burza a jedna z největších burz v Asii. |
+            | **Shanghai Stock Exchange** | Čína, Šanghaj | Významný čínský akciový trh. |
+            | **Hong Kong Stock Exchange** | Hongkong | Důležité propojení čínského a mezinárodního kapitálu. |
+            | **Euronext** | Evropa | Propojuje více evropských trhů, například Paříž, Amsterdam, Brusel nebo Lisabon. |
+            | **Deutsche Börse / Frankfurt Stock Exchange** | Německo, Frankfurt | Významný evropský trh, spojovaný například s indexem DAX. |
             """)
+            st.write("**Proč se burzy liší?**")
+            st.write("Burzy se liší velikostí, pravidly, typem obchodovaných firem, měnou, časovým pásmem, poplatky, likviditou a regulací. Pro investora je důležité vědět, že nákup americké akcie přes českou aplikaci znamená také měnové riziko, jiné obchodní hodiny a odlišné daňové nebo informační prostředí.")
 
+        # 3.1.11
         with st.container(border=True):
             st.markdown("### 3.1.11 Burzovní indexy: teploměr trhu")
-            st.write("Index sleduje vybranou skupinu akcií a ukazuje jejich souhrnný vývoj. Index neříká, že všechny firmy rostou stejně, ukazuje průměrný vývoj.")
-            st.write("Příklady: **PX** (Praha), **S&P 500** (USA), **Nasdaq Composite** (technologie), **DAX** (Německo).")
+            st.write("Když média říkají, že „americký trh roste“ nebo „pražská burza klesla“, často tím nemyslí každou jednu akcii. Mluví o burzovním indexu. Index sleduje vybranou skupinu akcií a ukazuje jejich souhrnný vývoj.")
+            st.write("**Příklady indexů:**")
+            st.markdown("""
+            * **PX** — index pražské burzy,
+            * **S&P 500** — sleduje velké americké společnosti,
+            * **Nasdaq Composite** — silně zastoupené technologické firmy,
+            * **Dow Jones Industrial Average** — známý americký index velkých firem,
+            * **DAX** — významný německý akciový index,
+            * **FTSE 100** — významný britský index,
+            * **Nikkei 225** — známý japonský index.
+            """)
+            st.info("🌡️ **Index jako teploměr:** Index neříká, že všechny firmy rostou nebo klesají stejně. Ukazuje průměrný nebo vážený vývoj vybrané skupiny firem. Je to orientační měřítko nálady a vývoje trhu.")
 
-        # Interaktivní aktivita
+        # 3.1.12
+        with st.container(border=True):
+            st.markdown("### 3.1.12 Kdo na burze obchoduje")
+            st.write("Na burze se potkávají různé typy účastníků:")
+            st.markdown("""
+            | Účastník | Co dělá | Příklad motivace |
+            | :--- | :--- | :--- |
+            | **Drobný investor** | Nakupuje menší objemy přes brokera nebo banku. | Dlouhodobé investování, dividenda, růst hodnoty. |
+            | **Trader** | Obchoduje aktivněji a snaží se využít pohyb cen. | Krátkodobý zisk, vyšší riziko. |
+            | **Investiční fond** | Spravuje peníze mnoha investorů. | Diverzifikované portfolio podle strategie. |
+            | **Penzijní fond** | Spravuje peníze na dlouhodobé zabezpečení klientů. | Dlouhý horizont a řízení rizika. |
+            | **Banka** | Obchoduje pro klienty nebo v rámci vlastního řízení rizik. | Likvidita, zajištění, investiční služby. |
+            | **Firma / emitent** | Vydává akcie nebo dluhopisy, komunikuje s investory. | Získání kapitálu, důvěryhodnost, růst. |
+            | **Market maker** | Pomáhá zajišťovat likviditu tím, že nabízí nákupní i prodejní ceny. | Vydělává na rozdílu cen a službě trhu. |
+            """)
+
+        # 3.1.13
+        with st.container(border=True):
+            st.markdown("### 3.1.13 Proč burza není totéž co kasino")
+            st.write("Na burze může člověk spekulovat a chovat se podobně jako hazardní hráč. Burza sama o sobě ale není kasino. Rozdíl je v tom, že cenné papíry často představují reálná práva: podíl ve firmě, pohledávku za emitentem nebo podíl ve fondu. Problém nastává, když člověk nakupuje bez porozumění, podle emocí, podle videí na sociálních sítích nebo s penězi, které si nemůže dovolit ztratit.")
+            st.info("🧠 **Zralé investiční chování:** Rozumím, co kupuji. Vím, proč to kupuji. Znám riziko. Nesázím všechno na jednu kartu. Nepanikařím při každém poklesu. Nepletu si investování se zábavní aplikací.")
+
+        # Aktivita
         with st.container(border=True):
             st.markdown("#### 🎮 Aktivita: Staň se burzovním reportérem")
-            rep_market = st.selectbox("Vyber burzu/index pro report:", ["BCPP (Praha)", "NYSE (New York)", "Nasdaq (USA)", "DAX (Německo)"], key="k3_rep1")
-            rep_firma = st.text_input("Zadej známou firmu nebo cenný papír:", value="ČEZ / Apple / SAP", key="k3_rep2")
+            st.write("Vyber jednu burzu nebo index: BCPP, RM-SYSTÉM, NYSE, Nasdaq, DAX, S&P 500 nebo PX.")
+            st.write("**Zjisti a vysvětli:**")
+            st.markdown("""
+            * V jaké zemi nebo městě trh působí?
+            * Co se na něm obchoduje?
+            * Kdo na něm může obchodovat přímo a kdo přes brokera?
+            * Jaký index se s ním spojuje?
+            * Jaká firma nebo cenný papír je pro něj typický?
+            * Jaké riziko by měl znát běžný investor?
+            """)
             
-            if st.button("Vygenerovat zprávu podcastu", key="k3_rep_btn"):
-                st.success(f"🎙️ **Zpráva z trhu:** „Dobrý den, hlásíme se z trhu {rep_market}. Pozornost investorů se dnes upírá k titulu {rep_firma}. Nezapomínejte však, že trhy kolísají a každá investice nese riziko. Zpět do studia!“")
+            rep_market = st.selectbox("Vyber burzu/index pro report:", ["BCPP", "RM-SYSTÉM", "NYSE", "Nasdaq", "DAX", "S&P 500", "PX"], key="k3_rep_mkt")
+            rep_firma = st.text_input("Zadej typickou firmu / cenný papír pro report:", value="ČEZ", key="k3_rep_firm")
+            rep_riziko = st.text_input("Hlavní riziko pro běžného investora:", value="Tržní propad a volatilita", key="k3_rep_riziko")
+            
+            if st.button("Vygenerovat výstup reportéra", key="k3_rep_btn"):
+                st.success(f"🎙️ **Zpráva z trhu {rep_market}:** „Dobrý den, hlásíme se ze světa financí! Dnes se pozornost investorů zaměřila na {rep_firma}. Nezapomínejme ale na klíčová rizika, mezi kterými dominuje {rep_riziko}. Investujte opatrně, přejeme vám úspěšný den a vracíme slovo do studia!“")
+            st.caption("Výstup: Krátká zpráva ve stylu ekonomického podcastu pro spolužáky.")
 
     # =========================================================================
     # 3.2 VÝNOS, RIZIKO, LIKVIDITA A ČASOVÝ HORIZONT
