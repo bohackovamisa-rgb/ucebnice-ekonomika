@@ -13,12 +13,15 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # 📌 AKTUALIZOVANÁ NABÍDKA SEZNAMU PODKAPITOL
+    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL (1.1 AŽ 3.10)
     section_options_2 = [
+        # Sekce 1: Bankovní systém
         "1.1 Peníze jako digitální data",
         "1.2 ČNB a komerční banky",
         "1.3 Platební styk",
         "1.4 Fintech revoluce",
+        
+        # Sekce 2: Osobní finance
         "2.1 Osobní finance v 21. století",
         "2.2 Rozpočet: mapa peněz",
         "2.3 Algoritmy bohatství",
@@ -26,10 +29,25 @@ def render():
         "2.5 Finanční rezerva",
         "2.6 Psychologie utrácení",
         "2.7 Kalkulačka času nákupu",
-        "2.8 Osobní finanční audit"
+        "2.8 Osobní finanční audit",
+        
+        # Sekce 3: Finanční trh
+        "3.1 Co je to finanční trh a burza",
+        "3.2 Výnos, riziko, likvidita a časový horizont",
+        "3.3 Spoření, investování a spekulace",
+        "3.4 Cenné papíry v teorii i praxi",
+        "3.5 Analýza dat a Školní investiční simulátor",
+        "3.6 Kryptoměny: technologie, spekulace a riziko",
+        "3.7 Ochrana spotřebitele a investiční reklama",
+        "3.8 Interaktivní aktivity a cvičebnice",
+        "3.9 Shrnutí: Co si z finančního trhu odnést",
+        "3.10 Právní a etický disclaimer"
     ]
+    
     selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
     st.divider()
+
+    # Následuje blok podmínek: if "1.1 Peníze" in selected_section_2: ...
 
     # =========================================================================
     # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA
