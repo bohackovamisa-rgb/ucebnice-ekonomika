@@ -4328,7 +4328,7 @@ def render():
 # =========================================================================
     # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
     # =========================================================================
-    elif selected_section_2.startswith("5.3 "):
+    elif selected_section_2.startswith("5.3"):
         st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
         st.markdown("## 5.3 Náklady, výnosy a bod zvratu")
         
