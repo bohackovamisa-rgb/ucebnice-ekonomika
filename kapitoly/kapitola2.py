@@ -1200,9 +1200,9 @@ def render():
 
             st.text_area("Vaše argumenty a příklad z běžného života:", key="k2_deb_text")
 # =========================================================================
-    # 2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“
+    # 2.1 OSOBNÍ FINANCE V 21. STOLETÍ
     # =========================================================================
-    elif "2. Osobní finance" in selected_section_2 or "2.1" in selected_section_2:
+    elif "2.1 Osobní finance" in selected_section_2:
         st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.1 Osobní finance v 21. století: proč je to těžší, než se zdá</h2>", unsafe_allow_html=True)
         st.write("Osobní finance nejsou jen otázka toho, kolik člověk vydělává. Jsou to každodenní rozhodnutí: za co utratím peníze, co odložím, co si půjčím, jak poznám riziko a jak se nenechám řídit reklamou, tlakem okolí nebo algoritmem v aplikaci.")
 
@@ -1227,7 +1227,7 @@ def render():
         with st.container(border=True):
             st.markdown("""
             <div class='box-red'>
-                ⚠️ <strong>Současný problém:</strong> Mnoho lidí nemá problém jen s nedostatkem informací, ale s prostředím, které podporuje okamžité rozhodování. Telefon umožňuje nakoupit, objednat, investovat nebo půjčit si během několika sekund. Finanční chyba tak může vzniknout rychleji než dřív.
+                ⚠️ <strong>Současný problém:</strong> Mnoho lidí nemá problém jen s nedostatkem informací, ale s prostředím, které podporuje okamžité rozhodování. Telefon umožňuje nakoupit, objednat, investovat nebo půjčit si během několika sekund. Finančníchyba tak může vzniknout rychleji než dřív.
             </div>
             """, unsafe_allow_html=True)
 
@@ -1265,17 +1265,22 @@ def render():
                 else:
                     st.error("Některé položky jsou zařazeny špatně. Potřeba je nutná k přežití a fungování, přání zvyšuje komfort.")
 
-        # 2.2 Rozpočet: mapa peněz
-        with st.container(border=True):
-            st.markdown("## 2.2 Rozpočet: mapa peněz")
-            st.write("Rozpočet ukazuje, odkud peníze přicházejí a kam odcházejí. Bez rozpočtu člověk často neví, jestli má problém s nízkými příjmy, vysokými výdaji, impulzivním utrácením, dluhy nebo chybějící rezervou.")
+    # =========================================================================
+    # 2.2 ROZPOČET: MAPA PENĚZ
+    # =========================================================================
+    elif "2.2 Rozpočet" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.2 Rozpočet: mapa peněz</h2>", unsafe_allow_html=True)
+        st.write("Rozpočet ukazuje, odkud peníze přicházejí a kam odcházejí. Bez rozpočtu člověk často neví, jestli má problém s nízkými příjmy, vysokými výdaji, impulzivním utrácením, dluhy nebo chybějící rezervou.")
 
+        with st.container(border=True):
             st.markdown("""
             <div class='box-blue'>
                 🧭 <strong>Jednoduše řečeno:</strong> Rozpočet není trest ani omezování života. Je to mapa. Pomáhá zjistit, jestli peníze směřují k tomu, co je pro člověka opravdu důležité.
             </div>
             """, unsafe_allow_html=True)
 
+        # 2.2.1 Příjmy
+        with st.container(border=True):
             st.markdown("### 2.2.1 Příjmy")
             st.write("Příjmy jsou peníze, které člověk získává. Mohou být pravidelné nebo nepravidelné.")
 
@@ -1287,6 +1292,8 @@ def render():
             | **Pasivnější příjem** | úrok, dividenda, příjem z pronájmu | Většinou vyžaduje kapitál, čas nebo riziko. |
             """)
 
+        # 2.2.2 Výdaje
+        with st.container(border=True):
             st.markdown("### 2.2.2 Výdaje")
             st.write("Výdaje je vhodné rozdělit podle toho, jak snadno je lze změnit.")
 
@@ -1302,6 +1309,8 @@ def render():
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Projdi si posledních 10 plateb v mobilním bankovnictví. Rozděl je na potřeby, přání a skryté nebo automatické výdaje.</div>", unsafe_allow_html=True)
             st.text_area("Zapiš svou analýzu posledních 10 plateb:", key="k2_last_10_payments")
 
+        # 2.2.3 Pravidlo 50-30-20
+        with st.container(border=True):
             st.markdown("### 2.2.3 Jednoduché pravidlo pro rozpočet (50–30–20)")
             st.write("Jedním z možných pravidel je model **50–30–20**:")
             st.markdown("""
@@ -1328,11 +1337,14 @@ def render():
             col_b2.metric("Přání (30 %)", f"{c_wants:,.0f} Kč".replace(",", " "))
             col_b3.metric("Rezerva / Úspory (20 %)", f"{c_saves:,.0f} Kč".replace(",", " "))
 
-        # 2.3 Algoritmy bohatství
-        with st.container(border=True):
-            st.markdown("## 2.3 Algoritmy bohatství: malé návyky, velký rozdíl")
-            st.write("Slovo „algoritmus“ tu neznamená počítačový program. Znamená opakovatelný postup, který člověku pomáhá rozhodovat se lépe. Bohatství nevzniká jen jedním velkým rozhodnutím. Často vzniká z malých pravidelných kroků, které se opakují dlouhou dobu.")
+    # =========================================================================
+    # 2.3 ALGORITMY BOHATSTVÍ
+    # =========================================================================
+    elif "2.3 Algoritmy" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.3 Algoritmy bohatství: malé návyky, velký rozdíl</h2>", unsafe_allow_html=True)
+        st.write("Slovo „algoritmus“ tu neznamená počítačový program. Znamená opakovatelný postup, který člověku pomáhá rozhodovat se lépe. Bohatství nevzniká jen jedním velkým rozhodnutím. Často vzniká z malých pravidelných kroků, které se opakují dlouhou dobu.")
 
+        with st.container(border=True):
             st.markdown("""
             <div class='box-blue'>
                 🔁 <strong>Algoritmus finanční stability:</strong><br>
@@ -1344,6 +1356,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
+        with st.container(border=True):
             st.markdown("### 2.3.1 Zaplať nejdřív sobě")
             st.write("Princip „zaplať nejdřív sobě“ znamená, že člověk nečeká, jestli mu na konci měsíce něco zbyde. Část peněz si odloží hned po přijetí příjmu.")
             st.write("Příklad:")
@@ -1354,6 +1367,7 @@ def render():
             """)
             st.write("**Proč to funguje?** Když člověk čeká, co zbyde, často nezbyde nic. Digitální platby, drobné nákupy, jídlo venku, doprava, předplatná a impulzivní objednávky peníze postupně „rozpustí“. Automatické odložení peněz snižuje závislost na vůli.")
 
+        with st.container(border=True):
             st.markdown("### 2.3.2 Automatizace pomáhá, ale musí být pod kontrolou")
             st.write("Automatické platby mohou být užitečné: pomáhají platit včas, odkládat rezervu nebo pravidelně spořit. Zároveň ale mohou vytvářet výdaje, kterých si člověk nevšímá.")
 
@@ -1364,11 +1378,15 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        # 2.4 Matematika peněz: čas, úrok a inflace
-        with st.container(border=True):
-            st.markdown("## 2.4 Matematika peněz: čas, úrok a inflace")
-            st.write("Peníze mají časovou hodnotu. Stokoruna dnes nemá stejnou hodnotu jako stokoruna za deset let, protože ceny se mění a peníze mohou nést úrok nebo výnos.")
+    # =========================================================================
+    # 2.4 MATEMATIKA PENĚZ
+    # =========================================================================
+    elif "2.4 Matematika" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.4 Matematika peněz: čas, úrok a inflace</h2>", unsafe_allow_html=True)
+        st.write("Peníze mají časovou hodnotu. Stokoruna dnes nemá stejnou hodnotu jako stokoruna za deset let, protože ceny se mění a peníze mohou nést úrok nebo výnos.")
 
+        # 2.4.1 Jednoduché úročení
+        with st.container(border=True):
             st.markdown("### 2.4.1 Jednoduché úročení")
             st.write("Jednoduché úročení znamená, že se úrok počítá stále jen z původně vložené nebo půjčené částky. Úroky se v dalších obdobích nepřičítají k základu pro další úročení.")
 
@@ -1386,6 +1404,8 @@ def render():
             st.write("**Příklad jednoduchého úročení:** Vložíš 10 000 Kč na 3 roky s roční úrokovou sazbou 5 %. Úrok se počítá pořád jen z původních 10 000 Kč.")
             st.write("Výpočet: $K = 10\\ 000 \\times (1 + 0{,}05 \\times 3) = 10\\ 000 \\times 1{,}15 = 11\\ 500\\ \\text{Kč}$. Za 3 roky získáš úrok 1 500 Kč.")
 
+        # 2.4.2 Složené úročení
+        with st.container(border=True):
             st.markdown("### 2.4.2 Složené úročení")
             st.write("Složené úročení znamená, že se úročí nejen původní částka, ale postupně i již připsané úroky nebo výnosy. Peníze tedy mohou vydělávat další peníze.")
 
@@ -1429,14 +1449,8 @@ def render():
             c_u_res2.metric("Složené úročení", f"{res_slozene:,.2f} Kč".replace(",", " "))
             c_u_res3.metric("Rozdíl ve prospěch složeného", f"+{diff_urok:,.2f} Kč".replace(",", " "))
 
-            st.markdown("""
-            <div class='box-purple'>
-                📈 <strong>Pointa rozdílu:</strong> U krátkého období může být rozdíl malý. U dlouhého období, vyšší částky nebo pravidelného investování ale může složené úročení hrát výraznou roli. Čas je ve financích jedna z největších výhod.
-            </div>
-            """, unsafe_allow_html=True)
-
             with st.expander("✍️ Procvičování: Spočítej úročení (3 příklady)"):
-                st.write("**1. Jednoduché úročení:** Vložíš 8 000 Kč na 2 roky při sazbe 4 % p.a.")
+                st.write("**1. Jednoduché úročení:** Vložíš 8 000 Kč na 2 roky při sazbě 4 % p.a.")
                 ex1_ans = st.number_input("Zadej vypočtenou konečnou částku (Kč):", value=0, key="k2_ex1_val")
                 if st.button("Zkontrolovat příklad 1", key="k2_ex1_btn"):
                     if abs(ex1_ans - 8640) < 1:
@@ -1457,24 +1471,30 @@ def render():
                 st.write("• Složené: $15\\ 000 \\times (1 + 0{,}06)^5 = 20\\ 073{,}38\\ \\text{Kč}$")
                 st.info("💡 Rozdíl je **573,38 Kč** ve prospěch složeného úročení. Čím delší doba, tím více se projevuje efekt úroků z úroků.")
 
+        # 2.4.3 Inflace
+        with st.container(border=True):
             st.markdown("### 2.4.3 Inflace")
             st.write("Inflace znamená růst cenové hladiny. Když ceny rostou, za stejnou částku si koupíme méně než dříve.")
-            st.write("Oficiální inflace je průměr za celou ekonomiku. Každý člověk ale může mít jinou **„osobní inflaci“**. Student, rodina s dětmi, senior nebo člověk dojíždějící autem vnímají zdražování jinak, protože utrácejí za jiné věci.")
+            st.write("Oficiální inflace je průměr za celou ekonomiku. Každý človek ale může mít jinou **„osobní inflaci“**. Student, rodina s dětmi, senior nebo človek dojíždějící autem vnímají zdražování jinak, protože utrácejí za jiné věci.")
 
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber pět věcí, které pravidelně kupuješ. Zjisti nebo odhadni, kolik stály dříve a kolik stojí dnes. Která položka zdražila nejvíc?</div>", unsafe_allow_html=True)
             st.text_area("Seznam 5 věcí a odhad změny ceny:", key="k2_inflation_5_items")
 
-        # 2.5 Finanční rezerva
-        with st.container(border=True):
-            st.markdown("## 2.5 Finanční rezerva: airbag osobních financí")
-            st.write("Finanční rezerva chrání člověka před tím, aby každá nečekaná situace skončila dluhem. Může jít o rozbitý telefon, ztrátu brigády, nemoc, opravu auta, vyšší vyúčtování energií nebo stěhování.")
+    # =========================================================================
+    # 2.5 FINANČNÍ REZERVA
+    # =========================================================================
+    elif "2.5 Finanční rezerva" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.5 Finanční rezerva: airbag osobních financí</h2>", unsafe_allow_html=True)
+        st.write("Finanční rezerva chrání člověka před tím, aby každá nečekaná situace skončila dluhem. Může jít o rozbitý telefon, ztrátu brigády, nemoc, opravu auta, vyšší vyúčtování energií nebo stěhování.")
 
+        with st.container(border=True):
             st.markdown("""
             <div class='box-blue'>
                 🛟 <strong>Jednoduše řečeno:</strong> Rezerva je finanční airbag. Doufáš, že ji nebudeš potřebovat, ale když přijde náraz, může zabránit větším škodám.
             </div>
             """, unsafe_allow_html=True)
 
+        with st.container(border=True):
             st.markdown("### 2.5.1 Jak velká má být rezerva")
             st.write("Obecné doporučení bývá mít rezervu alespoň ve výši 3 až 6 měsíců nutných výdajů. U studenta může být začátek menší: třeba první cíl 1 000 Kč, potom 5 000 Kč, potom jeden měsíc výdajů.")
 
@@ -1483,7 +1503,7 @@ def render():
             | :--- | :--- | :--- |
             | **Student s podporou rodiny** | 1 000–5 000 Kč | 1 měsíc vlastních výdajů |
             | **Člověk na brigádě nebo v první práci** | 1 měsíc nutných výdajů | 3 měsíce nutných výdajů |
-            | **Samostatně žijící člověk** | 3 měsíce nutných výdajů | 6 měsíců nutných výdajů |
+            | **Samostatně žijící človek** | 3 měsíce nutných výdajů | 6 měsíců nutných výdajů |
             | **Rodina nebo podnikatel** | 3–6 měsíců nutných výdajů | více podle rizika příjmů |
             """)
 
@@ -1491,7 +1511,7 @@ def render():
             user_sit = st.selectbox("Zvol svou aktuální životní situaci:", [
                 "Student s podporou rodiny",
                 "Člověk na brigádě / v první práci",
-                "Samostatně žijící člověk",
+                "Samostatně žijící človek",
                 "Rodina nebo podnikatel"
             ], key="k2_res_sit")
             
@@ -1510,6 +1530,7 @@ def render():
             col_res1.metric("Minimální základní rezerva", f"{r_min:,.0f} Kč".replace(",", " "))
             col_res2.metric("Doporučená optimální rezerva", f"{r_target:,.0f} Kč".replace(",", " "))
 
+        with st.container(border=True):
             st.markdown("### 2.5.2 Kde rezervu držet")
             st.write("Rezerva má být bezpečná a dostupná. Není určena k riskantnímu investování. Vhodné vlastnosti:")
             st.markdown("""
@@ -1521,15 +1542,18 @@ def render():
 
             st.markdown("""
             <div class='box-red'>
-                🚫 <strong>Častá chyba:</strong> Investovat nouzovou rezervu do rizikových aktiv. Když pak přijde problém, může být člověk nucen prodat v nevýhodnou chvíli se ztrátou.
+                🚫 <strong>Častá chyba:</strong> Investovat nouzovou rezervu do rizikových aktiv. Když pak přijde problém, může být človek nucen prodat v nevýhodnou chvíli se ztrátou.
             </div>
             """, unsafe_allow_html=True)
 
-        # 2.6 Psychologie utrácení
-        with st.container(border=True):
-            st.markdown("## 2.6 Psychologie utrácení: proč nerozhodujeme vždy racionálně")
-            st.write("Lidé nejsou kalkulačky. Často se rozhodujeme podle emocí, únavy, tlaku okolí, reklamy, strachu, že něco propásneme, nebo podle toho, co nám ukáže aplikace.")
+    # =========================================================================
+    # 2.6 PSYCHOLOGIE UTRÁCENÍ
+    # =========================================================================
+    elif "2.6 Psychologie" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.6 Psychologie utrácení: proč nerozhodujeme vždy racionálně</h2>", unsafe_allow_html=True)
+        st.write("Lidé nejsou kalkulačky. Často se rozhodujeme podle emocí, únavy, tlaku okolí, reklamy, strachu, že něco propásneme, nebo podle toho, co nám ukáže aplikace.")
 
+        with st.container(border=True):
             st.markdown("### 2.6.1 Nejčastější pasti")
             st.markdown("""
             | Past | Jak funguje | Obrana |
@@ -1541,12 +1565,13 @@ def render():
             | **Odložená platba (BNPL)** | Nákup nebolí hned. | Ber ji jako dluh, ne jako slevu. |
             """)
 
+        with st.container(border=True):
             st.markdown("### 2.6.2 Algoritmy a personalizovaná reklama")
             st.write("E-shopy, sociální sítě a aplikace sbírají data o tom, co sledujeme, hledáme, lajkujeme a kupujeme. Díky tomu nám mohou ukazovat nabídky, které přesně míří na naše zájmy, slabiny nebo aktuální náladu.")
 
             st.markdown("""
             <div class='box-purple'>
-                📱 <strong>Moderní realita:</strong> Dříve člověk viděl stejnou reklamu jako ostatní v televizi nebo časopise. Dnes může každý vidět jinou reklamu podle toho, co o něm platforma ví. Proto je finanční gramotnost propojená s digitální gramotností.
+                📱 <strong>Moderní realita:</strong> Dříve človek viděl stejnou reklamu jako ostatní v televizi nebo časopise. Dnes může každý vidět jinou reklamu podle toho, co o něm platforma ví. Proto je finanční gramotnost propojená s digitální gramotností.
             </div>
             """, unsafe_allow_html=True)
 
@@ -1562,11 +1587,14 @@ def render():
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Najdi jednu reklamu nebo nabídku, která tě nedávno zaujala. Popiš, jakou emoci používá: strach, radost, tlak na výkon, pocit výhodné koupě, krásu, úspěch, pohodlí nebo srovnávání s ostatními.</div>", unsafe_allow_html=True)
             st.text_area("Popis reklamy a emoce, kterou využívala:", key="k2_ad_emotion_analysis")
 
-        # 2.7 Kalkulačka času
-        with st.container(border=True):
-            st.markdown("## 2.7 Kalkulačka času: kolik života stojí nákup")
-            st.write("Cena věci není jen částka v korunách. Dá se přepočítat i na čas, který musí člověk pracovat, aby si ji mohl dovolit.")
+    # =========================================================================
+    # 2.7 KALKULAČKA ČASU NÁKUPU
+    # =========================================================================
+    elif "2.7 Kalkulačka" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.7 Kalkulačka času: kolik života stojí nákup</h2>", unsafe_allow_html=True)
+        st.write("Cena věci není jen částka v korunách. Dá se přepočítat i na čas, který musí človek pracovat, aby si ji mohl dovolit.")
 
+        with st.container(border=True):
             st.markdown("""
             <div class='box-gray'>
                 ⏱️ <strong>Vzorec pro výpočet časové ceny:</strong><br>
@@ -1588,11 +1616,14 @@ def render():
                 st.metric("Počet hodin práce nutný na tento nákup", f"{hours_needed:.1f} hodin")
                 st.info(f"👉 Aby sis mohl/a koupit tuto věc za **{price_item} Kč**, musíš strávit v práci **{hours_needed:.1f} hodin**. Stojí ti to za ten čas?")
 
-        # 2.8 Osobní finanční audit
-        with st.container(border=True):
-            st.markdown("## 2.8 Praktický výstup: můj osobní finanční audit")
-            st.write("Na konci této části by měl být člověk schopný udělat jednoduchý audit vlastních financí.")
+    # =========================================================================
+    # 2.8 OSOBNÍ FINANČNÍ AUDIT
+    # =========================================================================
+    elif "2.8 Osobní" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.8 Praktický výstup: můj osobní finanční audit</h2>", unsafe_allow_html=True)
+        st.write("Na konci této části by měl být človek schopný udělat jednoduchý audit vlastních financí.")
 
+        with st.container(border=True):
             st.markdown("#### ✅ Kontrolní checklist osobního auditu")
             st.write("Zaškrtni body, které už bezpečně ovládáš a uplatňuješ:")
 
