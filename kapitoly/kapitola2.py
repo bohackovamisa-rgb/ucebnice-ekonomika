@@ -4759,131 +4759,147 @@ def render():
         
         st.write(
             "Představ si úspěšný studentský e-shop **DropZone**, který prodává vlastní limitovaný streetwear merch. "
-            "Na první pohled firma raketově roste. Je ale opravdu finančně zdravá? Pojďme se podívat pod pokličku "
-            "pomocí finanční analýzy."
+            "Na první pohled firma raketově roste. Je ale opravdu finančně zdravá? "
+            "Vyzkoušej si roli finančního ředitele: analyzuj výchozí stav a pak zkus čísla pro Rok 2 upravit tak, abys firmu zachránil před krachem na cashflow!"
         )
 
         st.divider()
 
-        # Vstupní data (uložená ve slovnících pro snadnou manipulaci)
+        # Pevná data pro Rok 1 (Historie)
         data_y1 = {
             "Tržby": 800000, "Náklady": 740000, "Zisk": 60000,
             "Aktiva": 500000, "Vlastní kapitál": 250000, "Cizí zdroje": 250000,
             "Oběžná aktiva": 220000, "Zásoby": 120000, "Peníze": 45000,
             "Krátkodobé závazky": 140000, "Pohledávky": 55000
         }
-        
-        data_y2 = {
-            "Tržby": 1200000, "Náklady": 1080000, "Zisk": 120000,
-            "Aktiva": 700000, "Vlastní kapitál": 300000, "Cizí zdroje": 400000,
-            "Oběžná aktiva": 310000, "Zásoby": 170000, "Peníze": 35000,
-            "Krátkodobé závazky": 230000, "Pohledávky": 105000
-        }
 
-        # Dramatický graf úvodu - Zisk vs Peníze
-        st.markdown("### 📊 První pohled analytika: Úspěch, nebo past?")
-        st.write("Podívej se na vývoj čistého zisku a reálných peněz na účtu. Vidíš ten problém?")
+        st.markdown("### 🎛️ Interaktivní simulátor: Zachraň DropZone")
+        st.write("Hodnoty pro **Rok 1 jsou pevné**. Čísla pro **Rok 2 můžeš libovolně měnit**. (Výchozí čísla ukazují nebezpečný růst na dluh).")
+
+        with st.container(border=True):
+            st.markdown("#### 📥 Zadej data pro Rok 2 (v Kč)")
+            
+            col_in1, col_in2, col_in3 = st.columns(3)
+            
+            with col_in1:
+                st.markdown("**Výsledovka**")
+                trzby_y2 = st.number_input("Tržby", value=1200000, step=50000, key="dz_trzby")
+                naklady_y2 = st.number_input("Náklady", value=1080000, step=50000, key="dz_naklady")
+                zisk_y2 = trzby_y2 - naklady_y2
+                st.metric("Automatický čistý zisk", f"{zisk_y2:,} Kč".replace(",", " "))
+                
+            with col_in2:
+                st.markdown("**Rozvaha (Majetek a zdroje)**")
+                aktiva_y2 = st.number_input("Aktiva celkem", value=700000, step=50000, key="dz_aktiva")
+                vk_y2 = st.number_input("Vlastní kapitál", value=300000, step=50000, key="dz_vk")
+                cz_y2 = st.number_input("Cizí zdroje (Dluhy)", value=400000, step=50000, key="dz_cz")
+                
+            with col_in3:
+                st.markdown("**Hotovost a provoz**")
+                ob_aktiva_y2 = st.number_input("Oběžná aktiva", value=310000, step=50000, key="dz_oa")
+                zasoby_y2 = st.number_input("Zásoby na skladě", value=170000, step=10000, key="dz_zas")
+                pohledavky_y2 = st.number_input("Pohledávky (Dluží nám)", value=105000, step=10000, key="dz_pohl")
+                penize_y2 = st.number_input("Peníze na účtu", value=35000, step=5000, key="dz_pen")
+                kz_y2 = st.number_input("Krátkodobé závazky", value=230000, step=10000, key="dz_kz")
+
+        # Dramatický graf úvodu - Zisk vs Peníze (Reaguje na změny)
+        st.markdown("### 📊 Rychlý pohled na zdraví firmy (Zisk vs. Peníze)")
         
         chart_data = pd.DataFrame(
             {
-                "Čistý zisk": [data_y1["Zisk"], data_y2["Zisk"]],
-                "Peníze na účtu": [data_y1["Peníze"], data_y2["Peníze"]]
+                "Čistý zisk": [data_y1["Zisk"], zisk_y2],
+                "Peníze na účtu": [data_y1["Peníze"], penize_y2]
             },
-            index=["Rok 1", "Rok 2"]
+            index=["Rok 1", "Rok 2 (Tvá čísla)"]
         )
         st.bar_chart(chart_data, color=["#2ecc71", "#e74c3c"])
         
-        st.markdown("""
-        <div style="text-align: center; font-size: 0.9em; color: #555; margin-bottom: 20px;">
-            <i>Zatímco zisk se meziročně zdvojnásobil (zelené sloupce), hotovost na účtu klesla (červené sloupce). Kde ty peníze jsou?</i>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("### 🕵️‍♂️ Hloubková analýza")
-        tab_vstupy, tab_rentabilita, tab_likvidita, tab_aktivita, tab_zaver = st.tabs([
-            "📋 1. Vstupní data", 
-            "📈 2. Ziskovost", 
-            "💧 3. Likvidita", 
-            "⚙️ 4. Aktivita & Dluh", 
-            "🚨 5. Finální verdikt"
+        st.markdown("### 🕵️‍♂️ Hloubková analýza na základě tvých čísel")
+        tab_rentabilita, tab_likvidita, tab_aktivita, tab_zaver = st.tabs([
+            "📈 Ziskovost", 
+            "💧 Likvidita", 
+            "⚙️ Aktivita & Dluh", 
+            "🚨 Finální verdikt"
         ])
 
-        with tab_vstupy:
-            st.markdown("#### Srovnávací rozvaha a výsledovka (Rok 1 vs. Rok 2)")
-            df_vstupy = pd.DataFrame({
-                "Položka": list(data_y1.keys()),
-                "Rok 1 (Kč)": [f"{v:,}".replace(",", " ") for v in data_y1.values()],
-                "Rok 2 (Kč)": [f"{v:,}".replace(",", " ") for v in data_y2.values()]
-            }).set_index("Položka")
-            st.dataframe(df_vstupy, use_container_width=True)
+        # Prevence dělení nulou pro bezpečnost
+        trzby_y2_safe = max(trzby_y2, 1)
+        aktiva_y2_safe = max(aktiva_y2, 1)
+        vk_y2_safe = max(vk_y2, 1)
+        kz_y2_safe = max(kz_y2, 1)
+
+        # Výpočty Rok 1
+        ros_1 = (data_y1["Zisk"] / data_y1["Tržby"]) * 100
+        roa_1 = (data_y1["Zisk"] / data_y1["Aktiva"]) * 100
+        roe_1 = (data_y1["Zisk"] / data_y1["Vlastní kapitál"]) * 100
+        bl_1 = data_y1["Oběžná aktiva"] / data_y1["Krátkodobé závazky"]
+        pl_1 = (data_y1["Oběžná aktiva"] - data_y1["Zásoby"]) / data_y1["Krátkodobé závazky"]
+        ol_1 = data_y1["Peníze"] / data_y1["Krátkodobé závazky"]
+        zadl_1 = (data_y1["Cizí zdroje"] / data_y1["Aktiva"]) * 100
+        obrat_1 = data_y1["Tržby"] / data_y1["Aktiva"]
+        inkaso_1 = (data_y1["Pohledávky"] / data_y1["Tržby"]) * 365
+
+        # Výpočty Rok 2
+        ros_2 = (zisk_y2 / trzby_y2_safe) * 100
+        roa_2 = (zisk_y2 / aktiva_y2_safe) * 100
+        roe_2 = (zisk_y2 / vk_y2_safe) * 100
+        bl_2 = ob_aktiva_y2 / kz_y2_safe
+        pl_2 = (ob_aktiva_y2 - zasoby_y2) / kz_y2_safe
+        ol_2 = penize_y2 / kz_y2_safe
+        zadl_2 = (cz_y2 / aktiva_y2_safe) * 100
+        obrat_2 = trzby_y2 / aktiva_y2_safe
+        inkaso_2 = (pohledavky_y2 / trzby_y2_safe) * 365
 
         with tab_rentabilita:
             st.markdown("#### Ukazatele rentability (Ziskovosti)")
-            st.write("Firma vypadá z pohledu ziskovosti naprosto fantasticky.")
             c1, c2, c3 = st.columns(3)
             
-            c1.metric("ROS (Rentabilita tržeb)", "10,0 %", "2,5 % (z 7,5 %)")
-            c1.caption("Z 120 000 ÷ 1 200 000")
+            c1.metric("ROS (Rentabilita tržeb)", f"{ros_2:.1f} %", f"{ros_2 - ros_1:.1f} % (z {ros_1:.1f} %)")
+            c2.metric("ROA (Rentabilita aktiv)", f"{roa_2:.1f} %", f"{roa_2 - roa_1:.1f} % (z {roa_1:.1f} %)")
+            c3.metric("ROE (Rent. vl. kapitálu)", f"{roe_2:.1f} %", f"{roe_2 - roe_1:.1f} % (z {roe_1:.1f} %)")
             
-            c2.metric("ROA (Rentabilita aktiv)", "17,1 %", "5,1 % (z 12,0 %)")
-            c2.caption("Z 120 000 ÷ 700 000")
-            
-            c3.metric("ROE (Rent. vl. kapitálu)", "40,0 %", "16,0 % (z 24,0 %)")
-            c3.caption("Z 120 000 ÷ 300 000")
-            
-            st.success("✅ Všechny ukazatele rostou. Firma generuje skvělou marži a investorům se peníze zhodnocují o obřích 40 %.")
+            if ros_2 > ros_1 and roe_2 > roe_1:
+                st.success("✅ Firma se z pohledu ziskovosti zlepšuje (nebo drží skvělá čísla).")
+            else:
+                st.warning("⚠️ Rentabilita klesá. Zkontroluj, zda neplýtváš náklady.")
 
         with tab_likvidita:
             st.markdown("#### Ukazatele likvidity (Schopnost platit)")
-            st.write("Tady začíná příběh drhnout. Sleduj, co se děje s platební schopností, když firma roste na dluh.")
             c1, c2, c3 = st.columns(3)
             
-            # Používáme delta_color="inverse", protože pokles likvidity je špatný (červený)
-            c1.metric("Běžná likvidita", "1,35", "-0,22 (z 1,57)", delta_color="inverse")
-            c1.caption("Oběžná aktiva ÷ Krátk. závazky")
+            c1.metric("Běžná likvidita", f"{bl_2:.2f}", f"{bl_2 - bl_1:.2f} (z {bl_1:.2f})")
+            c2.metric("Pohotová likvidita", f"{pl_2:.2f}", f"{pl_2 - pl_1:.2f} (z {pl_1:.2f})")
+            c3.metric("Okamžitá likvidita", f"{ol_2:.2f}", f"{ol_2 - ol_1:.2f} (z {ol_1:.2f})")
             
-            c2.metric("Pohotová likvidita", "0,61", "-0,10 (z 0,71)", delta_color="inverse")
-            c2.caption("Bez zásob")
-            
-            c3.metric("Okamžitá likvidita", "0,15", "-0,17 (z 0,32)", delta_color="inverse")
-            c3.caption("Peníze ÷ Krátk. závazky")
-            
-            st.error("🚨 Likvidita se zhoršuje napříč celým spektrem. Peněz na účtu je méně, zatímco krátkodobé závazky (faktury k zaplacení) vzrostly ze 140 na 230 tisíc!")
+            if ol_2 < 0.2:
+                st.error("🚨 Kritický nedostatek hotovosti! Zvyš peníze na účtu, nebo sniž krátkodobé závazky.")
+            elif bl_2 > bl_1:
+                st.success("✅ Platební morálka firmy se oproti prvnímu roku zlepšila.")
+            else:
+                st.info("Likvidita se drží, ale hlídej si hotovostní polštář.")
 
         with tab_aktivita:
             st.markdown("#### Ukazatele aktivity a zadluženosti")
-            st.write("Kde tedy peníze uvízly? Odpověď najdeme zde.")
             c1, c2, c3 = st.columns(3)
             
-            c1.metric("Celková zadluženost", "57,1 %", "7,1 % (z 50,0 %)", delta_color="inverse")
-            c2.metric("Obrat aktiv", "1,71x", "0,11x (z 1,6x)")
-            c3.metric("Doba inkasa pohledávek", "32 dní", "7 dní (z 25 dní)", delta_color="inverse")
+            # Zadluženost a inkaso jsou inverzní (růst je špatný)
+            c1.metric("Celková zadluženost", f"{zadl_2:.1f} %", f"{zadl_2 - zadl_1:.1f} % (z {zadl_1:.1f} %)", delta_color="inverse")
+            c2.metric("Obrat aktiv", f"{obrat_2:.2f}x", f"{obrat_2 - obrat_1:.2f}x (z {obrat_1:.2f}x)")
+            c3.metric("Doba inkasa pohledávek", f"{inkaso_2:.0f} dní", f"{inkaso_2 - inkaso_1:.0f} dní (z {inkaso_1:.0f} dní)", delta_color="inverse")
             
-            st.warning("⚠️ Zákazníci platí e-shopu o týden pomaleji (32 dní místo 25). Růst firmy je navíc částečně financován růstem dluhu (cizí zdroje stouply o 150 000 Kč).")
+            if inkaso_2 > 30:
+                st.warning("⚠️ Zákazníci ti platí moc dlouho (více než měsíc). Zkus v zadání snížit pohledávky!")
+            else:
+                st.success("✅ Zákazníci platí rychle, peníze se ti vrací plynule.")
 
         with tab_zaver:
-            st.markdown("#### 📝 Závěrečná zpráva finančního ředitele")
+            st.markdown("#### 📝 Závěrečná zpráva (Dynamicky hodnoceno)")
             
-            st.markdown("""
-            <div class="box-green">
-                <b>✅ Co vypadá dobře:</b> Tržby raketově rostou, zisk se zdvojnásobil, rentabilita tržeb se zlepšila a firma využívá aktiva o něco efektivněji. Na první pohled podnik roste a vydělává spoustu peněz.
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("""
-            <div class="box-red">
-                <b>⚠️ Co je varovný signál (Červené vlajky):</b> Likvidita se prudce zhoršuje. Peněz na účtu je reálně méně než loni, zato krátkodobé závazky tvrdě rostou. Doba inkasa pohledávek se prodlužuje. Firma sice papírově vydělává, ale brzy může mít existenční problém zaplatit vlastní faktury! Zisk se „rozpustil“ ve větším skladu (zásoby stouply o 50 000 Kč) a v nezaplacených fakturách (pohledávky stouply o 50 000 Kč).
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("""
-            <div class="box-blue">
-                <b>🛠️ Možná opatření:</b> 
-                <ul>
-                    <li>Lépe řídit zásoby (neobjednávat tolik zboží na sklad dopředu).</li>
-                    <li>Zkrátit dobu splatnosti faktur pro zákazníky nebo vymáhat dluhy rychleji.</li>
-                    <li>Posílit hotovostní rezervu.</li>
-                    <li>Nezvyšovat dál zadluženost, dokud se nestabilizuje cashflow.</li>
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
+            if zisk_y2 > data_y1["Zisk"] and penize_y2 < data_y1["Peníze"]:
+                st.error("🚨 **Varování z výchozího scénáře:** Tohle je klasická past! Zisk se ti sice zvýšil, ale peníze na účtu mizí. Pravděpodobně ti utekly do rostoucích zásob a nezaplacených faktur (pohledávek). Zároveň tě začínají drtit narůstající krátkodobé závazky. **Zkus ve vstupech nahoře zmenšit Zásoby, vybrat Pohledávky (čímž se ti zvýší Peníze) a uvidíš, jak se firma uzdraví!**")
+            elif zisk_y2 > data_y1["Zisk"] and penize_y2 >= data_y1["Peníze"]:
+                st.success("🏆 **Výborná práce CEO!** Dokázal jsi nejen zvýšit zisk, ale i udržet zdravou hotovost. Takhle má vypadat udržitelný růst podniku.")
+            elif zisk_y2 <= 0:
+                st.error("💀 **Firma je ve ztrátě.** Než začneš řešit likviditu a zásoby, musíš spravit samotný byznys model (zvýšit tržby nebo osekat náklady).")
+            else:
+                st.info("Firma je stabilní, zkus si pohrát s hodnotami a najít ideální poměr mezi ziskem a hotovostí.")
