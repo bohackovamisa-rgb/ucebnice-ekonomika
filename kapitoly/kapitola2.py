@@ -15,12 +15,18 @@ def render():
 
     # 📌 AKTUALIZOVANÁ NABÍDKA SEZNAMU PODKAPITOL
     section_options_2 = [
-        "1.1 Peníze jako digitální data",
-        "1.2 ČNB a komerční banky",
-        "1.3 Platební styk",
-        "1.4 Fintech revoluce",
-        "2. Osobní finance a „Algoritmy bohatství“"
-    ]
+    "1.1 Peníze jako digitální data",
+    "1.2 ČNB a komerční banky",
+    "1.3 Platební styk",
+    "1.4 Fintech revoluce",
+    "2.1 Osobní finance v 21. století",
+    "2.2 Rozpočet: mapa peněz",
+    "2.3 Algoritmy bohatství",
+    "2.4 Matematika peněz (úročení a inflace)",
+    "2.5 Finanční rezerva",
+    "2.6 Psychologie utrácení",
+    "2.7 a 2.8 Kalkulačka času a Osobní audit"
+]
     selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
     st.divider()
 
