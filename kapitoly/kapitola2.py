@@ -13,7 +13,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL (1.1 AŽ 3.10)
+ # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_2 = [
         # Sekce 1: Bankovní systém
         "1.1 Peníze jako digitální data",
@@ -58,7 +58,26 @@ def render():
         "4.12 Neživotní pojištění",
         "4.13 Jak poznat dobré pojištění",
         "4.14 Praktické rozhodování: úvěr a pojištění dohromady",
-        "4.15 Shrnutí: co si odnést"
+        "4.15 Shrnutí: co si odnést",
+
+        # Sekce 5: Finanční řízení v podniku — most k podnikavosti
+        "5.1 Proč podnik řeší finance",
+        "5.2 Základní finanční výkazy: mapa firmy v číslech",
+        "5.3 Náklady, výnosy a bod zvratu",
+        "5.4 Zdroje financování podniku",
+        "5.5 Finanční analýza: kontrola finančního zdraví",
+        "5.6 Modelová finanční analýza: e-shop „DropZone“",
+        "5.7 Prázdná šablona finanční analýzy k vyplnění",
+        "5.8 Jak napsat závěr finanční analýzy",
+        "5.9 Case study: Influencer jako firma",
+        "5.10 Digitální generace a finanční řízení",
+        "5.11 Praktická aktivita: finanční manažer na 45 minut",
+        "5.12 Shrnutí: co si odnést",
+
+        # Závěrečné moduly
+        "6. Interaktivní vrstva celé kapitoly",
+        "7. Aktivita",
+        "8. Slovník cizích pojmů"
     ]
     
     selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
