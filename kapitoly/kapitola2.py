@@ -3741,3 +3741,127 @@ def render():
             st.markdown("**Situace:** Martin si při amatérském adrenalinovém závodě na horských kolech (downhill) zlomil obě nohy. Pojišťovna mu úrazové plnění krátila o 50 %. Proč?")
             with st.expander("Zobrazit řešení"):
                 st.error("❌ **Výluka:** Extrémní a rizikové sporty vyžadují speciální připojištění. Běžná pojistka tě kryje při rekreačním sportu, ale ne při závodech s vysokým rizikem zranění. Pojišťovna může plnění také krátit, pokud byl v krvi alkohol.")
+# =========================================================================
+    # 4.12 NEŽIVOTNÍ POJIŠTĚNÍ
+    # =========================================================================
+    elif "4.12" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>12. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.12 Neživotní pojištění")
+        
+        st.write("Zatímco životní pojištění chrání tebe a tvé tělo, neživotní pojištění se týká tvého majetku, odpovědnosti a konkrétních rizik. Chrání tě před škodami, které by ti jinak udělaly obří díru do rozpočtu.")
+
+        st.markdown("### Co sem patří?")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.info("🏠 Pojištění nemovitosti\n\n🛋️ Pojištění domácnosti\n\n🛡️ Pojištění odpovědnosti")
+        with col2:
+            st.info("🚗 Povinné ručení (auto)\n\n🚙 Havarijní pojištění\n\n✈️ Cestovní pojištění")
+        with col3:
+            st.info("🤕 Úrazové pojištění\n\n🏭 Pojištění podnikání\n\n📦 Pojištění strojů a zásob")
+
+        st.divider()
+
+        # --- 4.12.1 NEMOVITOST VS DOMÁCNOST ---
+        st.markdown("### 4.12.1 Pojištění nemovitosti vs. domácnosti")
+        st.write("Tyto dva pojmy se lidem neustále pletou. Přitom je rozdíl naprosto zásadní!")
+        
+        st.markdown("""
+        <div class="box-blue">
+            <b>💡 Trik, jak si to zapamatovat:</b> Představ si, že bys vzal svůj dům nebo byt, obrátil ho vzhůru nohama a pořádně s ním zatřásl. Všechno, co spadne na strop (nábytek, televize, oblečení, ty), je <b>DOMÁCNOST</b>. Všechno, co zůstane pevně držet (zdi, střecha, trubky, vana, podlaha), je <b>NEMOVITOST</b>.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.write("U hypotéky banka vždy požaduje pojištění **nemovitosti**. Kdyby dům vyhořel, ztratila by totiž svou zástavu.")
+
+        # HRA: CO JE CO?
+        with st.container(border=True):
+            st.markdown("#### 🧩 Kvíz: Roztřiď majetek")
+            
+            c_q1, c_q2 = st.columns(2)
+            with c_q1:
+                ans1 = st.selectbox("Vestavěná kuchyňská linka na míru:", ["Vyber...", "Nemovitost", "Domácnost"])
+                ans2 = st.selectbox("Notebook a herní konzole:", ["Vyber...", "Nemovitost", "Domácnost"])
+            with c_q2:
+                ans3 = st.selectbox("Radiátory a kotel:", ["Vyber...", "Nemovitost", "Domácnost"])
+                ans4 = st.selectbox("Drahý koberec a sedací souprava:", ["Vyber...", "Nemovitost", "Domácnost"])
+                
+            if st.button("Zkontrolovat", type="primary"):
+                if "Vyber..." in [ans1, ans2, ans3, ans4]:
+                    st.warning("Vyber všechny odpovědi!")
+                elif ans1 == "Nemovitost" and ans2 == "Domácnost" and ans3 == "Nemovitost" and ans4 == "Domácnost":
+                    st.success("✅ Skvěle! Pochopil/a jsi to naprosto přesně. Vestavěné a pevné věci = nemovitost. Volné věci = domácnost.")
+                else:
+                    st.error("❌ Někde je chyba. Vzpomeň si na trik s třesením domu!")
+
+        st.divider()
+
+        # --- 4.12.2 POJIŠTĚNÍ ODPOVĚDNOSTI ---
+        st.markdown("### 4.12.2 Pojištění odpovědnosti (tzv. pojistka na blbost)")
+        st.write("Chrání tě před škodou, kterou **ty (nebo tvé dítě/pes)** způsobíš někomu jinému. Může jít o škodu na zdraví, na majetku, nebo o finanční škodu.")
+        
+        st.markdown("""
+        <div class="box-purple">
+            <b>🛡️ Proč je odpovědnost často důležitější než pojištění majetku:</b> Pokud ti ukradnou starší auto, přijdeš třeba o 100 000 Kč. To bolí, ale nezničí tě to. Pokud ale na lyžích srazíš manažera, který bude mít trvalé následky a ušlý zisk, soud ti může nařídit platit miliony. Pojištění odpovědnosti tě chrání před tím, abys cizí škodu platil do konce života ze svého platu.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("**Typické příklady, kdy tě to zachrání:**")
+        st.markdown("- Vytopíš souseda pod sebou prasklou hadičkou od pračky.")
+        st.markdown("- Tvé dítě v obchodě shodí regál s drahou elektronikou.")
+        st.markdown("- Tvůj pes vběhne pod auto a způsobí nehodu.")
+        st.markdown("- Na kole nebo koloběžce srazíš chodce.")
+
+
+    # =========================================================================
+    # 4.13 JAK POZNAT DOBRÉ POJIŠTĚNÍ
+    # =========================================================================
+    elif "4.13" in selected_section_2:
+        st.markdown("<div class='sub-section-header'>13. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.13 Jak poznat dobré pojištění")
+        
+        st.write("U pojištění nestačí sledovat jen cenu. Levná pojistka je často k ničemu, protože má nízké limity nebo spoustu výluk (situací, kdy neplatí).")
+        
+        st.markdown("### 🔍 Na co si dát pozor ve smlouvě:")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("- **Pojistné limity:** Maximální částka, kterou ti pojišťovna dá.")
+            st.markdown("- **Spoluúčast:** Částka, kterou platíš ze svého (např. prvních 5 000 Kč škody platíš ty).")
+            st.markdown("- **Výluky:** Seznam výjimek (např. neplatí při alkoholu v krvi).")
+            st.markdown("- **Čekací doby:** Kdy pojištění začne reálně platit.")
+        with c2:
+            st.markdown("- **Způsob výpočtu:** Dostaneš novou cenu věci, nebo jen tu aktuální, opotřebenou?")
+            st.markdown("- **Zda řeší tvá rizika:** Pojištění lyží u moře ti nepomůže.")
+            st.markdown("- **Co není pojištěno:** Někdy chybí základní věci jako povodeň.")
+
+        st.divider()
+
+        # --- SIMULÁTOR PODPOJIŠTĚNÍ ---
+        st.markdown("### ⚠️ Neviditelný zabiják: Podpojištění")
+        st.write("Podpojištění vzniká, když je tvůj majetek pojištěn na mnohem **nižší částku, než je jeho skutečná dnešní hodnota** (typicky kvůli inflaci u domů). Pokud se to stane, pojišťovna ti při škodě **krátí plnění**, a to i u malých škod!")
+
+        with st.container(border=True):
+            st.markdown("#### 🧮 Simulátor tvrdé reality")
+            st.write("Představ si, že jsi před 10 lety koupil dům a pojistil ho na tehdejší cenu. Dnes má dům dvojnásobnou hodnotu, ale pojistku jsi neaktualizoval. Vichřice ti strhne část střechy (škoda za 500 000 Kč).")
+            
+            pojistna_castka = st.slider("Na kolik je dům papírově pojištěn (Smlouva):", 2000000, 10000000, 3000000, step=500000)
+            skutecna_hodnota = st.slider("Jakou má dům skutečnou hodnotu dnes:", 2000000, 15000000, 6000000, step=500000)
+            skoda = 500000
+            
+            # Výpočet plnění (vzorec podpojištění)
+            if pojistna_castka < skutecna_hodnota:
+                koeficient = pojistna_castka / skutecna_hodnota
+                vyplaceno = skoda * koeficient
+                doplatis_sam = skoda - vyplaceno
+                
+                col_a, col_b, col_c = st.columns(3)
+                col_a.metric("Škoda na střeše", f"{skoda:,} Kč".replace(",", " "))
+                col_b.metric("Pojišťovna zaplatí", f"{int(vyplaceno):,} Kč".replace(",", " "), delta="Kráceno kvůli podpojištění!", delta_color="inverse")
+                col_c.metric("Musíš doplatit ze svého", f"{int(doplatis_sam):,} Kč".replace(",", " "), delta="To bolí", delta_color="inverse")
+                
+                st.error(f"🚨 **Banka/Pojišťovna tě nachytala na matematice!** Protože jsi měl dům pojištěný jen na {int(koeficient*100)} % jeho reálné hodnoty, pojišťovna ti i z blbé škody na střeše vyplatí pouze {int(koeficient*100)} %! Zbytek musíš zaplatit ze svého.")
+            
+            else:
+                col_a, col_b = st.columns(2)
+                col_a.metric("Škoda na střeše", f"{skoda:,} Kč".replace(",", " "))
+                col_b.metric("Pojišťovna zaplatí", f"{skoda:,} Kč".replace(",", " "))
+                st.success("✅ **Vše v pořádku.** Pojistná částka odpovídá reálné hodnotě domu. Pojišťovna zaplatí celou škodu na střeše (mínus případná spoluúčast).")
