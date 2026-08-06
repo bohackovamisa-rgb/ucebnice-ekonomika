@@ -4903,3 +4903,200 @@ def render():
                 st.error("💀 **Firma je ve ztrátě.** Než začneš řešit likviditu a zásoby, musíš spravit samotný byznys model (zvýšit tržby nebo osekat náklady).")
             else:
                 st.info("Firma je stabilní, zkus si pohrát s hodnotami a najít ideální poměr mezi ziskem a hotovostí.")
+                
+# =========================================================================
+    # 5.7 A 5.8 ŠABLONA A ZÁVĚR FINANČNÍ ANALÝZY
+    # =========================================================================
+    elif selected_section_2.startswith("5.7") or selected_section_2.startswith("5.8"):
+        import pandas as pd
+        import numpy as np
+
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.7 Prázdná šablona finanční analýzy (Sandbox)")
+        st.write(
+            "Tuto šablonu můžeš využít pro svůj vlastní školní projekt, fiktivní studentskou firmu nebo rychlou analýzu reálného podniku. "
+            "Nemusíš nic složitě počítat na kalkulačce – stačí vyplnit vstupní data a aplikace se o zbytek postará sama!"
+        )
+
+        st.markdown("### 📝 Krok 1: Zadej data svého projektu")
+        st.write("💡 *Klikni přímo do buněk tabulky ve sloupcích **Rok 1** a **Rok 2** a přepiš ukázková čísla na svá vlastní. Výpočty dole se okamžitě aktualizují.*")
+
+        # Výchozí data (ukázkový startup, aby tam nebyly nuly a nepadaly chyby dělení)
+        vstupy = {
+            "Položka": [
+                "Tržby", "Náklady celkem", "Zisk", "Aktiva celkem", "Vlastní kapitál", 
+                "Cizí zdroje", "Oběžná aktiva", "Zásoby", "Peníze", 
+                "Krátkodobé závazky", "Pohledávky"
+            ],
+            "Nápověda k položce": [
+                "Vše, co firma utržila", "Vše, co firma zaplatila", "Zisk (Tržby mínus Náklady)", 
+                "Celkový majetek firmy", "Peníze majitelů", "Dluhy (Úvěry, atd.)", 
+                "Krátkodobý majetek", "Zboží na skladě", "Hotovost a peníze v bance", 
+                "Faktury k zaplacení do 1 roku", "Peníze, které dluží zákazníci nám"
+            ],
+            "Rok 1 (Kč)": [500000, 450000, 50000, 300000, 200000, 100000, 150000, 50000, 40000, 80000, 60000],
+            "Rok 2 (Kč)": [750000, 650000, 100000, 450000, 300000, 150000, 250000, 80000, 70000, 120000, 100000]
+        }
+        df_vstupy = pd.DataFrame(vstupy).set_index("Položka")
+
+        # Interaktivní tabulka
+        edited_df = st.data_editor(
+            df_vstupy,
+            column_config={
+                "Nápověda k položce": st.column_config.TextColumn("Komentář", disabled=True),
+                "Rok 1 (Kč)": st.column_config.NumberColumn("Rok 1 (Kč)", min_value=0, step=1000, format="%d Kč"),
+                "Rok 2 (Kč)": st.column_config.NumberColumn("Rok 2 (Kč)", min_value=0, step=1000, format="%d Kč")
+            },
+            use_container_width=True,
+            hide_index=False
+        )
+
+        st.divider()
+        st.markdown("### 🧮 Krok 2: Automatické výsledky (Vysvědčení firmy)")
+
+        # Bezpečné dělení (aby aplikace nespadla, když student zadá nulu)
+        def safe_div(a, b):
+            return a / b if b != 0 else 0
+
+        # Funkce pro vytažení dat z tabulky
+        def get_val(rok_col, polozka):
+            try:
+                return float(edited_df.loc[polozka, rok_col])
+            except:
+                return 0.0
+
+        # Získání dat pro oba roky
+        y1 = {k: get_val("Rok 1 (Kč)", k) for k in df_vstupy.index}
+        y2 = {k: get_val("Rok 2 (Kč)", k) for k in df_vstupy.index}
+
+        tab_r, tab_l, tab_z = st.tabs(["📈 Ziskovost (Rentabilita)", "💧 Likvidita (Hotovost)", "⚙️ Zadluženost a Aktivita"])
+
+        with tab_r:
+            c1, c2, c3 = st.columns(3)
+            # Výpočty Rok 2
+            ros_2 = safe_div(y2["Zisk"], y2["Tržby"]) * 100
+            roa_2 = safe_div(y2["Zisk"], y2["Aktiva celkem"]) * 100
+            roe_2 = safe_div(y2["Zisk"], y2["Vlastní kapitál"]) * 100
+            # Výpočty Rok 1 pro zjištění rozdílu
+            ros_1 = safe_div(y1["Zisk"], y1["Tržby"]) * 100
+            roa_1 = safe_div(y1["Zisk"], y1["Aktiva celkem"]) * 100
+            roe_1 = safe_div(y1["Zisk"], y1["Vlastní kapitál"]) * 100
+
+            c1.metric("ROS (Marže z tržeb)", f"{ros_2:.1f} %", f"{ros_2 - ros_1:.1f} %")
+            c1.caption("Kolik % z tržeb zůstává jako zisk?")
+            
+            c2.metric("ROA (Využití majetku)", f"{roa_2:.1f} %", f"{roa_2 - roa_1:.1f} %")
+            c2.caption("Jak efektivně firma využívá majetek?")
+            
+            c3.metric("ROE (Zhodnocení vkladu)", f"{roe_2:.1f} %", f"{roe_2 - roe_1:.1f} %")
+            c3.caption("Jak se zhodnocují peníze vlastníků?")
+
+        with tab_l:
+            c1, c2, c3 = st.columns(3)
+            bl_2 = safe_div(y2["Oběžná aktiva"], y2["Krátkodobé závazky"])
+            pl_2 = safe_div(y2["Oběžná aktiva"] - y2["Zásoby"], y2["Krátkodobé závazky"])
+            ol_2 = safe_div(y2["Peníze"], y2["Krátkodobé závazky"])
+            
+            bl_1 = safe_div(y1["Oběžná aktiva"], y1["Krátkodobé závazky"])
+            pl_1 = safe_div(y1["Oběžná aktiva"] - y1["Zásoby"], y1["Krátkodobé závazky"])
+            ol_1 = safe_div(y1["Peníze"], y1["Krátkodobé závazky"])
+
+            c1.metric("Běžná likvidita", f"{bl_2:.2f}", f"{bl_2 - bl_1:.2f}")
+            c1.caption("Zvládne firma platit závazky z majetku?")
+            
+            c2.metric("Pohotová likvidita", f"{pl_2:.2f}", f"{pl_2 - pl_1:.2f}")
+            c2.caption("Jak je na tom, když neprodá zásoby?")
+            
+            c3.metric("Okamžitá likvidita", f"{ol_2:.2f}", f"{ol_2 - ol_1:.2f}")
+            c3.caption("Co lze zaplatit IHNED z účtu?")
+
+        with tab_z:
+            c1, c2, c3 = st.columns(3)
+            zadl_2 = safe_div(y2["Cizí zdroje"], y2["Aktiva celkem"]) * 100
+            mira_2 = safe_div(y2["Cizí zdroje"], y2["Vlastní kapitál"])
+            inkaso_2 = safe_div(y2["Pohledávky"], y2["Tržby"]) * 365
+            
+            zadl_1 = safe_div(y1["Cizí zdroje"], y1["Aktiva celkem"]) * 100
+            mira_1 = safe_div(y1["Cizí zdroje"], y1["Vlastní kapitál"])
+            inkaso_1 = safe_div(y1["Pohledávky"], y1["Tržby"]) * 365
+
+            c1.metric("Celková zadluženost", f"{zadl_2:.1f} %", f"{zadl_2 - zadl_1:.1f} %", delta_color="inverse")
+            c1.caption("Jak moc firma funguje na dluh?")
+            
+            c2.metric("Míra zadluženosti", f"{mira_2:.2f}x", f"{mira_2 - mira_1:.2f}x", delta_color="inverse")
+            c2.caption("Kolik dluhu připadá na 1 Kč vlastních peněz?")
+            
+            c3.metric("Doba inkasa pohledávek", f"{inkaso_2:.0f} dní", f"{inkaso_2 - inkaso_1:.0f} dní", delta_color="inverse")
+            c3.caption("Za kolik dní průměrně zákazníci platí?")
+
+        st.markdown("""
+        <div class="box-blue">
+            <b>✍️ Úkol pro tebe:</b> Vyplň tabulku pro fiktivní podnik. Prohlédni si výsledky a zamysli se: 
+            <i>Co se firmě daří? Kde číhá největší riziko? Jaké JEDNO konkrétní opatření bys majiteli poradil/a?</i>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # --- 5.8 JAK NAPSAT ZÁVĚR ---
+        st.markdown("## 5.8 Jak napsat závěr finanční analýzy")
+        st.write(
+            "Samotné výpočty nestačí. Dobrý závěr finanční analýzy (manažerské shrnutí) má být **krátký, konkrétní a srozumitelný** "
+            "i pro člověka, který není účetní. Pokud vysypeš na šéfa jen procenta, nepochopí tě. Musíš vyprávět příběh."
+        )
+
+        st.markdown("""
+        **Struktura dokonalého závěru:**
+        * **📈 Ziskovost:** Vyděláváme / proděláváme a proč.
+        * **💧 Likvidita:** Máme / nemáme na účtu dost peněz na včasné zaplacení faktur.
+        * **💳 Zadluženost:** Náš dluh je bezpečný / rizikový.
+        * **⚙️ Efektivita:** Využíváme majetek dobře / peníze se nám zasekávají ve skladu a u neplatičů.
+        * **🚀 Doporučení:** Co konkrétně musíme zítra ráno udělat jinak.
+        """)
+
+        with st.container(border=True):
+            st.markdown("#### 🤖 Generátor profi závěru")
+            st.write("Vyber si aktuální stav tvé fiktivní firmy a podívej se, jak by tvé hodnocení zapsal profesionální finanční ředitel.")
+            
+            col_g1, col_g2 = st.columns(2)
+            with col_g1:
+                gen_zisk = st.selectbox("1. Jak je na tom firma se ziskem?", [
+                    "Tržby i zisk stabilně rostou.",
+                    "Firma je v zisku, ale marže klesá.",
+                    "Firma propadla do ztráty."
+                ])
+                gen_likvidita = st.selectbox("2. Co peníze a likvidita?", [
+                    "Hotovosti je dostatek, závazky platíme včas.",
+                    "Likvidita se zhoršuje, peníze chybí.",
+                    "Hrozí okamžitá platební neschopnost!"
+                ])
+            with col_g2:
+                gen_dluh = st.selectbox("3. Jaká je zadluženost?", [
+                    "Zadlužení je nízké a bezpečné.",
+                    "Dluh roste, ale zatím je zvládnutelný.",
+                    "Firma je předlužena a dusí ji splátky."
+                ])
+                gen_sklad = st.selectbox("4. Co zásoby a zákazníci?", [
+                    "Zákazníci platí včas, sklad se točí.",
+                    "Peníze se začínají zasekávat ve skladu.",
+                    "Zákazníci neplatí a zásoby leží ladem."
+                ])
+
+            st.markdown("##### 📄 Výsledný report pro majitele:")
+            
+            # Generování dynamického textu na základě výběru
+            report_text = f"Firma aktuálně vykazuje smíšené výsledky. Z pohledu rentability {gen_zisk.lower().replace('.', '')}. "
+            report_text += f"V oblasti cashflow {gen_likvidita.lower().replace('.', '')}, přičemž z hlediska cizích zdrojů platí, že {gen_dluh.lower().replace('.', '')}. "
+            report_text += f"Když se podíváme na provozní aktivitu, vidíme, že {gen_sklad.lower().replace('.', '')}. "
+            
+            # Doporučení na základě nejhoršího problému
+            if "Hrozí okamžitá" in gen_likvidita or "předlužena" in gen_dluh:
+                doporuceni = "🚨 **Krizové doporučení:** Firma musí okamžitě zastavit zbytné výdaje, vyjednat s bankou odklad splátek a tvrdě vymáhat pohledávky. Jinak hrozí úpadek."
+            elif "zasekávat ve skladu" in gen_sklad or "zhoršuje" in gen_likvidita:
+                doporuceni = "⚠️ **Doporučení k optimalizaci:** Prioritou pro další kvartál je uvolnit zamrzlou hotovost. Navrhuji zavést slevy na staré zásoby, vyprodat sklad a zkrátit dobu splatnosti faktur pro naše odběratele."
+            elif "ztráty" in gen_zisk:
+                doporuceni = "⚠️ **Strategické doporučení:** Musíme přehodnotit byznys model. Doporučuji provést detailní analýzu nákladů (osekat fixní náklady) a případně zdražit klíčové produkty."
+            else:
+                doporuceni = "✅ **Doporučení pro růst:** Firma je ve výborné kondici. Doporučuji udržet stávající kurz, volnou hotovost reinvestovat do marketingu a zvážit bezpečné využití úvěru pro rychlejší expanzi."
+
+            st.info(f"**Shrnutí:** {report_text}\n\n{doporuceni}")
