@@ -5479,7 +5479,7 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
             "jak firmy a algoritmy cílí na tvou peněženku."
         )
 
-        # Navigace uvnitř pracovní sekce
+        # Navigace uvnitř pracovní sekce (přidán key pro jistotu paměti)
         workbook_section = st.radio("Vyber si aktivitu:", [
             "🧭 Startovací diagnostika",
             "🔐 Bezpečnostní challenge (Poznej podvod)",
@@ -5487,7 +5487,7 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
             "🛟 Simulátor nečekané události",
             "🧮 Můj první byznys (Bod zvratu)",
             "✅ Exit ticket (Co si odnáším)"
-        ], horizontal=True)
+        ], horizontal=True, key="wb_nav")
 
         st.divider()
 
@@ -5497,10 +5497,10 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
             st.write("Vyplň před začátkem studia. Ohodnoť se na škále 0 (Nevím nic) až 10 (Umím to vysvětlit tátovi).")
 
             with st.container(border=True):
-                s1 = st.slider("Jak dobře chápu rozdíl mezi ČNB a běžnou komerční bankou?", 0, 10, 5)
-                s2 = st.slider("Dokážu poznat rizikovou finanční nabídku (podvod)?", 0, 10, 5)
-                s3 = st.slider("Rozumím, proč může být firma zisková, ale přesto nemá na účtu peníze na výplaty?", 0, 10, 5)
-                s4 = st.slider("Vím, co přesně znamená hrubá a čistá mzda?", 0, 10, 5)
+                st.slider("Jak dobře chápu rozdíl mezi ČNB a běžnou komerční bankou?", 0, 10, 5, key="diag_1")
+                st.slider("Dokážu poznat rizikovou finanční nabídku (podvod)?", 0, 10, 5, key="diag_2")
+                st.slider("Rozumím, proč může být firma zisková, ale přesto nemá na účtu peníze na výplaty?", 0, 10, 5, key="diag_3")
+                st.slider("Vím, co přesně znamená hrubá a čistá mzda?", 0, 10, 5, key="diag_4")
 
             st.info("💡 **Úkol pro tebe:** Po prostudování všech kapitol se sem vrať. Pokud se tvé skóre posunulo z 5 na 9, kapitola splnila svůj účel!")
 
@@ -5512,18 +5512,17 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 "zda je to bezpečná notifikace, nebo nebezpečný podvod."
             )
 
-            # Chat interface pro simulaci zpráv
             zpravy = [
                 {"text": "Vaše karta byla zablokována. Klikněte na tento odkaz (bit.ly/banka-overeni) a přihlaste se pro odblokování.", "spravne": "Nebezpečné", "vysvetleni": "Banka NIKDY neposílá odkazy na přihlášení přes SMS nebo e-mail. Je to phishing, který chce ukrást tvé heslo."},
                 {"text": "Dobrý den, jsem z bezpečnostního oddělení vaší banky. Na vašem účtu je podezřelá transakce. Nadiktujte mi prosím kód, který vám právě přišel v SMS.", "spravne": "Nebezpečné", "vysvetleni": "Vishing (hlasový podvod). Banka nikdy nechce diktovat kódy po telefonu. Útočník se právě snaží zadat platbu a potřebuje tvé potvrzení."},
-                {"text": "Vaše trvalá platba za nájem (8 500 Kč) neproběhla kvůli nedostatku zůstatku.", "spravne": "Bezpečné", "vysvetleni": "Standardní notifikace. Neobsahuje žádný odkaz, nevyvolává nátlak, jen tě informuje. (Stejně si ale zkontroluj aplikaci, ne odkaz v SMS)."},
+                {"text": "Vaše trvalá platba za nájem (8 500 Kč) neproběhla kvůli nedostatku zůstatku.", "spravne": "Bezpečné", "vysvetleni": "Standardní notifikace. Neobsahuje žádný odkaz, nevyvolává nátlak, jen tě informuje."},
                 {"text": "Garantovaný výnos 20 % měsíčně! Investujte do nové AI kryptoměny. Akce končí za 3 hodiny!", "spravne": "Nebezpečné", "vysvetleni": "Klasický scam. Jakmile někdo slibuje obří výnos, garantuje ho a navíc vytváří časový nátlak (FOMO), jde vždy o podvod."}
             ]
 
             for i, zprava in enumerate(zpravy):
                 with st.chat_message("user", avatar="📱"):
                     st.write(zprava["text"])
-                    volba = st.radio(f"Hodnocení zprávy č. {i+1}:", ["Vyber hodnocení...", "Bezpečné", "Podezřelé", "Nebezpečné"], key=f"msg_{i}")
+                    volba = st.radio(f"Hodnocení zprávy č. {i+1}:", ["Vyber hodnocení...", "Bezpečné", "Podezřelé", "Nebezpečné"], key=f"msg_sec_{i}")
                     
                     if volba != "Vyber hodnocení...":
                         if volba == zprava["spravne"] or (volba == "Podezřelé" and zprava["spravne"] == "Nebezpečné"):
@@ -5536,25 +5535,24 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
             st.markdown("### 🧠 Algoritmy utrácení: Kdo mě ovlivňuje?")
             st.write(
                 "Vyber jeden svůj nedávný nákup (např. skin ve hře, mikinu, drahý drink), ke kterému tě navedla reklama, "
-                "sleva, influencer nebo tlak okolí (kamarád to měl taky)."
+                "sleva, influencer nebo tlak okolí."
             )
 
             with st.container(border=True):
-                st.text_input("1. Co jsi koupil/a?")
+                st.text_input("1. Co jsi koupil/a?", key="alg_1")
                 
                 st.selectbox("2. Jakou emoci nebo taktiku na tebe nabídka použila?", [
                     "FOMO (Strach, že o něco přijdu - 'Akce končí za hodinu!')",
                     "Společenský status ('Budu vypadat dobře před ostatními')",
                     "Pohodlí ('Klikni a koupíš hned bez přemýšlení')",
                     "Autoritu ('Oblíbený influencer to doporučil')"
-                ])
+                ], key="alg_2")
                 
-                st.radio("3. Koupil/a bys to, i kdyby to nebylo ve slevě nebo kdyby to nikdo z tvých přátel neměl?", ["Ano, potřeboval/a jsem to.", "Spíše ne, nechal/a jsem se strhnout."])
+                st.radio("3. Koupil/a bys to, i kdyby to nebylo ve slevě?", ["Ano, potřeboval/a jsem to.", "Spíše ne, nechal/a jsem se strhnout."], key="alg_3")
                 
-                # Hodinová mzda kalkulačka
                 st.markdown("#### Přepočet na hodiny života")
-                cena = st.number_input("Kolik to stálo (Kč)?", value=500, step=100)
-                mzda = st.number_input("Tvá reálná (nebo vysněná studentská) hodinová mzda z brigády (Kč/h)?", value=150, step=10)
+                cena = st.number_input("Kolik to stálo (Kč)?", min_value=0, value=500, step=50, key="alg_cena")
+                mzda = st.number_input("Tvá reálná (nebo vysněná) hodinová mzda z brigády (Kč/h)?", min_value=1, value=150, step=10, key="alg_mzda")
                 if mzda > 0:
                     hodiny = cena / mzda
                     st.info(f"💡 Tento nákup tě stál **{hodiny:.1f} hodin čistého času** (práce). Stálo ti to za to?")
@@ -5562,7 +5560,7 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
         # --- AKTIVITA 4: SIMULÁTOR REZERVY ---
         elif workbook_section == "🛟 Simulátor nečekané události":
             st.markdown("### 🛟 Rezerva: Simulátor nečekané události")
-            st.write("Finanční rezerva funguje jako airbag v autě. Nikdy nevíš, kdy ho budeš potřebovat. Pojďme otestovat tvůj (fiktivní) rozpočet.")
+            st.write("Finanční rezerva funguje jako airbag v autě. Otestuj tvůj (fiktivní) rozpočet.")
 
             prijem = 18000
             vylohy = 13500
@@ -5581,7 +5579,7 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 "Spadl ti mobil a rozbilo se sklo (Oprava: 3 500 Kč)",
                 "Kvůli zkouškám/nemoci jsi přišel o 2 týdny brigády (Ztráta: 4 000 Kč)",
                 "Přišel nedoplatek za energie a internet na bytě (Výdaj: 2 800 Kč)"
-            ])
+            ], key="sim_udalost")
 
             if udalost != "Zvol krizový scénář...":
                 if "mobil" in udalost:
@@ -5597,23 +5595,57 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 st.markdown("#### Následky")
                 
                 if zbytek >= 0:
-                    st.success(f"✅ Tvůj airbag zafungoval! Zaplatil jsi {naklad} Kč z rezervy. Zbylo ti na ní {zbytek} Kč. Nemusel jsi do dluhů.")
+                    st.success(f"✅ Tvůj airbag zafungoval! Zaplatil jsi {naklad} Kč z rezervy. Zbylo ti na ní {zbytek} Kč.")
                     obnova = naklad / volne_mesicne
                     import math
-                    st.info(f"⏱️ Při tvém tempu spoření ({volne_mesicne} Kč měsíčně) potrvá **{math.ceil(obnova)} měsíce**, než rezervu znovu doplníš na původní částku.")
+                    st.info(f"⏱️ Při tvém tempu spoření ({volne_mesicne} Kč měsíčně) potrvá **{math.ceil(obnova)} měsíce**, než rezervu znovu doplníš.")
                 else:
                     st.error(f"🚨 Tvůj airbag praskl! Tvá rezerva nestačila. Na zaplacení ti **chybí {abs(zbytek)} Kč**.")
-                    st.warning("⚠️ Jak to vyřešíš? Půjčíš si od rodičů? Vezmeš si nevýhodný úvěr? Nezaplatíš to a přijde penále?")
+                    st.warning("⚠️ Jak to vyřešíš? Budeš si muset půjčit nevýhodně, nebo požádat rodiče?")
 
-        # --- AKTIVITA 5: BOD ZVRATU ---
+        # --- AKTIVITA 5: BOD ZVRATU (OPRAVENO) ---
         elif workbook_section == "🧮 Můj první byznys (Bod zvratu)":
             st.markdown("### 🧮 Podnikové finance: Bod zvratu na vlastním nápadu")
             st.write(
-                "Vymysli jednoduchý produkt nebo službu: školní merch, tisk samolepek na 3D tiskárně, nebo třeba pečení cupcakes. "
-                "Spočítej si, kolik jich musíš prodat, abys nebyl v mínusu."
+                "Vymysli jednoduchý produkt: školní merch, tisk samolepek, doučování... "
+                "Spočítej si, kolik jich musíš prodat, abys pokryl náklady."
             )
 
             with st.container(border=True):
-                produkt = st.text_input("Co budeš prodávat?", "Školní plátěná taška (Merch)")
+                produkt = st.text_input("Co budeš prodávat?", "Školní plátěná taška (Merch)", key="bz_produkt")
                 
                 c1, c2 = st.columns(2)
+                # Oprava: min_value nastavena na 1, aby šly zadávat i velmi levné produkty (např. samolepky za 10 Kč)
+                s_cena = c1.number_input("Prodejní cena za 1 ks [Kč]", min_value=1, value=300, step=10, key="bz_cena")
+                s_vn = c2.number_input("Variabilní náklad na 1 ks (Nákup materiálu) [Kč]", min_value=1, value=150, step=10, key="bz_vn")
+                s_fn = st.number_input("Fixní náklady celkem (E-shop, reklama, design) [Kč]", min_value=0, value=3000, step=500, key="bz_fn")
+
+                if s_cena <= s_vn:
+                    st.error("Chyba! Prodejní cena musí být vyšší než variabilní náklad na kus, jinak proděláváš už při výrobě.")
+                else:
+                    marze = s_cena - s_vn
+                    bep = s_fn / marze
+                    
+                    import math
+                    bep_kusy = math.ceil(bep)
+                    
+                    st.success(f"🎯 **Tvá marže je {marze} Kč z každého kusu.**")
+                    st.info(f"🚀 **Bod zvratu:** Musíš prodat **{bep_kusy} kusů** ({produkt}), abys pokryl/a fixní náklady. Od kusu číslo {bep_kusy + 1} začínáš generovat čistý zisk!")
+
+        # --- AKTIVITA 6: EXIT TICKET (OPRAVENO) ---
+        elif workbook_section == "✅ Exit ticket (Co si odnáším)":
+            st.markdown("### ✅ Exit ticket: Závěrečná reflexe")
+            st.write("Představ si, že bys měl/a předstoupit před třídu a shrnout, co sis z financí odnesl/a. Vyplň tyto body:")
+
+            # Oprava: Přidány unikátní klíče (key), aby formulář neztratil paměť po kliknutí na tlačítko
+            t1 = st.text_area("1. Jedna věc, kterou jsem pochopil/a nově:", key="et_text1")
+            t2 = st.text_area("2. Jedno finanční rozhodnutí, u kterého příště zpomalím:", key="et_text2")
+            t3 = st.text_area("3. Jedna otázka, kterou bych položil/a finančnímu poradci nebo podnikateli:", key="et_text3")
+
+            if st.button("Uložit moji reflexi", key="btn_save_et"):
+                # Kontrolujeme, zda po smazání prázdných mezer zbyl nějaký text
+                if t1.strip() != "" and t2.strip() != "" and t3.strip() != "":
+                    st.balloons()
+                    st.success("Tvá reflexe je uložená. Gratulujeme k úspěšnému absolvování vzdělávacího bloku o financích!")
+                else:
+                    st.warning("Zkus prosím vyplnit všechna tři pole. Reflexe ti pomůže si věci lépe zapamatovat.")
