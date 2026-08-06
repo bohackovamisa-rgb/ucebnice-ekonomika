@@ -2452,280 +2452,257 @@ def render():
             st.write("Historická data jsou užitečná, ale nejsou zárukou budoucnosti. Pokud nějaké aktivum v minulosti rostlo, neznamená to, že poroste dál. Trh se mění, firmy krachují, technologie zastarávají, regulace se mění a nálada investorů může být extrémně proměnlivá.")
             
             st.warning("⚠️ **Varování před grafem:** Graf začínající ve vhodně vybraném roce může vypadat skvěle. Jiný začátek může ukázat dlouhé období ztráty. Proto je nutné ptát se: Kdo graf vybral? Proč právě toto období? Co v grafu není vidět?")
-import streamlit as st
+# =========================================================================
+    # 3.6 KRYPTOMĚNY: TECHNOLOGIE, PENÍZE, SPEKULACE I RIZIKO
+    # =========================================================================
+    if "3.6 Kryptoměny" in selected_section_2:  # Uprav název proměnné podle tvého selectboxu
+        st.markdown("<div class='sub-section-header'>6. KRYPTOMĚNY A NOVÉ FINANČNÍ TECHNOLOGIE</div>", unsafe_allow_html=True)
+        
+        st.markdown("## 3.6 Kryptoměny: technologie, peníze, spekulace i riziko")
+        st.write(
+            "Kryptoměny jsou pro současnou generaci atraktivní, protože spojují technologie, internetovou kulturu, "
+            "možnost rychlého zisku, nedůvěru k institucím a příběh „nového finančního systému“. "
+            "Právě proto je potřeba je vysvětlit srozumitelně — bez strašení, ale také bez reklamního nadšení."
+        )
 
-def vykreslit_kapitolu_3_6():
-    st.markdown("# 3.6 Kryptoměny: technologie, peníze, spekulace i riziko")
-    st.write(
-        "Kryptoměny jsou pro současnou generaci atraktivní, protože spojují technologie, internetovou kulturu, "
-        "možnost rychlého zisku, nedůvěru k institucím a příběh „nového finančního systému“. "
-        "Právě proto je potřeba je vysvětlit srozumitelně — bez strašení, ale také bez reklamního nadšení."
-    )
-
-    st.markdown("""
-    <div class="box-blue">
-        <b>🪙 Kryptoměna jednoduše:</b> Kryptoměna je digitální aktivum, které existuje v počítačové síti.
-        Záznamy o vlastnictví a převodech nejsou vedeny jednou běžnou bankou, ale pomocí technologie, která umožňuje sdílenou evidenci transakcí.
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="box-red">
-        <b>🚫 Důležité:</b> Tato kapitola není investiční doporučení. Cílem není přesvědčit tě, abys kryptoměny kupoval/a nebo odmítal/a.
-        Cílem je rozumět principu, rizikům, reklamním trikům a rozdílu mezi technologií a spekulací.
-    </div>
-    """, unsafe_allow_html=True)
-
-    # --- 3.6.1 ---
-    st.markdown("## 3.6.1 Proč kryptoměny vznikly")
-    st.write(
-        "Kryptoměny vznikly jako reakce na otázku: *Lze vytvořit digitální peníze, které nepůjde jednoduše kopírovat a které nebudou závislé na jedné centrální autoritě?*"
-    )
-    st.write("U běžných digitálních peněz se problém řeší přes banku. Banka vede účetní záznam a hlídá, aby člověk neutratil stejné peníze dvakrát.")
-    st.write("U kryptoměn se tento problém řeší jinak:")
-
-    st.markdown("""
-    * **Sdílená databáze:** Transakce se zapisují do sdílené databáze.
-    * **Síťová validace:** Síť účastníků ověřuje, co je platné.
-    * **Protokol:** Pravidla jsou pevně dány protokolem.
-    * **Kryptografie:** Vlastnictví se prokazuje kryptografickými klíči.
-    """)
-
-    st.markdown("**Problém dvojí útraty**")
-    st.write(
-        "Když pošleš kamarádovi fotku, můžeš si ji stále nechat. Digitální soubor lze kopírovat. U peněz by to byl problém: "
-        "kdyby šlo stejnou digitální stokorunu poslat dvěma lidem, peníze by ztratily smysl. Kryptoměnové sítě se snaží řešit právě to, "
-        "aby šlo ověřit, kdo co vlastní a zda už danou hodnotu neutratil."
-    )
-
-    # --- 3.6.2 ---
-    st.markdown("## 3.6.2 Blockchain: účetní kniha, kterou sdílí síť")
-    st.write(
-        "Blockchain si můžeš představit jako řetěz bloků záznamů. Do bloků se zapisují transakce. Jakmile je blok potvrzen a navázán na předchozí bloky, "
-        "je velmi obtížné ho zpětně změnit bez toho, aby si toho síť všimla."
-    )
-    st.write("Blockchain není kouzlo. Je to kombinace:")
-
-    st.markdown("""
-    * Databáze
-    * Kryptografie
-    * Pravidel sítě
-    * Motivace účastníků
-    * Mechanismu ověřování transakcí
-    """)
-
-    st.markdown("""
-    <div class="box-yellow">
-        <b>📒 Přirovnání:</b> Představ si třídní účetní knihu, kterou nemá jen jeden pokladník, ale kopii má mnoho lidí.
-        Když někdo zapíše novou platbu, ostatní kontrolují, zda zápis dává smysl. Pokud by jeden člověk chtěl zápis podvést, ostatní kopie ho mohou odhalit.
-    </div>
-    """, unsafe_allow_html=True)
-
-    # --- 3.6.3 ---
-    st.markdown("## 3.6.3 Peněženka, adresa, veřejný a soukromý klíč")
-    st.write("Kryptoměny nejsou uložené „v peněžence“ stejným způsobem, jako máš mince v kapse. Peněženka spíš spravuje klíče, které umožňují s kryptoměnou nakládat.")
-
-    st.markdown("""
-    | Pojem | Co znamená | Přirovnání |
-    | :--- | :--- | :--- |
-    | **Veřejná adresa** | Adresa, na kterou lze poslat kryptoměnu. | Číslo účtu. |
-    | **Soukromý klíč** | Tajný údaj, kterým se prokazuje právo s kryptoměnou nakládat. | Kombinace podpisového práva a trezoru. |
-    | **Seed phrase** | Sada slov, ze které lze obnovit přístup k peněžence. | Hlavní klíč ke všemu. |
-    | **Burza** | Služba, kde lze kryptoměny nakupovat, prodávat nebo držet. | Směnárna a investiční platforma. |
-    | **Transakční poplatek** | Poplatek za zpracování transakce v síti. | Poplatek za převod, ale proměnlivý podle sítě. |
-    """)
-
-    st.markdown("""
-    <div class="box-red">
-        <b>🔐 Nejdůležitější bezpečnostní pravidlo:</b> Kdo zná tvůj soukromý klíč nebo seed phrase, může získat přístup ke kryptoměnám.
-        Banka ti ztracený soukromý klíč neobnoví jako heslo do internetového bankovnictví.
-    </div>
-    """, unsafe_allow_html=True)
-
-    # --- 3.6.4 ---
-    st.markdown("## 3.6.4 Bitcoin, Ethereum, stablecoiny a tokeny")
-    st.write("Kryptoměny nejsou všechny stejné.")
-
-    st.markdown("""
-    | Typ | Co je hlavní myšlenka | Riziko |
-    | :--- | :--- | :--- |
-    | **Bitcoin** | První a nejznámější kryptoměna, často chápaná jako digitální vzácné aktivum. | Vysoká volatilita, technologická a regulační rizika. |
-    | **Ethereum** | Síť umožňující chytré kontrakty a decentralizované aplikace. | Technologická složitost, chyby v aplikacích, kolísání ceny. |
-    | **Stablecoiny** | Tokeny, které se snaží držet hodnotu vůči měně, například dolaru. | Riziko rezerv, emitenta, regulace a ztráty navázání na měnu. |
-    | **Meme coiny** | Tokeny postavené často na internetové komunitě, humoru a virálním trendu. | Extrémní spekulace, manipulace, prudké pády. |
-    | **Utility tokeny** | Tokeny slibující využití v určité službě nebo ekosystému. | Projekt nemusí uspět, token nemusí mít reálnou hodnotu. |
-    """)
-
-    # --- 3.6.5 ---
-    st.markdown("## 3.6.5 Těžba, validace a spotřeba energie")
-    st.write("Některé kryptoměny používají systém **Proof of Work**. Ten vyžaduje výpočetní výkon a spotřebu energie. Nejznámějším příkladem je Bitcoin.")
-    st.write("Jiné sítě používají **Proof of Stake**, kde se transakce ověřují jiným způsobem — účastníci uzamykají určité množství tokenů jako ekonomickou záruku.")
-
-    st.markdown("""
-    | Mechanismus | Princip | Diskutované téma |
-    | :--- | :--- | :--- |
-    | **Proof of Work** | Ověřování pomocí výpočetní práce. | Energetická náročnost, bezpečnost sítě. |
-    | **Proof of Stake** | Ověřování pomocí uzamčeného podílu v síti. | Koncentrace bohatství, pravidla validátorů. |
-    """)
-
-    # --- 3.6.6 ---
-    st.markdown("## 3.6.6 Chytré kontrakty, DeFi a NFT")
-    st.write("**Chytrý kontrakt** je program běžící na blockchainu, který může automaticky provádět určité kroky podle rules. Neznamená to, že je právně „chytrý“ nebo bezpečný. Znamená to, že jde o kód.")
-    st.write("**DeFi** znamená decentralizované finance. Jde o služby, které se snaží napodobit finanční produkty — půjčování, směnu, úročení — bez klasické banky.")
-    st.write("**NFT** je unikátní token, který může odkazovat na digitální objekt, členství, herní předmět nebo jiný záznam.")
-
-    st.markdown("""
-    <div class="box-purple">
-        <b>⚠️ Pozor na slovo „decentralizované“:</b> To, že služba používá blockchain, neznamená, že je bezpečná, férová nebo bez prostředníků.
-        Rizikem může být chyba v kódu, podvodný tým, manipulace trhu, falešná likvidita nebo nejasná odpovědnost.
-    </div>
-    """, unsafe_allow_html=True)
-
-    # --- 3.6.7 ---
-    st.markdown("## 3.6.7 Proč cena kryptoměn tolik kolísá")
-    st.write("Kryptoměny často nemají stabilní vnitřní hodnotu jako produktivní firma s tržbami nebo dluhopis se smluvním úrokem. Cena je silně závislá na nabídce, poptávce, očekávání, náladě trhu, regulaci, mediálních trendech a chování velkých držitelů.")
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**Cena může růst kvůli:**")
         st.markdown("""
-        * Zájmu investorů
-        * Mediální pozornosti
-        * Omezené nabídce některých aktiv
-        * Technologickému vývoji
-        * Vstupu institucí
-        * Spekulaci a FOMO
-        """)
-    with col2:
-        st.markdown("**Cena může klesat kvůli:**")
+        <div class="box-blue">
+            <b>🪙 Kryptoměna jednoduše:</b> Kryptoměna je digitální aktivum, které existuje v počítačové síti.
+            Záznamy o vlastnictví a převodech nejsou vedeny jednou běžnou bankou, ale pomocí technologie, která umožňuje sdílenou evidenci transakcí.
+        </div>
+        """, unsafe_allow_html=True)
+
         st.markdown("""
-        * Panice na trhu
-        * Hackerskému útoku
-        * Pádu burzy
-        * Regulaci
-        * Ztrátě důvěry
-        * Výprodejům velkých investorů
-        * Nesplnění slibů projektu
+        <div class="box-red">
+            <b>🚫 Důležité:</b> Tato kapitola není investiční doporučení. Cílem není přesvědčit tě, abys kryptoměny kupoval/a nebo odmítal/a.
+            Cílem je rozumět principu, rizikům, reklamním trikům a rozdílu mezi technologií a spekulací.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # --- 3.6.1 ---
+        st.markdown("### 3.6.1 Proč kryptoměny vznikly")
+        st.write(
+            "Kryptoměny vznikly jako reakce na otázku: *Lze vytvořit digitální peníze, které nepůjde jednoduše kopírovat a které nebudou závislé na jedné centrální autoritě?*"
+        )
+        st.write("U běžných digitálních peněz se problém řeší přes banku. Banka vede účetní záznam a hlídá, aby člověk neutratil stejné peníze dvakrát.")
+        st.write("U kryptoměn se tento problém řeší jinak:")
+
+        st.markdown("""
+        * **Sdílená databáze:** Transakce se zapisují do sdílené databáze.
+        * **Síťová validace:** Síť účastníků ověřuje, co je platné.
+        * **Protokol:** Pravidla jsou pevně dány protokolem.
+        * **Kryptografie:** Vlastnictví se prokazuje kryptografickými klíči.
         """)
 
-    st.markdown("""
-    <div class="box-blue">
-        <b>🎢 Volatilita lidsky:</b> Pokud aktivum může za měsíc vyrůst o desítky procent, může také o desítky procent spadnout.
-        Vysoký pohyb nahoru a dolů není chyba systému — u kryptoměn je to běžná vlastnost trhu.
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("**Problém dvojí útraty**")
+        st.write(
+            "Když pošleš kamarádovi fotku, můžeš si ji stále nechat. Digitální soubor lze kopírovat. U peněz by to byl problém: "
+            "kdyby šlo stejnou digitální stokorunu poslat dvěma lidem, peníze by ztratily smysl. Kryptoměnové sítě se snaží řešit právě to, "
+            "aby šlo ověřit, kdo co vlastní a zda už danou hodnotu neutratil."
+        )
 
-    # --- 3.6.8 ---
-    st.markdown("## 3.6.8 Největší rizika kryptoměn")
+        # --- 3.6.2 ---
+        st.markdown("### 3.6.2 Blockchain: účetní kniha, kterou sdílí síť")
+        st.write(
+            "Blockchain si můžeš představit jako řetěz bloků záznamů. Do bloků se zapisují transakce. Jakmile je blok potvrzen a navázán na předchozí bloky, "
+            "je velmi obtížné ho zpětně změnit bez toho, aby si toho síť všimla."
+        )
+        st.write("Blockchain není kouzlo. Je to kombinace:")
 
-    st.markdown("""
-    | Riziko | Jak se projevuje | Jak se bránit |
-    | :--- | :--- | :--- |
-    | **Volatilita** | Cena prudce kolísá. | Neinvestovat peníze potřebné na běžný život nebo rezervu. |
-    | **Ztráta přístupu** | Člověk ztratí seed phrase nebo soukromý klíč. | Bezpečně zálohovat, nikdy nesdílet klíče. |
-    | **Podvod** | Falešná investice, falešná burza, falešný token. | Ověřovat zdroje, nedůvěřovat garantovaným výnosům. |
-    | **Hack burzy / aplikace** | Služba přijde o prostředky klientů. | Rozumět rozdílu mezi vlastní peněženkou a úschovou na burze. |
-    | **Regulace** | Změna pravidel omezí obchodování nebo služby. | Sledovat právní prostředí, nesázet vše na jeden scénář. |
-    | **Manipulace trhu** | Velcí hráči nebo influenceři ovlivňují cenu. | Nenakupovat podle virálních příspěvků a FOMO. |
-    | **Technická nevratnost** | Chybně odeslaná transakce nejde jednoduše vrátit. | Kontrolovat adresy, posílat testovací malé částky. |
-    """)
+        st.markdown("""
+        * Databáze
+        * Kryptografie
+        * Pravidel sítě
+        * Motivace účastníků
+        * Mechanismu ověřování transakcí
+        """)
 
-    # --- 3.6.9 ---
-    st.markdown("## 3.6.9 Krypto podvody a varovné signály")
-    st.write("Kryptoměny jsou oblíbeným prostředím pro podvody, protože kombinují technologickou složitost, touhu po rychlém zisku a strach, že člověk něco propásne.")
+        st.markdown("""
+        <div class="box-yellow">
+            <b>📒 Přirovnání:</b> Představ si třídní účetní knihu, kterou nemá jen jeden pokladník, ale kopii má mnoho lidí.
+            Když někdo zapíše novou platbu, ostatní kontrolují, zda zápis dává smysl. Pokud by jeden člověk chtěl zápis podvést, ostatní kopie ho mohou odhalit.
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown("**🚩 Varovné signály:**")
-    st.markdown("""
-    * „Garantovaný výnos“ nebo tvrzení „bez rizika“
-    * Tlak na rychlé rozhodnutí
-    * Tajná investiční skupina
-    * Influencer ukazující luxusní život s příslibem jednoduchého návodu
-    * Projekt nemá jasný tým nebo dokumentaci
-    * Není jasné, odkud se bere výnos
-    * Lidé vydělávají hlavně náborem dalších lidí
-    * Někdo vyžaduje seed phrase nebo přístupové údaje
-    * Nabídka zní příliš dobře na to, aby byla pravdivá
-    """)
+        # --- 3.6.3 ---
+        st.markdown("### 3.6.3 Peněženka, adresa, veřejný a soukromý klíč")
+        st.write("Kryptoměny nejsou uložené „v peněžence“ stejným způsobem, jako máš mince v kapse. Peněženka spíš spravuje klíče, které umožňují s kryptoměnou nakládat.")
 
-    st.markdown("""
-    <div class="box-red">
-        <b>🚨 Zlaté pravidlo:</b> Pokud nerozumíš tomu, odkud se bere výnos, pravděpodobně nejsi investor — jsi zdroj peněz pro někoho jiného.
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        | Pojem | Co znamená | Přirovnání |
+        | :--- | :--- | :--- |
+        | **Veřejná adresa** | Adresa, na kterou lze poslat kryptoměnu. | Číslo účtu. |
+        | **Soukromý klíč** | Tajný údaj, kterým se prokazuje právo s kryptoměnou nakládat. | Kombinace podpisového práva a trezoru. |
+        | **Seed phrase** | Sada slov, ze které lze obnovit přístup k peněžence. | Hlavní klíč ke všemu. |
+        | **Burza** | Služba, kde lze kryptoměny nakupovat, prodávat nebo držet. | Směnárna a investiční platforma. |
+        | **Transakční poplatek** | Poplatek za zpracování transakce v síti. | Poplatek za převod, ale proměnlivý podle sítě. |
+        """)
 
-    # --- 3.6.10 ---
-    st.markdown("## 3.6.10 Kryptoměny vs. běžné peníze")
+        st.markdown("""
+        <div class="box-red">
+            <b>🔐 Nejdůležitější bezpečnostní pravidlo:</b> Kdo zná tvůj soukromý klíč nebo seed phrase, může získat přístup ke kryptoměnám.
+            Banka ti ztracený soukromý klíč neobnoví jako heslo do internetového bankovnictví.
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown("""
-    | Otázka | Běžné peníze na účtu | Kryptoměny |
-    | :--- | :--- | :--- |
-    | **Kdo vede záznam?** | Banka a platební systém. | Síť podle pravidel protokolu. |
-    | **Kdo ručí za systém?** | Stát, regulace, banky, dohled, právní pravidla. | Kód, síť, komunita, ekonomická motivace účastníků. |
-    | **Je hodnota stabilní?** | U korun se řeší hlavně inflace a měnová stabilita. | Cena většiny kryptoměn silně kolísá. |
-    | **Lze transakci reklamovat?** | U bankovních služeb existují reklamační postupy. | Transakce bývají nevratné nebo velmi obtížně řešitelné. |
-    | **Kdo obnoví přístup?** | Banka může pomoci s heslem nebo kartou. | Ztracený soukromý klíč znamená trvalou ztrátu. |
-    | **Je to vhodné na rezervu?** | Běžný/spořicí účet je vhodný pro rezervu. | Kvůli volatilitě nevhodné pro nouzovou rezervu. |
-    """)
+        # --- 3.6.4 ---
+        st.markdown("### 3.6.4 Bitcoin, Ethereum, stablecoiny a tokeny")
+        st.write("Kryptoměny nejsou všechny stejné.")
 
-    # --- 3.6.11 ---
-    st.markdown("## 3.6.11 Kryptoměny a daně")
-    st.write(
-        "Kryptoměny mohou mít daňové dopady. Pokud člověk kryptoměnu prodá se ziskem, směňuje ji nebo ji použije k platbě, "
-        "může vzniknout povinnost řešit zdanění. Pravidla se mohou měnit a záleží na konkrétní situaci."
-    )
+        st.markdown("""
+        | Typ | Co je hlavní myšlenka | Riziko |
+        | :--- | :--- | :--- |
+        | **Bitcoin** | První a nejznámější kryptoměna, často chápaná jako digitální vzácné aktivum. | Vysoká volatilita, technologická a regulační rizika. |
+        | **Ethereum** | Síť umožňující chytré kontrakty a decentralizované aplikace. | Technologická složitost, chyby v aplikacích, kolísání ceny. |
+        | **Stablecoiny** | Tokeny, které se snaží držet hodnotu vůči měně, například dolaru. | Riziko rezerv, emitenta, regulace a ztráty navázání na měnu. |
+        | **Meme coiny** | Tokeny postavené často na internetové komunitě, humoru a virálním trendu. | Extrémní spekulace, manipulace, prudké pády. |
+        | **Utility tokeny** | Tokeny slibující využití v určité službě nebo ekosystému. | Projekt nemusí uspět, token nemusí mít reálnou hodnotu. |
+        """)
 
-    st.markdown("""
-    <div class="box-gray">
-        <b>📄 Praktická poznámka:</b> „Mám to v aplikaci“ neznamená, že to není skutečná finanční operace.
-        U kryptoměn je důležité vést si přehled nákupů, prodejů, směn, poplatků a případných zisků nebo ztrát.
-    </div>
-    """, unsafe_allow_html=True)
+        # --- 3.6.5 ---
+        st.markdown("### 3.6.5 Těžba, validace a spotřeba energie")
+        st.write("Některé kryptoměny používají systém **Proof of Work**. Ten vyžaduje výpočetní výkon a spotřebu energie. Nejznámějším příkladem je Bitcoin.")
+        st.write("Jiné sítě používají **Proof of Stake**, kde se transakce ověřují jiným způsobem — účastníci uzamykají určité množství tokenů jako ekonomickou záruku.")
 
-    # --- 3.6.12 ---
-    st.markdown("## 3.6.12 Jak o kryptoměnách přemýšlet odpovědně")
-    st.write("Před nákupem kryptoměny si polož tyto otázky:")
+        st.markdown("""
+        | Mechanismus | Princip | Diskutované téma |
+        | :--- | :--- | :--- |
+        | **Proof of Work** | Ověřování pomocí výpočetní práce. | Energetická náročnost, bezpečnost sítě. |
+        | **Proof of Stake** | Ověřování pomocí uzamčeného podílu v síti. | Koncentrace bohatství, pravidla validátorů. |
+        """)
 
-    st.markdown("""
-    1. Rozumím tomu, co kupuji?
-    2. Vím, kdo nebo co určuje hodnotu?
-    3. Vím, proč by cena měla růst?
-    4. Unesu ztrátu celé částky?
-    5. Neinvestuji peníze z rezervy?
-    6. Nekupuji jen kvůli influencerovi, kamarádovi nebo FOMO?
-    7. Vím, kde a jak aktivum bezpečně držím?
-    8. Rozumím poplatkům?
-    9. Vím, jaké mohou být daňové dopady?
-    10. Mám plán, nebo jen emoci?
-    """)
+        # --- 3.6.6 ---
+        st.markdown("### 3.6.6 Chytré kontrakty, DeFi a NFT")
+        st.write("**Chytrý kontrakt** je program běžící na blockchainu, který může automaticky provádět určité kroky podle pravidel. Neznamená to, že je právně „chytrý“ nebo bezpečný. Znamená to, že jde o kód.")
+        st.write("**DeFi** znamená decentralizované finance. Jde o služby, které se snaží napodobit finanční produkty — půjčování, směnu, úročení — bez klasické banky.")
+        st.write("**NFT** je unikátní token, který může odkazovat na digitální objekt, členství, herní předmět nebo jiný záznam.")
 
-    st.markdown("""
-    <div class="box-green">
-        <b>🧠 Rozumný závěr:</b> Blockchain může být zajímavá technologie. Kryptoměny mohou být inovace i spekulativní aktivum.
-        Ale žádná technologie neruší základní pravidla finanční gramotnosti: rozumět riziku, nevěřit garantovaným výnosům,
-        chránit přístupové údaje a neinvestovat peníze, které si nemůžeš dovolit ztratit.
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        <div class="box-purple">
+            <b>⚠️ Pozor na slovo „decentralizované“:</b> To, že služba používá blockchain, neznamená, že je bezpečná, férová nebo bez prostředníků.
+            Rizikem může být chyba v kódu, podvodný tým, manipulace trhu, falešná likvidita nebo nejasná odpovědnost.
+        </div>
+        """, unsafe_allow_html=True)
 
-    # --- ÚKOL ---
-    st.markdown("### 🧪 Krypto detektiv: ověř projekt dřív, než mu uvěříš")
-    st.write(
-        "Vyber libovolný kryptoměnový projekt nebo token. **Nehodnoť, zda ho koupit, ale zda mu rozumíš.**"
-    )
-    
-    st.markdown("""
-    **Zjisti:**
-    * Jaký problém údajně řeší
-    * Kdo za projektem stojí
-    * Zda má srozumitelnou dokumentaci
-    * Odkud se má brát hodnota
-    * Jaká jsou hlavní rizika
-    * Zda někdo neslibuje garantovaný výnos
-    * Jak moc cena kolísala v minulosti
-    * Zda je projekt spíš technologie, komunita, spekulace nebo meme
+        # --- 3.6.7 ---
+        st.markdown("### 3.6.7 Proč cena kryptoměn tolik kolísá")
+        st.write("Cena je silně závislá na nabídce, poptávce, očekávání, náladě trhu, regulaci, mediálních trendech a chování velkých držitelů.")
 
-    ---
-    **🎯 Výstup:** Semafor rizika (*zelená / oranžová / červená*) a tři věty zdůvodnění.
-    """)
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Cena může růst kvůli:**")
+            st.markdown("""
+            * Zájmu investorů a FOMO
+            * Mediální pozornosti
+            * Omezené nabídce
+            * Vstupu institucí
+            """)
+        with col2:
+            st.markdown("**Cena může klesat kvůli:**")
+            st.markdown("""
+            * Panice na trhu a výprodejům
+            * Hackerskému útoku nebo pádu burzy
+            * Tvrdé regulaci
+            * Nesplnění slibů projektu
+            """)
+
+        st.markdown("""
+        <div class="box-blue">
+            <b>🎢 Volatilita lidsky:</b> Pokud aktivum může za měsíc vyrůst o desítky procent, může také o desítky procent spadnout.
+            Vysoký pohyb nahoru a dolů není chyba systému — u kryptoměn je to běžná vlastnost trhu.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # --- 3.6.8 ---
+        st.markdown("### 3.6.8 Největší rizika kryptoměn")
+
+        st.markdown("""
+        | Riziko | Jak se projevuje | Jak se bránit |
+        | :--- | :--- | :--- |
+        | **Volatilita** | Cena prudce kolísá. | Neinvestovat peníze potřebné na běžný život nebo rezervu. |
+        | **Ztráta přístupu** | Ztráta seed phrase nebo klíče. | Bezpečně zálohovat, nikdy nesdílet klíče. |
+        | **Podvod** | Falešná investice, falešná burza. | Ověřovat zdroje, nedůvěřovat garantovaným výnosům. |
+        | **Hack burzy / aplikace** | Služba přijde o prostředky klientů. | Rozumět rozdílu mezi vlastní peněženkou a burzou. |
+        | **Regulace** | Změna pravidel omezí obchodování. | Sledovat právní prostředí, nesázet na jeden scénář. |
+        | **Manipulace trhu** | Velcí hráči ovlivňují cenu. | Nenakupovat podle virálních příspěvků. |
+        | **Technická nevratnost** | Chybně odeslaná platba nejde vrátit. | Kontrolovat adresy, posílat testovací malé částky. |
+        """)
+
+        # --- 3.6.9 ---
+        st.markdown("### 3.6.9 Krypto podvody a varovné signály")
+        st.write("Kryptoměny jsou oblíbeným prostředím pro podvody, protože kombinují technologickou složitost s touhou po rychlém zisku.")
+
+        st.markdown("**🚩 Varovné signály:**")
+        st.markdown("""
+        * „Garantovaný výnos“ nebo tvrzení „bez rizika“
+        * Tlak na rychlé rozhodnutí
+        * Influencer ukazující luxusní život s příslibem jednoduchého návodu
+        * Není jasné, odkud se bere výnos (lidé vydělávají náborem dalších)
+        * Někdo vyžaduje seed phrase nebo přístupové údaje
+        """)
+
+        st.markdown("""
+        <div class="box-red">
+            <b>🚨 Zlaté pravidlo:</b> Pokud nerozumíš tomu, odkud se bere výnos, pravděpodobně nejsi investor — jsi zdroj peněz pro někoho jiného.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # --- 3.6.10 ---
+        st.markdown("### 3.6.10 Kryptoměny vs. běžné peníze")
+
+        st.markdown("""
+        | Otázka | Běžné peníze na účtu | Kryptoměny |
+        | :--- | :--- | :--- |
+        | **Kdo vede záznam?** | Banka a platební systém. | Síť podle pravidel protokolu. |
+        | **Kdo ručí za systém?** | Stát, regulace, banky, dohled. | Kód, síť, komunita, ekonomická motivace. |
+        | **Je hodnota stabilní?** | Řeší se hlavně inflace. | Cena většiny kryptoměn silně kolísá. |
+        | **Lze transakci reklamovat?** | Existují reklamační postupy. | Transakce bývají nevratné. |
+        | **Kdo obnoví přístup?** | Banka může pomoci s heslem. | Ztracený klíč znamená trvalou ztrátu. |
+        | **Je to vhodné na rezervu?** | Vhodné pro rezervu. | Nevhodné pro nouzovou rezervu. |
+        """)
+
+        # --- 3.6.11 ---
+        st.markdown("### 3.6.11 Kryptoměny a daně")
+        st.markdown("""
+        <div class="box-gray">
+            <b>📄 Praktická poznámka:</b> „Mám to v aplikaci“ neznamená, že to není skutečná finanční operace.
+            Pokud člověk kryptoměnu prodá se ziskem nebo ji použije k platbě, vzniká povinnost řešit zdanění.
+            U kryptoměn je důležité vést si přehled nákupů, prodejů, směn a poplatků.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # --- 3.6.12 ---
+        st.markdown("### 3.6.12 Jak o kryptoměnách přemýšlet odpovědně")
+        st.write("Před nákupem kryptoměny si polož tyto otázky:")
+
+        st.markdown("""
+        1. Rozumím tomu, co kupuji a vím, proč by cena měla růst?
+        2. Unesu ztrátu celé částky a neinvestuji peníze z rezervy?
+        3. Nekupuji jen kvůli influencerovi, kamarádovi nebo FOMO?
+        4. Vím, kde a jak aktivum bezpečně držím?
+        5. Mám plán, nebo jen emoci?
+        """)
+
+        st.markdown("""
+        <div class="box-green">
+            <b>🧠 Rozumný závěr:</b> Blockchain může být zajímavá technologie a inovace. 
+            Žádná technologie ale neruší základní pravidla finanční gramotnosti: rozumět riziku, nevěřit garantovaným výnosům,
+            chránit přístupové údaje a neinvestovat peníze, které si nemůžeš dovolit ztratit.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("### 🧪 Krypto detektiv: ověř projekt dřív, než mu uvěříš")
+        st.write("Vyber libovolný kryptoměnový projekt nebo token. **Nehodnoť, zda ho koupit, ale zda mu rozumíš.**")
+        
+        st.markdown("""
+        **Zjisti:**
+        * Jaký problém údajně řeší a kdo za ním stojí?
+        * Odkud se má brát hodnota a neslibuje někdo garantovaný výnos?
+        * Je projekt spíš technologie, komunita, nebo meme?
+
+        ---
+        **🎯 Výstup:** Semafor rizika (*zelená / oranžová / červená*) a tři věty zdůvodnění.
+        """)
 
     # =========================================================================
     # 3.7 OCHRANA SPOTŘEBITELE A INVESTIČNÍ REKLAMA
