@@ -127,6 +127,7 @@ HIGH_TECH_CSS = """
 </style>
 """
 st.markdown(HIGH_TECH_CSS, unsafe_allow_html=True)
+st.page_link("app.py", label="🏠 Zpět do Učebnice ekonomiky")
 
 # --- POMOCNÉ FUNKCE ---
 def bezpecny_float(hodnota):
