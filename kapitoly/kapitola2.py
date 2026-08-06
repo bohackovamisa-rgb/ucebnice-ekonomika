@@ -4183,7 +4183,7 @@ def render():
         st.markdown("""
         <div class="box-blue">
             <b>🧭 Jednoduché přirovnání:</b><br>
-            📸 <b>Rozvaha</b> je <i>fotografie</i> firmy k určitému dni (státický stav majetku a dluhů).<br>
+            📸 <b>Rozvaha</b> je <i>fotografie</i> firmy k určitému dni (statický stav majetku a dluhů).<br>
             🎬 <b>Výkaz zisku a ztráty</b> je <i>film</i> za určité období (jak hospodařila od 1. 1. do 31. 12.).<br>
             💧 <b>Cashflow</b> ukazuje, kudy reálně tekly peníze v peněžence/na účtu.
         </div>
@@ -4191,9 +4191,9 @@ def render():
 
         st.divider()
 
-        # =========================================================================
+        # -------------------------------------------------------------------------
         # 5.2.1 ROZVAHA: CO FIRMA MÁ A Z ČEHO TO FINANCUJE
-        # =========================================================================
+        # -------------------------------------------------------------------------
         st.markdown("### 5.2.1 Rozvaha: co firma má a z čeho to financuje")
         st.write(
             "Rozvaha ukazuje majetek firmy (**Aktiva**) a současně zdroje, ze kterých je tento majetek financovaný (**Pasiva**). "
@@ -4215,17 +4215,17 @@ def render():
             
             with col_a:
                 st.markdown("#### 📦 AKTIVA (Co firma má)")
-                penize = st.number_input("Peníze na účtu a v pokladně (Kč):", value=25000, step=5000)
-                zasoby = st.number_input("Zásoby zboží na skladě (Kč):", value=30000, step=5000)
-                vybaveni = st.number_input("Notebook a balicí technika (Kč):", value=15000, step=5000)
+                penize = st.number_input("Peníze na účtu a v pokladně (Kč):", value=25000, step=5000, key="act_penize")
+                zasoby = st.number_input("Zásoby zboží na skladě (Kč):", value=30000, step=5000, key="act_zasoby")
+                vybaveni = st.number_input("Notebook a balicí technika (Kč):", value=15000, step=5000, key="act_vyb")
                 aktiva_celkem = penize + zasoby + vybaveni
                 st.metric("Aktiva Celkem", f"{aktiva_celkem:,} Kč".replace(",", " "))
 
             with col_p:
                 st.markdown("#### 💳 PASIVA (Z čeho to zaplatila)")
-                vklad = st.number_input("Vlastní vklad majitele (Kč):", value=40000, step=5000)
-                uver = st.number_input("Bankovní úvěr (Kč):", value=20000, step=5000)
-                zavazky = st.number_input("Nezaplacené faktury dodavatelům (Kč):", value=10000, step=5000)
+                vklad = st.number_input("Vlastní vklad majitele (Kč):", value=40000, step=5000, key="pas_vklad")
+                uver = st.number_input("Bankovní úvěr (Kč):", value=20000, step=5000, key="pas_uver")
+                zavazky = st.number_input("Nezaplacené faktury dodavatelům (Kč):", value=10000, step=5000, key="pas_zavazky")
                 pasiva_celkem = vklad + uver + zavazky
                 st.metric("Pasiva Celkem", f"{pasiva_celkem:,} Kč".replace(",", " "))
 
@@ -4234,15 +4234,15 @@ def render():
             if diference == 0:
                 st.success("✅ **Rozvaha je v rovnováze! (Aktiva = Pasiva)** E-shop má majetek za 70 000 Kč. Část financoval majitel ze svého, část úvěrem a část tím, že ještě nezaplatil dodavatelům.")
             elif diference > 0:
-                st.error(f"❌ **Rozvaha nevychází!** Mas o {diference:,} Kč více majetku (Aktiva) než zdrojů (Pasiva). Kde jsi vzal/a peníze na tento majetek?".replace(",", " "))
+                st.error(f"❌ **Rozvaha nevychází!** Máš o {diference:,} Kč více majetku (Aktiva) než zdrojů (Pasiva). Kde jsi vzal/a peníze na tento majetek?".replace(",", " "))
             else:
                 st.error(f"❌ **Rozvaha nevychází!** Zdroje (Pasiva) přesahují majetek o {abs(diference):,} Kč. Kde jsou ty peníze?".replace(",", " "))
 
         st.divider()
 
-        # =========================================================================
+        # -------------------------------------------------------------------------
         # 5.2.2 VÝKAZ ZISKU A ZTRÁTY: VYDĚLÁVÁ FIRMA?
-        # =========================================================================
+        # -------------------------------------------------------------------------
         st.markdown("### 5.2.2 Výkaz zisku a ztráty: vydělává firma?")
         st.write(
             "Výkaz zisku a ztráty (tzv. *Výsledovka*) ukazuje výnosy, náklady a výsledek hospodaření za dané období (např. za měsíc nebo rok)."
@@ -4263,16 +4263,16 @@ def render():
         with st.container(border=True):
             col_v1, col_v2 = st.columns(2)
             with col_v1:
-                trzby = st.slider("Tržby za prodej zboží (Výnosy):", 10000, 200000, 80000, step=5000)
-                naklady_zbozi = st.slider("Nákupní cena prodaného zboží:", 5000, 100000, 42000, step=2000)
+                trzby = st.slider("Tržby za prodej zboží (Výnosy):", 10000, 200000, 80000, step=5000, key="vys_trzby")
+                naklady_zbozi = st.slider("Nákupní cena prodaného zboží:", 5000, 100000, 42000, step=2000, key="vys_zbozi")
             
             hruby_zisk = trzby - naklady_zbozi
 
             with col_v2:
-                reklama = st.slider("Marketing a reklama:", 0, 30000, 8000, step=1000)
-                doprava = st.slider("Doprava a balicí materiál:", 0, 20000, 6000, step=1000)
-                software = st.slider("Software a doména e-shopu:", 0, 10000, 2000, step=500)
-                ostatni_op = st.slider("Ostatní provozní náklady:", 0, 15000, 4000, step=500)
+                reklama = st.slider("Marketing a reklama:", 0, 30000, 8000, step=1000, key="vys_rek")
+                doprava = st.slider("Doprava a balicí materiál:", 0, 20000, 6000, step=1000, key="vys_dopr")
+                software = st.slider("Software a doména e-shopu:", 0, 10000, 2000, step=500, key="vys_soft")
+                ostatni_op = st.slider("Ostatní provozní náklady:", 0, 15000, 4000, step=500, key="vys_ost")
 
             provozni_naklady_celkem = reklama + doprava + software + ostatni_op
             zisk_pred_zdanenim = hruby_zisk - provozni_naklady_celkem
@@ -4295,9 +4295,9 @@ def render():
 
         st.divider()
 
-        # =========================================================================
+        # -------------------------------------------------------------------------
         # 5.2.3 CASHFLOW: PENÍZE JSOU KYSLÍK FIRMY
-        # =========================================================================
+        # -------------------------------------------------------------------------
         st.markdown("### 5.2.3 Cashflow: peníze jsou kyslík firmy")
         st.write(
             "Cashflow znamená **reálný tok peněz**. Ukazuje, kolik peněz do firmy fyzicky přiteklo (na účet nebo do pokladny) "
@@ -4319,17 +4319,18 @@ def render():
                 "• **15. ledna:** Musí zaplatit 30 000 Kč nájem kanceláře a 40 000 Kč mzdy grafikovi.<br>"
                 "• **1. února:** Na účtu jí zbývá 5 000 Kč. Klient ještě nezaplatil (má čas do 1. března).<br>"
                 "• **15. února:** Přichází další mzdy a nájem (70 000 Kč). Bankovní účet jde na 0 Kč, dodavatelé hrozí soudem.<br>"
-                "• **Konec únoru:** Firma vyhlašuje insolvenci a krachuje, i když je 'papírově' v zisku!"
+                "• **Konec února:** Firma vyhlašuje insolvenci a krachuje, i když je 'papírově' v zisku!"
             , unsafe_allow_html=True)
             
             st.info("💡 **Poučení:** Firma nespravovala své Cashflow. Zákazníkům nabídla příliš dlouhou splatnost (60 dní), zatímco své vlastní výdaje musela platit hned.")
 
-        st.divider()
 
-        # =========================================================================
-        # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
-        # =========================================================================
-        st.markdown("### 5.3 Náklady, výnosy a bod zvratu")
+    # =========================================================================
+    # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
+    # =========================================================================
+    elif selected_section_2.startswith("5.3 "):
+        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown("## 5.3 Náklady, výnosy a bod zvratu")
         st.write(
             "Aby firma věděla, zda se jí podnikání vyplatí a kdy začne reálně vydělávat, musí dokonale rozumět svým nákladům. "
             "Nestačí si říct: *„Koupím tričko za 200 Kč a prodám ho za 400 Kč, takže vydělám 200 Kč.“*"
