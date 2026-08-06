@@ -4058,11 +4058,6 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-        with st.expander("📘 Informace pro vyučující (Vazba na RVP)"):
-            st.write(
-                "Tato část rozvíjí ekonomické myšlení, finanční gramotnost, podnikavost, odpovědné rozhodování, práci s daty, orientaci v nákladech, výnosech, výsledku hospodaření, cashflow, zdrojích financování a základních ukazatelích finanční analýzy. Studenti se učí posoudit finanční zdraví podniku a chápat, proč finanční informace zajímají vlastníky, zaměstnance, banky, investory, stát, dodavatele i zákazníky."
-            )
-
         st.divider()
 
         st.markdown("### ⚠️ Paradox: Skvělý produkt ≠ Úspěšná firma")
@@ -4135,7 +4130,7 @@ def render():
             },
             "🚚 Dodavatelé": {
                 "důvod": "Řeší, jestli firma zaplatí vystavené faktury včas a v plné výši.",
-                "otázka": "„Není riziko dodat jim zboží na fakturu se splatností 30 dní?“",
+                "otázka": "„Není riziko dodávat jim zboží na fakturu se splatností 30 dní?“",
                 "riziko": "Druhotná platební neschopnost (nedostanou zaplaceno za své zboží)."
             },
             "🛒 Zákazníci": {
