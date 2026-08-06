@@ -2776,6 +2776,112 @@ def render():
             <b>🛡️ Ochrana spotřebitele začíná otázkou:</b> Kdo mi to nabízí, jak na tom vydělává, jaké riziko mi neříká a proč mám rozhodnout právě teď?
         </div>
         """, unsafe_allow_html=True)
+        # =========================================================================
+    # 3.8 INTERAKTIVNÍ AKTIVITY K FINANČNÍMU TRHU
+    # =========================================================================
+    if "3.8 Interaktivní aktivity" in selected_section_2:  # Uprav název podle položky v selectboxu
+        st.markdown("<div class='sub-section-header'>8. INTERAKTIVNÍ AKTIVITY K FINANČNÍMU TRHU</div>", unsafe_allow_html=True)
+        st.markdown("## 3.8 Interaktivní aktivity k finančnímu trhu")
+        
+        # --- AKTIVITA 1: TŘÍDĚNÍ ---
+        st.markdown("### 🧩 Aktivita 1: Třídění finančních nástrojů")
+        st.write("Rozděl následující položky do správných kategorií podle míry rizika a účelu. Přemýšlej, než vybereš!")
+        
+        kategorie = ["Vyber...", "Spoření", "Investování", "Spekulace", "Hazard / Extrémní riziko"]
+        
+        # Formulář pro třídění
+        with st.form("trideni_form"):
+            col1, col2 = st.columns(2)
+            with col1:
+                q1 = st.selectbox("Spořicí účet", kategorie)
+                q2 = st.selectbox("Státní dluhopis", kategorie)
+                q3 = st.selectbox("Akcie jedné firmy (stock picking)", kategorie)
+                q4 = st.selectbox("ETF na široký index", kategorie)
+                q5 = st.selectbox("Podílový fond", kategorie)
+            with col2:
+                q6 = st.selectbox("Termínovaný vklad", kategorie)
+                q7 = st.selectbox("Nákup meme coinu podle TikToku", kategorie)
+                q8 = st.selectbox("Sázení na sport / ruleta", kategorie)
+                q9 = st.selectbox("Kryptoměna držená bez pochopení rizika", kategorie)
+                q10 = st.selectbox("Pravidelná investice do diverzifikovaného fondu", kategorie)
+                
+            submitted_trideni = st.form_submit_button("Vyhodnotit moje odpovědi", type="primary")
+            
+        if submitted_trideni:
+            if "Vyber..." in [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10]:
+                st.warning("⚠️ Nezapomeň zařadit všechny položky!")
+            else:
+                st.success("✅ Odesláno k zamyšlení! Zde je expertní pohled na to, kam položky typicky patří:")
+                with st.expander("Zobrazit správné řešení a bonusové detaily (rozbalit)"):
+                    st.markdown("""
+                    * **Spoření (nízké riziko, vysoká likvidita, nízký výnos):** Spořicí účet, Termínovaný vklad.
+                    * **Investování (střední riziko, dlouhý horizont, reálný výnos):** ETF na široký index, Podílový fond, Pravidelná investice do diverzifikovaného fondu, Státní dluhopis.
+                    * **Spekulace (vyšší riziko, sázka na konkrétní vývoj):** Akcie jedné firmy (stock picking).
+                    * **Hazard / Extrémní riziko (vysoká šance na ztrátu všeho):** Nákup meme coinu podle TikToku, Sázení, Kryptoměna držená bez pochopení rizika.
+                    """)
+        
+        st.divider()
+
+        # --- AKTIVITA 2: INVESTIČNÍ POČASÍ ---
+        st.markdown("### 📉 Aktivita 2: Investiční počasí")
+        st.write("Trh se neustále mění a vyvolává v lidech silné emoce. Vyber si jednu z tržních situací a porovnej chování začátečníka a profesionála.")
+        
+        situace = st.selectbox(
+            "Vyber situaci na trhu:", 
+            [
+                "Vyber situaci...",
+                "Trh roste a všichni mluví o rychlém zisku",
+                "Trh spadl o 30 %",
+                "Inflace je vysoká",
+                "Úrokové sazby rostou",
+                "Influencer doporučuje nový token",
+                "Kamarád říká, že „tohle nemůže spadnout“"
+            ]
+        )
+        
+        if situace != "Vyber situaci...":
+            col_zac, col_inv = st.columns(2)
+            with col_zac:
+                user_zacatecnik = st.text_area("Co by v této situaci udělal impulzivní začátečník?", height=150)
+            with col_inv:
+                user_investor = st.text_area("Co by udělal informovaný investor?", height=150)
+                
+            if st.button("Ukázat pohled psychologie trhu"):
+                if situace == "Trh roste a všichni mluví o rychlém zisku":
+                    st.info("**Expert:** Začátečník podlehne FOMO (strach z propásnutí), nakoupí na vrcholu a poruší svá pravidla. Investor zůstává v klidu, drží se svého plánu a nepanikaří, i když ostatní 'rychle bohatnou'.")
+                elif situace == "Trh spadl o 30 %":
+                    st.info("**Expert:** Začátečník se vyděsí, prodá se ztrátou a z trhu uteče. Investor ví, že propady jsou normální, rebalancuje portfolio nebo využije 'slevu' k dalším nákupům.")
+                elif situace == "Inflace je vysoká":
+                    st.info("**Expert:** Začátečník nechá peníze ležet na běžném účtu (kde ztrácejí hodnotu) nebo v panice nakoupí nesmysly. Investor se ujistí, že má diverzifikované portfolio s reálnými aktivy (akcie, nemovitosti), která dlouhodobě inflaci poráží.")
+                elif situace == "Úrokové sazby rostou":
+                    st.info("**Expert:** Začátečník si bere drahé úvěry. Investor ví, že teď lépe vydělávají spořicí účty a dluhopisy, a upraví podle toho svou konzervativní složku.")
+                elif situace == "Influencer doporučuje nový token":
+                    st.info("**Expert:** Začátečník ihned nakoupí, protože věří autoritě a slibu zisku. Investor ví, že influencer už je pravděpodobně zaplacený nebo nakoupil dávno předtím. Hledá varovné signály.")
+                elif situace == "Kamarád říká, že „tohle nemůže spadnout“":
+                    st.info("**Expert:** Začátečník mu uvěří a vsadí všechno na jednu kartu. Investor ví, že jakmile si trh myslí, že něco nemůže spadnout, riziko je obvykle nejvyšší (bublina).")
+
+        st.divider()
+
+        # --- AKTIVITA 3: ČTENÍ GRAFU ---
+        st.markdown("### 📊 Aktivita 3: Čtení grafu bez iluzí")
+        st.write("Vyber si na internetu (např. Google Finance) graf vývoje ceny libovolného aktiva (např. Bitcoin, S&P 500, Tesla) a podrob ho kritické analýze.")
+        
+        aktivum = st.text_input("Které aktivum analyzuješ?", placeholder="Např. Index S&P 500")
+        
+        st.markdown("**Odpověz si na následující otázky (odškrtni, jakmile máš zjištěno):**")
+        c1 = st.checkbox("Vím, jaké období graf ukazuje (1 měsíc vs. 10 let ukazuje úplně jiný příběh).")
+        c2 = st.checkbox("Vím, kde byl v historii grafu největší propad a jak dlouho trvalo zotavení.")
+        c3 = st.checkbox("Uvědomuji si, jak by graf vypadal, kdybych začal investovat přesně na vrcholu před krizí.")
+        c4 = st.checkbox("Vím, že graf není očištěný o inflaci a nejsou v něm započteny poplatky.")
+        
+        emoc = st.slider("Jakou emoci v tobě graf aktuálně vyvolává?", 0, 100, 50, help="0 = Velký strach/Panika, 50 = Klid/Nuda, 100 = Extrémní nadšení/FOMO")
+        
+        if emoc < 30:
+            st.write("💡 *Máš strach. Pamatuj, že nejlepší investiční příležitosti často vznikají právě v dobách pesimismu.*")
+        elif emoc > 70:
+            st.write("💡 *Cítíš nadšení. Pozor na FOMO! Když jsou všichni nadšení, trh bývá často přehřátý.*")
+        else:
+            st.write("💡 *Zachováváš si chladnou hlavu. Nuda a klid jsou pro dlouhodobé investování ty nejlepší emoce.*")
     # =========================================================================
     # 3.9 SHRNUTÍ: CO SI Z FINANČNÍHO TRHU ODNÉST
     # =========================================================================
