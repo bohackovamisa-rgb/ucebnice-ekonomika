@@ -2691,18 +2691,43 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
+# --- ÚKOL (INTERAKTIVNÍ) ---
         st.markdown("### 🧪 Krypto detektiv: ověř projekt dřív, než mu uvěříš")
         st.write("Vyber libovolný kryptoměnový projekt nebo token. **Nehodnoť, zda ho koupit, ale zda mu rozumíš.**")
         
         st.markdown("""
-        **Zjisti:**
+        **Co máš zjistit:**
         * Jaký problém údajně řeší a kdo za ním stojí?
         * Odkud se má brát hodnota a neslibuje někdo garantovaný výnos?
         * Je projekt spíš technologie, komunita, nebo meme?
-
-        ---
-        **🎯 Výstup:** Semafor rizika (*zelená / oranžová / červená*) a tři věty zdůvodnění.
         """)
+
+        st.markdown("---")
+        st.markdown("**🎯 Tvůj závěr a hodnocení rizika:**")
+        
+        # Interaktivní prvky Streamlitu
+        semafor = st.selectbox(
+            "Zvol úroveň rizika (Semafor):",
+            [
+                "Vyber hodnocení...", 
+                "🟢 Zelená (Nízké riziko, srozumitelný projekt)", 
+                "🟠 Oranžová (Střední riziko, nejasnosti nebo velká spekulace)", 
+                "🔴 Červená (Vysoké riziko, varovné signály, možný podvod)"
+            ]
+        )
+        
+        zduvodneni = st.text_area(
+            "Napiš max. 3 věty zdůvodnění, proč jsi zvolil/a tuto barvu:", 
+            height=100,
+            placeholder="Tento projekt mi přijde rizikový, protože..."
+        )
+        
+        if st.button("Uložit hodnocení", type="primary"):
+            if semafor == "Vyber hodnocení..." or not zduvodneni.strip():
+                st.warning("⚠️ Prosím, vyber barvu na semaforu a napiš své zdůvodnění.")
+            else:
+                st.success(f"✅ Skvělá práce, detektive! Hodnocení **{semafor.split(' ')[0]}** bylo zaznamenáno.")
+                st.info(f"**Tvé zdůvodnění:** {zduvodneni}")
 
     # =========================================================================
     # 3.7 OCHRANA SPOTŘEBITELE A INVESTIČNÍ REKLAMA
