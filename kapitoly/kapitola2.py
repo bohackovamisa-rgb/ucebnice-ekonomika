@@ -2895,26 +2895,55 @@ def render():
 
         st.divider()
 
-        # --- AKTIVITA 3: ČTENÍ GRAFU ---
-        st.markdown("### 📊 Aktivita 3: Čtení grafu bez iluzí")
-        st.write("Vyber si na internetu (např. Google Finance) graf vývoje ceny libovolného aktiva (např. Bitcoin, S&P 500, Tesla) a podrob ho kritické analýze.")
-        
-        aktivum = st.text_input("Které aktivum analyzuješ?", placeholder="Např. Index S&P 500")
-        
-        st.markdown("**Odpověz si na následující otázky (odškrtni, jakmile máš zjištěno):**")
-        c1 = st.checkbox("Vím, jaké období graf ukazuje (1 měsíc vs. 10 let ukazuje úplně jiný příběh).")
-        c2 = st.checkbox("Vím, kde byl v historii grafu největší propad a jak dlouho trvalo zotavení.")
-        c3 = st.checkbox("Uvědomuji si, jak by graf vypadal, kdybych začal investovat přesně na vrcholu před krizí.")
-        c4 = st.checkbox("Vím, že graf není očištěný o inflaci a nejsou v něm započteny poplatky.")
-        
-        emoc = st.slider("Jakou emoci v tobě graf aktuálně vyvolává?", 0, 100, 50, help="0 = Velký strach/Panika, 50 = Klid/Nuda, 100 = Extrémní nadšení/FOMO")
-        
-        if emoc < 30:
-            st.write("💡 *Máš strach. Pamatuj, že nejlepší investiční příležitosti často vznikají právě v dobách pesimismu.*")
-        elif emoc > 70:
-            st.write("💡 *Cítíš nadšení. Pozor na FOMO! Když jsou všichni nadšení, trh bývá často přehřátý.*")
-        else:
-            st.write("💡 *Zachováváš si chladnou hlavu. Nuda a klid jsou pro dlouhodobé investování ty nejlepší emoce.*")
+# --- AKTIVITA 3: ČTENÍ GRAFU BEZ ILUZÍ (INTERAKTIVNÍ) ---
+        st.markdown("### 📊 Aktivita 3: Čtení grafu bez iluzí (Zoom Efekt)")
+        st.write("Grafy mohou vyprávět úplně jiný příběh podle toho, jaký časový výsek si vybereš. Zjisti, jak snadné je nechat se oklamat.")
+
+        typ_grafu = st.selectbox(
+            "Vyber aktivum k analýze:", 
+            ["Vyber...", "🚀 Aktivum A: Nový revoluční token (Hype)", "📈 Aktivum B: Široký akciový index (S&P 500)"]
+        )
+
+        if typ_grafu == "🚀 Aktivum A: Nový revoluční token (Hype)":
+            st.markdown("Představ si, že ti kamarád nebo influencer ukáže tento graf se slovy: *„Koukej, za měsíc to udělalo 400 %! Musíme hned nakoupit, než to vyletí ještě výš!“*")
+            
+            pohled = st.radio("Zvol úhel pohledu:", ["Pohled začátečníka (Poslední 1 měsíc)", "Pohled experta (Celé 2 roky)"], horizontal=True)
+            
+            if "začátečníka" in pohled:
+                # Zobrazíme jen raketový růst (čistá data pro Streamlit line_chart)
+                st.line_chart([100, 150, 220, 350, 500], height=250)
+                st.warning("👀 **Co vidíš:** Nádherný, strmý růst. Graf vyvolává obrovské FOMO. Zdá se, že to může jít jen nahoru.")
+            else:
+                # Zobrazíme celou bublinu a následný pád
+                st.line_chart([10, 12, 11, 15, 20, 100, 150, 220, 350, 500, 180, 60, 25, 12, 8, 5, 3], height=250)
+                st.error("📉 **Realita bez iluzí:** Ten úžasný měsíc byla jen špička splaskávající bubliny (tzv. Pump and Dump). Kdo nakoupil na vrcholu plný emocí, přišel o 99 % svých peněz.")
+                
+        elif typ_grafu == "📈 Aktivum B: Široký akciový index (S&P 500)":
+            st.markdown("Tohle je reálný historický vývoj globálního trhu. Jak vnímáš krize?")
+            
+            pohled = st.radio("Zvol úhel pohledu:", ["Pohled panikařícího investora (Krize 2008)", "Dlouhodobý horizont (1990 - 2024)"], horizontal=True)
+            
+            if "panikařícího" in pohled:
+                # Zobrazíme jen propad (cca 2007-2009)
+                st.line_chart([1565, 1400, 1300, 1100, 900, 735, 676], height=250)
+                st.error("👀 **Co vidíš:** Trh padá volným pádem o více než 50 %. Vypadá to jako konec finančního světa. Spousta lidí tady v panice prodala všechno se ztrátou.")
+            else:
+                # Zobrazíme dlouhodobý trend s krizí jako pouhým "zubem"
+                st.line_chart([350, 450, 750, 1400, 1100, 800, 1565, 676, 1100, 1800, 2500, 3200, 4700, 3900, 5000], height=250)
+                st.success("📈 **Realita bez iluzí:** Ten hrozivý propad z roku 2008 je v dlouhodobém měřítku jen jeden z mnoha 'zubů'. Trh se časem zotavil a pokračoval v růstu. Dlouhodobý investor krizi jednoduše 'vyseděl'.")
+
+        # Závěrečný check emocí
+        if typ_grafu != "Vyber...":
+            st.divider()
+            st.markdown("#### 🧠 Rychlý test emocí")
+            emoc = st.slider("Jakou emoci bys cítil/a, kdybys viděl/a svůj graf padat o 40 % a měl/a v něm své úspory?", 0, 100, 50, help="0 = Extrémní panika a chuť vše prodat, 100 = Zlatá příležitost k nákupu ve slevě")
+            
+            if emoc < 35:
+                st.info("💡 **Tvá reakce:** To je naprosto přirozená lidská reakce. Právě proto bys do kolísavých aktiv neměl/a dávat peníze, které budeš brzy potřebovat. Železné nervy se budují postupně s praxí.")
+            elif emoc > 65:
+                st.info("💡 **Tvá reakce:** Skvělý přístup! Propady vnímáš jako výprodej a příležitost. Pozor jen na to, abys nekupoval/a 'padající nůž' u pochybných projektů bez vnitřní hodnoty.")
+            else:
+                st.info("💡 **Tvá reakce:** Klidný střed. Nechceš dělat ukvapené závěry, držíš se svého plánu a nejednáš impulzivně. To je pro dlouhodobého investora ten nejdůležitější stav mysli.")
     # =========================================================================
     # 3.9 SHRNUTÍ: CO SI Z FINANČNÍHO TRHU ODNÉST
     # =========================================================================
