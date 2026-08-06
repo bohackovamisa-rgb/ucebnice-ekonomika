@@ -2749,30 +2749,33 @@ def render():
             
             st.success("🛡️ **Ochrana spotřebitele začíná otázkou:** Kdo mi to nabízí, jak na tom vydělává, jaké riziko mi neříká a proč mám rozhodnout právě teď?")
 
+# =========================================================================
+    # 3.7 OCHRANA SPOTŘEBITELE A INVESTIČNÍ REKLAMA
     # =========================================================================
-    # 3.8 INTERAKTIVNÍ AKTIVITY A CVIČEBNICE
-    # =========================================================================
-    elif "3.8 Interaktivní" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.8 Interaktivní aktivity k finančnímu trhu</h2>", unsafe_allow_html=True)
+    if "3.7 Ochrana spotřebitele" in selected_section_2:  # Uprav název podle položky v selectboxu
+        st.markdown("<div class='sub-section-header'>7. OCHRANA SPOTŘEBITELE A REKLAMA</div>", unsafe_allow_html=True)
+        
+        st.markdown("## 3.7 Ochrana spotřebitele a investiční reklama")
+        st.write(
+            "Finanční produkty se často prodávají jazykem emocí. Reklama může zdůraznit svobodu, "
+            "rychlý zisk, strach z inflace, strach z promarněné šance nebo společenský status."
+        )
 
-        with st.container(border=True):
-            st.markdown("### 🧩 Třídění: spoření, investice, spekulace, hazard")
-            t1 = st.selectbox("Spořicí účet:", ["Spoření", "Investování", "Spekulace", "Hazard"], key="k3_t1")
-            t2 = st.selectbox("ETF na široký index:", ["Spoření", "Investování", "Spekulace", "Hazard"], index=1, key="k3_t2")
-            t3 = st.selectbox("Nákup meme coinu podle TikToku:", ["Spoření", "Investování", "Spekulace", "Hazard"], index=2, key="k3_t3")
-            
-            if st.button("Vyhodnotit", key="k3_t_btn"):
-                st.success("Skvělé! Chápeš rozdíl mezi bezpečím, dlouhodobým růstem a rizikovým hazardem.")
+        st.markdown("**Typické věty, u kterých je potřeba zpozornět:**")
+        st.markdown("""
+        * „Začni vydělávat pasivně hned.“
+        * „Tuhle příležitost nesmíš propásnout.“
+        * „Garantovaný výnos.“
+        * „Vydělávají na tom všichni.“
+        * „Stačí kopírovat moje obchody.“
+        * „Banky nechtějí, abys to věděl/a.“
+        """)
 
-        with st.container(border=True):
-            st.markdown("### 📉 Investiční počasí")
-            st.write("Trh spadl o 30 %.")
-            st.text_area("Co udělá impulzivní začátečník a co udělá informovaný investor?", key="k3_pocasi")
-
-        with st.container(border=True):
-            st.markdown("### 📊 Čtení grafu bez iluzí")
-            st.write("Otázky k zamyšlení: Jaké období graf ukazuje? Co by se změnilo, kdyby začínal v jiném roce? Jsou započteny poplatky?")
-
+        st.markdown("""
+        <div class="box-blue">
+            <b>🛡️ Ochrana spotřebitele začíná otázkou:</b> Kdo mi to nabízí, jak na tom vydělává, jaké riziko mi neříká a proč mám rozhodnout právě teď?
+        </div>
+        """, unsafe_allow_html=True)
     # =========================================================================
     # 3.9 SHRNUTÍ: CO SI Z FINANČNÍHO TRHU ODNÉST
     # =========================================================================
