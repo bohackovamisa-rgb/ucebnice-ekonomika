@@ -1,6 +1,8 @@
 import streamlit as st
 import math
-from kapitoly import kapitola1, kapitola2
+# Předpokládám, že tvé kapitoly mají nějakou hlavní funkci, např. show() nebo render()
+# Zde si je importuješ (odkomentuj/uprav podle toho, jak to máš v souborech)
+# from kapitoly import kapitola1, kapitola2
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
@@ -8,6 +10,7 @@ st.set_page_config(
     page_icon="📚",
     layout="wide"
 )
+
 # --- PŘIHLAŠOVACÍ BRÁNA ---
 def check_password():
     app_pwd = st.secrets.get("APP_PASSWORD")
@@ -119,6 +122,95 @@ with st.sidebar:
         st.session_state["password_correct"] = False
         st.rerun()
 
+
+# =========================================================================
+# HLAVNÍ OBSAH STRÁNKY PODLE VÝBĚRU V MENU
+# =========================================================================
+
+# --- ÚVODNÍ STRÁNKA ---
+if st.session_state["current_view"] == "Uvod":
+    
+    st.title("Ekonomika, která dává smysl")
+    
+    st.markdown("""
+    <div class="box-gray">
+        📚 <b>Digitální učebnice: Podnikavost, finance & ekonomika</b><br>
+        Moderní učebnice ekonomiky pro střední školy. Propojuje podnikavost, osobní finance, výrobu, trh práce, stát, daně, management a marketing s rozhodnutími, která žáci znají z reálného života.
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        <div class="box-green" style="height: 100%;">
+            🎯 <b>Cíl učebnice</b><br>
+            Žák má umět propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho praktického rozhodování.
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        st.markdown("""
+        <div class="box-yellow" style="height: 100%;">
+            🧭 <b>Začni tady</b><br>
+            Tahle stránka je hlavní rozcestník učebnice. Najdeš tu obsah, pravidla práce, výstupy kapitol, společné nástroje a odkaz do učitelského řídícího centra.
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # --- Sekce: Jak s učebnicí pracovat ---
+    st.markdown("### 📖 Jak s učebnicí pracovat")
+    st.markdown("""
+    1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
+    2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
+    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
+    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které pomáhají s vysvětlením, kontrolou nebo rozvojem vlastního projektu.
+    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
+    6. **V závěrečném projektu propojíš všechno dohromady.** Výstupem učebnice je návrh odpovědného ekonomického nebo podnikatelského projektu.
+    """)
+    
+    st.divider()
+    
+    # --- Legenda a tok ---
+    col_leg, col_tok = st.columns([1.1, 1])
+    
+    with col_leg:
+        st.markdown("### 🧩 Legenda učebnice")
+        # Využití tvých vlastních CSS tříd pro dokonalý design!
+        st.markdown("<div class='box-blue'><b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-yellow'><b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-purple'><b>Fialová:</b> AI mentoring a práce s asistencí</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-green'><b>Zelená:</b> Praxe, doporučení, dobrý postup</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-red'><b>Červená / Oranžová:</b> Riziko, varování, právní/etický problém</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-gray'><b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>", unsafe_allow_html=True)
+            
+    with col_tok:
+        st.markdown("### 🌊 Učebnicový tok")
+        st.markdown("**Od nápadu k odpovědnému projektu**")
+        
+        st.markdown("""
+        <div class="box-purple">
+            🧠 <b>Příběh celé učebnice:</b><br><br>
+            Nejdřív vzniká nápad. Potom se řeší peníze, výroba, práce lidí, stát a daně, řízení a marketing. <br><br>
+            Na konci má žák umět obhájit projekt podle zákazníka, nákladů, rizik, práva a odpovědnosti.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Vizualizace cesty
+        st.markdown("`Nápad` ➔ `Peníze` ➔ `Výroba` ➔ `Zákazník` ➔ `Stát` ➔ **Odpovědný projekt**")
+
+# --- KAPITOLY ---
+elif st.session_state["current_view"] == "Kapitola 1":
+    # Sem napojíš zobrazení 1. kapitoly (např. kapitola1.show() apod.)
+    st.title("1. Podnikavost a startupy")
+    st.info("Obsah 1. kapitoly bude zde...")
+
+elif st.session_state["current_view"] == "Kapitola 2":
+    # Sem napojíš zobrazení 2. kapitoly (s tím vším, co jsme dělali minule)
+    # kapitola2.show()
+    st.title("2. Finance a osobní management")
+    st.info("Obsah 2. kapitoly (včetně interaktivní vrstvy) je napojen zde...")
+    
+# Sem případně přidáš další elif pro Kapitolu 3, 4 atd.
 # --- HLAVNÍ OBSAHOVÁ PLOCHA ---
 view = st.session_state["current_view"]
 
