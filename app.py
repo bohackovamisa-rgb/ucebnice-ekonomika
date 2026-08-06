@@ -443,3 +443,5 @@ elif view == "Ucitel":
     st.markdown("<span class='hero-badge'>Metodik & Dashboard</span>", unsafe_allow_html=True)
     st.title("Učitelská základna")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 2rem;'>Metodické pokyny a sledování práce jednotlivých žáků podle tříd.</p>", unsafe_allow_html=True)
+
+
