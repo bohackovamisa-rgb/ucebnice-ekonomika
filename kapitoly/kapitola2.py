@@ -3031,7 +3031,7 @@ def render():
         # =========================================================================
     # 4.1 CO JE ÚVĚR
     # =========================================================================
-    elif "4.1" in selected_section_2:
+    elif "4.1 " in selected_section_2:
         st.markdown("<div class='sub-section-header'>1. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
         st.markdown("## 4.1 Co je úvěr")
         
