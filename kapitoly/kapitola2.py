@@ -2976,11 +2976,38 @@ def render():
         
         st.write("") # prázdný řádek pro vizuální oddělení
         st.success("🎉 Gratuluji k dokončení kapitoly o finančních trzích! Nyní jsi připraven/a využít tyto znalosti v praxi.")
-    # =========================================================================
+# =========================================================================
     # 3.10 PRÁVNÍ A ETICKÝ DISCLAIMER
     # =========================================================================
-    elif "3.10 Právní" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.10 Právní a etický disclaimer</h2>", unsafe_allow_html=True)
+    if "3.10 Právní a etický disclaimer" in selected_section_2:  # Zkontroluj název podle tvého selectboxu
+        st.markdown("<div class='sub-section-header'>10. ZÁVĚREČNÉ UPOZORNĚNÍ</div>", unsafe_allow_html=True)
+        
+        st.markdown("## 3.10 Právní a etický disclaimer")
+        
+        st.write(
+            "Tato učebnice a všechny její součásti (včetně textů, interaktivních aktivit, grafů, výpočtů i simulátoru) slouží **výhradně ke vzdělávacím účelům**. "
+            "Cílem je naučit tě přemýšlet o penězích, chápat principy finančního trhu a včas rozeznávat rizika."
+        )
 
-        with st.container(border=True):
-            st.write("Všechny příklady, výpočty, grafy a scénáře v této kapitole slouží pouze ke vzdělávání. Nejde o investiční doporučení, investiční poradenství ani výzvu k nákupu nebo prodeji konkrétního aktiva. Každý finanční produkt má rizika a každý člověk má jinou životní situaci, rezervu, příjem, cíle a schopnost snášet ztrátu.")
+        st.markdown("""
+        <div class="box-red">
+            <b>⚖️ Důležité právní upozornění:</b>
+            <br><br>
+            Žádný text, příklad, výpočet, graf ani scénář v této kapitole <b>není investičním doporučením, finančním ani daňovým poradenstvím a nepředstavuje výzvou k nákupu či prodeji</b> žádného konkrétního finančního aktiva (akcií, fondů, dluhopisů, kryptoměn atd.).
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("### Co bys měl/a mít vždy na paměti:")
+        
+        st.markdown("""
+        * **Osobní odpovědnost:** Svá reálná finanční rozhodnutí děláš vždy zcela na vlastní zodpovědnost. Trh nebere ohledy na to, jestli jsi udělal/a chybu z neznalosti.
+        * **Individuální situace:** Každý člověk má jinou výchozí životní situaci. Co je skvělá investice pro někoho s velkou rezervou a vysokým příjmem, může být finanční sebevražda pro někoho, kdo má dluhy a žije od výplaty k výplatě. Každý má také jinou schopnost snášet případnou ztrátu (toleranci k riziku) a jiný časový horizont.
+        * **Historie vs. budoucnost:** Historické výnosy (to, jak se aktivum chovalo včera nebo před deseti lety) nikdy nezaručují stejné nebo podobné výnosy v budoucnosti.
+        * **Riziko je všudypřítomné:** Každý finanční produkt nese riziko ztráty. Bez rizika není výnosu. Pokud ti někdo tvrdí, že nabízí „bezpečnou investici s vysokým a garantovaným ziskem“, s největší pravděpodobností lže nebo se jedná o podvod.
+        """)
+
+        st.markdown("""
+        <div class="box-gray">
+            <b>🎓 Závěrečná rada:</b> Než začneš na skutečném trhu investovat své reálné peníze, ujisti se, že máš vybudovanou <b>dostatečnou finanční rezervu na bezpečně dostupném místě</b> (např. spořicí účet). Pro složitá životní rozhodnutí se neboj využít služeb nezávislého odborníka, který je placený přímo tebou za radu, nikoliv z tajných provizí za prodej konkrétních produktů.
+        </div>
+        """, unsafe_allow_html=True)
