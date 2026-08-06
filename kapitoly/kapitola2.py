@@ -42,6 +42,23 @@ def render():
         "3.8 Interaktivní aktivity a cvičebnice",
         "3.9 Shrnutí: Co si z finančního trhu odnést",
         "3.10 Právní a etický disclaimer"
+
+        # Sekce 4: Úvěry, pojištění a ochrana majetku
+        "4.1 Co je úvěr",
+        "4.2 Úrok: cena půjčených peněz",
+        "4.3 RPSN: skutečnější cena úvěru",
+        "4.4 Ne každý úvěr dostane",
+        "4.5 Postup poskytnutí spotřebitelského úvěru",
+        "4.6 Hypotéka: úvěr na bydlení",
+        "4.7 Podnikatelské úvěry",
+        "4.8 Když se splácení pokazí",
+        "4.9 Past jménem „Kup teď, zaplať později“",
+        "4.10 Pojištění: ochrana před finančním nárazem",
+        "4.11 Životní pojištění",
+        "4.12 Neživotní pojištění",
+        "4.13 Jak poznat dobré pojištění",
+        "4.14 Praktické rozhodování: úvěr a pojištění dohromady",
+        "4.15 Shrnutí: co si odnést"
     ]
     
     selected_section_2 = st.selectbox("📌 Přechod na podkapitolu:", section_options_2, index=0)
