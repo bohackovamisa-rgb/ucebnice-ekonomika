@@ -1912,35 +1912,60 @@ def render():
                 st.success(f"🎙️ **Zpráva z trhu {rep_market}:** „Dobrý den, hlásíme se ze světa financí! Dnes se pozornost investorů zaměřila na {rep_firma}. Nezapomínejme ale na klíčová rizika, mezi kterými dominuje {rep_riziko}. Investujte opatrně, přejeme vám úspěšný den a vracíme slovo do studia!“")
             st.caption("Výstup: Krátká zpráva ve stylu ekonomického podcastu pro spolužáky.")
 
-    # =========================================================================
-    # 3.2 VÝNOS, RIZIKO, LIKVIDITA A ČASOVÝ HORIZONT
+# =========================================================================
+    # 3.2 VÝNOS, RIZIKO, LIKVIDITA A ČAS
     # =========================================================================
     elif "3.2 Výnos" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.2 Výnos, riziko, likvidita a časový horizont</h2>", unsafe_allow_html=True)
-        st.write("Než se člověk začne bavit o konkrétních produktech, musí chápat čtyři základní otázky: Jaký může být výnos? Jaké nesu riziko? Jak rychle se dostanu k penězům? Na jak dlouho peníze odkládám?")
+        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.2 Výnos, riziko, likvidita a čas</h2>", unsafe_allow_html=True)
+        
+        st.write("Než se člověk začne bavit o konkrétních produktech, musí chápat čtyři základní otázky:")
+        st.markdown("""
+        * Jaký může být výnos?
+        * Jaké nesu riziko?
+        * Jak rychle se dostanu k penězům?
+        * Na jak dlouho peníze odkládám?
+        """)
         
         st.info("⚖️ **Investiční trojúhelník:** Výnos, riziko a likvidita spolu souvisejí. Vyšší možný výnos obvykle znamená vyšší riziko. Vysoký výnos, nulové riziko a okamžitá dostupnost peněz najednou jsou podezřelá kombinace.")
 
+        # 3.2.1
         with st.container(border=True):
-            st.markdown("### 3.2.1 Výnos a 3.2.2 Riziko")
-            st.write("**Výnos** je to, co investor získá navíc oproti původně vložené částce (úrok, dividenda, růst ceny, nájemné).")
-            st.write("**Riziko** znamená možnost, že výsledek bude jiný, než člověk očekával.")
-            
+            st.markdown("### 3.2.1 Výnos")
+            st.write("Výnos je to, co investor získá navíc oproti původně vložené částce. Může mít podobu:")
+            st.markdown("""
+            * úroku,
+            * dividendy,
+            * růstu ceny aktiva,
+            * nájemného,
+            * kurzového zisku,
+            * kombinace více zdrojů.
+            """)
+            st.write("Výnos ale není totéž co jistota. U některých produktů je předvídatelnější, u jiných se může výrazně měnit.")
+
+        # 3.2.2
+        with st.container(border=True):
+            st.markdown("### 3.2.2 Riziko")
+            st.write("Riziko znamená možnost, že výsledek bude jiný, než člověk očekával. Může jít o nižší výnos, kolísání hodnoty, ztrátu části peněz nebo v extrémním případě ztrátu celé investice.")
             st.markdown("""
             | Druh rizika | Co znamená | Příklad |
             | :--- | :--- | :--- |
             | **Tržní riziko** | Cena aktiva kolísá podle vývoje trhu. | Akcie klesnou při ekonomické nejistotě. |
             | **Úvěrové riziko** | Dlužník nemusí splatit svůj závazek. | Firma nevykoupí dluhopis. |
-            | **Likviditní riziko** | Aktivum nejde rychle prodat za rozumnou cenu. | Malý token nemá kupce. |
+            | **Likviditní riziko** | Aktivum nejde rychle prodat za rozumnou cenu. | Malý token nebo podíl v projektu nemá kupce. |
             | **Měnové riziko** | Změna kurzu měny ovlivní výsledek. | Investice v dolarech se přepočítává do korun. |
             | **Inflační riziko** | Výnos nestačí pokrýt růst cen. | Spoření nese 3 %, inflace je 6 %. |
-            | **Regulační riziko** | Změna pravidel ovlivní dané aktivum. | Stát zpřísní pravidla pro krypto služby. |
+            | **Regulační riziko** | Změna pravidel ovlivní dané aktivum nebo trh. | Stát zpřísní pravidla pro kryptoměnové služby. |
+            | **Technologické riziko** | Selže systém, aplikace, úschova nebo zabezpečení. | Ztráta přístupu do kryptopeněženky. |
             """)
 
+        # 3.2.3 a 3.2.4
         with st.container(border=True):
-            st.markdown("### 3.2.3 Likvidita a 3.2.4 Časový horizont")
-            st.write("**Likvidita:** Jak snadno lze aktivum proměnit zpět na peníze.")
-            st.write("**Časový horizont:** Doba, po kterou plánujeme peníze nechat investované.")
+            st.markdown("### 3.2.3 Likvidita")
+            st.write("Likvidita znamená, jak snadno lze aktivum proměnit zpět na peníze. Hotovost je velmi likvidní. Nemovitost bývá méně likvidní. Některé kryptoměnové tokeny mohou být prakticky nelikvidní, pokud je nikdo nechce koupit.")
+            
+            st.markdown("### 3.2.4 Časový horizont")
+            st.write("Časový horizont je doba, po kterou člověk plánuje peníze nechat investované. Krátký horizont se nehodí pro vysoce kolísavé investice. Pokud člověk ví, že peníze bude potřebovat za tři měsíce, neměl by je vystavovat velkým výkyvům.")
+            
             st.success("🧭 **Jednoduché pravidlo:** Nouzová rezerva patří do bezpečných a dostupných nástrojů. Investice s vyšším rizikem patří až k penězům, které člověk nepotřebuje na běžné výdaje ani na krizové situace.")
 
     # =========================================================================
