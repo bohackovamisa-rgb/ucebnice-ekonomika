@@ -14,7 +14,7 @@ def render():
         """, unsafe_allow_html=True)
 
     section_options_2 = [
-        "1.1 Peníze jako digitální data(1.1.1 - 1.1.15)",
+        "1.1 Peníze jako digitální data",
         "1.2 ČNB a komerční banky",
         "1.3 Platební styk",
         "1.4 Fintech revoluce"
@@ -23,9 +23,9 @@ def render():
     st.divider()
 
     # =========================================================================
-    # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA (1.1.1 - 1.1.15)
+    # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA
     # =========================================================================
-    if selected_section_2 == "1.1 Peníze jako digitální data (1.1.1 - 1.1.15)":
+    if "1.1 Peníze jako digitální data" in selected_section_2:
         st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.1 Peníze jako digitální data</h2>", unsafe_allow_html=True)
         
         st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života. Běží na pozadí každého našeho kliknutí, každého „pípnutí“ mobilem u pokladny a každého online nákupu.")
@@ -286,7 +286,7 @@ def render():
     # =========================================================================
     # 1.2 ČNB A KOMERČNÍ BANKY
     # =========================================================================
-    elif selected_section_2 == "1.2 ČNB a komerční banky":
+    elif "1.2 ČNB" in selected_section_2:
         st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.2 ČNB a komerční banky</h2>", unsafe_allow_html=True)
         st.write("Bankovní systém není jen síť poboček a bankomatů. Je to jeden z nejdůležitějších „nervových systémů“ ekonomiky. Přes banky tečou mzdy, platby za zboží, splátky úvěrů, daně, sociální dávky, investice i peníze firem. Aby tento systém fungoval, musí mu lidé věřit.")
 
@@ -523,7 +523,7 @@ def render():
     # =========================================================================
     # 1.3 PLATEBNÍ STYK
     # =========================================================================
-    elif selected_section_2 == "1.3 Platební styk":
+    elif "1.3 Platební styk" in selected_section_2:
         st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.3 Platební styk</h2>", unsafe_allow_html=True)
         st.write("Platební styk znamená převod peněz mezi plátcem a příjemcem. Je to infrastruktura důvěry, která umožňuje bezpečný a prokazatelný přesun hodnoty.")
 
@@ -606,7 +606,7 @@ def render():
     # =========================================================================
     # 1.4 FINTECH REVOLUCE
     # =========================================================================
-    elif selected_section_2 == "1.4 Fintech revoluce":
+    elif "1.4 Fintech" in selected_section_2:
         st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.4 Fintech revoluce</h2>", unsafe_allow_html=True)
         st.write("Fintech (Finance + Technology) označuje firmy a služby, které pomocí technologií mění způsob, jak platíme, spoříme, investujeme nebo spravujeme rozpočet.")
 
