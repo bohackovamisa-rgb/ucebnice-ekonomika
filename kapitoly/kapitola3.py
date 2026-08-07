@@ -83,40 +83,40 @@ def render():
             else:
                 st.error("Něco tam nesedí. Zkus se zamyslet nad tím, kolik kusů se vyrábí a zda jsou na míru.")
 
-    elif selected_section_3 == "1.3 Výrobní kapacita":
+elif selected_section_3 == "1.3 Výrobní kapacita":
         st.markdown("### 1.3 Výrobní kapacita")
-        st.write("Výrobní kapacita vyjadřuje maximální možný objem produkce za určité období (např. počet kusů za hodinu, směnu nebo měsíc).")
+        st.write("Výrobní kapacita vyjadřuje maximální možný objem produkce za určité období (např. počet kusů za hodinu, směnu nebo den).")
         
         st.markdown("<div class='box-blue'><b>Výrobní kapacita = maximální možný objem výroby za jednotku času</b></div>", unsafe_allow_html=True)
         
-        st.write("Firma se obvykle nesnaží kapacitu využívat za každou cenu na 100 %. Příliš vysoké vytížení může vést k přetížení pracovníků, poruchám, zmetkům nebo zpoždění zakázek. Cílem je optimální využití (obvykle kolem 80–90 %), které nechává polštář pro údržbu a výkyvy poptávky.")
+        st.write("Firma se obvykle nesnaží kapacitu využívat za každou cenu na 100 %. Příliš vysoké vytížení znamená nulový prostor pro řešení problémů. Cílem je optimální využití (obvykle kolem 80–90 %), které nechává polštář pro údržbu a nečekané výkyvy.")
 
         st.divider()
-        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka využití kapacity</b></div>", unsafe_allow_html=True)
-        st.write("Vyzkoušej si namodelovat výrobu a sleduj, co se stane, když kapacitu přeženeš.")
+        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní model: Tisková farma na 3D klíčenky</b></div>", unsafe_allow_html=True)
         
-        col1, col2 = st.columns([1, 1])
-        with col1:
-            max_kapacita = st.number_input("Maximální kapacita (ks):", min_value=1, value=5000, step=100)
-            skutecnost = st.slider("Skutečná výroba (ks):", min_value=0, max_value=int(max_kapacita * 1.2), value=4200, step=50)
+        st.write("Představ si, že máš 5 3D tiskáren. Každá zvládne vytisknout maximálně 10 klíčenek za den. Tvá absolutní denní kapacita je tedy **50 klíčenek**.")
+        st.write("Otevřeš svůj e-shop. Kolik objednávek na dnešek zákazníkům slíbíš dodat?")
         
-        vyuziti = (skutecnost / max_kapacita) * 100
+        zakazky = st.slider("Počet slíbených zakázek (kusů):", min_value=0, max_value=60, value=40)
         
-        with col2:
-            st.metric("Využití výrobní kapacity", f"{vyuziti:.1f} %")
-            
-            # Bezpečnostní pojistka pro zobrazení progress baru (musí být 0.0 - 1.0)
-            progress_val = min(vyuziti / 100, 1.0)
-            st.progress(progress_val)
-            
-            if vyuziti > 100:
-                st.error("💥 KRITICKÝ STAV: Výroba jede nad limit! Hrozí havárie strojů, vyhoření lidí a obrovská chybovost. Nutné investovat do nových strojů.")
-            elif vyuziti >= 95:
-                st.warning("⚠️ RIZIKO: Jste na hraně. Každá malá porucha zastaví dodávky zákazníkům. Nemáte čas na údržbu.")
-            elif vyuziti >= 75:
-                st.success("✅ OPTIMÁLNÍ: Výroba běží efektivně a zároveň máte prostor pro údržbu strojů nebo nečekanou zakázku.")
-            else:
-                st.info("📉 NEEFEKTIVNÍ: Stroje a lidé stojí. Platíte fixní náklady (např. nájem), ale nevyrábíte dost, aby se to zaplatilo.")
+        vyuziti = (zakazky / 50) * 100
+        
+        st.metric("Vytížení tvých tiskáren", f"{vyuziti:.0f} %")
+        
+        # Omezení progress baru maximálně do 1.0 (100 %) pro Streamlit
+        progress_val = min(vyuziti / 100, 1.0)
+        st.progress(progress_val)
+        
+        if vyuziti > 100:
+            st.error("💥 KRITICKÁ CHYBA: Slíbil jsi víc, než tvé stroje fyzicky zvládnou! Zákazníci budou naštvaní, dostaneš špatné recenze a budeš muset vracet peníze.")
+        elif vyuziti == 100:
+            st.warning("⚠️ RIZIKO: Jedeš na absolutní doraz. Pokud se u jediné tiskárny zasekne struna, byť jen na hodinu, nestihneš dodat slíbené kusy!")
+        elif vyuziti >= 80:
+            st.success("✅ IDEÁLNÍ STAV: Vyděláváš skvělé peníze, ale máš malou rezervu (tzv. polštář), kdyby se něco pokazilo, nebo bylo potřeba tiskárnu vyčistit.")
+        elif vyuziti > 0:
+            st.info("📉 NEEFEKTIVNÍ: Tiskárny stojí a nevydělávají, i když by mohly. Stroje stárnou a ztrácejí hodnotu. Potřebuješ lepší marketing, abys přitáhl víc objednávek.")
+        else:
+            st.write("Zatím nemáš žádné objednávky. Tvá kapacita leží ladem.")
 
     elif selected_section_3 == "1.4 Logistika, zásobování a JIT":
         st.markdown("### 1.4 Logistika a zásobování")
