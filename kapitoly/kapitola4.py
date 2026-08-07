@@ -13,7 +13,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # 📌 PŘEHLED A NAVIGACE KAPITOLOU (Opraveno: čistý text bez HTML tagů)
+    # 📌 PŘEHLED A NAVIGACE KAPITOLOU
     with st.expander("🧭 Co si z kapitoly odnesete a doporučené pořadí studia", expanded=False):
         c_nav1, c_nav2 = st.columns(2)
         with c_nav1:
@@ -82,47 +82,98 @@ def render():
         </div>
         """, unsafe_allow_html=True)
         
-        st.write("Trh práce není jen místo, kde zaměstnavatelé nabízejí práce. Je to prostředí, kde se potkává **nabídka práce** (lidé nabízející čas a dovednosti), **poptávka po práci** (firmy potřebující vykonat činnost) a **cena práce** (mzda či odměna).")
+        st.write("Trh práce je prostředí, kde se potkává **nabídka práce** (lidé nabízející čas a dovednosti), **poptávka po práci** (firmy potřebující vykonat činnost) a **cena práce** (mzda či odměna).")
         st.write("Mzda se neodvíjí od toho, jak moc se člověk fyzicky nadře. Ovlivňuje ji kombinace následujících faktorů:")
 
         st.markdown("""
         | Faktor | Co znamená | Příklad z praxe |
         | :--- | :--- | :--- |
         | 💎 **Nedostatek dovedností** | Čím méně lidí danou věc umí, tím vyšší je odměna. | Datová analýza, kyberbezpečnost, specializovaný řemeslník. |
-        | ⚖️ **Odpovědnost** | Čím větší dopad má ошибка, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
+        | ⚖️ **Odpovědnost** | Čím větší dopad má ошибка/chyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
         | 🚀 **Produktivita a přidaná hodnota** | Kolik hodnoty či úspor dokáže člověk vytvořit za jednotku času. | Programátor, který automatizuje proces pro tisíce uživatelů. |
         | ⚠️ **Riziko a náročnost** | Fyzické, psychické nebo bezpečnostní nároky práce. | Práce ve zdravotnictví, výškové práce, směnný provoz. |
-        | 💬 **Vyjednávací síla** | Schopnost doložit své výsledky a vyjednat si odpovídající podmínky. | Uchazeč se silným portfoliem, praxí a referencemi. |
+        | 💬 **Vyjednávací síla a region** | Místo výkonu práce, praxe, vzdělání a schopnost doložit výsledky. | Praha vs. menší regiony, junior vs. seniorní specialista. |
         """)
 
         st.markdown("""
         <div class='box-gray'>
-            💡 <b>Příklad:</b> IT analytik může být placen více než administrativní asistent ne proto, že by „pracoval více hodin“, ale protože jeho dovednosti jsou vzácnější, mají vyšší dopad na zisk firmy a umožňují ušetřit nebo vydělat velké částky.
+            💡 <b>Příklad:</b> IT analytik v Praze může mít vyšší mzdu než administrativní pracovník v menším městě ne proto, že by „pracoval více hodin“, ale kvůli kombinaci vzácnosti dovedností, vysoké přidané hodnotě pro firmu a vyšším životním nákladům v kraji.
         </div>
         """, unsafe_allow_html=True)
 
         st.divider()
-        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní simulátor: Co určuje tvou mzdu?</b></div>", unsafe_allow_html=True)
-        st.write("Vyzkoušej si namixovat různé faktory a sleduj, jak se mění hodnota práce na trhu.")
+        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Reálné faktory mzdy v ČR</b></div>", unsafe_allow_html=True)
+        st.write("Měň parametry podle českého trhu práce a sleduj, jak obor, kraj, vzdělání a praxe ovlivňují průměrnou hrubou mzdu:")
 
         col_sim1, col_sim2 = st.columns(2)
         with col_sim1:
-            f_vzacnost = st.slider("Vzácnost dovednosti (kolik lidí to umí?):", min_value=1, max_value=10, value=7, help="1 = Umí to každý, 10 = Špičkový expert")
-            f_odpovednost = st.slider("Míra odpovědnosti za škodu/zdraví:", min_value=1, max_value=10, value=5)
-            f_poptavka = st.slider("Poptávka firem na trhu:", min_value=1, max_value=10, value=8)
+            s_obor = st.selectbox("Vyber obor:", [
+                "Služby, Gastro a Maloobchod",
+                "Administrativa a Zákaznická podpora",
+                "Průmysl, Výroba a Řemesla",
+                "Zdravotnictví a Sociální péče",
+                "IT, Vývoj softwaru a Data"
+            ])
+            
+            s_kraj = st.selectbox("Kraj (místo výkonu práce):", [
+                "Praha (nejvyšší životní náklady)",
+                "Jihomoravský / Středočeský / Plzeňský kraj",
+                "Moravskoslezský / Ústecký / Karlovarský kraj",
+                "Ostatní kraje ČR"
+            ])
+            
+            s_vzdelani = st.radio("Dosažené vzdělání:", [
+                "Výuční list / Základní",
+                "SŠ s maturitou",
+                "Vysokoškolské (Bc. / Mgr. / Ing.)"
+            ], horizontal=True)
+
+            s_praxe = st.select_slider("Délka praxe v oboru:", options=[
+                "Absolvent (0 let)", "1–3 roky praxe", "5+ let (Senior)"
+            ])
 
         with col_sim2:
-            zaklad = 28000
-            vypocet_mzdy = int(zaklad * (f_vzacnost * 0.25 + f_odpovednost * 0.2 + f_poptavka * 0.35 + 0.5))
-            
-            st.metric("Odhadovaná měsíční mzda", f"{vypocet_mzdy:,} Kč".replace(",", " "))
-            
-            if f_vzacnost >= 8 and f_poptavka >= 8:
-                st.success("🔥 **Špičkový profil:** Tvůj obor trpí kritickým nedostatkem lidí. Zaměstnavatelé se o tebe poperou!")
-            elif f_vzacnost <= 3 and f_poptavka <= 4:
-                st.warning("📉 **Vysoká konkurence:** Na jedno místo se hlásí desítky lidí. Pro vyšší mzdu budeš muset přidat unikátní dovednost (upskilling).")
+            # Základní orientační mediány pro ČR
+            base_obor = {
+                "Služby, Gastro a Maloobchod": 28000,
+                "Administrativa a Zákaznická podpora": 34000,
+                "Průmysl, Výroba a Řemesla": 38000,
+                "Zdravotnictví a Sociální péče": 42000,
+                "IT, Vývoj softwaru a Data": 62000
+            }[s_obor]
+
+            koef_kraj = {
+                "Praha (nejvyšší životní náklady)": 1.25,
+                "Jihomoravský / Středočeský / Plzeňský kraj": 1.05,
+                "Moravskoslezský / Ústecký / Karlovarský kraj": 0.90,
+                "Ostatní kraje ČR": 0.95
+            }[s_kraj]
+
+            koef_vzdelani = {
+                "Výuční list / Základní": 0.90,
+                "SŠ s maturitou": 1.05,
+                "Vysokoškolské (Bc. / Mgr. / Ing.)": 1.25
+            }[s_vzdelani]
+
+            koef_praxe = {
+                "Absolvent (0 let)": 0.80,
+                "1–3 roky praxe": 1.00,
+                "5+ let (Senior)": 1.35
+            }[s_praxe]
+
+            odhad_mzdy = int(base_obor * koef_kraj * koef_vzdelani * koef_praxe)
+
+            st.metric("Předpokládaná hrubá mzda (odhad v ČR)", f"{odhad_mzdy:,} Kč".replace(",", " "))
+
+            st.markdown("##### 📌 Co z toho pro žáka vyplývá?")
+            if s_praxe == "Absolvent (0 let)":
+                st.info("💡 **Nástupní mzda absolventa:** Jako začátečník bez praxe začínáš na nižší částce. Praxe a spolehlivost jsou hlavní pákou pro růst mzdy v prvních 3 letech.")
+            elif s_obor == "IT, Vývoj softwaru a Data":
+                st.success("🔥 **Vysoká poptávka:** IT obor má dlouhodobě nedostatek lidí, což žene mzdy nahoru, ale vyžaduje neustálé samo-vzdělávání.")
+            elif koef_kraj > 1.1:
+                st.write("🏙️ **Pražský příplatek:** Vyšší mzda v Praze kompenzuje výrazně dražší bydlení a nájmy.")
             else:
-                st.info("⚖️ **Standardní tržní pozice:** Mzda odpovídá průměru v daném oboru.")
+                st.write("⚖️ **Realita trhu:** Mzda je výsledkem oboru, regionu a zkušeností – nestačí jen chodit do práce, záleží na přidané hodnotě.")
 
     elif selected_section_4 == "1.2 Trh práce 4.0 a AI":
         st.markdown("### 1.2 Trh práce 4.0 a AI")
@@ -205,7 +256,7 @@ def render():
         elif profese_vyber == "Praktický lékař / Sestra":
             st.info("🤖 **AI převzneme:** Přepis lékařských zpráv, hlídání termínů očkování, analýzu rentgenových snímků.\n\n⚡ **AI zrychlí:** Diagnostiku vzácných chorob, vyhledávání v lékařských studiích.\n\n🧠 **Lidské zůstane:** Empatie, komunikace s pacientem, provedení zákroku, finální odpovědnost za léčbu.")
         elif profese_vyber == "Učitel / Lektor":
-            st.info("🤖 **AI převzneme:** Opravování testů s výběrem odpovědí, generování příkladů na procvičení.\n\n⚡ **AI zrychlí:** Přípravu pracovních listů, překlady materiálů, tvorbu prezentací.\n\n🧠 **Lidské zůstane:** Motivace žáků, osobní mentorování, řešení konfliktů ve třídě, vysvětlení látky s ohledem na emoce.")
+            st.info("🤖 **AI převzneme:** Opravování testů s výběrem odpovědí, generování příkladů na procvičení.\n\n⚡ **AI zrychlí:** Přípravu pracovních listů, překlady materiálů, tvorbu prezentací.\n\n🧠 **Lidské zůstane:** Motivace žáků, osobní mentorování, řešení konfliktů ve tříde, vysvětlení látky s ohledem na emoce.")
         elif profese_vyber == "Právník / Koncipient":
             st.info("🤖 **AI převzneme:** Prohledávání tisíců stránek zákonů a judikátů, kontrola formalit ve smlouvách.\n\n⚡ **AI zrychlí:** Návrh prvních verzí standardních smluv.\n\n🧠 **Lidské zůstane:** Obhajoba u soudu, vyjednávání s protistranou, etické posouzení sporu.")
 
