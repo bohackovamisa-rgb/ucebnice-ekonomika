@@ -476,8 +476,6 @@ def render():
         st.markdown("### 7.2 Slovníček, rychlé opakování a prověrka kapitoly")
         st.info("Závěrečné opakování se připravuje...")
 
-    else:
-        st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
         # =========================================================================
     # SEKCE 2: HRA PODLE PRAVIDEL: HR, ZÍSKÁNÍ PRÁCE A PRACOVNÍ PRÁVO
     # =========================================================================
