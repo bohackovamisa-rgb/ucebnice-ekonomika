@@ -688,22 +688,28 @@ def render():
         st.markdown("#### Rozdíl mezi účetními a daňovými odpisy")
         st.markdown("""
         * 📘 **Účetní odpisy:** Mají zobrazovat SKUTEČNÉ opotřebení majetku. Firma si sama určí, jak dlouho bude majetek používat (např. notebook na 4 roky). Cílem je věrný obraz účetnictví.
-        * 🏛️ **Daňové odpisy:** Jsou striktně dané státem (Zákonem o daních z příjmů). Snižují základ daně. Stát rozděluje majetek do tzv. **odpisových skupin** (např. počítač se daňově odpisuje 3 roky, auto 5 let, budova 30 let).
+        * 🏛️ **Daňové odpisy:** Jsou striktně dané státem (Zákonem o daních z příjmů). Snižují základ daně. Stát rozděluje majetek do **6 odpisových skupin**.
         """)
 
         st.divider()
-        st.markdown("#### Vzorce pro výpočet odpisů")
-        
-        st.markdown("**1. Účetní odpisy (Nejčastěji rovnoměrné)**")
-        st.write("Firma si stanoví životnost a každý měsíc/rok odepíše stejnou částku.")
-        st.markdown("<div class='box-gray'><b>Roční účetní odpis</b> = Pořizovací cena / Předpokládaná doba používání v letech</div>", unsafe_allow_html=True)
-        
-        st.markdown("**2. Daňové odpisy podle zákona**")
-        st.write("U daňových odpisů si firma vybere metodu a stát jí řekne přesná čísla (sazby a koeficienty), která musí dosadit do vzorce. Zvolená metoda se u daného majetku už nesmí měnit.")
+        st.markdown("#### Přehled 6 odpisových skupin podle zákona")
+        st.markdown("""
+        | Skupina | Doba odpisování | Typický majetek (příklady) |
+        | :---: | :---: | :--- |
+        | **1.** | **3 roky** | Počítače, notebooky, kancelářské stroje, ruční nářadí, skot. |
+        | **2.** | **5 let** | Osobní a užitková auta, motocykly, nábytek, většina strojů a přístrojů. |
+        | **3.** | **10 let** | Těžké stroje, lokomotivy, turbíny, trezory, skleníky. |
+        | **4.** | **20 let** | Budovy ze dřeva a plastů, oplocení, průmyslové plynovody. |
+        | **5.** | **30 let** | Běžné budovy (cihlové, betonové), mosty, dálnice, tunely. |
+        | **6.** | **50 let** | Administrativní budovy, hotely, domy kultury, historické památky. |
+        """)
+
+        st.divider()
+        st.markdown("#### Vzorce pro výpočet daňových odpisů")
         
         c_v1, c_v2 = st.columns(2)
         with c_v1:
-            st.markdown("<div class='box-blue'><b>Rovnoměrné odpisy (Lineární)</b><br>Počítají se pomocí státem daných procentuálních sazeb. Ideální pro firmy se stabilními zisky.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-blue'><b>Rovnoměrné odpisy (Lineární)</b><br>Počítají se pomocí státem daných procentuálních sazeb.</div>", unsafe_allow_html=True)
             st.markdown("""
             * **Odpis v 1. roce:**
             `Pořizovací cena × (Sazba pro 1. rok / 100)`
@@ -712,7 +718,7 @@ def render():
             """)
             
         with c_v2:
-            st.markdown("<div class='box-green'><b>Zrychlené odpisy (Degresivní)</b><br>Počítají se pomocí státem daných koeficientů. V prvních letech se odepíše víc (vysoký náklad = nižší daň).</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-green'><b>Zrychlené odpisy (Degresivní)</b><br>Počítají se pomocí státem daných koeficientů.</div>", unsafe_allow_html=True)
             st.markdown("""
             * **Odpis v 1. roce:**
             `Pořizovací cena / Koeficient pro 1. rok`
@@ -721,18 +727,20 @@ def render():
             """)
 
         st.divider()
-        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Rovnoměrné vs. Zrychlené odpisy</b></div>", unsafe_allow_html=True)
-        st.write("Vyzkoušej si, jak by si firma odepisovala majetek podle skutečného českého Zákona o daních z příjmů. Zadej cenu a vyber, o jaký majetek jde.")
+        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Všech 6 odpisových skupin</b></div>", unsafe_allow_html=True)
+        st.write("Vyber odpisovou skupinu a zadej cenu. Kalkulačka spočítá odpisy pro všech 6 zákonných skupin.")
         
-        c_kalk1, c_kalk2 = st.columns([1, 1])
+        c_kalk1, c_kalk2 = st.columns([1, 1.2])
         with c_kalk1:
             odp_cena = st.number_input("Pořizovací cena majetku (Kč):", value=500000, step=50000, min_value=10000)
         with c_kalk2:
-            # Zjednodušené odpisové skupiny pro výuku
             skupiny = {
-                "Skupina 1 (Počítače, nářadí) - 3 roky": {"roky": 3, "rov_1": 20, "rov_dalsi": 40, "zrych_1": 3, "zrych_dalsi": 4},
-                "Skupina 2 (Auta, stroje) - 5 let": {"roky": 5, "rov_1": 11, "rov_dalsi": 22.25, "zrych_1": 5, "zrych_dalsi": 6},
-                "Skupina 3 (Těžké stroje, trezory) - 10 let": {"roky": 10, "rov_1": 5.5, "rov_dalsi": 10.5, "zrych_1": 10, "zrych_dalsi": 11}
+                "1. skupina (3 roky) - Počítače, nářadí": {"roky": 3, "rov_1": 20, "rov_dalsi": 40, "zrych_1": 3, "zrych_dalsi": 4},
+                "2. skupina (5 let) - Auta, běžné stroje": {"roky": 5, "rov_1": 11, "rov_dalsi": 22.25, "zrych_1": 5, "zrych_dalsi": 6},
+                "3. skupina (10 let) - Těžké stroje, turbíny": {"roky": 10, "rov_1": 5.5, "rov_dalsi": 10.5, "zrych_1": 10, "zrych_dalsi": 11},
+                "4. skupina (20 let) - Dřevěné budovy, ploty": {"roky": 20, "rov_1": 2.15, "rov_dalsi": 5.15, "zrych_1": 20, "zrych_dalsi": 21},
+                "5. skupina (30 let) - Cihlové/betonové budovy": {"roky": 30, "rov_1": 1.4, "rov_dalsi": 3.4, "zrych_1": 30, "zrych_dalsi": 31},
+                "6. skupina (50 let) - Kancelářské budovy, hotely": {"roky": 50, "rov_1": 1.02, "rov_dalsi": 2.02, "zrych_1": 50, "zrych_dalsi": 51}
             }
             vybrana_skupina = st.selectbox("Vyber odpisovou skupinu:", list(skupiny.keys()), index=1)
             
@@ -762,7 +770,6 @@ def render():
         try:
             import pandas as pd
             
-            # Vytvoření přehledné tabulky pro studenty
             df_odpisy = pd.DataFrame({
                 "Rok": [f"{r}. rok" for r in range(1, roky + 1)],
                 "Rovnoměrný odpis (Kč)": rovnomerne,
@@ -770,26 +777,20 @@ def render():
             })
             
             st.markdown("##### 📊 Výpočet odpisů rok po roce")
-            # Zobrazení tabulky s hezkým formátováním čísel
             st.dataframe(df_odpisy.style.format({"Rovnoměrný odpis (Kč)": "{:,.0f}", "Zrychlený odpis (Kč)": "{:,.0f}"}), use_container_width=True)
             
             st.markdown("##### 📈 Grafické srovnání nákladů")
-            # Vykreslení grafu
             df_graf = df_odpisy.set_index("Rok")
             st.bar_chart(df_graf, color=["#3b82f6", "#22c55e"])
-            st.caption("🟦 Modrá = Rovnoměrný odpis | 🟩 Zelená = Zrychlený odpis. Všimni si, jak zrychlený odpis v prvních letech vytvoří největší náklad (a tím nejvíc sníží daně).")
+            st.caption("🟦 Modrá = Rovnoměrný odpis | 🟩 Zelená = Zrychlený odpis.")
             
         except ImportError:
             st.warning("Pro zobrazení tabulek a grafů je potřeba knihovna Pandas.")
 
-        st.markdown("#### Kdy jakou metodu vybrat?")
-        st.write("Pokud máš teď obrovské zisky a chceš co nejvíc ušetřit na daních hned, zvolíš **zrychlené odpisy** (zelené sloupce vlevo jsou vysoké). Pokud máš zisky stálé nebo čekáš, že porostou, hodí se **rovnoměrné odpisy** (modré sloupce).")
-
         st.divider()
         st.markdown("#### Vyřazení a evidence dlouhodobého majetku")
         st.write("Dlouhodobý majetek se z evidence vyřazuje tehdy, když už ho firma nepoužívá. Důvody mohou být: prodej, likvidace, darování, škoda/zničení, krádež nebo převod do osobního užívání.")
-        st.write("Při vyřazení se řeší: datum a způsob vyřazení, zůstatková cena, případný výnos z prodeje a doklad o vyřazení.")
-        st.markdown("<div class='box-gray'>🗂️ <b>Evidence:</b> Dlouhodobý majetek se eviduje na <i>kartách majetku</i>. Obsahuje inventární číslo, název, pořizovací cenu, odpisový plán, oprávky, odpovědnou osobu atd. Evidence pomáhá firmě vědět, co vlastní, kde to je a jaká je hodnota.</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-gray'>🗂️ <b>Evidence:</b> Dlouhodobý majetek se eviduje na <i>kartách majetku</i> (inventární číslo, název, pořizovací cena, odpisový plán, oprávky, odpovědná osoba).</div>", unsafe_allow_html=True)
 
     else:
         st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
