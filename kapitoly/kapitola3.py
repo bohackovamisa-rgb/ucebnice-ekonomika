@@ -156,92 +156,190 @@ def render():
             st.metric("Počet vadných kusů", f"{zmetky_ks} ks")
             st.metric("Finanční ztráta", f"{ztrata:,} Kč".replace(",", " "))
 
-    # =========================================================================
+# =========================================================================
     # SEKCE 3: NÁKLADY, VÝNOSY A ZISK
     # =========================================================================
     elif selected_section_3 == "3.1 Náklad vs. výdaj a pojetí zisku":
         st.markdown("### 3.1 Náklady, výnosy a zisk: základní teorie")
-        st.markdown("<div class='box-blue'>🧮 <b>Základní vztah:</b> Zisk vzniká tehdy, když jsou výnosy vyšší než náklady.</div>", unsafe_allow_html=True)
+        st.markdown("""
+        <div class='box-blue'>
+            🧮 <b>Základní vztah:</b> Zisk vzniká tehdy, když jsou výnosy vyšší než náklady. Důležité je ale vědět, které náklady do výpočtu opravdu patří.
+        </div>
+        """, unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("#### Náklad vs. Výdaj")
+            st.write("V běžné řeči se často zaměňují, ale v ekonomice a účetnictví mají odlišný význam.")
             st.markdown("""
-            * **Náklad:** Spotřeba zdrojů v penězích (odpis stroje).
-            * **Výdaj:** Skutečný odtok peněz z účtu (zaplacení faktury).
+            * **Náklad:** Spotřeba zdrojů vyjádřená v penězích (např. spotřeba materiálu ve výrobě, mzda, odpis stroje).
+            * **Výdaj:** Skutečný odtok peněz z pokladny nebo bankovního účtu (např. zaplacení faktury, nákup materiálu).
             """)
+            st.markdown("<div class='box-gray'>💡 <b>Příklad:</b> Firma koupí stroj za 240 000 Kč. Peníze odejdou z účtu hned — to je výdaj. Do nákladů se ale stroj dostává postupně pomocí odpisů.</div>", unsafe_allow_html=True)
+            
         with col2:
             st.markdown("#### Výnos vs. Příjem")
+            st.write("Podobně je potřeba rozlišovat výnos a příjem.")
             st.markdown("""
-            * **Výnos:** Vznik nároku na zaplacení (vystavená faktura).
-            * **Příjem:** Skutečný přítok peněz na účet (zákazník zaplatí).
+            * **Výnos:** Peněžně vyjádřený výkon firmy, vznik nároku na zaplacení (např. vystavená faktura).
+            * **Příjem:** Skutečný přítok peněz do pokladny nebo na účet (např. zákazník fakturu opravdu zaplatí).
             """)
-        
+            st.markdown("<div class='box-gray'>🧾 <b>Důležité:</b> Firma může mít výnos už při vystavení faktury, ale příjem vznikne až ve chvíli, kdy zákazník zaplatí.</div>", unsafe_allow_html=True)
+
         st.divider()
-        st.markdown("<div class='box-yellow'>📝 <b>Kvíz: O jaký pojem se jedná?</b></div>", unsafe_allow_html=True)
-        with st.form("kviz_pojmy"):
-            q1 = st.selectbox("Zaplacení faktury dodavateli:", ["Vyber...", "Náklad", "Výdaj", "Výnos", "Příjem"])
-            q2 = st.selectbox("Spotřeba materiálu ve výrobě:", ["Vyber...", "Náklad", "Výdaj", "Výnos", "Příjem"])
-            if st.form_submit_button("Zkontrolovat"):
-                if q1 == "Výdaj" and q2 == "Náklad":
-                    st.success("✅ Výborně!")
-                else:
-                    st.error("Něco se nepovedlo. Výdaj/Příjem je pohyb peněz. Náklad/Výnos je spotřeba/nárok.")
+        st.markdown("#### Tři pohledy na zisk")
+        st.markdown("**1. Účetní pohled na zisk**")
+        st.write("Z účetního pohledu se zisk počítá jako rozdíl mezi účetními výnosy a účetními náklady za určité období. Vychází z pravidel účetnictví a zachycuje tržby, mzdy, nájem, energie, odpisy. Odpovídá na otázku: *Kolik firma podle účetnictví vydělala?*")
+        
+        st.markdown("**2. Pohled finanční analýzy a řízení**")
+        st.write("Finanční řízení nesleduje jen " + "papírový" + " zisk, ale řeší, zda má firma hotovost, není předlužená a zisk se promítá do peněžních toků. Firma může vykázat zisk, ale zkrachovat na tom, že jí zákazníci neplatí včas (nemá hotovost).")
+        
+        st.markdown("**3. Ekonomický zisk**")
+        st.write("Ekonomický zisk jde dál než účetní zisk. Zohledňuje nejen skutečně zaplacené (explicitní) náklady, ale také tzv. implicitní (alternativní) náklady — tedy hodnotu nejlepší nevyužité příležitosti.")
+        st.markdown("<div class='box-green'>🧠 <b>Příklad:</b> Pokud podnikatel vloží do podnikání vlastní peníze, mohl je místo toho investovat jinam. Ušlý výnos je alternativní náklad.</div>", unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka: Účetní vs. Ekonomický zisk</b></div>", unsafe_allow_html=True)
+        st.write("Spočítej si, jestli se ti podnikání vyplatí víc, než kdybys šel do zaměstnání a peníze dal do banky.")
+        
+        c_in, c_out = st.columns([1, 1])
+        with c_in:
+            vynosy = st.number_input("Celkové roční výnosy (tržby):", value=1500000, step=100000)
+            exp_naklady = st.number_input("Explicitní náklady (materiál, nájem atd.):", value=900000, step=50000)
+            st.markdown("*Alternativní (implicitní) náklady:*")
+            usla_mzda = st.number_input("Ušlá čistá mzda (kdybys pracoval pro jiného):", value=480000, step=20000)
+            usly_urok = st.number_input("Ušlý úrok (kdybys peníze investoval jinam):", value=50000, step=10000)
+            
+        with c_out:
+            ucetni_zisk = vynosy - exp_naklady
+            eko_zisk = ucetni_zisk - usla_mzda - usly_urok
+            
+            st.metric("Účetní zisk (Papírový zisk)", f"{ucetni_zisk:,} Kč".replace(",", " "))
+            st.metric("Ekonomický zisk", f"{eko_zisk:,} Kč".replace(",", " "))
+            
+            if eko_zisk > 0:
+                st.success("✅ Podnikání se ti vyplatí! Vyděláváš víc, než kdybys chodil do práce a peníze měl v bance.")
+            else:
+                st.error("⚠️ Ekonomická ztráta! Z účetního pohledu jsi možná v plusu, ale ve skutečnosti by se ti víc vyplatilo jít do běžného zaměstnání.")
 
     elif selected_section_3 == "3.2 Členění nákladů a kalkulační vzorec":
-        st.markdown("### 3.2 Fixní, variabilní, přímé a nepřímé náklady")
+        st.markdown("### 3.2 Členění nákladů a kalkulační vzorec")
+        
         c1, c2 = st.columns(2)
         with c1:
+            st.markdown("#### Fixní a variabilní náklady")
+            st.write("Dělení podle toho, zda se mění s objemem výroby.")
             st.markdown("""
-            * 🔒 **Fixní:** Nemění se podle počtu kusů (nájem, odpisy).
-            * 📈 **Variabilní:** Rostou podle objemu výroby (materiál).
+            * 🔒 **Fixní náklady:** Nemění se přímo s počtem vyrobených kusů (nájem, pojištění, mzda administrativy, odpis stroje).
+            * 📈 **Variabilní náklady:** Rostou nebo klesají podle objemu výroby (materiál, obaly, přímé mzdy, energie na výrobu).
             """)
+            with st.expander("🛠️ Jak snižovat variabilní náklady?"):
+                st.write("Vyjednat lepší cenu materiálu, najít vhodnější dodavatele, snížit zmetkovitost, omezit plýtvání materiálem, zkrátit čas potřebný na výrobu jednoho kusu, využívat množstevní slevy.")
+            with st.expander("🛠️ Jak snižovat fixní náklady?"):
+                st.write("Přestěhovat se do levnějších prostor, sdílet kanceláře/sklady, pronajímat stroje místo nákupu, automatizovat administrativu, outsourcovat činnosti.")
+        
         with c2:
+            st.markdown("#### Přímé a nepřímé náklady")
+            st.write("Dělení pro přiřazení ceny ke konkrétnímu výrobku.")
             st.markdown("""
-            * 🎯 **Přímé:** Určitelné na jeden kus (materiál na 1 tričko).
-            * 🌫️ **Nepřímé:** Společné pro firmu, musí se rozpočítat (nájem).
+            * 🎯 **Přímé náklady:** Lze je přesně určit na jeden kus, zakázku nebo službu (materiál na jedno tričko, potisk, přímá mzda).
+            * 🌫️ **Nepřímé náklady:** Jsou společné pro více výrobků nebo celou firmu a musí se rozpočítat (nájem dílny, účetnictví, marketing).
             """)
+            st.info("Režijní přirážka = režijní náklady / zvolená rozvrhová základna × 100")
         
         st.divider()
         st.markdown("#### Kalkulační vzorec")
-        st.markdown("<div class='box-blue'>Přímý materiál + Přímé mzdy + Ostatní přímé náklady + Výrobní režie = <b>Vlastní náklady výroby</b><br>+ Správní režie = <b>Vlastní náklady výkonu</b><br>+ Odbytové náklady = <b>Úplné vlastní náklady</b><br>+ Zisková přirážka = <b>Prodejní cena bez DPH</b></div>", unsafe_allow_html=True)
+        st.write("Kalkulační vzorec pomáhá firmě sestavit cenu tak, aby pokryla náklady a umožnila zisk. Vyzkoušej si sestavit cenu vlastního produktu.")
+        
+        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní sestavení prodejní ceny</b></div>", unsafe_allow_html=True)
+        
+        k_in, k_out = st.columns([1, 1])
+        with k_in:
+            mat = st.number_input("Přímý materiál (Kč):", value=150, step=10)
+            mzdy = st.number_input("Přímé mzdy (Kč):", value=100, step=10)
+            v_rezie = st.number_input("Výrobní režie (Kč):", value=50, step=10)
+            s_rezie = st.number_input("Správní režie (Kč):", value=30, step=10)
+            o_naklady = st.number_input("Odbytové náklady (marketing, prodej) (Kč):", value=20, step=10)
+            zisk_prirazka = st.slider("Zisková přirážka (%)", min_value=0, max_value=100, value=20)
+            
+        with k_out:
+            vn_vyroby = mat + mzdy + v_rezie
+            vn_vykonu = vn_vyroby + s_rezie
+            uplne_vn = vn_vykonu + o_naklady
+            zisk_kc = uplne_vn * (zisk_prirazka / 100)
+            cena_bez_dph = uplne_vn + zisk_kc
+            
+            st.markdown(f"**Vlastní náklady výroby:** {vn_vyroby} Kč")
+            st.markdown(f"**Vlastní náklady výkonu:** {vn_vykonu} Kč")
+            st.markdown(f"**Úplné vlastní náklady:** {uplne_vn} Kč")
+            st.markdown(f"**Zisk ({zisk_prirazka} %):** + {zisk_kc:.1f} Kč")
+            st.markdown(f"<h3 style='color: #4f46e5; margin-top: 10px;'>Prodejní cena bez DPH: {cena_bez_dph:.1f} Kč</h3>", unsafe_allow_html=True)
 
     elif selected_section_3 == "3.3 Kalkulace nákladů":
         st.markdown("### 3.3 Kalkulace nákladů")
-        st.write("Odpovídá na otázky jako: *Za jakou cenu prodávat? Vyplatí se zakázka?*")
-        st.markdown("#### 1. Kalkulace úplných nákladů")
+        st.write("Kalkulace je postup, kterým firma zjišťuje, kolik ji stojí jeden výrobek, služba nebo zakázka. Pomáhá odpovědět na otázky: *Kolik stojí výroba kusu? Za jakou cenu prodávat? Vyplatí se zakázka?*")
+        
+        st.markdown("#### Kalkulace úplných nákladů")
+        st.write("Zahrnuje všechny náklady, které s výrobkem nebo službou souvisejí — přímé i nepřímé.")
         st.markdown("<div class='box-gray'><b>Úplné vlastní náklady = přímé náklady + podíl nepřímých nákladů</b></div>", unsafe_allow_html=True)
-        st.markdown("#### 2. Kalkulace neúplných nákladů")
-        st.write("Pracuje jen s variabilními náklady.")
-        st.markdown("<div class='box-blue'><b>Příspěvek na úhradu na kus = prodejní cena za kus − variabilní náklady na kus</b></div>", unsafe_allow_html=True)
+        st.markdown("""
+        <div class='box-blue'>
+            📊 <b>Výhoda:</b> Ukazuje celkové náklady výrobku.<br>
+            ⚠️ <b>Nevýhoda:</b> Rozpočítání nepřímých nákladů může být nepřesné a závisí na zvolené metodě (např. zda se rozpočítává podle hodin nebo podle spotřebovaného materiálu).
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("#### Kalkulace neúplných nákladů")
+        st.write("Pracuje jen s částí nákladů — často s variabilními náklady. Fixní náklady se neposuzují na každý kus zvlášť, ale sledují se za firmu jako celek. Zde se používá pojem **příspěvek na úhradu**.")
+        st.markdown("<div class='box-gray'><b>Příspěvek na úhradu na kus = prodejní cena za kus − variabilní náklady na kus</b></div>", unsafe_allow_html=True)
+        st.write("Příspěvek na úhradu říká, kolik z ceny jednoho prodaného kusu zbývá na úhradu fixních nákladů a tvorbu zisku.")
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka příspěvku na úhradu</b></div>", unsafe_allow_html=True)
+        
+        col_in, col_out = st.columns(2)
+        with col_in:
+            cena_ks = st.number_input("Prodejní cena za 1 kus (Kč):", value=800)
+            var_ks = st.number_input("Variabilní náklady na 1 kus (Kč):", value=350)
+            prodano_ks = st.number_input("Očekávaný prodej (ks):", value=500)
+        
+        with col_out:
+            prispevek_ks = cena_ks - var_ks
+            prispevek_celkem = prispevek_ks * prodano_ks
+            
+            st.metric("Příspěvek na úhradu (1 kus)", f"{prispevek_ks} Kč")
+            st.metric("Celkový příspěvek na úhradu", f"{prispevek_celkem:,} Kč".replace(",", " "))
+            st.info(f"Z této částky {prispevek_celkem:,} Kč musí firma nejprve zaplatit všechny své fixní náklady (nájem, energie). Cokoliv zbyde, je zisk.")
 
     elif selected_section_3 == "3.4 Bod zvratu a jeho graf":
-        st.markdown("### 3.4 Bod zvratu (Break-even point)")
-        st.write("Bod zvratu je objem prodeje, při kterém firma nemá ani zisk, ani ztrátu.")
-        st.markdown("<div class='box-gray'><b>Bod zvratu (ks) = Fixní náklady / (Cena za kus − Variabilní náklady na kus)</b></div>", unsafe_allow_html=True)
+        st.markdown("### 3.4 Bod zvratu a postup sestavení kalkulace")
+        
+        st.markdown("#### Bod zvratu (Break-even point)")
+        st.write("Bod zvratu je objem výroby nebo prodeje, při kterém firma nemá ani zisk, ani ztrátu. Výnosy se právě rovnají nákladům.")
+        st.markdown("<div class='box-gray'><b>Bod zvratu v kusech = Fixní náklady / (Cena za kus − Variabilní náklady na kus)</b></div>", unsafe_allow_html=True)
         
         st.divider()
-        st.markdown("<div class='box-purple'>🕹️ <b>Simulátor: Kdy začneš vydělávat?</b></div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-purple'>🕹️ <b>Simulátor Bodu Zvratu s Grafem</b></div>", unsafe_allow_html=True)
+        
         col_in, col_out = st.columns([1, 1.2])
         with col_in:
-            be_fix = st.number_input("Fixní náklady za měsíc (Kč):", value=20000, step=1000)
-            be_cena = st.number_input("Prodejní cena za 1 kus (Kč):", value=500, step=50)
-            be_var = st.number_input("Variabilní náklad na 1 kus (Kč):", value=200, step=50)
+            be_fix = st.number_input("Fixní náklady za období (Kč):", value=30000, step=1000)
+            be_cena = st.number_input("Prodejní cena kusu (Kč):", value=1000, step=100)
+            be_var = st.number_input("Variabilní náklad kusu (Kč):", value=400, step=100)
         
         with col_out:
             prispevek = be_cena - be_var
             if prispevek <= 0:
-                st.error("Chyba: Tvá cena nepokryje ani variabilní náklady!")
+                st.error("Chyba: Tvá cena nepokryje variabilní náklady. Bod zvratu neexistuje.")
             else:
                 bod_zvratu = math.ceil(be_fix / prispevek)
-                st.metric("Příspěvek na úhradu na kus", f"{prispevek} Kč")
                 st.metric("Bod zvratu (musíš prodat)", f"{bod_zvratu} kusů")
-                st.success(f"Až prodáš {bod_zvratu} kusů, jsi na nule. Další kus ti přinese zisk {prispevek} Kč!")
+                st.success(f"Při prodeji {bod_zvratu} kusů jsi na nule. Každý další kus = čistý zisk {prispevek} Kč.")
         
         if prispevek > 0:
             try:
                 import pandas as pd
-                max_x = int(bod_zvratu * 2.2) if bod_zvratu > 0 else 100
+                max_x = int(bod_zvratu * 2.5) if bod_zvratu > 0 else 100
                 kroky = max(1, max_x // 50)
                 df_graf = pd.DataFrame({"Kusy": range(0, max_x, kroky)})
                 df_graf["Tržby (Výnosy)"] = df_graf["Kusy"] * be_cena
@@ -249,36 +347,77 @@ def render():
                 df_graf["Fixní náklady"] = be_fix
                 df_graf = df_graf.set_index("Kusy")
                 
-                st.markdown("##### Graf bodu zvratu")
                 st.line_chart(df_graf, color=["#22c55e", "#ef4444", "#64748b"])
+                st.caption("📈 Zelená = Tržby, Červená = Celkové náklady. Místo protnutí je bod zvratu.")
             except ImportError:
-                st.warning("Graf bodu zvratu vyžaduje knihovnu Pandas.")
+                st.warning("Graf vyžaduje knihovnu Pandas.")
+
+        st.divider()
+        st.markdown("#### Postup sestavení kalkulace")
+        st.write("Při sestavování kalkulace je důležité postupovat systematicky:")
+        st.markdown("""
+        1. **Určit předmět kalkulace:** Co počítáme? Jeden výrobek, zakázku, projekt?
+        2. **Vymezit období nebo objem:** Počítáme náklady na kus, měsíc nebo konkrétní zakázku?
+        3. **Sepsat přímé náklady:** Materiál, přímé mzdy, obaly, doprava ke konkrétní zakázce.
+        4. **Určit nepřímé náklady:** Nájem, energie, administrativa, odpisy, marketing.
+        5. **Zvolit způsob rozvržení nepřímých nákladů:** Podle počtu kusů, hodin práce nebo strojových hodin.
+        6. **Spočítat náklady na jednotku:** Celkové náklady se převedou na jeden výrobek.
+        7. **Porovnat náklady s cenou:** Zjistit, zda cena pokryje náklady a umožní zisk.
+        8. **Vyhodnotit výsledek:** Pokud je zisk nízký/záporný, firma hledá možnosti úprav ceny, nákladů nebo procesu.
+        """)
 
     elif selected_section_3 == "3.5 Měření výkonu a rentabilita":
-        st.markdown("### 3.5 Jak měřit výkon firmy (KPI) a rentabilita")
-        st.markdown("<div class='box-green'>🎯 <b>Pravidlo KPI:</b> Dobré KPI má pomáhat rozhodování. Pokud ukazatel nikdo nepoužívá, je zbytečný.</div>", unsafe_allow_html=True)
+        st.markdown("### 3.5 Jak měřit výkon firmy a rentabilita")
+        st.write("Výkon firmy nelze hodnotit jen podle toho, zda „něco vydělala“. Důležité je sledovat více ukazatelů, protože každý ukazuje jinou část reality.")
+        
+        st.markdown("""
+        | Oblast | Ukazatel (KPI) | Co říká |
+        | :--- | :--- | :--- |
+        | 💰 **Ziskovost** | Zisk, zisková marže, rentabilita tržeb | Zda firma vydělává. |
+        | 📉 **Náklady** | Náklady na kus, podíl fixních nákladů | Jak efektivně firma vyrábí. |
+        | 🧑‍🏭 **Produktivita** | Výkon na pracovníka, kusy za hodinu | Jak dobře firma využívá práci. |
+        | 💧 **Likvidita** | Schopnost platit závazky | Zda má firma dostatek peněz. |
+        | ⚖️ **Zadluženost** | Podíl cizích zdrojů | Jak moc je firma závislá na dluhu. |
+        | 🛡️ **Kvalita** | Počet reklamací, zmetkovitost | Zda výkon není dosažen na úkor kvality. |
+        | 🚀 **Růst** | Růst tržeb, opakované nákupy | Zda se firmě daří rozvíjet. |
+        """)
+        
+        st.markdown("<div class='box-green'>🎯 <b>Pravidlo KPI:</b> Dobré KPI má pomáhat rozhodování. Pokud ukazatel nikdo nepoužívá k rozhodnutí, je to spíš číslo do tabulky než skutečný nástroj řízení.</div>", unsafe_allow_html=True)
+        
         st.divider()
-        st.markdown("#### Rentabilita")
-        st.write("Ukazuje, jak výnosně firma využívá své zdroje.")
-        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka Rentability tržeb</b></div>", unsafe_allow_html=True)
+        st.markdown("#### Vybrané vzorce a Rentabilita")
+        st.write("Rentabilita ukazuje, jak výnosně firma využívá své náklady, tržby nebo kapitál.")
+        st.markdown("""
+        * **Rentabilita nákladů** = Zisk / Náklady × 100
+        * **Rentabilita tržeb (Zisková marže)** = Zisk / Tržby × 100
+        * **Rentabilita kapitálu** = Zisk / Vložený kapitál × 100
+        * **Produktivita práce** = Výstup (ks nebo tržby) / Počet pracovníků
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Dashboard výkonu firmy (KPI kalkulačka)</b></div>", unsafe_allow_html=True)
         
         rc1, rc2 = st.columns(2)
         with rc1:
-            r_trzby = st.number_input("Celkové tržby (Kč):", value=1000000, step=100000)
-            r_naklady = st.number_input("Celkové náklady (Kč):", value=850000, step=100000)
-        
-        r_zisk = r_trzby - r_naklady
-        rent_trzeb = (r_zisk / r_trzby) * 100 if r_trzby > 0 else 0
-        
+            k_trzby = st.number_input("Tržby celkem (Kč):", value=2000000, step=100000)
+            k_naklady = st.number_input("Náklady celkem (Kč):", value=1600000, step=100000)
+            k_pracovnici = st.number_input("Počet pracovníků:", value=5, min_value=1)
+            k_kusy = st.number_input("Počet vyrobených kusů:", value=10000, step=1000)
+            
         with rc2:
-            st.metric("Vypočítaný Zisk", f"{r_zisk:,} Kč".replace(",", " "))
+            k_zisk = k_trzby - k_naklady
+            rent_trzeb = (k_zisk / k_trzby) * 100 if k_trzby > 0 else 0
+            prod_ks = k_kusy / k_pracovnici
+            naklad_na_kus = k_naklady / k_kusy if k_kusy > 0 else 0
+            
+            st.metric("Zisk firmy", f"{k_zisk:,} Kč".replace(",", " "))
             st.metric("Rentabilita tržeb (Marže)", f"{rent_trzeb:.1f} %")
+            st.metric("Produktivita (ks na 1 pracovníka)", f"{prod_ks:,.0f} ks".replace(",", " "))
+            st.metric("Náklad na 1 kus", f"{naklad_na_kus:,.1f} Kč".replace(",", " "))
+            
             if rent_trzeb < 0:
-                st.error("Firma je ve ztrátě. Rentabilita je záporná.")
-            elif rent_trzeb < 5:
-                st.warning("Rentabilita je velmi nízká.")
+                st.error("Firma je ve ztrátě. Hodnota rentability je záporná.")
+            elif rent_trzeb < 10:
+                st.warning("Pozor, rentabilita je nízká (pod 10 %).")
             else:
-                st.success("Firma je zdravě zisková!")
-
-    else:
-        st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
+                st.success("Skvělá práce, rentabilita i výkonnost jsou zdravé.")
