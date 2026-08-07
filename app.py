@@ -169,3 +169,9 @@ elif st.session_state["current_view"] == "Kapitola 2":
         kapitola2.show()
     elif hasattr(kapitola2, "render"):
         kapitola2.render()
+
+elif st.session_state["current_view"] == "Kapitola 3":
+    if hasattr(kapitola3, "show"):
+        kapitola3.show()
+    elif hasattr(kapitola3, "render"):
+        kapitola3.render()
