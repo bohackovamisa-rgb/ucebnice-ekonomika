@@ -680,7 +680,7 @@ def render():
             else:
                 st.error("Stroj nepřináší zisk.")
 
-    elif selected_section_3 == "4.5 Odpisy a evidence majetku":
+elif selected_section_3 == "4.5 Odpisy a evidence majetku":
         st.markdown("### 4.5 Odpisy (Účetní vs. Daňové) a grafické srovnání")
         
         st.write("Dlouhodobý majetek (např. auto za 1 milion Kč) si firma nedá do nákladů celý najednou v roce nákupu. Náklady se rozloží do více let – tomu se říká **Odpis**.")
@@ -702,52 +702,75 @@ def render():
             st.markdown("<div class='box-green'><b>Zrychlené odpisy</b><br>V prvních letech se odepíše podstatně větší část hodnoty majetku (a tím se hned na začátku výrazně sníží daně). V dalších letech částka odpisu klesá.</div>", unsafe_allow_html=True)
 
         st.divider()
-        st.markdown("<div class='box-yellow'>🧮 <b>Simulátor: Rovnoměrný vs. Zrychlený odpis (Srovnání nákladů)</b></div>", unsafe_allow_html=True)
-        st.write("Tento graf ukazuje, **kolik tisíc Kč si firma dá do nákladů každý rok**. Všimni si, jak zrychlený odpis udělá v prvních dvou letech velký náklad (čímž ušetří na daních zisku) a pak rychle klesne.")
+        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Rovnoměrné vs. Zrychlené odpisy</b></div>", unsafe_allow_html=True)
+        st.write("Vyzkoušej si, jak by si firma odepisovala majetek podle skutečného českého Zákona o daních z příjmů. Zadej cenu a vyber, o jaký majetek jde.")
         
-        odp_cena = st.number_input("Pořizovací cena stroje (Kč):", value=500000, step=50000, min_value=50000)
-        
-        # Simulace pro Odpisovou skupinu 2 (auta, stroje - doba odpisování 5 let)
-        # Rovnoměrné: 1. rok 11 %, další roky 22,25 %
-        # Zrychlené (koeficienty): 1. rok 5, další roky 6
+        c_kalk1, c_kalk2 = st.columns([1, 1])
+        with c_kalk1:
+            odp_cena = st.number_input("Pořizovací cena majetku (Kč):", value=500000, step=50000, min_value=10000)
+        with c_kalk2:
+            # Zjednodušené odpisové skupiny pro výuku
+            skupiny = {
+                "Skupina 1 (Počítače, nářadí) - 3 roky": {"roky": 3, "rov_1": 20, "rov_dalsi": 40, "zrych_1": 3, "zrych_dalsi": 4},
+                "Skupina 2 (Auta, stroje) - 5 let": {"roky": 5, "rov_1": 11, "rov_dalsi": 22.25, "zrych_1": 5, "zrych_dalsi": 6},
+                "Skupina 3 (Těžké stroje, trezory) - 10 let": {"roky": 10, "rov_1": 5.5, "rov_dalsi": 10.5, "zrych_1": 10, "zrych_dalsi": 11}
+            }
+            vybrana_skupina = st.selectbox("Vyber odpisovou skupinu:", list(skupiny.keys()), index=1)
+            
+        param = skupiny[vybrana_skupina]
+        roky = param["roky"]
+
+        # 1. Výpočet rovnoměrných odpisů
+        rovnomerne = []
+        for rok in range(1, roky + 1):
+            if rok == 1:
+                odpis = odp_cena * (param["rov_1"] / 100)
+            else:
+                odpis = odp_cena * (param["rov_dalsi"] / 100)
+            rovnomerne.append(round(odpis))
+
+        # 2. Výpočet zrychlených odpisů
+        zrychlene = []
+        zustatek_zrych = odp_cena
+        for rok in range(1, roky + 1):
+            if rok == 1:
+                odpis = odp_cena / param["zrych_1"]
+            else:
+                odpis = (2 * zustatek_zrych) / (param["zrych_dalsi"] - (rok - 1))
+            zustatek_zrych -= odpis
+            zrychlene.append(round(odpis))
+
         try:
             import pandas as pd
             
-            rovnomerne = [
-                odp_cena * 0.11, 
-                odp_cena * 0.2225, 
-                odp_cena * 0.2225, 
-                odp_cena * 0.2225, 
-                odp_cena * 0.2225
-            ]
-            
-            # Zrychlené výpočty (zjednodušená daňová logika pro 5 let)
-            zrych_1 = odp_cena / 5
-            z_zustatek_1 = odp_cena - zrych_1
-            zrych_2 = (2 * z_zustatek_1) / (6 - 1)
-            z_zustatek_2 = z_zustatek_1 - zrych_2
-            zrych_3 = (2 * z_zustatek_2) / (6 - 2)
-            z_zustatek_3 = z_zustatek_2 - zrych_3
-            zrych_4 = (2 * z_zustatek_3) / (6 - 3)
-            z_zustatek_4 = z_zustatek_3 - zrych_4
-            zrych_5 = (2 * z_zustatek_4) / (6 - 4)
-            
-            zrychlene = [zrych_1, zrych_2, zrych_3, zrych_4, zrych_5]
-            
+            # Vytvoření přehledné tabulky pro studenty
             df_odpisy = pd.DataFrame({
-                "Rok": ["1. rok", "2. rok", "3. rok", "4. rok", "5. rok"],
+                "Rok": [f"{r}. rok" for r in range(1, roky + 1)],
                 "Rovnoměrný odpis (Kč)": rovnomerne,
                 "Zrychlený odpis (Kč)": zrychlene
-            }).set_index("Rok")
+            })
             
-            st.bar_chart(df_odpisy, color=["#3b82f6", "#22c55e"])
-            st.caption("🟦 Modrá = Rovnoměrný odpis | 🟩 Zelená = Zrychlený odpis. (Modelově vypočítáno pro majetek s dobou odepisování 5 let).")
+            st.markdown("##### 📊 Výpočet odpisů rok po roce")
+            # Zobrazení tabulky s hezkým formátováním čísel
+            st.dataframe(df_odpisy.style.format({"Rovnoměrný odpis (Kč)": "{:,.0f}", "Zrychlený odpis (Kč)": "{:,.0f}"}), use_container_width=True)
+            
+            st.markdown("##### 📈 Grafické srovnání nákladů")
+            # Vykreslení grafu
+            df_graf = df_odpisy.set_index("Rok")
+            st.bar_chart(df_graf, color=["#3b82f6", "#22c55e"])
+            st.caption("🟦 Modrá = Rovnoměrný odpis | 🟩 Zelená = Zrychlený odpis. Všimni si, jak zrychlený odpis v prvních letech vytvoří největší náklad (a tím nejvíc sníží daně).")
             
         except ImportError:
-            st.warning("Pro zobrazení grafu je potřeba knihovna Pandas.")
-            
+            st.warning("Pro zobrazení tabulek a grafů je potřeba knihovna Pandas.")
+
         st.markdown("#### Kdy jakou metodu vybrat?")
         st.write("Pokud máš teď obrovské zisky a chceš co nejvíc ušetřit na daních hned, zvolíš **zrychlené odpisy** (zelené sloupce vlevo jsou vysoké). Pokud máš zisky stálé nebo čekáš, že porostou, hodí se **rovnoměrné odpisy** (modré sloupce).")
+
+        st.divider()
+        st.markdown("#### Vyřazení a evidence dlouhodobého majetku")
+        st.write("Dlouhodobý majetek se z evidence vyřazuje tehdy, když už ho firma nepoužívá. Důvody mohou být: prodej, likvidace, darování, škoda/zničení, krádež nebo převod do osobního užívání.")
+        st.write("Při vyřazení se řeší: datum a způsob vyřazení, zůstatková cena, případný výnos z prodeje a doklad o vyřazení.")
+        st.markdown("<div class='box-gray'>🗂️ <b>Evidence:</b> Dlouhodobý majetek se eviduje na <i>kartách majetku</i>. Obsahuje inventární číslo, název, pořizovací cenu, odpisový plán, oprávky, odpovědnou osobu atd. Evidence pomáhá firmě vědět, co vlastní, kde to je a jaká je hodnota.</div>", unsafe_allow_html=True)
 
     else:
         st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
