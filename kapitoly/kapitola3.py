@@ -1000,7 +1000,7 @@ def render():
         if st.button("Uložit návrh zlepšení"):
             st.success("✅ Skvělý postřeh! Přesně takhle uvažují Lean procesní inženýři ve firmách.")
 
-    elif selected_section_3 == "6.2 Průmysl 4.0, Cirkulární ekonomika a KPI":
+elif selected_section_3 == "6.2 Průmysl 4.0, Cirkulární ekonomika a KPI":
         st.markdown("### 6.2 Průmysl 4.0, Cirkulární ekonomika a Dashboardy")
         
         st.markdown("#### Průmysl 4.0, AI a Automatizace")
@@ -1046,10 +1046,59 @@ def render():
         """)
 
         st.divider()
-        st.markdown("#### KPI a Přehledové Dashboardy")
-        st.write("Dashboard je přehled důležitých ukazatelů (KPI) na jednom místě. Dobře zvolený dashboard nemá obsahovat všechno – má obsahovat jen ta čísla, podle kterých se dá rozhodovat.")
-        st.markdown("<div class='box-gray'>📱 <b>Příklady z běžného života:</b> Počet zhlédnutí na TikToku, míra prokliku, přehled poslechů na Spotify, statistiky v bankovní aplikaci – to všechno jsou vaše osobní KPI!</div>", unsafe_allow_html=True)
+        st.markdown("#### KPI a Přehledové Dashboardy: Jak řídit firmu podle dat")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            📊 <b>KPI (Key Performance Indicators / Klíčové ukazatele výkonnosti):</b> Měřitelná čísla, která ukazují, jak úspěšně firma plní své hlavní cíle. 
+        </div>
+        """, unsafe_allow_html=True)
 
+        st.markdown("##### 🚗 Metafora přístrojové desky v autě")
+        st.write("Představ si, že řídíš auto. Na palubní desce nesleduješ teploměr v kufru ani počet šroubků v motoru. Sleduješ jen to podstatné: **rychlost (KPI 1)**, **stav paliva (KPI 2)** a **otáčky (KPI 3)**. Podle toho se rozhoduješ: *Přidám plyn? Musím k benzínce?* Přesně tak funguje firemní **Dashboard**.")
+
+        st.markdown("##### ⚠️ Past jménem „Vanity Metrics“ (Marnivá čísla)")
+        st.write("Firma se nesmí nechat opít čísly, která sice vypadají hezky na papíře, ale neříkají nic o skutečném zisku nebo zdraví podniku.")
+
+        st.markdown("""
+        | Oblast | 🎭 Vanity Metric (Pěkné na pohled, ale nezaplatí účty) | 🎯 Skutečné Business KPI (Dá se podle něj rozhodnout) |
+        | :--- | :--- | :--- |
+        | **E-shop** | Celková návštěvnost webu | **Konverzní poměr (%)** & **Čistá zisková marže** |
+        | **Sociální sítě** | Počet sledujících / Lajky pod fotkou | **Míra prokliku (CTR)** & **Cena za získání zákazníka (CAC)** |
+        | **Výroba** | Počet vyrobených kusů za směnu | **Zmetkovitost (%)** & **Doba obratu zásoby** |
+        | **Student** | Počet hodin prosezených nad knížkou | **Počet zvládnutých otázek** & **Známkový průměr** |
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-purple'>🕹️ <b>Interaktivní simulátor: Sestav si řídící Dashboard e-shopu</b></div>", unsafe_allow_html=True)
+        st.write("Jsi ředitel/ka e-shopu s oblečením. Měň parametry vlevo a sleduj, jak tvůj živý Dashboard vpravo reaguje na zdraví firmy.")
+
+        c_kpi1, c_kpi2 = st.columns([1, 1.2])
+        with c_kpi1:
+            kpi_navstevnost = st.number_input("Měsíční návštěvnost webu (lidí):", value=10000, step=1000)
+            kpi_konverze = st.slider("Konverzní poměr (%) - kolik % lidí nakoupí:", min_value=0.1, max_value=10.0, value=2.0, step=0.1)
+            kpi_kosik = st.number_input("Průměrná hodnota objednávky (Kč):", value=850, step=50)
+            kpi_vratky = st.slider("Míra vratek a reklamací (%):", min_value=0.0, max_value=30.0, value=5.0, step=1.0)
+
+        with c_kpi2:
+            kpi_objednavky = int(kpi_navstevnost * (kpi_konverze / 100))
+            kpi_hrube_trzby = kpi_objednavky * kpi_kosik
+            kpi_ztrata_vratky = kpi_hrube_trzby * (kpi_vratky / 100)
+            kpi_ciste_trzby = kpi_hrube_trzby - kpi_ztrata_vratky
+
+            st.markdown("##### 🚗 Živý Manažerský Dashboard:")
+            st.metric("Počet vyřízených objednávek", f"{kpi_objednavky} ks")
+            st.metric("Čisté tržby (po odečtení vratek)", f"{kpi_ciste_trzby:,.0f} Kč".replace(",", " "))
+            st.metric("Ztráta z vratek a reklamací", f"{kpi_ztrata_vratky:,.0f} Kč".replace(",", " "))
+
+            st.markdown("##### 🚦 Diagnostika podle KPI:")
+            if kpi_konverze < 1.5:
+                st.warning("⚠️ **Nízká konverze!** Lidé na web chodí, ale nenakupují. Rozbitý košík nebo drahá doprava?")
+            elif kpi_konverze >= 3.5:
+                st.success("✅ **Skvělá konverze!** Web přesvědčí k nákupu nadprůměrné množství lidí.")
+
+            if kpi_vratky > 12:
+                st.error("🚨 **Kritická vratkovost!** Zákazníci masivně vracejí zboží. Velikosti nesedí nebo fotky neodpovídají realitě.")
     elif selected_section_3 == "6.3 Projektová dílna: Launch vlastního merche":
         st.markdown("### 6.3 Projektová dílna: Launch vlastního merche / e-shopu")
         st.markdown("""
