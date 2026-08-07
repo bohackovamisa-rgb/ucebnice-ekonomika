@@ -584,7 +584,7 @@ def render():
             • <b>DPČ</b> se hodí na pravidelnou celoroční brigádu při škole (např. 2 odpoledne týdně v kavárně).
         </div>
         """, unsafe_allow_html=True)
-    elif selected_section_4 == "2.5 Ukázka pracovní smlouvy a její náležitosti":
+elif selected_section_4 == "2.5 Ukázka pracovní smlouvy a její náležitosti":
         st.markdown("### 2.5 Pracovní smlouva: Povinné náležitosti a rizika")
         
         st.write("Pracovní smlouva je nejdůležitější dokument vašeho pracovního života. Musí být **vždy uzavřena písemně** a vyhotovena ve dvou stejnopisech (jeden pro vás, jeden pro firmu). Zákoník práce vás chrání, ale jen tehdy, když víte, co podepisujete.")
@@ -595,10 +595,10 @@ def render():
         col_s1, col_s2, col_s3 = st.columns(3)
         with col_s1:
             st.markdown("##### 1️⃣ Druh práce")
-            st.write("Co přesně budete dělat (např. 'Účetní'). Pokud je definice příliš široká (např. 'Pracovník firmy'), nadřízený vás může nutit dělat cokoliv – od účtování po úklid toalet.")
+            st.write("Co přesně budete dělat (např. 'Specialista zákaznické podpory'). Pokud je definice příliš široká, nadřízený vás může nutit dělat cokoliv – od administrativy po úklid.")
         with col_s2:
             st.markdown("##### 2️⃣ Místo výkonu")
-            st.write("Kde budete pracovat (např. 'Pobočka Brno, ulice X'). Pokud podepíšete místo 'Česká republika', může vás firma bez vašeho souhlasu přeložit z Prahy do Ostravy.")
+            st.write("Kde budete pracovat (např. 'Pobočka Brno, Masarykova 12'). Pokud podepíšete místo 'Česká republika', může vás firma ze dne na den přeložit na druhý konec země.")
         with col_s3:
             st.markdown("##### 3️⃣ Den nástupu")
             st.write("Přesné datum (např. 1. 9. 2026). Od tohoto dne vám vznikají práva a povinnosti, i kdybyste smlouvu podepsali o měsíc dříve.")
@@ -607,33 +607,61 @@ def render():
         <div class='box-red'>
             🚨 <b>Klíčový omyl: Mzda NEMUSÍ být přímo v pracovní smlouvě!</b><br>
             Plat nebo mzda často není v textu smlouvy, ale na odděleném papíru zvaném <b>mzdový výměr</b>. Proč to firmy dělají?<br>
-            • Co je ve <b>smlouvě</b>, to lze změnit POUZE s vaším písemným souhlasem (např. podepsáním dodatku).<br>
+            • Co je ve <b>smlouvě</b>, to lze změnit POUZE s vaším písemným souhlasem (případně dodatkem ke smlouvě).<br>
             • <b>Mzdový výměr</b> může firma jednostranně změnit i bez vás (může vám mzdu snížit až na hranici zaručené minimální mzdy).
         </div>
         """, unsafe_allow_html=True)
 
         st.divider()
-        st.markdown("<div class='box-yellow'>🛠️ <b>Interaktivní dílna: Sestav platnou pracovní smlouvu</b></div>", unsafe_allow_html=True)
-        st.write("HR oddělení ti poslalo návrh smlouvy, ale chybí v ní důležité pasáže. Doplň je tak, aby tě smlouva maximálně chránila a byla platná:")
+        st.markdown("<div class='box-yellow'>🛠️ <b>Interaktivní dílna: Sestav a zkontroluj smlouvu</b></div>", unsafe_allow_html=True)
+        st.write("Navrhni parametry své pracovní smlouvy a zjisti, jaké výhody nebo skrytá rizika tvá volba přináší:")
 
         with st.form("form_smlouva"):
-            f_druh = st.selectbox("1. Vyber druh práce:", ["Pracovník (cokoliv bude potřeba)", "Specialista marketingu", "Pomocná síla"])
-            f_misto = st.selectbox("2. Vyber místo výkonu práce:", ["Česká republika", "Evropská unie", "Kancelář zaměstnavatele, Květná 15, Plzeň"])
-            f_mzda = st.radio("3. Kde chceš mít uvedenou svou mzdu 45 000 Kč?", ["Přímo jako bod v Pracovní smlouvě", "Na odděleném Mzdovém výměru"])
+            f_druh = st.selectbox("1. Jak specifikuješ druh práce?", [
+                "Přesná pozice: 'Specialista marketingu a správy sociálních sítí'",
+                "Všeobecná pozice: 'Pracovník provozu dle potřeb zaměstnavatele'"
+            ])
             
-            if st.form_submit_button("Zkontrolovat smlouvu"):
-                if f_druh == "Specialista marketingu" and f_misto == "Kancelář zaměstnavatele, Květná 15, Plzeň" and f_mzda == "Přímo jako bod v Pracovní smlouvě":
-                    st.success("✅ **Výborně! Sestavil jsi perfektní smlouvu.** Specifikoval jsi úzký druh práce (nebudou tě nutit dělat cizí práci), přesné místo (nemohou tě bez souhlasu přesunout do jiného města) a mzdu máš přímo ve smlouvě (nemohou ti ji jednostranně snížit).")
-                else:
-                    st.error("❌ **Tady na tebe zaměstnavatel vyzrál!** Pokud jsi dal široký druh práce nebo místo 'ČR', stáváš se loutkou, kterou lze libovolně přesouvat. Pokud jsi dal mzdu na mzdový výměr, vzdal jsi se jistoty pevné částky.")
+            f_misto = st.selectbox("2. Jak určité bude místo výkonu práce?", [
+                "Přesné místo: 'Kancelář Plzeň, Květná 15'",
+                "Široké místo: 'Všechny pobočky zaměstnavatele v ČR'"
+            ])
+            
+            f_mzda = st.radio("3. Kde chceš mít uvedenou svou sjednanou mzdu (45 000 Kč)?", [
+                "Přímo v textu Pracovní smlouvy",
+                "Na samostatném Mzdovém výměru"
+            ])
+            
+            submit_smlouva = st.form_submit_button("🔍 Vyhodnotit právní bezpečnost smlouvy")
+
+        if submit_smlouva:
+            st.markdown("##### 📊 Rozbor tvé smlouvy:")
+            
+            # Vyhodnocení druhu práce
+            if "Specialista" in f_druh:
+                st.success("✅ **Druh práce OK:** Máš jasně vymezené kompetence. Zaměstnavatel ti nemůže nakázat činnosti, které nesouvisí s marketingem.")
+            else:
+                st.error("⚠️ **Riziko u druhu práce:** Formulace 'dle potřeb' dává firmě možnost nutit tě do úklidu, skladu i cizí práce bez nároku na příplatek.")
+
+            # Vyhodnocení místa
+            if "Plzeň" in f_misto:
+                st.success("✅ **Místo práce OK:** Pracuješ na konkrétní adrese. Změna pobočky do jiného města by vyžadovala tvůj písemný souhlas.")
+            else:
+                st.error("⚠️ **Riziko u místa:** Při volbě 'všechny pobočky v ČR' tě firma může poslat na služební cestu či přeložit kamkoliv bez nároku na kompenzaci.")
+
+            # Vyhodnocení mzdy
+            if "Přímo v textu" in f_mzda:
+                st.success("🔒 **Maximální garance mzdy:** Mzda je pevně zakotvena ve smlouvě. Firma ti ji nemůže snížit, ani kdyby se jí nedařilo.")
+            else:
+                st.info("ℹ️ **Standardní praxe (Mzdový výměr):** Je to běžné, ale pozor – zaměstnavatel ti může mzdovým výměrem mzdu do budoucna jednostranně snížit.")
 
     elif selected_section_4 == "2.6 Zkušební doba":
         st.markdown("### 2.6 Zkušební doba: Pravidla a ochrana")
-        st.write("Zkušební doba není obdobím 'bezpráví'. Slouží k tomu, aby si obě strany vyzkoušely, zda jim spolupráce vyhovuje. Lze během ní pracovní poměr ukončit **zrušením ve zkušební době**, a to písemně, z jakéhokoliv důvodu i bez udání důvodu, a to i ze dne na den.")
+        st.write("Zkušební doba slouží k tomu, aby si obě strany vyzkoušely, zda jim spolupráce vyhovuje. Během ní lze pracovní poměr zrušit **písemně, z jakéhokoliv důvodu i bez udání důvodu**, a to i ze dne na den.")
 
         st.markdown("#### ⏳ Maximální délka zkušební doby ze zákona:")
         st.markdown("""
-        * 👷 **Běžný zaměstnanec:** Maximálně **4 měsíce** (dříve 3 měsíce, novela ZP upravila).
+        * 👷 **Běžný zaměstnanec:** Maximálně **4 měsíce**.
         * 👔 **Vedoucí zaměstnanec (manažer):** Maximálně **8 měsíců**.
         * ⏱️ **U smlouvy na dobu určitou:** Zkušební doba nesmí být delší než **polovina** sjednané doby trvání smlouvy.
         """)
@@ -641,7 +669,7 @@ def render():
         st.markdown("""
         <div class='box-blue'>
             🛡️ <b>Skrytá ochrana ve zkušební době (Nemoc):</b><br>
-            Zaměstnavatel vás <b>nesmí</b> vyhodit během prvních 14 dnů vaší pracovní neschopnosti (nemoci), i když jste ve zkušební době! Zkušební doba se navíc o dobu vaší nemoci (či dovolené) automaticky prodlužuje.
+            Zaměstnavatel vás <b>nesmí</b> vyhodit během prvních 14 dnů vaší pracovní neschopnosti (nemoci)! Zkušební doba se navíc o dny vaší nemoci automaticky prodlužuje.
         </div>
         """, unsafe_allow_html=True)
 
@@ -651,12 +679,12 @@ def render():
         sit1 = st.radio("Situace 1: Panu Novákovi končí 4měsíční zkušebka v pátek. V pondělí za ním přijde šéf s tím, že mu zkušebku 'o další měsíc prodlužuje', protože si jím ještě není jistý. Může to udělat?", 
                       ["Ano, pokud se na tom dohodnou.", "Ne, zkušební dobu nelze dodatečně prodlužovat nad zákonný rámec."])
         if sit1 == "Ne, zkušební dobu nelze dodatečně prodlužovat nad zákonný rámec.":
-            st.success("✅ Přesně tak! Zkušební doba se prodlužuje pouze o dny překážek v práci (např. nemoc). Zaměstnavatel ji nemůže svévolně natáhnout.")
+            st.success("✅ Přesně tak! Zkušební dobu nelze po sjednání svévolně prodlužovat. Prodlužuje se pouze automaticky o celodenní překážky v práci (nemoc, dovolená).")
 
         sit2 = st.radio("Situace 2: Lenka je ve zkušební době. Zjistila, že jí práce ničí psychiku a chce okamžitě odejít. Šéf jí řekl, že musí dodržet dvouměsíční výpovědní lhůtu. Má pravdu?",
                       ["Ano, výpovědní lhůta platí vždy.", "Ne, ve zkušební době může odejít ze dne na den (písemně)."])
         if sit2 == "Ne, ve zkušební době může odejít ze dne na den (písemně).":
-            st.success("✅ Správně! Kouzlo zkušební doby funguje obousměrně. Pokud se vám tam nelíbí, doručíte písemné zrušení a zítra už tam nemusíte.")
+            st.success("✅ Správně! Kouzlo zkušební doby funguje obousměrně. Pokud se vám tam nelíbí, doručíte písemné zrušení a zítra už v práci nemusíte být.")
 
     elif selected_section_4 == "2.7 Smlouva na dobu určitou a neurčitou":
         st.markdown("### 2.7 Smlouva na dobu určitou a neurčitou")
@@ -694,9 +722,9 @@ def render():
         elif poradi_smlouvy == 2:
             st.info("📄 Podepsal jsi 1. prodloužení. Vše je v pořádku.")
         elif poradi_smlouvy == 3:
-            st.warning("⚠️ <b>Poslední povoleno!</b> Toto je tvá celkově třetí a ze zákona poslední smlouva na dobu určitou. Až vyprší, musí přijít smlouva na neurčito.")
+            st.warning("⚠️ **Poslední povoleno!** Toto je tvá celkově třetí a ze zákona poslední smlouva na dobu určitou. Až vyprší, musí přijít smlouva na neurčito.")
         else:
-            st.error("🚨 <b>PORUŠENÍ ZÁKONA:</b> Čtvrtá smlouva na dobu určitou v řadě je (až na specifické sezónní výjimky) nezákonná! Máš právo písemně oznámit zaměstnavateli, že trváš na zaměstnávání a tvůj poměr se tím mění na dobu neurčitou.")
+            st.error("🚨 **PORUŠENÍ ZÁKONA:** Čtvrtá smlouva na dobu určitou v řadě je (až na specifické sezónní výjimky) nezákonná! Máš právo písemně oznámit zaměstnavateli, že trváš na zaměstnávání a tvůj poměr se tím mění na dobu neurčitou.")
 
     elif selected_section_4 == "2.8 Švarcsystém a gig economy":
         st.markdown("### 2.8 Švarcsystém a gig economy")
@@ -725,7 +753,7 @@ def render():
         skore_svarc = sum([svarc1, svarc2, svarc3, svarc4])
 
         if skore_svarc >= 3:
-            st.error(f"🚩 **Tohle je učebnicový Švarcsystém!** Splňuješ všechny znaky závislé práce podle § 2 Zákoníku práce (vztah nadřízenosti, osobní výkon, náklady zaměstnavatele). Pracuješ nelegálně na IČO.")
+            st.error("🚩 **Tohle je učebnicový Švarcsystém!** Splňuješ všechny znaky závislé práce podle § 2 Zákoníku práce (vztah nadřízenosti, osobní výkon, náklady zaměstnavatele). Pracuješ nelegálně na IČO.")
         elif skore_svarc > 0:
             st.warning("⚠️ **Riziková zóna:** Tvá práce má znaky zaměstnání. Jako skutečný podnikatel na IČO bys měl mít svobodu v organizaci času a nést vlastní podnikatelské riziko.")
         else:
