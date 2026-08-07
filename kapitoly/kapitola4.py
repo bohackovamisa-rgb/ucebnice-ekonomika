@@ -13,8 +13,8 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # 📌 PREHLED A NAVIGACE KAPITOLOU (Expander pro žáky)
-    with st.expander("🧭 <b>Co si z kapitoly odnesete a doporučené pořadí studia</b>", expanded=False):
+    # 📌 PŘEHLED A NAVIGACE KAPITOLOU (Opraveno: čistý text bez HTML tagů)
+    with st.expander("🧭 Co si z kapitoly odnesete a doporučené pořadí studia", expanded=False):
         c_nav1, c_nav2 = st.columns(2)
         with c_nav1:
             st.markdown("""
@@ -89,7 +89,7 @@ def render():
         | Faktor | Co znamená | Příklad z praxe |
         | :--- | :--- | :--- |
         | 💎 **Nedostatek dovedností** | Čím méně lidí danou věc umí, tím vyšší je odměna. | Datová analýza, kyberbezpečnost, specializovaný řemeslník. |
-        | ⚖️ **Odpovědnost** | Čím větší dopad má chyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
+        | ⚖️ **Odpovědnost** | Čím větší dopad má ошибка, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
         | 🚀 **Produktivita a přidaná hodnota** | Kolik hodnoty či úspor dokáže člověk vytvořit za jednotku času. | Programátor, který automatizuje proces pro tisíce uživatelů. |
         | ⚠️ **Riziko a náročnost** | Fyzické, psychické nebo bezpečnostní nároky práce. | Práce ve zdravotnictví, výškové práce, směnný provoz. |
         | 💬 **Vyjednávací síla** | Schopnost doložit své výsledky a vyjednat si odpovídající podmínky. | Uchazeč se silným portfoliem, praxí a referencemi. |
@@ -120,7 +120,7 @@ def render():
             if f_vzacnost >= 8 and f_poptavka >= 8:
                 st.success("🔥 **Špičkový profil:** Tvůj obor trpí kritickým nedostatkem lidí. Zaměstnavatelé se o tebe poperou!")
             elif f_vzacnost <= 3 and f_poptavka <= 4:
-                st.warning("📉 **Vysoká konkurence:** Na jedno místo se hlásí desítky lidí. Pro vyšší mzdu budeš muset přidat unikátní dovednost (upskilling).")
+                st.warning("📉 **Vysoká konkurence:** Na jedno místo se hlásí desítky lidí. Pro vyšší mzdu budeš muset přidat unikátní dovednost (upskilling).")
             else:
                 st.info("⚖️ **Standardní tržní pozice:** Mzda odpovídá průměru v daném oboru.")
 
@@ -131,7 +131,7 @@ def render():
         st.markdown("#### Hlavní hýbatelé Trhu práce 4.0:")
         st.markdown("""
         * ⚙️ **Automatizace:** Stroje, algoritmy a roboti přebírají rutinní a opakující se činnosti.
-        * 🤖 **Generativní umělá inteligence (AI):** Pomáhá psát texty, analyzovat data, překládat, kórovat, navrhovat grafiku i vyhodnocovat dokumenty.
+        * 🤖 **Generativní umělá inteligence (AI):** Pomáhá psát texty, analyzovat data, překládat, kódovat, navrhovat grafiku i vyhodnocovat dokumenty.
         * 🏠 **Remote work a hybridní práce:** Práce na dálku odstraňuje hranice měst – můžete pracovat z regionu pro pražskou nebo zahraniční firmu.
         * 📲 **Platformová ekonomika (Gig Economy):** Část práce se přesouvá do aplikací a zakázkových platforem (Uber, Bolt, Foodora, Freelance portály).
         * 🌐 **Globální konkurence:** U digitálních profesí nesoutěžíte jen s kolegy ze třídy, ale s pracovníky z celého světa.
@@ -166,7 +166,7 @@ def render():
                     st.error("Zkus to znovu. Pamatuj, že AI nahrazuje úkoly, ne lidskou odpovědnost a kritické myšlení.")
 
     elif selected_section_4 == "1.3 Profese a dovednosti budoucnosti":
-        st.markdown("### 1.3 Profese budoucnosti a dovednosti budoucnosti")
+        st.markdown("### 1.3 Profese a dovednosti budoucnosti")
         st.write("Technické znalosti konkrétního softwaru stárnou. Co zůstává trvale cenné, jsou **hard skills (odborné dovednosti)** spojené s **soft skills (měkkými dovednostmi)**.")
 
         col_sk1, col_sk2 = st.columns(2)
@@ -182,7 +182,7 @@ def render():
         with col_sk2:
             st.markdown("##### 🤝 Lidské dovednosti (které AI nenahradí):")
             st.markdown("""
-            * 💬 **Komunikace, empatiie a vyjednávání**,
+            * 💬 **Komunikace, empatie a vyjednávání**,
             * 👥 **Týmová spolupráce a vedení lidí**,
             * 🛡️ **Etické rozhodování a morální odpovědnost**,
             * 🧘 **Resilience (odolnost vůči stresu a změnám)**.
@@ -229,7 +229,7 @@ def render():
         """)
 
         st.divider()
-        st.markdown("<div class='box-yellow'>📋 **Audit tvé digitální stopy (Rychlá kontrola)**</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-yellow'>📋 <b>Audit tvé digitální stopy (Rychlá kontrola)</b></div>", unsafe_allow_html=True)
         st.write("Zaškrtni položky, které máš v pořádku:")
 
         d1 = st.checkbox("Mám uzamčené soukromé profily (Instagram/Facebook) nebo na nich nemám nevhodný obsah (alkohol, vulgarismy).")
@@ -249,21 +249,20 @@ def render():
 
         st.divider()
         st.markdown("#### 📱 Hybridní prvek: Otestuj si profese budoucnosti")
-        st.write("Naskenuj QR kód nebo klikni na tlačítko a vyzkoušej si oficiální kariérní dotazník národního systému kualifikací:")
+        st.write("Naskenuj QR kód nebo klikni na tlačítko a vyzkoušej si oficiální kariérní dotazník národního systému kvalifikací:")
         
         col_qr1, col_qr2 = st.columns([1, 2])
         with col_qr1:
-            # Zobrazení ukázkového QR kódu
             st.image("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.nsp.cz", caption="Kariérní kompas NSP.cz", width=150)
         with col_qr2:
             st.markdown("""
             **Kam pokračovat dále?**
             * 🔗 **[Národní soustava povolání (NSP.cz)](https://www.nsp.cz):** Databáze všech profesí v ČR vč. požadavků na vzdělání a průměrných mezd.
-            * 🔗 **[Kariérní kompas:](https://www.Vyskumpaliv.cz)** Zjisti, jaké dovednosti ti chybí pro tvou vysněnou práci.
+            * 🔗 **[Kariérní kompas](https://www.nsp.cz):** Zjisti, jaké dovednosti ti chybí pro tvou vysněnou práci.
             """)
 
     # =========================================================================
-    # REZERVOVANÉ ELIF PRO DALŠÍ SEKCE (PODLE OSNOVY)
+    # REZERVOVANÉ ELIF PRO DALŠÍ SEKCE
     # =========================================================================
     elif selected_section_4 == "2.1 HR a personalistika: co znamenají":
         st.markdown("### 2.1 HR a personalistika: co znamenají")
