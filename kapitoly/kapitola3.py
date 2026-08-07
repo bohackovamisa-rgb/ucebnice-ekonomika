@@ -358,7 +358,7 @@ def render():
             st.markdown(f"**Zisk ({zisk_prirazka} %):** + {zisk_kc:.1f} Kč")
             st.markdown(f"<h3 style='color: #4f46e5; margin-top: 10px;'>Prodejní cena bez DPH: {cena_bez_dph:.1f} Kč</h3>", unsafe_allow_html=True)
 
-        elif selected_section_3 == "3.3 Kalkulace nákladů":
+    elif selected_section_3 == "3.3 Kalkulace nákladů":
         st.markdown("### 3.3 Kalkulace nákladů")
         st.write("Kalkulace je postup, kterým firma zjišťuje, kolik ji stojí jeden výrobek, služba nebo zakázka. Pomáhá odpovědět na otázky: *Kolik stojí výroba kusu? Za jakou cenu prodávat? Vyplatí se zakázka?*")
         
