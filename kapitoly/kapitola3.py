@@ -1177,7 +1177,7 @@ def render():
  # =========================================================================
     # SEKCE 7: PŘÍPADOVÉ STUDIE A ZÁVĚREČNÝ CHECKLIST
     # =========================================================================
-elif selected_section_3 == "7.1 Případové studie z praxe":
+    elif selected_section_3 == "7.1 Případové studie z praxe":
         st.markdown("### 7.1 Případové studie z praxe")
         st.write("Aplikuj získané znalosti z výroby, kalkulací, odpisů a řízení jakosti na reálných příkladech z praxe.")
 
