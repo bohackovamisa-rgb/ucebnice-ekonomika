@@ -511,3 +511,135 @@ def render():
                 st.warning("Pozor, rentabilita je nízká (pod 10 %).")
             else:
                 st.success("Skvělá práce, rentabilita i výkonnost jsou zdravé.")
+# =========================================================================
+    # SEKCE 4: MAJETEK FIRMY
+    # =========================================================================
+    elif selected_section_3 == "4.1 Oběžný majetek a zásoby":
+        st.markdown("### 4.1 Oběžný majetek a plánování zásob")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🏢 <b>Podstata majetku:</b> Majetek firmy představuje vše, co firma používá ke své činnosti. Dělí se na <b>oběžný</b> (rychle se mění, spotřebovává) a <b>dlouhodobý</b> (slouží déle než 1 rok).
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### Oběžný majetek")
+        st.write("Oběžný majetek se při činnosti firmy rychle mění. Patří sem materiál, nedokončená výroba, hotové výrobky, zboží, krátkodobé pohledávky (faktury k proplacení) a peníze v hotovosti nebo na účtu.")
+        st.markdown("<div class='box-gray'>🔄 <b>Koloběh:</b> Peníze se použijí na nákup materiálu → materiál se změní ve výrobek → výrobek se prodá → do firmy se vrátí peníze.</div>", unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧩 <b>Rozřazovací kvíz: Co je co?</b></div>", unsafe_allow_html=True)
+        c_kviz1, c_kviz2 = st.columns(2)
+        with c_kviz1:
+            q_auto = st.selectbox("Dodávka na rozvoz zboží:", ["Vyber...", "Oběžný", "Dlouhodobý"], key="q_auto")
+            q_mat = st.selectbox("Mouka v pekárně:", ["Vyber...", "Oběžný", "Dlouhodobý"], key="q_mat")
+        with c_kviz2:
+            q_penize = st.selectbox("Peníze v pokladně:", ["Vyber...", "Oběžný", "Dlouhodobý"], key="q_penize")
+            q_sw = st.selectbox("Účetní program (licence):", ["Vyber...", "Oběžný", "Dlouhodobý"], key="q_sw")
+        
+        if st.button("Vyhodnotit majetek"):
+            if q_auto == "Dlouhodobý" and q_mat == "Oběžný" and q_penize == "Oběžný" and q_sw == "Dlouhodobý":
+                st.success("✅ Výborně! Auto a licence vydrží roky (dlouhodobý), mouka se sní hned a peníze pořád obíhají (oběžný).")
+            else:
+                st.warning("Zkus to ještě promyslet. Pamatuj na pravidlo 1 roku!")
+
+        st.divider()
+        st.markdown("#### Plánování a druhy zásob")
+        st.write("Cílem plánování je najít rovnováhu. Málo zásob = výroba stojí. Moc zásob = utopené peníze ve skladu.")
+        
+        st.markdown("""
+        * **Běžná zásoba:** Slouží k pravidelné spotřebě mezi dvěma dodávkami.
+        * **Pojistná zásoba:** Železná rezerva pro případ, že se dodávka zpozdí.
+        * **Signální zásoba:** Určuje přesný okamžik, kdy musíte materiál znovu objednat!
+        """)
+
+        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka: Kdy musím objednat nový materiál? (Signální zásoba)</b></div>", unsafe_allow_html=True)
+        col_s1, col_s2 = st.columns([1, 1])
+        with col_s1:
+            denni_spotreba = st.number_input("Denní spotřeba (např. kg kávy):", value=5, min_value=1)
+            dodaci_lhuta = st.number_input("Dodací lhůta (za kolik dní dodavatel přijede?):", value=3, min_value=1)
+            pojistna = st.number_input("Pojistná (železná) zásoba (kg):", value=10, min_value=0)
+            
+        with col_s2:
+            signalni = (denni_spotreba * dodaci_lhuta) + pojistna
+            st.metric("Signální zásoba", f"{signalni} kg")
+            st.info(f"Jakmile ti na skladě zbyde přesně {signalni} kg, musíš zvednout telefon a objednat. Než dodavatel přijede (za {dodaci_lhuta} dny), spotřebuješ {denni_spotreba * dodaci_lhuta} kg a zůstane ti přesně tvá železná rezerva {pojistna} kg.")
+
+        st.divider()
+        st.markdown("#### Moderní metody vyskladňování (FIFO vs. Průměr)")
+        st.write("Firma nakupuje stejný materiál vícekrát, ale pokaždé za jinou cenu (např. v pondělí za 10 Kč, ve středu za 15 Kč). Jakou cenou se má materiál odepsat do nákladů, když se vydá do výroby?")
+        
+        tab1, tab2 = st.tabs(["🛒 FIFO (First In, First Out)", "⚖️ Vážený průměr"])
+        with tab1:
+            st.write("Ze skladu se účetně vydává nejdříve to, co bylo nakoupeno jako první (za původní cenu). Běžné u potravin a léků.")
+            st.markdown("<div class='box-gray'>🏷️ <b>Příklad:</b> Koupili jste 100 ks po 20 Kč a pak 100 ks po 25 Kč. Pokud vydáte 80 ks, ocení se cenou 20 Kč/ks.</div>", unsafe_allow_html=True)
+        with tab2:
+            st.write("Materiál se oceňuje průměrnou cenou ze všech nákupů. Běžné ve stavebnictví, u hutního materiálu nebo pohonných hmot.")
+            st.markdown("<div class='box-gray'>🏷️ <b>Vzorec:</b> Průměrná cena = Celková hodnota všech zásob / Celkové množství kusů</div>", unsafe_allow_html=True)
+        
+        st.markdown("*(Poznámka: Metoda LIFO (Last In, First Out) se v českém účetnictví běžně nepoužívá, ale slouží jako teoretický protipól k FIFO.)*")
+
+    elif selected_section_3 == "4.2 Dlouhodobý majetek a investice":
+        st.markdown("### 4.2 Dlouhodobý majetek, investice a odpisy")
+        
+        st.write("Dlouhodobý majetek firma používá delší dobu (déle než rok). Nespotřebuje se najednou, ale postupně se opotřebovává.")
+        st.markdown("""
+        * 🏗️ **Hmotný:** Má fyzickou podobu (budovy, stroje, auta).
+        * 💿 **Nehmotný:** Nemá fyzickou podobu (software, licence, ochranná známka).
+        * 📈 **Finanční:** Dlouhodobé investice, cenné papíry, podíly v jiných firmách.
+        """)
+
+        st.divider()
+        st.markdown("#### Plánování investic a Návratnost")
+        st.write("Pořízení dlouhodobého majetku je investice. Než firma koupí nový drahý stroj, musí vědět, za jak dlouho si na sebe stroj vydělá.")
+        
+        st.markdown("<div class='box-purple'>🕹️ <b>Simulátor: Vyplatí se firmě koupit nový robotický balicí stroj?</b></div>", unsafe_allow_html=True)
+        
+        c_i1, c_i2 = st.columns([1, 1.2])
+        with c_i1:
+            cena_stroje = st.number_input("Cena nového stroje (Kč):", value=500000, step=50000)
+            vedlejsi_naklady = st.number_input("Doprava a instalace (Kč):", value=50000, step=10000)
+            uspora_mesic = st.number_input("Měsíční úspora na brigádnících (Kč):", value=20000, step=5000)
+            
+        with c_i2:
+            porizovaci_cena = cena_stroje + vedlejsi_naklady
+            rocni_prinos = uspora_mesic * 12
+            
+            st.metric("Celková pořizovací cena", f"{porizovaci_cena:,} Kč".replace(",", " "))
+            if rocni_prinos > 0:
+                navratnost = porizovaci_cena / rocni_prinos
+                st.metric("Doba návratnosti investice", f"{navratnost:.1f} let")
+                
+                if navratnost < 3:
+                    st.success("✅ Tohle je skvělá investice! Stroj se zaplatí velmi rychle.")
+                elif navratnost < 6:
+                    st.warning("⚠️ Investice je přijatelná, ale záleží na tom, jak dlouho stroj fyzicky vydrží.")
+                else:
+                    st.error("❌ Riziková investice. Bude trvat příliš dlouho, než se stroj vůbec zaplatí.")
+            else:
+                st.error("Stroj nepřináší žádnou úsporu!")
+
+        st.divider()
+        st.markdown("#### Opotřebení a odpisy")
+        st.write("Dlouhodobý majetek stárne buď fyzicky (používáním), nebo morálně (zastará technicky, i když ještě funguje).")
+        st.markdown("<div class='box-blue'>🧾 <b>Odpis</b> vyjadřuje postupné přenášení hodnoty majetku do nákladů. Odpis NENÍ výdaj v daném okamžiku (výdaj nastal při pořízení).</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka Rovnoměrných odpisů</b></div>", unsafe_allow_html=True)
+        col_odp1, col_odp2 = st.columns(2)
+        with col_odp1:
+            odp_cena = st.number_input("Pořizovací cena majetku (Kč):", value=porizovaci_cena, disabled=True)
+            odp_roky = st.slider("Předpokládaná doba používání (roky):", min_value=2, max_value=20, value=5)
+            roky_v_provozu = st.slider("Kolik let už stroj používáte?", min_value=0, max_value=odp_roky, value=2)
+            
+        with col_odp2:
+            rocni_odpis = odp_cena / odp_roky
+            opravky = rocni_odpis * roky_v_provozu
+            zustatkova = odp_cena - opravky
+            
+            st.metric("Roční odpis (Náklad do účetnictví)", f"{rocni_odpis:,.0f} Kč".replace(",", " "))
+            st.metric("Oprávky (Součet dosavadních odpisů)", f"{opravky:,.0f} Kč".replace(",", " "))
+            st.metric("Zůstatková cena (Aktuální účetní hodnota)", f"{zustatkova:,.0f} Kč".replace(",", " "))
+            st.info(f"Kdyby firma chtěla stroj dnes prodat, z účetního hlediska má hodnotu {zustatkova:,.0f} Kč.")
+
+    else:
+        st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
