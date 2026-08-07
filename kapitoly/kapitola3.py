@@ -358,7 +358,7 @@ def render():
             st.markdown(f"**Zisk ({zisk_prirazka} %):** + {zisk_kc:.1f} Kč")
             st.markdown(f"<h3 style='color: #4f46e5; margin-top: 10px;'>Prodejní cena bez DPH: {cena_bez_dph:.1f} Kč</h3>", unsafe_allow_html=True)
 
-    elif selected_section_3 == "3.3 Kalkulace nákladů":
+elif selected_section_3 == "3.3 Kalkulace nákladů":
         st.markdown("### 3.3 Kalkulace nákladů")
         st.write("Kalkulace je postup, kterým firma zjišťuje, kolik ji stojí jeden výrobek, služba nebo zakázka. Pomáhá odpovědět na otázky: *Kolik stojí výroba kusu? Za jakou cenu prodávat? Vyplatí se zakázka?*")
         
@@ -372,10 +372,10 @@ def render():
         </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("#### Kalkulace neúplných nákladů")
-        st.write("Pracuje jen s částí nákladů — často s variabilními náklady. Fixní náklady se neposuzují na každý kus zvlášť, ale sledují se za firmu jako celek. Zde se používá pojem **příspěvek na úhradu**.")
+        st.markdown("#### Kalkulace neúplných nákladů (Krycí příspěvek)")
+        st.write("Pracuje jen s částí nákladů — často s variabilními náklady. Fixní náklady se neposuzují na každý kus zvlášť, ale sledují se za firmu jako celek. Zde se používá klíčový manažerský pojem **příspěvek na úhradu** (tzv. krycí příspěvek). V reálném byznysu se tento výpočet používá denně k rychlému rozhodování.")
         st.markdown("<div class='box-gray'><b>Příspěvek na úhradu na kus = prodejní cena za kus − variabilní náklady na kus</b></div>", unsafe_allow_html=True)
-        st.write("Příspěvek na úhradu říká, kolik z ceny jednoho prodaného kusu zbývá na úhradu fixních nákladů a tvorbu zisku.")
+        st.write("Příspěvek na úhradu říká, kolik z ceny jednoho prodaného kusu zbývá na úhradu fixních nákladů (např. nájmu) a tvorbu zisku.")
 
         st.divider()
         st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka příspěvku na úhradu</b></div>", unsafe_allow_html=True)
@@ -392,7 +392,7 @@ def render():
             
             st.metric("Příspěvek na úhradu (1 kus)", f"{prispevek_ks} Kč")
             st.metric("Celkový příspěvek na úhradu", f"{prispevek_celkem:,} Kč".replace(",", " "))
-            st.info(f"Z této částky {prispevek_celkem:,} Kč musí firma nejprve zaplatit všechny své fixní náklady (nájem, energie). Cokoliv zbyde, je zisk.")
+            st.info(f"Z této částky {prispevek_celkem:,} Kč musí firma nejprve zaplatit všechny své fixní náklady (nájem, energie). Cokoliv zbyde, je čistý zisk.")
 
     elif selected_section_3 == "3.4 Bod zvratu a jeho graf":
         st.markdown("### 3.4 Bod zvratu a postup sestavení kalkulace")
@@ -402,7 +402,7 @@ def render():
         st.markdown("<div class='box-gray'><b>Bod zvratu v kusech = Fixní náklady / (Cena za kus − Variabilní náklady na kus)</b></div>", unsafe_allow_html=True)
         
         st.divider()
-        st.markdown("<div class='box-purple'>🕹️ <b>Simulátor Bodu Zvratu s Grafem</b></div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-purple'>🕹️ <b>Simulátor Bodu Zvratu s Křivkou zisku</b></div>", unsafe_allow_html=True)
         
         col_in, col_out = st.columns([1, 1.2])
         with col_in:
@@ -425,13 +425,19 @@ def render():
                 max_x = int(bod_zvratu * 2.5) if bod_zvratu > 0 else 100
                 kroky = max(1, max_x // 50)
                 df_graf = pd.DataFrame({"Kusy": range(0, max_x, kroky)})
+                
+                # Výpočty pro graf
                 df_graf["Tržby (Výnosy)"] = df_graf["Kusy"] * be_cena
                 df_graf["Celkové náklady"] = be_fix + (df_graf["Kusy"] * be_var)
                 df_graf["Fixní náklady"] = be_fix
+                # Přidaná křivka zisku/ztráty
+                df_graf["Zisk / Ztráta"] = df_graf["Tržby (Výnosy)"] - df_graf["Celkové náklady"]
+                
                 df_graf = df_graf.set_index("Kusy")
                 
-                st.line_chart(df_graf, color=["#22c55e", "#ef4444", "#64748b"])
-                st.caption("📈 Zelená = Tržby, Červená = Celkové náklady. Místo protnutí je bod zvratu.")
+                # Barvy: Zelená (Tržby), Červená (Náklady), Šedá (Fix. nák.), Fialová (Zisk)
+                st.line_chart(df_graf, color=["#22c55e", "#ef4444", "#64748b", "#8b5cf6"])
+                st.caption("📈 <b>Zelená</b> = Tržby | <b>Červená</b> = Celkové náklady | <b>Fialová</b> = Zisk / Ztráta. <br>Všimni si, jak fialová křivka začíná v minusu (ztráta) a přesně v bodě zvratu protíná nulu a roste do zisku!", unsafe_allow_html=True)
             except ImportError:
                 st.warning("Graf vyžaduje knihovnu Pandas.")
 
