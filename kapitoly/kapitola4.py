@@ -584,7 +584,7 @@ def render():
             • <b>DPČ</b> se hodí na pravidelnou celoroční brigádu při škole (např. 2 odpoledne týdně v kavárně).
         </div>
         """, unsafe_allow_html=True)
-elif selected_section_4 == "2.5 Ukázka pracovní smlouvy a její náležitosti":
+    elif selected_section_4 == "2.5 Ukázka pracovní smlouvy a její náležitosti":
         st.markdown("### 2.5 Pracovní smlouva: Povinné náležitosti a rizika")
         
         st.write("Pracovní smlouva je nejdůležitější dokument vašeho pracovního života. Musí být **vždy uzavřena písemně** a vyhotovena ve dvou stejnopisech (jeden pro vás, jeden pro firmu). Zákoník práce vás chrání, ale jen tehdy, když víte, co podepisujete.")
