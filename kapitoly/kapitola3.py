@@ -938,7 +938,7 @@ def render():
     # =========================================================================
     # SEKCE 6: EFEKTIVITA, ŠTÍHLÁ VÝROBA A TECHNOLOGIE
     # =========================================================================
-elif selected_section_3 == "6.1 Štíhlá výroba, Poka-Yoke a 5S":
+    elif selected_section_3 == "6.1 Štíhlá výroba, Poka-Yoke a 5S":
         st.markdown("### 6.1 Štíhlá výroba (Lean), Poka-Yoke a 5S")
         st.markdown("""
         <div class='box-blue'>
