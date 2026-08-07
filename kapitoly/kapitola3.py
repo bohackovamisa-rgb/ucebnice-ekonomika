@@ -797,3 +797,324 @@ def render():
 
     else:
         st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
+# =========================================================================
+    # SEKCE 5: KALKULACE, CENY A CENOVÉ STRATEGIE
+    # =========================================================================
+    elif selected_section_3 == "5.1 Cenové strategie v praxi":
+        st.markdown("### 5.1 Cenové strategie v praxi")
+        st.markdown("""
+        <div class='box-blue'>
+            🏷️ <b>Klíčová myšlenka:</b> Zákazník neplatí jen za výrobek. Platí také za značku, pohodlí, důvěru, rychlost a vnímanou hodnotu.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.write("Cena není jen matematický výsledek kalkulace. Firma musí znát své náklady, ale zároveň přemýšlí o tom, jakou hodnotu zákazník v produktu vidí a kolik je ochoten zaplatit.")
+        
+        st.markdown("**Na cenu působí například:** Náklady na výrobu či službu, ceny konkurence, značka a důvěra, rychlost dodání, pohodlí, kvalita a design, vzácnost a ochota zákazníka zaplatit.")
+        
+        st.markdown("<div class='box-gray'>💬 <b>Otázka k zamyšlení:</b> Proč si někdo koupí mikinu za 1 200 Kč, i když její výroba stála 350 Kč? Často neplatí jen za látku a potisk, ale za značku, komunitu, styl a pocit, že k něčemu patří.</div>", unsafe_allow_html=True)
+        
+        st.divider()
+        st.markdown("#### Moderní cenové strategie")
+        
+        tab_c1, tab_c2, tab_c3, tab_c4, tab_c5 = st.tabs([
+            "🆓 Freemium", "📅 Předplatné", "📈 Dynamická cena", "📦 Balíčkování", "💎 Prémiová cena"
+        ])
+        
+        with tab_c1:
+            st.markdown("##### Freemium")
+            st.write("**Jak funguje:** Základní verze je zdarma, pokročilé funkce nebo odstranění reklam jsou placené.")
+            st.markdown("<div class='box-green'>🎮 <b>Příklady z praxe:</b> Spotify, Canva, Duolingo, mobilní hry.</div>", unsafe_allow_html=True)
+        with tab_c2:
+            st.markdown("##### Předplatné (Subscription)")
+            st.write("**Jak funguje:** Zákazník neplatí jednorázově, ale pravidelně (měsíčně/ročně) za trvalý přístup.")
+            st.markdown("<div class='box-green'>🎬 <b>Příklady z praxe:</b> Netflix, Adobe, posilovny, cloudová úložiště (iCloud, Google One).</div>", unsafe_allow_html=True)
+        with tab_c3:
+            st.markdown("##### Dynamická cena (Dynamic Pricing)")
+            st.write("**Jak funguje:** Cena se mění v reálném čase podle poptávky, času, počasí nebo obsazenosti.")
+            st.markdown("<div class='box-green'>✈️ <b>Příklady z praxe:</b> Letenky, hotely, Uber, lístky na koncerty a zápasy.</div>", unsafe_allow_html=True)
+        with tab_c4:
+            st.markdown("##### Balíčkování (Bundling)")
+            st.write("**Jak funguje:** Více produktů či služeb se prodává společně za výhodnější cenu, než kdyby se kupovaly zvlášť.")
+            st.markdown("<div class='box-green'>🍔 <b>Příklady z praxe:</b> Menu ve fast foodu, balíček aplikací Microsoft 365, výhodný výhodový set na e-shopu.</div>", unsafe_allow_html=True)
+        with tab_c5:
+            st.markdown("##### Prémiová cena (Skimming / Premium Pricing)")
+            st.write("**Jak funguje:** Záměrně vysoká cena podporuje dojem luxusu, výjimečnosti a špičkové kvality.")
+            st.markdown("<div class='box-green'>🏎️ <b>Příklady z praxe:</b> Apple, limitované edice oblečení, luxusní parfémové značky.</div>", unsafe_allow_html=True)
+            
+        st.divider()
+        st.markdown("<div class='box-yellow'>🎲 <b>Mini-aplikace: Vyber ideální cenovou strategii</b></div>", unsafe_allow_html=True)
+        
+        prod_typ = st.selectbox("Vyber typ produktu / projektu:", [
+            "Vyber...",
+            "Mobilní aplikace na plánování tréninků",
+            "Limitovaná edice 50 kusů designer mikin",
+            "Taxi služba v pátek v noc po koncertě",
+            "Set šamponu, kondicionéru a hřebenu"
+        ])
+        
+        if prod_typ != "Vyber...":
+            strat_volba = st.radio("Jaká strategie je pro tento produkt nejvhodnější?", [
+                "Freemium", "Předplatné", "Dynamická cena", "Balíčkování", "Prémiová cena"
+            ], horizontal=True)
+            
+            dovud = st.text_input("Zdůvodni, proč tato strategie dává ekonomický smysl:")
+            
+            if st.button("Vyhodnotit strategii"):
+                sprat_map = {
+                    "Mobilní aplikace na plánování tréninků": ["Freemium", "Předplatné"],
+                    "Limitovaná edice 50 kusů designer mikin": ["Prémiová cena"],
+                    "Taxi služba v pátek v noc po koncertě": ["Dynamická cena"],
+                    "Set šamponu, kondicionéru a hřebenu": ["Balíčkování"]
+                }
+                if strat_volba in sprat_map.get(prod_typ, []):
+                    st.success(f"✅ Výborně! Strategie '{strat_volba}' je pro tento případ ideální.")
+                else:
+                    st.warning(f"Zvážil/a jsi všechny aspekty? Pro tento typ produktu se častěji využívá {', '.join(sprat_map.get(prod_typ, []))}.")
+
+    elif selected_section_3 == "5.2 Náklady v digitálním světě a Asset-Light":
+        st.markdown("### 5.2 Náklady v digitálním světě a Asset-Light model")
+        
+        st.markdown("#### Nulové mezní náklady v digitálním světě")
+        st.write("U fyzického produktu má každý další kus obvykle další náklady (tričko potřebuje látku, potisk, obal, práci a dopravu). U digitálního produktu je situace jiná.")
+        st.markdown("<div class='box-purple'>🎮 <b>Aha moment:</b> Vývoj mobilní hry může stát 2 000 000 Kč. Jakmile je ale hra hotová, stažení 100 000. kopie už firmu téměř nic nestojí. Fixní náklady jsou obrovské, ale variabilní náklady na jednu další kopii se blíží nule.</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div class='box-gray'><b>Průměrné náklady na uživatele</b> = Celkové náklady / Počet uživatelů</div>", unsafe_allow_html=True)
+        st.write("Čím více uživatelů digitální službu využívá, tím více se vysoké fixní vývojové náklady rozpočítají.")
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka: Fyzický vs. Digitální produkt</b></div>", unsafe_allow_html=True)
+        
+        cd1, cd2 = st.columns(2)
+        with cd1:
+            st.markdown("##### 👕 Fyzický produkt (Kniha / Tričko)")
+            f_fix = st.number_input("Fixní náklady (tiskové desky/grafika):", value=50000, step=10000, key="f_fix")
+            f_var = st.number_input("Variabilní náklad na 1 kus (materiál):", value=150, step=10, key="f_var")
+            f_kusy = st.slider("Počet vyrobených a prodaných kusů:", min_value=100, max_value=10000, value=1000, step=100, key="f_kusy")
+            
+            f_celk = f_fix + (f_var * f_kusy)
+            f_prum = f_celk / f_kusy
+            st.metric("Celkové náklady", f"{f_celk:,} Kč".replace(",", " "))
+            st.metric("Průměrný náklad na 1 kus", f"{f_prum:.1f} Kč")
+            
+        with cd2:
+            st.markdown("##### 📱 Digitální produkt (Aplikace / E-kniha)")
+            d_fix = st.number_input("Fixní náklady (vývoj hry/aplikace):", value=300000, step=50000, key="d_fix")
+            d_var = st.number_input("Variabilní náklad na 1 stažení (server):", value=2, step=1, key="d_var")
+            d_kusy = st.slider("Počet stažení / uživatelů:", min_value=100, max_value=100000, value=10000, step=1000, key="d_kusy")
+            
+            d_celk = d_fix + (d_var * d_kusy)
+            d_prum = d_celk / d_kusy
+            st.metric("Celkové náklady", f"{d_celk:,} Kč".replace(",", " "))
+            st.metric("Průměrný náklad na 1 uživatele", f"{d_prum:.1f} Kč")
+
+        st.divider()
+        st.markdown("#### Podnikání bez vlastního skladu a strojů (Asset-Light)")
+        st.write("Některé moderní firmy se snaží vlastnit co nejméně majetku. Místo skladu, strojů a velkých zásob využívají dodavatele, platformy a outsourcing. Tomuto přístupu se říká **asset-light business**.")
+        
+        st.markdown("""
+        * 📦 **Dropshipping:** E-shop prodá zboží, ale skladování, balení a odeslání řeší přímo dodavatel.
+        * 🖨️ **Print-on-Demand (POD):** Tričko, mikina nebo plakát se vyrobí a potiskne až ve chvíli, kdy zákazník vytvoří objednávku. (Nulové neprodané zásoby!).
+        * ☁️ **Cloudové služby:** Firma si nekupuje vlastní servery, ale pronajímá si výpočetní výkon (AWS, Azure).
+        * 🏢 **Sdílené kanceláře (Coworking):** Firma nevlastní budovu, ale platí jen za stoly, které využívala.
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>⚖️ <b>Rozhodovací simulátor: Sklad vs. Print-on-Demand vs. Dropshipping</b></div>", unsafe_allow_html=True)
+        
+        model_volba = st.selectbox("Vyber obchodní model pro svůj nový e-shop:", [
+            "Vyber...",
+            "Vlastní sklad a nákup zásob dopředu",
+            "Print-on-Demand (výroba po objednávce)",
+            "Dropshipping"
+        ])
+        
+        if model_volba == "Vlastní sklad a nákup zásob dopředu":
+            st.info("📊 **Vlastnosti:** Vyšší marže na kus, plná kontrola nad kvalitou a balením. **Riziko:** Vázaný kapitál a neprodané zásoby ležící na skladě.")
+        elif model_volba == "Print-on-Demand (výroba po objednávce)":
+            st.success("📊 **Vlastnosti:** Nulové riziko neprodaných zásob, nízký startovací kapitál. **Riziko:** Nižší marže z jednoho kusu, delší doba doručení zákazníkovi.")
+        elif model_volba == "Dropshipping":
+            st.success("📊 **Vlastnosti:** Nemusíš řešit logistiku ani sklad. **Riziko:** Žádná kontrola nad kvalitou zboží a reklamacemi, vysoká konkurence.")
+
+    # =========================================================================
+    # SEKCE 6: EFEKTIVITA, ŠTÍHLÁ VÝROBA A TECHNOLOGIE
+    # =========================================================================
+    elif selected_section_3 == "6.1 Štíhlá výroba, Poka-Yoke a 5S":
+        st.markdown("### 6.1 Štíhlá výroba (Lean), Poka-Yoke a 5S")
+        st.markdown("""
+        <div class='box-blue'>
+            ⚙️ <b>Praktický přesah:</b> Efektivita neznamená pracovat rychleji za každou cenu. Znamená odstraňovat plýtvání a zlepšovat procesy.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### Štíhlá výroba (Lean Production)")
+        st.write("Cílem Lean výroby není nutit lidi pracovat chaoticky rychleji, ale nastavit proces tak, aby zbytečně nevznikaly chyby, čekání, nadbytečné zásoby nebo opravy.")
+        
+        st.markdown("##### 7 druhů plýtvání (Muda):")
+        st.markdown("""
+        1. ⏳ **Čekání** (na materiál, schválení, stroj),
+        2. 🚚 **Zbytečná doprava a přesuny** materiálu,
+        3. 📦 **Nadbytečné zásoby** (utopené peníze na skladě),
+        4. 🏃 **Zbytečné pohyby** pracovníků,
+        5. 🏭 **Nadvýroba** (výroba toho, co nikdo nechce),
+        6. 🔧 **Nedorobky, chyby a opravy**,
+        7. 🧠 **Nevyužitý potenciál a nápady lidí**.
+        """)
+
+        st.divider()
+        st.markdown("#### Poka-Yoke: Navrhnout proces tak, aby chyba nevznikla")
+        st.write("Poka-Yoke je japonský princip předcházení chybám z nepozornosti. Místo kontroly na konci výroby se proces nebo produkt navrhne tak, aby se chyba fyzicky nemohla stát.")
+        
+        st.markdown("""
+        * 📱 **SIM karta / SD karta:** Má seříznutý roh, takže ji nelze vložit do telefonu obráceně.
+        * 🔌 **USB-C konektor:** Je oboustranný, čímž odpadá chybné zastrčení.
+        * ⛽ **Tankovací pistole na naftu:** Je širší než hrdlo benzínové nádrže (nelze natankovat naftu do benzínového auta).
+        * 💻 **Webový formulář:** Nepustí vás dál, pokud chybí zavináč v e-mailu.
+        """)
+
+        st.divider()
+        st.markdown("#### Metoda 5S na pracovišti")
+        st.write("Metoda pro přehledné, čisté a bezpečné pracoviště. Pomáhá, aby lidé rychle našli, co potřebují.")
+        st.markdown("""
+        1. 🧹 **Seiri (Vytřídit):** Odstranit nepotřebné věci z pracoviště.
+        2. 📐 **Seiton (Uspořádat):** Každá věc má své přesné místo.
+        3. 🧽 **Seiso (Udržovat čistotu):** Čisté pracoviště a stroje.
+        4. 📋 **Seiketsu (Standardizovat):** Nastavit jasná pravidla a štítky.
+        5. 🔄 **Shitsuke (Dodržovat):** Dlouhodobě udržovat disciplínu.
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🔎 <b>Detektiv plýtvání (Lean cvičení)</b></div>", unsafe_allow_html=True)
+        
+        sit = st.text_area("Popiš situaci z vaší školní jídelny, dílny nebo brigády, kde vzniká chaos:", 
+                           value="Při výdeji obědů kuchařka musí běhat pro příbory do vedlejší místnosti a studenti čekají ve 20metrové frontě.")
+        
+        c_l1, c_v2 = st.columns(2)
+        with c_l1:
+            plytvani_typ = st.multiselect("Jaké druhy plýtvání zde vznikají?", [
+                "Čekání", "Zbytečný pohyb", "Zbytečná doprava", "Chyby a opravy", "Nadbytečné zásoby"
+            ], default=["Čekání", "Zbytečný pohyb"])
+        with c_v2:
+            reseni_lean = st.text_input("Navrhni jedno jednoduché zlepšení (Poka-Yoke / 5S):", 
+                                       value="Příbory umístit přímo k výdejnímu okénku do označeného stojanu.")
+            
+        if st.button("Uložit návrh zlepšení"):
+            st.success("✅ Skvělý postřeh! Přesně takhle uvažují Lean procesní inženýři ve firmách.")
+
+    elif selected_section_3 == "6.2 Průmysl 4.0, Cirkulární ekonomika a KPI":
+        st.markdown("### 6.2 Průmysl 4.0, Cirkulární ekonomika a Dashboardy")
+        
+        st.markdown("#### Průmysl 4.0, AI a Automatizace")
+        st.write("Moderní výroba už nejsou jen lidé u pásu. Do výroby vstupují roboti, IoT senzory, umělá inteligence, datová analytika a automatizované sklady.")
+        
+        st.markdown("""
+        * 📈 **Rostou fixní náklady** na nákup technologií a softwaru,
+        * 📉 **Klesají variabilní náklady** na výrobu jednoho kusu,
+        * ⚙️ Zvyšuje se potřeba odborné údržby, IT specialistů a datové kontroly.
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-purple'>🤖 <b>Kalkulačka návratnosti robota / automatizace</b></div>", unsafe_allow_html=True)
+        
+        c_r1, c_r2 = st.columns(2)
+        with c_r1:
+            investice_robot = st.number_input("Investiční výdaj na robota/software (Kč):", value=2000000, step=100000)
+            uspora_rok = st.number_input("Roční úspora nákladů / vyšší výkon (Kč):", value=500000, step=50000)
+        with c_r2:
+            if uspora_rok > 0:
+                doba_n = investice_robot / uspora_rok
+                st.metric("Doba návratnosti robota", f"{doba_n:.1f} let")
+                if doba_n <= 4:
+                    st.success(f"✅ Doba návratnosti je {doba_n:.1f} let. Investice do automatizace se firmě velmi rychle vrátí!")
+                else:
+                    st.warning(f"Doba návratnosti je {doba_n:.1f} let. Firma musí posoudit životnost robota a rizika zastarání.")
+
+        st.divider()
+        st.markdown("#### Cirkulární ekonomika a udržitelná výroba")
+        st.write("Udržitelnost není jen marketing. Pro firmu znamená nižší spotřebu materiálu, méně odpadu a nižší náklady.")
+        
+        st.markdown("""
+        | Lineární ekonomika (Starý model) | Cirkulární ekonomika (Udržitelný model) |
+        | :--- | :--- |
+        | Vytěžit → Vyrobit → Prodat → Použít → Vyhodit | Navrhnout → Vyrobit → Používat → Opravit → Znovu využít → Recyklovat |
+        """)
+        
+        st.markdown("""
+        * 🔄 **Upcycling:** Starý nebo odpadní materiál se promění v produkt s vyšší hodnotou (např. tašky ze starých autoplacht).
+        * 👶 **Cradle to Cradle („od kolébky ke kolébce“):** Návrh produktu tak, aby se jeho materiály daly nekonečně znovu využívat bez ztráty kvality.
+        * 🛠️ **Design pro opravitelnost:** Výrobek je navržen tak, aby ho šlo snadno rozmontovat a vyměnit rozbitelný díl.
+        * 📊 **ESG:** Sledování dopadů firmy na životní prostředí (Environmental), společnost (Social) a způsob řízení (Governance).
+        """)
+
+        st.divider()
+        st.markdown("#### KPI a Přehledové Dashboardy")
+        st.write("Dashboard je přehled důležitých ukazatelů (KPI) na jednom místě. Dobře zvolený dashboard nemá obsahovat všechno – má obsahovat jen ta čísla, podle kterých se dá rozhodovat.")
+        st.markdown("<div class='box-gray'>📱 <b>Příklady z běžného života:</b> Počet zhlédnutí na TikToku, míra prokliku, přehled poslechů na Spotify, statistiky v bankovní aplikaci – to všechno jsou vaše osobní KPI!</div>", unsafe_allow_html=True)
+
+    elif selected_section_3 == "6.3 Projektová dílna: Launch vlastního merche":
+        st.markdown("### 6.3 Projektová dílna: Launch vlastního merche / e-shopu")
+        st.markdown("""
+        <div class='box-blue'>
+            ✍️ <b>Projektový úkol:</b> Představte si, že jako tvůrce obsahu, streamer, školní tým nebo studentská značka chcete pustit na trh vlastní edici mikin, triček, plakátů nebo školních zápisníků.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<div class='box-yellow'>🧪 <b>Projektová kalkulačka & Diagnostika merche</b></div>", unsafe_allow_html=True)
+        st.write("Zadej své plánované náklady a cenovou strategii. Kalkulačka spočítá příspěvek na úhradu, bod zvratu i očekávaný zisk.")
+        
+        cp1, cp2 = st.columns(2)
+        with cp1:
+            p_nazev = st.text_input("Název produktu / projektu:", value="Školní edice mikin s kapucí")
+            p_cena = st.number_input("Prodejní cena za 1 kus (Kč):", value=890, step=50)
+            p_var = st.number_input("Variabilní náklady na 1 kus (potisk, textil, obal) (Kč):", value=420, step=20)
+            p_fix = st.number_input("Fixní náklady celkem (grafika, reklama, e-shop) (Kč):", value=15000, step=1000)
+            p_odhad = st.number_input("Očekávaný počet prodaných kusů:", value=50, step=10)
+            
+        with cp2:
+            p_prispevek = p_cena - p_var
+            st.markdown("##### 📐 Výsledky projektu:")
+            
+            if p_prispevek <= 0:
+                st.error("💥 KRITICKÁ CHYBA: Prodejní cena je nižší nebo rovna variabilním nákladům! Na každém kusu proděláváš.")
+            else:
+                p_bz = math.ceil(p_fix / p_prispevek)
+                p_trzby = p_odhad * p_cena
+                p_naklady_celkem = p_fix + (p_odhad * p_var)
+                p_zisk = p_trzby - p_naklady_celkem
+                p_marze = (p_zisk / p_trzby * 100) if p_trzby > 0 else 0
+                
+                st.metric("Příspěvek na úhradu na 1 kus", f"{p_prispevek} Kč")
+                st.metric("Bod zvratu (musíš prodat)", f"{p_bz} kusů")
+                st.metric("Předpokládaný zisk / ztráta", f"{p_zisk:,} Kč".replace(",", " "))
+                st.metric("Zisková marže", f"{p_marze:.1f} %")
+                
+                st.divider()
+                st.markdown("##### 🚦 Diagnostika projektu:")
+                if p_odhad < p_bz:
+                    st.error(f"❌ **Projekt je rizikový!** Tvůj odhad prodeje ({p_odhad} ks) nepokryje ani bod zvratu ({p_bz} ks). Budeš ve ztrátě {abs(p_zisk):,} Kč.")
+                    st.info("💡 **Doporučení:** Zvyš cenu, vyjednej levnější textil nebo zvyšte propagační kampaň.")
+                else:
+                    st.success(f"🎉 **Projekt je ziskový!** Po prodeji {p_bz} kusů začínáš vydělávat. Při prodeji {p_odhad} kusů bude čistý zisk {p_zisk:,} Kč.")
+
+        st.divider()
+        st.markdown("#### Moje manažerské rozhodnutí k projektu")
+        
+        m_model = st.radio("Zvolený model výroby:", [
+            "Print-on-Demand (výroba po objednávce - nulové zásoby)",
+            "Nákup na sklad dopředu (vyšší marže, ale riziko neprodaných kusů)"
+        ])
+        
+        m_kpi = st.multiselect("Které KPI budeš sledovat pro vyhodnocení úspěchu?", [
+            "Počet prodaných kusů", "Čistá zisková marže", "Rychlost vyprodání edice", 
+            "Návratnost investic do reklamy (ROAS)", "Míra vratek a reklamací"
+        ], default=["Počet prodaných kusů", "Čistá zisková marže"])
+        
+        rozhodnuti_text = st.text_area("Shrnutí strategického rozhodnutí pro prezentaci před třídou/vedením:", 
+                                       value="Projekt spustíme jako limitovanou edici v předprodeji (Print-on-Demand), čímž eliminujeme riziko neprodaných zásob. Počáteční grafické náklady pokryjeme z příspěvku na úhradu po prodeji prvních 32 kusů.")
+        
+        if st.button("Uložit projektový list"):
+            st.balloons()
+            st.success("✅ Projektový list byl úspěšně sestaven a připraven k obhajobě!")
+
+    else:
+        st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
