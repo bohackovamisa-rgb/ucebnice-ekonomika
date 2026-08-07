@@ -582,110 +582,77 @@ def render():
         """)
         st.markdown("<div class='box-gray'>📦 Dobré skladování snižuje ztráty, záměny, poškození i zbytečné nákupy materiálu, který už firma ve skladu má.</div>", unsafe_allow_html=True)
 
-    elif selected_section_3 == "4.2 Oceňování a moderní řízení zásob":
-        st.markdown("### 4.2 Metody vyskladňování a moderní řízení zásob")
-        st.write("Při výdeji materiálu ze skladu musí firma určit, v jaké hodnotě se materiál ze skladu odepíše do nákladů. To je důležité hlavně tehdy, když firma nakupuje stejný materiál opakovaně, ale za různé ceny.")
+elif selected_section_3 == "4.2 Oceňování a moderní řízení zásob":
+        st.markdown("### 4.2 Oceňování a moderní řízení zásob")
         
-        st.markdown("#### Metody vyskladňování zásob")
-        tab1, tab2, tab3 = st.tabs(["🛒 FIFO", "⏳ LIFO", "⚖️ Vážený průměr"])
-        with tab1:
-            st.markdown("##### FIFO (First In, First Out)")
-            st.write("Ze skladu se účetně vydává nejdříve to, co bylo nakoupeno jako první.")
-            st.markdown("<div class='box-gray'><b>FIFO = první do skladu, první ze skladu</b></div>", unsafe_allow_html=True)
-            st.write("**Příklad:** Firma nakoupí 100 kusů materiálu po 20 Kč a později 100 kusů po 25 Kč. Pokud vydá do výroby 80 kusů, u FIFO se ocení cenou 20 Kč za kus.")
-            st.markdown("<div class='box-green'>🏷️ <b>Kde se používá dnes:</b> Běžné v potravinářství, farmacii, drogerii, kosmetice, gastronomii a maloobchodu — všude tam, kde záleží na expiraci nebo stáří zboží. Typicky ho využívají supermarkety, lékárny nebo restaurace.</div>", unsafe_allow_html=True)
-        with tab2:
-            st.markdown("##### LIFO (Last In, First Out)")
-            st.write("Ze skladu odchází nejdříve nejnovější zásoby.")
-            st.markdown("<div class='box-gray'><b>LIFO = poslední do skladu, první ze skladu</b></div>", unsafe_allow_html=True)
-            st.markdown("<div class='box-red'>⚠️ <b>Poznámka k praxi:</b> LIFO je užitečné znát pro pochopení principu, ale v českém účetnictví se běžně nepoužívá jako standardní metoda. Fyzicky se s ním ale setkáte například u hromad sypkého materiálu nebo palet uložených za sebou.</div>", unsafe_allow_html=True)
-        with tab3:
-            st.markdown("##### Vážený aritmetický průměr")
-            st.write("Materiál se oceňuje průměrnou cenou z více nákupů. Používá se tehdy, když firma nechce sledovat přesnou pořizovací cenu každé dávky zvlášť.")
-            st.markdown("<div class='box-gray'><b>Průměrná cena = celková hodnota zásob / celkové množství zásob</b></div>", unsafe_allow_html=True)
-            st.markdown("<div class='box-green'>🏷️ <b>Kde se používá dnes:</b> Ve výrobních firmách, velkoobchodu a skladech materiálu (hutní materiál, obaly, pohonné hmoty).</div>", unsafe_allow_html=True)
+        st.write("Rozdíl: FIFO, LIFO a vážený průměr řeší hlavně **ocenění zásob při výdeji**. Moderní metody (Kanban, JIT) řeší spíš to, **kolik zásob držet, kdy objednávat a jak zabránit plýtvání**.")
+        
+        st.markdown("#### Vizuální systém KANBAN 🚥")
+        st.write("Kanban pochází z japonštiny (znamená „cedulka“ nebo „vizuální signál“). Proslavila ho automobilka Toyota. Jde o systém, kdy si další krok výroby „táhne“ materiál až ve chvíli, kdy ho potřebuje.")
+        
+        st.markdown("<div class='box-green'><b>Princip dvou bedýnek (Dvoubinový systém)</b></div>", unsafe_allow_html=True)
+        st.write("Představ si, že montuješ kola a máš před sebou dvě bedýnky se šroubky.")
+        
+        col_k1, col_k2, col_k3 = st.columns(3)
+        with col_k1:
+            st.info("📦 **Bedýnka 1 (Používám)**\n\nBeru z ní šroubky. Dokud v ní něco je, nic neřeším.")
+        with col_k2:
+            st.warning("🪹 **Bedýnka 1 se vyprázdní!**\n\nTo je **SIGNÁL (Kanban)**. Prázdnou bedýnku pošlu do skladu jako objednávku.")
+        with col_k3:
+            st.success("📦 **Bedýnka 2 (Záložní)**\n\nZačnu brát z druhé bedýnky. Než ji vyprázdním, sklad mi vrátí plnou Bedýnku 1.")
+            
+        st.markdown("💡 *Dnes se Kanban nepoužívá jen ve výrobě, ale i v IT a projektovém řízení (aplikace jako Trello nebo Jira), kde se místo bedýnek posouvají úkoly ve sloupcích (To Do → In Progress → Done).*")
 
         st.divider()
-        st.markdown("#### Moderní řízení zásob")
-        st.write("Rozdíl: FIFO, LIFO a vážený průměr řeší hlavně Ocenění zásob při výdeji. Moderní metody řeší spíš to, kolik zásob držet, kdy objednávat a jak zabránit výpadkům.")
+        st.markdown("#### Just-in-Time (JIT)")
+        st.write("Materiál dorazí přesně tehdy, kdy je potřeba. Firma nemá téměř žádné sklady. V současnosti se ale po zkušenostech s výpadky dodavatelských řetězců (např. chybějící čipy) firmy snaží o rovnováhu a často kombinují JIT s bezpečnostní zásobou.")
         
-        st.markdown("**ABC analýza zásob**")
-        st.write("Pomáhá rozdělit zásoby podle důležitosti. Ne všechny položky ve skladu mají stejnou hodnotu.")
+        st.markdown("#### ABC analýza zásob")
+        st.write("Rozděluje zásoby podle důležitosti a hodnoty, protože nemá smysl počítat každý šroubek se stejnou pečlivostí jako drahé motory.")
         st.markdown("""
-        * **A položky:** Nejdůležitější a drahé. Pečlivé sledování, častá kontrola. (např. kávovar v kavárně, drahé náhradní díly).
-        * **B položky:** Středně důležité. Pravidelná kontrola. (kvalitní káva).
-        * **C položky:** Méně důležité, levné. Jednodušší evidence, větší tolerance. (kelímky).
+        * 🥇 **Skupina A (cca 10 % položek, ale 70 % hodnoty):** Nejdražší položky. Hlídají se denně, zásoby jsou minimální (např. drahé čipy, motory).
+        * 🥈 **Skupina B (cca 20 % položek, 20 % hodnoty):** Středně důležité. Kontrolují se pravidelně.
+        * 🥉 **Skupina C (cca 70 % položek, ale jen 10 % hodnoty):** Levné drobnosti (šroubky, gumičky, kancelářský papír). Objednávají se ve velkém, zásoba se moc nehlídá.
         """)
-        
-        st.markdown("**Kanban v řízení zásob**")
-        st.write("Vizuální metoda řízení toku práce a zásob (např. prázdná bedýnka je signálem pro nákup dalšího materiálu). Rozvinul ho Taiichi Ohno v Toyotě (Toyota Production System). Dnes se používá nejen ve výrobě, ale i v IT (Trello, Jira) a marketingu.")
-        
-        st.markdown("**Just-in-Time (JIT) dnes**")
-        st.write("Materiál dorazí přesně tehdy, kdy je potřeba. V současnosti se po zkušenostech s výpadky dodavatelských řetězců firmy snaží o rovnováhu a často kombinují JIT s bezpečnostní zásobou.")
-        
-        st.markdown("**Digitální skladové systémy a Predikce poptávky**")
-        st.write("Moderní sklady využívají čárové kódy, QR, RFID čipy a software, který v reálném čase sleduje pohyby zboží. Predikce poptávky (často pomocí AI) sleduje minulý prodej, sezónnost či počasí a umí automaticky navrhnout, kolik materiálu objednat.")
-        
-        st.divider()
-        st.markdown("<div class='box-yellow'>🧩 <b>Kvíz: FIFO, LIFO, nebo vážený průměr?</b></div>", unsafe_allow_html=True)
-        with st.form("kviz_vyskladnovani"):
-            k1 = st.selectbox("Nejdříve se účetně vydává nejstarší nákup:", ["Vyber...", "FIFO", "LIFO", "Vážený průměr"])
-            k2 = st.selectbox("Použije se průměrná cena zásob:", ["Vyber...", "FIFO", "LIFO", "Vážený průměr"])
-            k3 = st.selectbox("Nejdříve se účetně vydává poslední nákup:", ["Vyber...", "FIFO", "LIFO", "Vážený průměr"])
-            if st.form_submit_button("Zkontrolovat test"):
-                if k1 == "FIFO" and k2 == "Vážený průměr" and k3 == "LIFO":
-                    st.success("✅ Skvělá práce, máš to perfektně!")
-                else:
-                    st.error("Něco je špatně. Pamatuj: First in (FIFO), Last in (LIFO).")
 
     elif selected_section_3 == "4.3 Výpočty k oběžnému majetku":
-        st.markdown("### 4.3 Výpočty k oběžnému majetku a zásobám")
-        st.write("V této sekci se podíváme na základní vzorce a výpočty, které firma používá k řízení svých zásob.")
+        st.markdown("### 4.3 Rychlost a doba obratu zásob")
+        st.write("Každá zásoba, která leží na skladě, jsou **„utopené“ peníze**, za které firma mohla koupit něco jiného nebo je úročit v bance. Proto manažery zajímá, jak rychle se zásoby točí.")
         
-        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní výpočty oběžného majetku</b></div>", unsafe_allow_html=True)
+        st.markdown("""
+        * 🔄 **Počet obrátek (Rychlost obratu):** Říká, kolikrát za rok se sklad kompletně vyprázdní a znovu naplní. Čím vyšší číslo, tím lépe!
+        * ⏳ **Doba obratu (ve dnech):** Říká, kolik dní průměrně leží materiál na skladě, než z něj vyrobíme produkt a ten prodáme. Čím kratší doba, tím lépe!
+        """)
         
-        st.markdown("#### 1. Stanovení spotřeby a nákupu materiálu")
-        c1, c2 = st.columns(2)
-        with c1:
-            st.write("**Výpočet spotřeby materiálu**")
-            norma = st.number_input("Norma spotřeby na kus (např. kg na výrobek):", value=0.4, step=0.1)
-            pocet_v = st.number_input("Plánovaný počet vyrobených kusů:", value=500, step=100)
-            spotreba = norma * pocet_v
-            st.info(f"**Celková spotřeba:** {spotreba} kg")
-            st.caption("Vzorec: norma spotřeby na kus × počet výrobků")
-        with c2:
-            st.write("**Stanovení nákupu materiálu**")
-            poc_zasoba = st.number_input("Počáteční zásoba na skladě (kg):", value=30, step=10)
-            kon_zasoba = st.number_input("Požadovaná konečná zásoba (kg):", value=50, step=10)
-            nakup = spotreba + kon_zasoba - poc_zasoba
-            st.success(f"**Plánovaný nákup:** {nakup} kg")
-            st.caption("Vzorec: plánovaná spotřeba + konečná zásoba − počáteční zásoba")
+        st.markdown("<div class='box-gray'><b>Počet obrátek</b> = Tržby (nebo spotřeba) / Průměrná zásoba<br><b>Doba obratu</b> = 360 dní / Počet obrátek</div>", unsafe_allow_html=True)
 
         st.divider()
-        st.markdown("#### 2. Obrat zásob")
-        st.write("Rychlost obratu říká, kolikrát se zásoba za určité období „otočí“ (spotřebuje a znovu obnoví). Doba obratu říká, kolik dní je zásoba průměrně vázaná ve firmě.")
-        st.markdown("<div class='box-gray'>🧮 <b>Interpretace:</b> Vyšší rychlost obratu většinou znamená, že firma zásoby využívá efektivněji. Příliš nízké zásoby ale mohou ohrozit plynulost výroby.</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-purple'>🕹️ <b>Simulátor: Proč na obratu záleží?</b></div>", unsafe_allow_html=True)
+        st.write("Podívej se, jak snížení zásob na skladě radikálně zkrátí dobu, po kterou ti v nich leží peníze.")
         
-        c3, c4 = st.columns(2)
-        with c3:
-            spotreba_obdobi = st.number_input("Celková spotřeba/tržby za období (Kč):", value=1200000, step=100000)
-            prum_zasoba_obrat = st.number_input("Průměrná hodnota zásoby na skladě (Kč):", value=200000, step=50000)
-            pocet_dni = st.number_input("Počet dní sledovaného období (např. rok):", value=360)
+        c_obr1, c_obr2 = st.columns([1, 1.2])
+        with c_obr1:
+            rocni_trzby = st.number_input("Roční tržby e-shopu (Kč):", value=3600000, step=100000)
+            hodnota_skladu = st.slider("Průměrná hodnota zboží na skladě (Kč):", min_value=100000, max_value=2000000, value=600000, step=50000)
             
-        with c4:
-            if prum_zasoba_obrat > 0:
-                rychlost_obratu = spotreba_obdobi / prum_zasoba_obrat
-                doba_obratu = pocet_dni / rychlost_obratu if rychlost_obratu > 0 else 0
-                st.metric("Rychlost obratu zásob (Obrátky)", f"{rychlost_obratu:.1f}x za období")
-                st.metric("Doba obratu zásob", f"{doba_obratu:.1f} dní")
-                st.info(f"Zásoby ve firmě zbytečně neleží. V průměru se jedna zásoba zdrží na skladě {doba_obratu:.1f} dní, než je spotřebována nebo prodána.")
+        with c_obr2:
+            obratky = rocni_trzby / hodnota_skladu
+            doba_obratu = 360 / obratky if obratky > 0 else 0
+            
+            st.metric("Počet obrátek za rok", f"{obratky:.1f}x")
+            st.metric("Doba obratu (Zboží leží ve skladu)", f"{doba_obratu:.0f} dní")
+            
+            if doba_obratu > 90:
+                st.error("📉 Zboží leží na skladě moc dlouho (více než 3 měsíce)! Zbytečně v něm vážeš peníze a riskuješ, že vyjde z módy nebo se zkazí.")
+            elif doba_obratu < 30:
+                st.success("✅ Skvělá práce! Sklad se točí rychle, peníze se ti vrací na účet a můžeš je znovu investovat.")
             else:
-                st.warning("Průměrná zásoba musí být větší než 0 pro výpočet obratu.")
+                st.info("⚖️ Standardní rychlost obratu. Dá se to ale ještě optimalizovat (např. Kanbanem).")
 
     elif selected_section_3 == "4.4 Dlouhodobý majetek a investice":
         st.markdown("### 4.4 Dlouhodobý majetek a plánování investic")
         
-        st.write("Dlouhodobý majetek je majetek, který firma používá delší dobu, obvykle déle než jeden rok. Nespotřebuje se najednou, ale postupně se opotřebovává.")
+        st.write("Dlouhodobý majetek je majetek, který firma používá delší dobu (déle než rok). Nespotřebuje se najednou, ale postupně se opotřebovává.")
         
         st.markdown("#### Dělení dlouhodobého majetku")
         st.markdown("""
@@ -697,79 +664,90 @@ def render():
         """)
 
         st.divider()
-        st.markdown("#### Pořízení dlouhodobého majetku a Pořizovací cena")
-        st.write("Dlouhodobý majetek může firma pořídit několika způsoby: nákupem, vlastní výrobou, finančním leasingem, darem, vkladem vlastníka do podnikání nebo převodem z jiného majetku.")
-        st.write("Pořizovací cena obvykle zahrnuje nejen samotnou cenu majetku, ale i náklady související s uvedením majetku do používání (např. doprava, montáž, instalace, clo, zkušební provoz).")
-        st.markdown("<div class='box-gray'><b>Pořizovací cena = cena majetku + vedlejší pořizovací náklady</b></div>", unsafe_allow_html=True)
-
-        st.divider()
         st.markdown("#### Plánování investic a Doba návratnosti")
-        st.write("Pořízení dlouhodobého majetku je investice. Firma by měla předem zvažovat, proč majetek potřebuje, kolik bude stát provoz, jak dlouho vydrží a hlavně – za jak dlouho se investice vrátí.")
-        st.markdown("<div class='box-gray'><b>Doba návratnosti investice = pořizovací cena investice / roční přínos investice</b></div>", unsafe_allow_html=True)
-        st.markdown("<div class='box-blue'>💡 Investice není dobrá jen proto, že je moderní. Dobrá investice musí dávat ekonomický, provozní nebo strategický smysl. Vypočítej si návratnost!</div>", unsafe_allow_html=True)
+        st.write("Pořízení dlouhodobého majetku je investice. Firma by měla předem zvažovat, proč majetek potřebuje a za jak dlouho se investice vrátí.")
+        st.markdown("<div class='box-gray'><b>Doba návratnosti = Pořizovací cena / Roční čistý přínos investice</b></div>", unsafe_allow_html=True)
         
-        st.markdown("<div class='box-yellow'>🧮 <b>Simulátor Doby návratnosti</b></div>", unsafe_allow_html=True)
         c_i1, c_i2 = st.columns([1, 1])
         with c_i1:
-            cena_stroje = st.number_input("Cena nového stroje/zařízení (Kč):", value=300000, step=50000)
-            vedlejsi_naklady = st.number_input("Vedlejší náklady - montáž, doprava (Kč):", value=20000, step=5000)
-            rocni_uspora = st.number_input("Roční čistý přínos nebo úspora (Kč):", value=75000, step=5000)
-            
+            cena_stroje = st.number_input("Cena nového stroje vč. instalace (Kč):", value=500000, step=50000)
+            rocni_uspora = st.number_input("Roční finanční přínos stroje (Kč):", value=125000, step=5000)
         with c_i2:
-            porizovaci_cena = cena_stroje + vedlejsi_naklady
-            st.metric("Celková pořizovací cena", f"{porizovaci_cena:,} Kč".replace(",", " "))
-            
             if rocni_uspora > 0:
-                navratnost = porizovaci_cena / rocni_uspora
-                st.metric("Doba návratnosti investice", f"{navratnost:.1f} let")
-                st.markdown("<div class='box-green'>🎯 <b>Závěr:</b> Zvažte, zda stroj fyzicky vydrží v provozu déle, než je tato doba návratnosti. Pokud ano, investice dává smysl.</div>", unsafe_allow_html=True)
+                navratnost = cena_stroje / rocni_uspora
+                st.metric("Doba návratnosti", f"{navratnost:.1f} let")
+                st.success("Pokud stroj fyzicky vydrží déle než vypočítaná doba návratnosti, investice má smysl.")
             else:
-                st.error("Stroj nepřináší žádný roční přínos!")
+                st.error("Stroj nepřináší zisk.")
 
     elif selected_section_3 == "4.5 Odpisy a evidence majetku":
-        st.markdown("### 4.5 Opotřebení, odpisy a evidence majetku")
+        st.markdown("### 4.5 Odpisy (Účetní vs. Daňové) a grafické srovnání")
         
-        st.markdown("#### Opotřebení majetku")
-        st.write("Dlouhodobý majetek se používáním opotřebovává. Opotřebení může být:")
-        st.markdown("""
-        * ⚙️ **Fyzické** — majetek se opotřebuje používáním nebo časem (stroj se zadrhne, auto zreziví).
-        * 💻 **Morální** — majetek zastará technicky, i když ještě fyzicky funguje (počítač je moc pomalý na nový software).
-        """)
-
-        st.markdown("#### Odpisy, Oprávky a Zůstatková cena")
-        st.markdown("<div class='box-blue'>🧾 <b>Odpis</b> vyjadřuje postupné přenášení hodnoty dlouhodobého majetku do nákladů. Odpis NENÍ výdaj v daném okamžiku. Výdaj vzniká při pořízení majetku, ale náklad se do účetnictví dostává postupně pomocí odpisů.</div>", unsafe_allow_html=True)
+        st.write("Dlouhodobý majetek (např. auto za 1 milion Kč) si firma nedá do nákladů celý najednou v roce nákupu. Náklady se rozloží do více let – tomu se říká **Odpis**.")
         
-        st.write("Zjednodušeně lze použít **rovnoměrný účetní odpis**. (Dle daňových pravidel se rozlišuje i zrychlené odpisování).")
+        st.markdown("#### Rozdíl mezi účetními a daňovými odpisy")
         st.markdown("""
-        * **Roční odpis** = pořizovací cena / doba používání v letech
-        * **Měsíční odpis** = roční odpis / 12
-        * **Oprávky** = souhrn dosud provedených odpisů (kolik z hodnoty už bylo odepsáno).
-        * **Zůstatková cena** = pořizovací cena − oprávky (ukazuje aktuální zůstatkovou účetní hodnotu).
+        * 📘 **Účetní odpisy:** Mají zobrazovat SKUTEČNÉ opotřebení majetku. Firma si sama určí, jak dlouho bude majetek používat (např. notebook na 4 roky). Cílem je věrný obraz účetnictví.
+        * 🏛️ **Daňové odpisy:** Jsou striktně dané státem (Zákonem o daních z příjmů). Snižují základ daně. Stát rozděluje majetek do tzv. **odpisových skupin** (např. počítač se daňově odpisuje 3 roky, auto 5 let, budova 30 let).
         """)
 
         st.divider()
-        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka Rovnoměrných odpisů</b></div>", unsafe_allow_html=True)
+        st.markdown("#### Daňové odpisy: Rovnoměrné vs. Zrychlené")
+        st.write("U daňových odpisů si firma může vybrat ze dvou metod (a zvolenou metodu pak nesmí u daného majetku měnit):")
         
-        col_odp1, col_odp2 = st.columns(2)
-        with col_odp1:
-            odp_cena = st.number_input("Pořizovací cena majetku (Kč):", value=240000, step=10000)
-            odp_roky = st.slider("Předpokládaná doba používání (roky):", min_value=2, max_value=20, value=6)
-            roky_v_provozu = st.slider("Kolik plných let už majetek používáte?", min_value=0, max_value=odp_roky, value=2)
-            
-        with col_odp2:
-            rocni_odpis = odp_cena / odp_roky
-            mesicni_odpis = rocni_odpis / 12
-            opravky = rocni_odpis * roky_v_provozu
-            zustatkova = odp_cena - opravky
-            
-            st.metric("Roční odpis (Náklad do účetnictví)", f"{rocni_odpis:,.0f} Kč".replace(",", " "))
-            st.metric("Měsíční odpis", f"{mesicni_odpis:,.0f} Kč".replace(",", " "))
-            st.metric("Oprávky (Součet dosavadních odpisů)", f"{opravky:,.0f} Kč".replace(",", " "))
-            st.metric("Zůstatková cena", f"{zustatkova:,.0f} Kč".replace(",", " "))
-            st.info(f"Firma zatím odepsala {opravky:,.0f} Kč. V účetnictví má tento majetek momentálně hodnotu {zustatkova:,.0f} Kč.")
+        c_odp1, c_odp2 = st.columns(2)
+        with c_odp1:
+            st.markdown("<div class='box-blue'><b>Rovnoměrné odpisy</b><br>Firma odepíše každý rok stejné procento z pořizovací ceny. Výše odpisu je (až na první rok) stabilní. Ideální pro firmy, které mají stabilní zisky.</div>", unsafe_allow_html=True)
+        with c_odp2:
+            st.markdown("<div class='box-green'><b>Zrychlené odpisy</b><br>V prvních letech se odepíše podstatně větší část hodnoty majetku (a tím se hned na začátku výrazně sníží daně). V dalších letech částka odpisu klesá.</div>", unsafe_allow_html=True)
 
         st.divider()
-        st.markdown("#### Vyřazení a evidence dlouhodobého majetku")
-        st.write("Dlouhodobý majetek se z evidence vyřazuje tehdy, když už ho firma nepoužívá. Důvody mohou být: prodej, likvidace, darování, škoda/zničení, krádež nebo převod do osobního užívání.")
-        st.write("Při vyřazení se řeší: datum a způsob vyřazení, zůstatková cena, případný výnos z prodeje a doklad o vyřazení.")
-        st.markdown("<div class='box-gray'>🗂️ <b>Evidence:</b> Dlouhodobý majetek se eviduje na <i>kartách majetku</i>. Obsahuje inventární číslo, název, pořizovací cenu, odpisový plán, oprávky, odpovědnou osobu atd. Evidence pomáhá firmě vědět, co vlastní, kde to je a jaká je hodnota.</div>", unsafe_allow_html=True)
+        st.markdown("<div class='box-yellow'>🧮 <b>Simulátor: Rovnoměrný vs. Zrychlený odpis (Srovnání nákladů)</b></div>", unsafe_allow_html=True)
+        st.write("Tento graf ukazuje, **kolik tisíc Kč si firma dá do nákladů každý rok**. Všimni si, jak zrychlený odpis udělá v prvních dvou letech velký náklad (čímž ušetří na daních zisku) a pak rychle klesne.")
+        
+        odp_cena = st.number_input("Pořizovací cena stroje (Kč):", value=500000, step=50000, min_value=50000)
+        
+        # Simulace pro Odpisovou skupinu 2 (auta, stroje - doba odpisování 5 let)
+        # Rovnoměrné: 1. rok 11 %, další roky 22,25 %
+        # Zrychlené (koeficienty): 1. rok 5, další roky 6
+        try:
+            import pandas as pd
+            
+            rovnomerne = [
+                odp_cena * 0.11, 
+                odp_cena * 0.2225, 
+                odp_cena * 0.2225, 
+                odp_cena * 0.2225, 
+                odp_cena * 0.2225
+            ]
+            
+            # Zrychlené výpočty (zjednodušená daňová logika pro 5 let)
+            zrych_1 = odp_cena / 5
+            z_zustatek_1 = odp_cena - zrych_1
+            zrych_2 = (2 * z_zustatek_1) / (6 - 1)
+            z_zustatek_2 = z_zustatek_1 - zrych_2
+            zrych_3 = (2 * z_zustatek_2) / (6 - 2)
+            z_zustatek_3 = z_zustatek_2 - zrych_3
+            zrych_4 = (2 * z_zustatek_3) / (6 - 3)
+            z_zustatek_4 = z_zustatek_3 - zrych_4
+            zrych_5 = (2 * z_zustatek_4) / (6 - 4)
+            
+            zrychlene = [zrych_1, zrych_2, zrych_3, zrych_4, zrych_5]
+            
+            df_odpisy = pd.DataFrame({
+                "Rok": ["1. rok", "2. rok", "3. rok", "4. rok", "5. rok"],
+                "Rovnoměrný odpis (Kč)": rovnomerne,
+                "Zrychlený odpis (Kč)": zrychlene
+            }).set_index("Rok")
+            
+            st.bar_chart(df_odpisy, color=["#3b82f6", "#22c55e"])
+            st.caption("🟦 Modrá = Rovnoměrný odpis | 🟩 Zelená = Zrychlený odpis. (Modelově vypočítáno pro majetek s dobou odepisování 5 let).")
+            
+        except ImportError:
+            st.warning("Pro zobrazení grafu je potřeba knihovna Pandas.")
+            
+        st.markdown("#### Kdy jakou metodu vybrat?")
+        st.write("Pokud máš teď obrovské zisky a chceš co nejvíc ušetřit na daních hned, zvolíš **zrychlené odpisy** (zelené sloupce vlevo jsou vysoké). Pokud máš zisky stálé nebo čekáš, že porostou, hodí se **rovnoměrné odpisy** (modré sloupce).")
+
+    else:
+        st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
