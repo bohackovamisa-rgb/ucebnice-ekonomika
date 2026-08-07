@@ -1000,7 +1000,7 @@ def render():
         if st.button("Uložit návrh zlepšení"):
             st.success("✅ Skvělý postřeh! Přesně takhle uvažují Lean procesní inženýři ve firmách.")
 
-elif selected_section_3 == "6.2 Průmysl 4.0, Cirkulární ekonomika a KPI":
+    elif selected_section_3 == "6.2 Průmysl 4.0, Cirkulární ekonomika a KPI":
         st.markdown("### 6.2 Průmysl 4.0, Cirkulární ekonomika a Dashboardy")
         
         st.markdown("#### Průmysl 4.0, AI a Automatizace")
