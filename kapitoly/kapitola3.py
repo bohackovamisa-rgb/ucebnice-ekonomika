@@ -680,7 +680,7 @@ def render():
             else:
                 st.error("Stroj nepřináší zisk.")
 
-    elif selected_section_3 == "4.5 Odpisy a evidence majetku":
+elif selected_section_3 == "4.5 Odpisy a evidence majetku":
         st.markdown("### 4.5 Odpisy (Účetní vs. Daňové) a grafické srovnání")
         
         st.write("Dlouhodobý majetek (např. auto za 1 milion Kč) si firma nedá do nákladů celý najednou v roce nákupu. Náklady se rozloží do více let – tomu se říká **Odpis**.")
@@ -692,14 +692,33 @@ def render():
         """)
 
         st.divider()
-        st.markdown("#### Daňové odpisy: Rovnoměrné vs. Zrychlené")
-        st.write("U daňových odpisů si firma může vybrat ze dvou metod (a zvolenou metodu pak nesmí u daného majetku měnit):")
+        st.markdown("#### Vzorce pro výpočet odpisů")
         
-        c_odp1, c_odp2 = st.columns(2)
-        with c_odp1:
-            st.markdown("<div class='box-blue'><b>Rovnoměrné odpisy</b><br>Firma odepíše každý rok stejné procento z pořizovací ceny. Výše odpisu je (až na první rok) stabilní. Ideální pro firmy, které mají stabilní zisky.</div>", unsafe_allow_html=True)
-        with c_odp2:
-            st.markdown("<div class='box-green'><b>Zrychlené odpisy</b><br>V prvních letech se odepíše podstatně větší část hodnoty majetku (a tím se hned na začátku výrazně sníží daně). V dalších letech částka odpisu klesá.</div>", unsafe_allow_html=True)
+        st.markdown("**1. Účetní odpisy (Nejčastěji rovnoměrné)**")
+        st.write("Firma si stanoví životnost a každý měsíc/rok odepíše stejnou částku.")
+        st.markdown("<div class='box-gray'><b>Roční účetní odpis</b> = Pořizovací cena / Předpokládaná doba používání v letech</div>", unsafe_allow_html=True)
+        
+        st.markdown("**2. Daňové odpisy podle zákona**")
+        st.write("U daňových odpisů si firma vybere metodu a stát jí řekne přesná čísla (sazby a koeficienty), která musí dosadit do vzorce. Zvolená metoda se u daného majetku už nesmí měnit.")
+        
+        c_v1, c_v2 = st.columns(2)
+        with c_v1:
+            st.markdown("<div class='box-blue'><b>Rovnoměrné odpisy (Lineární)</b><br>Počítají se pomocí státem daných procentuálních sazeb. Ideální pro firmy se stabilními zisky.</div>", unsafe_allow_html=True)
+            st.markdown("""
+            * **Odpis v 1. roce:**
+            `Pořizovací cena × (Sazba pro 1. rok / 100)`
+            * **Odpis v dalších letech:**
+            `Pořizovací cena × (Sazba pro další roky / 100)`
+            """)
+            
+        with c_v2:
+            st.markdown("<div class='box-green'><b>Zrychlené odpisy (Degresivní)</b><br>Počítají se pomocí státem daných koeficientů. V prvních letech se odepíše víc (vysoký náklad = nižší daň).</div>", unsafe_allow_html=True)
+            st.markdown("""
+            * **Odpis v 1. roce:**
+            `Pořizovací cena / Koeficient pro 1. rok`
+            * **Odpis v dalších letech:**
+            `(2 × Zůstatková cena) / (Koeficient pro další roky − počet let, po které se již odpisovalo)`
+            """)
 
         st.divider()
         st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Rovnoměrné vs. Zrychlené odpisy</b></div>", unsafe_allow_html=True)
