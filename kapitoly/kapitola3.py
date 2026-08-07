@@ -1177,49 +1177,76 @@ def render():
  # =========================================================================
     # SEKCE 7: PŘÍPADOVÉ STUDIE A ZÁVĚREČNÝ CHECKLIST
     # =========================================================================
-    elif selected_section_3 == "7.1 Případové studie z praxe":
+elif selected_section_3 == "7.1 Případové studie z praxe":
         st.markdown("### 7.1 Případové studie z praxe")
-        st.write("Aplikuj získané znalosti z výroby, kalkulací, odpisů a řízení jakosti na reálných příkladech z praxe.")
+        st.write("Aplikuj získané znalosti z kalkulací, příspěvku na úhradu, odpisů a řízení jakosti na reálných příkladech z praxe.")
 
         st.divider()
-        st.markdown("#### 1. Kavárna u školy: Kdy se začne vyplácet?")
-        st.markdown("<div class='box-blue'>☕ <b>Situace:</b> Studentský tým chce otevřít malý stánek s kávou a domácí limonádou během školních akcí.</div>", unsafe_allow_html=True)
-        
+        st.markdown("#### ☕ 1. Kavárna u školy: Kdy se začne vyplácet?")
         st.markdown("""
-        * 🔒 **Fixní náklady na vybavení a povolení:** 12 000 Kč
-        * 📈 **Variabilní náklady na 1 nápoj:** 18 Kč
-        * 🏷️ **Prodejní cena 1 nápoje:** 45 Kč
-        * 📊 **Očekávaný prodej:** 500 nápojů za měsíc
-        """)
+        <div class='box-blue'>
+            <b>Situace:</b> Studentský tým chce otevřít malý stánek s kávou a domácí limonádou během školních akcí.<br><br>
+            • 🔒 <b>Fixní náklady</b> (vybavení stánku a povolení): <b>12 000 Kč</b><br>
+            • 📈 <b>Variabilní náklady</b> na 1 nápoj (kelímek, káva, sirup): <b>18 Kč</b><br>
+            • 🏷️ <b>Prodejní cena</b> 1 nápoje: <b>45 Kč</b><br>
+            • 📊 <b>Očekávaný prodej:</b> 500 nápojů za měsíc
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class='box-gray'>
+            💡 <b>Rychlá nápověda pro výpočet:</b><br>
+            • <b>Příspěvek na úhradu na 1 nápoj</b> = Prodejní cena (45 Kč) − Variabilní náklady (18 Kč). To je čistá částka z jednoho nápoje, kterou přispíváš na zaplacení stánku (12 000 Kč).<br>
+            • <b>Bod zvratu</b> = Fixní náklady na stánek (12 000 Kč) / Příspěvek na úhradu z 1 nápoje.
+        </div>
+        """, unsafe_allow_html=True)
 
         with st.form("form_studie_kavarna"):
             st.markdown("##### 📝 Vyplň řešení:")
             s1_prispevek = st.number_input("Příspěvek na úhradu na 1 nápoj (Kč):", value=0, step=1)
-            s1_bz = st.number_input("Bod zvratu (počet nápojů k pokrytí fixních nákladů):", value=0, step=1)
+            s1_bz = st.number_input("Bod zvratu (kolik nápojů musíte prodat k zaplacení stánku 12 000 Kč?):", value=0, step=1)
             s1_dostacujici = st.radio("Je plánovaný prodej 500 nápojů dostatečný k dosažení zisku?", ["Vyber...", "Ano", "Ne"], horizontal=True)
-            s1_opatreni = st.text_input("Navrhni jedno opatření, jak snížit riziko ztráty:")
+            s1_opatreni = st.text_input("Navrhni jedno opatření, jak snížit riziko ztráty (např. úprava ceny, nákladů, propagace):")
 
             if st.form_submit_button("Zkontrolovat výpočty kavárny"):
                 spravny_prispevek = 45 - 18
                 spravny_bz = math.ceil(12000 / spravny_prispevek)
                 
                 if s1_prispevek == spravny_prispevek and abs(s1_bz - spravny_bz) <= 1 and s1_dostacujici == "Ano":
-                    st.success(f"🎉 **Skvěle! Všechny výpočty máš správně!**\n* Příspěvek na úhradu = {spravny_prispevek} Kč na nápoj.\n* Bod zvratu = {spravny_bz} nápojů.\n* Plánovaných 500 nápojů stačí, zisk bude {(500 - spravny_bz) * spravny_prispevek:,} Kč.".replace(",", " "))
+                    st.success(f"🎉 **Skvěle! Všechny výpočty máš správně!**\n* Příspěvek na úhradu = {spravny_prispevek} Kč z jednoho nápoje.\n* Bod zvratu = {spravny_bz} nápojů k pokrytí stánku.\n* Plánovaných 500 nápojů stačí! Po pokrytí stánku bude čistý zisk {(500 - spravny_bz) * spravny_prispevek:,} Kč.".replace(",", " "))
                     st.balloons()
                 else:
-                    st.error(f"Něco tam nesedí. **Nápověda:** Příspěvek na úhradu = cena (45) − variabilní náklady (18) = **27 Kč**. Bod zvratu = 12 000 / 27 ≈ **445 nápojů**.")
+                    st.error(f"Něco tam ještě nesedí.\n• **Příspěvek na úhradu** = 45 − 18 = **27 Kč**.\n• **Bod zvratu** = 12 000 / 27 ≈ **445 nápojů**.")
 
         st.divider()
-        st.markdown("#### 2. Mikiny pro školní tým: Sklad, nebo Print-on-Demand?")
-        st.markdown("<div class='box-blue'>👕 <b>Situace:</b> Školní tým chce prodávat mikiny s vlastním potiskem. Zvažuje dvě varianty výroby.</div>", unsafe_allow_html=True)
+        st.markdown("#### 👕 2. Mikiny pro školní tým: Sklad, nebo Print-on-Demand?")
+        st.markdown("<div class='box-blue'><b>Situace:</b> Školní tým chce prodávat mikiny s vlastním potiskem. Zvažuje dvě varianty výroby.</div>", unsafe_allow_html=True)
         
         col_m1, col_m2 = st.columns(2)
         with col_m1:
-            st.markdown("<div class='box-gray'><b>Varianta A: Výroba na sklad</b><br>• Fixní náklady: 8 000 Kč<br>• Nákup a potisk 1 mikiny: 420 Kč<br>• Cena: 750 Kč<br>⚠️ <i>Riziko neprodaných kusů.</i></div>", unsafe_allow_html=True)
+            st.markdown("""
+            <div class='box-gray'>
+                <b>Varianta A: Výroba na sklad</b><br>
+                • Fixní náklady (grafika, e-shop): 8 000 Kč<br>
+                • Nákup a potisk 1 mikiny: 420 Kč<br>
+                • Prodejní cena: 750 Kč<br>
+                👉 <i>Příspěvek na úhradu = 750 − 420 = <b>330 Kč/ks</b></i><br>
+                ⚠️ <b>Riziko:</b> Neprodané mikiny leží ve skladu.
+            </div>
+            """, unsafe_allow_html=True)
         with col_m2:
-            st.markdown("<div class='box-green'><b>Varianta B: Print-on-Demand</b><br>• Fixní náklady: 8 000 Kč<br>• Výroba 1 mikiny po objednání: 560 Kč<br>• Cena: 750 Kč<br>✅ <i>Nulové zásoby.</i></div>", unsafe_allow_html=True)
+            st.markdown("""
+            <div class='box-green'>
+                <b>Varianta B: Print-on-Demand (na zakázku)</b><br>
+                • Fixní náklady (grafika, e-shop): 8 000 Kč<br>
+                • Výroba 1 mikiny po objednání: 560 Kč<br>
+                • Prodejní cena: 750 Kč<br>
+                👉 <i>Příspěvek na úhradu = 750 − 560 = <b>190 Kč/ks</b></i><br>
+                ✅ <b>Výhoda:</b> Nulové riziko ležáků na skladě.
+            </div>
+            """, unsafe_allow_html=True)
 
-        if st.checkbox("📈 Zobrazit grafické srovnání zisku obou variant"):
+        if st.checkbox("📈 Zobrazit grafické srovnání tvorby zisku u obou variant"):
             try:
                 import pandas as pd
                 kusy_range = list(range(0, 100, 5))
@@ -1232,26 +1259,26 @@ def render():
                     "Zisk Varianta B (Print-on-Demand)": zisk_b
                 }).set_index("Prodané kusy")
                 st.line_chart(df_mikiny, color=["#3b82f6", "#22c55e"])
-                st.caption("🟦 Modrá = Výroba na sklad (strmější růst zisku) | 🟩 Zelená = Print-on-Demand (bezpečnější při malých prodejích).")
+                st.caption("🟦 Modrá = Výroba na sklad (vyšší příspěvek na úhradu = strmější růst zisku při vysokém prodeji) | 🟩 Zelená = Print-on-Demand (pomalý růst, ale bez rizika vázaného kapitálu).")
             except ImportError:
                 st.warning("Pro zobrazení grafu je potřeba knihovna Pandas.")
 
         with st.form("form_studie_mikiny"):
             st.markdown("##### 👕 Vyplň porovnání variant:")
-            m_a_prisp = st.number_input("Varianta A — příspěvek na úhradu na kus (Kč):", value=0)
-            m_b_prisp = st.number_input("Varianta B — příspěvek na úhradu na kus (Kč):", value=0)
-            m_vyssi_marze = st.radio("Která varianta má vyšší marži na 1 kus?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True)
+            m_a_prisp = st.number_input("Varianta A — příspěvek na úhradu na 1 kus (Kč):", value=0)
+            m_b_prisp = st.number_input("Varianta B — příspěvek na úhradu na 1 kus (Kč):", value=0)
+            m_vyssi_marze = st.radio("Která varianta přináší vyšší příspěvek na úhradu (marži) z jednoho kusu?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True)
             m_nizsi_riziko = st.radio("Která varianta má nižší riziko neprodaných zásob?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True)
 
             if st.form_submit_button("Zkontrolovat porovnání"):
                 if m_a_prisp == 330 and m_b_prisp == 190 and m_vyssi_marze == "Varianta A (Sklad)" and m_nizsi_riziko == "Varianta B (Print-on-Demand)":
-                    st.success("✅ **Výborně, máš to absolutně přesně!**\n* Varianta A: příspěvek = 330 Kč/ks (vyšší zisk při velkém prodeji).\n* Varianta B: příspěvek = 190 Kč/ks (bezpečnější při nejistém prodeji).")
+                    st.success("✅ **Výborně, máš to přesně!**\n* Varianta A přináší z každé mikiny do pokladny **330 Kč**.\n* Varianta B přináší **190 Kč**, ale neriskuješ, že ti zůstanou neprodané kusy.")
                 else:
                     st.error("Zkontroluj výpočty: Varianta A = 750 − 420 = 330 Kč. Varianta B = 750 − 560 = 190 Kč.")
 
         st.divider()
-        st.markdown("#### 3. Výrobní dílna: Problém se zmetkovitostí")
-        st.markdown("<div class='box-blue'>🛠️ <b>Situace:</b> Malá výrobní dílna vyrábí dřevěné stojany na notebooky. V posledním měsíci výrazně vzrostl počet vadných kusů.</div>", unsafe_allow_html=True)
+        st.markdown("#### 🛠️ 3. Výrobní dílna: Problém se zmetkovitostí")
+        st.markdown("<div class='box-blue'><b>Situace:</b> Malá výrobní dílna vyrábí dřevěné stojany na notebooky. V posledním měsíci výrazně vzrostl počet vadných kusů.</div>", unsafe_allow_html=True)
 
         st.markdown("""
         * 📦 **Měsíční výroba:** 1 000 kusů
@@ -1270,7 +1297,6 @@ def render():
                     st.success("🎉 **Skvělá práce!**\n* Vadné kusy dříve: 30 ks (3 % z 1 000).\n* Vadné kusy nyní: 110 ks (11 % z 1 000).\n* Rozdíl je 80 vadných kusů × 160 Kč = **12 800 Kč zbytečné finanční ztráty!**")
                 else:
                     st.error("Nápověda: Dříve = 1 000 × 0,03 = 30 ks. Nyní = 1 000 × 0,11 = 110 ks. Zvýšení o 80 ks × 160 Kč = 12 800 Kč.")
-
     elif selected_section_3 == "7.2 Závěrečný checklist a prověrka kapitoly":
         st.markdown("### 7.2 Závěrečný checklist a prověrka kapitoly")
         st.write("Projdi si klíčové dovednosti Kapitoly 3. Zaškrtni všechny body, které bezpečně zvládáš!")
