@@ -938,65 +938,73 @@ def render():
     # =========================================================================
     # SEKCE 6: EFEKTIVITA, ŠTÍHLÁ VÝROBA A TECHNOLOGIE
     # =========================================================================
-    elif selected_section_3 == "6.1 Štíhlá výroba, Poka-Yoke a 5S":
+elif selected_section_3 == "6.1 Štíhlá výroba, Poka-Yoke a 5S":
         st.markdown("### 6.1 Štíhlá výroba (Lean), Poka-Yoke a 5S")
         st.markdown("""
         <div class='box-blue'>
             ⚙️ <b>Praktický přesah:</b> Efektivita neznamená pracovat rychleji za každou cenu. Znamená odstraňovat plýtvání a zlepšovat procesy.
         </div>
         """, unsafe_allow_html=True)
-
-        st.markdown("#### Štíhlá výroba (Lean Production)")
-        st.write("Cílem Lean výroby není nutit lidi pracovat chaoticky rychleji, ale nastavit proces tak, aby zbytečně nevznikaly chyby, čekání, nadbytečné zásoby nebo opravy.")
         
-        st.markdown("##### 7 druhů plýtvání (Muda):")
+        st.markdown("#### Štíhlá výroba (Lean Production) a plýtvání MUDA")
+        st.write("Štíhlá výroba vznikla v japonské automobilce Toyota. Jejím hlavním cílem je identifikovat a eliminovat **plýtvání (v japonštině MUDA)** — tedy jakoukoliv činnost, která spotřebovává zdroje, ale nepřináší zákazníkovi žádnou hodnotu.")
+        
+        st.markdown("##### 8 hlavních druhů plýtvání (Muda):")
         st.markdown("""
-        1. ⏳ **Čekání** (na materiál, schválení, stroj),
-        2. 🚚 **Zbytečná doprava a přesuny** materiálu,
-        3. 📦 **Nadbytečné zásoby** (utopené peníze na skladě),
-        4. 🏃 **Zbytečné pohyby** pracovníků,
-        5. 🏭 **Nadvýroba** (výroba toho, co nikdo nechce),
-        6. 🔧 **Nedorobky, chyby a opravy**,
-        7. 🧠 **Nevyužitý potenciál a nápady lidí**.
+        1. 🏭 **Nadvýroba:** Vyrábění většího množství nebo dříve, než zákazník požaduje (nejhorší druh plýtvání).
+        2. ⏳ **Čekání:** Prostoje lidí nebo strojů z důvodu chybějícího materiálu, informací nebo poruchy.
+        3. 🚚 **Zbytečná doprava:** Přesouvání materiálu a polotovarů z jednoho konce haly na druhý.
+        4. 🛠️ **Nadbytečné zpracování (Overprocessing):** Dělání práce navíc, kterou zákazník nevyžaduje ani nezaplatí (např. příliš leštěný povrch vnitřního skrytého dílu).
+        5. 📦 **Nadbytečné zásoby:** Držet na skladě tuny materiálu nebo hotových výrobků, ve kterých leží vázané peníze.
+        6. 🏃 **Zbytečné pohyby:** Pracovník se musí ohýbat, natahovat nebo chodit pro nářadí, protože ho nemá po ruce.
+        7. 🔧 **Chyby a opravy (Zmetky):** Výroba vadných kusů, které se musí opravit nebo vyhodit.
+        8. 🧠 **Nevyužitý potenciál lidí:** Ignorování nápadů a zkušeností řadových zaměstnanců ze strany vedení.
         """)
-
         st.divider()
-        st.markdown("#### Poka-Yoke: Navrhnout proces tak, aby chyba nevznikla")
-        st.write("Poka-Yoke je japonský princip předcházení chybám z nepozornosti. Místo kontroly na konci výroby se proces nebo produkt navrhne tak, aby se chyba fyzicky nemohla stát.")
+
+        st.markdown("#### Poka-Yoke: Ochrana před neúmyslnou chybou")
+        st.write("**Poka-Yoke** (v japonštině *„poka“ = neúmyslná chyba*, *„yoke“ = zabránění*) je technický nebo procesní prvek, který fyzicky znemožňuje udělat chybu, nebo na ni okamžitě upozorní.")
+        
+        c_py1, c_v2 = st.columns(2)
+        with c_py1:
+            st.markdown("<div class='box-blue'><b>Preventivní Poka-Yoke (Chyba se nemůže stát)</b></div>", unsafe_allow_html=True)
+            st.markdown("""
+            * 📱 **SIM karta / SD karta:** Má seříznutý roh, nelze ji zasunout špatně.
+            * 🔌 **USB-C konektor:** Je symetrický, pasuje z obou stran.
+            * ⛽ **Naftová pistole na čerpací stanici:** Je širší než hrdlo benzínové nádrže, naftu do benzíňáku nenatankujete.
+            """)
+        with c_v2:
+            st.markdown("<div class='box-yellow'><b>Detekční Poka-Yoke (Systém na chybu ihned upozorní)</b></div>", unsafe_allow_html=True)
+            st.markdown("""
+            * 🚗 **Senzor zapnutí pásů v autě:** Auto začne hlasitě pískat, pokud nebuďte připoutaní.
+            * 💻 **Webový formulář:** Zervená kolonka, pokud chybí `@` v e-mailu.
+            * 🛒 **Samoobslužná pokladna:** Zablokuje se, pokud nepoložíte zboží na váhu.
+            """)
+        st.divider()
+
+        st.markdown("#### Metoda 5S: Organizace a čistota pracoviště")
+        st.write("Metoda 5S představuje pět kroků k vytvoření organizovaného, čistého a bezpečného prostředí. Původní japonské názvy byly přeloženy do praktických kroků:")
         
         st.markdown("""
-        * 📱 **SIM karta / SD karta:** Má seříznutý roh, takže ji nelze vložit do telefonu obráceně.
-        * 🔌 **USB-C konektor:** Je oboustranný, čímž odpadá chybné zastrčení.
-        * ⛽ **Tankovací pistole na naftu:** Je širší než hrdlo benzínové nádrže (nelze natankovat naftu do benzínového auta).
-        * 💻 **Webový formulář:** Nepustí vás dál, pokud chybí zavináč v e-mailu.
-        """)
-
-        st.divider()
-        st.markdown("#### Metoda 5S na pracovišti")
-        st.write("Metoda pro přehledné, čisté a bezpečné pracoviště. Pomáhá, aby lidé rychle našli, co potřebují.")
-        st.markdown("""
-        1. 🧹 **Seiri (Vytřídit):** Odstranit nepotřebné věci z pracoviště.
-        2. 📐 **Seiton (Uspořádat):** Každá věc má své přesné místo.
-        3. 🧽 **Seiso (Udržovat čistotu):** Čisté pracoviště a stroje.
-        4. 📋 **Seiketsu (Standardizovat):** Nastavit jasná pravidla a štítky.
-        5. 🔄 **Shitsuke (Dodržovat):** Dlouhodobě udržovat disciplínu.
+        * 1️⃣ **Seiri (Vytřídit):** Projít pracoviště a nekompromisně vyhodit nebo odvézt vše, co se nepoužívá.
+        * 2️⃣ **Seiton (Srovnat / Uspořádat):** „Místo pro všechno a všechno na svém místě.“ Každé nářadí má vyznačené přesné místo nebo stín na tabuli.
+        * 3️⃣ **Seiso (Soustavně čistit):** Pravidelný úklid pracoviště a kontrola strojů (při čištění se často odhalí drobné závady a úniky oleje).
+        * 4️⃣ **Seiketsu (Standardizovat):** Vytvořit jasná pravidla, návody a barevné značení, aby každý hned poznal správný stav.
+        * 5️⃣ **Shitsuke (Stále udržovat / Disciplína):** Proměnit dodržování pravidel v osobní návyk a neustále stav kontrolovat.
         """)
 
         st.divider()
         st.markdown("<div class='box-yellow'>🔎 <b>Detektiv plýtvání (Lean cvičení)</b></div>", unsafe_allow_html=True)
-        
         sit = st.text_area("Popiš situaci z vaší školní jídelny, dílny nebo brigády, kde vzniká chaos:", 
                            value="Při výdeji obědů kuchařka musí běhat pro příbory do vedlejší místnosti a studenti čekají ve 20metrové frontě.")
-        
         c_l1, c_v2 = st.columns(2)
         with c_l1:
-            plytvani_typ = st.multiselect("Jaké druhy plýtvání zde vznikají?", [
-                "Čekání", "Zbytečný pohyb", "Zbytečná doprava", "Chyby a opravy", "Nadbytečné zásoby"
+            plytvani_typ = st.multiselect("Jaké druhy plýtvání (MUDA) zde vznikají?", [
+                "Čekání", "Zbytečný pohyb", "Zbytečná doprava", "Chyby a opravy", "Nadbytečné zásoby", "Nadvýroba"
             ], default=["Čekání", "Zbytečný pohyb"])
         with c_v2:
             reseni_lean = st.text_input("Navrhni jedno jednoduché zlepšení (Poka-Yoke / 5S):", 
-                                       value="Příbory umístit přímo k výdejnímu okénku do označeného stojanu.")
-            
+                                       value="Příbory umístit přímo k výdejnímu okénku do označeného stojanu (Seiton).")
         if st.button("Uložit návrh zlepšení"):
             st.success("✅ Skvělý postřeh! Přesně takhle uvažují Lean procesní inženýři ve firmách.")
 
