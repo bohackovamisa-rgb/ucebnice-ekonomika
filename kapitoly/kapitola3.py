@@ -31,8 +31,11 @@ def render():
         "4.3 Výpočty k oběžnému majetku",
         "4.4 Dlouhodobý majetek a investice",
         "4.5 Odpisy a evidence majetku",
-        "5. Kalkulace a ceny (připravuje se)",
-        "6. Efektivita a štíhlá výroba (připravuje se)"
+        "5.1 Cenové strategie v praxi",
+        "5.2 Náklady v digitálním světě a Asset-Light",
+        "6.1 Štíhlá výroba, Poka-Yoke a 5S",
+        "6.2 Průmysl 4.0, Cirkulární ekonomika a KPI",
+        "6.3 Projektová dílna: Launch vlastního merche"
     ]
     
     selected_section_3 = st.selectbox("📌 Přechod na podkapitolu:", section_options_3, index=0)
