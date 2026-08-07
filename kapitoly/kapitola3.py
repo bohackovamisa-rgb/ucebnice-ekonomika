@@ -13,7 +13,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
+   # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_3 = [
         "1.1 Výrobní proces a faktory",
         "1.2 Typy výroby",
@@ -26,7 +26,8 @@ def render():
         "3.3 Kalkulace nákladů",
         "3.4 Bod zvratu a jeho graf",
         "3.5 Měření výkonu a rentabilita",
-        "4. Majetek firmy (připravuje se)",
+        "4.1 Oběžný majetek a zásoby",
+        "4.2 Dlouhodobý majetek a investice",
         "5. Kalkulace a ceny (připravuje se)",
         "6. Efektivita a štíhlá výroba (připravuje se)"
     ]
