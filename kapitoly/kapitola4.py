@@ -89,7 +89,7 @@ def render():
         | Faktor | Co znamená | Příklad z praxe |
         | :--- | :--- | :--- |
         | 💎 **Nedostatek dovedností** | Čím méně lidí danou věc umí, tím vyšší je odměna. | Datová analýza, kyberbezpečnost, specializovaný řemeslník. |
-        | ⚖️ **Odpovědnost** | Čím větší dopad máchyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
+        | ⚖️ **Odpovědnost** | Čím větší dopad má chyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
         | 🚀 **Produktivita a přidaná hodnota** | Kolik hodnoty či úspor dokáže člověk vytvořit za jednotku času. | Programátor, který automatizuje proces pro tisíce uživatelů. |
         | ⚠️ **Riziko a náročnost** | Fyzické, psychické nebo bezpečnostní nároky práce. | Práce ve zdravotnictví, výškové práce, směnný provoz. |
         | 💬 **Vyjednávací síla a region** | Místo výkonu práce, praxe, vzdělání a schopnost doložit výsledky. | Praha vs. menší regiony, junior vs. seniorní specialista. |
@@ -145,12 +145,14 @@ def render():
                 "Vysokoškolské (Bc. / Mgr. / Ing.)"
             ], horizontal=True)
 
-            s_praxe = st.select_slider("Délka praxe v oboru:", options=[
-                "Absolvent (0 let)", "1–3 roky praxe", "5+ let (Senior)"
+            s_praxe = st.selectbox("Délka praxe v oboru:", [
+                "Absolvent (bez praxe)",
+                "Junior (1–3 roky praxe)",
+                "Medior (3–5 let praxe)",
+                "Senior / Expert (5+ let praxe)"
             ])
 
         with col_sim2:
-            # Reálné orientační základní mediány v ČR (v Kč)
             base_obor = {
                 "Gastro, Služby a Úklid": 27000,
                 "Maloobchod, Prodej a Pokladní": 30000,
@@ -166,7 +168,6 @@ def render():
                 "Management a Vedení týmů": 70000
             }[s_obor]
 
-            # Koeficienty regionů podle ČSÚ
             koef_kraj = {
                 "Hl. m. Praha": 1.25,
                 "Středočeský kraj": 1.08,
@@ -191,9 +192,10 @@ def render():
             }[s_vzdelani]
 
             koef_praxe = {
-                "Absolvent (0 let)": 0.80,
-                "1–3 roky praxe": 1.00,
-                "5+ let (Senior)": 1.35
+                "Absolvent (bez praxe)": 0.80,
+                "Junior (1–3 roky praxe)": 1.00,
+                "Medior (3–5 let praxe)": 1.18,
+                "Senior / Expert (5+ let praxe)": 1.35
             }[s_praxe]
 
             odhad_mzdy = int(base_obor * koef_kraj * koef_vzdelani * koef_praxe)
@@ -201,7 +203,7 @@ def render():
             st.metric("Odhadovaná HRUBÁ mzda v inzerátu", f"{odhad_mzdy:,} Kč".replace(",", " "))
 
             st.markdown("##### 📌 Co z tohoto odhadu pro žáka vyplývá?")
-            if s_praxe == "Absolvent (0 let)":
+            if s_praxe == "Absolvent (bez praxe)":
                 st.info("💡 **Nástupní mzda absolventa:** Jako začátečník bez praxe začínáš na nižší částce (cca 80 % průměru). Získaná praxe a spolehlivost jsou hlavní pákou pro růst mzdy v prvních letech.")
             elif s_obor in ["IT, Vývoj softwaru a Kyberbezpečnost", "Management a Vedení týmů"]:
                 st.success("🔥 **Vysoká poptávka / Odpovědnost:** Tyto obory nabízejí nadprůměrné mzdy z důvodu kritického nedostatku odborníků a vysoké přidané hodnotě pro firmu.")
@@ -283,17 +285,41 @@ def render():
             "Grafický designér / Marketer",
             "Praktický lékař / Sestra",
             "Učitel / Lektor",
-            "Právník / Koncipient"
+            "Právník / Koncipient",
+            "Účetní / Daňový poradce",
+            "Programátor / IT vývojář",
+            "Řidič kamionu / Kurýr",
+            "Kuchař / Číšník",
+            "Strojírenský technik / Řemeslník",
+            "Realitní makléř / Obchodník",
+            "Zákaznická podpora / Call centrum",
+            "Novinář / Copywriter"
         ])
 
         if profese_vyber == "Grafický designér / Marketer":
-            st.info("🤖 **AI převzneme:** Generování variant pozadí, úprava formátů bannerů, základní korektury.\n\n⚡ **AI zrychlí:** Tvorbu skic, psaní textů do reklam, návrhy vizuálních konceptů.\n\n🧠 **Lidské zůstane:** Pochopení emoce a strategie značky, osobní vztah s klientem, finální estetický úsudek.")
+            st.info("🤖 **AI přebere:** Generování variant pozadí, úpravu formátů bannerů, základní gramatické korektury.\n\n⚡ **AI zrychlí:** Tvorbu prvotních skic, generování textových konceptů pro reklamu.\n\n🧠 **Lidské zůstane:** Pochopení emoce a strategie značky, osobní vztah s klientem, finální estetické rozhodnutí.")
         elif profese_vyber == "Praktický lékař / Sestra":
-            st.info("🤖 **AI převzneme:** Přepis lékařských zpráv, hlídání termínů očkování, analýzu rentgenových snímků.\n\n⚡ **AI zrychlí:** Diagnostiku vzácných chorob, vyhledávání v lékařských studiích.\n\n🧠 **Lidské zůstane:** Empatie, komunikace s pacientem, provedení zákroku, finální odpovědnost za léčbu.")
+            st.info("🤖 **AI přebere:** Přepis lékařských zpráv, hlídání termínů preventivních prohlídek, prvotní třídění příznaků.\n\n⚡ **AI zrychlí:** Diagnostiku vzácných chorob, vyhledávání v tisících lékařských studií.\n\n🧠 **Lidské zůstane:** Empatie, lidský přístup, fyzické provedení zákroku, finální morální i právní odpovědnost za léčbu.")
         elif profese_vyber == "Učitel / Lektor":
-            st.info("🤖 **AI převzneme:** Opravování testů s výběrem odpovědí, generování příkladů na procvičení.\n\n⚡ **AI zrychlí:** Přípravu pracovních listů, překlady materiálů, tvorbu prezentací.\n\n🧠 **Lidské zůstane:** Motivace žáků, osobní mentorování, řešení konfliktů ve třídě, vysvětlení látky s ohledem na emoce.")
+            st.info("🤖 **AI přebere:** Opravování uzavřených testů, generování variací příkladů na procvičení.\n\n⚡ **AI zrychlí:** Přípravu pracovních listů, překlady cizojazyčných podkladů, tvorbu vizuálních prezentací.\n\n🧠 **Lidské zůstane:** Osobní motivace žáků, mentoring, řešení konfliktů ve třídě, vysvětlení látky podle emocí a potřeb žáka.")
         elif profese_vyber == "Právník / Koncipient":
-            st.info("🤖 **AI převzneme:** Prohledávání tisíců stránek zákonů a judikátů, kontrola formalit ve smlouvách.\n\n⚡ **AI zrychlí:** Návrh prvních verzí standardních smluv.\n\n🧠 **Lidské zůstane:** Obhajoba u soudu, vyjednávání s protistranou, etické posouzení sporu.")
+            st.info("🤖 **AI přebere:** Prohledávání tisíců stránek zákonů a judikátů, kontrolu povinných náležitostí ve smlouvách.\n\n⚡ **AI zrychlí:** Návrh prvních verzí standardních smluv a podání.\n\n🧠 **Lidské zůstane:** Obhajoba a vystupování u soudu, vyjednávání s protistranou, etické posouzení sporu.")
+        elif profese_vyber == "Účetní / Daňový poradce":
+            st.info("🤖 **AI přebere:** Vytěžování dat z faktur, automatické párování plateb v bance, rutina účetních závěrek.\n\n⚡ **AI zrychlí:** Kontrolu neobvyklých transakcí, vyhledávání v daňové legislativě.\n\n🧠 **Lidské zůstane:** Daňové plánování a strategie pro firmu, osobní jednání s klientem a finančním úřadem.")
+        elif profese_vyber == "Programátor / IT vývojář":
+            st.info("🤖 **AI přebere:** Psaní opakujícího se kódu (boilerplate), hledání syntaktických chyb, testování.\n\n⚡ **AI zrychlí:** Tvorbu dokumentace, učení se nových programovacích knihoven.\n\n🧠 **Lidské zůstane:** Návrh celkové architektury systému, bezpečnostní rozhodnutí, pochopení reálných potřeb uživatele.")
+        elif profese_vyber == "Řidič kamionu / Kurýr":
+            st.info("🤖 **AI přebere:** Autonomní řízení na dálnicích (výhledově), optimalizaci trasy podle dopravy.\n\n⚡ **AI zrychlí:** Vyřizování celních dokladů, plánování nakládek.\n\n🧠 **Lidské zůstane:** Řešení krizových situací v městském provozu, ruční nakládka a předání zboží zákazníkovi do ruky.")
+        elif profese_vyber == "Kuchař / Číšník":
+            st.info("🤖 **AI přebere:** Přijímání objednávek přes aplikace, hlídání minimálních zásob surovin v kuchyni.\n\n⚡ **AI zrychlí:** Normování receptur, výpočet kalorií a alergiků v menu.\n\n🧠 **Lidské zůstane:** Chuťové ladění jídel, kulinářská kreativita, vytvoření příjemné atmosféry v restauraci.")
+        elif profese_vyber == "Strojírenský technik / Řemeslník":
+            st.info("🤖 **AI přebere:** Diagnostiku závad podle senzorů vibrací a teploty stroje.\n\n⚡ **AI zrychlí:** Kreslení 3D modelů dílů, kalkulaci spotřeby materiálu.\n\n🧠 **Lidské zůstane:** Fyzická montáž v nestandardních podmínkách, manuální zručnost, adaptace na místě.")
+        elif profese_vyber == "Realitní makléř / Obchodník":
+            st.info("🤖 **AI přebere:** Psaní textů inzerátů, generování virtuálních prohlídek nemovitostí.\n\n⚡ **AI zrychlí:** Oceňování nemovitostí podle dat z katastru a trhu.\n\n🧠 **Lidské zůstane:** Osobní prohlídky, budování důvěry, vyjednávání o ceně mezi kupujícím a prodávajícím.")
+        elif profese_vyber == "Zákaznická podpora / Call centrum":
+            st.info("🤖 **AI přebere:** Odpovídání na 80 % běžných dotazů (kde je zásilka, jak vrátit zboží).\n\n⚡ **AI zrychlí:** Souhrn historie zákazníka před předáním živému operátorovi.\n\n🧠 **Lidské zůstane:** Řešení emotivních a složitých reklamací, empatie při problému zákazníka.")
+        elif profese_vyber == "Novinář / Copywriter":
+            st.info("🤖 **AI přebere:** Generování krátkých zpráv o sportovních výsledcích nebo kurzech měn.\n\n⚡ **AI zrychlí:** Přepis rozhovorů z audia, rešerše podkladů z více zdrojů.\n\n🧠 **Lidské zůstane:** Investigativní práce na místě, rozhovory s lidmi z očí do očí, kritické ověřování faktů.")
 
     elif selected_section_4 == "1.4 Osobní brand a digitální stopa":
         st.markdown("### 1.4 Osobní brand a digitální stopa")
