@@ -1174,5 +1174,163 @@ def render():
             st.balloons()
             st.success("✅ Projektový list byl úspěšně sestaven a připraven k obhajobě!")
 
-    else:
-        st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
+ # =========================================================================
+    # SEKCE 7: PŘÍPADOVÉ STUDIE A ZÁVĚREČNÝ CHECKLIST
+    # =========================================================================
+    elif selected_section_3 == "7.1 Případové studie z praxe":
+        st.markdown("### 7.1 Případové studie z praxe")
+        st.write("Aplikuj získané znalosti z výroby, kalkulací, odpisů a řízení jakosti na reálných příkladech z praxe.")
+
+        st.divider()
+        st.markdown("#### 1. Kavárna u školy: Kdy se začne vyplácet?")
+        st.markdown("<div class='box-blue'>☕ <b>Situace:</b> Studentský tým chce otevřít malý stánek s kávou a domácí limonádou během školních akcí.</div>", unsafe_allow_html=True)
+        
+        st.markdown("""
+        * 🔒 **Fixní náklady na vybavení a povolení:** 12 000 Kč
+        * 📈 **Variabilní náklady na 1 nápoj:** 18 Kč
+        * 🏷️ **Prodejní cena 1 nápoje:** 45 Kč
+        * 📊 **Očekávaný prodej:** 500 nápojů za měsíc
+        """)
+
+        with st.form("form_studie_kavarna"):
+            st.markdown("##### 📝 Vyplň řešení:")
+            s1_prispevek = st.number_input("Příspěvek na úhradu na 1 nápoj (Kč):", value=0, step=1)
+            s1_bz = st.number_input("Bod zvratu (počet nápojů k pokrytí fixních nákladů):", value=0, step=1)
+            s1_dostacujici = st.radio("Je plánovaný prodej 500 nápojů dostatečný k dosažení zisku?", ["Vyber...", "Ano", "Ne"], horizontal=True)
+            s1_opatreni = st.text_input("Navrhni jedno opatření, jak snížit riziko ztráty:")
+
+            if st.form_submit_button("Zkontrolovat výpočty kavárny"):
+                spravny_prispevek = 45 - 18
+                spravny_bz = math.ceil(12000 / spravny_prispevek)
+                
+                if s1_prispevek == spravny_prispevek and abs(s1_bz - spravny_bz) <= 1 and s1_dostacujici == "Ano":
+                    st.success(f"🎉 **Skvěle! Všechny výpočty máš správně!**\n* Příspěvek na úhradu = {spravny_prispevek} Kč na nápoj.\n* Bod zvratu = {spravny_bz} nápojů.\n* Plánovaných 500 nápojů stačí, zisk bude {(500 - spravny_bz) * spravny_prispevek:,} Kč.".replace(",", " "))
+                    st.balloons()
+                else:
+                    st.error(f"Něco tam nesedí. **Nápověda:** Příspěvek na úhradu = cena (45) − variabilní náklady (18) = **27 Kč**. Bod zvratu = 12 000 / 27 ≈ **445 nápojů**.")
+
+        st.divider()
+        st.markdown("#### 2. Mikiny pro školní tým: Sklad, nebo Print-on-Demand?")
+        st.markdown("<div class='box-blue'>👕 <b>Situace:</b> Školní tým chce prodávat mikiny s vlastním potiskem. Zvažuje dvě varianty výroby.</div>", unsafe_allow_html=True)
+        
+        col_m1, col_m2 = st.columns(2)
+        with col_m1:
+            st.markdown("<div class='box-gray'><b>Varianta A: Výroba na sklad</b><br>• Fixní náklady: 8 000 Kč<br>• Nákup a potisk 1 mikiny: 420 Kč<br>• Cena: 750 Kč<br>⚠️ <i>Riziko neprodaných kusů.</i></div>", unsafe_allow_html=True)
+        with col_m2:
+            st.markdown("<div class='box-green'><b>Varianta B: Print-on-Demand</b><br>• Fixní náklady: 8 000 Kč<br>• Výroba 1 mikiny po objednání: 560 Kč<br>• Cena: 750 Kč<br>✅ <i>Nulové zásoby.</i></div>", unsafe_allow_html=True)
+
+        if st.checkbox("📈 Zobrazit grafické srovnání zisku obou variant"):
+            try:
+                import pandas as pd
+                kusy_range = list(range(0, 100, 5))
+                zisk_a = [(k * (750 - 420)) - 8000 for k in kusy_range]
+                zisk_b = [(k * (750 - 560)) - 8000 for k in kusy_range]
+                
+                df_mikiny = pd.DataFrame({
+                    "Prodané kusy": kusy_range,
+                    "Zisk Varianta A (Sklad)": zisk_a,
+                    "Zisk Varianta B (Print-on-Demand)": zisk_b
+                }).set_index("Prodané kusy")
+                st.line_chart(df_mikiny, color=["#3b82f6", "#22c55e"])
+                st.caption("🟦 Modrá = Výroba na sklad (strmější růst zisku) | 🟩 Zelená = Print-on-Demand (bezpečnější při malých prodejích).")
+            except ImportError:
+                st.warning("Pro zobrazení grafu je potřeba knihovna Pandas.")
+
+        with st.form("form_studie_mikiny"):
+            st.markdown("##### 👕 Vyplň porovnání variant:")
+            m_a_prisp = st.number_input("Varianta A — příspěvek na úhradu na kus (Kč):", value=0)
+            m_b_prisp = st.number_input("Varianta B — příspěvek na úhradu na kus (Kč):", value=0)
+            m_vyssi_marze = st.radio("Která varianta má vyšší marži na 1 kus?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True)
+            m_nizsi_riziko = st.radio("Která varianta má nižší riziko neprodaných zásob?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True)
+
+            if st.form_submit_button("Zkontrolovat porovnání"):
+                if m_a_prisp == 330 and m_b_prisp == 190 and m_vyssi_marze == "Varianta A (Sklad)" and m_nizsi_riziko == "Varianta B (Print-on-Demand)":
+                    st.success("✅ **Výborně, máš to absolutně přesně!**\n* Varianta A: příspěvek = 330 Kč/ks (vyšší zisk při velkém prodeji).\n* Varianta B: příspěvek = 190 Kč/ks (bezpečnější při nejistém prodeji).")
+                else:
+                    st.error("Zkontroluj výpočty: Varianta A = 750 − 420 = 330 Kč. Varianta B = 750 − 560 = 190 Kč.")
+
+        st.divider()
+        st.markdown("#### 3. Výrobní dílna: Problém se zmetkovitostí")
+        st.markdown("<div class='box-blue'>🛠️ <b>Situace:</b> Malá výrobní dílna vyrábí dřevěné stojany na notebooky. V posledním měsíci výrazně vzrostl počet vadných kusů.</div>", unsafe_allow_html=True)
+
+        st.markdown("""
+        * 📦 **Měsíční výroba:** 1 000 kusů
+        * 📉 **Zmetkovitost dříve:** 3 % | 📈 **Zmetkovitost nyní:** 11 %
+        * 💸 **Náklady na 1 vadný kus:** 160 Kč
+        """)
+
+        with st.form("form_studie_zmetky"):
+            st.markdown("##### 🛠️ Vyplň analýzu zmetkovitosti:")
+            z_driv = st.number_input("Vadné kusy dříve (ks):", value=0)
+            z_ted = st.number_input("Vadné kusy nyní (ks):", value=0)
+            z_rozdil_kc = st.number_input("O kolik Kč se zvýšily finanční ztráty z nákladů na zmetky? (Kč):", value=0)
+
+            if st.form_submit_button("Zkontrolovat analýzu zmetkovitosti"):
+                if z_driv == 30 and z_ted == 110 and z_rozdil_kc == 12800:
+                    st.success("🎉 **Skvělá práce!**\n* Vadné kusy dříve: 30 ks (3 % z 1 000).\n* Vadné kusy nyní: 110 ks (11 % z 1 000).\n* Rozdíl je 80 vadných kusů × 160 Kč = **12 800 Kč zbytečné finanční ztráty!**")
+                else:
+                    st.error("Nápověda: Dříve = 1 000 × 0,03 = 30 ks. Nyní = 1 000 × 0,11 = 110 ks. Zvýšení o 80 ks × 160 Kč = 12 800 Kč.")
+
+    elif selected_section_3 == "7.2 Závěrečný checklist a prověrka kapitoly":
+        st.markdown("### 7.2 Závěrečný checklist a prověrka kapitoly")
+        st.write("Projdi si klíčové dovednosti Kapitoly 3. Zaškrtni všechny body, které bezpečně zvládáš!")
+
+        st.markdown("<div class='box-yellow'>✅ <b>Sebehodnotící checklist Kapitoly 3</b></div>", unsafe_allow_html=True)
+        
+        ch1 = st.checkbox("Umím rozlišit náklad, výdaj, výnos a příjem a uvést příklady.")
+        ch2 = st.checkbox("Umím spočítat účetní i ekonomický zisk nebo ztrátu.")
+        ch3 = st.checkbox("Umím vysvětlit rozdríl mezi fixními a variabilními náklady.")
+        ch4 = st.checkbox("Umím spočítat bod zvratu v kusech a interpretovat ho.")
+        ch5 = st.checkbox("Rozumím rozdílu mezi účetními a daňovými odpisy (rovnoměrné vs. zrychlené).")
+        ch6 = st.checkbox("Umím vysvětlit principy Lean výroby (plýtvání Muda, Poka-Yoke, metoda 5S, Kanban).")
+        ch7 = st.checkbox("Rozumím moderním cenovým strategiím (Freemium, POD, Asset-Light) a umím navrhnout KPI.")
+
+        splneno_pocet = sum([ch1, ch2, ch3, ch4, ch5, ch6, ch7])
+        procento = int((splneno_pocet / 7) * 100)
+
+        st.progress(splneno_pocet / 7)
+        st.metric("Tvé skóre v Kapitole 3", f"{splneno_pocet} z 7 bodů ({procento} %)")
+
+        if splneno_pocet == 7:
+            st.balloons()
+            st.success("🎉 **GRATULUJEME!** Zvládl/a jsi kompletní látku 3. kapitoly s plným počtem bodů. Jsi připraven/a na reálné řízení firmy!")
+        elif splneno_pocet >= 4:
+            st.info("👍 **Skvělý výkon!** Většině témat rozumíš. Doporučujeme si ještě zopakovat chybějící podkapitoly výše.")
+        else:
+            st.warning("⚠️ Zkus si projít jednotlivé podkapitoly znovu a vyzkoušet si v nich interaktivní kalkulačky a kvízy.")
+
+        st.divider()
+        st.markdown("#### 🏆 Blesková závěrečná prověrka znalostí (5 otázek)")
+        
+        with st.form("form_proverka_k3"):
+            p1 = st.selectbox("1. Nákup nového výrobního stroje zaplacený převodem z účtu je v roce nákupu:", [
+                "Vyber...", "Náklad v plné výši", "Výdaj v plné výši, do nákladů jde postupně přes odpisy", "Příjem firmy"
+            ])
+            p2 = st.selectbox("2. Bod zvratu je okamžik, kdy:", [
+                "Vyber...", "Jsou tržby vyšší než náklady a firma dosahuje maximálního zisku", "Tržby pokryjí celkové náklady a zisk je přesně 0 Kč", "Firma zaplatí své první daně"
+            ])
+            p3 = st.selectbox("3. Počítač z 1. odpisové skupiny se podle českého zákona odpisuje daňově po dobu:", [
+                "Vyber...", "3 roky", "5 let", "10 let"
+            ])
+            p4 = st.selectbox("4. Systém Poka-Yoke ve štíhlé výrobě představuje:", [
+                "Vyber...", "Kontrolu kvality na konci výroby", "Technický nebo procesní prvek znemožňující vznik chyby", "Drahý nákup robotických ramen"
+            ])
+            p5 = st.selectbox("5. Který z následujících ukazatelů je tzv. 'Vanity Metric' (marnivé číslo)?", [
+                "Vyber...", "Konverzní poměr e-shopu", "Čistá zisková marže", "Celkový počet zobrazení stránek (bez ohledu na prodej)"
+            ])
+
+            if st.form_submit_button("Vyhodnotit prověrku"):
+                body = 0
+                if p1 == "Výdaj v plné výši, do nákladů jde postupně přes odpisy": body += 1
+                if p2 == "Tržby pokryjí celkové náklady a zisk je přesně 0 Kč": body += 1
+                if p3 == "3 roky": body += 1
+                if p4 == "Technický nebo procesní prvek znemožňující vznik chyby": body += 1
+                if p5 == "Celkový počet zobrazení stránek (bez ohledu na prodej)": body += 1
+
+                if body == 5:
+                    st.success(f"🥇 **Perfektní test! Získal/a jsi {body}/5 bodů!**")
+                    st.balloons()
+                elif body >= 3:
+                    st.info(f"🥈 **Dobrá práce! Získal/a jsi {body}/5 bodů.**")
+                else:
+                    st.error(f"❌ **Získal/a jsi {body}/5 bodů.** Projděte si ještě jednou odpovídající sekce v nabídce.")
