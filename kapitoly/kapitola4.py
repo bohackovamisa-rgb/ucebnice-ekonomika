@@ -476,7 +476,7 @@ def render():
         st.markdown("### 7.2 Slovníček, rychlé opakování a prověrka kapitoly")
         st.info("Závěrečné opakování se připravuje...")
 
-        # =========================================================================
+# =========================================================================
     # SEKCE 2: HRA PODLE PRAVIDEL: HR, ZÍSKÁNÍ PRÁCE A PRACOVNÍ PRÁVO
     # =========================================================================
     elif selected_section_4 == "2.1 HR a personalistika: co znamenají":
@@ -542,7 +542,7 @@ def render():
         if inzerat_typ.startswith("Typ A"):
             st.warning("⚠️ **Pozor na prázdné fráze:** Slova jako 'nindža' nebo 'dynamický kolektiv' často zakrývají chaos a neplacené přesčasy. Chybí konkrétní mzda i náplň práce.")
         elif inzerat_typ.startswith("Typ B"):
-            st.success("✅ **Profesionální inzerát:** Uvádí konkrétní hrubou mzdu, jasný typ smlouvy, nárok na dovolenou a střízlivý popis pozice. HR jednající férově.")
+            st.success("✅ **Profesionální inzerát:** Uvádí konkrétní hrubou mzda, jasný typ smlouvy, nárok na dovolenou a střízlivý popis pozice. HR jednající férově.")
         elif inzerat_typ.startswith("Typ C"):
             st.error("🚨 **Kritický RED FLAG:** Požadavek na zápisné za školení nebo slib pohádkových příjmů na IČO pro juniora je typický znak podvodu či nelegálního Švarcsystému!")
 
