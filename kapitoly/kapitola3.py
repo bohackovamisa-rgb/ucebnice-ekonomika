@@ -680,7 +680,7 @@ def render():
             else:
                 st.error("Stroj nepřináší zisk.")
 
-elif selected_section_3 == "4.5 Odpisy a evidence majetku":
+    elif selected_section_3 == "4.5 Odpisy a evidence majetku":
         st.markdown("### 4.5 Odpisy (Účetní vs. Daňové) a grafické srovnání")
         
         st.write("Dlouhodobý majetek (např. auto za 1 milion Kč) si firma nedá do nákladů celý najednou v roce nákupu. Náklady se rozloží do více let – tomu se říká **Odpis**.")
