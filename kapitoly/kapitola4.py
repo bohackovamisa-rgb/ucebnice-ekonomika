@@ -478,3 +478,212 @@ def render():
 
     else:
         st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
+        # =========================================================================
+    # SEKCE 2: HRA PODLE PRAVIDEL: HR, ZÍSKÁNÍ PRÁCE A PRACOVNÍ PRÁVO
+    # =========================================================================
+    elif selected_section_4 == "2.1 HR a personalistika: co znamenají":
+        st.markdown("### 2.1 HR a personalistika: co znamenají")
+        st.markdown("""
+        <div class='box-blue'>
+            ⚖️ <b>Základní otázka:</b> Jak získat práci, porozumět roli HR a zároveň se nenechat nachytat na neférové podmínky?
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.write("**HR** znamená *Human Resources* (lidské zdroje). V češtině používáme pojem **personalistika**. Jde o oblast, která řeší kompletní péči o lidi ve firmě: od vyhledání uchazečů přes smlouvy, zaškolení, hodnocení a odměňování až po ukončení pracovního poměru.")
+
+        st.markdown("#### Co HR ve firmě obvykle řeší:")
+        st.markdown("""
+        | Oblast HR | Co znamená | Příklad z praxe |
+        | :--- | :--- | :--- |
+        | 🔍 **Nábor a výběr** | Hledání vhodných uchazečů a vedení výběrového řízení. | Pracovní inzerát, pohovor, testovací úkol. |
+        | 🚀 **Onboarding** | Zaškolení a začlenění nového člověka do firmy. | První den v práci, úvodní školení, přidělení mentora. |
+        | 📄 **Pracovní dokumentace** | Smlouvy, dohody, mzdové výměry, interní pravidla. | Pracovní smlouva, DPP, DPČ, dodatky ke smlouvě. |
+        | 💵 **Odměňování a benefity** | Nastavení mzdy, bonusů, benefitů a forem odměny. | Mzda, roční prémie, stravenky, home office. |
+        | 📈 **Hodnocení a rozvoj** | Zpětná vazba, plnění cílů, vzdělávání a kariérní růst. | Hodnoticí rozhovor, odborný kurz, plán rozvoje. |
+        | 🤝 **Firemní kultura** | Způsob komunikace, spolupráce a řešení problémů. | Atmosféra v týmu, pravidla komunikace, řešení konfliktů. |
+        | 🚪 **Offboarding** | Profesionální proces odchodu zaměstnance z firmy. | Výstupní pohovor, předání práce, zápočtový list. |
+        """)
+
+        st.markdown("""
+        <div class='box-gray'>
+            💡 <b>HR z pohledu uchazeče:</b> HR připravuje inzeráty, komunikuje s vámi, vede pohovor, vysvětluje benefity a připravuje smlouvu.<br>
+            <b>Pamatujte:</b> HR není automaticky váš „kamarád“, ale ani nepřítel. Zastupuje zaměstnavatele, ale zároveň by mělo hlídat férový, profesionální a zákonný průběh náboru.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("#### 📚 Klíčové HR pojmy, které se hodí znát")
+        
+        col_hr1, col_hr2 = st.columns(2)
+        with col_hr1:
+            st.markdown("""
+            * 🎯 **Recruitment:** Nábor nových zaměstnanců.
+            * 🧑‍💼 **Recruiter:** Člověk, který vyhledává a oslovuje uchazeče.
+            * 🛠️ **HR Generalist:** Personalista, který řeší širší agendu HR (od smluv po mzdy).
+            * 💎 **Talent Acquisition:** Strategické vyhledávání lidí se specializovanými dovednostmi.
+            """)
+        with col_hr2:
+            st.markdown("""
+            * 🚀 **Onboarding:** Zaškolení a adaptace nového zaměstnance.
+            * 🏆 **Employer Branding:** Budování dobré pověsti firmy jako zaměstnavatele.
+            * 📊 **Performance Review:** Pravidelné hodnocení pracovního výkonu.
+            * 🚪 **Offboarding:** Proces odchodu zaměstnance z firmy.
+            """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧪 <b>Mini-úkol: Detektiv firemní kultury z inzerátu</b></div>", unsafe_allow_html=True)
+        st.write("Vyber ukázkový text z inzerátu a zhodnoť, co vypovídá o HR a kultuře firmy:")
+
+        inzerat_typ = st.selectbox("Vyber znění inzerátu:", [
+            "Vyber...",
+            "Typ A: 'Hledáme dynamického nindžu do mladého kolektivu! Nabízíme práci pod tlakem, prémie dle výkonu a multisportku.'",
+            "Typ B: 'Hledáme juniorního účetního. Nabízíme 38 000 Kč hrubého, zkušební dobu 3 měsíce, fixní pracovní dobu a 25 dní dovolené.'",
+            "Typ C: 'Atraktivní výdělek až 100 000 Kč měsíčně! Nutné vlastní IČO, zápisné 2 000 Kč za školení.'"
+        ])
+
+        if inzerat_typ.startswith("Typ A"):
+            st.warning("⚠️ **Pozor na prázdné fráze:** Slova jako 'nindža' nebo 'dynamický kolektiv' často zakrývají chaos a neplacené přesčasy. Chybí konkrétní mzda i náplň práce.")
+        elif inzerat_typ.startswith("Typ B"):
+            st.success("✅ **Profesionální inzerát:** Uvádí konkrétní hrubou mzdu, jasný typ smlouvy, nárok na dovolenou a střízlivý popis pozice. HR jednající férově.")
+        elif inzerat_typ.startswith("Typ C"):
+            st.error("🚨 **Kritický RED FLAG:** Požadavek na zápisné za školení nebo slib pohádkových příjmů na IČO pro juniora je typický znak podvodu či nelegálního Švarcsystému!")
+
+    elif selected_section_4 == "2.2 Nábor v éře AI":
+        st.markdown("### 2.2 Nábor v éře AI")
+        st.write("Nábor u větších firem dnes často nezačíná u člověka. Životopisy nejdříve procházejí přes **ATS (Applicant Tracking System)** — software, který automaticky filtruje uchazeče podle klíčových slov a požadavků z inzerátu.")
+
+        st.markdown("##### 📌 Jak uspět při náboru řízeném AI / ATS:")
+        st.markdown("""
+        * 📄 **Přehledný formát:** Používejte standardní písmo, jasné nadpisy a formát PDF (vyhněte se složitým grafickým sloupcům, které ATS nepřečte).
+        * 🔑 **Klíčová slova:** Názvy dovedností v CV přizpůsobte přesně slovům v inzerátu (např. 'pokročilý Excel', 'angličtina B2').
+        * 🎯 **Mírná úprava na míru:** Neposílejte jeden obecný životopis na 20 různých pozic.
+        * 🖼️ **Portfolio jako trumf:** Konkrétní ukázka vaší práce (web, grafika, kód) přesvědčí lidského personalistu víc než obecná tvrzení.
+        * 🛑 **Nepodvádějte:** AI vám pomůže životopis vyšperkovat, ale nikdy si nevymýšlejte zkušenosti. Při pohovoru se na ně personalista zeptá!
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-purple'>🤖 <b>Interaktivní trenažér: Pohovor nanečisto s AI</b></div>", unsafe_allow_html=True)
+        st.write("Chceš si vyzkoušet pohovor na jakoukoliv brigádu nebo pozici? Zkopíruj si tento vyzkoušený prompt a vlož ho do ChatGPT nebo Claude:")
+
+        pozice_input = st.text_input("Zadej pozici, na kterou se chceš připravit (např. Prodavač v e-shopu, Junior vývojář, Recepční):", value="Prodavač v e-shopu")
+
+        prompt_text = f"""Chovej se jako přísný, ale férový HR manažer. Ucházím se o pozici {pozice_input}. Ptej se mě postupně na otázky jako u reálného pracovního pohovoru (vždy jen jedna otázka najednou). Po 5 mé odpovědi mi dej detailní zpětnou vazbu: co bylo přesvědčivé, v čem jsem chyboval/a a jak bych mohl/a své odpovědi zlepšit."""
+
+        st.code(prompt_text, language="markdown")
+        st.caption("💡 Tip: Stiskni tlačítko kopírování vpravo nahoře u kódového pole a vlož prompt do AI chatu.")
+
+    elif selected_section_4 == "2.3 Životopis, motivační dopis a portfolio":
+        st.markdown("### 2.3 Životopis, motivační dopis a portfolio")
+        st.write("Dobré materiály nejsou seznamem všeho, co jste v životě dělali. Jsou jasnou odpovědí na otázku: **Proč se hodím právě na tuto konkrétní pozici?**")
+
+        col_cv1, col_cv2 = st.columns(2)
+        with col_cv1:
+            st.markdown("##### 📄 Co má obsahovat kvalitní Životopis (CV):")
+            st.markdown("""
+            * **Profil / O mně:** Krátké 2–3 věty sumarizující vaše cíle a přednosti.
+            * **Vzdělání:** Název školy, obor, plánovaný rok ukončení a klíčové úspěchy.
+            * **Praxe a projekty:** Brigády, školní projekty, dobrovolnictví (s konkrétní náplní).
+            * **Dovednosti:** Jazyky, software, řidičské oprávnění, certifikáty.
+            * **Kontakt:** Jméno, telefon, profesionální e-mail a odkaz na LinkedIn / portfolio.
+            """)
+        with col_cv2:
+            st.markdown("##### 📸 Fotografie v životopisu:")
+            st.markdown("""
+            Fotografie v životopisu **není povinná**. Pokud se ji rozhodnete vložit, dodržujte tato pravidla:
+            * ✅ Profesionální portrét s přirozeným úsměvem a neutrálním pozadím.
+            * ❌ **NIKDY nepoužívejte:** Selfie z auta, fotky z párty/dovolené, vystřižené postavy z hromadných fotek nebo silně filtrované fotky ze sociálních sítí.
+            """)
+
+        st.divider()
+        st.markdown("#### 🔍 Rozbor částí životopisu: Na co si dát pozor")
+        st.markdown("""
+        | Část životopisu | Proč je důležitá | Na co si dát pozor |
+        | :--- | :--- | :--- |
+        | 👤 **Profil** | Rychle shrne, kdo jste a co nabízíte. | Vyhněte se frázím 'jsme flexibilní a komunikativní' bez důkazu. |
+        | 🎓 **Vzdělání** | U absolventů nahrazuje dlouhou praxi. | Uveďte relevantní projekty, soutěže nebo vedení školního týmu. |
+        | 🛠️ **Praxe a projekty** | Ukazuje konkrétní zkušenosti a spolehlivost. | Pište konkrétní výsledky a činnosti, ne jen strohý název firmy. |
+        | 💻 **Dovednosti** | Pomáhá HR rychle posoudit shodu s inzerátem. | Nepřehánějte úrovně. Pokročilá angličtina se u pohovoru prověří! |
+        | 📞 **Kontakt** | Umožňuje rychlé pozvání na pohovor. | E-mail musí být profesionální (jmeno.prijmeni@email.cz). |
+        """)
+
+        st.markdown("""
+        <div class='box-red'>
+            🚩 <b>Co do životopisu RADĚJI NEPATŘÍ:</b> Neprofesionální e-mail, vymyslené zkušenosti, rodinné příslušníky a rodné číslo, pravopisné chyby, dlouhé souvislé texty bez odrážek a záliby, které nijak nesouvisí s prací (např. 'spánek a sledování TV').
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧪 <b>Kontrolor životopisu: Odhal chyby v přihlášce</b></div>", unsafe_allow_html=True)
+        
+        with st.form("form_cv_check"):
+            st.write("Vyber, které z následujících prvků v životopisu jsou CHYBNÉ:")
+            cv_c1 = st.checkbox("E-mail: dravec_ostrava_69@seznam.cz")
+            cv_c2 = st.checkbox("Odrážka u praxe: 'Koordinace 4členného týmu při organizaci školního plesu'")
+            cv_c3 = st.checkbox("Dovednosti: 'Práce na PC - 100 %, Angličtina - 100 %'")
+            cv_c4 = st.checkbox("Fotografie: Selfie v zrcadle v tělocvičně")
+
+            if st.form_submit_button("Zkontrolovat životopis"):
+                if cv_c1 and not cv_c2 and cv_c3 and cv_c4:
+                    st.success("🎉 **Skvěle! Odhalil/a jsi všechny chyby!**\n* Neformální e-mail působí neprofesionálně.\n* Hodnocení v procentech (100 %) je subjektivní nesmysl (raději uvádějte úrovně A1-C2 nebo konkrétní dovednosti).\n* Selfie v zrcadle do CV nepatří.")
+                else:
+                    st.error("Něco jsi přehlédl/a. Správné odrážky s výsledky (jako u plesu) jsou v pořádku, ale neformální e-maily, procentuální stupnice a selfie jsou chyby!")
+
+    elif selected_section_4 == "2.4 Pracovní smlouva, DPP a DPČ":
+        st.markdown("### 2.4 Pracovní smlouva, DPP a DPČ")
+        st.markdown("""
+        <div class='box-blue'>
+            ⚖️ <b>Základní princip:</b> V ČR existuje více forem práce. Každá má jiné výhody, zákonné povinnosti, odvody a míru právní ochrany.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### Přehled základních forem práce:")
+        st.markdown("""
+        | Forma práce | Kdy se používá | Typická výhoda | Typické riziko |
+        | :--- | :--- | :--- | :--- |
+        | 🏢 **Pracovní poměr (HPP)** | Dlouhodobá stálá práce. | Nárok na dovolenou, nemocenskou, odstupné, vysoká ochrana. | Nižší flexibilita, pevná pracovní doba. |
+        | 📝 **DPP (Dohoda o provedení práce)** | Brigády, jednorázová či nárazová práce. | Jednoduchost, možnost pracovat pro více zaměstnavatelů. | Limit hodin, menší jistota. |
+        | 📋 **DPČ (Dohoda o pracovní činnosti)** | Pravidelný menší či částečný úvazek. | Vhodné pro pravidelnou práci při škole. | Odvody se platí od nižší hranice než u HPP. |
+        | 💼 **OSVČ / Freelancer** | Podnikání na vlastní účet. | Samostatnost, volnost času a volba klientů. | Plná odpovědnost, nejistý příjem, žádná dovolená. |
+        | 📲 **Platformová práce (Gig)** | Aplikace (rozvoz, doprava, úklid). | Rychlý nástup, flexibilita směn. | Slabá právní ochrana, kolísavé výdělky, opotřebení auta/kola. |
+        """)
+
+        st.divider()
+        st.markdown("#### ⚖️ Srovnání dohody DPP vs. DPČ")
+        
+        st.markdown("""
+        | Oblast | DPP (Dohoda o provedení práce) | DPČ (Dohoda o pracovní činnosti) |
+        | :--- | :--- | :--- |
+        | ⏱️ **Hodinový limit** | Max. **300 hodin ročně** u jednoho zaměstnavatele. | Práce nesmí překročit v průměru **20 hodin týdně** (polovinu úvazku). |
+        | 📜 **Písemná forma** | **Musí být vždy písemná!** (Ústní dohoda je neplatná). | **Musí být vždy písemná!** |
+        | 📋 **Povinné náležitosti** | Druh práce, rozsah hodin, odměna, doba trvání. | Druh práce, rozsah pracovní doby, odměna, doba trvání. |
+        | 🏥 **Odvody pojištění** | Odvádí se až při překročení zákonného limitu příjmu. | Odvádí se při překročení hranice rozhodného příjmu. |
+        | 🏖️ **Nárok na dovolenou** | **ANO**, při splnění zákonných podmínek (odpracování dostatečného počtu hodin). | **ANO**, při splnění zákonných podmínek. |
+        | 🚪 **Ukončení** | Výpovědí z jakéhokoliv důvodu s **15denní výpovědní lhůtou**. | Výpovědí z jakéhokoliv důvodu s **15denní výpovědní lhůtou**. |
+        """)
+
+        st.markdown("""
+        <div class='box-green'>
+            💡 <b>Rychlá pomůcka do praxe:</b><br>
+            • **DPP** se hodí na nárazovou brigádu (např. 2 týdny v létě na festivalu nebo nárazový sběr dat).<br>
+            • **DPČ** se hodí na pravidelnou celoroční brigádu při škole (např. 2 odpoledne týdně v kavárně).
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class='box-red'>
+            🚩 **Na co si dát pozor:** Každá dohoda (DPP i DPČ) musí dodržovat minimální hodinovou mzdu! Zaměstnavatel je povinen vést evidenci odpracované doby. Pokud pracujete bez písemné smlouvy, jde o nelegální práci "na černo", za kterou hrozí vysoké pokuty zaměstnavateli i vám.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Rozhodovací kalkulačka: Jaká forma práce je pro tebe ideální?</b></div>", unsafe_allow_html=True)
+        
+        f_hodiny = st.slider("Kolik hodin týdně chceš odpracovat?", min_value=1, max_value=40, value=10)
+        f_trvani = st.radio("Jak dlouho bude práce trvat?", ["Jednorázově / Pár týdnů v roce", "Pravidelně po celý rok"], horizontal=True)
+
+        if f_hodiny <= 10 and f_trvani == "Jednorázově / Pár týdnů v roce":
+            st.success("✅ **Ideální volba: DPP (Dohoda o provedení práce)** — nepřekročíš limit 300 hodin a je to nejjednodušší forma.")
+        elif f_hodiny <= 20 and f_trvani == "Pravidelně po celý rok":
+            st.success("✅ **Ideální volba: DPČ (Dohoda o pracovní činnosti)** — vhodná pro stabilní částečný úvazek při studiu.")
+        else:
+            st.info("ℹ️ **Ideální volba: Pracovní poměr (HPP / Zkrácený úvazek)** — při vyšším počtu hodin poskytuje nejvyšší právní ochranu, dovolenou a jistotu.")
