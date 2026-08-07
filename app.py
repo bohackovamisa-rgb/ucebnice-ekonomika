@@ -1,6 +1,6 @@
 import streamlit as st
 import math
-from kapitoly import kapitola1, kapitola2, kapitola3
+from kapitoly import kapitola1, kapitola2, kapitola3, kapitola4
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
@@ -175,3 +175,9 @@ elif st.session_state["current_view"] == "Kapitola 3":
         kapitola3.show()
     elif hasattr(kapitola3, "render"):
         kapitola3.render()
+
+elif st.session_state["current_view"] == "Kapitola 4":
+    if hasattr(kapitola4, "show"):
+        kapitola4.show()
+    elif hasattr(kapitola4, "render"):
+        kapitola4.render()
