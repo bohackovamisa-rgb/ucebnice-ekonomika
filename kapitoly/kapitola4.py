@@ -451,43 +451,91 @@ def render():
         
         st.caption("💡 Tip: Označ text výše, zkopíruj (Ctrl+C / Cmd+C) a vlož ho rovnou do svého oblíbeného AI chatu.")
 
-    elif selected_section_4 == "2.3 Životopis, motivační dopis a portfolio":
+elif selected_section_4 == "2.3 Životopis, motivační dopis a portfolio":
         st.markdown("### 2.3 Životopis, motivační dopis a portfolio")
         st.write("Dobré materiály nejsou seznamem všeho, co jste v životě dělali. Jsou jasnou odpovědí na otázku: **Proč se hodím právě na tuto konkrétní pozici?**")
 
-        st.markdown("#### 👁️ Jak by měl vypadat moderní životopis?")
-        st.write("Kvalitní životopis je přehledný, stručný a rozdělený do jasných bloků. Vyhněte se románům a složité grafice, která ruší pozornost.")
+        st.markdown("#### 📄 Vzorový strukturovaný životopis")
+        st.write("Podívejte se na reálnou ukázku profesionálně zpracovaného strukturovaného životopisu:")
 
-        # Zástupce pro obrázek - můžeš nahrát vlastní s názvem ukazka_zivotopisu.png
+        # Načtení vkládaného obrázku (s elegantním HTML záložním náhledem)
         try:
-            st.image("ukazka_zivotopisu.png", caption="Ukázka přehledného a profesionálního životopisu", use_column_width=True)
+            st.image("ukazka_zivotopisu.png", caption="Vzorový strukturovaný životopis (Ing. Petr Novák)", use_container_width=True)
         except:
-            st.info("🖼️ **Zde se zobrazí obrázek s ukázkou životopisu.** (Nahraj k souboru `app.py` vlastní obrázek s názvem `ukazka_zivotopisu.png` a aplikace ho zde rovnou ukáže.)")
+            st.markdown("""
+            <div style="background-color: #ffffff; padding: 25px; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1e293b; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0284c7; padding-bottom: 15px; margin-bottom: 15px;">
+                    <div>
+                        <h2 style="margin: 0; color: #0f172a; font-size: 1.5rem;">ING. PETR NOVÁK</h2>
+                        <h4 style="margin: 5px 0 0 0; color: #0284c7; font-size: 1rem; font-weight: 600;">STRUKTUROVANÝ ŽIVOTOPIS</h4>
+                    </div>
+                    <div style="background-color: #e2e8f0; width: 70px; height: 85px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #64748b;">[ FOTO ]</div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #0284c7; font-size: 0.9rem;">📌 OSOBNÍ A KONTAKTNÍ ÚDAJE</strong><br>
+                    <small><b>Telefon:</b> +420 777 123 456 | <b>E-mail:</b> petr.novak@email.cz | <b>Adresa:</b> Praha | <b>LinkedIn:</b> linkedin.com/in/petr-novak</small>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #0284c7; font-size: 0.9rem;">💼 PRACOVNÍ ZKUŠENOSTI</strong>
+                    <div style="margin-top: 5px; font-size: 0.85rem;">
+                        <b>01/2020 – DOSUD: PROJEKTOVÝ MANAŽER</b><br>
+                        • Vedení týmů, plánování a kontrola projektů<br>
+                        • Příprava smluvních podkladů a rozpočtů | Komunikace se zákazníky<br>
+                        <b>06/2016 – 12/2019: ASISTENT PROJEKTŮ</b>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #0284c7; font-size: 0.9rem;">🎓 VZDĚLÁNÍ</strong>
+                    <div style="margin-top: 5px; font-size: 0.85rem;">
+                        <b>2011 – 2016: Vysokoškolské (VŠE v Praze)</b> — Obor Podniková ekonomika a management (Titul Ing.)<br>
+                        <b>2007 – 2011: Středoškolské</b> — Gymnázium Jana Nerudy, Praha
+                    </div>
+                </div>
+                <div>
+                    <strong style="color: #0284c7; font-size: 0.9rem;">🛠️ DOVEDNOSTI A ZNALOSTI</strong>
+                    <div style="margin-top: 5px; font-size: 0.85rem;">
+                        • <b>Jazyky:</b> Čeština (rodilý mluvčí), Angličtina (C1), Němčina (B2)<br>
+                        • <b>PC znalosti:</b> MS Office (pokročilý), SAP (základní) | <b>Řidičský průkaz:</b> Skupina B
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
         st.divider()
-        col_cv1, col_cv2 = st.columns(2)
-        with col_cv1:
-            st.markdown("##### 📄 Co má obsahovat kvalitní Životopis (CV):")
-            st.markdown("""
-            * **Profil / O mně:** Krátké 2–3 věty sumarizující vaše cíle a přednosti.
-            * **Vzdělání:** Název školy, obor, plánovaný rok ukončení a klíčové úspěchy.
-            * **Praxe a projekty:** Brigády, školní projekty, dobrovolnictví (s konkrétní náplní).
-            * **Dovednosti:** Jazyky, software, řidičské oprávnění, certifikáty.
-            * **Kontakt:** Jméno, telefon, profesionální e-mail a odkaz na LinkedIn / portfolio.
-            """)
-        with col_cv2:
-            st.markdown("##### 📸 Fotografie v životopisu:")
-            st.markdown("""
-            Fotografie v životopisu **není povinná**. Pokud se ji rozhodnete vložit, dodržujte tato pravidla:
-            * ✅ Profesionální portrét s přirozeným úsměvem a neutrálním pozadím.
-            * ❌ **NIKDY nepoužívejte:** Selfie z auta, fotky z párty/dovolené, vystřižené postavy z hromadných fotek nebo silně filtrované fotky ze sociálních sítí.
-            """)
+        st.markdown("#### 🔍 Proč tento životopis funguje a na co si dát pozor")
+        
+        st.markdown("""
+        | Část životopisu | Proč je důležitá | Na co si dát pozor |
+        | :--- | :--- | :--- |
+        | 👤 **Hlavička a kontakt** | Umožňuje okamžitý kontakt a profesionální dojem. | E-mail musí být profesionální (jmeno.prijmeni@email.cz), ne přezdívka z dětství. |
+        | 📸 **Fotografie** | Vytváří první osobní dojem (není povinná, ale vhodná). | Pouze profesionální portrét s neutrálním pozadím — ne selfie ani fotka z párty! |
+        | 💼 **Pracovní zkušenosti** | Řazeno **chronologicky od nejnovější po nejstarší**. | Vždy uveďte konkrétní náplň práce v odrážkách, ne jen název pozice. |
+        | 🎓 **Vzdělání** | Dokládá kvalifikaci (u absolventů nahrazuje chybějící praxi). | Uveďte název školy, obor a případně klíčové školní projekty. |
+        | 🧠 **Dovednosti a jazyky** | Pomáhá HR i automatickým systémům (ATS) rychle posoudit shodu. | Uvádějte reálné úrovně (např. B2, C1). Nepoužívejte vymyslená procenta (např. 'PC 100 %'). |
+        | 📜 **GDPR doložka** | Uděluje souhlas se zpracováním osobních údajů pro nábor. | V ČR se vyžaduje u většiny větších firem a nadnárodních korporací. |
+        """)
 
         st.markdown("""
         <div class='box-red'>
-            🚩 <b>Co do životopisu RADĚJI NEPATŘÍ:</b> Neprofesionální e-mail (jako <i>drsnak123@seznam.cz</i>), vymyslené zkušenosti, rodné číslo, pravopisné chyby a dlouhé slohové práce.
+            🚩 <b>Co do životopisu RADĚJI NEPATŘÍ:</b> Neprofesionální e-mail, rodné číslo, rodinný stav, pravopisné chyby, dlouhé souvislé odstavce bez odrážek a záliby, které nijak nesouvisí s pozicí.
         </div>
         """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧪 <b>Kontrolor životopisu: Odhal chyby v přihlášce</b></div>", unsafe_allow_html=True)
+        
+        with st.form("form_cv_check"):
+            st.write("Vyber, které z následujících prvků v životopisu jsou CHYBNÉ:")
+            cv_c1 = st.checkbox("E-mail: dravec_ostrava_69@seznam.cz")
+            cv_c2 = st.checkbox("Odrážka u praxe: 'Koordinace 4členného týmu při organizaci školního plesu'")
+            cv_c3 = st.checkbox("Dovednosti: 'Práce na PC - 100 %, Angličtina - 100 %'")
+            cv_c4 = st.checkbox("Fotografie: Selfie v zrcadle v tělocvičně")
+
+            if st.form_submit_button("Zkontrolovat životopis"):
+                if cv_c1 and not cv_c2 and cv_c3 and cv_c4:
+                    st.success("🎉 **Skvěle! Odhalil/a jsi všechny chyby!**\n* Neformální e-mail působí neprofesionálně.\n* Hodnocení v procentech (100 %) je subjektivní nesmysl (raději uvádějte úrovně A1-C2 nebo konkrétní dovednosti).\n* Selfie v zrcadle do CV nepatří.")
+                else:
+                    st.error("Něco jsi přehlédl/a. Správné odrážky s výsledky (jako u plesu) jsou v pořádku, ale neformální e-maily, procentuální stupnice a selfie jsou chyby!")
 
     elif selected_section_4 == "2.4 Pracovní smlouva, DPP a DPČ":
         st.markdown("### 2.4 Pracovní smlouva, DPP a DPČ")
