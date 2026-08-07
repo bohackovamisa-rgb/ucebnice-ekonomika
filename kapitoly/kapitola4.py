@@ -89,37 +89,54 @@ def render():
         | Faktor | Co znamená | Příklad z praxe |
         | :--- | :--- | :--- |
         | 💎 **Nedostatek dovedností** | Čím méně lidí danou věc umí, tím vyšší je odměna. | Datová analýza, kyberbezpečnost, specializovaný řemeslník. |
-        | ⚖️ **Odpovědnost** | Čím větší dopad má chyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
+        | ⚖️ **Odpovědnost** | Čím větší dopad máchyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
         | 🚀 **Produktivita a přidaná hodnota** | Kolik hodnoty či úspor dokáže člověk vytvořit za jednotku času. | Programátor, který automatizuje proces pro tisíce uživatelů. |
         | ⚠️ **Riziko a náročnost** | Fyzické, psychické nebo bezpečnostní nároky práce. | Práce ve zdravotnictví, výškové práce, směnný provoz. |
         | 💬 **Vyjednávací síla a region** | Místo výkonu práce, praxe, vzdělání a schopnost doložit výsledky. | Praha vs. menší regiony, junior vs. seniorní specialista. |
         """)
 
         st.markdown("""
-        <div class='box-gray'>
-            💡 <b>Příklad:</b> IT analytik v Praze může mít vyšší mzdu než administrativní pracovník v menším městě ne proto, že by „pracoval více hodin“, ale kvůli kombinaci vzácnosti dovedností, vysoké přidané hodnotě pro firmu a vyšším životním nákladům v kraji.
+        <div class='box-red'>
+            ⚠️ <b>Zlaté pravidlo trhu práce:</b> V pracovních inzerátech, na pohovorech i v pracovní smlouvě se <b>VŽDY uvádí HRUBÁ MZDA</b>, nikoli čistá! Čistá mzda závisí na vašich osobních poměrech (zda uplatňujete slevu na studenta, na děti, invaliditu apod.), které zaměstnavatel předem nezná.
         </div>
         """, unsafe_allow_html=True)
 
         st.divider()
         st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Reálné faktory mzdy v ČR</b></div>", unsafe_allow_html=True)
-        st.write("Měň parametry podle českého trhu práce a sleduj, jak obor, kraj, vzdělání a praxe ovlivňují průměrnou hrubou mzdu:")
+        st.write("Vyber obor, přesný kraj, vzdělání a praxi. Kalkulačka vychází z reálných mzdových mediánů v České republice:")
 
         col_sim1, col_sim2 = st.columns(2)
         with col_sim1:
-            s_obor = st.selectbox("Vyber obor:", [
-                "Služby, Gastro a Maloobchod",
-                "Administrativa a Zákaznická podpora",
-                "Průmysl, Výroba a Řemesla",
+            s_obor = st.selectbox("Vyber obor / odvětví:", [
+                "Gastro, Služby a Úklid",
+                "Maloobchod, Prodej a Pokladní",
+                "Doprava, Logistika a Sklad",
+                "Administrativa, HR a Zákaznický servis",
+                "Řemesla a Stavebnictví",
+                "Školství, Vzdělávání a Věda",
+                "Výroba, Strojírenství a Elektrotechnika",
+                "Marketing, Média a PR",
                 "Zdravotnictví a Sociální péče",
-                "IT, Vývoj softwaru a Data"
+                "Finance, Účetnictví a Bankovnictví",
+                "IT, Vývoj softwaru a Kyberbezpečnost",
+                "Management a Vedení týmů"
             ])
             
             s_kraj = st.selectbox("Kraj (místo výkonu práce):", [
-                "Praha (nejvyšší životní náklady)",
-                "Jihomoravský / Středočeský / Plzeňský kraj",
-                "Moravskoslezský / Ústecký / Karlovarský kraj",
-                "Ostatní kraje ČR"
+                "Hl. m. Praha",
+                "Středočeský kraj",
+                "Jihomoravský kraj",
+                "Plzeňský kraj",
+                "Pardubický kraj",
+                "Královéhradecký kraj",
+                "Jihočeský kraj",
+                "Kraj Vysočina",
+                "Liberecký kraj",
+                "Olomoucký kraj",
+                "Zlínský kraj",
+                "Moravskoslezský kraj",
+                "Ústecký kraj",
+                "Karlovarský kraj"
             ])
             
             s_vzdelani = st.radio("Dosažené vzdělání:", [
@@ -133,19 +150,38 @@ def render():
             ])
 
         with col_sim2:
+            # Reálné orientační základní mediány v ČR (v Kč)
             base_obor = {
-                "Služby, Gastro a Maloobchod": 28000,
-                "Administrativa a Zákaznická podpora": 34000,
-                "Průmysl, Výroba a Řemesla": 38000,
-                "Zdravotnictví a Sociální péče": 42000,
-                "IT, Vývoj softwaru a Data": 62000
+                "Gastro, Služby a Úklid": 27000,
+                "Maloobchod, Prodej a Pokladní": 30000,
+                "Doprava, Logistika a Sklad": 35000,
+                "Administrativa, HR a Zákaznický servis": 36000,
+                "Řemesla a Stavebnictví": 37000,
+                "Školství, Vzdělávání a Věda": 39000,
+                "Výroba, Strojírenství a Elektrotechnika": 40000,
+                "Marketing, Média a PR": 42000,
+                "Zdravotnictví a Sociální péče": 44000,
+                "Finance, Účetnictví a Bankovnictví": 48000,
+                "IT, Vývoj softwaru a Kyberbezpečnost": 65000,
+                "Management a Vedení týmů": 70000
             }[s_obor]
 
+            # Koeficienty regionů podle ČSÚ
             koef_kraj = {
-                "Praha (nejvyšší životní náklady)": 1.25,
-                "Jihomoravský / Středočeský / Plzeňský kraj": 1.05,
-                "Moravskoslezský / Ústecký / Karlovarský kraj": 0.90,
-                "Ostatní kraje ČR": 0.95
+                "Hl. m. Praha": 1.25,
+                "Středočeský kraj": 1.08,
+                "Jihomoravský kraj": 1.05,
+                "Plzeňský kraj": 1.02,
+                "Pardubický kraj": 0.98,
+                "Královéhradecký kraj": 0.97,
+                "Jihočeský kraj": 0.96,
+                "Kraj Vysočina": 0.95,
+                "Liberecký kraj": 0.95,
+                "Olomoucký kraj": 0.93,
+                "Zlínský kraj": 0.92,
+                "Moravskoslezský kraj": 0.92,
+                "Ústecký kraj": 0.90,
+                "Karlovarský kraj": 0.88
             }[s_kraj]
 
             koef_vzdelani = {
@@ -162,17 +198,17 @@ def render():
 
             odhad_mzdy = int(base_obor * koef_kraj * koef_vzdelani * koef_praxe)
 
-            st.metric("Předpokládaná hrubá mzda (odhad v ČR)", f"{odhad_mzdy:,} Kč".replace(",", " "))
+            st.metric("Odhadovaná HRUBÁ mzda v inzerátu", f"{odhad_mzdy:,} Kč".replace(",", " "))
 
-            st.markdown("##### 📌 Co z toho pro žáka vyplývá?")
+            st.markdown("##### 📌 Co z tohoto odhadu pro žáka vyplývá?")
             if s_praxe == "Absolvent (0 let)":
-                st.info("💡 **Nástupní mzda absolventa:** Jako začátečník bez praxe začínáš na nižší částce. Praxe a spolehlivost jsou hlavní pákou pro růst mzdy v prvních 3 letech.")
-            elif s_obor == "IT, Vývoj softwaru a Data":
-                st.success("🔥 **Vysoká poptávka:** IT obor má dlouhodobě nedostatek lidí, což žene mzdy nahoru, ale vyžaduje neustálé samo-vzdělávání.")
-            elif koef_kraj > 1.1:
-                st.write("🏙️ **Pražský příplatek:** Vyšší mzda v Praze kompenzuje výrazně dražší bydlení a nájmy.")
+                st.info("💡 **Nástupní mzda absolventa:** Jako začátečník bez praxe začínáš na nižší částce (cca 80 % průměru). Získaná praxe a spolehlivost jsou hlavní pákou pro růst mzdy v prvních letech.")
+            elif s_obor in ["IT, Vývoj softwaru a Kyberbezpečnost", "Management a Vedení týmů"]:
+                st.success("🔥 **Vysoká poptávka / Odpovědnost:** Tyto obory nabízejí nadprůměrné mzdy z důvodu kritického nedostatku odborníků a vysoké přidané hodnotě pro firmu.")
+            elif s_kraj == "Hl. m. Praha":
+                st.write("🏙️ **Pražský příplatek:** Mzdy v Praze bývají o 20–25 % vyšší než celostátní průměr, což kompenzuje výrazně dražší bydlení a životní náklady.")
             else:
-                st.write("⚖️ **Realita trhu:** Mzda je výsledkem oboru, regionu a zkušeností – nestačí jen chodit do práce, záleží na přidané hodnotě.")
+                st.write("⚖️ **Regionální realita:** Rozdíly v mzdách mezi kraji odrážejí strukturu místního průmyslu a životní náklady v daném regionu.")
 
     elif selected_section_4 == "1.2 Trh práce 4.0 a AI":
         st.markdown("### 1.2 Trh práce 4.0 a AI")
