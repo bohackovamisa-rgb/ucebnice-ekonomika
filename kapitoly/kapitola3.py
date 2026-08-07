@@ -770,6 +770,3 @@ def render():
         st.write("Dlouhodobý majetek se z evidence vyřazuje tehdy, když už ho firma nepoužívá. Důvody mohou být: prodej, likvidace, darování, škoda/zničení, krádež nebo převod do osobního užívání.")
         st.write("Při vyřazení se řeší: datum a způsob vyřazení, zůstatková cena, případný výnos z prodeje a doklad o vyřazení.")
         st.markdown("<div class='box-gray'>🗂️ <b>Evidence:</b> Dlouhodobý majetek se eviduje na <i>kartách majetku</i>. Obsahuje inventární číslo, název, pořizovací cenu, odpisový plán, oprávky, odpovědnou osobu atd. Evidence pomáhá firmě vědět, co vlastní, kde to je a jaká je hodnota.</div>", unsafe_allow_html=True)
-
-    else:
-        st.info("Obsah pro tuto podkapitolu se právě připravuje. Pokračujte ve výběru výše.")
