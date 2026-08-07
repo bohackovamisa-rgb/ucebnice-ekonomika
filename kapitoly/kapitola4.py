@@ -89,7 +89,7 @@ def render():
         | Faktor | Co znamená | Příklad z praxe |
         | :--- | :--- | :--- |
         | 💎 **Nedostatek dovedností** | Čím méně lidí danou věc umí, tím vyšší je odměna. | Datová analýza, kyberbezpečnost, specializovaný řemeslník. |
-        | ⚖️ **Odpovědnost** | Čím větší dopad má ошибка/chyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
+        | ⚖️ **Odpovědnost** | Čím větší dopad má chyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
         | 🚀 **Produktivita a přidaná hodnota** | Kolik hodnoty či úspor dokáže člověk vytvořit za jednotku času. | Programátor, který automatizuje proces pro tisíce uživatelů. |
         | ⚠️ **Riziko a náročnost** | Fyzické, psychické nebo bezpečnostní nároky práce. | Práce ve zdravotnictví, výškové práce, směnný provoz. |
         | 💬 **Vyjednávací síla a region** | Místo výkonu práce, praxe, vzdělání a schopnost doložit výsledky. | Praha vs. menší regiony, junior vs. seniorní specialista. |
@@ -133,7 +133,6 @@ def render():
             ])
 
         with col_sim2:
-            # Základní orientační mediány pro ČR
             base_obor = {
                 "Služby, Gastro a Maloobchod": 28000,
                 "Administrativa a Zákaznická podpora": 34000,
@@ -256,7 +255,7 @@ def render():
         elif profese_vyber == "Praktický lékař / Sestra":
             st.info("🤖 **AI převzneme:** Přepis lékařských zpráv, hlídání termínů očkování, analýzu rentgenových snímků.\n\n⚡ **AI zrychlí:** Diagnostiku vzácných chorob, vyhledávání v lékařských studiích.\n\n🧠 **Lidské zůstane:** Empatie, komunikace s pacientem, provedení zákroku, finální odpovědnost za léčbu.")
         elif profese_vyber == "Učitel / Lektor":
-            st.info("🤖 **AI převzneme:** Opravování testů s výběrem odpovědí, generování příkladů na procvičení.\n\n⚡ **AI zrychlí:** Přípravu pracovních listů, překlady materiálů, tvorbu prezentací.\n\n🧠 **Lidské zůstane:** Motivace žáků, osobní mentorování, řešení konfliktů ve tříde, vysvětlení látky s ohledem na emoce.")
+            st.info("🤖 **AI převzneme:** Opravování testů s výběrem odpovědí, generování příkladů na procvičení.\n\n⚡ **AI zrychlí:** Přípravu pracovních listů, překlady materiálů, tvorbu prezentací.\n\n🧠 **Lidské zůstane:** Motivace žáků, osobní mentorování, řešení konfliktů ve třídě, vysvětlení látky s ohledem na emoce.")
         elif profese_vyber == "Právník / Koncipient":
             st.info("🤖 **AI převzneme:** Prohledávání tisíců stránek zákonů a judikátů, kontrola formalit ve smlouvách.\n\n⚡ **AI zrychlí:** Návrh prvních verzí standardních smluv.\n\n🧠 **Lidské zůstane:** Obhajoba u soudu, vyjednávání s protistranou, etické posouzení sporu.")
 
