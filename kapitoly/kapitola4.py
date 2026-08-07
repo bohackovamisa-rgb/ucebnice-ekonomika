@@ -451,7 +451,7 @@ def render():
         
         st.caption("💡 Tip: Označ text výše, zkopíruj (Ctrl+C / Cmd+C) a vlož ho rovnou do svého oblíbeného AI chatu.")
 
-elif selected_section_4 == "2.3 Životopis, motivační dopis a portfolio":
+    elif selected_section_4 == "2.3 Životopis, motivační dopis a portfolio":
         st.markdown("### 2.3 Životopis, motivační dopis a portfolio")
         st.write("Dobré materiály nejsou seznamem všeho, co jste v životě dělali. Jsou jasnou odpovědí na otázku: **Proč se hodím právě na tuto konkrétní pozici?**")
 
