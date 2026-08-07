@@ -582,7 +582,7 @@ def render():
         """)
         st.markdown("<div class='box-gray'>📦 Dobré skladování snižuje ztráty, záměny, poškození i zbytečné nákupy materiálu, který už firma ve skladu má.</div>", unsafe_allow_html=True)
 
-elif selected_section_3 == "4.2 Oceňování a moderní řízení zásob":
+    elif selected_section_3 == "4.2 Oceňování a moderní řízení zásob":
         st.markdown("### 4.2 Oceňování a moderní řízení zásob")
         
         st.write("Rozdíl: FIFO, LIFO a vážený průměr řeší hlavně **ocenění zásob při výdeji**. Moderní metody (Kanban, JIT) řeší spíš to, **kolik zásob držet, kdy objednávat a jak zabránit plýtvání**.")
