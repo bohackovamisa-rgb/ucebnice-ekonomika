@@ -1361,3 +1361,94 @@ def render():
             st.markdown("**Deglobalizace a Reshoring**")
             st.write("Firmy se poučily z krizí a zjistily, že být 100% závislý na Asii je nebezpečné. Začínají přesouvat výrobu zpět blíž k zákazníkům nebo do bezpečnějších spřátelených zemí (tomu se říká **Reshoring** nebo *Friendshoring*).")
             st.info("🇨🇿 **Dopad na Česko:** Na jednu stranu to může Evropě přinést nová pracovní místa (např. stavba továren na baterie či čipy v EU). Na druhou stranu – evropský dělník je mnohem dražší než asijský, takže produkty v obchodech budou ve výsledku dražší.")
+# =====================================================================
+        # PODKAPITOLA 4.4: EVROPSKÁ UNIE A JEDNOTNÝ TRH
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 4.4 Evropská unie a jednotný vnitřní trh: Náš domácí prostor")
+        st.write("Česká republika není ekonomický ostrov. Přes 80 % všeho, co vyrobíme, vyvážíme do zemí Evropské unie. Jsme pevnou součástí jejího **jednotného vnitřního trhu**, který funguje jako jeden obří stát bez hranic a patří mezi největší a nejbohatší obchodní prostory na světě.")
+
+        st.markdown("<div class='box-blue'>🇪🇺 <b>Kouzlo čtyř svobod EU</b><br>Jednotný trh nestojí na slibech, ale na čtyřech základních pilířích, které nám absolutně změnily život:</div>", unsafe_allow_html=True)
+
+        col_sv1, col_sv2, col_sv3, col_sv4 = st.columns(4)
+        col_sv1.success("📦 **1. Zboží**\nŽádná cla, žádné čekání kamionů na hranicích. Firma pošle balík z Brna do Paříže stejně snadno jako do Prahy.")
+        col_sv2.info("🚶 **2. Osoby**\nMůžeš se sebrat a jít žít, studovat nebo pracovat do Finska či Španělska, aniž bys potřeboval/a složitá víza.")
+        col_sv3.warning("🛠️ **3. Služby**\nČeský architekt nebo programátor může legálně nabízet své služby klientům v Německu bez byrokratických překážek.")
+        col_sv4.error("💸 **4. Kapitál**\nPeníze a investice mohou volně protékat celou Evropou. Můžeš si bez problému koupit akcie francouzské firmy.")
+
+        st.markdown("##### 🎒 Co znamená EU v praxi pro tvou generaci (Gen Z)?")
+        tab_eu1, tab_eu2, tab_eu3 = st.tabs(["✈️ Studium a práce", "📱 Roaming", "🛡️ Ochrana a Brussels Effect"])
+
+        with tab_eu1:
+            st.write("**Erasmus+ a práce v zahraničí**")
+            st.write("Díky EU můžeš během střední nebo vysoké školy vyjet na placený studijní pobyt do zahraničí (Erasmus+), kde získáš kontakty a jazyk. Následně můžeš kdekoliv v EU legálně pracovat za stejných podmínek jako místní občané.")
+        
+        with tab_eu2:
+            st.write("**Roaming jako doma**")
+            st.write("Ještě nedávno znamenalo přehrát si video na dovolené v Itálii účet za telefon v tisících korun. Dnes díky regulaci EU voláš a datuješ všude v Unii za stejné ceny jako doma v ČR.")
+            
+        with tab_eu3:
+            st.write("**Ochrana spotřebitele a tzv. Brussels Effect (Bruselský efekt)**")
+            st.write("EU je tak obrovský a bohatý trh, že když zdejší politici schválí nějaké pravidlo (např. *'Všechny mobily musí mít nabíječku USB-C'*, nebo pravidla ochrany dat *GDPR*), globálním gigantům jako Apple nebo Google se nevyplatí vyrábět dvě verze iPhonu. Raději zavedou USB-C pro celý svět. Tomu se říká **Brussels Effect** – EU diktuje globální pravidla hry.")
+
+        st.markdown("<div class='box-purple'>⚖️ <b>Debatní aréna: Velký evropský regulátor</b></div>", unsafe_allow_html=True)
+        with st.form("debata_eu_regulace"):
+            st.write("EU velmi tvrdě reguluje trh: nařídila USB-C, chrání tvá osobní data (GDPR), nařizuje limity emisí, reguluje umělou inteligenci (AI Act). Někdo to chválí, jiný kritizuje.")
+            postoj_eu = st.radio("Zvol si svůj postoj k evropské regulaci:", [
+                "🛡️ EU je náš štít: Chrání běžné spotřebitele před zvůlí obřích korporací, kterým jde jen o zisk. Bez EU by si s námi firmy dělaly, co chtějí.",
+                "⚓ EU je kotva inovací: Přehnaná byrokracie a neustálé zákazy dusí evropské firmy. Proto nám technologicky utíkají USA a Asie, my totiž místo vývoje vymýšlíme směrnice."
+            ])
+            if st.form_submit_button("Hlasovat o roli EU"):
+                st.info("Tvůj hlas byl zaznamenán! Na tomto dilematu se dnes naprosto reálně štěpí evropská politická scéna.")
+
+        st.divider()
+        st.markdown("#### 4.4.1 Mělo by Česko přijmout Euro?")
+        st.write("Tohle je jedno z nejcitlivějších politických témat u nás. Zatímco firmy obvykle prosí vládu, aby Euro co nejdříve zavedla, velká část běžných občanů se ho bojí a chce si nechat Korunu.")
+
+        # Simulátor kurzového rizika
+        st.markdown("##### 📉 Simulátor kurzového rizika: Proč firmy chtějí Euro?")
+        st.write("Představ si, že jsi česká firma. Podepsal/a jsi smlouvu s Německem, že jim za měsíc dodáš stroje za **100 000 Eur**. Tvé náklady na platy dělníků a materiál v ČR jsou přesně **2 400 000 Kč**. Smlouvu jsi podepsal/a v době, kdy byl kurz 25 Kč za Euro. Co se stane za měsíc, až ti Němci pošlou Eura a ty si je směníš na Koruny?")
+        
+        kurz_eur = st.slider("Zahýbej kurzem! Jaký bude kurz za měsíc, až přijdou Eura?", 22.0, 28.0, 25.0, step=0.5)
+        
+        prijem_v_kc = 100000 * kurz_eur
+        zisk_firmy = prijem_v_kc - 2400000
+        
+        col_kurz1, col_kurz2 = st.columns(2)
+        col_kurz1.metric("Tvůj příjem v Kč", f"{int(prijem_v_kc):,} Kč".replace(',', ' '))
+        
+        with col_kurz2:
+            if zisk_firmy > 0:
+                st.metric("Zisk tvé firmy", f"{int(zisk_firmy):,} Kč".replace(',', ' '))
+                st.success("Vydělal/a jsi! Koruna oslabila a tobě to nečekaně přineslo zisk navíc.")
+            elif zisk_firmy == 0:
+                st.metric("Zisk tvé firmy", "0 Kč")
+                st.warning("Jsi na nule. Vše, co jsi vydělal/a, padlo na zaplacení dělníků.")
+            else:
+                st.metric("Zisk tvé firmy", f"{int(zisk_firmy):,} Kč".replace(',', ' '), delta_color="inverse")
+                st.error(f"Katastrofa! Koruna posílila a ty jsi kvůli kurzu ve ztrátě. Prodělal/a jsi a nemáš na platy. **A přesně kvůli tomuto neustálému stresu a nejistotě české firmy chtějí Euro!**")
+
+        st.markdown("##### 🪙 Argumenty: Česká koruna vs. Euro")
+        col_euro_pro, col_euro_proti = st.columns(2)
+        with col_euro_pro:
+            st.success("**👍 Argumenty PRO přijetí Eura**")
+            st.markdown("""
+            * **Žádné měnové riziko:** Firmy budou vědět, na čem jsou. Nezkrachují kvůli výkyvu kurzu.
+            * **Úspory za poplatky:** Odpadnou miliardové poplatky bankám za směnu peněz při exportu i dovolených.
+            * **Pevnější začlenění:** Byli bychom u hlavního stolu, kde se rozhoduje o ekonomice Evropy (dnes tam nejsme).
+            """)
+            
+        with col_euro_proti:
+            st.error("**👎 Argumenty PROTI přijetí Eura**")
+            st.markdown("""
+            * **Ztráta nezávislosti:** Ztratili bychom Českou národní banku (ČNB). Úrokové sazby by nám určovali ve Frankfurtu, což nemusí naší ekonomice vždy vyhovovat.
+            * **Strach ze zdražování:** Lidé se bojí psychologického efektu zaokrouhlování cen směrem nahoru, když se přejde na novou měnu.
+            * **Ručení za ostatní:** Stali bychom se součástí měny, kde jsou i zadlužené státy (např. Řecko, Itálie).
+            """)
+
+        with st.form("form_euro_postoj"):
+            st.write("**Tvůj osobní verdikt jako občana:**")
+            euro_rozhodnuti = st.text_area("Napiš své stanovisko: „Euro bych v ČR přijal/a / nepřijal/a, protože...“")
+            if st.form_submit_button("Uložit mé stanovisko"):
+                st.success("Skvělé! Umět obhájit svůj postoj argumenty (a nejen emocemi) je klíč k dobré ekonomické debatě.")
