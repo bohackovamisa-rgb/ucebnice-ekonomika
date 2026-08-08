@@ -125,8 +125,8 @@ def render():
         with tab_role1:
             st.markdown("##### Manažer")
             st.write("**Co dělá:** Řídí lidi, procesy nebo část organizace. Odpovídá za splnění cílů a efektivitu.")
-            st.info("<i class='fi fi-bs-users'></i> **Příklady:** Vedoucí týmu, ředitel školy, manažer pobočky, projektový manažer v IT.")
-
+            st.info("👥 **Příklady:** Vedoucí týmu, ředitel školy, manažer pobočky, projektový manažer v IT.")
+        
         with tab_role2:
             st.markdown("##### Podnikatel")
             st.write("**Co dělá:** Přichází s nápadem, vyhledává příležitosti na trhu, nese riziko a chce vytvořit novou hodnotu.")
