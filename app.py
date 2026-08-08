@@ -53,13 +53,9 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (iOS EDITORIAL & FLATICON UICONS BOLD) ---
+# --- STYLOVÁNÍ (iOS EDITORIAL & EMOJI STYL) ---
 st.markdown(
     """
-<!-- Import Flaticon UIcons (Bold Straight - Černé silné linky) -->
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-straight/css/uicons-bold-straight.css'>
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
@@ -256,14 +252,6 @@ section[data-testid="stSidebar"] {
     color: #44403C !important; 
     font-size: 0.93rem; 
 }
-
-/* 8. STYLING PRO ČERNÉ ČÁROVÉ IKONY V HTML */
-i.fi { 
-    font-size: 1.15rem !important; 
-    color: #111111 !important; 
-    vertical-align: -2px !important; 
-    margin-right: 8px !important; 
-}
 </style>
 """,
     unsafe_allow_html=True,
@@ -334,10 +322,10 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown(
         """
     <div class="box-gray">
-        <i class="fi fi-bs-book-alt"></i> <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
+        📚 <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
     </div>
     <div class="box-green">
-        <i class="fi fi-bs-crosshair"></i> <b>Cíl učebnice</b><br>
+        🎯 <b>Cíl učebnice</b><br>
         Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
     </div>
     """,
@@ -361,12 +349,12 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown("### 🧩 Legenda učebnice")
     st.markdown(
         """
-    <div class="box-blue"><i class="fi fi-bs-info"></i> <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow"><i class="fi fi-bs-edit"></i> <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
-    <div class="box-purple"><i class="fi fi-bs-sparkles"></i> <b>Fialová:</b> AI mentoring a práce s asistencí</div>
-    <div class="box-green"><i class="fi fi-bs-check"></i> <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
-    <div class="box-red"><i class="fi fi-bs-exclamation"></i> <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
-    <div class="box-gray"><i class="fi fi-bs-document"></i> <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
+    <div class="box-blue">📘 <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
+    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-purple">🤖 <b>Fialová:</b> AI mentoring a práce s asistencí</div>
+    <div class="box-green">✅ <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
+    <div class="box-red">⚠️ <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
+    <div class="box-gray">📄 <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
     """,
         unsafe_allow_html=True,
     )
