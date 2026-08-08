@@ -1936,3 +1936,68 @@ def render():
             st.write("Dopravit miliony věcí letadlem nebo lodí vytváří brutální emise uhlíku a extrémní závislost (když se ucpe průplav, výroba stojí).")
         with st.expander("♻️ Co se stane po použití?"):
             st.write("Když výrobek doslouží, je z něj toxický odpad ležící na skládce v Keni, nebo ho může firma přijmout zpět, rozebrat, recyklovat a použít na nový model? To je ten rozdíl mezi průšvihem a udržitelností.")
+# =====================================================================
+        # PODKAPITOLA 5.6: ODPOVĚDNÝ SPOTŘEBITEL A ZÁVĚR
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 5.6 Odpovědný spotřebitel: Hlasuješ peněženkou, ale ne všechno je na tobě")
+        st.write("Jako spotřebitel máš obrovskou moc. Každým nákupem v podstatě 'hlasuješ' pro to, jaké firmy a postupy budou na trhu prosperovat. Zároveň ale **není fér svalovat veškerou odpovědnost jen na jednotlivce**. Klíčová pravidla totiž musí nastavovat státy, Evropská unie, investoři a mezinárodní dohody.")
+
+        st.markdown("<div class='box-purple'>⚖️ <b>Dilema: Měl by být výrobek dražší, když je ekologický a férový?</b></div>", unsafe_allow_html=True)
+        st.write("Pojďme se podívat na dva zásadní pohledy, které se střetávají v běžném životě i v politice:")
+
+        col_dil1, col_dil2 = st.columns(2)
+        with col_dil1:
+            st.success("**👍 Argument PRO vyšší cenu**")
+            st.write("Superlevné zboží je levné jen zdánlivě – neobsahuje totiž **skutečné náklady** na znečištěnou vodu, emise, likvidaci odpadu nebo nelidské pracovní podmínky dělníků. Vyšší cena férového produktu je spravedlivá, protože poctivě odráží realitu bez skrytých dluhů vůči planetě.")
+        
+        with col_dil2:
+            st.error("**👎 Argument PROTI vyšší ceně**")
+            st.write("Drahé ekologické a férové produkty si mohou dovolit jen bohatší lidé. Pokud stát nebo firmy vše plošně zdraží pod nálepkou 'udržitelnosti', nejvíce to odnesou nízkopříjmové rodiny. Udržitelnost se pak stane nedostupným luxusem pouze pro bohatou elitu.")
+
+        st.info("💡 **Vyvážený ekonomický pohled:** Cílem moderní ekonomiky není zkrátka jen 'všechno zdražit'. Cílem je podporovat inovace, zlevňovat ekologické technologie, podporovat opravy a cirkulární ekonomiku a dávat zákazníkům férové a pravdivé informace bez greenwashingu.")
+
+        st.markdown("<div class='box-yellow'>🧩 <b>Mini aktivita: ESG audit značky</b></div>", unsafe_allow_html=True)
+        st.write("Vyber si jakoukoliv značku, kterou reálně používáš (oblečení, elektronika, kosmetika, e-shop, fastfood nebo banka). Udělej jí rychlý 'ESG audit' a jako inspektor/ka jí vystav známku!")
+
+        with st.form("form_esg_audit"):
+            st.markdown("##### 🕵️ Inspeční formulář ESG")
+            col_a1, col_a2 = st.columns(2)
+            with col_a1:
+                znacka_nazev = st.text_input("Název prověřované značky / firmy:", value="např. Apple / H&M / Temu / ČSOB")
+                slogan_data = st.radio("Dodává firma ke svým eko-tvrzením konkrétní data?", [
+                    "Uvádí tvrdá, měřitelná a auditovaná data.",
+                    "Používá spíše obecné slogany ('green', 'eco', 'myslíme na přírodu').",
+                    "Přírodu a ekologii v reklamách vůbec neřeší."
+                ])
+            with col_a2:
+                znamka = st.select_slider("Jakou celkovou známku firmě udělíš?", options=["A (Vzorová)", "B (Dobrá)", "C (Průměrná)", "D (Problémová)", "E (Čistý Greenwashing)"], value="C (Průměrná)")
+                dodavatele_opravy = st.multiselect("Co všechno firma reálně nabízí/řeší?", [
+                    "Možnost snadné opravy / náhradní díly",
+                    "Program pro zpětný odběr / recyklaci",
+                    "Férové podmínky a kontroly u dodavatelů",
+                    "Ekologické/papírové obaly",
+                    "Přechod na obnovitelné zdroje energie"
+                ])
+
+            argumenty_text = st.text_area("Napiš 2-3 větné zdůvodnění své známky (na co ses zaměřil/a a co ti na značce vadí/příjde skvělé):")
+
+            if st.form_submit_button("Odeslat ESG audit ke zveřejnění"):
+                st.success(f"Audit pro značku **{znacka_nazev}** byl úspěšně zpracován! Známka: **{znamka}**. Odesláno do třídního přehledu.")
+
+        st.markdown("##### 🔗 Užitečné zdroje k tématu udržitelnosti")
+        st.write("Pokud chceš pracovat s reálnými daty a zkontrolovat fakta, využívej tyto ověřené zdroje:")
+        st.markdown("""
+        * 📊 [Fakta o klimatu](https://faktaoklimatu.cz/) — Špičková, srozumitelná česká data, studie a grafiky o klimatu a energetice.
+        * 🧮 [Kalkulačka uhlíkové stopy (Fakta o klimatu)](https://faktaoklimatu.cz/uhlikova-stopa) — Přesný nástroj pro spočítání tvého dopadu na planetu.
+        * 🌍 [Cíle udržitelného rozvoje OSN (SDGs)](https://www.osn.cz/osn/hlavni-temata/sdgs/) — 17 globálních cílů pro lepší svět.
+        * 🇪🇺 [Evropská komise: Green Deal](https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/european-green-deal_cs) — Oficiální evropská strategie udržitelné transformace.
+        """)
+
+        st.markdown("""
+        <div class='box-green'>
+            ✅ <b>Co si zapamatovat z celého bloku ESG a udržitelná ekonomika (Shrnutí 5. bloku):</b><br>
+            ESG není jen "zelená nálepka" nebo moderní reklamní výstřelek. Je to způsob, jak hodnotit <b>dlouhodobá rizika a reálné dopady firem</b> na společnost i přírodu. Udržitelná ekonomika hledá rovnováhu mezi ziskem, lidmi a planetou. Nejde o to, že bychom všichni museli ze dne na den přestat nakupovat nebo podnikat. Jde o to <b>rozhodovat se informovaněji</b> a vytvářet hodnotu bez toho, abychom skryté náklady naši spotřeby přesouvali na chudší státy nebo budoucí generace.
+        </div>
+        """, unsafe_allow_html=True)
