@@ -23,7 +23,7 @@ def render():
         "14. Reflexe a sebehodnocení",
         "15. Integrované opakování"
     ]
-selected_section = st.selectbox('<i class="fi fi-bs-bookmark"></i> Přechod na podkapitolu:', section_options, index=0)
+        selected_section = st.selectbox('<i class="fi fi-bs-bookmark"></i> Přechod na podkapitolu:', section_options, index=0)
 
 # --- 1. Podnikatel a základní pojmy ---
     if selected_section == "1. Podnikatel a základní pojmy":
