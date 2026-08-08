@@ -358,9 +358,9 @@ def render():
         st.markdown("### 6. Aktivity a případové studie na závěr")
         st.info("Zde budou interaktivní případové studie (Levné tričko, Student vydělává online, Obec rozhoduje o rozpočtu...)")
 # =========================================================================
-    # SEKCE 2: DANĚ, STÁTNÍ ROZPOČET A EKONOMICKÁ REALITA
+    # SEKCE 2: DANĚ A STÁTNÍ ROZPOČET
     # =========================================================================
-    elif selected_section_5 == "2. Daně, státní rozpočet a ekonomická realita" or "2" in selected_section_5:
+    elif selected_section_5 == "2. Daně, státní rozpočet a ekonomická realita" or "2." in selected_section_5:
         st.markdown("### 2. Daně, státní rozpočet a ekonomická realita")
         
         st.markdown("""
