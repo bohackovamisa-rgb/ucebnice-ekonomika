@@ -56,7 +56,7 @@ def render():
         "6. Aktivity a případové studie na závěr"
     ]
     
-    selected_section_5 = st.selectbox("<i class='fi fi-bs-bookmark'></i> Přechod na podkapitolu:", section_options_5, index=0)
+    selected_section_5 = st.selectbox("Přechod na podkapitolu:", section_options_5, index=0)
     st.divider()
 
     # =========================================================================

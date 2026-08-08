@@ -80,7 +80,7 @@ def render():
         "8. Slovník cizích pojmů"
     ]
     
-    selected_section_2 = st.selectbox("<i class='fi fi-bs-bookmark'></i> Přechod na podkapitolu:", section_options_2, index=0)
+    selected_section_2 = st.selectbox("Přechod na podkapitolu:", section_options_2, index=0)
     st.divider()
 
     # Následuje blok podmínek: if "1.1 Peníze" in selected_section_2: ...

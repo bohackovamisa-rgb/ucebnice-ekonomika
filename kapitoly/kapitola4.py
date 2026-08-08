@@ -69,7 +69,7 @@ def render():
         "7.2 Slovníček, rychlé opakování a prověrka"
     ]
     
-    selected_section_4 = st.selectbox("<i class='fi fi-bs-bookmark'></i> Přechod na podkapitolu:", section_options_4, index=0)
+    selected_section_4 = st.selectbox("Přechod na podkapitolu:", section_options_4, index=0)
     st.divider()
 
     # =========================================================================
