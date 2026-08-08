@@ -1540,3 +1540,70 @@ def render():
         * 🌍 [Cíle udržitelného rozvoje (SDGs od OSN)](https://www.osn.cz/osn/hlavni-temata/sdgs/)
         * 🏦 [Světová banka (World Bank)](https://www.worldbank.org/) & [Mezinárodní měnový fond (IMF)](https://www.imf.org/)
         """)
+# =====================================================================
+        # PODKAPITOLA 4.6: BUDOUCNOST PRÁCE A FINANCÍ (NOMÁDI A KRYPTO)
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 4.6 Budoucnost práce a financí v globálním světě")
+        st.write("Globalizace už dávno není jen o ocelových kontejnerech na lodích a montovnách v Číně. Dnes se týká dat, online služeb, kapitálu (peněz), digitálních měn a hlavně – **tvého budoucího pracovního místa**.")
+
+        tab_prace1, tab_prace2, tab_prace3, tab_prace4 = st.tabs(["🏝️ Digitální nomádství", "💻 Remote work", "💸 Mezinárodní kapitál", "🪙 CBDC a Krypto"])
+
+        with tab_prace1:
+            st.markdown("##### Digitální nomádství")
+            st.write("Člověk může žít v jedné zemi (např. v Portugalsku u oceánu) a pracovat online pro firmu nebo klienty z úplně jiné země (např. z USA nebo ČR).")
+            st.warning("🏝️ **Mýtus:** *'Když pracuju z pláže na Bali, jsem mimo systém a nemusím platit daně.'* **Realita:** Musíš řešit tzv. daňovou rezidenci, víza a pojištění. Státu neutečeš.")
+            
+        with tab_prace2:
+            st.markdown("##### Remote work (Práce na dálku)")
+            st.write("Práce na dálku zničila hranice regionálního pracovního trhu. Už nesoutěžíš jen o místo s lidmi ze svého města, ale z celého světa.")
+            st.info("💻 **Zamyšlení:** Pokud můžeš dělat svou práci 100% z domova na počítači, co brání tvé firmě, aby na stejnou práci najala někoho z Indie nebo Filipín, komu stačí třetinový plat?")
+            
+        with tab_prace3:
+            st.markdown("##### Mezinárodní kapitálové toky")
+            st.write("Peníze (kapitál) obrovských fondů a investorů se přelévají mezi státy, burzami a měnami rychlostí kliknutí myši.")
+            st.error("💸 **Domino efekt:** To je důvod, proč se lokální problém (např. krach jedné banky v USA) může během pár hodin přelít do celého světa a způsobit globální krizi. Všechny peníze jsou propojené.")
+            
+        with tab_prace4:
+            st.markdown("##### CBDC a Kryptoměny")
+            st.write("Svět peněz se dělí na dva tábory:")
+            st.markdown("* **Kryptoměny (Bitcoin):** Decentralizované, neřídí je žádný stát ani banka. Fungují po celém světě bez hranic.")
+            st.markdown("* **CBDC (Digitální měny centrálních bank):** Státy (např. Čína, EU - Digitální Euro) budují vlastní digitální peníze, nad kterými budou mít absolutní kontrolu a přehled.")
+
+        st.markdown("<div class='box-purple'>🌴 <b>Simulátor: Past na digitálního nomáda</b></div>", unsafe_allow_html=True)
+        st.write("Zkus si to v praxi. Sbalil/a sis notebook a odletěl/a jsi na 8 měsíců žít na Bali (Indonésie). Vytváříš tam webové stránky pro americké a české klienty a peníze ti chodí na účet na Revolutu nebo přes PayPal. Jak je to s daněmi?")
+        
+        with st.container(border=True):
+            nomad_kviz = st.radio("Kde budeš legálně platit daně z příjmu?", [
+                "Zvol odpověď...",
+                "A) Nikde. Pracuji přes internet, peníze jsou virtuální a zdržuji se mimo ČR.",
+                "B) Rozdělím to: něco zaplatím v USA, něco v ČR a něco na Bali podle toho, od koho peníze přišly.",
+                "C) Záleží na pravidle tzv. daňové rezidence (obvykle 183 dní). Tam zdaním své celosvětové příjmy."
+            ])
+            
+            if "C)" in nomad_kviz:
+                st.success("✅ **Přesně tak! Objevil/a jsi svatý grál mezinárodních daní: Daňovou rezidenci.** Obvykle platí (tzv. pravidlo 183 dní), že stát, ve kterém fyzicky strávíš více než půl roku, tě považuje za svého 'daňového rezidenta'. Tomuto státu musíš přiznat a zdanit VŠECHNY své celosvětové příjmy (a to i ty z USA). Musíš si také hlídat smlouvy o zamezení dvojího zdanění, abys neplatil/a daně dvakrát.")
+            elif "A)" in nomad_kviz or "B)" in nomad_kviz:
+                st.error("❌ Au, tohle bude drahé! Finanční úřady na celém světě si dnes automaticky vyměňují informace o bankovních účtech. Odpověď A je daňový únik (trestný čin). Odpověď B je nesmysl – daně neplatíš podle toho, odkud peníze jdou, ale kde fyzicky žiješ (daňová rezidence). Správná odpověď je C.")
+
+        st.markdown("##### 📊 S kým dnes soutěžíš na trhu práce? (Remote work)")
+        st.write("Představ si pozici IT analytika nebo šikovného grafika pracujícího 100% z domova. Zde je orientační porovnání ročních mzdových nákladů, které na takového člověka firma vynaloží v různých částech světa:")
+
+        # Graf srovnání nákladů na remote pracovníka (orientační hodnoty)
+        lokace_remote = ['USA (Silicon Valley)', 'Německo', 'Česká republika', 'Indie / Filipíny']
+        naklady_usd = [160000, 90000, 50000, 18000] # Hodnoty v USD za rok
+        
+        fig_remote = go.Figure(go.Bar(
+            x=naklady_usd,
+            y=lokace_remote,
+            orientation='h',
+            text=[f"${val:,}" for val in naklady_usd],
+            textposition='auto',
+            marker_color=['#ef4444', '#f59e0b', '#3b82f6', '#10b981']
+        ))
+        fig_remote.update_layout(title="Průměrný roční náklad na IT/Remote pracovníka (v USD)", margin=dict(t=30, b=10, l=10, r=10), height=250)
+        
+        st.plotly_chart(fig_remote, use_container_width=True)
+        
+        st.write("💡 **Co z toho vyplývá pro tvou kariéru:** Pokud tvá práce nevyžaduje fyzickou přítomnost (jako u zubaře nebo elektrikáře), tvůj zaměstnavatel může zítra najmout někoho z Asie za zlomek tvé ceny. Abys v globálním světě uspěl/a, musíš nabídnout víc než jen základní " + '"odvedení úkolu"' + " – musíš mít **komunikační schopnosti, kreativitu, kritické myšlení, pochopení místní kultury a umět používat AI lépe než ostatní**.")
