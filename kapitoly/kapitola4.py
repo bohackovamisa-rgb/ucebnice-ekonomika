@@ -1288,3 +1288,121 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
         """, unsafe_allow_html=True)
         
         st.caption("💡 Tip: Zkopíruj text z fialového boxu výše a zkus AI přesvědčit, že si peníze navíc zasloužíš!")
+# =========================================================================
+    # SEKCE 4: ŽIVOT V PRÁCI: KULTURA, WELLBEING A KARIÉRNÍ RŮST
+    # =========================================================================
+    elif selected_section_4 == "4.1 Firemní kultura a wellbeing":
+        st.markdown("### 4.1 Firemní kultura a wellbeing")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🧘 <b>Základní otázka:</b> Jak poznat práci, ve které se dá dlouhodobě kariérně růst a neztratit přitom zdraví a nervy?
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.write("**Firemní kultura** není to, co má firma napsané zlatým písmem na webu. Je to způsob, jakým se lidé ve firmě chovají, komunikují a rozhodují, když se nikdo nedívá.")
+
+        col_kult1, col_kult2 = st.columns(2)
+        with col_kult1:
+            st.success("🟢 **Znaky zdravé kultury:**\n* Chyby se berou jako příležitost k učení, ne jako důvod k trestu.\n* Lidé se nebojí na cokoliv zeptat.\n* Firma drží své sliby.\n* Přesčasy jsou výjimečné, ne každodenní pravidlo.")
+        with col_kult2:
+            st.error("🔴 **Toxická kultura (Red flags):**\n* *„Kdo se ptá, ten na to asi nemá.“*\n* *„U nás se na hodinky nekouká, prostě makáme, dokud není hotovo.“*\n* Vedení mluví o zákaznících a podřízených s despektem a výsměchem.")
+
+        st.divider()
+        st.markdown("#### 🔋 Wellbeing a prevence vyhoření")
+        st.write("**Wellbeing (životní a pracovní pohoda)** opravdu neznamená, že vám firma dá do kuchyňky banány zdarma nebo vám zaplatí lekci jógy. Skutečný wellbeing znamená **podmínky, ve kterých člověk může dlouhodobě pracovat bez poškozování fyzického a duševního zdraví**.")
+
+        st.markdown("<div class='box-yellow'>📋 <b>Osobní test: Hrozí ti vyhoření? (Burnout Check)</b></div>", unsafe_allow_html=True)
+        st.write("Syndrom vyhoření nevzniká ze dne na den. Je to plíživý proces. Zaškrtni tvrzení, která momentálně zažíváš ve škole, na brigádě nebo v práci:")
+
+        b1 = st.checkbox("Mám neustále pocit, že nestíhám, a žiju v dlouhodobém stresu.")
+        b2 = st.checkbox("Často vůbec nevím, co se ode mě přesně očekává (nejasná zadání).")
+        b3 = st.checkbox("Nemám kontrolu nad svým časem (všechno řídí někdo jiný).")
+        b4 = st.checkbox("Neumím nebo se bojím říct 'NE', když mě někdo požádá o úkol navíc.")
+        b5 = st.checkbox("Moje práce/studium mi nedává smysl a dělám to jen jako robot.")
+        b6 = st.checkbox("Nemám čas na odpočinek, koníčky a spánek.")
+
+        skore_vyhoreni = sum([b1, b2, b3, b4, b5, b6])
+        st.progress(skore_vyhoreni / 6)
+
+        if skore_vyhoreni >= 4:
+            st.error("🚨 **KRITICKÉ RIZIKO VYHOŘENÍ!** Tvůj systém hlásí přetížení. Chybí ti 'ochranné faktory'. Musíš si okamžitě nastavit hranice, naučit se říkat ne a najít si čas na digitální detox a spánek.")
+        elif skore_vyhoreni >= 2:
+            st.warning("⚠️ **Zvýšené riziko:** Začínáš balancovat na hraně. Zaměř se na to, abys měl jasně vymezený čas na práci a čas, kdy úplně 'vypneš' hlavu.")
+        elif skore_vyhoreni > 0:
+            st.info("ℹ️ **Běžná zátěž:** Občasný stres je normální, ale hlídej si, aby se z těchto bodů nestala každodenní rutina.")
+        else:
+            st.success("✅ **Skvělá práce s hranicemi!** Tvé mentální zdraví a wellbeing jsou aktuálně v rovnováze. Máš nastavené zdravé priority.")
+
+    elif selected_section_4 == "4.2 Právo na odpojení a podnikavost v zaměstnání":
+        st.markdown("### 4.2 Právo na odpojení a Intrapreneurship")
+        
+        st.markdown("#### 📵 Právo na odpojení (Right to disconnect)")
+        st.write("V digitální době je hranice mezi prací a volnem extrémně křehká. Právo na odpojení znamená, že **nemáte povinnost být neustále dostupní (číst e-maily a zvedat telefony) ve svém osobním volnu**, jen proto, že máte v kapse smartphone.")
+
+        st.markdown("<div class='box-yellow'>⚖️ <b>Rozhodovací scénář: Páteční zpráva od šéfa</b></div>", unsafe_allow_html=True)
+        st.write("Je pátek, 20:30. Sedíš s přáteli v kině. Najednou ti pípne WhatsApp od šéfa: *„Ahoj, prosím tě, můžeš mi do toho reportu rychle dopsat čísla za tento týden? Potřebuju se na to podívat. Díky!“* (Nemáš sjednanou placenou pohotovost).")
+        
+        reakce_boss = st.radio("Jak zareaguješ?", [
+            "A) Omluvím se přátelům, vyjdu z kina, otevřu na telefonu tabulku a rychle to udělám. Chci ukázat, že jsem pracovitý.",
+            "B) Zprávu si přečtu, naštve mě to, ale odepíšu: 'Jsem v kině, udělám to zítra ráno, o víkendu.'",
+            "C) Zprávu ignoruji nebo odepíšu: 'Ahoj, teď mám volno, podívám se na to hned v pondělí ráno, jak přijdu do práce.'"
+        ])
+
+        if reakce_boss.startswith("A"):
+            st.error("❌ **Špatně (Cesta do pekla):** Právě jsi šéfovi ukázal, že tvůj osobní čas nemá hodnotu a jsi mu k dispozici 24/7. Příště ti napíše v sobotu o půlnoci.")
+        elif reakce_boss.startswith("B"):
+            st.warning("⚠️ **Napůl špatně:** Sice jsi práci odložil, ale stejně jsi obětoval svůj víkend. Navíc už sis zkazil náladu v kině přemýšlením nad prací.")
+        elif reakce_boss.startswith("C"):
+            st.success("✅ **Správně! (Zdravé hranice):** Pokud se nejedná o hořící budovu nebo nemáš ve smlouvě placenou pohotovost, tvůj volný čas je svatý. Dobrý šéf to bude respektovat. Špatný šéf to bude zkoušet znovu – a pak je načase změnit firmu.")
+
+        st.divider()
+        st.markdown("#### 💡 Intrapreneurship: Podnikavost v zaměstnání")
+        st.write("Nemusíte si zakládat vlastní IČO nebo startup, abyste byli 'podnikatelé'. **Intrapreneurship** je schopnost chovat se podnikavě *uvnitř* cizí firmy (jako zaměstnanec). Znamená to přinášet nápady, vylepšovat procesy a brát si odpovědnost.")
+
+        st.markdown("##### 🚀 Příklady, jak být Intrapreneurem:")
+        st.markdown("""
+        * ⚙️ **Zjednodušení procesů:** Štve tě, že se nějaká tabulka přepisuje ručně? Vytvoříš jednoduché makro (nebo poprosíš AI o skript) a ušetříš oddělení 5 hodin času týdně.
+        * 🗣️ **Nová služba:** Pracuješ v kavárně a všimneš si, že si lidé často ptají na ovesné mléko. Navrhneš majiteli, ať ho zařadí, a zvedneš tak prodeje.
+        * 📚 **Sdílení know-how:** Začneš sám od sebe tvořit přehledný manuál pro nové brigádníky, aby se nemuseli pořád ptát na to samé.
+        """)
+
+        st.info("🎯 **Proč byste to dělali?** Pokud firmě takto prokazatelně šetříte čas nebo vyděláváte peníze, získáváte ultimátní argument pro **vyjednávání o vyšším platu** nebo povýšení.")
+
+    elif selected_section_4 == "4.3 Upskilling a reskilling":
+        st.markdown("### 4.3 Upskilling a reskilling")
+        st.write("V době automatizace a umělé inteligence už neplatí, že vystudujete jednu školu a s těmito znalostmi vystačíte do důchodu. Vaše tržní hodnota závisí na schopnosti se učit.")
+
+        col_skill1, col_skill2 = st.columns(2)
+        with col_skill1:
+            st.markdown("##### 📈 Upskilling (Zlepšování v oboru)")
+            st.write("Znamená rozšiřování a prohlubování dovedností ve vaší současné profesi. Děláte to proto, abyste si udrželi práci a zvedli svou cenu.")
+            st.caption("Příklad: Jste mzdová účetní a uděláte si kurz na to, jak automatizovat faktury pomocí AI nebo pokročilého Excelu.")
+        with col_skill2:
+            st.markdown("##### 🔄 Reskilling (Přeškolení na jiné povolání)")
+            st.write("Znamená učení se úplně novým dovednostem pro získání zcela jiné role nebo přechod do jiného oboru (často když starý obor zaniká).")
+            st.caption("Příklad: Pracovali jste jako operátor na lince (práci převzal robot), a tak se přeškolíte na servisního technika, který ty roboty opravuje.")
+
+        st.divider()
+        st.markdown("<div class='box-purple'>🎯 <b>Generátor dovedností budoucnosti</b></div>", unsafe_allow_html=True)
+        st.write("Představ si profesi, která tě láká. Co by se člověk v takové profesi měl naučit (Upskilling), aby ho za 5 let nenahradil algoritmus nebo neztratil práci?")
+
+        profese = st.selectbox("Vyber profesi pro analýzu:", [
+            "Vyber profesi...",
+            "Marketingový specialista",
+            "Automechanik",
+            "Učitel",
+            "Účetní / Administrativa",
+            "Programátor / Vývojář"
+        ])
+
+        if profese == "Marketingový specialista":
+            st.success("**Upskilling na 5 let:**\n* **Prompt engineering (práce s AI):** Nejen psát texty, ale umět zadat ChatGPT, ať vygeneruje 50 variant kampaně na základě dat.\n* **Analýza dat a psychologie:** AI napíše text, ale vy musíte chápat data o zákaznících a lidské emoce, na které reklama cílí.\n* *Kde začít dnes:* Založit si účet na ChatGPT a zkoušet ho používat jako svého osobního asistenta při psaní.")
+        elif profese == "Automechanik":
+            st.success("**Upskilling na 5 let:**\n* **Diagnostika elektromobilů a baterií:** Spalovacích motorů bude ubývat. Mechanik budoucnosti je z poloviny elektrikář a IT specialista.\n* **Práce s diagnostickým softwarem:** Hledání chyb v milionech řádků kódu palubních počítačů.\n* *Kde začít dnes:* Zajímat se o elektroniku, senzory a vývoj v elektromobilitě.")
+        elif profese == "Učitel":
+            st.success("**Upskilling na 5 let:**\n* **Mentoring a facilitace:** Žáci si fakta najdou na internetu za sekundu. Učitel je musí učit *jak* informace kriticky ověřovat a řešit problémy.\n* **Využití AI ve výuce:** Zapojit technologie do výuky, ne je zakazovat.\n* *Kde začít dnes:* Trénovat kritické myšlení, prezentační dovednosti a psychologii komunikace.")
+        elif profese == "Účetní / Administrativa":
+            st.success("**Upskilling na 5 let:**\n* **Finanční poradenství:** Rutinní přepisování čísel z faktur udělá software. Účetní budoucnosti musí data interpretovat a radit firmám, kde ušetřit.\n* **Automatizace systémů:** Schopnost propojovat různé fakturační systémy a bankovní API.\n* *Kde začít dnes:* Naučit se pokročilé datové funkce (Power Query, Power BI) a daňovou legislativu.")
+        elif profese == "Programátor / Vývojář":
+            st.success("**Upskilling na 5 let:**\n* **Soft skills a pochopení byznysu:** Základní kód už umí psát Copilot. Programátor musí umět mluvit s klientem a chápat, jaký byznys problém vlastně kód řeší.\n* **Architektura systémů a kyberbezpečnost:** Navrhovat velké, bezpečné a udržitelné systémy.\n* *Kde začít dnes:* Trénovat komunikaci a vedení projektů, nezůstávat jen zavřený u psaní kódu.")
