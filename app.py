@@ -1,13 +1,6 @@
 import math
 import streamlit as st
-from kapitoly import (
-    kapitola1,
-    kapitola2,
-    kapitola3,
-    kapitola4,
-    kapitola5,
-    kapitola6,
-)
+from kapitoly import kapitola1, kapitola2, kapitola3, kapitola4, kapitola5, kapitola6
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
