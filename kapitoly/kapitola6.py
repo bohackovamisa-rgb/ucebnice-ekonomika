@@ -2376,7 +2376,7 @@ def render():
 
         # WORKBOOK KROK 16 PRO STUDENTŮV PROJEKT - ETICKÁ KAMPAŇ
         st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 16: Návrh Etické kampaně a dokončení Bloku 3</b></div>", unsafe_allow_html=True)
-        with st.form("form_projekt_krok16"):
+        with st.form("form_projekt_krok16_etika"):  # Unikátní klíč opraven zde
             st.markdown("##### 🚀 Navrhni krátkou etickou kampaň pro svůj projekt:")
             st.text_input("1. Hlavní sdělení kampaně (Co lidem komunikujeme?):", placeholder="např. 'Obleč se do školy udržitelně a bez zbytečného odpadu.'")
             col_k1, col_k2 = st.columns(2)
@@ -2388,4 +2388,4 @@ def render():
                 st.text_input("5. Označení spolupráce (Pokud využiješ influencera):", placeholder="např. Viditelné označení #spoluprace v prvním řádku popisku")
 
             if st.form_submit_button("Uložit Krok 16 a dokončit celý Blok 3!"):
-                st.success("🎉 Výborně! Základ značky, komunikační kampaň i etická pravidla (Blok 3) jsou kompletně vytvořeny a uloženy v Projektovém pasu!")
+                st.success("🎉 Výborně! Základ značky, komunikační kampaň i etická pravidla (Blok 3) jsou kompletně vytvořeny a uloženy v Projektového pasu!")
