@@ -468,6 +468,23 @@ def render():
             st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz (1000 Kč - František Palacký)")
             st.write("Zvol prvek v nabídce níže, sleduj jeho přesné umístění přímo na reálné bankovce a zjisti, jak ho v praxi ověřit:")
 
+            # Pomocná funkce pro stažení obrázku a převod do Base64 (vyhne se blokování v prohlížeči)
+            @st.cache_data
+            def nacti_bankovku_base64():
+                import base64
+                import urllib.request
+                url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/1000_Czech_koruna_Obverse.jpg/800px-1000_Czech_koruna_Obverse.jpg"
+                req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                try:
+                    with urllib.request.urlopen(req) as response:
+                        img_bytes = response.read()
+                        return f"data:image/jpeg;base64,{base64.b64encode(img_bytes).decode('utf-8')}"
+                except Exception:
+                    # Záložní stabilní zrcadlo v případě výpadku
+                    return "https://raw.githubusercontent.com/bohackovamisa-rgb/ucebnice-ekonomika/main/1000_czk.jpg"
+
+            base64_bankovka = nacti_bankovku_base64()
+
             # Databáze prvků pro 1000 Kč s Františkem Palackým
             prvky_bankovky = {
                 "Vodoznak (pohledem)": {
@@ -536,13 +553,10 @@ def render():
 
             det = prvky_bankovky[p_sel]
 
-            # Použití nezávislého CDN proxy pro spolehlivé načtení obrázku bez blokování
-            url_bankovky_1000 = "https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/3/30/1000_Czech_koruna_Obverse.jpg&w=800"
-
             html_bankovka = (
                 f'<div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; '
                 f'border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">'
-                f'<img src="{url_bankovky_1000}" alt="1000 Kč - František Palacký" '
+                f'<img src="{base64_bankovka}" alt="1000 Kč - František Palacký" '
                 f'style="width: 100%; height: auto; display: block; border-radius: 10px;" />'
                 f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
                 f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; '
