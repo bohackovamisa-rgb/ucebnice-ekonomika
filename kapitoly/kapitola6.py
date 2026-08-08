@@ -86,13 +86,8 @@ def render():
         "4. Závěrečný výstup kapitoly a případové studie"
     ]
 
-<<<<<<< HEAD
-    selected_section_6 = st.selectbox("📌 Přechod na hlavní blok kapitoly:", section_options_6, index=0, label_visibility="collapsed")
-    st.divider()
-=======
-    st.markdown("📌 <strong>Přechod na hlavní blok kapitoly:</strong>", unsafe_allow_html=True)
-    selected_section_6 = st.selectbox("Přechod na hlavní blok kapitoly:", section_options_6, index=0, label_visibility="collapsed")
->>>>>>> 85dc2bec670296c4873213a08bf23888e3d5502e
+    st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+    selected_section_6 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
 # =========================================================================
     # SEKCE 1: MANAGEMENT – JAK Z CHAOSU UDĚLAT FUNGUJÍCÍ FIRMU
     # =========================================================================
