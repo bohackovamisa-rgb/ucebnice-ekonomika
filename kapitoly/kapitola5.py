@@ -1305,3 +1305,59 @@ def render():
         st.markdown("##### 📦 Kauza: Levné balíčky z Asie (Temu, Shein, AliExpress)")
         st.write("Další živý příklad protekcionismu vs. volného obchodu se týká drobných zásilek (oblečení, doplňky) z mimoevropských e-shopů. Dlouhou dobu platily výjimky, díky kterým se z malých a levných balíčků neplatilo clo (a někdy ani DPH).")
         st.write("To vytvořilo **nefér výhodu**: asijský e-shop mohl prodat věc levněji než ten český, který u nás musel odvádět všechny daně a dodržovat přísné bezpečnostní certifikáty. Státy a EU proto nyní tyto daňové a celní výjimky ruší, aby srovnaly podmínky pro domácí prodejce.")
+# =====================================================================
+        # PODKAPITOLA 4.3: GLOBÁLNÍ DODAVATELSKÉ ŘETĚZCE
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 4.3 Globální dodavatelské řetězce a zranitelnost ekonomiky")
+        st.write("Moderní ekonomika nefunguje tak, že by jedna továrna nakoupila železo a vyrobila celé auto. Funguje v obří síti dodavatelů. Jeden složitější výrobek (mobil, auto) může během výroby projít přes desítky zemí.")
+
+        st.markdown("##### ⏱️ Extrémní efektivita: Just-in-Time")
+        st.write("Firmy dnes nechtějí platit za obrovské a drahé sklady. Místo toho používají systém **Just-in-Time (Právě včas)**. Díly (např. sedačky do auta) se nevyrábí do zásoby, ale dorazí kamionem do továrny přesně v tu minutu, kdy se mají namontovat do auta na lince.")
+
+        col_jit1, col_jit2 = st.columns(2)
+        with col_jit1:
+            st.success("✅ **Výhody Just-in-Time:**\nNižší náklady (neplatíš sklady), obrovská rychlost, efektivita, levnější výrobek pro zákazníka.")
+        with col_jit2:
+            st.error("🚨 **Rizika Just-in-Time:**\nZtráta odolnosti. Továrna má zásoby dílů třeba jen na 12 hodin. Když se někde ve světě zasekne kamion, loď nebo továrna, do pár hodin stojí celý řetězec!")
+
+        st.markdown("<div class='box-purple'>🚢 <b>Simulátor: Motýlí efekt a zaseknutý Suez</b></div>", unsafe_allow_html=True)
+        st.write("Představ si, že jsi šéfem logistiky v české automobilce. Čekáš na klíčové mikročipy z Asie. Využíváš systém Just-in-Time (máš zásobu čipů na skladě přesně na 3 dny výroby). Najednou se v Suezském průplavu v Egyptě vzpříčí obří kontejnerová loď Ever Given a zablokuje celou dopravní tepnu.")
+
+        with st.container(border=True):
+            trasa = st.radio("Jak zareaguješ? Zvol náhradní trasu pro tvou loď s čipy:", [
+                "A) Počkat, až Suezský průplav vybagrují a uvolní (Zpoždění cca 7 dní).",
+                "B) Přikázat lodi, ať Suez objede celou cestou kolem afrického kontinentu - Mys Dobré naděje (Zpoždění cca 14 dní, masivní spálení paliva)."
+            ])
+            
+            st.write("---")
+            if "A)" in trasa:
+                st.warning("⏳ **Výsledek: Továrna stojí!** Zásoby čipů ti došly po 3 dnech. Další 4 dny mají dělníci v české továrně nucenou dovolenou, auta se nevyrábí, ale platy musíš platit dál. Ztráty jdou do stovek milionů korun, ale ušetřil jsi za palivo lodi.")
+            else:
+                st.error("📉 **Výsledek: Extrémní zdražení!** Tvá loď pluje kolem celé Afriky. Zpoždění je obrovské (14 dní), takže česká továrna na skoro dva týdny úplně zastaví výrobu. Navíc lodní společnost spálila tisíce tun nafty navíc a zdražila ti dopravu kontejneru o 300 %. Tuto ztrátu budeš muset promítnout do konečné ceny auta pro zákazníky.")
+
+        st.markdown("##### 🌍 4 hlavní rizika globalizace (Co všechno se může pokazit?)")
+        st.write("Zde jsou reálné hrozby, které mohou globální řetězce roztrhat na kusy:")
+
+        tab_riz1, tab_riz2, tab_riz3, tab_riz4 = st.tabs(["💻 Krize čipů", "🚢 Blokáda dopravy", "⚔️ Geopolitika a válka", "🔄 Deglobalizace (Reshoring)"])
+
+        with tab_riz1:
+            st.markdown("**Krize mikročipů**")
+            st.write("Chybí čipy pro auta, mobily, herní konzole nebo průmyslové stroje (vyrábí se drtivou většinou jen na Tchaj-wanu).")
+            st.info("🇨🇿 **Dopad na Česko:** Automobilový průmysl tvoří páteř české ekonomiky. Když nejsou čipy, Škodovka a její dodavatelé nemohou dokončit auta, odstavují je na letiště a lidé přicházejí o peníze.")
+            
+        with tab_riz2:
+            st.markdown("**Blokáda dopravy**")
+            st.write("Suezský průplav, Panamský průplav nebo Rudé moře (útoky pirátů). Zpoždění lodí a extrémně dražší lodní kontejnery.")
+            st.info("🇨🇿 **Dopad na Česko:** Téměř všechna levná elektronika, oblečení a součástky do českých firem jedou přes tyto světové trasy. Výpadek znamená okamžité zdražení pro českého spotřebitele.")
+
+        with tab_riz3:
+            st.markdown("**Válka a geopolitické konflikty**")
+            st.write("Válka přináší výpadky klíčových komodit (energií, plynu, ropy, potravin).")
+            st.info("🇨🇿 **Dopad na Česko:** Růst cen plynu, elektřiny a hnojiv se okamžitě promítne do obrovské inflace. Pekárně zdraží plyn -> zdraží chleba. Firmám rostou náklady a lidem padá životní úroveň.")
+
+        with tab_riz4:
+            st.markdown("**Deglobalizace a Reshoring**")
+            st.write("Firmy se poučily z krizí a zjistily, že být 100% závislý na Asii je nebezpečné. Začínají přesouvat výrobu zpět blíž k zákazníkům nebo do bezpečnějších spřátelených zemí (tomu se říká **Reshoring** nebo *Friendshoring*).")
+            st.info("🇨🇿 **Dopad na Česko:** Na jednu stranu to může Evropě přinést nová pracovní místa (např. stavba továren na baterie či čipy v EU). Na druhou stranu – evropský dělník je mnohem dražší než asijský, takže produkty v obchodech budou ve výsledku dražší.")
