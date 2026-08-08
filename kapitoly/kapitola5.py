@@ -1042,3 +1042,98 @@ def render():
             Daně nejsou jen "kolik mi stát sebere peněz z výplaty". Jsou to pravidla, která financují naši solidaritu, záchranku, školy a dálnice. Regulují to, kolik pijeme alkoholu a kolik vypouštíme smogu. Dobrý občan nemusí být certifikovaný daňový poradce. Měl by ale ovládat základy: chápat rozdíl mezi hrubou a čistou mzdou z brigády, vědět, že podepsat Růžový papír mu zachrání peníze, a rozumět tomu, proč práce 'na ruku' a nelegální prodeje na internetu ničí jeho vlastní důchodovou budoucnost i celou společnost.
         </div>
         """, unsafe_allow_html=True)
+# =========================================================================
+    # SEKCE 3: MOJE DANĚ V PRAXI
+    # =========================================================================
+    elif selected_section_5 == "3. Moje daně v praxi" or "3." in selected_section_5:
+        st.markdown("### 3. Moje daně v praxi")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            💻 <b>Praktický přesah:</b> Daňový portál, datová schránka, elektronická identita a Portál občana ukazují, že ekonomika není jen teorie. Moderní občan potřebuje rozumět tomu, kde hledat informace, jak ověřovat povinnosti a proč je digitální komunikace se státem zásadní součástí finanční gramotnosti.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("#### 3.1 Digitální stát (eGovernment): Konec front na úřadech")
+        st.write("Generace před tebou musely kvůli každému papíru stát hodiny na úřadě. Dnes už máš státní úřady doslova ve svém mobilu. Stačí k tomu klíč, kterému se říká **Elektronická identita** (nejčastěji tvá bankovní identita – BankID).")
+
+        col_eg1, col_eg2 = st.columns(2)
+        with col_eg1:
+            st.success("📱 **Identita občana (např. BankID)**\nFunguje jako tvá digitální občanka. Tvá banka státu zaručí, že u klávesnice sedíš opravdu ty. Přihlásíš se s ní do všech státních portálů stejně jednoduše jako do internetového bankovnictví.")
+            st.info("📬 **Datová schránka**\nTvůj oficiální, státem garantovaný e-mail. Když pošleš zprávu úřadu přes 'datovku', má to stejnou právní váhu, jako bys to poslal/a doporučeně poštou s podpisem.")
+        with col_eg2:
+            st.warning("🏛️ **Portál občana**\nTvé hlavní digitální velitelství. Zjistíš tu, kdy ti propadne pas, kolik máš bodů na řidičáku, získáš výpis z rejstříku trestů nebo založíš živnost.")
+            st.error("🧾 **Portál MOJE daně**\nOnline finanční úřad. Zde si můžeš vyplnit a jedním kliknutím odeslat daňové přiznání. Systém za tebe spoustu věcí sám spočítá a zkontroluje chyby.")
+
+        st.markdown("##### 🔗 Tvé digitální záložky (Kde to najdeš v realitě):")
+        st.markdown("""
+        * 🔑 [Identita občana (identitaobcana.cz)](https://www.identitaobcana.cz/)
+        * ✉️ [Moje datová schránka (mojedatovaschranka.cz)](https://www.mojedatovaschranka.cz/)
+        * 🏢 [Portál občana (obcan.portal.gov.cz)](https://obcan.portal.gov.cz/)
+        * 💰 [Portál MOJE daně (mojedane.cz)](https://www.mojedane.cz/)
+        """)
+
+        st.markdown("<div class='box-purple'>🕹️ <b>Kvíz: Jaký portál na to použiješ?</b></div>", unsafe_allow_html=True)
+        st.write("Otestuj se, jestli bys v dnešním digitálním státě přežil/a bez návštěvy úřadu.")
+        
+        q_egov = st.radio("Jsi na dovolené v zahraničí a potřebuješ nutně zjistit, jestli nemáš v ČR nezaplacenou pokutu za rychlost, kvůli které ti hrozí exekuce. Kam se přihlásíš?", [
+            "Vyber odpověď...",
+            "A) Přihlásím se do své e-mailové schránky na Seznamu/Gmailu.",
+            "B) Přihlásím se na Portál občana pomocí své Bankovní identity.",
+            "C) Přihlásím se na portál MOJE daně."
+        ])
+        if "B)" in q_egov:
+            st.success("✅ Správně! Portál občana je místo, kde máš přehled o svých přestupcích, dokladech a komunikaci se státem.")
+        elif "A)" in q_egov or "C)" in q_egov:
+            st.error("❌ Kdepak. Běžný e-mail není oficiální státní kanál a Portál MOJE daně řeší čistě finance a daňová přiznání. Správná odpověď je B (Portál občana).")
+
+        st.divider()
+        st.markdown("#### 3.2 Trenažér: „Tohle přece danit nemusím!“")
+        st.write("Tohle je slavná poslední věta mnoha mladých lidí předtím, než jim přijde dopis z finančního úřadu. Podnikání a zdanitelné příjmy totiž už dávno nejsou jen o tom, že máš kamenný obchod.")
+        
+        st.markdown("""
+        <div class='box-yellow'>
+            🧩 <b>Mini úkol: Daňový průzkumník</b><br>
+            Vyber si jednu ze situací níže. Tvým úkolem je zamyslet se a vypsat, <b>jaké kontrolní otázky by sis musel/a zodpovědět a ověřit v zákonech</b>, než bys s klidným svědomím prohlásil/a: <i>„Z tohto příjmu neplatím státu ani korunu.“</i>
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.form("form_dane_praxe"):
+            situace_praxe = st.selectbox("Vyber si svou životní situaci:", [
+                "👗 1. Prodej oblečení na Vinted",
+                "🎥 2. Příjmy z YouTube / TikToku (Reklamy a dary)",
+                "🏠 3. Pronájem pokoje turistům přes Airbnb",
+                "🪙 4. Zisk z prodeje kryptoměn (Bitcoin)",
+                "📚 5. Pravidelné doučování angličtiny za hotové",
+                "🍔 6. Nárazová brigáda (Dohoda o provedení práce)"
+            ])
+            
+            otazky_student = st.text_area("Napiš 2-3 klíčové otázky, které si podle tebe musíš zjistit (např. Jde o jednorázový příjem?):")
+            
+            submit_praxe = st.form_submit_button("Ověřit mé otázky s Daňovým poradcem (AI)")
+            
+            if submit_praxe:
+                st.write("---")
+                st.markdown(f"**Tvá zvolená situace:** {situace_praxe}")
+                st.markdown("👨‍💼 **Komentář daňového experta. Tyto otázky sis měl/a položit:**")
+                
+                if "Vinted" in situace_praxe:
+                    st.success("1. **Soustavnost:** Prodávám jen své staré obnošené věci (osvobozeno), nebo soustavně nakupuji věci v sekáči, abych je s přirážkou prodal (podnikání)?\n2. **Záměr zisku:** Dělám to za účelem zisku?\n3. **Limit příležitostného příjmu:** Nepřesáhl jsem roční limit pro příležitostné příjmy (aktuálně 30 000 Kč)?")
+                elif "YouTube" in situace_praxe:
+                    st.success("1. **Pravidelnost:** Je tvorba obsahu mým pravidelným zdrojem příjmů?\n2. **Živnost:** Mám zřízené živnostenské oprávnění (IČO)?\n3. **Barter:** Uvědomuji si, že produkty 'zdarma' za recenzi (mobil, oblečení) jsou nepeněžní příjem, který se musí zdanit?")
+                elif "Airbnb" in situace_praxe:
+                    st.success("1. **Služby vs. Nájem:** Poskytuji jen holý nájem, nebo i služby (úklid, snídaně, povlečení)? Pokud služby, jde o ubytovací službu (podnikání).\n2. **Místní poplatky:** Odvádím obci rekreační/ubytovací poplatek za každého hosta?\n3. **DPH:** Nezačal/a jsem poskytováním služeb do zahraničí (platformě Airbnb) splňovat podmínky pro registraci k DPH (tzv. identifikovaná osoba)?")
+                elif "kryptoměn" in situace_praxe:
+                    st.success("1. **Kryptoměna jako majetek:** Vím o tom, že krypto se v ČR nedaní jako akcie, ale jako nehmotný majetek?\n2. **Časový test:** Jsem si vědom/a, že na krypto NEPLATÍ tříletý časový test pro osvobození daně jako u akcií?\n3. **Směna:** Vím, že se daní nejen prodej za koruny, ale i to, když za Bitcoin nakoupím Ethereum nebo si za krypto koupím auto?")
+                elif "doučování" in situace_praxe:
+                    st.success("1. **Soustavnost:** Doučuji někoho jednorázově před maturitou (příležitostný příjem do 30 000 Kč ročně), nebo učím každý týden (soustavná činnost = nutnost živnosti)?\n2. **Evidence:** Vedu si evidenci, kolik peněz jsem reálně převzal/a, abych případně doložil/a, že jsem pod limitem?")
+                elif "brigáda" in situace_praxe:
+                    st.success("1. **Limit odvodů:** Mám hrubý výdělek do 10 000 Kč měsíčně (DPP), abych neplatil/a sociální a zdravotní pojištění?\n2. **Růžový papír:** Mám podepsané Prohlášení poplatníka (slevu na dani), a nemám ho podepsané u dvou zaměstnavatelů zároveň?\n3. **Vrácení daně:** Vím o tom, že si na jaře mohu podat Daňové přiznání a stát mi sraženou daň pravděpodobně vrátí?")
+
+        st.markdown("""
+        <div class='box-green'>
+            ✅ <b>Co si zapamatovat z tohoto bloku:</b><br>
+            Moderní stát s tebou mluví digitálně. Mít datovou schránku a BankID znamená ušetřit dny života strávené na úřadech. A hlavně: Danit nemusíš jen to, co ti stát v zákoně <b>výslovně osvobodí</b>. Aplikace a internetové platformy sice usnadňují výdělek, ale <b>nezbavují tě odpovědnosti znát zákony</b>. Ignorance ("já myslel, že z TikToku se daně neplatí") před finančním úřadem nikdy neobstojí.
+        </div>
+        """, unsafe_allow_html=True)
