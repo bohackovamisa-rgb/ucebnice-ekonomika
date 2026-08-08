@@ -591,3 +591,149 @@ def render():
             
             if st.form_submit_button("Uložit Krok 3 do Projektového pasu"):
                 st.success("Krok 3 úspěšně uložen do tvého projektového pasu!")
+# =====================================================================
+        # PODKAPITOLA 1.5: ORGANIZAČNÍ STRUKTURY FIREM
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 1.5 Organizační struktury firem: Mapa tvé organizace")
+        st.write("Organizační struktura určuje vnitřní uspořádání firmy. Ukazuje, kdo komu odpovídá, jak jsou rozdělené útvary, kudy tečou informace a kdo má pravomoc rozhodovat.")
+
+        st.markdown("""
+        <div class='box-blue'>
+            🏢 <b>Jednoduše:</b> Organizační struktura je mapa firmy. Pomáhá lidem pochopit, kde jsou jejich role, kdo o čem rozhoduje, s kým spolupracují a na koho se v jaké situaci obrátit.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 1.5.1 FORMÁLNÍ A NEFORMÁLNÍ STRUKTURA
+        # ---------------------------------------------------------------------
+        st.markdown("##### 1.5.1 Formální a neformální struktura")
+        st.write("V každé firmě fungují vedle sebe dvě struktury – ta, která je nakreslená na papíře, a ta, která reálně žije na chodbičkách a v chatu.")
+
+        col_str1, col_str2 = st.columns(2)
+        with col_str1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #1e40af;">📄 Formální struktura</h5>
+                <b>Co znamená:</b> Oficiálně dané vztahy, pozice, pravomoci a odpovědnosti stanovené vedením.<br><br>
+                <b>Příklady:</b> Organigram školy, popisy pracovních pozic, smlouva, oficiální vedoucí oddělení.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_str2:
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #b45309;">💬 Neformální struktura</h5>
+                <b>Co znamená:</b> Přirozené vztahy, sympatie, osobní vliv a neoficiální autorita mezi lidmi.<br><br>
+                <b>Příklady:</b> Člověk, za kterým všichni chodí pro radu (i když není vedoucí), neformální skupinka na oběd, vlivný člen týmu.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🕹️ <b>Reality check: Síla neformální autority</b></div>", unsafe_allow_html=True)
+        st.write("Neformální autorita může být obrovským pomocníkem, ale i tichým zabijákem projektu. Záleží na tom, jak s ní manažer pracuje:")
+
+        neformalni_scenar = st.radio("Jak zareaguje neformální autorita v týmu?", [
+            "🟢 Kladný vliv: Neformální lídr podporuje změnu a pomáhá ostatním vysvětlit její smysl.",
+            "🔴 Záporný vliv: Neformální lídr šíří skepsi, pomluvy a v zákulisí sabotuje rozhodnutí vedení."
+        ])
+
+        if "Kladný" in neformalni_scenar:
+            st.success("✅ **Výsledek:** Tým přijme změnu 2× rychleji. Manažer získal klíčového spojence a komunikace je přirozená a hladká.")
+        else:
+            st.error("🚨 **Výsledek:** Projekt drhne, v týmu roste napětí a oficiální autorita manažera kolabuje. Moudrý manažer musí s tímto člověkem okamžitě mluvit mezi čtyřma očima a pochopit jeho výhrady.")
+
+        # ---------------------------------------------------------------------
+        # 1.5.2 ZÁKLADNÍ TYPY ORGANIZAČNÍCH STRUKTUR
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 1.5.2 Základní typy organizačních struktur")
+        st.write("Podle toho, jak se ve firmě dělí pravomoci a odbornosti, rozlišujeme 4 základní typy uspořádání:")
+
+        tab_org1, tab_org2, tab_org3, tab_org4 = st.tabs(["📐 Liniová", "🛡️ Štábní", "⚙️ Funkcionální", "🔀 Maticová"])
+
+        with tab_org1:
+            st.markdown("##### Liniová struktura (Jasný řetězec)")
+            st.write("**Jak funguje:** Nejjednodušší pyramida. Jeden podřízený má přesně jednoho přímého nadřízeného.")
+            col_l1, col_l2 = st.columns(2)
+            col_l1.success("👍 **Výhody:** Přehlednost, jasné pravomoci, nikdo nemá zmatek v tom, kdo je jeho šéf.")
+            col_l2.error("👎 **Rizika:** Nepružnost, přetížení šéfa nahoře, pomalý tok informací přes více pater.")
+
+        with tab_org2:
+            st.markdown("##### Štábní / Liniově-štábní struktura")
+            st.write("**Jak funguje:** Linioví vedoucí rozhodují, ale k ruce mají **štáb** (odborné poradce bez přímé moci prikazovat).")
+            col_s1, col_s2 = st.columns(2)
+            col_s1.success("👍 **Výhody:** Manažer má odbornou podporu (např. právník, HR specialista, analytik).")
+            col_s2.error("👎 **Rizika:** Štáb sice radí, ale nenese přímou odpovědnost za reálný výsledek na provozu.")
+
+        with tab_org3:
+            st.markdown("##### Funkcionální struktura (Podle odbornosti)")
+            st.write("**Jak funguje:** Firma je rozdělená na specializovaná oddělení: Marketing, Finance, Výroba, HR, IT.")
+            col_f1, col_f2 = st.columns(2)
+            col_f1.success("👍 **Výhody:** Vysoká odbornost a specializace lidí v daném oboru.")
+            col_f2.error("👎 **Rizika:** Vznik 'sil' – oddělení spolu málo komunikují a hádají se o priority.")
+
+        with tab_org4:
+            st.markdown("##### Maticová struktura (Projektová mašinérie)")
+            st.write("**Jak funguje:** Kombinuje odborná oddělení a konkrétní projektové týmy. Pracovník má **dva nadřízené**!")
+            col_m1, col_m2 = st.columns(2)
+            col_m1.success("👍 **Výhody:** Extrémně pružné, skvělé pro projekty, inovace a týmovou spolupráci napříč obory.")
+            col_m2.error("👎 **Rizika:** Dvojí podřízenost – riziko konfliktů, čí úkol má přednost.")
+
+        st.markdown("<div class='box-purple'>🎒 <b>Příklad z praxe: Maticová struktura na školním projektu</b></div>", unsafe_allow_html=True)
+        st.write("Představ si, že jsi student/ka grafiky. Tví dva šéfové ti zadají úkol:")
+
+        col_mat1, col_mat2 = st.columns(2)
+        with col_mat1:
+            st.info("🎨 **Funkční vedoucí (Šéf grafického oddělení):**\n*'Zajímá mě vizuální čistota, dodržení brandu a špičková kvalita grafiky. Na plakátu pracuj alespoň 3 dny!'*")
+        with col_mat2:
+            st.warning("🎪 **Projektový vedoucí (Šéf festivalu):**\n*'Potřebuji plakát hned zítra ráno, jinak nestihneme tisk! Kvalita nemusí být perfektní, hlavní je rychlost.'*")
+
+        st.caption("👉 *A přesně v tento moment vzniká maticové dilema! Výhodou je, že projekt dostane grafika od odborníka, ale grafik musí umět balancovat mezi požadavky obou šéfů.*")
+
+        # ---------------------------------------------------------------------
+        # 1.5.3 ROZPĚTÍ ŘÍZENÍ
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 1.5.3 Rozpětí řízení: Kolik lidí zvládne jeden manažer?")
+        st.write("Rozpětí řízení určuje **počet podřízených, kteří přímo podléhají jednomu vedoucímu**.")
+
+        st.markdown("<div class='box-purple'>🕹️ <b>Simulátor rozpětí řízení: Vyzkoušej si roli šéfa</b></div>", unsafe_allow_html=True)
+        st.write("Posouvej sliderem a sleduj, jak se mění charakteristika organizace s počtem tvých přímých podřízených:")
+
+        pocet_podrizenych = st.slider("Počet lidí, které přímo řídíš:", min_value=2, max_value=25, value=5, step=1)
+
+        if pocet_podrizenych <= 6:
+            st.info(f"📏 **Úzké rozpětí řízení ({pocet_podrizenych} lidí na 1 manažera)**")
+            st.markdown("""
+            * **Jak vypadá organizace:** 'Vysoká' pyramida s mnoha úrovněmi řízení a mezivedoucími.
+            * **Výhody:** Máš na každého čas, můžeš detailně kontrolovat a mentorovat, vhodné pro složité/rizikové úkoly (např. chirurgie, vývoj jádra).
+            * **Nevýhody:** Drahý provoz (hodně manažerů), pomalá byrokracie a pomalý tok informací shora dolů.
+            """)
+        elif 7 <= pocet_podrizenych <= 12:
+            st.success(f"⚖️ **Optimalní/Vyvážené rozpětí řízení ({pocet_podrizenych} lidí na 1 manažera)**")
+            st.markdown("""
+            * **Jak vypadá organizace:** Zdravý kompromis mezi kontrolou a samostatností.
+            * **Výhody:** Zvládáš sledovat výstupy, lidé mají prostor pro vlastní nápady a komunikace je dostatečně rychlá.
+            """)
+        else:
+            st.warning(f"📐 **Široké rozpětí řízení ({pocet_podrizenych} lidí na 1 manažera)**")
+            st.markdown("""
+            * **Jak vypadá organizace:** 'Plochá' struktura s málo úrovněmi (častá u startupů nebo McDonald's).
+            * **Výhody:** Blesková komunikace, nízké náklady na manažery, velká samostatnost podřízených.
+            * **Nevýhody:** Manažer nestíhá reagovat, hrozí přetížení, přehlížení chyb a chaos u nezkušeného týmu.
+            """)
+
+        # WORKBOOK KROK 4 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 4: Organizační mapa tvého projektu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok4"):
+            st.selectbox("1. Jaký typ organizační struktury se nejlépe hodí pro tvůj projekt?:", [
+                "Liniová (Jednoduchá pyramida s jedním šéfem)",
+                "Funkcionální (Rozděleno podle oborů: Marketing, Výroba, IT...)",
+                "Maticová (Projektový tým se skládá ze specialistů z různých oborů)",
+                "Plochá / Široká (Všichni komunikujeme přímo s zakladatelem)"
+            ])
+            st.text_area("2. Jaké zvolíš rozpětí řízení pro hlavního manažera a jak ošetříte neformální vztahy v týmu?:", placeholder="např. Hlavní manažer pořídí 4 vedoucí sekcí (úzké rozpětí), aby nebyl přetížen. Neformální lídr bude v týmu mít roli inovátora...")
+            
+            if st.form_submit_button("Uložit Krok 4 do Projektového pasu"):
+                st.success("Krok 4 úspěšně uložen! Tvá organizace má jasnou strukturu i pravidla.")
