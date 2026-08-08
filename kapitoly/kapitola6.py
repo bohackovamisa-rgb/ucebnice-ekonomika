@@ -1766,3 +1766,145 @@ def render():
 
             if st.form_submit_button("Uložit Krok 11 do Projektového pasu"):
                 st.success("Krok 11 úspěšně uložen! Tvá značka má svůj příběh, vizi i jasnou tvář.")
+# ---------------------------------------------------------------------
+        # 3.1.3 STRATEGIE ZNAČKY: REBRANDING A EXTENZE ZNAČKY
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.1.3 Strategie značky: Rebranding a Extenze značky")
+        st.write("Jakmile značka na trhu vyroste, čelí dvěma výzvám: jak zůstat moderní pro novou generaci (**Rebranding**) a jak využít své dobré jméno pro nové produkty (**Extenze značky**).")
+
+        col_str1, col_str2 = st.columns(2)
+        with col_str1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #1e40af;">🔄 Rebranding (Změna tváře)</h5>
+                <b>Co to je:</b> Změna image značky – od nového loga, barev a vizuálu až po celkový tón komunikace.<br><br>
+                <b>Kdy se dělá:</b> Značka působí zastarale, chce oslovit mladší generaci, změnila majitele nebo napravuje poškozenou reputaci.<br><br>
+                <b>Příklad:</b> McDonald's změnil podklad loga z červené na tmavě zelenou, aby působil více ekologicky a prémiově.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_str2:
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #b45309;">🌿 Extenze značky (Využití dobrého jména)</h5>
+                <b>Co to je:</b> Rozšíření známé značky do úplně nové kategorie produktů.<br><br>
+                <b>Výhody:</b> Novinka hned od startu těží z důvěry existující značky.<br>
+                <b>Riziko (Rozmělnění značky):</b> Pokud se rozšíření nepovede nebo nedává smysl, poškodí to i původní značku.<br><br>
+                <b>Příklad:</b> Značka sportovního oblečení začne prodávat hodinky nebo parfémy.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # =====================================================================
+        # PODKAPITOLA 3.2: NÁKUPNÍ CHOVÁNÍ A PSYCHOLOGIE SPOTŘEBITELE
+        # =====================================================================
+        st.divider()
+        st.markdown("#### 3.2 Nákupní chování a psychologie spotřebitele")
+        st.write("Nákupní chování zkoumá, jak se lidé rozhodují při utrácení peněz, co je ovlivňuje a proč si vyberou konkrétní produkt. **Člověk se málokdy rozhoduje 100% racionálně.** Do nákupu masivně vstupují emoce, společenský tlak, strach z vyčlenění, nálada i okamžité impulzy.")
+
+        # ---------------------------------------------------------------------
+        # 3.2.1 PROCES NÁKUPNÍHO ROZHODOVÁNÍ
+        # ---------------------------------------------------------------------
+        st.markdown("##### 3.2.1 Proces nákupního rozhodování (5 fází)")
+        st.write("Každý větší nákup probíhá v pěti na sebe navazujících krokách:")
+
+        tab_dec1, tab_dec2, tab_dec3, tab_dec4, tab_dec5 = st.tabs([
+            "1️⃣ Rozpoznání potřeby", 
+            "2️⃣ Hledání informací", 
+            "3️⃣ Hodnocení alternativ", 
+            "4️⃣ Nákupní rozhodnutí", 
+            "5️⃣ Poprodejní chování"
+        ])
+
+        with tab_dec1:
+            st.markdown("**1. Rozpoznání potřeby (Uvědomění problému)**")
+            st.write("Zákazník si uvědomí rozdíl mezi současným stavem a tím, co by chtěl mít.")
+            st.info("💻 *Příklad:* Studentovi praskne displej na starém notebooku nebo zjistí, že současný počítač nestíhá školní programy.")
+
+        with tab_dec2:
+            st.markdown("**2. Hledání informací (Průzkum)**")
+            st.write("Zákazník zjišťuje možnosti, čte recenze, sleduje videa na YouTube, ptá se kamarádů nebo hledá na Heurece.")
+            st.warning("🔍 *Příklad:* Student sleduje srovnávací recenze notebooků do 15 000 Kč a ptá se spolužáků v chatu.")
+
+        with tab_dec3:
+            st.markdown("**3. Hodnocení alternativ (Porovnávání)**")
+            st.write("Porovnává kritéria: cena, výkon, značka, design, záruka, výdrž baterie.")
+            st.error("⚖️ *Příklad:* Rozhoduje se mezi lehkým notebookem s dlouhou výdrží baterie a výkonnějším, ale těžším modelem.")
+
+        with tab_dec4:
+            st.markdown("**4. Nákupní rozhodnutí (Akce)**")
+            st.write("Vybere konkrétní produkt a provede nákup v e-shopu nebo kamenné prodejně.")
+            st.success("🛒 *Příklad:* Vloží vybraný notebook do košíku, zvolí platbu a doručení do Zásilkovny.")
+
+        with tab_dec5:
+            st.markdown("**5. Poprodejní chování (Vyhodnocení a kognitivní disonance)**")
+            st.write("Po nákupu vyhodnocuje spokojenost. Zde vzniká buď radost a doporučení, nebo pochybnosti.")
+
+        st.markdown("""
+        <div class='box-purple' style='margin-top: 15px;'>
+            🧠 <b>Kognitivní disonance (Nákupní výčitky):</b><br>
+            Je to nepříjemný pocit pochybnosti těsně po drahém nákupu: <i>„Utratil/a jsem zbytečně moc peněz? Neměl/a jsem koupit raději jiný model?“</i><br>
+            <b>Co dělají moudré firmy:</b> Posílají e-mail s ubezpečením (<i>„Skvělá volba! Tady je návod, jak z notebooku vytěžit maximum“</i>), dávají prodlouženou záruku a nabízejí snadné vrácení zboží.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 3.2.2 FAKTORY OVLIVŇUJÍCÍ NÁKUPNÍ CHOVÁNÍ
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.2.2 Faktory ovlivňující nákupní chování")
+        st.write("Nákupní rozhodnutí ovlivňují 4 hlavní skupiny vlivů:")
+
+        col_f1, col_f2 = st.columns(2)
+        with col_f1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #1e40af;">🧑 Osobní faktory</h5>
+                Věk, příjem, životní fáze, povolání, životní styl, vzdělání a zkušenosti.<br><br>
+                <i>Příklad: Student, rodič samoživitel a generální ředitel mají úplně jiné nákupní priority a finanční limity.</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; border-radius: 4px; height: 100%; margin-top: 10px;">
+                <h5 style="margin-top: 0; color: #b45309;">🧠 Psychologické faktory</h5>
+                Vnímání, postoje, motivace, emoce, osobnost a potlačené potřeby.<br><br>
+                <i>Příklad: Maslowova pyramida vysvětluje, proč někdo kupuje jídlo pro přežití, zatímco jiný si kupuje luxusní značku pro uznání.</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_f2:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">👥 Sociální faktory</h5>
+                Rodina, přátelé, vrstevníci, influenceři, celebrity a <b>referenční skupiny</b>.<br><br>
+                <i>Příklad: Teenager si koupí konkrétní boty ne proto, že jsou nejlepší, ale proto, že je nosí všichni v jeho partě.</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #6366f1; border-radius: 4px; height: 100%; margin-top: 10px;">
+                <h5 style="margin-top: 0; color: #4338ca;">🌍 Kulturní faktory</h5>
+                Kultura, podkultura, hodnoty společnosti, tradice a náboženské normy.<br><br>
+                <i>Příklad: V některých zemích jsou symbolem statusu drahá auta, v jiných udržitelnost a střídmý životní styl.</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            👥 <b>Co je to Referenční skupina?:</b> Je to skupina lidí, se kterými se člověk porovnává nebo ke kterým chce patřit (např. spolužáci, herní komunita, lidé z fitka, oblíbený streamer). Doporučení od referenční skupiny funguje 10× silněji než běžná reklama.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 12 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 12: Psychologie a Nákupní cesta tvého zákazníka</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok12"):
+            st.text_area("1. ROZPOZNÁNÍ POTŘEBY – Jaký konkrétní 'spouštěč' nebo problém přiměje zákazníka hledat tvůj produkt?:", placeholder="např. Zákazníkovi dojde šťáva před důležitou zkouškou / nemá co nosit na školní akce...")
+            col_b_p1, col_b_p2 = st.columns(2)
+            with col_b_p1:
+                st.text_input("2. REFERENČNÍ SKUPINA (Kdo ovlivňuje jeho nákup?):", placeholder="např. Spolužáci ze třídy, známí tiktokeři")
+            with col_b_p2:
+                st.text_input("3. OBRANA PROTI KOGNITIVNÍ DISONANCI (Jak ho uklidníš po nákupu?):", placeholder="např. Pošleme děkovný e-mail s dárkovým stickerem")
+
+            if st.form_submit_button("Uložit Krok 12 do Projektového pasu"):
+                st.success("Krok 12 úspěšně uložen! Máš zmapované chování i psychologii svého zákazníka.")
