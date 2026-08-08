@@ -511,58 +511,90 @@ def render():
     # DOKONČENÍ SEKCE 2: NEPŘÍMÉ DANĚ A ROZPOČET (2.6 - 2.9)
     # =========================================================================
 
+# =====================================================================
+        # DOKONČENÍ SEKCE 2: NEPŘÍMÉ DANĚ A SCHÉMA ROZDĚLOVÁNÍ (2.6 - 2.6.1)
+        # =====================================================================
+
         st.divider()
         st.markdown("#### 2.6 Nepřímé daně: Neviditelné daně v každém nákupu")
-        st.write("Tyto daně neplatíš finančnímu úřadu přímo ze svého účtu. Jsou už chytře schované v ceně zboží nebo služby, které si kupuješ. Platíš je ty jako zákazník, ale státu je fyzicky posílá obchodník.")
+        st.write("Nepřímé daně jsou zahrnuté přímo v ceně zboží nebo služby. Spotřebitel (ty) je fakticky zaplatí v ceně u pokladny, ale státu je fyzicky odvádí prodejce nebo výrobce.")
 
-        col_nep1, col_nep2, col_nep3 = st.columns(3)
-        with col_nep1:
-            st.info("🛒 **DPH (Daň z přidané hodnoty)**\nZahrnutá v ceně skoro všeho: oblečení, lístek na koncert, software, jídlo. Je to hlavní zdroj peněz pro stát.")
-        with col_nep2:
-            st.warning("🚬 **Spotřební daň (Daň z hříchu)**\nUvalená na věci s dopadem na zdraví: tabák, alkohol. Stát tím vydělává, ale i odrazuje od spotřeby.")
-        with col_nep3:
-            st.success("🌱 **Ekologická daň**\nDaň na paliva a energie. Cílem je promítnout ničení životního prostředí (např. emise) do ceny, aby si to lidi rozmysleli.")
+        tab_dph, tab_spotrebni, tab_eko = st.tabs(["🛒 DPH", "🚬 Spotřební daně", "🌱 Ekologické daně"])
+        
+        with tab_dph:
+            st.markdown("##### DPH (Daň z přidané hodnoty)")
+            st.write("Daň zahrnutá v ceně většiny zboží a služeb (mobil, oblečení, kadeřnictví, lístek na akci, software).")
+            st.info("💡 **Proč existuje?** Je to absolutně největší a nejstabilnější příjem státního rozpočtu. Platíme ji všichni každý den.")
+            
+        with tab_spotrebni:
+            st.markdown("##### Spotřební daně (Daně z hříchu / Sin taxes)")
+            st.write("Daně uvalené na vybrané výrobky, které mají negativní dopad na zdraví nebo spotřebu (tabák, alkohol, pohonné hmoty).")
+            st.warning("🚬 **Daně z hříchu:** Stát tím získává obrovské příjmy a zároveň se snaží odrazovat lidi od škodlivé spotřeby, která státu později přináší náklady (např. léčba nemocí). Podobně se ve světě dnes diskutují daně z vapes, energetických nápojů nebo sladkých limonád.")
+            
+        with tab_eko:
+            st.markdown("##### Ekologické daně")
+            st.write("Daně související s energiemi a dopady na životní prostředí (vybraná paliva, environmentálně zatěžující činnosti).")
+            st.success("🌱 **Ekologická logika:** Pokud určitá činnost vytváří náklady pro okolí (smog, hluk, uhlíková stopa), stát tuto 'externalitu' promítne do ceny. Cílem je, aby 'levné na účtence' neznamenalo skrytě 'drahé pro životní prostředí'.")
 
-        st.markdown("<div class='box-purple'>🕹️ <b>Rozpitvej si cenu benzínu!</b></div>", unsafe_allow_html=True)
-        st.write("Myslíš, že peníze za benzín jdou jen naftařům? Zkus si s posuvníkem nasimulovat průměrnou cenu jednoho litru a podívej se, kdo si bere kolik.")
+        st.markdown("<div class='box-purple'>💻 <b>Úkol: Anatomie účtenky</b></div>", unsafe_allow_html=True)
+        st.write("Když si koupíš produkt, část tvých peněz si nenechá obchod, ale musí je odevzdat státu. Zkus si najít účtenku a nasimuluj si to:")
         
-        cena_benzinu = st.slider("Cena 1 litru Naturalu 95 na pumpě (Kč):", 25.0, 55.0, 40.0, step=0.5)
+        col_calc1, col_calc2 = st.columns(2)
+        with col_calc1:
+            cena_s_dph = st.number_input("Zadej celkovou cenu nákupu na účtence (Kč):", value=15000, step=100)
+        with col_calc2:
+            sazba_dph = st.radio("Vyber sazbu DPH:", ["21 % (Oblečení, mobil, většina zboží)", "12 % (Potraviny, léky, knihy)"])
         
-        # Orientacni vypocet (Spotrebni dan na benzin je cca 12,84 Kc/litr, DPH je 21% z celku)
-        spotrebni_dan_benzin = 12.84
-        dph_benzin = round(cena_benzinu - (cena_benzinu / 1.21), 2)
-        cista_cena = round(cena_benzinu - spotrebni_dan_benzin - dph_benzin, 2)
-        danove_zatiženi = round(((spotrebni_dan_benzin + dph_benzin) / cena_benzinu) * 100, 1)
-
-        # Vizualizace pomoci plotly (kolacovy graf)
-        fig_palivo = go.Figure(data=[go.Pie(
-            labels=['Samotný benzín a marže pumpy', 'Spotřební daň (pevná částka)', 'DPH (21 % z celku)'],
-            values=[cista_cena, spotrebni_dan_benzin, dph_benzin],
-            hole=.4,
-            marker_colors=['#3b82f6', '#f59e0b', '#ef4444']
-        )])
-        fig_palivo.update_layout(margin=dict(t=20, b=20, l=20, r=20), height=300)
+        # Výpočet DPH tzv. "shora"
+        sazba_cislo = 1.21 if "21" in sazba_dph else 1.12
+        zaklad_dane = round(cena_s_dph / sazba_cislo, 2)
+        castka_dph = round(cena_s_dph - zaklad_dane, 2)
         
-        col_graf1, col_graf2 = st.columns([1, 1])
-        with col_graf1:
-            st.plotly_chart(fig_palivo, use_container_width=True)
-        with col_graf2:
-            st.markdown(f"**Rozpad ceny {cena_benzinu} Kč za litr:**")
-            st.markdown(f"⛽ Hodnota benzínu a zisk pumpy: **{cista_cena} Kč**")
-            st.markdown(f"💸 DPH státu: **{dph_benzin} Kč**")
-            st.markdown(f"🚬 Spotřební daň státu: **{spotrebni_dan_benzin} Kč**")
-            st.error(f"Z každého litru jde státu cca **{danove_zatiženi} %** ceny!")
+        st.write("**Rozpad tvé zaplacené částky:**")
+        col_u1, col_u2, col_u3 = st.columns(3)
+        col_u1.metric("Základ daně (Zůstane obchodu)", f"{zaklad_dane} Kč")
+        col_u2.metric("Sazba DPH", sazba_dph.split(" ")[0] + " %")
+        col_u3.metric("Částka DPH (Jde státu)", f"{castka_dph} Kč")
 
         st.divider()
-        st.markdown("#### 2.6.1 Kam ty peníze z daní vlastně tečou?")
-        st.write("Systém se nazývá *Rozpočtové určení daní*. Peníze se podle zákonných tabulek dělí mezi stát, kraje a samotné obce.")
+        st.markdown("#### 2.6.1 Schéma: Jak se daně dělí a kam putují")
+        st.markdown("""
+        <div class='box-blue'>
+            🧭 <b>Jak schéma číst:</b> Daně se dělí na <b>přímé</b> (z příjmu/majetku) a <b>nepřímé</b> (schované v cenách v obchodě). Jakmile stát peníze vybere, musí je podle tabulek rozdělit mezi <b>státní rozpočet, kraje a obce</b>. Přesné podíly se v čase mění, proto je důležité pochopit hlavní princip (kdo co dostává), než se učit nazpaměť procenta.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("##### 🗺️ Mapa daňových toků (Kde končí tvé peníze?)")
         
-        with st.expander("Ukaž mi, kdo dostane peníze z jaké daně"):
+        with st.expander("💸 DPFO, DPPO a DPH (Tzv. Sdílené daně)"):
+            st.write("**Daň z příjmů (fyzických i právnických osob) a DPH** se označují jako sdílené daně. Nejdou celé jednomu úřadu, ale obrovský balík peněz se dělí (tzv. Rozpočtové určení daní):")
             st.markdown("""
-            * **DPH a Daň z příjmů (fyzických i právnických osob):** Jde o tzv. *sdílené daně*. Rozdělují se. Stát z nich platí důchody a armádu, kraje z nich platí střední školy, obce z nich svítí.
-            * **Daň z nemovitosti:** Zůstává 100 % obci, ve které dům stojí. Z toho ti starosta zaplatí chodník a popeláře.
-            * **Spotřební daně (alkohol, benzín):** Jdou primárně přímo státu na jeho chod.
+            * 🏛️ **Stát** si nechá většinu. Platí z ní plošné věci: důchody, sociální systém, armádu, platy hasičů, dálnice.
+            * 🏢 **Obce a Kraje** dostanou svou porci, ze které financují regionální věci: místní školy, nemocnice, MHD a stavbu infrastruktury.
             """)
+            
+        with st.expander("🏡 Daň z nemovitých věcí (Přímo tvé obci)"):
+            st.write("**Tato daň připadá typicky ze 100 % přímo obci nebo městu, kde nemovitost stojí.**")
+            st.info("🏙️ **Příklad z praxe:** Když tvá rodina zaplatí daň z pozemku nebo domu, peníze pomáhají rozpočtu vaší radnice. Obec z nich neplatí 'jen tu jednu lampu před vaším domem', ale hodí je do společné kasy – na chodníky, údržbu zeleně, svoz odpadu, provoz místní školky nebo hřiště.")
+            
+        with st.expander("🚬 Spotřební a 🌱 Ekologické daně (Přímo státu)"):
+            st.write("**Směřují především do státního (nebo veřejného) rozpočtu.**")
+            st.write("Financují obecné výdaje státu a zároveň plní funkci jakési pokuty za to, že daný produkt vytváří budoucí zdravotní či ekologické náklady pro celou společnost.")
+
+        with st.expander("📦 Clo (Přímo Evropské unii)"):
+            st.write("**Souvisí s ochranou trhu celé EU.**")
+            st.write("Když si objednáš balíček ze země mimo EU, vybírá se clo. Část peněz (provize) zůstane ČR za to, že to úředníci zpracovali, ale naprostá většina putuje rovnou do společného rozpočtu Evropské unie na financování evropských politik.")
+
+        st.markdown("<br><div class='box-yellow'>💬 <b>Diskusní aréna: Spravedlnost mezi regiony</b></div>", unsafe_allow_html=True)
+        with st.form("diskuse_regiony"):
+            st.write("Je spravedlivější, aby víc peněz z daní zůstávalo obcím, kde se vyberou (např. v bohaté Praze nebo v místech s velkými fabrikami), nebo aby se velká část přerozdělovala od bohatších k chudším regionům, aby se rozvíjel celý stát?")
+            nazor_region = st.radio("Zvol si svůj postoj:", [
+                "Ať peníze zůstanou tam, kde vznikly. Úspěšná města by neměla doplácet na ta pasivní.",
+                "Stát musí být solidární. Peníze z bohatých center se musí rozdělovat i do chudších regionů (např. na kvalitní školy a silnice pro všechny).",
+                "Měl by se najít kompromis. Zohlednit, kde peníze vznikly, ale nastavit i minimální podporu pro chudší."
+            ])
+            if st.form_submit_button("Odeslat názor k zamyšlení"):
+                st.success("Přesně kvůli této otázce se starostové s vládou hádají u každé úpravy zákona o rozpočtovém určení daní! Každý pohled má své silné argumenty.")
 
         st.divider()
         st.markdown("#### 2.7 a 2.8 Státní rozpočet (Velká státní peněženka)")
