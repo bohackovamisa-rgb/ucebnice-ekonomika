@@ -809,8 +809,8 @@ def render():
         """, unsafe_allow_html=True)
 
 
-        # =====================================================================
-        # PODKAPITOLA 2.10: STÁTNÍ DLUH A DLUHOPISY
+# =====================================================================
+        # PODKAPITOLA 2.10: STÁTNÍ DLUH A DLUHOPISY (VČETNĚ BANKROTU)
         # =====================================================================
 
         st.divider()
@@ -823,12 +823,10 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-        with st.expander("❓ FAQ: Kdo to kupuje a proč nás to jako Gen Z zajímá?"):
+        with st.expander("❓ FAQ: Kdo dluhopisy kupuje a proč stát dluhy dělá?"):
             st.markdown("""
             * **Kdo kupuje státní dluhopisy?** Banky, investiční fondy, pojišťovny, zahraniční investoři, ale někdy i běžní občané (např. v ČR tzv. Dluhopis Republiky).
             * **Proč je stát vůbec vydává?** Aby financoval letošní schodek rozpočtu, pokryl nečekané krizové výdaje, nebo tzv. refinancoval starší dluh (zkrátka si vezme novou půjčku, aby mohl splatit tu starou, jejíž čas právě vypršel).
-            * **Je státní dluhopis bez rizika?** Obvykle se považuje za velmi bezpečnou investici (protože státy typu ČR nekrachují často). Ale pozor! Není to kouzelný výnos bez rizika. O tvé skutečné bohatství tě může připravit **inflace**.
-            * **Jak se dluh týká naší generace (Gen Z)?** Každý dluh se jednou musí zaplatit. Extrémní dluh znamená, že stát musí platit obrovské úroky, takže mu nezbydou peníze na investice, školství nebo platy. V budoucnu to tak zaplatíme my – vyššími daněmi nebo škrty ve službách.
             """)
 
         st.markdown("<div class='box-purple'>💸 <b>Simulátor investora: Zničí ti inflace tvůj dluhopis?</b></div>", unsafe_allow_html=True)
@@ -851,17 +849,56 @@ def render():
         realna_hodnota = konecna_castka / ((1 + (inflace / 100)) ** roky)
         rozdil_kupni_sily = realna_hodnota - investice
 
-        st.write(f"⏱️ **Výsledek tvé investice po {roky} letech:**")
         col_res1, col_res2 = st.columns(2)
-        
         with col_res1:
             st.metric("Peníze fyzicky na účtu (Nominální)", f"{int(konecna_castka)} Kč", f"+ {int(cisty_zisk_nominalni)} Kč z úroků")
-            st.write("*(Tohle číslo uvidíš v internetovém bankovnictví. Stát dodržel slovo a vyplatil tě.)*")
+            st.write("*(Tohle číslo uvidíš v bance. Stát dodržel slovo a vyplatil tě.)*")
             
         with col_res2:
             if rozdil_kupni_sily >= 0:
                 st.metric("Skutečná hodnota peněz (Reálná)", f"{int(realna_hodnota)} Kč", f"+ {int(rozdil_kupni_sily)} Kč v kupní síle")
-                st.success("✅ **Vyhrál/a jsi!** Úrok z dluhopisu byl vyšší než inflace. Skutečně jsi zbohatl/a a koupíš si za tyto peníze více věcí než před pěti lety.")
+                st.success("✅ **Vyhrál/a jsi!** Úrok z dluhopisu byl vyšší než inflace. Skutečně jsi zbohatl/a.")
             else:
                 st.metric("Skutečná hodnota peněz (Reálná)", f"{int(realna_hodnota)} Kč", f"{int(rozdil_kupni_sily)} Kč v kupní síle", delta_color="inverse")
-                st.error("❌ **Prohrál/a jsi s inflací.** Sice máš na účtu číselně víc korun, ale věci v obchodech zdražily mnohem rychleji. V reálu sis za svou původní investici mohl/a koupit víc věcí než teď z toho, co ti vrátil stát.")
+                st.error("❌ **Prohrál/a jsi s inflací.** Sice máš víc peněz, ale v obchodech vše zdražilo ještě víc.")
+
+        st.divider()
+        st.markdown("##### 📈 Tvůj osobní podíl na státním dluhu")
+        st.write("Dluh státu se neplatí sám od sebe. Dluží ho občané. Pokud celkový dluh ČR (který je v bilionech korun) vydělíme počtem obyvatel (včetně novorozenců), získáme **dluh na jednoho Čecha**.")
+
+        # Simulátor budoucího dluhu
+        st.markdown("**Vyzkoušej si, kde to může skončit:** Nastav, jaký průměrný roční schodek (deficit) budou politici v následujících 10 letech sekat. Graf ti ukáže, jak se vyvíjel tvůj osobní dluh v minulosti a kam vystřelí v budoucnu.")
+        
+        roky_historie = [2000, 2005, 2010, 2015, 2020, 2024]
+        dluh_historie = [28000, 68000, 128000, 158000, 192000, 295000] # Orientační data vývoje v ČR
+        
+        budouci_schodek = st.slider("Průměrný roční schodek vlády na dalších 10 let (mld. Kč):", 0, 500, 250, step=25)
+        
+        # Výpočet pro rok 2034 (10 let od 2024): 10 let * schodek mld / 10.9 milionu obyvatel
+        # 1 mld / 10.9 mil obyvatel = cca 91.7 Kč na osobu
+        prirustek_na_osobu = budouci_schodek * 10 * 91.7
+        dluh_2034 = 295000 + prirustek_na_osobu
+        
+        fig_dluh = go.Figure()
+        fig_dluh.add_trace(go.Scatter(x=roky_historie, y=dluh_historie, mode='lines+markers', name='Historie', line=dict(color='#3b82f6', width=3)))
+        fig_dluh.add_trace(go.Scatter(x=[2024, 2034], y=[295000, dluh_2034], mode='lines+markers', name='Tvá prognóza', line=dict(color='#ef4444', width=3, dash='dash')))
+        
+        fig_dluh.update_layout(title="Vývoj státního dluhu na 1 obyvatele ČR (Kč)", margin=dict(t=40, b=20, l=20, r=20), height=350)
+        st.plotly_chart(fig_dluh, use_container_width=True)
+
+        st.markdown("##### 💥 Co se stane, když stát zkrachuje (Státní bankrot)?")
+        st.write("Pokud dluh roste příliš rychle, investoři (banky) státu přestanou věřit. Řeknou si: *„Tenhle stát už nemá šanci to splatit.“* V tu chvíli odmítnou státu dál půjčovat, nebo požadují extrémní úroky (klidně 30 % ročně).")
+        
+        st.markdown("""
+        <div style="background-color: #fef2f2; padding: 15px; border-left: 5px solid #dc2626;">
+            <p><b>Státní bankrot (Default) neznamená, že stát přestane existovat na mapě. Znamená to, že státní pokladna je prázdná a stát ze dne na den oznámí, že nemůže splatit své dluhy. A dopady na občany jsou brutální:</b></p>
+            <ul>
+                <li><b>Zmrznutí státních peněz:</b> Stát nemá na účtu hotovost. Ze dne na den se tak zpozdí nebo nevyplatí důchody a dramaticky se sníží platy učitelů, hasičů, policistů či lékařů.</li>
+                <li><b>Drastické škrty a daně:</b> Vláda musí okamžitě najít peníze. Služby (jako školy a nemocnice) přestanou být zdarma, zruší se veškeré dotace a skokově se zvýší daně obyvatelům.</li>
+                <li><b>Propad měny a hyperinflace:</b> Pokud se stát pokusí z dluhu "vykupit" tím, že natiskne nové peníze, měna ztratí hodnotu. V obchodech vše extrémně zdraží a celoživotní úspory lidí se promění v bezcenné papírky.</li>
+                <li><b>Ztráta důvěry:</b> Na záchranu často musí přijet MMF (Mezinárodní měnový fond). Ten státu půjčí jen pod podmínkou těch nejtvrdších a nejbolestivějších škrtů (přesně to zažilo např. <b>Řecko nebo Argentina</b>).</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.info("💡 **Poučení pro Gen Z:** Každý dluh se musí zaplatit. Extrémní dluh znamená, že stát musí platit obrovské úroky (tzv. obsluha dluhu). Tyto peníze pak chybí na školy, modernizaci nebo platy. V budoucnu to tak zaplatí dnešní mladá generace – mnohem vyššími daněmi nebo nižšími důchody.")
