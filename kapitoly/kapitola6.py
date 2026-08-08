@@ -2112,7 +2112,7 @@ def render():
         st.markdown("#### 3.4 Moderní formy a trendy v digitálním marketingu")
         st.write("Moderní marketing se posouvá na obrazovky telefonů a počítačů. Výhodou digitálního marketingu je přesné cílení na konkrétní lidi, bleskové měření výsledků a možnost testování. Rizikem je naopak přehlcení zákazníků reklamou a boj s neustále se měnícími algoritmy.")
 
-        # ---------------------------------------------------------------------
+# ---------------------------------------------------------------------
         # 3.4.1 DIGITÁLNÍ / ONLINE MARKETING
         # ---------------------------------------------------------------------
         st.markdown("##### 3.4.1 Základní nástroje digitálního marketingu")
@@ -2134,7 +2134,7 @@ def render():
             st.write("Placená reklama ve vyhledávačích nebo na sociálních sítích. Neplatíš za zobrazení banneru, ale až ve chvíli, kdy na reklamu zákazník reálně klikne.")
             st.warning("📌 **Příklad:** Sponzorovaný odkaz na prvním místě v Googlu při vyhledání slova 'studentské batohy' nebo sponzorované video v feedu.")
 
-        with tab_dr3: # tab_dig3
+        with tab_dig3:  # <-- ZDE BYLA CHYBA (opraveno z tab_dr3 na tab_dig3)
             st.markdown("**E-mailový marketing (Newslettery)**")
             st.write("Přímá komunikace se stálými zákazníky přes e-mail. Má nejvyšší návratnost investic (ROI), protože e-mailová databáze je tvým vlastním majetkem (nezáleží na algoritmech).")
             st.success("📌 **Příklad:** Týdenní newsletter s novinkami, slevový kód k narozeninám nebo připomenutí *'Nezapomněl jsi něco v košíku?'*.")
@@ -2143,7 +2143,6 @@ def render():
             st.markdown("**Marketingová automatizace**")
             st.write("Chytré systémy, které posílají zprávy, doporučení nebo nabídky automaticky na základě chování zákazníka na webu.")
             st.error("📌 **Příklad:** Zákazník si 3× prohlédne konkrétní boty ➔ systém mu za 2 hodiny automaticky pošle e-mail s recenzemi na tyto boty a slevou 5 %.")
-
         # ---------------------------------------------------------------------
         # 3.4.2 SOCIAL MEDIA MARKETING A CONTENT MARKETING
         # ---------------------------------------------------------------------
