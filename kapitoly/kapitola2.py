@@ -444,7 +444,7 @@ def render():
             | **Banka státu** | Vede účty státu a poskytuje vybrané služby veřejnému sektoru. | Souvisí s pohybem peněz státu, například při placení výdajů veřejných institucí. |
             """)
 
-        # 1.2.4 Hotovost a ochranné prvky
+# 1.2.4 Hotovost a ochranné prvky
         with st.container(border=True):
             st.markdown("### 1.2.4 Hotovost, ochranné prvky bankovek a důvěra v peníze")
             st.write("Jednou z viditelných činností ČNB je péče o hotovostní oběh. ČNB vydává české bankovky a mince, stahuje z oběhu poškozené nebo neplatné peníze a stará se o to, aby hotovost byla důvěryhodná. Právě sem patří také ochranné prvky bankovek.")
@@ -466,30 +466,86 @@ def render():
             """)
 
             st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz")
-            st.write("Prohlédni si bankovku a najdi její ochranné prvky:")
-            
-            p_sel = st.selectbox("Zvol ochranný prvek pro zobrazení popisu:", [
-                "Vodoznak (pohledem)",
-                "Ochranný proužek s mikrotextem (pohledem)",
-                "Reliéfní tisk (hmatem)",
-                "Opticky proměnlivá barva (naklopením)",
-                "Soutisková značka (pohledem)",
-                "UV prvky (pomůckami)"
-            ], key="k2_1_2_4_bankovka_sel")
+            st.write("Zvol prvek v nabídce níže, sleduj jeho umístění přímo na bankovce a zjisti, jak ho v praxi ověřit:")
 
-            if "Vodoznak" in p_sel:
-                st.info("💧 **Vodoznak:** Zřetelný portrét osobnosti viditelný z obou stran při pohledu proti světlu v nepotištěném okraji.")
-            elif "Ochranný proužek" in p_sel:
-                st.info("📏 **Ochranný proužek:** Tmavý souvislý pás s negativním mikrotextem nominální hodnoty viditelný proti světlu.")
-            elif "Reliéfní tisk" in p_sel:
-                st.info("🖐️ **Reliéfní tisk:** Vystoupený povrch hlubotisku nahmatatelný na lícové straně.")
-            elif "Opticky proměnlivá barva" in p_sel:
-                st.info("🎨 **Opticky proměnlivá barva:** Mění barvu při naklonění bankovky (např. ze zelené na zlatou).")
-            elif "Soutisková značka" in p_sel:
-                st.info("🧩 **Soutisková značka:** Oboustranný tisk, který se proti světlu přesně doplňuje v celistvý symbol.")
-            else:
-                st.info("🔦 **UV prvky:** Svítící vlákna a tiskové motivy viditelné pod UV lampou.")
+            # Databáze prvků pro vizualizaci
+            prvky_bankovky = {
+                "Vodoznak (pohledem)": {
+                    "ikona": "💧",
+                    "top": "35%", "left": "22%",
+                    "nazev": "Vodoznak",
+                    "misto": "Levý nepotištěný okraj bankovky",
+                    "popis": "Zřetelný portrét osobnosti viditelný z obou stran při pohledu proti světlu.",
+                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na ním proti světlu."
+                },
+                "Ochranný proužek (pohledem)": {
+                    "ikona": "📏",
+                    "top": "45%", "left": "38%",
+                    "nazev": "Ochranný proužek s mikrotextem",
+                    "misto": "Svislý metalický pás zapuštěný do papíru",
+                    "popis": "Tmavý souvislý pás s negativním mikrotextem nominální hodnoty viditelný proti světlu.",
+                    "kontrola": "☀️ **Jak zkontrolovat:** Podívej se na bankovku proti světlu nebo ji nakloň a sleduj proměnu barev."
+                },
+                "Soutisková značka (pohledem)": {
+                    "ikona": "🧩",
+                    "top": "15%", "left": "52%",
+                    "nazev": "Soutisková značka",
+                    "misto": "Horní část bankovky",
+                    "popis": "Oboustranný tisk, ze kterého vidíš z každé strany jen část. Proti světlu se přesně doplňuje v celistvý symbol.",
+                    "kontrola": "🔍 **Jak zkontrolovat:** Prohlédni si značku proti světlu – obě strany do sebe musí přesně zapadnout."
+                },
+                "Opticky proměnlivá barva (naklopením)": {
+                    "ikona": "🎨",
+                    "top": "60%", "left": "65%",
+                    "nazev": "Opticky proměnlivá barva",
+                    "misto": "Pravá spodní část lícní strany",
+                    "popis": "Speciální tisková barva mění svůj odstín v závislosti na úhlu dopadu světla.",
+                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku – barva se změní např. ze zelené na zlatou."
+                },
+                "Reliéfní tisk (hmatem)": {
+                    "ikona": "🖐️",
+                    "top": "20%", "left": "80%",
+                    "nazev": "Reliéfní tisk (Hlubotisk)",
+                    "misto": "Portrét, nominální hodnota a hmatové značky pro nevidomé",
+                    "popis": "Vystouplý povrch hlubotisku nahmatatelný na lícové straně bankovky.",
+                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď prstem po portrétu nebo čísle – ucítíš výrazný hmatatelný reliéf."
+                },
+                "UV prvky (pomůckami)": {
+                    "ikona": "🔦",
+                    "top": "50%", "left": "50%",
+                    "nazev": "UV prvky a fluorescenční vlákna",
+                    "misto": "Po celé ploše bankovky",
+                    "popis": "Skryté tiskové motivy a světélkující vlákna zapuštěná v papíru.",
+                    "kontrola": "💡 **Jak zkontrolovat:** Posviť na bankovku UV lampou – skryté prvky světélkují žlutě a zeleně."
+                }
+            }
 
+            p_sel = st.selectbox(
+                "Zvol ochranný prvek pro zobrazení popisu:",
+                list(prvky_bankovky.keys()),
+                key="k2_1_2_4_bankovka_sel"
+            )
+
+            det = prvky_bankovky[p_sel]
+
+            # Interaktivní grafika bankovky s dynamickým hotspotem
+            st.markdown(f"""
+            <div style="position: relative; width: 100%; max-width: 600px; height: 220px; background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%); border: 2px solid #64748b; border-radius: 10px; margin: 15px auto; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+                <div style="position: absolute; top: 10px; left: 15px; font-weight: bold; color: #334155; font-size: 22px;">2000 Kč</div>
+                <div style="position: absolute; bottom: 10px; right: 15px; font-weight: bold; color: #475569; font-size: 12px;">ČESKÁ NÁRODNÍ BANKA</div>
+                <div style="position: absolute; top: 30%; right: 25%; font-size: 55px; opacity: 0.12; user-select: none;">🏛️</div>
+                
+                <!-- Dynamický svítící hotspot -->
+                <div style="position: absolute; top: {det['top']}; left: {det['left']}; transform: translate(-50%, -50%);">
+                    <div style="background-color: #ef4444; color: white; width: 36px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2px solid white; box-shadow: 0 0 12px #ef4444;">
+                        {det['ikona']}
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Kartička s detailem
+            st.info(f"{det['ikona']} **{det['nazev']}** ({det['misto']})\n\n{det['popis']}\n\n{det['kontrola']}")
         # 1.2.5 Kdo ČNB řídí
         with st.container(border=True):
             st.markdown("### 1.2.5 Kdo ČNB řídí")
