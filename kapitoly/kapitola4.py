@@ -69,13 +69,8 @@ def render():
         "7.2 Slovníček, rychlé opakování a prověrka"
     ]
     
-<<<<<<< HEAD
-    selected_section_4 = st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    st.selectbox("Přechod na podkapitolu:", section_options_4, index=0, label_visibility="collapsed")
-=======
     st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    selected_section_4 = st.selectbox("Přechod na podkapitolu:", section_options_4, index=0, label_visibility="collapsed")
->>>>>>> 85dc2bec670296c4873213a08bf23888e3d5502e
+    selected_section_4 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
     st.divider()
 
     # =========================================================================
