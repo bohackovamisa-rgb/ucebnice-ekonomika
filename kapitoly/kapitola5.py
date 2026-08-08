@@ -1232,3 +1232,76 @@ def render():
                 </ul>
             </div>
             """, unsafe_allow_html=True)
+# =====================================================================
+        # PODKAPITOLA 4.2: VOLNÝ OBCHOD A PROTEKCIONISMUS
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 4.2 Volný obchod, protekcionismus a obchodní bariéry")
+        st.write("Každý stát řeší dilema: Máme naše hranice úplně otevřít všemu zboží ze světa, nebo máme chránit naše vlastní firmy a továrny před levnou cizí konkurencí?")
+
+        col_obchod1, col_obchod2 = st.columns(2)
+        with col_obchod1:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">🕊️ Volný obchod</h5>
+                <b>Co znamená:</b> Stát neklade obchodu překážky. Zboží a služby volně překračují hranice.<br><br>
+                <b>Výhody pro nás:</b> Levnější zboží, obrovský výběr v obchodech, tlak na kvalitu a inovace firem.<br><br>
+                <b>Rizika:</b> Extrémní závislost na cizích zemích (co když přestanou dodávat?), ztráta pracovních míst v domácích továrnách, které nezvládnou cenově konkurovat Asii.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with col_obchod2:
+            st.markdown("""
+            <div style="background-color: #fef2f2; padding: 15px; border-left: 5px solid #ef4444; height: 100%;">
+                <h5 style="margin-top: 0; color: #b91c1c;">🛡️ Protekcionismus</h5>
+                <b>Co znamená:</b> Stát úmyslně chrání (ochranářství) domácí výrobce před zahraniční konkurencí.<br><br>
+                <b>Výhody pro stát:</b> Záchrana domácích pracovních míst a klíčového průmyslu (např. chceme mít vlastní potraviny a léky pro případ krize).<br><br>
+                <b>Rizika pro nás:</b> Zboží v obchodech zákazníkům brutálně zdraží, je menší výběr. Navíc hrozí "obchodní válka" (cizí státy nám na oplátku zablokují náš vývoz).
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("##### 🧱 Zbraně protekcionismu: Obchodní bariéry")
+        st.write("Když chce stát omezit dovoz, nevyhlásí hned opravdovou válku. Použije tyto čtyři nástroje:")
+        
+        c_bar1, c_bar2, c_bar3, c_bar4 = st.columns(4)
+        c_bar1.info("💰 **Clo**\nDaň (poplatek) na dovážené zboží. Uměle ho zdraží.")
+        c_bar2.warning("🔢 **Kvóta**\nMnožstevní limit. *(Dovolíme k nám dovézt max 10 000 aut ročně).*")
+        c_bar3.error("🛑 **Embargo**\nÚplný zákaz obchodu s danou zemí. *(Sankce)*")
+        c_bar4.success("📐 **Technické normy**\nPravidla bezpečnosti či původu. *(Když nesplní testy, nesmí na trh).*")
+
+        st.markdown("<div class='box-purple'>🚗 <b>Simulátor obchodní války: Cla na čínské elektromobily</b></div>", unsafe_allow_html=True)
+        st.write("Čína masivně dotuje své továrny na auta. Díky tomu dokáže dovézt do Evropy skvělé elektroauto mnohem levněji, než ho vyrobí evropská Škodovka nebo Volkswagen. Evropská unie se bojí, že naše automobilky zkrachují, a proto zvažuje **cla**.")
+        
+        with st.container(border=True):
+            st.write("**Nastav si roli šéfa Evropské komise a urči výši cla:**")
+            clo_eu = st.slider("Výše cla na dovoz čínských aut (% z ceny):", 0, 50, 0, step=5)
+            
+            cena_cina_zaklad = 700000
+            cena_cina_konecna = int(cena_cina_zaklad * (1 + (clo_eu / 100)))
+            cena_eu_auto = 900000
+            
+            col_auto1, col_auto2 = st.columns(2)
+            col_auto1.metric("Čínské auto (s tvým clem)", f"{cena_cina_konecna:,} Kč".replace(',', ' '))
+            col_auto2.metric("Evropské auto (bez cla)", f"{cena_eu_auto:,} Kč".replace(',', ' '))
+            
+            if cena_cina_konecna < cena_eu_auto:
+                st.error("📉 Čínské auto je stále levnější. Evropští občané sice kupují levná auta a jásají, ale domácí továrny (např. v Německu a ČR) začínají propouštět dělníky, protože jejich dražší auta nikdo nekupuje.")
+            elif cena_cina_konecna == cena_eu_auto:
+                st.warning("⚖️ Ceny se srovnaly. Evropské automobilky mají šanci přežít. Boj o zákazníka teď rozhodne design a kvalita.")
+            else:
+                st.success(f"🏭 Čínské auto je o {cena_cina_konecna - cena_eu_auto:,} Kč dražší! Ochránil/a jsi evropské továrny a pracovní místa. **ALE:** Běžní občané nadávají, protože jsi jim sebral šanci koupit si levné auto a donutil jsi je platit víc. To je přesně daň za protekcionismus!".replace(',', ' '))
+
+        st.markdown("<div class='box-yellow'>🗣️ <b>Debatní aréna: Kdo má pravdu?</b></div>", unsafe_allow_html=True)
+        with st.form("debata_protekce"):
+            st.write("Debatní otázka: Má stát chránit domácí průmysl a továrny, i když tím svým vlastním zákazníkům úmyslně zdraží výrobky?")
+            debata_odpoved = st.radio("Zvol si svůj postoj:", [
+                "Zastávám Protekcionismus: Ochrana našich pracovních míst a klíčových firem je přednější. Navíc nemůžeme být plně závislí na Asii.",
+                "Zastávám Volný obchod: Je to nespravedlivé vůči běžným lidem. Pokud naše firmy neumí vyrábět levně a kvalitně, stát by je neměl uměle dotovat penězi zákazníků."
+            ])
+            if st.form_submit_button("Odeslat do debaty"):
+                st.info("Odesláno! Přesně na tomto dilematu se dnes štěpí politici po celém světě.")
+
+        st.markdown("##### 📦 Kauza: Levné balíčky z Asie (Temu, Shein, AliExpress)")
+        st.write("Další živý příklad protekcionismu vs. volného obchodu se týká drobných zásilek (oblečení, doplňky) z mimoevropských e-shopů. Dlouhou dobu platily výjimky, díky kterým se z malých a levných balíčků neplatilo clo (a někdy ani DPH).")
+        st.write("To vytvořilo **nefér výhodu**: asijský e-shop mohl prodat věc levněji než ten český, který u nás musel odvádět všechny daně a dodržovat přísné bezpečnostní certifikáty. Státy a EU proto nyní tyto daňové a celní výjimky ruší, aby srovnaly podmínky pro domácí prodejce.")
