@@ -1788,3 +1788,145 @@ def render():
                 🧠 <b>Jednoduše a stručně:</b> Udržitelná ekonomika se neptá jen <i>"kolik to vydělá letos"</i>, ale také <i>"co to způsobí lidem, přírodě a budoucím nákladům za 10 let"</i>.
             </div>
             """, unsafe_allow_html=True)
+# =====================================================================
+        # PODKAPITOLA 5.2: CO ZNAMENÁ ESG
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 5.2 Co znamená ESG")
+        st.write("ESG je dnes v byznysu jedno z nejdůležitějších slov. Používá se při hodnocení firem, investic a rizik. Nejde jen o morálku nebo to, že chce být firma hodná – ESG reálně ovlivňuje, zda firma získá peníze od banky, veřejnou zakázku, dobré zaměstnance nebo vůbec důvěru zákazníků.")
+
+        tab_e, tab_s, tab_g = st.tabs(["🌳 E - Environmental", "🤝 S - Social", "⚖️ G - Governance"])
+        with tab_e:
+            st.markdown("##### E — Environmental (Životní prostředí)")
+            st.write("**Co sleduje:** Jaké má firma dopady na přírodu.")
+            st.info("**Příklady v praxi:** Emise CO₂, spotřeba elektřiny a vody, množství vyprodukovaného odpadu, používání plastových obalů, ekologická doprava, recyklace a celková uhlíková stopa.")
+        with tab_s:
+            st.markdown("##### S — Social (Lidé a společnost)")
+            st.write("**Co sleduje:** Jak firma zachází s lidmi (zaměstnanci i okolím).")
+            st.info("**Příklady v praxi:** Bezpečnost práce v továrně, férové mzdy, diverzita (stejné šance pro muže i ženy), zákazy dětské práce u dodavatelů, ochrana zdraví zákazníků a vztahy s místní komunitou.")
+        with tab_g:
+            st.markdown("##### G — Governance (Řízení firmy)")
+            st.write("**Co sleduje:** Zda je firma řízena eticky a transparentně.")
+            st.info("**Příklady v praxi:** Boj proti korupci, transparentní a férové účetnictví (žádné lži v daňovém přiznání), odpovědné vedení a přísná kontrola rizik.")
+
+        st.markdown("<div class='box-purple'>🏦 <b>Simulátor bankéře: Proč zajímá banku, že jsi 'eko'?</b></div>", unsafe_allow_html=True)
+        st.write("Banka není charita. Zelené firmy nepodporuje proto, že by milovala stromy, ale proto, že **špatné ESG znamená obrovské finanční riziko**. Zkus si roli ředitele banky. Máš před sebou žádost o úvěr na 50 milionů Kč od obří chemičky. Jaký úrok jim dáš podle jejich ESG skóre?")
+        
+        with st.container(border=True):
+            esg_skore = st.select_slider(
+                "Ohodnoť firmu podle ESG zprávy:",
+                options=["Katastrofa (Ignorují ekologii i lidi)", "Průměr (Plní jen co musí)", "Skvělé (Inovují, čistí vodu, férové platy)"],
+                value="Průměr (Plní jen co musí)"
+            )
+            
+            if "Katastrofa" in esg_skore:
+                st.error("📉 **Výsledek úvěru: ZAMÍTNUTO nebo úrok 12 %**")
+                st.write("**Myšlení bankéře:** 'Téhle firmě nepůjčím. Za dva roky dostanou obří pokutu za znečištění řeky, vláda jim napaří daně za uhlík, zákazníci je zbojkotují a oni zkrachují. Své peníze bych už nikdy neviděl.'")
+            elif "Průměr" in esg_skore:
+                st.warning("⚖️ **Výsledek úvěru: SCHVÁLENO, úrok 7 %**")
+                st.write("**Myšlení bankéře:** 'Firma je stabilní, ale hrozí jí budoucí rizika ze zdražování energií. Půjčíme jim, ale raději s vyšším úrokem pro strýčka Příhodu.'")
+            else:
+                st.success("✅ **Výsledek úvěru: SCHVÁLENO, VIP zelený úrok 4 %**")
+                st.write("**Myšlení bankéře:** 'Tato firma je připravená na budoucnost. Mají vlastní solární panely, stabilní zaměstnance a nehrozí jim žádné pokuty. Riziko krachu je minimální, dáme jim nejlepší možný úrok!'")
+
+        # =====================================================================
+        # PODKAPITOLA 5.3: GREENWASHING
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 5.3 Greenwashing: Když zelená reklama zakrývá realitu")
+        st.write("Greenwashing znamená, že firma působí ekologicky nebo odpovědně hlavně na reklamních plakátech, ale její skutečné dopady na přírodu se nezlepšují (často je to spíš naopak).")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🔍 <b>Jak odhalit Greenwashing (Red flags):</b>
+            <ul>
+                <li>Firma má úžasný slogan (např. <i>"Planet Friendly"</i>), ale nedodá žádná měřitelná data.</li>
+                <li>Zvýrazní jeden bezvýznamný "eko" detail, ale mlčí o hlavním špinavém byznysu.</li>
+                <li>Láká na zelené barvy, obrázky listů a přírody místo konkrétních důkazů.</li>
+                <li>Tvrdí, že je "udržitelná", ale nevysvětlí podle jakých kritérií to měří a nemá na to nezávislý audit.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<div class='box-yellow'>👕 <b>Scanner reklamy: Eko kolekce u Fast Fashion</b></div>", unsafe_allow_html=True)
+        st.write("Představ si obří řetězec rychlé módy, který každý týden chrlí tuny levného oblečení. Nyní vyvěsil v obchodech tento plakát. Najdi v něm chytáky:")
+        
+        with st.container(border=True):
+            st.markdown("#### 🌿 *Nová kolekce PURE NATURE. Zachraňujeme planetu s každým tričkem.* 🌿")
+            st.markdown("*Naše nová trička obsahují neuvěřitelných 10 % recyklovaného polyesteru. Kup si jich pět a buď ohleduplný/á k přírodě!*")
+            
+            ukaz_pravdu = st.toggle("🔍 Zapnout detektor Greenwashingu")
+            if ukaz_pravdu:
+                st.error("🚨 **DETEKTOR ODHALIL:**")
+                st.write("1. **Kolekce vs. Zbytek firmy:** Eko-kolekce tvoří 1 % jejich zboží. Zbylých 99 % je z nerecyklovaného, vysoce znečišťujícího materiálu. Tímto jen zakrývají svůj neudržitelný model.")
+                st.write("2. **Podněcování spotřeby:** Říkat 'Kup si 5 kusů' a tvářit se ekologicky je nesmysl. Skutečná ekologie znamená vyrábět i nakupovat MÉNĚ věcí, které déle vydrží.")
+                st.write("3. **10 % recyklátu:** Znamená, že 90 % trička je stále nově vyrobený plast (polyester) z ropy.")
+
+        # =====================================================================
+        # PODKAPITOLA 5.4: CIRKULÁRNÍ EKONOMIKA
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 5.4 Cirkulární ekonomika: Od „vyrobit–použít–vyhodit“ k oběhu")
+        st.write("Náš současný svět funguje převážně lineárně. Cirkulární (oběhová) ekonomika se to snaží změnit. Cílem je, aby materiály a výrobky neskončily na skládce, ale zůstávaly v oběhu co nejdéle.")
+
+        col_lin, col_cir = st.columns(2)
+        with col_lin:
+            st.markdown("##### ➡️ Lineární ekonomika")
+            st.error("**Těžba surovin ➔ Výroba ➔ Rychlá spotřeba ➔ Odpad**")
+            st.write("Výrobek (např. mobil) je navržen tak, aby byl levný, ale nešel opravit. Když odejde baterie, musíš ho vyhodit a koupit nový.")
+            
+        with col_cir:
+            st.markdown("##### 🔄 Cirkulární ekonomika")
+            st.success("**Návrh ➔ Dlouhé používání ➔ Oprava/Sdílení ➔ Recyklace materiálu**")
+            st.write("Výrobek se už na rýsovacím prkně navrhuje tak, aby šel rozebrat, spravit (právo na opravu) a na konci recyklovat na surovinu pro nový výrobek.")
+
+        st.markdown("<div class='box-purple'>📱 <b>Kalkulačka životního cyklu: Vyplatí se opravitelnost?</b></div>", unsafe_allow_html=True)
+        st.write("Zkusme si to finančně i ekologicky porovnat na horizontu **6 let**. Vyměnit celý telefon (Lineární model) vs. koupit opravitelný telefon a měnit jen baterii/displej (Cirkulární model).")
+        
+        with st.container(border=True):
+            cena_mobilu = st.slider("Pořizovací cena nového smartphonu (Kč):", 5000, 30000, 15000, step=1000)
+            cena_opravy = cena_mobilu * 0.15 # Odhad ceny opravy baterie (15% z mobilu)
+            
+            # Lineární: Kupuje nový každé 2 roky (celkem 3 mobily během 6 let)
+            naklad_linearni = cena_mobilu * 3
+            odpad_linearni = 3
+            
+            # Cirkulární: Koupí 1 na začátku, 2x opraví baterii po 2 letech
+            naklad_cirkularni = cena_mobilu + (cena_opravy * 2)
+            odpad_cirkularni = 1
+            
+            ustetrene_kc = naklad_linearni - naklad_cirkularni
+            
+            col_k1, col_k2 = st.columns(2)
+            col_k1.metric("Lineární přístup (6 let)", f"{int(naklad_linearni)} Kč", f"{odpad_linearni} vyhozené mobily", delta_color="inverse")
+            col_k2.metric("Cirkulární přístup (6 let)", f"{int(naklad_cirkularni)} Kč", f"{odpad_cirkularni} mobil v kapse", delta_color="normal")
+            
+            st.success(f"💡 **Závěr:** Nejenže cirkulární přístup ušetří planetě těžbu vzácných kovů, ale **tvé peněžence reálně zachrání {int(ustetrene_kc)} Kč**. Cirkulární ekonomika (druhá ruka, opravitelnost, sdílení) dává smysl i finančně!")
+
+        # =====================================================================
+        # PODKAPITOLA 5.5: ESG V DODAVATELSKÝCH ŘETĚZCÍCH
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 5.5 ESG v dodavatelských řetězcích")
+        st.write("Firma nenese odpovědnost jen za to, co se děje v její krásné prosklené kanceláři v Praze. Obrovská část dopadů (a problémů) vzniká u jejích dodavatelů: při těžbě surovin v Africe, výrobě komponent v Asii nebo při dopravě přes oceán.")
+
+        st.markdown("""
+        <div class='box-yellow'>
+            🚚 <b>Skrytá odpovědnost:</b> Pokud tvá oblíbená značka prodává superlevné zboží, ale její dodavatelé využívají špatně placenou práci a ignorují emise, firma neušetřila peníze. Jen tyto náklady <b>přesunula mimo dohled zákazníka</b>. Dnes ale zákony začínají nutit firmy odpovídat i za své dodavatele.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("##### 🔎 Rentgen produktu (Na co se firmy musí ptát)")
+        
+        with st.expander("🌍 Kde vznikají suroviny?"):
+            st.write("Těžba surovin (např. kobalt do baterek, bavlna na oblečení) často souvisí s masivními ekologickými škodami (vykácené pralesy, kontaminovaná voda) nebo s porušováním lidských práv v chudých oblastech planety.")
+        with st.expander("🏭 Kdo reálně vyrábí komponenty?"):
+            st.write("Značka si díly objedná v asijské továrně. Porušuje tento dodavatel pracovní práva? Nutí lidi pracovat 16 hodin denně? Jsou stroje bezpečné? Pokud u dodavatele vypukne skandál (např. vyhoří továrna a zahynou lidé), zničí to pověst značky na západě.")
+        with st.expander("🚢 Jak se zboží dopravuje?"):
+            st.write("Dopravit miliony věcí letadlem nebo lodí vytváří brutální emise uhlíku a extrémní závislost (když se ucpe průplav, výroba stojí).")
+        with st.expander("♻️ Co se stane po použití?"):
+            st.write("Když výrobek doslouží, je z něj toxický odpad ležící na skládce v Keni, nebo ho může firma přijmout zpět, rozebrat, recyklovat a použít na nový model? To je ten rozdíl mezi průšvihem a udržitelností.")
