@@ -105,7 +105,7 @@ def render():
             </div>
             """, unsafe_allow_html=True) #[cite: 1]
 
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost.</div>", unsafe_allow_html=True) #[cite: 1]
             st.text_area("Tvoje odpověď:", key="p1_idea") #[cite: 1]
 
             st.markdown("""
@@ -142,7 +142,7 @@ def render():
             </div>
             """, unsafe_allow_html=True) #[cite: 1]
 
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber tři pojmy ze slovníčku a napiš k nim vlastní příklad z reálného nebo vymyšleného podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
             
             st.markdown("""
             <div class='box-purple'>
@@ -242,7 +242,7 @@ def render():
             st.write(f"Při {reserve_pct} % si odložíte: {28000 * (reserve_pct/100):.0f} Kč.") #[cite: 1]
             st.write("Vysvětli, proč není bezpečné utratit celých 28 000 Kč.") #[cite: 1]
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Napiš, jestli by se tvůj projekt dal na začátku provozovat jako OSVČ, a uveď jedno hlavní riziko.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš, jestli by se tvůj projekt dal na začátku provozovat jako OSVČ, a uveď jedno hlavní riziko.</div>", unsafe_allow_html=True) #[cite: 1]
             st.text_input("Tvoje odpověď:", key="osvc_vyzva") #[cite: 1]
             
             st.markdown("""
@@ -259,7 +259,7 @@ def render():
 
         with st.container(border=True):
             st.markdown("### 3.3 Podmínky pro podnikání jako OSVČ") #[cite: 1]
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vypiš, které podmínky by musel splnit začínající podnikatel ve tvém příkladu.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vypiš, které podmínky by musel splnit začínající podnikatel ve tvém příkladu.</div>", unsafe_allow_html=True) #[cite: 1]
             st.write("**Co musí splnit začínající OSVČ?**") #[cite: 1]
             st.markdown("""
             * dosažení věku 18 let,
@@ -270,7 +270,7 @@ def render():
 
         with st.container(border=True):
             st.markdown("### 3.4 Druhy živností") #[cite: 1]
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Zařaď svůj nápad k volné, řemeslné, vázané nebo koncesované živnosti a napiš, proč.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Zařaď svůj nápad k volné, řemeslné, vázané nebo koncesované živnosti a napiš, proč.</div>", unsafe_allow_html=True) #[cite: 1]
             
             st.markdown("""
             | Druh živnosti | Co znamená | Příklad |
@@ -283,7 +283,7 @@ def render():
 
         with st.container(border=True):
             st.markdown("### 3.5 Jak si zařídit živnost") #[cite: 1]
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Sepiš první tři kroky, které bys udělal/a před ohlášením živnosti.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Sepiš první tři kroky, které bys udělal/a před ohlášením živnosti.</div>", unsafe_allow_html=True) #[cite: 1]
             
             st.markdown("""
             1. Rozhodnout se, o jaký typ živnosti jde.
@@ -520,7 +520,7 @@ def render():
             </div>
             """, unsafe_allow_html=True) #[cite: 1]
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Rozhodni, jestli by tvému projektu pomohlo oddělit firmu od osobního majetku zakladatele. Napiš jeden důvod.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Rozhodni, jestli by tvému projektu pomohlo oddělit firmu od osobního majetku zakladatele. Napiš jeden důvod.</div>", unsafe_allow_html=True) #[cite: 1]
             st.text_input("Tvoje odpověď:", key="firma_vyzva_oddělení") #[cite: 1]
             
             st.markdown("""
@@ -539,7 +539,7 @@ def render():
         with st.container(border=True):
             st.markdown("### 4.6 Osobní společnosti") #[cite: 1]
             st.write("Osobní společnosti stojí hlavně na osobní účasti, důvěře a odpovědnosti společníků.") #[cite: 1]
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Napiš, kdy by ve tvém projektu dávalo smysl podnikat s další osobou na základě vysoké důvěry.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš, kdy by ve tvém projektu dávalo smysl podnikat s další osobou na základě vysoké důvěry.</div>", unsafe_allow_html=True) #[cite: 1]
             
             with st.expander("Veřejná obchodní společnost (v.o.s.)"):
                 st.write("Veřejná obchodní společnost je osobní společnost, ve které podnikají alespoň dvě osoby pod společnou firmou. Zákonně jde o formu vhodnou spíše pro osoby, které si velmi důvěřují. Důvod je jednoduchý: společníci ručí za dluhy společnosti společně a nerozdílně celým svým majetkem. To znamená, že věřitel se může domáhat splnění dluhu i po jednom ze společníků, a ten si potom případně vypořádává vztahy s ostatními.") #[cite: 1]
@@ -879,7 +879,7 @@ def render():
             """)
             st.info("**Výstup:** Jedna stránka „nápad → hypotéza → test → metrika“.")
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vymysli jeden problém, který lidé kolem tebe řeší, a napiš, jaké jednoduché řešení by mohlo vzniknout jako startup.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli jeden problém, který lidé kolem tebe řeší, a napiš, jaké jednoduché řešení by mohlo vzniknout jako startup.</div>", unsafe_allow_html=True)
             st.text_input("Tvoje odpověď:", key="startup_vymysli_problem")
             
             st.markdown("""
@@ -892,7 +892,7 @@ def render():
         with st.container(border=True):
             st.markdown("### 5.4 Jak startup vzniká")
             st.write("Startup obvykle nevzniká tak, že někdo rovnou napíše dokonalý podnikatelský plán. Častější cesta je postupné ověřování. Tým nejdřív pracuje s nejistotou: má domněnky o zákazníkovi, problému, řešení, ceně a způsobu prodeje. Teprve když získá důkazy, rozhoduje, jestli pokračovat, upravit směr, nebo projekt ukončit.")
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyber jeden krok z následujícího postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden krok z následujícího postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.</div>", unsafe_allow_html=True)
             st.markdown("""
             * **Problém:** někdo si všimne potřeby, nespokojenosti nebo neefektivního řešení.
             * **Zákazník:** tým určí, komu chce pomoci.
@@ -989,7 +989,7 @@ def render():
             | **Metrika** | Číslo nebo pozorování, podle kterého rozhodneme. | Měříme skutečný zájem, nebo jen popularitu? |
             | **Vyhodnocení** | Krátký závěr: co data znamenají. | Je rozhodnutí opřené o důkaz? |
             """)
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Aktivita: Lean Startup sprint na 45 minut</strong><br>Popiš problém, urči zákazníka, napiš hypotézu, navrhni MVP test, urči metriku úspěchu a rozhodni se, co uděláš podle výsledku.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Aktivita: Lean Startup sprint na 45 minut</strong><br>Popiš problém, urči zákazníka, napiš hypotézu, navrhni MVP test, urči metriku úspěchu a rozhodni se, co uděláš podle výsledku.</div>", unsafe_allow_html=True)
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Použij metodiku Lean Startup na můj nápad. Pomoz mi určit nejrizikovější hypotézu, navrhni MVP test, metriku úspěchu, možné výsledky a rozhodnutí: pokračovat, pivotovat nebo ukončit.“
@@ -1022,7 +1022,7 @@ def render():
             st.write("Moderní startup dnes často nestaví jen na nápadu a právní formě. Musí umět chytře využívat technologie, pracovat efektivně, komunikovat s komunitou a zároveň myslet na dlouhodobou udržitelnost práce zakladatele.")
             st.markdown("<div class='box-blue'><strong><i class='fi fi-bs-rocket-lunch'></i> Moderní startupové pilíře:</strong> AI-First, Solopreneurship, Build in Public a Founder Wellbeing pomáhají přemýšlet o tom, jak bude projekt fungovat v praxi — nejen co prodává, ale také jak se tvoří, komunikuje a dlouhodobě zvládá.</div>", unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyber jeden pilíř z tabulky a doplň, jak by se mohl projevit ve tvém startupu.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden pilíř z tabulky a doplň, jak by se mohl projevit ve tvém startupu.</div>", unsafe_allow_html=True)
             st.markdown("""
             | Téma | Proč na tom záleží | Jak to implementuji v mém projektu? |
             | :--- | :--- | :--- |
@@ -1055,7 +1055,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Napiš svůj podnikatelský nápad ve formátu: „Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit.“</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš svůj podnikatelský nápad ve formátu: „Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit.“</div>", unsafe_allow_html=True)
             st.text_input("Tvůj nápad:", key="zamer_napad")
             
             st.markdown("""
@@ -1090,7 +1090,7 @@ def render():
 
         with st.container(border=True):
             st.markdown("### 6.2 Co by měl podnikatelský záměr obsahovat")
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyplň ke svému nápadu zákazníka, problém, hodnotu, konkurenci, cenu, náklady, rizika, právní formu a první test.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyplň ke svému nápadu zákazníka, problém, hodnotu, konkurenci, cenu, náklady, rizika, právní formu a první test.</div>", unsafe_allow_html=True)
             
             with st.expander("Zobrazit strukturu podnikatelského záměru"):
                 st.markdown("""
@@ -1113,7 +1113,7 @@ def render():
             st.markdown("### 6.3 Analýza trhu")
             st.write("Než podnikatel začne vyrábět nebo prodávat, musí zjistit, jestli o jeho nabídku někdo stojí. Analýza trhu neznamená jen „vygooglit konkurenci“. Znamená pochopit zákazníka, jeho současné chování a alternativy, ze kterých si vybírá.")
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Najdi tři podobné firmy, produkty nebo náhradní řešení. U každého napiš cenu, výhodu, slabinu a příležitost pro tvůj projekt.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Najdi tři podobné firmy, produkty nebo náhradní řešení. U každého napiš cenu, výhodu, slabinu a příležitost pro tvůj projekt.</div>", unsafe_allow_html=True)
             
             st.markdown("#### Zákazník není „všichni“")
             st.write("Častá chyba začínajících projektů je tvrzení: „Naším zákazníkem jsou všichni studenti.“ Jenže prvák, maturant, student odborného výcviku, rodič a učitel mají jiné potřeby, rozpočet i motivaci.")
@@ -1228,7 +1228,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu: „Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…“</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu: „Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…“</div>", unsafe_allow_html=True)
             st.text_input("Tvoje hypotéza:", key="lean_hypoteza")
             
             st.markdown("""
@@ -1405,7 +1405,7 @@ def render():
             4. **Má pravidla řízení?** (Etický kodex, ochrana dat)
             5. **Je komunikace důvěryhodná?** (Firma přiznává i limity a oblasti ke zlepšení)
             """)
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.</div>", unsafe_allow_html=True)
             st.text_input("Tvé hodnocení vybrané firmy:")
 
     # --- 9. Rizika podnikání ---
@@ -1474,7 +1474,7 @@ def render():
             ])
             st.text_input(f"Jaký je tvůj první preventivní krok proti riziku: '{nej_riziko}'?")
             
-            st.success("<i class='fi fi-bs-puzzle-piece'></i> **Praktické minimum pro start:** Počítat s daněmi a odvody, odlišit jednorázový přivýdělek od soustavné činnosti, znát základní pravidla ochrany spotřebitele a nakládat odpovědně s daty.")
+            st.success("🧩 **Praktické minimum pro start:** Počítat s daněmi a odvody, odlišit jednorázový přivýdělek od soustavné činnosti, znát základní pravidla ochrany spotřebitele a nakládat odpovědně s daty.")
 
     # --- 10. Švarcsystém ---
     elif "10. Švarcsystém" in selected_section:
@@ -1494,7 +1494,7 @@ def render():
             * vystupuje jménem firmy (firemní e-mail, vizitky).
             """)
 
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vymysli příklad spolupráce, která je férová, a příklad, který už by mohl připomínat švarcsystém.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli příklad spolupráce, která je férová, a příklad, který už by mohl připomínat švarcsystém.</div>", unsafe_allow_html=True)
             st.text_area("Tvůj příklad obou situací:")
             
             st.markdown("""
@@ -1559,7 +1559,7 @@ def render():
             5. Zjisti, zda nezatajuje účetní závěrky.
             """)
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Ověř jednu existující firmu (např. svou oblíbenou značku) v online rejstříku (Justice.cz).</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Ověř jednu existující firmu (např. svou oblíbenou značku) v online rejstříku (Justice.cz).</div>", unsafe_allow_html=True)
             c_f1, c_f2 = st.columns(2)
             with c_f1:
                 st.text_input("Název ověřované firmy:")
@@ -1580,7 +1580,7 @@ def render():
         with st.container(border=True):
             st.write("Podnikání může skončit dobrovolně (např. splněním cíle, odchodem do důchodu), rozhodnutím soudu nebo v důsledku finančních problémů (insolvence).")
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Napiš dva varovné signály, podle kterých by podnikatel poznal, že musí změnit plán nebo podnikání ukončit.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš dva varovné signály, podle kterých by podnikatel poznal, že musí změnit plán nebo podnikání ukončit.</div>", unsafe_allow_html=True)
             st.text_input("Varovný signál 1:")
             st.text_input("Varovný signál 2:")
             
@@ -1600,7 +1600,7 @@ def render():
             with col_z2:
                 st.error("**2. Zánik = konec**\n\nDefinitivní okamžik, kdy firma právně přestává existovat. Obchodní korporace zaniká výmazem z obchodního rejstříku.")
 
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu.</div>", unsafe_allow_html=True)
             st.text_area("Tvůj příklad:")
             
             st.warning("⚠️ **Důležitá poznámka k insolvenci:** Pokud má firma více dluhů než majetku a není schopna své závazky dlouhodobě splácet, dostává se do úpadku. V takovém případě musí podat insolvenční návrh.")
@@ -1616,7 +1616,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyber jednu větev mapy, která je pro tvůj projekt nejdůležitější, a napiš proč.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu větev mapy, která je pro tvůj projekt nejdůležitější, a napiš proč.</div>", unsafe_allow_html=True)
             nej_vetev = st.selectbox("Nejdůležitější větev pro můj projekt:", [
                 "Legislativa a definice",
                 "Právní formy",
@@ -1701,7 +1701,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
             st.text_input("Tvoje otázka k nejasnosti:")
             
             st.markdown("""
@@ -1751,7 +1751,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
             st.text_input("Tvoje otázka pro další konzultaci:")
             
             st.markdown("""
