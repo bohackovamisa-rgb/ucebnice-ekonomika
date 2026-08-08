@@ -515,46 +515,117 @@ def render():
         # DOKONČENÍ SEKCE 2: NEPŘÍMÉ DANĚ A SCHÉMA ROZDĚLOVÁNÍ (2.6 - 2.6.1)
         # =====================================================================
 
+# =====================================================================
+        # DOKONČENÍ SEKCE 2: NEPŘÍMÉ DANĚ A SCHÉMA ROZDĚLOVÁNÍ (2.6 - 2.6.1)
+        # =====================================================================
+
         st.divider()
         st.markdown("#### 2.6 Nepřímé daně: Neviditelné daně v každém nákupu")
         st.write("Nepřímé daně jsou zahrnuté přímo v ceně zboží nebo služby. Spotřebitel (ty) je fakticky zaplatí v ceně u pokladny, ale státu je fyzicky odvádí prodejce nebo výrobce.")
 
-        tab_dph, tab_spotrebni, tab_eko = st.tabs(["🛒 DPH", "🚬 Spotřební daně", "🌱 Ekologické daně"])
+        tab_dph, tab_spotrebni, tab_eko = st.tabs(["🛒 DPH (Účtenka)", "🚬 Spotřební daně (Hříchy)", "🌱 Ekologické daně (Příroda)"])
         
         with tab_dph:
             st.markdown("##### DPH (Daň z přidané hodnoty)")
-            st.write("Daň zahrnutá v ceně většiny zboží a služeb (mobil, oblečení, kadeřnictví, lístek na akci, software).")
-            st.info("💡 **Proč existuje?** Je to absolutně největší a nejstabilnější příjem státního rozpočtu. Platíme ji všichni každý den.")
+            st.write("Daň zahrnutá v ceně většiny zboží a služeb (mobil, oblečení, kadeřnictví, lístek na akci, software). Je to absolutně největší příjem státního rozpočtu.")
+            
+            st.markdown("<div class='box-purple'>💻 <b>Kalkulačka: Anatomie tvé účtenky</b></div>", unsafe_allow_html=True)
+            st.write("Když si koupíš produkt, část tvých peněz si nenechá obchod, ale musí je odevzdat státu. Zkus si to nasimulovat:")
+            
+            col_calc1, col_calc2 = st.columns(2)
+            with col_calc1:
+                cena_s_dph = st.number_input("Zadej celkovou cenu nákupu na účtence (Kč):", value=15000, step=100)
+            with col_calc2:
+                sazba_dph = st.radio("Vyber sazbu DPH pro tento nákup:", ["21 % (Oblečení, mobil, většina zboží)", "12 % (Potraviny, léky, knihy, časopisy)"])
+            
+            # Výpočet DPH tzv. "shora"
+            sazba_cislo = 1.21 if "21" in sazba_dph else 1.12
+            zaklad_dane = round(cena_s_dph / sazba_cislo, 2)
+            castka_dph = round(cena_s_dph - zaklad_dane, 2)
+            
+            st.write("**Rozpad tvé zaplacené částky:**")
+            col_u1, col_u2, col_u3 = st.columns(3)
+            col_u1.metric("Základ daně (Zůstane obchodu)", f"{zaklad_dane} Kč")
+            col_u2.metric("Sazba DPH", sazba_dph.split(" ")[0] + " %")
+            col_u3.metric("Částka DPH (Jde státu)", f"{castka_dph} Kč")
             
         with tab_spotrebni:
             st.markdown("##### Spotřební daně (Daně z hříchu / Sin taxes)")
-            st.write("Daně uvalené na vybrané výrobky, které mají negativní dopad na zdraví nebo spotřebu (tabák, alkohol, pohonné hmoty).")
-            st.warning("🚬 **Daně z hříchu:** Stát tím získává obrovské příjmy a zároveň se snaží odrazovat lidi od škodlivé spotřeby, která státu později přináší náklady (např. léčba nemocí). Podobně se ve světě dnes diskutují daně z vapes, energetických nápojů nebo sladkých limonád.")
+            st.write("Daně uvalené na vybrané výrobky, které mají negativní dopad na zdraví. Stát tím získává obrovské příjmy a zároveň se snaží odrazovat lidi od škodlivé spotřeby (např. aby omezil budoucí náklady na léčbu nemocí).")
+            
+            st.markdown("<div class='box-purple'>🕹️ <b>Kalkulačka neřestí: Komu vlastně platíš?</b></div>", unsafe_allow_html=True)
+            st.write("Vyber si produkt a podívej se, kolik peněz z tvé kapsy jde výrobci a kolik shrábne stát (přes DPH a brutální spotřební daň).")
+            
+            typ_neresti = st.selectbox("Co si kupuješ?", [
+                "Krabička cigaret (cca 150 Kč)", 
+                "Litr tvrdého alkoholu 40% (např. rum, vodka - cca 300 Kč)", 
+                "Půllitr točeného piva 12° (cca 50 Kč)"
+            ])
+
+            # Hodnoty pro kalkulaci (přibližné reálné zdanění pro výuku)
+            if "cigaret" in typ_neresti:
+                cena_n = 150
+                spotrebni_n = 85  # Spotřební daň z krabičky
+            elif "alkoholu" in typ_neresti:
+                cena_n = 300
+                spotrebni_n = 158 # 39500 Kč / hl čistého lihu -> 40% z 1l = 158 Kč
+            else:
+                cena_n = 50
+                spotrebni_n = 2   # Cca 2 Kč na půllitr 12° piva
+
+            dph_n = round(cena_n - (cena_n / 1.21), 2)
+            zbytek_n = round(cena_n - spotrebni_n - dph_n, 2)
+            zdaneni_procento = round(((spotrebni_n + dph_n) / cena_n) * 100, 1)
+
+            fig_nerest = go.Figure(go.Bar(
+                x=[cena_n],
+                y=['Cena'],
+                orientation='h',
+                marker=dict(color='rgba(0,0,0,0)'),
+                showlegend=False,
+                hoverinfo='none'
+            ))
+            fig_nerest.add_trace(go.Bar(name='Zisk výrobce a obchodu', x=[zbytek_n], y=['Rozpad ceny'], orientation='h', marker_color='#10b981'))
+            fig_nerest.add_trace(go.Bar(name='Spotřební daň (Stát)', x=[spotrebni_n], y=['Rozpad ceny'], orientation='h', marker_color='#ef4444'))
+            fig_nerest.add_trace(go.Bar(name='DPH (Stát)', x=[dph_n], y=['Rozpad ceny'], orientation='h', marker_color='#f59e0b'))
+            fig_nerest.update_layout(barmode='stack', height=200, margin=dict(t=0, b=0, l=0, r=0))
+            
+            st.plotly_chart(fig_nerest, use_container_width=True)
+            
+            col_n1, col_n2 = st.columns(2)
+            with col_n1:
+                st.markdown(f"**Cena pro tebe:** {cena_n} Kč")
+                st.markdown(f"**Reálná hodnota produktu:** jen {zbytek_n} Kč")
+            with col_n2:
+                st.error(f"**Stát si z nákupu bere celkem: {zdaneni_procento} %**")
             
         with tab_eko:
-            st.markdown("##### Ekologické daně")
-            st.write("Daně související s energiemi a dopady na životní prostředí (vybraná paliva, environmentálně zatěžující činnosti).")
-            st.success("🌱 **Ekologická logika:** Pokud určitá činnost vytváří náklady pro okolí (smog, hluk, uhlíková stopa), stát tuto 'externalitu' promítne do ceny. Cílem je, aby 'levné na účtence' neznamenalo skrytě 'drahé pro životní prostředí'.")
-
-        st.markdown("<div class='box-purple'>💻 <b>Úkol: Anatomie účtenky</b></div>", unsafe_allow_html=True)
-        st.write("Když si koupíš produkt, část tvých peněz si nenechá obchod, ale musí je odevzdat státu. Zkus si najít účtenku a nasimuluj si to:")
-        
-        col_calc1, col_calc2 = st.columns(2)
-        with col_calc1:
-            cena_s_dph = st.number_input("Zadej celkovou cenu nákupu na účtence (Kč):", value=15000, step=100)
-        with col_calc2:
-            sazba_dph = st.radio("Vyber sazbu DPH:", ["21 % (Oblečení, mobil, většina zboží)", "12 % (Potraviny, léky, knihy)"])
-        
-        # Výpočet DPH tzv. "shora"
-        sazba_cislo = 1.21 if "21" in sazba_dph else 1.12
-        zaklad_dane = round(cena_s_dph / sazba_cislo, 2)
-        castka_dph = round(cena_s_dph - zaklad_dane, 2)
-        
-        st.write("**Rozpad tvé zaplacené částky:**")
-        col_u1, col_u2, col_u3 = st.columns(3)
-        col_u1.metric("Základ daně (Zůstane obchodu)", f"{zaklad_dane} Kč")
-        col_u2.metric("Sazba DPH", sazba_dph.split(" ")[0] + " %")
-        col_u3.metric("Částka DPH (Jde státu)", f"{castka_dph} Kč")
+            st.markdown("##### Ekologické daně (Zdanění uhlíkové stopy)")
+            st.write("Cílem je promítnout ničení životního prostředí (emise, smog, hluk) do ceny produktu. Aby 'levné na účtence' neznamenalo skrytě 'drahé pro přírodu a společnost'. Spadají sem daně z elektřiny, plynu a pevných paliv. V širším smyslu má tento ekologický efekt i zdanění pohonných hmot.")
+            
+            st.markdown("<div class='box-purple'>🚗 <b>Rozpitvej si cenu benzínu na pumpě</b></div>", unsafe_allow_html=True)
+            
+            cena_benzinu = st.slider("Cena 1 litru benzínu (Kč):", 25.0, 55.0, 38.0, step=0.5)
+            
+            # Spotřební/Ekologická daň na benzín je pevná (cca 12,84 Kč/litr)
+            spotrebni_dan_benzin = 12.84
+            dph_benzin = round(cena_benzinu - (cena_benzinu / 1.21), 2)
+            cista_cena = round(cena_benzinu - spotrebni_dan_benzin - dph_benzin, 2)
+            
+            fig_palivo = go.Figure(data=[go.Pie(
+                labels=['Samotný benzín a marže pumpy', 'Fixní daň (Ekologická/Spotřební)', 'DPH (21 % z celku)'],
+                values=[cista_cena, spotrebni_dan_benzin, dph_benzin],
+                hole=.4,
+                marker_colors=['#3b82f6', '#ef4444', '#f59e0b']
+            )])
+            fig_palivo.update_layout(margin=dict(t=20, b=20, l=20, r=20), height=300)
+            
+            col_graf1, col_graf2 = st.columns([1, 1])
+            with col_graf1:
+                st.plotly_chart(fig_palivo, use_container_width=True)
+            with col_graf2:
+                st.write("**Proč je to zdaněné tak moc?**")
+                st.write("Stát touto daní vybírá peníze na opravu dálnic, ale také tím uměle zdražuje jízdu autem. Kdyby byl litr benzínu jen za 18 Kč (bez daní), lidé by jezdili auty mnohem více a dopady na smog, zácpy a emise by byly drastické.")
 
         st.divider()
         st.markdown("#### 2.6.1 Schéma: Jak se daně dělí a kam putují")
@@ -595,7 +666,6 @@ def render():
             ])
             if st.form_submit_button("Odeslat názor k zamyšlení"):
                 st.success("Přesně kvůli této otázce se starostové s vládou hádají u každé úpravy zákona o rozpočtovém určení daní! Každý pohled má své silné argumenty.")
-
         st.divider()
         st.markdown("#### 2.7 a 2.8 Státní rozpočet (Velká státní peněženka)")
         st.write("Státní rozpočet je plán příjmů (daně) a výdajů státu, obvykle na 1 rok. Výdaje se dělí do dvou obrovských skupin, a to je důvod, proč politici nemohou snadno 'ušetřit'.")
