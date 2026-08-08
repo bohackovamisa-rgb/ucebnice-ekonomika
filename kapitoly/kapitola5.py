@@ -1706,7 +1706,7 @@ def render():
 # =========================================================================
         # SEKCE 5: ESG A UDRŽITELNÁ EKONOMIKA
         # =========================================================================
-        elif selected_section_5 == "5. ESG a udržitelná ekonomika" or "5." in selected_section_5:
+    elif selected_section_5 == "5. ESG a udržitelná ekonomika" or "5." in selected_section_5:
             st.markdown("### 5. ESG a udržitelná ekonomika")
             
             st.markdown("""
