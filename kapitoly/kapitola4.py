@@ -1487,7 +1487,7 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
             
         st.caption("💡 *Tip z praxe: Je úplně jedno, jestli podáš výpověď 1. nebo 28. v měsíci. Lhůta vždy čeká na začátek dalšího měsíce. Pokud spěcháš, zkus se šéfem raději sepsat Dohodu.*")
 
-    elif selected_section_4 == "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace":
+elif selected_section_4 == "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace":
         st.markdown("### 5.2 Kdy mám nárok na podporu a jak pomáhá Úřad práce")
         st.write("Úřad práce (ÚP) není jen instituce 'pro dlouhodobě nezaměstnané'. Je to klíčový partner, který vám **vyřeší zdravotní pojištění** (bude ho za vás platit stát) a pomůže finančně překlenout dobu hledání nového místa.")
 
@@ -1544,7 +1544,11 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
         </div>
         """, unsafe_allow_html=True)
 
-    elif selected_section_4 == "6.1 Praktická dílna (Aktivity 1–5)" or selected_section_4 == "7.1 Případové studie z praxe" or selected_section_4 == "7.2 Slovníček, rychlé opakování a prověrka":
+        st.divider()
+
+        # =========================================================================
+        # PŘESUNUTO Z 5.3 SEM (Nyní se to zobrazí jako součást konce podkapitoly 5.2)
+        # =========================================================================
         st.markdown("### 5.3 Co dělat, když... (Krizový trenažér)")
         st.markdown("""
         <div class='box-red'>
@@ -1582,6 +1586,74 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
                     st.error("❌ **Stal ses obětí manipulace.** Pokud podepíšeš dohodu o ukončení z vlastní vůle bez odstupného, vzdal ses veškeré právní ochrany. Hrubé porušení by ti musel šéf složitě dokazovat a prohrál by u soudu.")
                 elif k_odp.startswith("C"):
                     st.warning("⚠️ **Pozor na emoce.** Pokud začneš ničit firemní majetek nebo někoho fyzicky napadat, dáváš šéfovi skutečný a legální důvod tě okamžitě vyhodit pro hrubé porušení kázně (tzv. Výpověď na hodinu).")
+
+    # =========================================================================
+    # SEKCE 6: PRAKTICKÁ DÍLNA (ČISTĚ AKTIVITY 1–5)
+    # =========================================================================
+    elif selected_section_4 == "6.1 Praktická dílna (Aktivity 1–5)":
+        st.markdown("### 🛠️ 6.1 Praktická dílna")
+        st.write("Vyberte si aktivitu ze záložek níže a vyzkoušejte si praktické úkoly zaměřené na trh práce:")
+
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "🗺️ Aktivita 1", 
+            "🕵️ Aktivita 2", 
+            "🤖 Aktivita 3", 
+            "🧾 Aktivita 4", 
+            "🎭 Aktivita 5"
+        ])
+
+        with tab1:
+            st.markdown("#### Aktivita 1: Moje profesní mapa")
+            with st.form("form_akt1"):
+                q1 = st.text_area("Jaké činnosti mě baví?")
+                q2 = st.text_area("Jaké problémy rád/a řeším?")
+                q3 = st.text_area("Jaké dovednosti už mám?")
+                q4 = st.text_area("Jaké dovednosti mi chybí?")
+                q5 = st.text_area("Jaké profese s tím souvisejí?")
+                q6 = st.text_area("Co mohu vyzkoušet během příštích tří měsíců?")
+                if st.form_submit_button("Uložit mapu"):
+                    st.success("Vaše profesní mapa byla uložena!")
+
+        with tab2:
+            st.markdown("#### Aktivita 2: Analýza pracovního inzerátu")
+            with st.form("form_akt2"):
+                a1 = st.text_area("Jaké dovednosti zaměstnavatel požaduje?")
+                a2 = st.text_area("Co je nutné a co je jen výhoda?")
+                a3 = st.text_area("Jaké red flags se v inzerátu objevují?")
+                a4 = st.text_area("Jaké otázky byste položili na pohovoru?")
+                a5 = st.text_area("Jak byste upravili životopis pro tuto pozici?")
+                if st.form_submit_button("Uložit analýzu"):
+                    st.success("Analýza inzerátu uložena!")
+
+        with tab3:
+            st.markdown("#### Aktivita 3: AI jako kariérní kouč")
+            pozice_ai = st.text_input("Zadejte název pozice:", value="[pozice]")
+            prompt = f"Pomoz mi připravit se na pohovor na pozici {pozice_ai}.\nNejprve mi polož 5 otázek jako personalista. Po každé mé odpovědi polož doplňující otázku. Na konci vyhodnoť moje silné stránky, slabá místa a navrhni konkrétní formulace, které znějí profesionálně, ale přirozeně."
+            st.markdown("🤖 **Prompt ke zkopírování do AI:**")
+            st.code(prompt, language="text")
+
+        with tab4:
+            st.markdown("#### Aktivita 4: Výplatní páska s chybami")
+            with st.form("form_akt4"):
+                e1 = text_area_1 = st.text_area("1. Najít tři chyby:")
+                e2 = text_area_2 = st.text_area("2. Vysvětlit, proč jsou problém:")
+                e3 = text_area_3 = st.text_area("3. Navrhnout, jak chybu řešit:")
+                e4 = text_area_4 = st.text_area("4. Napsat e-mail zaměstnavateli:")
+                if st.form_submit_button("Odeslat řešení"):
+                    st.success("Řešení bylo odesláno!")
+
+        with tab5:
+            st.markdown("#### Aktivita 5: Role-play vyjednávání o mzdě")
+            st.info("Zahrajte si scénku ve třech: Zaměstnavatel, Uchazeč a Pozorovatel.")
+            with st.form("form_akt5"):
+                st.write("**Hodnocení:**")
+                h1 = st.checkbox("Věcnost")
+                h2 = st.checkbox("Práce s důkazy")
+                h3 = st.checkbox("Respekt")
+                h4 = st.checkbox("Schopnost hledat kompromis")
+                h5 = st.checkbox("Jasné pojmenování hodnoty práce")
+                if st.form_submit_button("Uložit hodnocení"):
+                    st.success("Hodnocení role-play uloženo!")
 # =========================================================================
     # SEKCE 6: PRAKTICKÁ DÍLNA (ČISTĚ AKTIVITY 1–5)
     # =========================================================================
