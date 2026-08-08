@@ -2569,13 +2569,14 @@ def render():
                 if st.form_submit_button("Odeslat řešení Případové studie 3"):
                     st.success("✅ **Výborně!** Přesně jsi odhalil/a skrytou reklamu, manipulativní Dark patterns i etickou odpovědnost tvorby obsahu.")
 
-        # ---------------------------------------------------------------------
+# ---------------------------------------------------------------------
         # ZÁVĚREČNÁ REFLEXE KAPITOLY
         # ---------------------------------------------------------------------
         st.divider()
         st.markdown("##### 🎓 Závěrečná reflexe celou kapitolou")
 
-        st.markdown("""
+        st.markdown(
+            """
         <div class='box-green'>
             🧠 <b>Klíčové shrnutí Kapitoly 6:</b><br>
             • <b>Management</b> dává projektům směr, strukturu a řád.<br>
@@ -2583,17 +2584,33 @@ def render():
             • <b>Brand</b> buduje dlouhodobou důvěru a emoce.<br>
             • <b>Etika</b> hlídá hranici, aby se přesvědčování nezvrhlo v manipulaci a podvod.
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
         with st.form("form_zaverecna_reflexe"):
-            st.markdown("<b>Odpověz na finální otázku k libovolně zvolené případové studii:</b>")
-            ref_vyber = st.selectbox("Vyber si případovou studii k reflexi:", [
-                "Případová studie 1: Školní merch",
-                "Případová studie 2: Kavárna u školy",
-                "Případová studie 3: Influencer a zázračný produkt"
-            ])
-            ref_odpoved = st.text_area("Co by měl v této situaci rozhodnout dobrý manažer, jak by měl marketér upravit komunikaci a kde přesně podle tebe leží hranice mezi férovým přesvědčováním a manipulací?:", placeholder="Napiš své myšlenky v 3-5 větách...")
+            st.markdown(
+                "**Odpověz na finální otázku k libovolně zvolené případové"
+                " studii:**"
+            )
+            ref_vyber = st.selectbox(
+                "Vyber si případovou studii k reflexi:",
+                [
+                    "Případová studie 1: Školní merch",
+                    "Případová studie 2: Kavárna u školy",
+                    "Případová studie 3: Influencer a zázračný produkt",
+                ],
+            )
+            ref_odpoved = st.text_area(
+                "Co by měl v této situaci rozhodnout dobrý manažer, jak by měl"
+                " marketér upravit komunikaci a kde přesně podle tebe leží"
+                " hranice mezi férovým přesvědčováním a manipulací?:",
+                placeholder="Napiš své myšlenky v 3-5 větičkách...",
+            )
 
             if st.form_submit_button("Odeslat finální reflexi a UZAVŘÍT KAPITOLU 6"):
                 st.balloons()
-                st.success("🎉 **GRATULUJEME! Kompletně jsi dokončil/a Kapitolu 6 (Management a Marketing).** Tvé odpovědi byly zaznamenány.")
+                st.success(
+                    "🎉 **GRATULUJEME! Kompletně jsi dokončil/a Kapitolu 6"
+                    " (Management a Marketing).** Tvé odpovědi byly zaznamenány."
+                )
