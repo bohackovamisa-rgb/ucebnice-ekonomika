@@ -468,15 +468,15 @@ def render():
             st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz")
             st.write("Zvol prvek v nabídce níže, sleduj jeho umístění přímo na bankovce a zjisti, jak ho v praxi ověřit:")
 
-            # Databáze prvků s přesnými souřadnicemi pro reálný obrázek 2000 Kč bankovky
+            # Databáze prvků s přesnými souřadnicemi
             prvky_bankovky = {
                 "Vodoznak (pohledem)": {
                     "ikona": "💧",
                     "top": "50%", "left": "16%",
-                    "nazev": "Vodoznak",
+                    "nazev": "Vodoznak (Ema Destinnová)",
                     "misto": "Levý nepotištěný okraj bankovky",
-                    "popis": "Zřetelný portrét Emy Destinnové viditelný z obou stran při pohledu proti světlu.",
-                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na ni proti světlu."
+                    "popis": "Zřetelný stínovaný portrét Emy Destinnové viditelný z obou stran při pohledu proti světlu.",
+                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na nepotištěný okraj proti světlu."
                 },
                 "Ochranný proužek (pohledem)": {
                     "ikona": "📏",
@@ -500,15 +500,15 @@ def render():
                     "nazev": "Opticky proměnlivá barva (Lyra)",
                     "misto": "Spodní část bankovky u motivu lyry",
                     "popis": "Speciální tisková barva mění svůj odstín ze zlatavé na zelenou při naklonění bankovky.",
-                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku – barva se změní ze zlaté na zelenou."
+                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku – barva lyry se změní ze zlaté na zelenou."
                 },
                 "Reliéfní tisk (hmatem)": {
                     "ikona": "🖐️",
-                    "top": "35%", "left": "80%",
+                    "top": "38%", "left": "78%",
                     "nazev": "Reliéfní tisk (Hlubotisk)",
                     "misto": "Portrét Emy Destinnové a hmatové značky",
                     "popis": "Vystouplý povrch hlubotisku nahmatatelný na lícové straně bankovky.",
-                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď prstem po portrétu nebo číslu – ucítíš výrazný hmatatelný reliéf."
+                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď prstem po portrétu Emy Destinnové nebo číslu '2000' – ucítíš výrazný hmatatelný reliéf."
                 },
                 "UV prvky (pomůckami)": {
                     "ikona": "🔦",
@@ -528,19 +528,33 @@ def render():
 
             det = prvky_bankovky[p_sel]
 
-            # URL adresa reálného obrázku české bankovky 2000 Kč z Wikimedia Commons
-            url_bankovky = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/2000_CZK_2007_obverse.jpg/800px-2000_CZK_2007_obverse.jpg"
-
-            # HTML s reálným obrázkem na pozadí a aktivním hotspotem
+            # Vektorový grafický model bankovky 2000 Kč s Ematou Destinnovou
             html_bankovka = (
                 f'<div style="position: relative; width: 100%; max-width: 650px; height: 280px; '
-                f'background-image: url(\'{url_bankovky}\'); background-size: cover; background-position: center; '
-                f'border: 2px solid #64748b; border-radius: 10px; margin: 15px auto; overflow: hidden; '
-                f'box-shadow: 0 4px 12px rgba(0,0,0,0.15);">'
-                f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%);">'
-                f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; '
-                f'display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2px solid white; '
-                f'box-shadow: 0 0 15px #ef4444;">'
+                f'background: linear-gradient(135deg, #d8ece4 0%, #a8d5c8 100%); border: 2px solid #2d6a4f; '
+                f'border-radius: 12px; margin: 15px auto; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: sans-serif;">'
+                f'<!-- Vodoznaková zóna -->'
+                f'<div style="position: absolute; top: 10%; left: 5%; width: 22%; height: 80%; border: 1px dashed #74c69d; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 11px; color: #2d6a4f; text-align: center;">Vodoznam<br>Ema Destinnová</div>'
+                f'<!-- Ochranný proužek -->'
+                f'<div style="position: absolute; top: 0; left: 33%; width: 6px; height: 100%; background: linear-gradient(to bottom, #52b788, #d8ece4, #52b788); border-left: 1px solid #1b4332; border-right: 1px solid #1b4332;"></div>'
+                f'<!-- Text ČNB -->'
+                f'<div style="position: absolute; top: 12px; left: 32%; font-weight: bold; color: #1b4332; font-size: 13px; letter-spacing: 2px;">ČESKÁ NÁRODNÍ BANKA</div>'
+                f'<!-- Nominální hodnota -->'
+                f'<div style="position: absolute; top: 10px; left: 8%; font-weight: 900; color: #1b4332; font-size: 26px;">2000</div>'
+                f'<div style="position: absolute; bottom: 10px; left: 8%; font-weight: bold; color: #2d6a4f; font-size: 14px;">2000 Kč</div>'
+                f'<!-- Motiv Lyry -->'
+                f'<div style="position: absolute; top: 60%; left: 40%; font-size: 32px; opacity: 0.6; color: #d4af37;">🎼</div>'
+                f'<!-- Portrét Ema Destinnová -->'
+                f'<div style="position: absolute; top: 15%; right: 6%; width: 140px; height: 190px; border-radius: 10px; background: rgba(45,106,79,0.15); border: 1px solid #2d6a4f; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #1b4332;">'
+                f'<div style="font-size: 65px; margin-bottom: -10px;">👩‍🎤</div>'
+                f'<div style="font-weight: bold; font-size: 13px; margin-top: 5px;">EMA DESTINNOVÁ</div>'
+                f'<div style="font-size: 10px; opacity: 0.8;">1878–1930</div>'
+                f'</div>'
+                f'<!-- Hmatové značky pro nevidomé -->'
+                f'<div style="position: absolute; top: 15px; right: 15px; font-size: 16px; color: #1b4332;">:::</div>'
+                f'<!-- Dynamický svítící hotspot -->'
+                f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
+                f'<div style="background-color: #ef4444; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; border: 3px solid white; box-shadow: 0 0 15px #ef4444;">'
                 f'{det["ikona"]}'
                 f'</div></div></div>'
             )
