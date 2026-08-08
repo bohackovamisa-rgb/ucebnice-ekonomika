@@ -786,3 +786,82 @@ def render():
             Domácnost má povinné platby (mandatorní výdaje): nájem, energie, splátky, jídlo. Těžko je můžeš ze dne na den nezaplatit. Stát to má podobně, ale <b>je tu jeden obrovský rozdíl:</b> Stát není běžná rodina. Na rozdíl od rodiny může stát legálně vybrat daně navíc, nebo vydávat státní dluhopisy a půjčovat si na finančních trzích. Přesto platí základní gravitace – dlouhodobé a neřízené deficity vytvářejí obrovský tlak na to, že v budoucnu bude muset stát buď dramaticky zvednout daně, nebo radikálně snížit kvalitu služeb a důchodů.
         </div>
         """, unsafe_allow_html=True)
+# =====================================================================
+        # PODKAPITOLA 2.9: TYPY ROZPOČTŮ
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.9 Vyrovnaný, přebytkový a schodkový rozpočet")
+        st.write("Státní rozpočet může na konci roku dopadnout třemi způsoby. Vše závisí na tom, jak se poperou příjmy (vybrané daně) s výdaji (útrata státu).")
+
+        col_r1, col_r2, col_r3 = st.columns(3)
+        with col_r1:
+            st.info("⚖️ **Vyrovnaný rozpočet**\nPříjmy se přesně rovnají výdajům.\n*(Stát vybere 100, utratí 100)*")
+        with col_r2:
+            st.success("📈 **Přebytkový rozpočet**\nPříjmy jsou vyšší než výdaje.\n*(Stát vybere 100, utratí 95)*")
+        with col_r3:
+            st.error("📉 **Schodkový rozpočet (Deficit)**\nVýdaje jsou vyšší než příjmy.\n*(Stát vybere 100, utratí 120. Rozdíl 20 si musí půjčit!)*")
+
+        st.markdown("""
+        <div class='box-yellow'>
+            ⚠️ <b>Život na dluh:</b> Deficit (schodek) nemusí být vždy automaticky katastrofa — například během tvrdé krize, pandemie nebo povodní musí stát masivně podpořit ekonomiku. Problém vzniká ve chvíli, kdy se deficity opakují dlouhodobě i v době, kdy ekonomika roste a daří se jí. Dluh pak roste rychleji než schopnost státu ho unést.
+        </div>
+        """, unsafe_allow_html=True)
+
+
+        # =====================================================================
+        # PODKAPITOLA 2.10: STÁTNÍ DLUH A DLUHOPISY
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.10 Státní dluh a státní dluhopisy")
+        st.write("Pokud má stát dlouhodobě schodkový rozpočet (utrácí víc, než vybere na daních), logicky mu chybí peníze. Jak už víme, stát si nemůže peníze donekonečna jen tak tisknout. Musí si je legálně půjčit na finančních trzích. Tím vzniká **státní dluh**. Hlavním nástrojem, jak si stát půjčuje, jsou **státní dluhopisy**.")
+
+        st.markdown("""
+        <div class='box-blue'>
+            📄 <b>Státní dluhopis jednoduše:</b> Když stát vydá dluhopis, nabízí tím investorům "dlužní úpis". Investor (banka, fond, nebo i ty) státu půjčí své peníze a stát slíbí, že je za několik let vrátí zpět a jako odměnu přidá pravidelný úrok.
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.expander("❓ FAQ: Kdo to kupuje a proč nás to jako Gen Z zajímá?"):
+            st.markdown("""
+            * **Kdo kupuje státní dluhopisy?** Banky, investiční fondy, pojišťovny, zahraniční investoři, ale někdy i běžní občané (např. v ČR tzv. Dluhopis Republiky).
+            * **Proč je stát vůbec vydává?** Aby financoval letošní schodek rozpočtu, pokryl nečekané krizové výdaje, nebo tzv. refinancoval starší dluh (zkrátka si vezme novou půjčku, aby mohl splatit tu starou, jejíž čas právě vypršel).
+            * **Je státní dluhopis bez rizika?** Obvykle se považuje za velmi bezpečnou investici (protože státy typu ČR nekrachují často). Ale pozor! Není to kouzelný výnos bez rizika. O tvé skutečné bohatství tě může připravit **inflace**.
+            * **Jak se dluh týká naší generace (Gen Z)?** Každý dluh se jednou musí zaplatit. Extrémní dluh znamená, že stát musí platit obrovské úroky, takže mu nezbydou peníze na investice, školství nebo platy. V budoucnu to tak zaplatíme my – vyššími daněmi nebo škrty ve službách.
+            """)
+
+        st.markdown("<div class='box-purple'>💸 <b>Simulátor investora: Zničí ti inflace tvůj dluhopis?</b></div>", unsafe_allow_html=True)
+        st.write("Rozhodl/a ses půjčit českému státu peníze na **5 let** formou dluhopisů. Stát ti slíbil garantovaný úrok. Budou ale peníze, které ti stát za pět let pošle zpět, reálně stačit na víc věcí? Nasimuluj si vliv inflace:")
+
+        col_dluh1, col_dluh2, col_dluh3 = st.columns(3)
+        with col_dluh1:
+            investice = st.number_input("Kolik státu půjčíš (Kč):", min_value=1000, value=100000, step=5000)
+        with col_dluh2:
+            urok_dluhopisu = st.slider("Roční úrok od státu (%):", 1.0, 10.0, 4.0, step=0.5)
+        with col_dluh3:
+            inflace = st.slider("Průměrná roční inflace (%):", 0.0, 15.0, 5.0, step=0.5)
+
+        # Matematika složeného úročení na 5 let
+        roky = 5
+        konecna_castka = investice * ((1 + (urok_dluhopisu / 100)) ** roky)
+        cisty_zisk_nominalni = konecna_castka - investice
+        
+        # Očištění o inflaci (reálná kupní síla peněz za 5 let v dnešních cenách)
+        realna_hodnota = konecna_castka / ((1 + (inflace / 100)) ** roky)
+        rozdil_kupni_sily = realna_hodnota - investice
+
+        st.write(f"⏱️ **Výsledek tvé investice po {roky} letech:**")
+        col_res1, col_res2 = st.columns(2)
+        
+        with col_res1:
+            st.metric("Peníze fyzicky na účtu (Nominální)", f"{int(konecna_castka)} Kč", f"+ {int(cisty_zisk_nominalni)} Kč z úroků")
+            st.write("*(Tohle číslo uvidíš v internetovém bankovnictví. Stát dodržel slovo a vyplatil tě.)*")
+            
+        with col_res2:
+            if rozdil_kupni_sily >= 0:
+                st.metric("Skutečná hodnota peněz (Reálná)", f"{int(realna_hodnota)} Kč", f"+ {int(rozdil_kupni_sily)} Kč v kupní síle")
+                st.success("✅ **Vyhrál/a jsi!** Úrok z dluhopisu byl vyšší než inflace. Skutečně jsi zbohatl/a a koupíš si za tyto peníze více věcí než před pěti lety.")
+            else:
+                st.metric("Skutečná hodnota peněz (Reálná)", f"{int(realna_hodnota)} Kč", f"{int(rozdil_kupni_sily)} Kč v kupní síle", delta_color="inverse")
+                st.error("❌ **Prohrál/a jsi s inflací.** Sice máš na účtu číselně víc korun, ale věci v obchodech zdražily mnohem rychleji. V reálu sis za svou původní investici mohl/a koupit víc věcí než teď z toho, co ti vrátil stát.")
