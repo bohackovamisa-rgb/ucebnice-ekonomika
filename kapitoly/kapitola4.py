@@ -1585,9 +1585,9 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
 # =========================================================================
     # SEKCE 6: PRAKTICKÁ DÍLNA (WORKSHOP)
     # =========================================================================
-    elif "6.1" in selected_section_4 or "praktická dílna" in selected_section_4.lower():
-        st.markdown("### 🛠️ 6.1 Praktická dílna")
-        st.write("Vyzkoušejte si klíčové situace z trhu práce nanečisto. Vyberte si aktivitu v záložkách níže:")
+    elif "6.1" in selected_section_4:
+        st.markdown("### 🛠️ 6.1 Praktická dílna (Aktivity 1–5)")
+        st.write("Vyzkoušejte si klíčové praktické situace z trhu práce. Vyberte si aktivitu v záložkách níže:")
 
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "🗺️ Aktivita 1: Profesní mapa", 
@@ -1602,87 +1602,73 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
         # ---------------------------------------------------------------------
         with tab1:
             st.markdown("#### 🗺️ Aktivita 1: Moje profesní mapa")
-            st.write("Vytvořte si jednoduchou mapu své budoucí pracovní cesty. Odpovězte na 6 klíčových otázek:")
+            st.write("Vytvořte jednoduchou mapu své budoucí pracovní cesty:")
             
-            with st.form("profesni_mapa_form"):
+            with st.form("profesni_mapa_form_v2"):
                 col_m1, col_m2 = st.columns(2)
                 with col_m1:
-                    q1 = st.text_area("1. Jaké činnosti mě baví?", placeholder="Např. tvoření grafiky, organizování akcí, práce s lidmi...")
-                    q2 = st.text_area("2. Jaké problémy rád/a řeším?", placeholder="Např. technické záhadnosti, konflikty v týmu, matematika...")
-                    q3 = st.text_area("3. Jaké dovednosti už mám?", placeholder="Např. angličtina C1, střih videa, trpělivost, řidičák...")
+                    q1 = st.text_area("1. Jaké činnosti mě baví?", placeholder="Napište činnosti...")
+                    q2 = st.text_area("2. Jaké problémy rád/a řeším?", placeholder="Napište typy problémů...")
+                    q3 = st.text_area("3. Jaké dovednosti už mám?", placeholder="Seznam vašich dovedností...")
                 with col_m2:
-                    q4 = st.text_area("4. Jaké dovednosti mi chybí?", placeholder="Např. pokročilý Excel, vyjednávání, veřejné vystupování...")
-                    q5 = st.text_area("5. Jaké profese s tím souvisejí?", placeholder="Např. projektový manažer, IT supporter, UX designér...")
-                    q6 = st.text_area("6. Co mohu vyzkoušet během příštích tří měsíců?", placeholder="Např. kurz na jsemvkurzu.cz, stáž, tvorba vlastního projektu...")
+                    q4 = st.text_area("4. Jaké dovednosti mi chybí?", placeholder="Co je potřeba se naučit...")
+                    q5 = st.text_area("5. Jaké profese s tím souvisejí?", placeholder="Možné profese...")
+                    q6 = st.text_area("6. Co mohu vyzkoušet během příštích tří měsíců?", placeholder="Konkrétní akční krok...")
 
-                submit_mapa = st.form_submit_button("🚀 Vygenerovat mé profesní shrnutí")
+                submit_mapa = st.form_submit_button("🚀 Uložit a zobraziť moji mapu")
 
             if submit_mapa:
-                if q1 or q3 or q5:
-                    st.success("🎉 **Tvá profesní mapa byla úspěšně sestavena!**")
-                    st.markdown("""
-                    <div style="background-color: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0;">
-                        <h4 style="color: #166534; margin-top:0;">📋 Souhrn tvojí kariérní vize:</h4>
-                        <p><b>Baví tě:</b> {}</p>
-                        <b>Problémy k řešení:</b> {}<br>
-                        <b>Tvé silné stránky:</b> {}<br>
-                        <b>Co se chceš naučit:</b> {}<br>
-                        <b>Cílové profese:</b> {}<br>
-                        <b>Akční plán na 3 měsíce:</b> {}
-                    </div>
-                    """.format(
-                        q1 if q1 else "Nespecifikováno",
-                        q2 if q2 else "Nespecifikováno",
-                        q3 if q3 else "Nespecifikováno",
-                        q4 if q4 else "Nespecifikováno",
-                        q5 if q5 else "Nespecifikováno",
-                        q6 if q6 else "Nespecifikováno"
-                    ), unsafe_allow_html=True)
-                else:
-                    st.warning("⚠️ Pro vygenerování mapy vyplň alespoň některé položky.")
+                st.success("🎉 **Vaše profesní mapa byla úspěšně sestavena!**")
+                st.markdown(f"""
+                <div style="background-color: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                    <h4 style="color: #166534; margin-top:0;">📋 Souhrn tvojí profesní cesty:</h4>
+                    <b>Baví mě:</b> {q1 if q1 else 'Nespecifikováno'}<br>
+                    <b>Rád/a řeším:</b> {q2 if q2 else 'Nespecifikováno'}<br>
+                    <b>Moje dovednosti:</b> {q3 if q3 else 'Nespecifikováno'}<br>
+                    <b>Chybějící dovednosti:</b> {q4 if q4 else 'Nespecifikováno'}<br>
+                    <b>Související profese:</b> {q5 if q5 else 'Nespecifikováno'}<br>
+                    <b>Plán na 3 měsíce:</b> {q6 if q6 else 'Nespecifikováno'}
+                </div>
+                """, unsafe_allow_html=True)
 
         # ---------------------------------------------------------------------
         # AKTIVITA 2: ANALÝZA PRACOVNÍHO INZERÁTU
         # ---------------------------------------------------------------------
         with tab2:
             st.markdown("#### 🕵️ Aktivita 2: Analýza pracovního inzerátu")
-            st.write("Přečtěte si vzorový inzerát a odpovězte na 5 analytických otázek:")
+            st.write("Vyberte si tento vzorový inzerát a odpovězte na analytické otázky:")
 
             st.markdown("""
-            <div style="background-color: #f8fafc; padding: 18px; border-left: 5px solid #0284c7; border-radius: 5px; font-family: sans-serif; color: #334155; line-height: 1.5;">
-                <h3 style="margin-top:0; color: #0f172a;">💼 Hledáme: Junior Asistent/ka marketingu & operativy</h3>
+            <div style="background-color: #f8fafc; padding: 18px; border-left: 5px solid #0284c7; border-radius: 5px; font-family: sans-serif; color: #334155; line-height: 1.5; margin-bottom: 15px;">
+                <h3 style="margin-top:0; color: #0f172a;">💼 Inzerát: Junior Asistent/ka operativy a marketingu</h3>
                 <p><i>„Jsme jako jedna velká rodina! Hledáme dynamického člověka, který se nebojí výzev a zvládne práci pod tlakem v našem rychlém prostředí.“</i></p>
                 <b>Požadujeme:</b>
                 <ul>
-                    <li>SŠ/VŠ vzdělání, výbornou češtinu a angličtinu na úrovni C1 (denní komunikace).</li>
+                    <li>SŠ/VŠ vzdělání, výbornou češtinu a angličtinu na úrovni C1.</li>
                     <li>Ochotu být k dispozici na telefonu i o víkendech v případě krizí.</li>
                     <li>Řidičský průkaz sk. B a vlastní automobil k služebním cestám.</li>
-                    <li>Všestrannost – zvládnutí administrativy, obsluhy sociálních sítí i občasného úklidu kanceláře.</li>
+                    <li>Všestrannost – zvládnutí administrativy, sociálních sítí i úklidu kanceláře.</li>
                 </ul>
                 <b>Výhodou:</b> Znalost Canvy, základy střihu videa, němčina.<br>
-                <b>Nabízíme:</b> Motivující odměnu závislou na výkonu (dořešíme na pohovoru), skvělý kolektiv a multisportku.
+                <b>Nabízíme:</b> Odpovídající plat (dořešíme na pohovoru), super kolektiv a multisportku.
             </div>
             """, unsafe_allow_html=True)
 
-            with st.form("inzerat_dílna_form"):
-                a2_1 = st.text_input("1. Jaké dovednosti zaměstnavatel požaduje?", placeholder="Vyjmenuje hlavní požadavky...")
-                a2_2 = st.text_input("2. Co je nutné a co je jen výhoda?", placeholder="Co musím splňovat 100% a co je jen bonus?")
-                a2_3 = st.text_area("3. Jaké red flags (varovné signály) se v inzerátu objevují?", placeholder="Které věty působí podezřele a proč?")
-                a2_4 = st.text_input("4. Jaké 2 konkrétní otázky byste položili na pohovoru?", placeholder="Na co se zeptat ohledně mzdy, pohotovosti nebo náplně?")
-                a2_5 = st.text_area("5. Jak byste upravili životopis pro tuto pozici?", placeholder="Které dovednosti a projekty ze svého života zdůrazníte?")
+            with st.form("inzerat_v2_form"):
+                a1 = st.text_input("1. Jaké dovednosti zaměstnavatel požaduje?")
+                a2 = st.text_input("2. Co je nutné a co je jen výhoda?")
+                a3 = st.text_area("3. Jaké red flags se v inzerátu objevují?")
+                a4 = st.text_input("4. Jaké otázky byste položili na pohovoru?")
+                a5 = st.text_area("5. Jak byste upravili životopis pro tuto pozici?")
 
-                submit_inzerat = st.form_submit_button("🔍 Vyhodnotit mou analýzu inzerátu")
+                submit_inzerat = st.form_submit_button("🔍 Vyhodnotit analýzu")
 
             if submit_inzerat:
-                st.success("✅ **Analýza dokončena! Zde je odborná zpětná vazba pro kontrolu:**")
+                st.success("✅ **Analýza dokončena! Zde je vzorové vyhodnocení k porovnání:**")
                 st.markdown("""
-                * **Nutné vs. Výhoda:** Nutná je Čeština, Angličtina C1 a ŘP B. Znalost Canvy, videa či Němčiny jsou pouze bonusem.
-                * **Red Flags v inzerátu:** 
-                  1. *„Jsme jako rodina“* + *„dostupnost o víkendech“* = Tlak na přesčasy zdarma.
-                  2. *„Práce pod tlakem“* = Chaos v procesech.
-                  3. *„Všestrannost (i úklid)“* = Nejasná náplň práce, budete dělat všechno.
-                  4. *„Odměna dořešíme na pohovoru“* = Skrývání mzdy, pravděpodobně velmi nízký základ.
-                * **Správné otázky na pohovoru:** *Jaká je garantovaná pevná složka mzdy? Jak jsou propláceny víkendové pohotovosti?*
+                * **Nutné vs. Výhoda:** Nutná je angličtina C1, čeština a ŘP B. Canva, video a němčina jsou pouze výhodou.
+                * **Red flags:** *„Jsme jako rodina“* + *„dostupnost o víkendu“* (tlak na neplacené přesčasy), *„práce pod tlakem“* (chaos), *„plat na pohovoru“* (netransparentní odměňování), *„i úklid kanceláře“* (nejasná náplň práce).
+                * **Otázky na pohovor:** *Jaká je pevná složka mzdy? Jak jsou propláceny víkendové pohotovosti?*
                 """)
 
         # ---------------------------------------------------------------------
@@ -1690,82 +1676,59 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
         # ---------------------------------------------------------------------
         with tab3:
             st.markdown("#### 🤖 Aktivita 3: AI jako kariérní kouč")
-            st.write("Použijte generativní AI nástroj (ChatGPT, Claude, Gemini) k simulaci reálného pohovoru.")
+            st.write("Použijte AI nástroj (ChatGPT, Claude, Gemini) k přípravě na pracovní pohovor.")
 
-            st.markdown("""
-            <div class='box-blue'>
-                💡 <b>Jak postupovat:</b><br>
-                1. Vyberte si pozici, o kterou byste se chtěli ucházet.<br>
-                2. Zkopírujte níže uvedený prompt do AI chatu.<br>
-                3. Absolvujte simulovaný pohovor přímo v chatu s AI.
-            </div>
-            """, unsafe_allow_html=True)
+            pozice = st.text_input("Zadejte pozici, na kterou se připravujete:", value="Asistent marketingu")
 
-            pozice_input = st.text_input("Zadejte požadovanou pozici pro pohovor:", value="Junior Marketingový Specialista")
+            prompt_kod = f"""„Pomoz mi připravit se na pohovor na pozici {pozice}.
+Nejprve mi polož 5 otázek jako personalista. Po každé mé odpovědi polož doplňující otázku. Na konci vyhodnoť moje silné stránky, slabá místa a navrhni konkrétní formulace, které znějí profesionálně, ale přirozeně.“"""
 
-            prompt_text = f"""Pomoz mi připravit se na pohovor na pozici [{pozice_input}].
-Nejprve mi polož 5 otázek jako personalista. Ptej se mě po jedné otázce a počkej na mou odpověď!
-Po každé mé odpovědi polož doplňující otázku nebo krátce reaguj.
-Na konci vyhodnoť moje silné stránky, slabá místa a navrhni konkrétní formulace, které znějí profesionálně, ale přirozeně."""
-
-            st.markdown("##### 📋 Prompt ke zkopírování:")
-            st.code(prompt_text, language="markdown")
-
-            st.info("🎯 **Tip pro výuku:** Zkus záměrně odpovědět na jednu otázku AI velmi stručně (např. 'Nevím' nebo 'Baví mě to') a sleduj, jak tě AI poučí a nabídne lepší profesionální formulaci.")
+            st.markdown("<aside>🤖 <b>Prompt ke zkopírování do AI:</b></aside>", unsafe_allow_html=True)
+            st.code(prompt_kod, language="text")
 
         # ---------------------------------------------------------------------
         # AKTIVITA 4: VÝPLATNÍ PÁSKA S CHYBAMI
         # ---------------------------------------------------------------------
         with tab4:
             st.markdown("#### 🧾 Aktivita 4: Výplatní páska s chybami")
-            st.write("Prozkoumejte modelovou výplatní pásku za minulý měsíc (zaměstnanec odpracoval plný měsíc 168 h + 8 hodin přesčasu o víkendu a podepsal daňové prohlášení).")
+            st.write("Práce s modelovou výplatní páskou (zaměstnanec odpracoval plných 168 h + 8 h přesčasu o víkendu a podepsal prohlášení k dani):")
 
             st.markdown("""
-            <div style="background-color: #ffffff; padding: 20px; border: 2px solid #94a3b8; border-radius: 6px; font-family: monospace; font-size: 0.95rem; color: #0f172a; line-height: 1.5;">
-                <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 5px; margin-bottom: 10px;">
-                    <b>VÝPLATNÍ LÍSTEK — 08/2026</b><br>
-                    Zaměstnanec: Jan Novák | Odpracováno: 168 hod. | Víkendový přesčas: 8 hod.
-                </div>
+            <div style="background-color: #ffffff; padding: 18px; border: 2px solid #94a3b8; border-radius: 6px; font-family: monospace; font-size: 0.95rem; color: #0f172a; line-height: 1.5; margin-bottom: 15px;">
+                <b>VÝPLATNÍ LÍSTEK — 08/2026</b><br>
+                Zaměstnanec: Jan Novák | Odpracováno: 168 hod. | Víkendový přesčas: 8 hod.<br>
+                ------------------------------------------------------------<br>
                 Základní hrubá mzda ........................ 32 000 Kč<br>
                 Příplatek za práci o víkendu ............... 0 Kč<br>
                 <b>Hrubý příjem celkem ..................... 32 000 Kč</b><br>
-                <hr style="border-top: 1px dashed #cbd5e1;">
+                ------------------------------------------------------------<br>
                 Sociální pojištění zaměstnance (7,1 %) ..... -2 272 Kč<br>
                 Zdravotní pojištění zaměstnance (4,5 %) .... -1 440 Kč<br>
                 Záloha na daň před slevou (15 %) ........... -4 800 Kč<br>
                 Sleva na poplatníka ........................ 0 Kč (Neuplatněno)<br>
                 <b>Záloha na daň po slevě ................... -4 800 Kč</b><br>
-                <hr style="border-top: 1px dashed #cbd5e1;">
+                ------------------------------------------------------------<br>
                 Srážka ze mzdy: Pokuta za pozdní příchod .. -1 000 Kč<br>
-                <hr style="border-top: 2px solid #0f172a;">
+                ------------------------------------------------------------<br>
                 <b style="font-size: 1.1rem; color: #dc2626;">ČISTÁ MZDA K VÝPLATĚ: .................... 22 488 Kč</b>
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("##### 🕵️ Úkoly k výplatní pásce:")
+            with st.form("paska_akt4_form"):
+                e1 = st.text_area("1. Najít tři chyby:")
+                e2 = st.text_area("2. Vysvětlit, proč jsou problém:")
+                e3 = st.text_area("3. Navrhnout, jak chybu řešit:")
+                e4 = st.text_area("4. Napsat krátký profesionální e-mail zaměstnavateli:")
 
-            with st.form("paska_vada_form"):
-                chyba_1 = st.text_input("1. Chyba č. 1 (Kde chybí peníze / co chybí?):", placeholder="Např. Víkendový příplatek...")
-                chyba_2 = st.text_input("2. Chyba č. 2 (Jaká sleva chybí?):", placeholder="Např. Sleva na...")
-                chyba_3 = st.text_input("3. Chyba č. 3 (Jaká srážka porušuje zákon?):", placeholder="Např. Pokuta...")
-                
-                vysvetleni = st.text_area("4. Vysvětlete, proč jsou tyto chyby problémem a jak je řešit:")
-                email_text = st.text_area("5. Napište krátký profesionální a asertivní e-mail mzdové účetní:", placeholder="Dobrý den, při kontrole výplatní pásky jsem zpozoroval/a...")
-
-                submit_paska = st.form_submit_button("✉️ Zkontrolovat mé řešení výplatní pásky")
+                submit_paska = st.form_submit_button("✉️ Zkontrolovat řešení")
 
             if submit_paska:
-                st.success("✅ **Zkontrolováno! Zde je vzorové řešení k porovnání:**")
+                st.success("✅ **Vzorové řešení k porovnání:**")
                 st.markdown("""
-                **3 Chyby na pásce:**
-                1. **Chybějící víkendový příplatek:** Odpracováno 8 h o víkendu, ale příplatek je 0 Kč.
-                2. **Neuplatněná sleva na poplatníka:** Záloha na daň je 4 800 Kč místo 2 230 Kč (4 800 - 2 570). Zaměstnanec přišel o 2 570 Kč!
-                3. **Nelegální srážka (pokuta):** Zaměstnavatel nesmí svévolně strhávat pokuty ze mzdy bez písemné dohody.
-
-                **Vzorový e-mail mzdové účetní:**
-                > *Dobrý den,*<br>
-                > *při kontrole výplatní pásky za měsíc srpna jsem objevil/a několik nesrovnalostí. Na pásce chybí proplacení příplatku za 8 hodin víkendového přesčasu ze dne 15. 8. Dále nebyla uplatněna podepsaná základní sleva na poplatníka a objevila se srážka 1 000 Kč jako pokuta.*<br>
-                > *Prosím o prověření výpočtu a zaslání opraveného mzdového listu. Děkuji, Jan Novák.*
+                1. **3 chyby:** Chybějící víkendový příplatek (8 h), neuplatněná sleva na poplatníka (2 570 Kč), nelegální srážka pokuty ze mzdy.
+                2. **Proč je to problém:** Zaměstnanec přišel o cca 3 500+ Kč a srážka pokuty bez písemné dohody porušuje zákoník práce.
+                3. **Řešení:** Upozornit mzdovou účetní a požádat o opravu a doplatek v nejbližším výplatním termínu.
+                4. **E-mail:** *„Dobrý den, při kontrole výplatního lístku za srpen jsem zjistil/a chybějící příplatek za víkend (8 h), neuplatněnou slevu na poplatníka a srážku 1 000 Kč. Prosím o prověření výpočtu a zaslání opraveného lístku. Děkuji, Jan Novák.“*
                 """)
 
         # ---------------------------------------------------------------------
@@ -1773,54 +1736,27 @@ Na konci vyhodnoť moje silné stránky, slabá místa a navrhni konkrétní for
         # ---------------------------------------------------------------------
         with tab5:
             st.markdown("#### 🎭 Aktivita 5: Role-play vyjednávání o mzdě")
-            st.write("Vyzkoušejte si vyjednávání o mzdě ve trojicích (nebo se simulací). Každá role má své instrukce:")
+            st.write("Rozdělte se do rolí a vyzkoušejte si vyjednávání:")
 
-            col_r1, col_r2, col_r3 = st.columns(3)
-            with col_r1:
-                st.markdown("""
-                <div style="background-color: #eff6ff; padding: 15px; border-radius: 6px; border: 1px solid #bfdbfe; height: 100%;">
-                    <h5 style="color: #1e3a8a; margin-top:0;">👔 Role 1: Zaměstnavatel</h5>
-                    <p style="font-size: 0.88rem;"><b>Cíl:</b> Udržet rozpočet.<br>
-                    Máte omezený rozpočet (max. 35 000 Kč hrubého). Pokud uchazeč žádá více, hledejte kompromis v nefinančních benefitech (home office, vzdělávání, flexibilita).</p>
-                </div>
-                """, unsafe_allow_html=True)
-            with col_r2:
-                st.markdown("""
-                <div style="background-color: #f0fdf4; padding: 15px; border-radius: 6px; border: 1px solid #bbf7d0; height: 100%;">
-                    <h5 style="color: #166534; margin-top:0;">🧑‍💼 Role 2: Uchazeč o práci</h5>
-                    <p style="font-size: 0.88rem;"><b>Cíl:</b> Získat 40 000 Kč.<br>
-                    Argumentujte daty z trhu práce, svými dovednostmi a konkrétním přínosem pro firmu. Buďte připraveni na kompromis s benefity.</p>
-                </div>
-                """, unsafe_allow_html=True)
-            with col_r3:
-                st.markdown("""
-                <div style="background-color: #fff7ed; padding: 15px; border-radius: 6px; border: 1px solid #fed7aa; height: 100%;">
-                    <h5 style="color: #9a3412; margin-top:0;">⚖️ Role 3: Pozorovatel</h5>
-                    <p style="font-size: 0.88rem;"><b>Cíl:</b> Hodnotit průběh.<br>
-                    Sledujte rozhovor a na konci vyplňte hodnotící formulář níže.</p>
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown("""
+            * 👔 **Zaměstnavatel:** Máte omezený rozpočet (max. 35 000 Kč hrubého). Pokud uchazeč žádá více, nabízejte kompromis v benefitech (home office, kurzy).
+            * 🧑‍💼 **Uchazeč o práci:** Žádáte 40 000 Kč. Argumentujte svými dovednostmi, přínosem pro firmu a srovnatelnými sazbami v oboru.
+            * ⚖️ **Pozorovatel:** Hodnotí průběh podle kritérií níže.
+            """)
 
             st.divider()
             st.markdown("##### 📝 Hodnotící arch pro Pozorovatele:")
 
-            with st.form("roleplay_eval_form"):
-                st.write("Zaškrtněte, jak si uchazeč a zaměstnavatel vedli v debatě:")
-                eval_1 = st.checkbox("🎯 **Věcnost:** Uchazeč argumentoval konkrétními dovednostmi, ne pocity ('potřebuju peníze na nájem').")
-                eval_2 = st.checkbox("📊 **Práce s důkazy:** Byly zmíněny reálné sazby v oboru nebo přínos pro firmu.")
-                eval_3 = st.checkbox("🤝 **Respekt:** Rozhovor probíhal profesionálně bez emocí a nátlaku.")
-                eval_4 = st.checkbox("🔄 **Schopnost kompromisu:** Obě strany hledaly řešení (např. mzda + benefity).")
-                eval_5 = st.checkbox("💎 **Pojmenování hodnoty:** Uchazeč jasně vysvětlil, co za dané peníze firmě doručí.")
+            with st.form("roleplay_v2_form"):
+                st.write("Hodnotí se:")
+                h1 = st.checkbox("🎯 **Věcnost:** Argumentace fakty, nikoliv pocity.")
+                h2 = st.checkbox("📊 **Práce s důkazy:** Odkazování na reálné dovednosti a přínos pro firmu.")
+                h3 = st.checkbox("🤝 **Respekt:** Profesionální komunikace bez nátlaku a emocí.")
+                h4 = st.checkbox("🔄 **Schopnost hledat kompromis:** Ochota jednat o benefitech nebo rozložení mzdy.")
+                h5 = st.checkbox("💎 **Jasné pojmenování hodnoty práce:** Jasně definováno, co zaměstnanec za peníze doručí.")
 
-                pohovor_vysledek = st.select_slider("Výsledný dojem z vyjednávání:", options=["Nedohodli se (Pat)", "Chudý kompromis", "Výborná dohoda Win-Win"])
+                submit_h = st.form_submit_button("📊 Uložit hodnocení")
 
-                submit_eval = st.form_submit_button("📊 Uložit hodnocení scénky")
-
-            if submit_eval:
-                skore_eval = sum([eval_1, eval_2, eval_3, eval_4, eval_5])
-                st.success(f"✅ **Hodnocení uloženo! Dosažené skóre profesionality: {skore_eval} / 5.**")
-                if skore_eval >= 4:
-                    st.balloons()
-                    st.markdown("**Ukázkové vyjednávání!** Obě strany dosáhly férové dohody na základě argumentů a respektu.")
-                else:
-                    st.info("💡 Pro příště zapracujte na větší věcnosti a využití kompromisů v nefinančních benefitech.")
+            if submit_h:
+                skore = sum([h1, h2, h3, h4, h5])
+                st.success(f"✅ **Hodnocení uloženo! Dosažené skóre: {skore} / 5.**")
