@@ -1242,3 +1242,132 @@ def render():
             
             if st.form_submit_button("Uložit Krok 7 do Projektového pasu"):
                 st.success("Krok 7 uložen! Než začneš utrácet peníze, víš, že musíš zjistit tvrdá data.")
+# =====================================================================
+        # PODKAPITOLA 2.3: STP PROCES (SEGMENTACE, TARGETING, POSITIONING)
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.3 STP proces: Segmentace, Cílení (Targeting) a Positioning")
+        st.write("Firma nemůže prodávat všem. Lidé mají různé vkusy, potřeby i peněženky. STP proces je tříkroková strategie, jak z obřího davu vybrat přesně ty správné zákazníky a získat si pevné místo v jejich mysli.")
+
+        col_stp1, col_str2, col_stp3 = st.columns(3)
+        col_stp1.info("✂️ **S — Segmentation**\nRozdělíme trh na menší, podobné skupiny lidí.")
+        col_str2.warning("🎯 **T — Targeting**\nVybereme nejvhodnější skupinu, na kterou se zaměříme.")
+        col_stp3.success("📌 **P — Positioning**\nUrčíme, jak chceme být zapamatováni v hlavě zákazníka.")
+
+        # ---------------------------------------------------------------------
+        # 2.3.1 SEGMENTACE TRHU
+        # ---------------------------------------------------------------------
+        st.markdown("##### 2.3.1 Segmentace trhu: Rozdělení koláče")
+        st.write("Segmentace rozděluje trh na menší skupiny (segmenty). Lidé v jednom segmentu mají podobné chování, potřeby a reakce na nabídku. Trh dělíme podle **4 základních kritérií**:")
+
+        tab_seg1, tab_seg2, tab_seg3, tab_seg4 = st.tabs(["🌍 Geografická", "👥 Demografická", "🧠 Psychografická", "🛒 Behaviorální"])
+
+        with tab_seg1:
+            st.markdown("##### Geografická segmentace (KDE?)")
+            st.write("Místo, region, město, stát, klima nebo typ lokality.")
+            st.info("📌 **Příklad:** Nabídka kavárny v centru Prahy bude jiná než kavárna na malovesnické návsi. Prodejce zimních bund cílí na horské oblasti, ne na pobřeží Španělska.")
+
+        with tab_seg2:
+            st.markdown("##### Demografická segmentace (KDO?)")
+            st.write("Věk, pohlaví, příjem, vzdělání, rodinný stav, povolání.")
+            st.info("📌 **Příklad:** Bankovní účet pro studenty (zdarma), kosmetika pro teenagery s akné, rodinné balení rodinného auta, prémiové hodinky pro vysokopříjmové manažery.")
+
+        with tab_seg3:
+            st.markdown("##### Psychografická segmentace (JAK MYSLÍ?)")
+            st.write("Životní styl, hodnoty, zájmy, osobnost a postoje.")
+            st.info("📌 **Příklad:** Značka Patagonia cílí na lidi milující přírodu a udržitelný životní styl. Jiná značka cílí na extravagantní lidi, co chtějí šokovat okolí.")
+
+        with tab_seg4:
+            st.markdown("##### Behaviorální segmentace (JAK NAKUPUJÍ?)")
+            st.write("Nákupní chování, frekvence užívání, věrnost značce, reakce na slevy.")
+            st.info("📌 **Příklad:** E-shop rozlišuje zákazníky na: *lovce slev* (nakoupí jen v akcích), *loajální štamgasty* (nakupují každý měsíc) a *váhavce* (často opouštějí košík).")
+
+        # ---------------------------------------------------------------------
+        # 2.3.2 CÍLENÍ (TARGETING)
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.3.2 Cílení (Targeting): Na koho namíříme své úsilí?")
+        st.write("Jakmile máme trh rozdělený, musíme se rozhodnout, na které segmenty vložíme své peníze, čas a kapacitu.")
+
+        col_t1, col_t2, col_t3 = st.columns(3)
+        with col_t1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-top: 5px solid #94a3b8; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #475569;">🌊 Masový marketing</h5>
+                <b>Jak funguje:</b> Oslovujeme co nejširší trh jednou univerzální nabídkou.<br><br>
+                <b>Příklady:</b> Běžná balená voda, rohlíky, toaletní papír, základní saponáty.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_t2:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-top: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #1d4ed8;">🎯 Koncentrovaný marketing</h5>
+                <b>Jak funguje:</b> Soustředíme se na 1 velký konkrétní segment a přizpůsobíme mu nabídku.<br><br>
+                <b>Příklady:</b> Značka běžeckého oblečení cílí výhradně na rekreační i profi běžce.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_t3:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-top: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #047857;">🔬 Nika / Níšový marketing</h5>
+                <b>Jak funguje:</b> Cílíme na velmi úzkou, specifickou skupinu s jasným, opomíjeným problémem.<br><br>
+                <b>Příklady:</b> Veganské proteinové tyčinky bez celeru pro lidi s celiakií a intolerancí laktózy.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 2.3.3 POSITIONING A USP
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.3.3 Positioning a USP (Unikátní prodejní argument)")
+        st.write("Positioning je vytvoření jedinečného obrazu značky v mysli zákazníka. Kde 'sedíme' v jeho hlavě, když se řekne kategorie nášeho produktu?")
+
+        st.markdown("""
+        <div class='box-yellow'>
+            💎 <b>USP (Unique Selling Proposition):</b> Unikátní prodejní argument. Je to jasná, stručná odpověď na otázku zákazníka: <i>„Proč si mám koupit tohle zrovna od vás a ne od deseti dalších konkurentů?“</i>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<br>##### 📊 Příklady úspěšného Positioningu a USP:")
+        st.markdown("""
+        | Značka / Produkt | Positioning v hlavě zákazníka | Unikátní prodejní argument (USP) |
+        | :--- | :--- | :--- |
+        | **Studentská kavárna** | Tiché a klidné studijní místo hned u školy. | Káva + zaručené místo u zásuvky + 20% sleva na ISIC. |
+        | **Udržitelný merch** | Školní oblečení, které nevypadá jako levný reklamní dárek. | Lokální bio bavlna, moderní oversized střih a unikátní art design. |
+        | **Aplikace na učení** | Rychlá příprava na maturitní testy bez zbytečného šprtání. | Bleskové kartičky, AI procvičování podle vlastních chyb, 10 minut denně. |
+        """)
+
+        st.markdown("<br><div class='box-purple'>🕹️ <b>Trenažér USP: Poznáš silný positioning od klišé?</b></div>", unsafe_allow_html=True)
+        st.write("Otestuj své marketingové oko. Která z těchto vět představuje SKUTEČNĚ silný a zapamatovatelný positioning?")
+
+        usp_vyber = st.radio("Vyber nejlepší vyjádření Positioningu:", [
+            "Vyber odpověď...",
+            "A) „Jsme mladá dynamická firma, která nabízí nejvyšší kvalitu za nejnižší ceny na trhu.“",
+            "B) „Doručíme ti čerstvou horkou pizzu do 30 minut od objednání, nebo ji máš úplně ZDARMA.“",
+            "C) „Záleží nám na zákazníkovi a náš zákaznický servis je vždy na prvním místě.“"
+        ])
+
+        if "B)" in usp_vyber:
+            st.success("✅ **Přesně tak! B je slavné legendární USP pizzy Domino's.** Je to konkrétní, měřitelný, odvážný a snadno ověřitelný slib. Možnosti A a C jsou jen prázdná marketingová klišé, která tvrdí všichni, ale nikdo jim nevěří.")
+        elif "A)" in usp_vyber or "C)" in usp_vyber:
+            st.error("❌ Pozor! Fráze typu 'nejvyšší kvalita za nejnižší ceny' nebo 'zákazník na prvním místě' říká každá druhá firma na svém webu. To není positioning, ale klišé. Správná odpověď je B.")
+
+        # WORKBOOK KROK 8 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 8: STP analýza tvého projektu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok8"):
+            st.markdown("##### 🎯 Definuj svoji Cílovou skupinu (Targeting):")
+            col_stp_f1, col_stp_f2 = st.columns(2)
+            with col_stp_f1:
+                p_demo = st.text_input("Demografické údaje (Věk, role...):", placeholder="např. Studenti SŠ ve věku 15-19 let")
+                p_psycho = st.text_input("Psychografické údaje (Zájmy, životní styl...):", placeholder="např. Zajímají se o módu, tvoří obsah na sítě")
+            with col_stp_f2:
+                p_typ_mkt = st.selectbox("Typ cílení:", ["Koncentrovaný (Jedna větší skupina)", "Níša / Nika (Úzká specifická skupina)", "Masový (Skoro všichni)"])
+
+            st.markdown("##### 💎 Formuluj svoje USP a Positioning:")
+            st.text_area("Proč si má zákazník vybrat tvůj projekt a ne konkurenci? Napiš 1 údernou větu (USP):", placeholder="např. Náš školní merch není jen tričko s logem, ale oversized udržitelné oblečení od návrháře ze 4.B, které chceš nosit i do města.")
+
+            if st.form_submit_button("Uložit Krok 8 do Projektového pasu"):
+                st.success("Krok 8 úspěšně uložen! Tvá značka má jasně definovaný profil a unikátní hodnotu.")
