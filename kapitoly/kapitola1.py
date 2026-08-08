@@ -803,7 +803,7 @@ def render():
             with col2:
                 st.markdown("""
                 <div class='box-green'>
-                    <strong>🚀 Startup (Aplikace na sdílení kol)</strong><br><br>
+                    <strong><i class='fi fi-bs-rocket-lunch'></i> Startup (Aplikace na sdílení kol)</strong><br><br>
                     <strong>Cíl:</strong> Obrovský a rychlý růst do celého světa. Startup nechce jen pomalu provozovat jednu službu v jedné čtvrti. Hledá model, který se dá rychle opakovat ve více městech nebo zemích. Pokud aplikace na sdílení kol funguje v jednom městě, tým chce ověřit, zda ji lze spustit i jinde, získat hodně uživatelů a růst výrazně rychleji než běžná lokální firma.<br><br>
                     <strong>Riziko:</strong> Extrémně vysoké (buď uspěje, nebo zanikne). Startup pracuje s velkou nejistotou. Nemusí být jasné, jestli lidé službu opravdu použijí, zda za ni zaplatí, jestli město povolí provoz, zda se kola nebudou ztrácet nebo ničit a jestli náklady na údržbu nepřevýší příjmy. Proto může startup rychle vyrůst, ale také rychle skončit, pokud se ukáže, že model nefunguje.<br><br>
                     <strong>Trh:</strong> Celá planeta. Trh startupu může být mnohem širší než jedno sousedství. Aplikace se dá teoreticky nabídnout ve více městech, státech nebo regionech, pokud se podaří přizpůsobit pravidlům, dopravě a chování zákazníků. Startup proto přemýšlí globálně: hledá problém, který řeší mnoho lidí na různých místech.
@@ -865,7 +865,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("#### 🚀 Aktivita: Startup za 30 minut")
+            st.markdown("#### <i class='fi fi-bs-rocket-lunch'></i> Aktivita: Startup za 30 minut")
             st.write("Ve skupině vyberte jeden problém ze školy nebo běžného života.")
             st.markdown("""
             1. Popište problém jednou větou.
@@ -885,7 +885,7 @@ def render():
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi převést můj nápad na startupovou hypotézu: problém, zákazník, řešení, cena a první test.“
             </div>
             """, unsafe_allow_html=True)
-            st.markdown("<div class='box-blue'><strong>🚀 Jednoduše řečeno:</strong> Startup není hotová firma. Je to pokus najít funkční podnikatelský model, který se dá rychle ověřovat, upravovat a případně zvětšovat.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-blue'><strong><i class='fi fi-bs-rocket-lunch'></i> Jednoduše řečeno:</strong> Startup není hotová firma. Je to pokus najít funkční podnikatelský model, který se dá rychle ověřovat, upravovat a případně zvětšovat.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
             st.markdown("### 5.4 Jak startup vzniká")
@@ -905,7 +905,7 @@ def render():
             st.markdown("### 5.5 Metodika Lean Startup")
             st.write("Metodika Lean Startup pomáhá začínajícím týmům netrávit měsíce tvorbou produktu, o který nakonec nikdo nestojí. Její základní myšlenka je jednoduchá: nejdřív ověř nejrizikovější předpoklad, potom investuj víc času a peněz.")
             st.write("Lean Startup vychází z toho, že startup není zmenšená verze velké firmy. Velká firma často ví, kdo je její zákazník, jaký produkt prodává a jak vydělává. Startup to teprve hledá. Proto potřebuje rychlé učení, malé experimenty a ochotu měnit plán podle dat.")
-            st.markdown("<div class='box-blue'><strong>🚀 Jednoduše řečeno:</strong> Lean Startup je způsob práce, při kterém tým rychle vytvoří malý test, získá zpětnou vazbu, změří výsledky a podle nich se rozhodne, co dál.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-blue'><strong><i class='fi fi-bs-rocket-lunch'></i> Jednoduše řečeno:</strong> Lean Startup je způsob práce, při kterém tým rychle vytvoří malý test, získá zpětnou vazbu, změří výsledky a podle nich se rozhodne, co dál.</div>", unsafe_allow_html=True)
             
             st.markdown("#### Základní cyklus: vytvoř — změř — pouč se")
             st.write("Lean Startup se často vysvětluje pomocí cyklu Build — Measure — Learn, česky vytvoř — změř — pouč se.")
@@ -1018,7 +1018,7 @@ def render():
             st.markdown("### 5.12 Moderní startupové pilíře")
             st.write("Tradiční formy podnikání dnes doplňuje dynamický svět technologických startupů. Pochopení jejich pilířů — škálovatelnosti, inovací, práce s daty, rizikového kapitálu a rychlého ověřování nápadů — pomáhá studentům pochopit moderní digitální ekonomiku a proměny trhu práce.")
             st.write("Moderní startup dnes často nestaví jen na nápadu a právní formě. Musí umět chytře využívat technologie, pracovat efektivně, komunikovat s komunitou a zároveň myslet na dlouhodobou udržitelnost práce zakladatele.")
-            st.markdown("<div class='box-blue'><strong>🚀 Moderní startupové pilíře:</strong> AI-First, Solopreneurship, Build in Public a Founder Wellbeing pomáhají přemýšlet o tom, jak bude projekt fungovat v praxi — nejen co prodává, ale také jak se tvoří, komunikuje a dlouhodobě zvládá.</div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-blue'><strong><i class='fi fi-bs-rocket-lunch'></i> Moderní startupové pilíře:</strong> AI-First, Solopreneurship, Build in Public a Founder Wellbeing pomáhají přemýšlet o tom, jak bude projekt fungovat v praxi — nejen co prodává, ale také jak se tvoří, komunikuje a dlouhodobě zvládá.</div>", unsafe_allow_html=True)
             
             st.markdown("<div class='box-yellow'><strong><i class='fi fi-bs-puzzle-piece'></i> Interaktivní výzva:</strong> Vyber jeden pilíř z tabulky a doplň, jak by se mohl projevit ve tvém startupu.</div>", unsafe_allow_html=True)
             st.markdown("""
@@ -1647,7 +1647,7 @@ def render():
                 """)
                 
             with st.container(border=True):
-                st.markdown("#### 🚀 3. Podnikatelský záměr a Lean Canvas")
+                st.markdown("#### <i class='fi fi-bs-rocket-lunch'></i> 3. Podnikatelský záměr a Lean Canvas")
                 st.markdown("""
                 * Zákazník & Problém
                 * Řešení & Unikátní hodnota
