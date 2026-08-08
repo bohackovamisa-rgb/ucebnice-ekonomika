@@ -480,12 +480,12 @@ def render():
             
             if "Ne" in roz_podepsano and dan_konecna > 0:
                 st.info("💡 **Tip:** Strženou daň si můžeš vyžádat zpět od státu, pokud si na jaře podáš Daňové přiznání (protože za rok jako student/brigádník pravděpodobně nevyčerpáš celou svou slevu na poplatníka).")
-        with tab_online:
+            with tab_online:
             st.markdown("##### Twitch, TikTok, Patreon, OnlyFans a Barter")
             st.write("Pokud dlouhodobě a soustavně vyděláváš tvorbou obsahu (spolupráce, předplatné, dary, prodej), jde obvykle o zdanitelný příjem a může se jednat o podnikání (na IČO).")
             st.warning("⚠️ **Pozor na Barter!** Pokud ti firma pošle zdarma drahý telefon nebo boty za to, že jim uděláš reklamu, nejedná se o „dárek“. Je to nepeněžní příjem v hodnotě té věci, a ten se musí také danit!")
 
-        with tab_vinted:
+            with tab_vinted:
             st.markdown("##### Prodej na Vinted, Bazoši a Aukru")
             st.write("Tady je potřeba si položit klíčovou otázku:")
             
@@ -499,7 +499,7 @@ def render():
             else:
                 st.error("Tohle už může být problém! Nakupování za účelem dalšího prodeje a zisku (soustavnost) je definicí podnikání. K tomu potřebuješ živnostenský list a musíš odvádět daně, jinak riskuješ pokutu.")
 
-        with tab_investice:
+            with tab_investice:
             st.markdown("##### Kryptoměny, Akcie a ETF")
             st.write("Aplikace jako Revolut dělají nákup snadným, ale nezbaví tě povinnosti danit. Pravidla se navíc liší:")
             st.markdown("""
