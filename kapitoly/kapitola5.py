@@ -902,3 +902,56 @@ def render():
         """, unsafe_allow_html=True)
         
         st.info("💡 **Poučení pro Gen Z:** Každý dluh se musí zaplatit. Extrémní dluh znamená, že stát musí platit obrovské úroky (tzv. obsluha dluhu). Tyto peníze pak chybí na školy, modernizaci nebo platy. V budoucnu to tak zaplatí dnešní mladá generace – mnohem vyššími daněmi nebo nižšími důchody.")
+# =====================================================================
+        # PODKAPITOLA 2.11: ÚNIKY, OPTIMALIZACE A STÍNOVÁ EKONOMIKA
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.11 Daňové úniky, optimalizace a stínová ekonomika")
+        st.write("Ne každé snížení daní je hned zločin. Je obrovský rozdíl mezi tím, když uplatníš zákonnou slevu pro studenta, a tím, když prodáváš kradené telefony. Pojďme si v tom udělat pořádek:")
+
+        tab_opt, tab_seda, tab_cerna = st.tabs(["✅ Legální optimalizace", "🌫️ Šedá ekonomika (Úniky)", "🏴‍☠️ Černá ekonomika"])
+
+        with tab_opt:
+            st.markdown("##### Legální daňová optimalizace")
+            st.write("**Co to je:** Využití zákonných možností k tomu, abys zaplatil/a státu na daních co nejméně.")
+            st.success("Tohle je naprosto legální a v pořádku. Patří sem: uplatnění slevy na studenta, odečtení úroků z hypotéky, využití paušálních výdajů u živnostníků, nebo investice s daňovým zvýhodněním.")
+            
+        with tab_seda:
+            st.markdown("##### Šedá ekonomika a nelegální daňové úniky")
+            st.write("**Co to je:** Samotná práce nebo produkt jsou sice legální (např. oprava auta, ostříhání vlasů, doučování), ale příjem za ně **není zdaněn a přiznán**.")
+            st.warning("Patří sem: peníze vyplácené 'na ruku' bez smlouvy, práce na černo, nebo když ti řemeslník nabídne 'udělám vám to levněji, ale bez papíru a bez DPH'. Jde o krácení daní, což je trestný čin.")
+            
+        with tab_cerna:
+            st.markdown("##### Černá ekonomika")
+            st.write("**Co to je:** Samotná činnost je nelegální a mimo zákonný systém.")
+            st.error("Patří sem: prodej drog, obchod s padělky (falešné kabelky Gucci z tržnice), pašování zbraní nebo prostituce. Tyto peníze nikdy neprojdou systémem.")
+
+        st.markdown("<div class='box-purple'>🛠️ <b>Simulátor řemeslníka: Chceš to levněji „bez papíru“?</b></div>", unsafe_allow_html=True)
+        st.write("Představ si situaci: Necháváš si opravit dům. Zedník ti řekne: *„Pokud mi to dáte v hotovosti bez faktury (a já nebudu platit daně a pojištění), udělám vám to o 20 % levněji.“* Ušetříš ty a vydělá zedník. Je to win-win? Ne tak úplně.")
+        
+        with st.container(border=True):
+            volba_prace = st.radio("Zvol si svou cestu jako zedník:", [
+                "Být poctivý OSVČ: Dám zákazníkovi fakturu, zaplatím sociální, zdravotní a DPH.",
+                "Šedá zóna (na ruku): Vezmu to bez dokladu v hotovosti, ušetřím na daních a o peníze se nepodělím."
+            ])
+            
+            if "poctivý" in volba_prace:
+                st.success("✅ **Zákazník sice zaplatil o něco víc, ale ty jako zedník máš zajištěnou budoucnost.**")
+                st.write("* Platíš si pojištění. Pokud na stavbě spadneš a zlomíš si nohu, dostaneš **nemocenskou** a zaplatí ti operaci.")
+                st.write("* Tvé příjmy se počítají do **starobního důchodu**.")
+                st.write("* Zákazník má doklad, takže pokud mu zednická práce do týdne spadne na hlavu, může ji reklamovat a domáhat se nápravy.")
+            else:
+                st.error("🚨 **Peníze v hotovosti máš, ale za jakou cenu?**")
+                st.write("* Lhal jsi státu (daňový podvod).")
+                st.write("* **Neplatíš sociální pojištění.** Až budeš starý, stát ti vypočítá důchod třeba jen 6 000 Kč a neuživíš se.")
+                st.write("* Pokud si zlomíš ruku a nemůžeš 3 měsíce pracovat, **nemáš nárok na žádnou nemocenskou**. Jsi bez příjmu.")
+                st.write("* Zákazník je hlupák. Nemá fakturu. Když oprava praskne, nemůže reklamovat vůbec nic, protože oficiálně tam nikdo nikdy nebyl.")
+
+        st.markdown("##### 🏢 Jak se vyhýbají daním obří korporace?")
+        st.write("Malý podnikatel to řeší 'prací na ruku', ale nadnárodní giganti (Google, Apple, Amazon) to dělají chytřeji. Mají obří týmy právníků a využívají mezer v mezinárodním právu.")
+        
+        st.markdown("""
+        * 🌴 **Daňové ráje:** Firma vytvoří obrovský zisk z prodeje reklamy v ČR, ale peníze formálně převede (např. přes fiktivní poplatky za licenci) do své pobočky na Bahamách nebo v Irsku, kde je daň ze zisku třeba jen 1 % nebo nulová.
+        * 🌍 **Co s tím dělá stát?** Běžný stát proti tomu nic nezmůže. Proto se státy sdružují (Evropská unie, OECD) a snaží se zavést **Globální minimální daň** (aby velké firmy platily alespoň 15 % daň bez ohledu na to, kam se na světě papírově přestěhují). Řeší se také tzv. **Digitální daň**.
+        """)
