@@ -428,7 +428,7 @@ def render():
 
         tab_brigada, tab_online, tab_vinted, tab_investice = st.tabs(["🍔 Brigáda a růžový papír", "📱 TikTok a Twitch", "👗 Vinted a Bazoš", "🪙 Krypto a Akcie"])
 
-with tab_brigada:
+            with tab_brigada:
             st.markdown("##### Brigády, limity a „Růžový papír“")
             st.write("U dohod jako DPP nebo DPČ záleží na dvou věcech: jestli přesáhneš zákonný limit pro odvody a jestli podepíšeš **Prohlášení poplatníka k dani** (tzv. růžový papír).")
             st.write("Toto prohlášení ti umožňuje uplatnit základní *slevu na poplatníka* (2 570 Kč měsíčně), která ti čistou mzdu výrazně zvýší. Pozor: v jednom měsíci ho můžeš mít podepsaný jen u jednoho zaměstnavatele!")
