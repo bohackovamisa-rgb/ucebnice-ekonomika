@@ -428,22 +428,58 @@ def render():
 
         tab_brigada, tab_online, tab_vinted, tab_investice = st.tabs(["🍔 Brigáda a růžový papír", "📱 TikTok a Twitch", "👗 Vinted a Bazoš", "🪙 Krypto a Akcie"])
 
-        with tab_brigada:
-            st.markdown("##### Brigáda a „Růžový papír“")
-            st.write("U dohod jako DPP nebo DPČ záleží, jestli podepíšeš **Prohlášení poplatníka k dani** (růžový papír).")
-            st.write("Toto prohlášení ti umožňuje uplatnit tzv. *slevu na poplatníka*, která ti čistou mzdu výrazně zvýší. Pozor: v jednom měsíci ho můžeš mít podepsaný jen u jednoho zaměstnavatele!")
+with tab_brigada:
+            st.markdown("##### Brigády, limity a „Růžový papír“")
+            st.write("U dohod jako DPP nebo DPČ záleží na dvou věcech: jestli přesáhneš zákonný limit pro odvody a jestli podepíšeš **Prohlášení poplatníka k dani** (tzv. růžový papír).")
+            st.write("Toto prohlášení ti umožňuje uplatnit základní *slevu na poplatníka* (2 570 Kč měsíčně), která ti čistou mzdu výrazně zvýší. Pozor: v jednom měsíci ho můžeš mít podepsaný jen u jednoho zaměstnavatele!")
             
-            st.markdown("🧮 **Mini-kalkulačka DPP (do 10 000 Kč):**")
-            dpp_vydelek = st.slider("Hrubý výdělek na DPP (Kč):", 1000, 10000, 5000, step=500)
-            roz_podepsano = st.radio("Podepsal/a jsi Růžové prohlášení?", ["Ano, mám podepsáno", "Ne, nemám podepsáno"])
+            st.markdown("🧮 **Kalkulačka výdělku z brigády (DPP a DPČ):**")
+            
+            col_kalk1, col_kalk2 = st.columns(2)
+            with col_kalk1:
+                typ_dohody = st.radio("Vyber typ smlouvy:", ["DPP (Dohoda o provedení práce)", "DPČ (Dohoda o pracovní činnosti)"])
+            with col_kalk2:
+                roz_podepsano = st.radio("Máš podepsaný Růžový papír?", ["Ano, mám podepsáno", "Ne, nemám podepsáno"])
+                
+            hruby_vydelek = st.slider("Tvůj hrubý výdělek za měsíc (Kč):", 1000, 30000, 5000, step=500)
+            
+            # Logika zákonných limitů pro placení odvodů
+            odvody_se_plati = False
+            if "DPP" in typ_dohody and hruby_vydelek > 10000:
+                odvody_se_plati = True
+            elif "DPČ" in typ_dohody and hruby_vydelek >= 4000:
+                odvody_se_plati = True
+
+            # Výpočty daní a odvodů
+            soc_poj = int(hruby_vydelek * 0.071) if odvody_se_plati else 0
+            zdr_poj = int(hruby_vydelek * 0.045) if odvody_se_plati else 0
+            dan_zaklad = int(hruby_vydelek * 0.15)
             
             if "Ano" in roz_podepsano:
-                st.success(f"Díky slevě na dani je tvá daň 0 Kč. Čistá mzda na účet = **{dpp_vydelek} Kč**.")
+                dan_konecna = max(0, dan_zaklad - 2570)
             else:
-                srazka = int(dpp_vydelek * 0.15)
-                cista = dpp_vydelek - srazka
-                st.error(f"Zaměstnavatel ti strhne 15% srážkovou daň (-{srazka} Kč). Čistá mzda na účet = **{cista} Kč**. (Tyto stržené peníze si ale můžeš vyžádat zpět od státu v ročním daňovém přiznání).")
-
+                dan_konecna = dan_zaklad
+                
+            cista_mzda = hruby_vydelek - soc_poj - zdr_poj - dan_konecna
+            
+            st.divider()
+            
+            # Dynamické upozornění na překročení limitu
+            if odvody_se_plati:
+                st.warning(f"⚠️ **Překročil/a jsi limit!** U {typ_dohody[:3]} se z částek nad limit musí odvádět sociální (7,1 %) a zdravotní pojištění (4,5 %) stejně jako u běžného zaměstnání.")
+            else:
+                st.success(f"✅ **Výdělek je v limitu.** Z této částky se neodvádí žádné sociální ani zdravotní pojištění.")
+                
+            # Přehledná tabulka výsledků
+            col_v1, col_v2, col_v3 = st.columns(3)
+            col_v1.metric("Hrubá mzda", f"{hruby_vydelek} Kč")
+            col_v2.metric("Odvody (Soc+Zdr)", f"- {soc_poj + zdr_poj} Kč")
+            col_v3.metric("Daň z příjmu", f"- {dan_konecna} Kč")
+            
+            st.markdown(f"<div style='background-color: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #10b981; text-align: center; margin-top: 15px;'><h3 style='margin: 0; color: #047857;'>💸 Čistá mzda na účet: {cista_mzda} Kč</h3></div>", unsafe_allow_html=True)
+            
+            if "Ne" in roz_podepsano and dan_konecna > 0:
+                st.info("💡 **Tip:** Strženou daň si můžeš vyžádat zpět od státu, pokud si na jaře podáš Daňové přiznání (protože za rok jako student/brigádník pravděpodobně nevyčerpáš celou svou slevu na poplatníka).")
         with tab_online:
             st.markdown("##### Twitch, TikTok, Patreon, OnlyFans a Barter")
             st.write("Pokud dlouhodobě a soustavně vyděláváš tvorbou obsahu (spolupráce, předplatné, dary, prodej), jde obvykle o zdanitelný příjem a může se jednat o podnikání (na IČO).")
