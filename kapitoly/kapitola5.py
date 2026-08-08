@@ -1452,3 +1452,91 @@ def render():
             euro_rozhodnuti = st.text_area("Napiš své stanovisko: „Euro bych v ČR přijal/a / nepřijal/a, protože...“")
             if st.form_submit_button("Uložit mé stanovisko"):
                 st.success("Skvělé! Umět obhájit svůj postoj argumenty (a nejen emocemi) je klíč k dobré ekonomické debatě.")
+# =====================================================================
+        # PODKAPITOLA 4.5: KLIMATICKÁ KRIZE, UDRŽITELNOST A INSTITUCE
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 4.5 Klimatická krize, udržitelný rozvoj a mezinárodní instituce")
+        st.write("Hospodářský růst naráží na fyzické limity naší planety. Moderní ekonomika řeší zásadní otázku: Jak vyrábět, cestovat a spotřebovávat tak, abychom kvůli dnešnímu pohodlí nezničili zdroje, klima a zdraví pro naši vlastní budoucnost?")
+
+        st.markdown("""
+        <div class='box-green'>
+            🌱 <b>Trvale udržitelný rozvoj:</b> Rozvoj, který uspokojuje potřeby současné generace, aniž by ohrozil možnost budoucích generací uspokojovat ty jejich. Nejde jen o to "chránit stromy", ale o rovnováhu tří věcí: <b>ekologie, ekonomiky a sociální spravedlnosti</b>.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Mezinárodní instituce a pojmy
+        st.markdown("##### 🏛️ Kdo řídí globalizaci a chrání planetu?")
+        
+        col_inst1, col_inst2 = st.columns(2)
+        with col_inst1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; height: 100%;">
+                <h5 style="margin-top: 0; color: #1e40af;">🌍 Globální obchod a finance</h5>
+                <b>WTO (Světová obchodní organizace):</b> Dohlíží na pravidla obchodu a řeší spory mezi státy (aby nevedly nekonečné obchodní války).<br><br>
+                <b>MMF (Mezinárodní měnový fond):</b> Finanční záchranka. Pomáhá státům, které krachují, padá jim měna nebo nemají na splátky dluhů.<br><br>
+                <b>Světová banka:</b> Pomáhá chudším zemím postavit se na nohy. Financuje stavbu silnic, škol nebo nemocnic v rozvojovém světě.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with col_inst2:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">🌱 Udržitelnost a Evropa</h5>
+                <b>Green Deal (Zelená dohoda):</b> Obří strategie EU. Cíl? Udělat z Evropy do roku 2050 první klimaticky neutrální kontinent. Změní to energetiku, auta i průmysl.<br><br>
+                <b>ESG:</b> Zkratka pro Environment, Social, Governance. Způsob, jak investoři a banky hodnotí, jestli se firma chová eticky k přírodě a lidem.<br><br>
+                <b>OSN (Organizace spojených národů):</b> Neřeší jen mír, ale i tzv. Cíle udržitelného rozvoje (konec chudoby, čistá voda, rovnost).
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🏭 <b>Simulátor: Proč vymysleli uhlíkové clo (CBAM)?</b></div>", unsafe_allow_html=True)
+        st.write("Představ si českou ocelárnu. EU jí nařídila přísná ekologická pravidla a musí platit miliardy za tzv. emisní povolenky. Její ocel je kvůli tomu dražší. Konkurenční ocelárna v Asii žádná pravidla nemá, znečišťuje řeky i vzduch a svou špinavou, ale levnou ocel doveze bez překážek do ČR. Co se stane? Česká ocelárna by zkrachovala.")
+        
+        with st.container(border=True):
+            st.write("Aby EU ochránila svůj průmysl před neférovou 'špinavou' konkurencí, vymyslela **CBAM (Uhlíkové clo na hranicích)**. Asijská firma musí při dovozu zaplatit daň za uhlík, který vypustila při výrobě. Zkus ho nastavit tak, abys evropskou ocelárnu zachránil/a:")
+            
+            cena_eu_ocel = 12000 # vč. ekologických nákladů
+            cena_asijska_ocel = 9000
+            
+            clo_cbam = st.slider("Zavedené uhlíkové clo (CBAM) na 1 tunu asijské oceli (Kč):", 0, 5000, 0, step=500)
+            konecna_asijska = cena_asijska_ocel + clo_cbam
+            
+            col_c1, col_c2 = st.columns(2)
+            col_c1.metric("Česká čistá ocel", f"{cena_eu_ocel} Kč/t")
+            col_c2.metric("Asijská špinavá ocel + clo", f"{konecna_asijska} Kč/t")
+            
+            if konecna_asijska < cena_eu_ocel:
+                st.error("📉 Asijská ocel je stále levnější! Evropské továrny krachují nebo se samy stěhují do Asie, aby se vyhly eko-pravidlům (tomu se říká 'Carbon leakage' – únik uhlíku).")
+            elif konecna_asijska == cena_eu_ocel:
+                st.success("⚖️ Ceny se srovnaly! Hrací pole je konečně fér. Asijská firma ztratila cenovou výhodu ze svého znečišťování a evropská firma přežije.")
+            else:
+                st.warning("📈 Extrémní ochrana. Evropská továrna má sice monopol, ale stavaři si stěžují, že železo na stavby je teď neúnosně drahé a byty pro lidi brutálně zdraží.")
+
+        st.divider()
+        st.markdown("#### 4.5.1 Greenwashing: Když je firma zelená jen na plakátu")
+        st.write("**Greenwashing (Lakováni na zeleno)** znamená, že firma utratí víc peněz za marketing, aby *vypadala* ekologicky, než kolik reálně investuje do záchrany přírody. Její skutečné podnikání je dál špinavé, jen má teď na sobě zelenou nálepku a obrázek listu.")
+
+        st.markdown("<div class='box-yellow'>🕵️ <b>Hra na detektiva: Odhal Greenwashing</b></div>", unsafe_allow_html=True)
+        with st.form("greenwashing_quiz"):
+            st.write("Přečti si dva firemní scénáře a rozhodni, o co se jedná.")
+            q_gw1 = st.radio("Firma A (Rychlá móda) vyrobí denně 50 000 kusů toxického polyesterového oblečení, které vydrží pár vyprání. Do obchodů ale uvede speciální kolekci s 10 tričky z 'bio bavlny'. Všude mají zelená loga a hesla 'Zachraňujeme planetu'.", [
+                "Zvol hodnocení...", "Toto je ukázkový Greenwashing ❌", "Toto je reálné a poctivé ESG (udržitelnost) ✅"
+            ])
+            q_gw2 = st.radio("Firma B (Logistika) zveřejní auditovanou zprávu. Přizná v ní, že její kamiony tvoří hodně emisí, ale ukáže jasná data a činy: vyměnila dodávky ve městech za nákladní elektrokola, snížila spotřebu jednorázových plastů na depech o 15 % a stanovila si jasný, kontrolovatelný cíl snížit emise do roku 2030.", [
+                "Zvol hodnocení...", "Toto je ukázkový Greenwashing ❌", "Toto je reálné a poctivé ESG (udržitelnost) ✅"
+            ])
+            
+            if st.form_submit_button("Vyhodnotit scénáře"):
+                if "❌" in q_gw1 and "✅" in q_gw2:
+                    st.success("Trefa! Firma A typicky zakrývá svůj brutálně špinavý byznys jedním směšným 'zeleným' produktem. Firma B si na nic nehraje, upřímně přiznává své problémy, ale pracuje s tvrdými daty a reálně je mění k lepšímu (skutečné ESG).")
+                else:
+                    st.error("Něco je špatně. Pamatuj: Zelený marketing (Firma A) bez změny hlavního byznysu je Greenwashing. Skutečné ESG (Firma B) je založené na auditech, datech a reálných změnách celého systému firmy.")
+
+        st.markdown("##### 🔗 Užitečné odkazy pro zvídavé studenty")
+        st.markdown("""
+        * 🇪🇺 [Evropská unie - Oficiální portál](https://european-union.europa.eu/index_cs)
+        * ✈️ [Erasmus+ (Zkušenosti v zahraničí)](https://www.dzs.cz/program/erasmus)
+        * 🌍 [Cíle udržitelného rozvoje (SDGs od OSN)](https://www.osn.cz/osn/hlavni-temata/sdgs/)
+        * 🏦 [Světová banka (World Bank)](https://www.worldbank.org/) & [Mezinárodní měnový fond (IMF)](https://www.imf.org/)
+        """)
