@@ -1052,7 +1052,7 @@ def render():
 
         st.write("📊 **Jak se firemní peníze (náklady) rozdělily procentuálně:**")
         st.progress(podil_zamestnanec, text=f"Zaměstnanec dostane cca {int(podil_zamestnanec*100)} % z firemních nákladů (Zbytek bere stát).")
-    elif selected_section_4 == "3.6 Slevy na dani a odčitatelné položky":
+elif selected_section_4 == "3.6 Slevy na dani a odčitatelné položky":
         st.markdown("### 3.6 Slevy na dani, daňové zvýhodnění a odčitatelné položky")
         
         st.write("V oblasti daní se často používají tři pojmy, které znějí podobně, ale fungují úplně jinak. Pokud chcete maximalizovat svou výplatu (nebo vratku daní z finančního úřadu), musíte znát rozdíl!")
@@ -1101,18 +1101,36 @@ def render():
             """)
             st.warning("⚠️ **Zrušené slevy:** Pamatuj, že tzv. 'Sleva na studenta' a 'Školkovné' byly státem nedávno zrušeny. Na brigádě tě dnes chrání výhradně vysoká 'Základní sleva na poplatníka'.")
 
+        st.divider()
         st.markdown("#### 📉 Běžné Odčitatelné položky (Nezdanitelné části základu daně)")
-        st.write("Tyto položky řešíte typicky až na jaře v **ročním zúčtování daně** nebo v **daňovém přiznání**. Stát vám díky nim vrátí část zaplacených daní za loňský rok na účet.")
+        st.write("Tyto položky řešíte typicky až na jaře v **ročním zúčtování daně** (udělá to za vás účetní) nebo v **daňovém přiznání**. Stát vám díky nim vrátí část zaplacených daní za loňský rok na účet jako hezký přeplatek.")
         
         st.markdown("""
-        * 🩸 **Dary a darování krve:** Darovali jste peníze na charitu nebo krev? Za 1 bezpříspěvkový odběr krve si snížíte základ daně o 3 000 Kč (což vám na dani reálně ušetří 450 Kč). Odběr kostní dřeně sníží základ o 20 000 Kč.
-        * 🏠 **Úroky z hypotéky:** Ze základu daně si můžete odečíst to, co jste bance zaplatili na úrocích z úvěru na bydlení.
-        * 🐖 **Spoření na stáří:** Penzijní spoření, životní pojištění nebo DIP (Dlouhodobý investiční produkt). Stát vás tak motivuje, abyste si šetřili na důchod.
+        * 🩸 **Dary a darování krve:** Darovali jste peníze na charitu, nebo krev? Za 1 bezpříspěvkový odběr krve si snížíte základ daně o 3 000 Kč (vratka na dani = **450 Kč** čistého za odběr). Odběr kostní dřeně = 20 000 Kč.
+        * 🏠 **Úroky z hypotéky:** Ze základu daně si můžete odečíst zaplacené úroky z úvěru na bydlení. Maximální limit je **150 000 Kč ročně**. Pokud ho využijete naplno, stát vám na jaře vrátí **až 22 500 Kč**.
         """)
+
+        st.markdown("##### 🐖 Spoření na stáří (Penzijko, Životní pojištění, DIP)")
+        st.write("Od roku 2024 stát zavedl **jeden společný limit 48 000 Kč ročně** pro všechny produkty spoření na stáří dohromady (Doplňkové penzijní spoření, Životní pojištění a Dlouhodobý investiční produkt - DIP). Pokud limit naplníte, stát vám vrátí na dani **7 200 Kč**.")
+        
+        st.markdown("""
+        * ⚠️ **Zásadní pravidlo:** Do tohoto limitu se počítají POUZE vaše vlastní vklady (to, co si pošlete ze svého účtu). Nepočítají se sem peníze, které vám posílá zaměstnavatel!
+        * 🧮 **Kdy se mi to začne počítat do daní?**
+          * U nového **DIPu** si můžete odečíst z daní hned každou korunu, kterou vložíte.
+          * U klasického **Penzijka (DPS)** na vás stát uplatňuje tzv. práh. Na vklady od 500 do 1 700 Kč měsíčně vám dává 'Státní příspěvek'. Abyste si něco mohli navíc odečíst i z daní, **musíte spořit více než 1 700 Kč měsíčně**. Do daní se započítá až částka, která oněch 1 700 Kč přesahuje. *(Abyste si z daní odečetli roční maximum 48 000 Kč, musíte měsíčně posílat 5 700 Kč).*
+        """)
+
+        st.markdown("""
+        <div class='box-green'>
+            🎁 <b>Firemní benefit snů: Příspěvek zaměstnavatele na stáří</b><br>
+            Firma vám může na Penzijko, DIP nebo Životní pojištění přispívat ze svého <b>až 50 000 Kč ročně</b>. Proč je to pro obě strany tak výhodné?<br>
+            Jsou to totiž absolutně <b>čisté nezdaněné peníze!</b> Z tohoto příspěvku zaměstnavatele se neodvádí žádná 15% daň, žádné zdravotní ani sociální pojištění. Pokud vám firma pošle na DIP 2 000 Kč, přistane vám tam přesně 2 000 Kč. Kdyby vám stejné peníze dali do hrubé mzdy jako bonus, zbylo by vám z nich na účtu sotva čtrnáct stovek.
+        </div>
+        """, unsafe_allow_html=True)
 
         st.divider()
         st.markdown("<div class='box-yellow'>🧩 <b>Simulátor: Kouzlo daňového bonusu a slev</b></div>", unsafe_allow_html=True)
-        st.write("Nastav hrubou mzdu a přidej životní situaci. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?")
+        st.write("Nastav hrubou mzdu a přidej životní situaci. Sleduj, co to udělá s daní. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?")
 
         col_slev1, col_slev2 = st.columns(2)
         with col_slev1:
@@ -1163,28 +1181,3 @@ def render():
             if cista_mzda_konecna > hruba_slevy:
                 st.balloons()
                 st.markdown("**WOW! Tvá čistá mzda je vyšší než hrubá!** To je možné právě díky státnímu daňovému bonusu za děti.")
-
-    elif selected_section_4 == "3.7 Kam jdou odvody (sociální a zdravotní pojištění)":
-        st.markdown("### 3.7 Kam jdou naše odvody a sazby pojištění")
-        
-        st.markdown("""
-        <div class='box-blue'>
-            🧮 <b>Základní princip:</b> Zaměstnanec ze své hrubé mzdy platí sociální pojištění, zdravotní pojištění a daň z příjmů. Zaměstnavatel k tomu ale navíc platí DALŠÍ sociální a zdravotní pojištění za zaměstnance (jako svůj firemní náklad).
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("#### ⚖️ Kdo platí kolik a k čemu to slouží?")
-        st.markdown("""
-        | Položka | Platí zaměstnanec | Platí zaměstnavatel | K čemu to slouží státu |
-        | :--- | :--- | :--- | :--- |
-        | 🏛️ **Sociální pojištění** | **7,1 %** z hrubé mzdy | **24,8 %** z hrubé mzdy | Důchody seniorů, nemocenské dávky, mateřská a podpory v nezaměstnanosti. |
-        | 🏥 **Zdravotní pojištění** | **4,5 %** z hrubé mzdy | **9 %** z hrubé mzdy | Financování lékařské péče, chodu nemocnic a léků ze systému veřejného pojištění. |
-        | 💸 **Daň z příjmu (DPFO)** | **15 %** ze základu daně* | **Neplatí se jako odvod zaměstnavatele** | Příjem veřejných rozpočtů (školy, infrastruktura, policie). |
-        """)
-        st.caption("*Poznámka: Počítá se ze základu daně a snižuje se o slevy (viz předchozí podkapitola). U velmi vysokých příjmů se platí z přesahující části vyšší sazba.*")
-
-        st.markdown("""
-        <div class='box-red'>
-            ⚠️ <b>Častá chyba (Záměna daně a odvodu):</b> Odvod a daň nejsou totéž! Sociální a zdravotní pojištění si <b>nemůžete</b> snížit pomocí slev na dani. Slevy na dani se uplatňují výhradně a pouze proti vypočtené dani z příjmů.
-        </div>
-        """, unsafe_allow_html=True)
