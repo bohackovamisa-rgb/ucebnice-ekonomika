@@ -1585,8 +1585,9 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
 # =========================================================================
     # SEKCE 6: PRAKTICKÁ DÍLNA (ČISTĚ AKTIVITY 1–5)
     # =========================================================================
-    elif selected_section_4 == "6.1 Praktická dílna (Aktivity 1–5)":
+    elif "6.1" in selected_section_4:
         st.markdown("### 🛠️ 6.1 Praktická dílna")
+        st.write("Vyberte si aktivitu ze záložek níže a vyzkoušejte si praktické úkoly zaměřené na trh práce:")
 
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "🗺️ Aktivita 1", 
@@ -1596,78 +1597,95 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
             "🎭 Aktivita 5"
         ])
 
-        # AKTIVITA 1
+        # ---------------------------------------------------------------------
+        # AKTIVITA 1: MOJE PROFESNÍ MAPA
+        # ---------------------------------------------------------------------
         with tab1:
             st.markdown("#### Aktivita 1: Moje profesní mapa")
             st.write("Vytvořte jednoduchou mapu své budoucí pracovní cesty:")
-            
-            with st.form("form_akt1_mapa"):
-                q1 = st.text_area("Jaké činnosti mě baví?", placeholder="Napište zde...")
-                q2 = st.text_area("Jaké problémy rád/a řeším?", placeholder="Napište zde...")
-                q3 = st.text_area("Jaké dovednosti už mám?", placeholder="Napište zde...")
-                q4 = st.text_area("Jaké dovednosti mi chybí?", placeholder="Napište zde...")
-                q5 = st.text_area("Jaké profese s tím souvisejí?", placeholder="Napište zde...")
-                q6 = st.text_area("Co mohu vyzkoušet během příštích tří měsíců?", placeholder="Napište zde...")
-                
-                if st.form_submit_button("Uložit mapu"):
-                    st.success("Profesní mapa byla uložena.")
 
-        # AKTIVITA 2
+            with st.form("form_akt1_mapa"):
+                q1 = st.text_area("Jaké činnosti mě baví?")
+                q2 = st.text_area("Jaké problémy rád/a řeším?")
+                q3 = st.text_area("Jaké dovednosti už mám?")
+                q4 = st.text_area("Jaké dovednosti mi chybí?")
+                q5 = st.text_area("Jaké profese s tím souvisejí?")
+                q6 = st.text_area("Co mohu vyzkoušet během příštích tří měsíců?")
+
+                if st.form_submit_button("Uložit profesní mapu"):
+                    st.success("Vaše profesní mapa byla uložena! Ideální odrazový můstek pro vaši kariéru.")
+
+        # ---------------------------------------------------------------------
+        # AKTIVITA 2: ANALÝZA PRACOVNÍHO INZERÁTU
+        # ---------------------------------------------------------------------
         with tab2:
             st.markdown("#### Aktivita 2: Analýza pracovního inzerátu")
-            st.write("Vyberte pracovní inzerát a odpovězte:")
-            
-            with st.form("form_akt2_inzerat"):
-                a1 = st.text_area("Jaké dovednosti zaměstnavatel požaduje?")
-                a2 = st.text_area("Co je nutné a co je jen výhoda?")
-                a3 = st.text_area("Jaké red flags se v inzerátu objevují?")
-                a4 = st.text_area("Jaké otázky byste položili na pohovoru?")
-                a5 = st.text_area("Jak byste upravili životopis pro tuto pozici?")
-                
-                if st.form_submit_button("Uložit analýzu"):
-                    st.success("Analýza inzerátu byla uložena.")
+            st.write("Vyberte si libovolný pracovní inzerát (např. na portálu Jobs.cz) a odpovězte na tyto otázky:")
 
-        # AKTIVITA 3
+            with st.form("form_akt2_inzerat"):
+                a2_1 = st.text_area("Jaké dovednosti zaměstnavatel požaduje?")
+                a2_2 = st.text_area("Co je nutné a co je jen výhoda?")
+                a2_3 = st.text_area("Jaké red flags se v inzerátu objevují?")
+                a2_4 = st.text_area("Jaké otázky byste položili na pohovoru?")
+                a2_5 = st.text_area("Jak byste upravili životopis pro tuto pozici?")
+
+                if st.form_submit_button("Vyhodnotit inzerát"):
+                    st.success("Skvělá práce! Analýza inzerátu vám pomůže nenaletět na špatnou nabídku.")
+
+        # ---------------------------------------------------------------------
+        # AKTIVITA 3: AI JAKO KARIÉRNÍ KOUČ
+        # ---------------------------------------------------------------------
         with tab3:
             st.markdown("#### Aktivita 3: AI jako kariérní kouč")
-            st.write("Použijte AI nástroj k přípravě na pracovní pohovor.")
-            
-            pozice_akt3 = st.text_input("Zadejte pozici:", value="[pozice]")
-            prompt_akt3 = f"„Pomoz mi připravit se na pohovor na pozici {pozice_akt3}.\nNejprve mi polož 5 otázek jako personalista. Po každé mé odpovědi polož doplňující otázku. Na konci vyhodnoť moje silné stránky, slabá místa a navrhni konkrétní formulace, které znějí profesionálně, ale přirozeně.“"
-            
-            st.markdown("> 🤖 **Prompt ke zkopírování:**")
-            st.code(prompt_akt3, language="text")
+            st.write("Použijte AI nástroj (ChatGPT, Claude) k přípravě na pracovní pohovor. Zadejte vysněnou pozici a zkopírujte si vygenerovaný prompt.")
 
-        # AKTIVITA 4
+            pozice_ai = st.text_input("Na jakou pozici se hlásíte?", value="Zadejte název pozice...")
+
+            prompt_text = f"Pomoz mi připravit se na pohovor na pozici {pozice_ai}.\nNejprve mi polož 5 otázek jako personalista. Po každé mé odpovědi polož doplňující otázku. Na konci vyhodnoť moje silné stránky, slabá místa a navrhni konkrétní formulace, které znějí profesionálně, ale přirozeně."
+
+            st.markdown("🤖 **Prompt ke zkopírování do AI:**")
+            st.code(prompt_text, language="text")
+
+        # ---------------------------------------------------------------------
+        # AKTIVITA 4: VÝPLATNÍ PÁSKA S CHYBAMI
+        # ---------------------------------------------------------------------
         with tab4:
             st.markdown("#### Aktivita 4: Výplatní páska s chybami")
-            st.write("Práce s modelovou výplatní páskou:")
-            
-            with st.form("form_akt4_paska"):
-                b1 = st.text_area("1. Najít tři chyby:")
-                b2 = st.text_area("2. Vysvětlit, proč jsou problém:")
-                b3 = st.text_area("3. Navrhnout, jak chybu řešit:")
-                b4 = st.text_area("4. Napsat krátký profesionální e-mail zaměstnavateli:")
-                
-                if st.form_submit_button("Odeslat řešení"):
-                    st.success("Řešení výplatní pásky bylo odesláno.")
+            st.write("Představte si, že jste na výplatní pásce našli nesrovnalosti. Zkuste je vyřešit:")
 
-        # AKTIVITA 5
+            with st.form("form_akt4_paska"):
+                a4_1 = st.text_area("1. Najít tři chyby:")
+                a4_2 = st.text_area("2. Vysvětlit, proč jsou problém:")
+                a4_3 = st.text_area("3. Navrhnout, jak chybu řešit:")
+                a4_4 = st.text_area("4. Napsat krátký profesionální e-mail zaměstnavateli:")
+
+                if st.form_submit_button("Odeslat řešení"):
+                    st.success("Odesláno! Komunikovat slušně, ale asertivně o penězích je základní dovednost.")
+
+        # ---------------------------------------------------------------------
+        # AKTIVITA 5: ROLE-PLAY VYJEDNÁVÁNÍ O MZDĚ
+        # ---------------------------------------------------------------------
         with tab5:
             st.markdown("#### Aktivita 5: Role-play vyjednávání o mzdě")
             
-            st.markdown("**Role:**")
-            st.markdown("- 👔 **Zaměstnavatel** s omezeným rozpočtem\n- 🧑‍💼 **Uchazeč o práci**\n- ⚖️ **Pozorovatel**, který hodnotí argumenty")
-            
-            st.markdown("**Hodnotí se:**")
-            st.markdown("- Věcnost\n- Práce s důkazy\n- Respekt\n- Schopnost hledat kompromis\n- Jasné pojmenování hodnoty práce")
-            
+            st.markdown("**Role pro scénku ve třídě:**")
+            col_r1, col_r2, col_r3 = st.columns(3)
+            with col_r1:
+                st.info("👔 **Zaměstnavatel**\n(s omezeným rozpočtem)")
+            with col_r2:
+                st.success("🧑‍💼 **Uchazeč o práci**\n(snaží se vyjednat víc)")
+            with col_r3:
+                st.warning("⚖️ **Pozorovatel**\n(hodnotí argumenty obou)")
+
+            st.markdown("---")
+            st.markdown("**Co pozorovatel hodnotí:**")
+
             with st.form("form_akt5_roleplay"):
-                r1 = st.checkbox("Věcnost")
-                r2 = st.checkbox("Práce s důkazy")
-                r3 = st.checkbox("Respekt")
-                r4 = st.checkbox("Schopnost hledat kompromis")
-                r5 = st.checkbox("Jasné pojmenování hodnoty práce")
+                h1 = st.checkbox("Věcnost (padly konkrétní argumenty, ne pocity?)")
+                h2 = st.checkbox("Práce s důkazy (odkazování na trh práce/dovednosti?)")
+                h3 = st.checkbox("Respekt (proběhlo to bez nátlaku a hádek?)")
+                h4 = st.checkbox("Schopnost hledat kompromis (nabídly se např. benefity?)")
+                h5 = st.checkbox("Jasné pojmenování hodnoty práce")
                 
-                if st.form_submit_button("Uložit hodnocení"):
-                    st.success("Hodnocení role-play bylo uloženo.")
+                if st.form_submit_button("Uložit hodnocení z role-play"):
+                    st.success("Hodnocení uloženo! Vyjednávání o mzdě chce trénink.")
