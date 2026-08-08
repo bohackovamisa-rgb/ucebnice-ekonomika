@@ -24,7 +24,7 @@ def render():
         "15. Integrované opakování"
     ]
     st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-selected_section = st.selectbox("Přechod na podkapitolu:", section_options, index=0, label_visibility="collapsed")
+    selected_section = st.selectbox("Přechod na podkapitolu:", section_options, index=0, label_visibility="collapsed")
     selected_section = st.selectbox('<i class="fi fi-bs-bookmark"></i> Přechod na podkapitolu:', section_options, index=0)
 
 # --- 1. Podnikatel a základní pojmy ---
