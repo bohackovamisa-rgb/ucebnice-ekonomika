@@ -1369,40 +1369,62 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
 
         st.info("🎯 **Proč byste to dělali?** Pokud firmě takto prokazatelně šetříte čas nebo vyděláváte peníze, získáváte ultimátní argument pro **vyjednávání o vyšším platu** nebo povýšení.")
 
-    elif selected_section_4 == "4.3 Upskilling a reskilling":
-        st.markdown("### 4.3 Upskilling a reskilling")
-        st.write("V době automatizace a umělé inteligence už neplatí, že vystudujete jednu školu a s těmito znalostmi vystačíte do důchodu. Vaše tržní hodnota závisí na schopnosti se učit.")
+elif selected_section_4 == "4.3 Upskilling a reskilling":
+        st.markdown("### 4.3 Upskilling a reskilling: Jak nezestárnout na trhu práce")
+        st.write("V době automatizace a umělé inteligence už neplatí, že vystudujete jednu školu a s těmito znalostmi vystačíte do důchodu. Vaše tržní hodnota a bezpečnost závisí na vaší ochotě a schopnosti se učit.")
 
         col_skill1, col_skill2 = st.columns(2)
         with col_skill1:
             st.markdown("##### 📈 Upskilling (Zlepšování v oboru)")
-            st.write("Znamená rozšiřování a prohlubování dovedností ve vaší současné profesi. Děláte to proto, abyste si udrželi práci a zvedli svou cenu.")
-            st.caption("Příklad: Jste mzdová účetní a uděláte si kurz na to, jak automatizovat faktury pomocí AI nebo pokročilého Excelu.")
+            st.write("Znamená rozšiřování a prohlubování dovedností ve vaší současné profesi. Děláte to proto, abyste si udrželi práci, zrychlili si ji a zvedli svou finanční hodnotu.")
+            st.caption("Příklad: Jste mzdová účetní a uděláte si kurz na to, jak automatizovat faktury pomocí pokročilého Excelu nebo AI.")
         with col_skill2:
-            st.markdown("##### 🔄 Reskilling (Přeškolení na jiné povolání)")
-            st.write("Znamená učení se úplně novým dovednostem pro získání zcela jiné role nebo přechod do jiného oboru (často když starý obor zaniká).")
-            st.caption("Příklad: Pracovali jste jako operátor na lince (práci převzal robot), a tak se přeškolíte na servisního technika, který ty roboty opravuje.")
+            st.markdown("##### 🔄 Reskilling (Přeškolení na jiný obor)")
+            st.write("Znamená učení se úplně novým dovednostem pro získání zcela jiné role (často se to děje, když starý obor zaniká nebo vás už nebaví).")
+            st.caption("Příklad: Pracovali jste jako operátor na lince (práci převzal robot), a tak se přeškolíte na IT testera nebo řemeslníka.")
+
+        st.markdown("""
+        <div class='box-green'>
+            🎓 <b>Státní podpora: E-shop s kurzy (Jsemvkurzu.cz)</b><br>
+            Věděli jste, že za drahé IT a digitální kurzy nemusíte platit desetitisíce ze svého? Ministerstvo práce a sociálních věcí provozuje portál <b><a href="https://www.jsemvkurzu.cz" target="_blank" style="color: #166534; text-decoration: underline;">jsemvkurzu.cz</a></b>. Můžete se tam přihlásit na kurzy programování, marketingu, grafiky nebo cizích jazyků a <b>stát za vás zaplatí 82 % až 100 % ceny kurzu (až do výše 50 000 Kč)</b>. Je to dostupné i pro studenty nebo pracující, nejen pro nezaměstnané!
+        </div>
+        """, unsafe_allow_html=True)
 
         st.divider()
         st.markdown("<div class='box-purple'>🎯 <b>Generátor dovedností budoucnosti</b></div>", unsafe_allow_html=True)
-        st.write("Představ si profesi, která tě láká. Co by se člověk v takové profesi měl naučit (Upskilling), aby ho za 5 let nenahradil algoritmus nebo neztratil práci?")
+        st.write("Představ si profesi, která tě láká. Co by se člověk v takové profesi měl začít učit (Upskilling), aby ho za 5 let nenahradil algoritmus, ale naopak se stal nepostradatelným?")
 
         profese = st.selectbox("Vyber profesi pro analýzu:", [
             "Vyber profesi...",
             "Marketingový specialista",
             "Automechanik",
-            "Učitel",
+            "Učitel / Lektor",
             "Účetní / Administrativa",
-            "Programátor / Vývojář"
+            "Programátor / Vývojář",
+            "Zdravotní sestra / Pečovatel",
+            "Skladník / Logistik",
+            "Právník / Koncipient",
+            "Kuchař / Gastronomie",
+            "Stavař / Řemeslník"
         ])
 
         if profese == "Marketingový specialista":
-            st.success("**Upskilling na 5 let:**\n* **Prompt engineering (práce s AI):** Nejen psát texty, ale umět zadat ChatGPT, ať vygeneruje 50 variant kampaně na základě dat.\n* **Analýza dat a psychologie:** AI napíše text, ale vy musíte chápat data o zákaznících a lidské emoce, na které reklama cílí.\n* *Kde začít dnes:* Založit si účet na ChatGPT a zkoušet ho používat jako svého osobního asistenta při psaní.")
+            st.success("**Upskilling na 5 let:**\n* **Prompt engineering (práce s AI):** Nejen psát texty, ale umět zadat AI, ať vygeneruje 50 variant kampaně na základě dat.\n* **Analýza dat a psychologie:** AI napíše text, ale vy musíte chápat data o zákaznících a lidské emoce, na které reklama cílí.\n* *Kde začít dnes:* Založit si účet na ChatGPT/Claude a zkoušet ho používat pro brainstorming.")
         elif profese == "Automechanik":
-            st.success("**Upskilling na 5 let:**\n* **Diagnostika elektromobilů a baterií:** Spalovacích motorů bude ubývat. Mechanik budoucnosti je z poloviny elektrikář a IT specialista.\n* **Práce s diagnostickým softwarem:** Hledání chyb v milionech řádků kódu palubních počítačů.\n* *Kde začít dnes:* Zajímat se o elektroniku, senzory a vývoj v elektromobilitě.")
-        elif profese == "Učitel":
-            st.success("**Upskilling na 5 let:**\n* **Mentoring a facilitace:** Žáci si fakta najdou na internetu za sekundu. Učitel je musí učit *jak* informace kriticky ověřovat a řešit problémy.\n* **Využití AI ve výuce:** Zapojit technologie do výuky, ne je zakazovat.\n* *Kde začít dnes:* Trénovat kritické myšlení, prezentační dovednosti a psychologii komunikace.")
+            st.success("**Upskilling na 5 let:**\n* **Diagnostika elektromobilů a baterií:** Spalovacích motorů bude ubývat. Mechanik budoucnosti je z poloviny elektrikář a IT specialista.\n* **Práce s diagnostickým softwarem:** Hledání chyb v milionech řádků kódu palubních počítačů.\n* *Kde začít dnes:* Sledovat trendy v elektromobilitě a učit se základy elektroniky.")
+        elif profese == "Učitel / Lektor":
+            st.success("**Upskilling na 5 let:**\n* **Mentoring a facilitace:** Žáci si fakta najdou na internetu za sekundu. Učitel je musí učit *jak* informace kriticky ověřovat a řešit problémy v týmu.\n* **Využití AI ve výuce:** Zapojit technologie do výuky, ne je zakazovat.\n* *Kde začít dnes:* Trénovat koučovací techniky a psychologii komunikace.")
         elif profese == "Účetní / Administrativa":
-            st.success("**Upskilling na 5 let:**\n* **Finanční poradenství:** Rutinní přepisování čísel z faktur udělá software. Účetní budoucnosti musí data interpretovat a radit firmám, kde ušetřit.\n* **Automatizace systémů:** Schopnost propojovat různé fakturační systémy a bankovní API.\n* *Kde začít dnes:* Naučit se pokročilé datové funkce (Power Query, Power BI) a daňovou legislativu.")
+            st.success("**Upskilling na 5 let:**\n* **Finanční poradenství:** Rutinní přepisování čísel z faktur udělá software. Účetní budoucnosti musí data interpretovat a radit firmám, kde ušetřit.\n* **Automatizace systémů:** Schopnost propojovat různé fakturační systémy a bankovní API.\n* *Kde začít dnes:* Naučit se pokročilé datové funkce (Power Query, Excel) a udělat si kurz datové analytiky na jsemvkurzu.cz.")
         elif profese == "Programátor / Vývojář":
-            st.success("**Upskilling na 5 let:**\n* **Soft skills a pochopení byznysu:** Základní kód už umí psát Copilot. Programátor musí umět mluvit s klientem a chápat, jaký byznys problém vlastně kód řeší.\n* **Architektura systémů a kyberbezpečnost:** Navrhovat velké, bezpečné a udržitelné systémy.\n* *Kde začít dnes:* Trénovat komunikaci a vedení projektů, nezůstávat jen zavřený u psaní kódu.")
+            st.success("**Upskilling na 5 let:**\n* **Soft skills a pochopení byznysu:** Základní kód už umí psát nástroje jako Copilot. Programátor musí umět mluvit s klientem a chápat, jaký byznys problém kód vůbec řeší.\n* **Architektura systémů a kyberbezpečnost:** Navrhovat velké, bezpečné a udržitelné systémy proti hackerům.\n* *Kde začít dnes:* Trénovat komunikaci, vedení projektů a etický hacking.")
+        elif profese == "Zdravotní sestra / Pečovatel":
+            st.success("**Upskilling na 5 let:**\n* **Telemedicína a digitální záznamy:** Obsluha chytrých monitorovacích náramků, práce s digitální kartou pacienta a vyhodnocování dat na dálku.\n* **Lidská empatie a komunikace:** Tohle žádný robot nenahradí. Role se posune od 'píchání injekcí' (což časem zvládnou přístroje) k psychické podpoře pacientů.\n* *Kde začít dnes:* Kurz komunikace v krizových situacích a seznámení se s moderními medical-tech aplikacemi.")
+        elif profese == "Skladník / Logistik":
+            st.success("**Upskilling na 5 let:**\n* **Obsluha skladových dronů a robotů:** Těžkou fyzickou práci převezmou stroje. Skladník se stane jejich 'dispečerem'.\n* **Práce s WMS (Warehouse Management System):** Sledování toků zboží na tabletech a optimalizace tras.\n* *Kde začít dnes:* Zlepšovat se v práci s databázemi, Excelem a logickým plánováním procesů.")
+        elif profese == "Právník / Koncipient":
+            st.success("**Upskilling na 5 let:**\n* **Legal-tech a AI nástroje:** Prohledávání stovek stran smluv za právníka udělá AI. Právník se soustředí na složité vyjednávání u soudu a kličky.\n* **Kybernetické právo a ochrana dat (GDPR, AI Act):** Nový obor, který masivně roste.\n* *Kde začít dnes:* Kurz zaměřený na legislativu technologií a kyberbezpečnosti.")
+        elif profese == "Kuchař / Gastronomie":
+            st.success("**Upskilling na 5 let:**\n* **Zero-waste management a udržitelnost:** Umět sestavit menu tak, aby se nic nevyhazovalo (šetří to firmě obrovské peníze).\n* **Moderní potravinářské technologie:** Práce s konvektomaty řízenými počítačem, fúze klasického vaření s potravinovou chemií.\n* *Kde začít dnes:* Sledovat trendy v udržitelnosti a optimalizaci nákladů v kuchyni.")
+        elif profese == "Stavař / Řemeslník":
+            st.success("**Upskilling na 5 let:**\n* **Chytrá domácnost (Smart Home):** Elektrikář už nezapojuje jen dráty, ale nastavuje řídící jednotky na Wi-Fi (topení, žaluzie, bezpečnost).\n* **Čtení 3D modelů (BIM):** Místo papírových výkresů se bude na stavbách pracovat s tabletem a 3D modelem budovy.\n* *Kde začít dnes:* Kurz zapojování prvků chytré domácnosti nebo základy práce s CAD programy.")
