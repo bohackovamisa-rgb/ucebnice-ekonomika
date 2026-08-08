@@ -259,3 +259,130 @@ def render():
             
             if st.form_submit_button("Uložit Krok 1 do Projektového pasu"):
                 st.success("Krok 1 uložen! Tvá týmová struktura je připravena pro další plánování.")
+# =====================================================================
+        # PODKAPITOLA 1.2: ZÁKLADNÍ MANAŽERSKÉ FUNKCE
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 1.2 Základní manažerské funkce: Proces řízení")
+        st.write("Manažerská práce není nahodilé hašení požárů. Je to neustále se opakující cyklus čtyř navazujících kroků: **Plánování ➔ Organizování ➔ Vedení lidí ➔ Kontrola**.")
+
+        col_fnc1, col_fce2, col_fce3, col_fce4 = st.columns(4)
+        col_fnc1.info("🎯 **1. Plánování**\nStanovení cílů a cest, jak jich dosáhnout.\n*(Kam jdeme?)*")
+        col_fce2.warning("🏗️ **2. Organizování**\nRozdělení práce, úkolů, pravomocí a zdrojů.\n*(Kdo co udělá?)*")
+        col_fce3.success("💬 **3. Vedení lidí**\nMotivace, komunikace, týmová atmosféra.\n*(Jak je nadchnout?)*")
+        col_fce4.error("🔍 **4. Kontrola**\nMěření výsledků a nápravná opatření.\n*(Splnili jsme to?)*")
+
+        # ---------------------------------------------------------------------
+        # 1.2.1 PLÁNOVÁNÍ A SMART CÍLE
+        # ---------------------------------------------------------------------
+        st.markdown("##### 1.2.1 Plánování a SMART cíl")
+        st.write("Plánování dává týmu smysl a směr. Podle časového horizontu rozlišujeme:")
+        
+        st.markdown("""
+        * ⏱️ **Krátkodobé (Operativní):** Dny až týdny. *(Rozpis směn na příští týden, plán postů na TikTok).*
+        * 🗓️ **Střednědobé (Taktické):** Měsíce až 1–2 roky. *(Kampaň na pololetí, vývoj nového produktu).*
+        * 🌐 **Dlouhodobé (Strategické):** Několik let. *(Vstup značky na asijský trh, digitalizace celé firmy).*
+        """)
+
+        st.markdown("<div class='box-purple'>🎯 <b>Trenažér: Vyllaď cíl podle pravidla S.M.A.R.T.</b></div>", unsafe_allow_html=True)
+        st.write("Vágne zadaný cíl (*'Chceme prodávat hodně mikin'*) vedoucího i tým zmate. Správný cíl musí být **S.M.A.R.T.**:")
+
+        st.markdown("""
+        * **S** (Specific) = Konkrétní
+        * **M** (Measurable) = Měřitelný (obsahuje číslo)
+        * **A** (Achievable) = Dosažitelný
+        * **R** (Realistic) = Realistický vzhledem ke zdrojům
+        * **T** (Time-bound) = Časově ohraničený (termín)
+        """)
+
+        with st.container(border=True):
+            st.write("**Předělej špatný cíl na SMART cíl:**")
+            st.caption("🔴 *Špatný cíl:* 'Chceme mít úspěšný školní merch.'")
+            
+            c_smart1, c_smart2, c_smart3 = st.columns(3)
+            s_ks = c_smart1.number_input("Kolik kusů chceme prodat?:", min_value=10, value=80, step=10)
+            s_marze = c_smart2.number_input("Minimální zisk/marže na kus (Kč):", min_value=50, value=120, step=10)
+            s_termin = c_smart3.date_input("Termín dokončení akce:")
+
+            st.success(f"🟢 **Tůj vygenerovaný SMART cíl:** *„Do {s_termin.strftime('%d. %m. %Y')} prodáme přesně {s_ks} kusů školních mikin studentům s minimální marží {s_marze} Kč na kus.“*")
+
+        # ---------------------------------------------------------------------
+        # 1.2.2 ORGANIZOVÁNÍ
+        # ---------------------------------------------------------------------
+        st.markdown("##### 1.2.2 Organizování a Pravomoc vs. Odpovědnost")
+        st.write("Organizování znamená vytvořit jasnou strukturu: určit, kdo o čem rozhoduje, kdo komu podléhá a kdo za co ručí.")
+
+        st.markdown("""
+        <div class='box-yellow'>
+            ⚖️ <b>Základní rovnováha managementu:</b><br>
+            • <b>Pravomoc:</b> Právo rozhodovat, utrácet peníze a zadávat úkoly.<br>
+            • <b>Odpovědnost:</b> Povinnost nést následky a ručit za výsledek.<br>
+            <i>Největší past neefektivního manažera? Dát podřízenému 100% odpovědnost za akci, ale nedát mu žádnou pravomoc o ní rozhodnout!</i>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 1.2.3 VEDENÍ LIDÍ A MASLOWOVA PYRAMIDA
+        # ---------------------------------------------------------------------
+        st.markdown("##### 1.2.3 Vedení lidí a Maslowova pyramida potřeb")
+        st.write("Vedení lidí není o komandování, ale o motivaci. Rozlišujeme:")
+        st.markdown("* **Motivace:** Vnitřní touha a smysl něco dělat *(např. student chce vést podcast, protože ho to baví a chce se rozvíjet)*.")
+        st.markdown("* **Stimulace:** Vnější odměna nebo podnět *(např. finanční bonus, pochvala, diplom, volno)*.")
+
+        st.markdown("#### 🔺 1.2.3.1 Maslowova pyramida potřeb v praxi")
+        st.write("Psycholog Abraham Maslow ukázal, že lidé mají potřeby uspořádané do hierarchie. V managementu to znamená jedinou věc: **Člověk, který se bojí o vyhazov nebo nemá zaplacený nájem, nebude v práci kreativní ani zapálený pro vizi.**")
+
+        # Vizualizace Maslowovy pyramidy pomocí Plotly Funnel/Pyramid chart
+        úrovně_maslow = [
+            "5. Seberealizace", 
+            "4. Uznání a respekt", 
+            "3. Sociální potřeby (Tým)", 
+            "2. Bezpečí a jistota", 
+            "1. Fyziologické potřeby"
+        ]
+        sirky_maslow = [20, 40, 60, 80, 100]
+
+        fig_maslow = go.Figure(go.Funnel(
+            y=úrovně_maslow,
+            x=sirky_maslow,
+            textinfo="label",
+            marker={"color": ["#8b5cf6", "#3b82f6", "#10b981", "#f59e0b", "#ef4444"]}
+        ))
+        fig_maslow.update_layout(
+            title="Maslowova pyramida potřeb (Klikni na úroveň níže pro manažerský význam)",
+            height=350, 
+            margin=dict(t=40, b=10, l=10, r=10),
+            showlegend=False
+        )
+
+        st.plotly_chart(fig_maslow, use_container_width=True)
+
+        # Interaktivní průzkumník Maslowovy pyramidy
+        wybrana_uroven = st.selectbox("🔍 Vyber úroveň pyramidy a podívej se, jak ji řeší dobrý manažer:", [
+            "1. Fyziologické potřeby (Základ)",
+            "2. Potřeba bezpečí (Jistota)",
+            "3. Sociální potřeby (Vztahy v týmu)",
+            "4. Uznání a respekt (Ocenění)",
+            "5. Seberealizace (Růst a smysl)"
+        ])
+
+        if "1." in wybrana_uroven:
+            st.error("🍎 **1. Fyziologické potřeby u zaměstnance:** Důstojný plat, ze kterého zaplatí jídlo a bydlení, větrané prostředí, přestávka na oběd, pitný režim a spánek.")
+        elif "2." in wybrana_uroven:
+            st.warning("🛡️ **2. Potřeba bezpečí:** Stabilní pracovní smlouva (ne strach z vyhazovu ze dne na den), bezpečné pracoviště bez šikany a jasná pravidla hry.")
+        elif "3." in wybrana_uroven:
+            st.success("🤝 **3. Sociální potřeby:** Přijetí do týmu, dobrá atmosféra, neformální teambuildingy, vzájemná pomoc a lidská komunikace.")
+        elif "4." in wybrana_uroven:
+            st.info("🏆 **4. Uznání a respekt:** Pochvala před týmem za dobře odvedenou práci, povýšení, certifikát, titul nebo přidělení důležitého úkolu.")
+        else:
+            st.markdown("<div class='box-purple'>🚀 <b>5. Seberealizace:</b> Svoboda v tvoření, smysluplná práce, možnost učit se nové věci, realizovat vlastní nápady a odborně růst.</div>", unsafe_allow_html=True)
+
+        # WORKBOOK KROK 2 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 2: SMART cíl a motivace týmu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok2"):
+            st.text_area("1. Napiš přesný S.M.A.R.T. cíl pro svůj projekt (Co, kolik, do kdy):", placeholder="např. Do 15. prosince získá náš školní podcast 500 stálých posluchačů na Spotify.")
+            st.text_area("2. Jak budeš svůj tým motivovat (kromě peněz) na úrovni Uznání a Seberealizace?:", placeholder="např. Každý člen bude mít v titulcích své jméno, bude mít volnost ve výběru hostů...")
+            
+            if st.form_submit_button("Uložit Krok 2 do Projektového pasu"):
+                st.success("Krok 2 uložen! Tůj cíl je ostrý jako břitva.")
