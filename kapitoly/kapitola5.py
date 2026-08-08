@@ -328,7 +328,7 @@ def render():
     # =========================================================================
     elif selected_section_5 == "2. Daně, státní rozpočet a ekonomická realita":
         st.markdown("### 2. Daně, státní rozpočet a ekonomická realita")
-        st.info("Zde bude obsah pro podkapitoly 2.1 až 2.12 (Zásady zdaňování, přímé/nepřímé daně, rozpočet, dluh...)")
+       
 
     # =========================================================================
     # SEKCE 3: MOJE DANĚ V PRAXI
