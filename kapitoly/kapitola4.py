@@ -1369,7 +1369,7 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
 
         st.info("🎯 **Proč byste to dělali?** Pokud firmě takto prokazatelně šetříte čas nebo vyděláváte peníze, získáváte ultimátní argument pro **vyjednávání o vyšším platu** nebo povýšení.")
 
-elif selected_section_4 == "4.3 Upskilling a reskilling":
+    elif selected_section_4 == "4.3 Upskilling a reskilling":
         st.markdown("### 4.3 Upskilling a reskilling: Jak nezestárnout na trhu práce")
         st.write("V době automatizace a umělé inteligence už neplatí, že vystudujete jednu školu a s těmito znalostmi vystačíte do důchodu. Vaše tržní hodnota a bezpečnost závisí na vaší ochotě a schopnosti se učit.")
 
