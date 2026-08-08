@@ -92,10 +92,7 @@ def render():
     # =========================================================================
     # SEKCE 1: MANAGEMENT
     # =========================================================================
-    if selected_section_6 == section_options_6[0]:
-        st.markdown("### 1. Management – Jak z chaosu udělat fungující firmu")
-        st.info("Zde bude pokračovat podkapitola 1.1 Podstata a význam managementu...")
-
+   
     # =========================================================================
     # SEKCE 2: MARKETING
     # =========================================================================
