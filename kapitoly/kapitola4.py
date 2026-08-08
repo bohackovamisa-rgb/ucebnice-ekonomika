@@ -1547,7 +1547,7 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
 
         st.divider()
 
-elif selected_section_4 == "5.3 Co dělat, když... (Krizový trenažér)":
+    elif selected_section_4 == "5.3 Co dělat, když... (Krizový trenažér)":
         st.markdown("### 5.3 Co dělat, když... (Krizový trenažér)")
         
         st.markdown("""
