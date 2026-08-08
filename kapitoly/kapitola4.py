@@ -1052,3 +1052,153 @@ def render():
 
         st.write("📊 **Jak se firemní peníze (náklady) rozdělily procentuálně:**")
         st.progress(podil_zamestnanec, text=f"Zaměstnanec dostane cca {int(podil_zamestnanec*100)} % z firemních nákladů (Zbytek bere stát).")
+elif selected_section_4 == "3.6 Sazby pojištění, daně a náklady zaměstnavatele":
+        st.markdown("### 3.6 Sazby pojištění a daň z příjmů")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🧮 <b>Základní princip:</b> Zaměstnanec ze své hrubé mzdy platí sociální, zdravotní a daň. Zaměstnavatel ale k tomu navíc platí DALŠÍ sociální a zdravotní pojištění za zaměstnance ze svého (svůj firemní náklad).
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### ⚖️ Kdo co platí a k čemu to slouží?")
+        st.markdown("""
+        | Položka | Platí zaměstnanec | Platí zaměstnavatel | K čemu to slouží státu |
+        | :--- | :--- | :--- | :--- |
+        | 🏛️ **Sociální pojištění** | **7,1 %** z hrubé mzdy | **24,8 %** z hrubé mzdy | Důchody seniorů, nemocenské dávky a podpory v nezaměstnanosti. |
+        | 🏥 **Zdravotní pojištění** | **4,5 %** z hrubé mzdy | **9 %** z hrubé mzdy | Financování lékařské péče, nemocnic a léků pro všechny. |
+        | 💸 **Daň z příjmu (DPFO)** | **15 %** ze základu daně* | **Neplatí se** | Peníze na stavbu dálnic, školy, policii, hasiče atd. |
+        """)
+        st.caption("*Poznámka: U velmi nadstandardních příjmů nad zákonný limit se z přesahující části platí vyšší sazba daně (tzv. progrese).*")
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka: Jak se tvoří celkové náklady na tebe?</b></div>", unsafe_allow_html=True)
+        st.write("Zadej svou vysněnou hrubou mzdu a podívej se na přesný rozpad toho, kolik peněz spolkne sociální a zdravotní pojištění z pohledu firmy a tebe:")
+
+        mzda_kalk = st.slider("Zadej hrubou mzdu (Kč):", 20000, 100000, 33200, step=1000)
+
+        # Výpočty pro simulátor
+        soc_zam = int(mzda_kalk * 0.071)
+        zdr_zam = int(mzda_kalk * 0.045)
+        
+        soc_firma = int(mzda_kalk * 0.248)
+        zdr_firma = int(mzda_kalk * 0.09)
+        
+        celkem_naklad = mzda_kalk + soc_firma + zdr_firma
+
+        col_sz1, col_sz2 = st.columns(2)
+        with col_sz1:
+            st.markdown("##### 👤 Z tvé hrubé mzdy se srazí:")
+            st.write(f"Sociální: **{soc_zam:,} Kč**")
+            st.write(f"Zdravotní: **{zdr_zam:,} Kč**")
+            st.caption("(Plus se ještě odečte daň)")
+        with col_sz2:
+            st.markdown("##### 🏢 Zaměstnavatel doplatí navíc:")
+            st.write(f"Sociální doplatek: **{soc_firma:,} Kč**")
+            st.write(f"Zdravotní doplatek: **{zdr_firma:,} Kč**")
+            st.caption(f"Tím se tvá cena pro firmu vyšplhá na {celkem_naklad:,} Kč!")
+
+    elif selected_section_4 == "3.6 Slevy na dani a odčitatelné položky":
+        # Streamlit dropdown uses text matching. Redirect mapping:
+        st.markdown("*(Přesměrování)*")
+        st.info("Vyberte z roletky '3.7 Kam jdou odvody a daňové slevy'")
+
+    elif selected_section_4 == "3.7 Kam jdou odvody (sociální a zdravotní pojištění)":
+        # Streamlit dropdown uses text matching. We merge 3.7 into the actual correct content block below.
+        st.markdown("*(Přesměrování...)*")
+
+    # Správné mapování pro roletku (musíme upravit název sekce, aby odpovídala obsahu RVP dodaného uživatelem)
+    elif selected_section_4 == "3.7 Kam jdou odvody (sociální a zdravotní pojištění)" or selected_section_4 == "3.6 Slevy na dani a odčitatelné položky":
+        # (Oprava: z uživatelova seznamu je lepší vytvořit jeden masivní blok pro slevy a daně)
+        pass
+
+    # TOTO JE PLNĚ VYPRACOVANÁ SEKCE PRO DANĚ A SLEVY (V původní roletce pod 3.6/3.7)
+    if selected_section_4 == "3.6 Slevy na dani a odčitatelné položky" or selected_section_4 == "3.7 Kam jdou odvody (sociální a zdravotní pojištění)":
+        st.markdown("### 3.7 Slevy na dani, daňové zvýhodnění a odčitatelné položky")
+        
+        st.write("V oblasti daní se často používají tři pojmy, které znějí podobně, ale fungují úplně jinak. Pokud chcete maximalizovat svou výplatu (nebo vratku daní z finančního úřadu), musíte znát rozdíl!")
+
+        st.markdown("#### ⚖️ Tři klíčové pojmy (Co je co?)")
+        st.markdown("""
+        | Pojem | Co snižuje? | Příklad v praxi |
+        | :--- | :--- | :--- |
+        | 💎 **Sleva na dani** | Snižuje **přímo vypočtenou daň**. | Sleva na poplatníka, sleva na ZTP. (Pomůže nejvíc). |
+        | 👨‍👩‍👧 **Daňové zvýhodnění** | Snižuje daň. Pokud vám daň už klesla na nulu, stát vám **peníze doplatí (tzv. Daňový bonus)**. | Zvýhodnění na vyživované dítě. |
+        | 📉 **Odčitatelná položka** | Nesnižuje daň, ale jen **základ, ze kterého se daň počítá**. | Dary na charitu, úroky z hypotéky, penzijní spoření. |
+        """)
+
+        st.markdown("""
+        <div class='box-blue'>
+            💡 <b>Rozdíl polopaticky:</b><br>
+            • <b>Sleva 1 000 Kč</b> = Na dani zaplatíte o rovných 1 000 Kč méně. Peníze vám zůstávají v kapse.<br>
+            • <b>Odčitatelná položka 1 000 Kč</b> = Sníží váš daňový základ. Reálně vám to ale na finální dani ušetří jen 15 % z oné tisícikoruny (tj. pouhých 150 Kč).
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("#### 📅 Měsíčně, nebo až za rok?")
+        st.write("Abyste mohli slevy uplatňovat už z měsíční výplaty, musíte v práci hned při nástupu podepsat tzv. **Prohlášení poplatníka k dani** (růžový papír). Pokud ho nepodepíšete, firma vám slevy neodečte a vaše čistá výplata bude mnohem nižší (peníze si pak musíte složitě žádat zpět od FÚ na jaře dalšího roku).")
+
+        st.markdown("""
+        * 🕒 **Měsíčně ve výplatě se odečítá:** Základní sleva na poplatníka, Zvýhodnění na děti, Sleva na invaliditu.
+        * 🗓️ **Až 1x ročně (v daňovém přiznání) se odečítá:** Dary na charitu/krev, úroky z hypotéky, platby na penzijní spoření, sleva na manžela/ku bez příjmů.
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧩 <b>Simulátor: Kouzlo daňového bonusu a slev</b></div>", unsafe_allow_html=True)
+        st.write("Nastav hrubou mzdu a přidej životní situaci (např. vychovávání dětí). Sleduj, co to udělá s daní. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?")
+
+        col_slev1, col_slev2 = st.columns(2)
+        with col_slev1:
+            hruba_slevy = st.slider("Hrubá mzda:", 20000, 60000, 30000, step=1000)
+            
+            # Pravidla platná pro 2026 (absence školkovného/studenta atd.)
+            deti = st.selectbox("Počet vyživovaných dětí:", [0, 1, 2, 3])
+            
+            # Výpočet pro simulátor
+            dan_zaklad = int(hruba_slevy * 0.15)
+            sleva_poplatnik = 2570
+            
+            # Zvýhodnění na děti (měsíční částky)
+            sleva_deti = 0
+            if deti == 1: sleva_deti = 1267
+            elif deti == 2: sleva_deti = 1267 + 1860
+            elif deti >= 3: sleva_deti = 1267 + 1860 + 2320
+            
+            # Mezivýpočet
+            dan_po_poplatnikovi = dan_zaklad - sleva_poplatnik
+            
+            if dan_po_poplatnikovi < 0: 
+                dan_po_poplatnikovi = 0
+                
+            dan_po_detech = dan_po_poplatnikovi - sleva_deti
+            
+            # Bonus vzniká, pokud jdeme do mínusu díky dětem
+            bonus = 0
+            if dan_po_detech < 0:
+                bonus = abs(dan_po_detech)
+                realna_dan = 0
+            else:
+                realna_dan = dan_po_detech
+                
+            soc = int(hruba_slevy * 0.071)
+            zdr = int(hruba_slevy * 0.045)
+            
+            cista_mzda_konecna = hruba_slevy - soc - zdr - realna_dan + bonus
+
+        with col_slev2:
+            st.write(f"1. Vypočtená daň z hrubé: **{dan_zaklad} Kč**")
+            st.write(f"2. Mínus sleva na tebe: **- 2 570 Kč**")
+            st.write(f"3. Mínus slevy na děti: **- {sleva_deti} Kč**")
+            st.divider()
+            
+            if bonus > 0:
+                st.success(f"🚀 **Vznikl ti Daňový Bonus: {bonus} Kč!**\nStát tě nenechá platit žádnou daň, a ještě ti tuto částku přihodí k výplatě navíc!")
+                st.metric("Tvoje finální čistá mzda:", f"{cista_mzda_konecna} Kč")
+            else:
+                st.info(f"Konečná daň, kterou zaplatíš: {realna_dan} Kč")
+                st.metric("Tvoje finální čistá mzda:", f"{cista_mzda_konecna} Kč")
+            
+            if cista_mzda_konecna > hruba_slevy:
+                st.balloons()
+                st.markdown("**WOW! Tvá čistá mzda je vyšší než hrubá!** To je možné právě díky státnímu daňovému bonusu za děti.")
