@@ -1539,3 +1539,82 @@ def render():
 
             if st.form_submit_button("Uložit Krok 9 do Projektového pasu"):
                 st.success("Krok 9 úspěšně uložen! První 3P tvého mixu jsou kompletní.")
+# ---------------------------------------------------------------------
+        # 2.4.4 PROMOTION / PROPAGACE A KOMUNIKAČNÍ MIX
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.4.4 Promotion / Propagace a komunikační mix")
+        st.write("Propagace neznamená jen zaplatit si reklamu na Instagramu. Je to celá strategie, jak firma komunikuje se zákazníky, médii, veřejností a partnery. Cílem je informovat, přesvědčit, připomenout značku a budovat dlouhodobý vztah.")
+
+        st.markdown("##### 📣 5 nástrojů komunikačního mixu")
+        tab_pr1, tab_pr2, tab_pr3, tab_pr4, tab_pr5 = st.tabs([
+            "📢 Reklama", 
+            "🏷️ Podpora prodeje", 
+            "📰 Public Relations", 
+            "🤝 Osobní prodej", 
+            "📩 Přímý marketing"
+        ])
+
+        with tab_pr1:
+            st.markdown("**Reklama (Advertising)**")
+            st.write("Placená, neosobní forma prezentace přes masmédia nebo digitální kanály. Má velký dosah, ale zákazník ví, že si ji firma zaplatila.")
+            st.info("📌 **Příklady:** TV spot, billboard u dálnice, reklama na YouTube, banner na webu, placený sponzorovaný příspěvek na Instagramu nebo TikToku.")
+
+        with tab_pr2:
+            st.markdown("**Podpora prodeje (Sales Promotion)**")
+            st.write("Krátkodobé stimuly a výhody, které mají zákazníka přimět k **okamžitému nákupu**.")
+            st.warning("📌 **Příklady:** Slevový kupón v aplikaci, vzorek zdarma v časopise, akce 1+1 zdarma, věrnostní body, soutěž o ceny.")
+
+        with tab_pr3:
+            st.markdown("**Public Relations (PR / Vztahy s veřejností)**")
+            st.write("Budování dobrého jména firmy, důvěry a vztahů s veřejností, médii a komunitou. PR prodává nepřímo přes příběh.")
+            st.success("📌 **Příklady:** Tisková zpráva v novinách, rozhovor se zakladatelem v podcastu, sponzorování dětského domova, zvládnutí krizové komunikace.")
+
+        with tab_pr4:
+            st.markdown("**Osobní prodej (Personal Selling)**")
+            st.write("Osobní komunikace se zákazníkem tváří v tvář nebo online. Extrémně účinná, ale drahá metoda.")
+            st.error("📌 **Příklady:** Obchodní zástupce prodávající software firmám (B2B), specializovaný konzultant v prodejně elektro, video-ukázka produktu.")
+
+        with tab_pr5:
+            st.markdown("**Přímý marketing (Direct Marketing)**")
+            st.write("Přímé a adresné oslovení konkrétně vybraných zákazníků z databáze.")
+            st.info("📌 **Příklady:** Personalizovaný e-mailing, SMS s narozeninovou slevou, adresný katalog do schránky, nabídka přímo v mobilní aplikaci.")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        col_mkt_trend1, col_mkt_trend2 = st.columns(2)
+        with col_mkt_trend1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #8b5cf6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #6d28d9;">📱 Influencer marketing & UGC</h5>
+                V moderní propagaci hrají obrovskou roli <b>influencer marketing</b> a <b>UGC (User-Generated Content)</b>.<br><br>
+                UGC je obsah (recenze, unboxing videa, fotky), který zdarma nebo za odměnu tvoří běžní uživatelé. Působí autenticky a zákazníci mu věří více než klasické reklamě. Placené spolupráce ale musí být vždy transparentně označené!
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_mkt_trend2:
+            st.markdown("""
+            <div style="background-color: #fff7ed; padding: 15px; border-left: 5px solid #f97316; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #c2410c;">⚠️ Virál není strategie sám o sobě</h5>
+                Virální video s miliony zhlédnutí je super pro ego, ale nemusí přinést ani jedinou korunu do pokladny.<br><br>
+                Pokud virál neodpovídá pozici značky, cílům a produktu, lidé si zapamatují vtipné video, ale vůbec nebudou vědět, co prodáváš nebo kdo jsi.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 10 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 10: Komunikační mix a finální rekapitulace 4P</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok10"):
+            st.markdown("##### 📢 Propagace tvého projektu:")
+            st.text_area("1. Jaké 2 hlavní nástroje komunikačního mixu použiješ pro oslovení zákazníků a proč?:", placeholder="např. 1. Instagram Ads a TikTok (Reklama na zásah) + 2. Slevový kód 15 % na první nákup (Podpora prodeje na konverzi).")
+            st.text_input("2. Využiješ Influencer marketing nebo UGC? Pokud ano, jak?:", placeholder="např. Pošleme 5 balíčků micro-influencerům ze školy výměnou za unboxing video.")
+
+            st.markdown("##### 🎯 Rekapitulace finálního Marketingového mixu 4P:")
+            col_4p_rec1, col_4p_rec2 = st.columns(2)
+            with col_4p_rec1:
+                st.caption("📦 **PRODUCT:** Hlavní hodnota produktu")
+                st.caption("💸 **PRICE:** Cenová strategie a cenovka")
+            with col_4p_rec2:
+                st.caption("🚚 **PLACE:** Kde a jak se prodává")
+                st.caption("📢 **PROMOTION:** Hlavní komunikační kanál")
+
+            if st.form_submit_button("Uložit Krok 10 a dokončit Blok 2 (Marketing)"):
+                st.success("🎉 Gratulujeme! Blok 2 (Marketing) je kompletně zpracovaný. Tvůj projekt má jasný produkt, cenovku, distribuci i promo kampaň!")
