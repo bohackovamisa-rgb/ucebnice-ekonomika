@@ -466,118 +466,155 @@ def render():
             """)
 
             st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz (1000 Kč - František Palacký)")
-            st.write("Zvol prvek v nabídce níže, sleduj jeho přesné umístění přímo na reálné bankovce a zjisti, jak ho v praxi ověřit:")
+            st.write("Prohlédni si přední (lícovou) i zadní (rubovou) stranu tisícikoruny a prozkoumej její ochranné prvky:")
 
-            # ⬇️ SEM PATŘÍ TATO FUNKCE ⬇️
+            # Funkce pro načtení obrázků z repozitáře
             @st.cache_data
-            def nacist_lokalni_bankovku():
+            def nacist_obrazek_bankovky(nazvy_souboru):
                 import base64
                 import os
-
-                mozne_cesty = [
-                    "1000_czk_lic.jpg",
-                    "1000_czk.jpg",
-                    "kapitoly/1000_czk_lic.jpg",
-                    "kapitoly/1000_czk.jpg",
-                    "assets/1000_czk_lic.jpg",
-                    "assets/1000_czk.jpg",
-                ]
-                for cesta in mozne_cesty:
-                    if os.path.exists(cesta):
-                        with open(cesta, "rb") as f:
-                            encoded = base64.b64encode(f.read()).decode()
-                            return f"data:image/jpeg;base64,{encoded}"
+                for nazev in nazvy_souboru:
+                    mozne_cesty = [nazev, f"kapitoly/{nazev}", f"assets/{nazev}"]
+                    for cesta in mozne_cesty:
+                        if os.path.exists(cesta):
+                            with open(cesta, "rb") as f:
+                                encoded = base64.b64encode(f.read()).decode()
+                                return f"data:image/jpeg;base64,{encoded}"
                 return None
 
-            # Zavolání funkce
-            img_base64 = nacist_lokalni_bankovku()
+            img_lic_base64 = nacist_obrazek_bankovky(["1000_czk_lic.jpg", "1000_czk.jpg"])
+            img_rub_base64 = nacist_obrazek_bankovky(["1000_czk_rub.jpg"])
 
-            # Databáze prvků pro 1000 Kč
-            prvky_bankovky = {
-                "Vodoznak (pohledem)": {
-                    "ikona": "💧",
-                    "top": "48%", "left": "14%",
-                    "nazev": "Vodoznak (František Palacký)",
-                    "misto": "Levý nepotištěný okraj bankovky",
-                    "popis": "Zřetelný stínovaný portrét Františka Palackého s číselným označením '1000' a motivem lipového listu, viditelný z obou stran při pohledu proti světlu.",
-                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na nepotištěný levý okraj proti světelnému zdroji."
-                },
-                "Ochranný proužek (pohledem)": {
-                    "ikona": "📏",
-                    "top": "50%", "left": "55.8%",
-                    "nazev": "Ochranný proužek s mikrotextem",
-                    "misto": "Svislý metalický pás zapuštěný do papíru (uprostřed bankovky)",
-                    "popis": "Tmavý okenníkový proužek z pokovené umělé hmoty s negativním mikrotextem 'ČNB 1000 Kč'. Při naklonění mění barvu z hnědofialové na zelenou.",
-                    "kontrola": "☀️ **Jak zkontrolovat:** Podívej se na bankovku proti světlu (vidíš souvislý pás) nebo ji nakloň a sleduj proměnu barev."
-                },
-                "Soutisková značka (pohledem)": {
-                    "ikona": "🧩",
-                    "top": "14.5%", "left": "29.5%",
-                    "nazev": "Soutisková značka (CS / ČR)",
-                    "misto": "Horní část bankovky vlevo od stromu",
-                    "popis": "Oboustranný tisk kroužku s písmeny. Z lícní strany vidíš jen část, z rubové druhou část. Proti světlu se přesně doplňují v celistvý symbol.",
-                    "kontrola": "🔍 **Jak zkontrolovat:** Prohlédni si značku proti světlu – obě poloviny vytvoří přesný kruhový symbol."
-                },
-                "Opticky proměnlivá barva (naklopením)": {
-                    "ikona": "🎨",
-                    "top": "18.5%", "left": "41.5%",
-                    "nazev": "Opticky proměnlivá barva (Lipový list)",
-                    "misto": "Horní část stromu nad nápisem TISÍC",
-                    "popis": "Stylizovaný lipový list vytištěný speciální barvou. Při naklonění bankovky mění barvu ze zlatavé/hnědé na zelenou.",
-                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku pod úhlem naproti světlu – sleduj proměnu barvy lipového listu."
-                },
-                "Reliéfní tisk (hmatem)": {
-                    "ikona": "🖐️",
-                    "top": "48%", "left": "70%",
-                    "nazev": "Reliéfní tisk (Portrét Františka Palackého)",
-                    "misto": "Portrét Palackého, texty a hmatové značky",
-                    "popis": "Vystouplý povrch hlubotisku nahmatatelný prsty na lícové straně bankovky.",
-                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď bříškem prstu po portrétu Františka Palackého nebo po nápisu 'TISÍC KORUN ČESKÝCH'."
-                },
-                "Hmatová značka pro nevidomé (hmatem)": {
-                    "ikona": "🔲",
-                    "top": "9%", "left": "93%",
-                    "nazev": "Hmatová značka pro nevidomé",
-                    "misto": "Pravý horní roh lícní strany",
-                    "popis": "Speciální vystouplé čárky vytištěné hlubotiskem v pravém horním rohu, které slouží zrakově postiženým k rozpoznání hodnoty 1000 Kč.",
-                    "kontrola": "👉 **Jak zkontrolovat:** Nahmatáš prstem vystoupené svislé čárky v pravém rohu."
-                },
-                "UV prvky (pomůckami)": {
-                    "ikona": "🔦",
-                    "top": "75%", "left": "41.5%",
-                    "nazev": "UV prvky a fluorescenční vlákna",
-                    "misto": "Kořeny stromu a plocha bankovky",
-                    "popis": "Skryté tiskové motivy (světélkující zelená a žlutá vlákna a tisk v oblasti kořenů), které reagují pod ultrafialovým světlem.",
-                    "kontrola": "💡 **Jak zkontrolovat:** Posviť na bankovku UV lampou v bance nebo v obchodě."
+            tab_lic, tab_rub = st.tabs(["📄 Lícní strana (Přední - Palacký)", "🦅 Rubová strana (Zadní - Orlice)"])
+
+            # -----------------------------------------------------------------
+            # LÍCNÍ STRANA
+            # -----------------------------------------------------------------
+            with tab_lic:
+                prvky_lic = {
+                    "Vodoznak (pohledem)": {
+                        "ikona": "💧", "top": "48%", "left": "14%",
+                        "nazev": "Vodoznak (František Palacký)",
+                        "misto": "Levý nepotištěný okraj bankovky",
+                        "popis": "Zřetelný stínovaný portrét Františka Palackého s číselným označením '1000' a motivem lipového listu, viditelný z obou stran při pohledu proti světlu.",
+                        "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na nepotištěný levý okraj proti světelnému zdroji."
+                    },
+                    "Ochranný proužek (pohledem)": {
+                        "ikona": "📏", "top": "50%", "left": "55.8%",
+                        "nazev": "Ochranný proužek s mikrotextem",
+                        "misto": "Svislý metalický pás zapuštěný do papíru (uprostřed)",
+                        "popis": "Tmavý okenníkový proužek z pokovené umělé hmoty s negativním mikrotextem 'ČNB 1000 Kč'. Při naklonění mění barvu z hnědofialové na zelenou.",
+                        "kontrola": "☀️ **Jak zkontrolovat:** Podívej se na bankovku proti světlu (vidíš souvislý pás) nebo ji nakloň a sleduj proměnu barev."
+                    },
+                    "Soutisková značka (pohledem)": {
+                        "ikona": "🧩", "top": "14.5%", "left": "29.5%",
+                        "nazev": "Soutisková značka (Lícní část)",
+                        "misto": "Horní část bankovky vlevo od stromu",
+                        "popis": "Lícní část kroužku s písmeny. Při pohledu proti světlu se přesně spojí s druhou částí vytištěnou na rubu v celistvý symbol.",
+                        "kontrola": "🔍 **Jak zkontrolovat:** Prohlédni si značku proti světlu – obě poloviny (z líce i rubu) vytvoří přesný kruhový symbol."
+                    },
+                    "Opticky proměnlivá barva (naklopením)": {
+                        "ikona": "🎨", "top": "18.5%", "left": "41.5%",
+                        "nazev": "Opticky proměnlivá barva (Lipový list)",
+                        "misto": "Horní část stromu nad nápisem TISÍC",
+                        "popis": "Stylizovaný lipový list vytištěný speciální barvou. Při naklonění bankovky mění barvu ze zlatavé/hnědé na zelenou.",
+                        "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku pod úhlem naproti světlu – sleduj proměnu barvy lipového listu."
+                    },
+                    "Reliéfní tisk (hmatem)": {
+                        "ikona": "🖐️", "top": "48%", "left": "70%",
+                        "nazev": "Reliéfní tisk (Portrét Františka Palackého)",
+                        "misto": "Portrét Palackého, texty a hmatové značky",
+                        "popis": "Vystouplý povrch hlubotisku nahmatatelný prsty na lícové straně bankovky.",
+                        "kontrola": "👉 **Jak zkontrolovat:** Přejeď bříškem prstu po portrétu Františka Palackého nebo po nápisu 'TISÍC KORUN ČESKÝCH'."
+                    },
+                    "Hmatová značka pro nevidomé (hmatem)": {
+                        "ikona": "🔲", "top": "9%", "left": "93%",
+                        "nazev": "Hmatová značka pro nevidomé",
+                        "misto": "Pravý horní roh lícní strany",
+                        "popis": "Speciální vystouplé čárky vytištěné hlubotiskem v pravém horním rohu k rozpoznání hodnoty 1000 Kč hmatem.",
+                        "kontrola": "👉 **Jak zkontrolovat:** Nahmatáš prstem vystoupené svislé čárky v pravém rohu."
+                    }
                 }
-            }
 
-            p_sel = st.selectbox(
-                "Zvol ochranný prvek pro zobrazení popisu:",
-                list(prvky_bankovky.keys()),
-                key="k2_1_2_4_bankovka_sel"
-            )
+                p_sel_lic = st.selectbox("Zvol prvek na lícní straně:", list(prvky_lic.keys()), key="k2_lic_sel")
+                det_lic = prvky_lic[p_sel_lic]
 
-            det = prvky_bankovky[p_sel]
+                if img_lic_base64:
+                    st.markdown(f'''
+                    <div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid #cbd5e1;">
+                        <img src="{img_lic_base64}" alt="1000 Kč - Líc" style="width: 100%; height: auto; display: block;" />
+                        <div style="position: absolute; top: {det_lic["top"]}; left: {det_lic["left"]}; transform: translate(-50%, -50%); z-index: 10;">
+                            <div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; box-shadow: 0 0 15px #ef4444;">
+                                {det_lic["ikona"]}
+                            </div>
+                        </div>
+                    </div>
+                    ''', unsafe_allow_html=True)
+                else:
+                    st.warning("⚠️ Obrázek '1000_czk_lic.jpg' nebyl nalezen v repozitáři.")
 
-            if img_base64:
-                html_bankovka = (
-                    f'<div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; '
-                    f'border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid #cbd5e1;">'
-                    f'<img src="{img_base64}" alt="1000 Kč - František Palacký" style="width: 100%; height: auto; display: block;" />'
-                    f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
-                    f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; '
-                    f'display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; '
-                    f'box-shadow: 0 0 15px #ef4444;">'
-                    f'{det["ikona"]}'
-                    f'</div></div></div>'
-                )
-                st.markdown(html_bankovka, unsafe_allow_html=True)
-            else:
-                st.warning("⚠️ Obrázek bankovky se nenenašel. Nahraj soubor '1000_czk_lic.jpg' do hlavní složky repozitáře na GitHubu.")
+                st.info(f"{det_lic['ikona']} **{det_lic['nazev']}** ({det_lic['misto']})\n\n{det_lic['popis']}\n\n{det_lic['kontrola']}")
 
-            # Kartička s detailem
-            st.info(f"{det['ikona']} **{det['nazev']}** ({det['misto']})\n\n{det['popis']}\n\n{det['kontrola']}")
+            # -----------------------------------------------------------------
+            # RUBOVÁ STRANA
+            # -----------------------------------------------------------------
+            with tab_rub:
+                prvky_rub = {
+                    "Soutisková značka z rubu (pohledem)": {
+                        "ikona": "🧩", "top": "14.5%", "left": "70.5%",
+                        "nazev": "Soutisková značka (Rubová část)",
+                        "misto": "Pravá horní část rubové strany",
+                        "popis": "Druhá polovina soutiskové značky. Z rubu je vidět zrcadlově doplněná část kroužku. Proti světlu vytváří kompletní symbol.",
+                        "kontrola": "🔍 **Jak zkontrolovat:** Při pohledu proti světlu zapadne do lícní části."
+                    },
+                    "Vodoznak z rubu (pohledem)": {
+                        "ikona": "💧", "top": "48%", "left": "86%",
+                        "nazev": "Vodoznak (pohled z rubu)",
+                        "misto": "Pravý nepotištěný okraj rubové strany",
+                        "popis": "Vodoznak je stranově převrácený (zrcadlový) portrét Františka Palackého, viditelný stejně zřetelně i z rubové strany.",
+                        "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na pravý nepotištěný okraj proti světlu."
+                    },
+                    "Sériové číslo vodorovné": {
+                        "ikona": "🔢", "top": "85%", "left": "60%",
+                        "nazev": "Sériové číslo (černé vodorovné)",
+                        "misto": "Pravá spodní část pod státním znakem",
+                        "popis": "Vodorovně tištěné sériové číslo bankovky v černé barvě, které pod UV světlem zeleně světélkuje.",
+                        "kontrola": "💡 **Jak zkontrolovat:** Zkontroluj číslo očima nebo pod UV lampou."
+                    },
+                    "Sériové číslo svislé": {
+                        "ikona": "🔤", "top": "50%", "left": "5%",
+                        "nazev": "Sériové číslo (červené svislé)",
+                        "misto": "Levý okraj rubové strany",
+                        "popis": "Svisle tištěná série a číslo bankovky v červené barvě.",
+                        "kontrola": "👀 **Jak zkontrolovat:** Zkontroluj shodu série s vodorovným číslem."
+                    },
+                    "Státní znak ČR": {
+                        "ikona": "🦁", "top": "48%", "left": "63%",
+                        "nazev": "Velký státní znak ČR",
+                        "misto": "Pravá středová část rubu",
+                        "popis": "Vyobrazení velkého státního znaku České republiky v rohu nad zámeckým motivem.",
+                        "kontrola": "🔍 **Jak zkontrolovat:** Detailní tisk státního znaku."
+                    }
+                }
+
+                p_sel_rub = st.selectbox("Zvol prvek na rubové straně:", list(prvky_rub.keys()), key="k2_rub_sel")
+                det_rub = prvky_rub[p_sel_rub]
+
+                if img_rub_base64:
+                    st.markdown(f'''
+                    <div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid #cbd5e1;">
+                        <img src="{img_rub_base64}" alt="1000 Kč - Rub" style="width: 100%; height: auto; display: block;" />
+                        <div style="position: absolute; top: {det_rub["top"]}; left: {det_rub["left"]}; transform: translate(-50%, -50%); z-index: 10;">
+                            <div style="background-color: #3b82f6; color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; box-shadow: 0 0 15px #3b82f6;">
+                                {det_rub["ikona"]}
+                            </div>
+                        </div>
+                    </div>
+                    ''', unsafe_allow_html=True)
+                else:
+                    st.warning("⚠️ Obrázek '1000_czk_rub.jpg' nebyl nalezen v repozitáři.")
+
+                st.info(f"{det_rub['ikona']} **{det_rub['nazev']}** ({det_rub['misto']})\n\n{det_rub['popis']}\n\n{det_rub['kontrola']}")
             
         # 1.2.5 Kdo ČNB řídí
         with st.container(border=True):
