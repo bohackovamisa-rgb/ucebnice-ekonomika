@@ -1006,3 +1006,4 @@ def render():
             Management je schopnost proměnit chaos ve fungující projekt. Stojí na cyklu <b>Plánování (SMART cílů) ➔ Organizování (pravomoc a odpovědnost) ➔ Vedení lidí (Maslowova pyramida a motivace) ➔ Kontrola (porovnání plánu a reality)</b>. Dobrý lídr dokáže střídat styly řízení podle situace, pracuje se SWOT analýzou i riziky a vytváří prostředí, kde lidé mohou bezpečně a udržitelně růst.
         </div>
         """, unsafe_allow_html=True)
+
