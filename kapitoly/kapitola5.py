@@ -955,3 +955,90 @@ def render():
         * 🌴 **Daňové ráje:** Firma vytvoří obrovský zisk z prodeje reklamy v ČR, ale peníze formálně převede (např. přes fiktivní poplatky za licenci) do své pobočky na Bahamách nebo v Irsku, kde je daň ze zisku třeba jen 1 % nebo nulová.
         * 🌍 **Co s tím dělá stát?** Běžný stát proti tomu nic nezmůže. Proto se státy sdružují (Evropská unie, OECD) a snaží se zavést **Globální minimální daň** (aby velké firmy platily alespoň 15 % daň bez ohledu na to, kam se na světě papírově přestěhují). Řeší se také tzv. **Digitální daň**.
         """)
+# =====================================================================
+        # PODKAPITOLA 2.12: PRAKTICKÉ PRVKY DO NOTION A ZÁVĚR
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.12 Praktické prvky: Mzda, účtenka a daňové dilema")
+        st.write("Všechny tyhle teorie z učebnice se střetnou s realitou přesně v momentě, kdy dostaneš svou první výplatní pásku z brigády, nebo když poprvé pošleš fakturu za správu sociálních sítí.")
+
+        st.markdown("<div class='box-purple'>🧮 <b>Interaktivní kalkulačka: Jak z tebe stát udělá plátce?</b></div>", unsafe_allow_html=True)
+        st.write("Vyzkoušej si modelovou brigádu (Dohodu o provedení práce - DPP). Nastav si hodinovku a počet hodin, které za měsíc odpracuješ. Sleduj, jak drasticky se změní výsledek, když překročíš magický zákonný limit (který je aktuálně 10 000 Kč).")
+
+        # Edukativní kalkulačka mzdy z brigády (aktualizováno)
+        col_mzda1, col_mzda2 = st.columns(2)
+        with col_mzda1:
+            hodinovka = st.slider("Tvá hodinová odměna (Kč/hod):", 120, 250, 150, step=10)
+        with col_mzda2:
+            hodiny_mesic = st.slider("Odpracováno hodin za měsíc:", 10, 100, 40, step=5)
+            
+        st.write("*Pro tento příklad předpokládáme, že MÁŠ podepsaný růžový papír (slevu na poplatníka).*")
+
+        hruba_mzda_dpp = hodinovka * hodiny_mesic
+        
+        # Logika překročení limitu 10 000 Kč (nutnost platit sociální a zdravotní z celé částky!)
+        if hruba_mzda_dpp > 10000:
+            soc = int(hruba_mzda_dpp * 0.071)
+            zdr = int(hruba_mzda_dpp * 0.045)
+            odvody_strzeno = soc + zdr
+            upozorneni_limit = "⚠️ **Překročen limit 10 000 Kč!** Z celé tvé výplaty ti stát okamžitě strhl sociální (7,1 %) a zdravotní (4,5 %) pojištění."
+        else:
+            odvody_strzeno = 0
+            upozorneni_limit = "✅ **Jsi pod limitem 10 000 Kč.** Neplatíš žádné zdravotní ani sociální pojištění."
+
+        # Výpočet daně z příjmu (15 %) po odečtení odvodů (pro zjednodušenou edukaci) a aplikaci slevy na poplatníka
+        dan = max(0, int(hruba_mzda_dpp * 0.15) - 2570) # 2570 je sleva na poplatníka
+        
+        cista_mzda_dpp = hruba_mzda_dpp - odvody_strzeno - dan
+
+        st.markdown(f"**Hrubá mzda (co sis vydělal/a): {hruba_mzda_dpp} Kč**")
+        if odvody_strzeno > 0:
+            st.error(upozorneni_limit)
+        else:
+            st.success(upozorneni_limit)
+            
+        col_f1, col_f2 = st.columns(2)
+        col_f1.metric("Strženo na odvodech a daních", f"- {odvody_strzeno + dan} Kč")
+        col_f2.metric("Tvá čistá mzda na účet", f"{cista_mzda_dpp} Kč")
+
+        st.markdown("##### 🔗 Odkazy do reality: Kde si věci ověřovat?")
+        st.write("Dobrý občan nemusí znát všechny zákony nazpaměť. Musí ale vědět, kde najít pravdu, když má pochybnosti o svých výdělcích online nebo ze studentského podnikání.")
+        
+        st.markdown("""
+        * 🏢 [Finanční správa ČR (mojedane.cz)](https://www.mojedane.cz/) — Hlavní portál státu.
+        * 💻 **Elektronické formuláře (EPO):** Na portálu Moje daně si můžeš *bez přihlašování* rozkliknout formulář k Daňovému přiznání. Zkuste si ve třídě společně v 'Průvodci' nacvakat fiktivního studenta, který fotí na IČO.
+        * 🧮 [Kalkulačky MPSV](https://www.mpsv.cz/kalkulacky) — Oficiální státní kalkulačky k důchodům a dávkám. Na hrubou/čistou mzdu používej raději kalkulačky renomovaných ekonomických portálů (např. Kurzy.cz, Peníze.cz) a **vždy si zkontroluj aktuální rok**, protože pravidla se často mění.
+        """)
+
+        st.markdown("##### ⚖️ Optimalizace vs. Únik: Tahák pro praxi")
+        st.write("Tenká, ale zásadní hranice mezi chytrostí a kriminálem:")
+        st.markdown("""
+        | ✅ Legální optimalizace (Jsi chytrý) | 🚨 Nelegální daňový únik (Jsi zločinec) |
+        | :--- | :--- |
+        | Uplatním slevu na poplatníka (jsem student). | Zatajím část příjmů z Instagramu. |
+        | Využiji tzv. paušální výdaje pro OSVČ (např. 60 %). | Vymyslím si fiktivní faktury za věci, co jsem nekoupil. |
+        | Vedu si přesnou evidenci a uchovávám všechny doklady. | Nevystavím účtenku, ačkoliv jsem peníze dostal. |
+        | Zjistím si pravidla PŘED tím, než začnu podnikat. | Spoléhám na to, že *"se na to nepřijde"*. |
+        """)
+
+        st.markdown("<div class='box-purple'>🕵️ <b>Mini aktivita: Daňový detektiv</b></div>", unsafe_allow_html=True)
+        st.write("Tvoji spolužáci se dostali do zajímavých finančních situací a neví, co mají dělat. Vyber jednu z nich a napiš, jaké 3 věci si musí daný člověk urychleně ověřit a co se stane, když se na to vykašle.")
+        
+        with st.form("detektiv_form"):
+            situace = st.selectbox("Vyber situaci, kterou chceš jako detektiv řešit:", [
+                "1. Spolužačka dostala novou kosmetiku zdarma (barter) výměnou za sérii reels na Instagramu.",
+                "2. Spolužák před dvěma lety koupil Bitcoin, ten vyrostl o 200 %, a on ho teď celý prodal a peníze si poslal na bankovní účet.",
+                "3. Kamarádka má o víkendu první brigádu na letním hudebním festivalu na DPP (Dohodu o provedení práce).",
+                "4. Známý neustále nakupuje zlevněné boty ve výprodejích a následně je se ziskem masivně přeprodává na Vinted."
+            ])
+            detektiv_reseni = st.text_area("Tvé rady jako detektiva (co si ověřit a jaká hrozí rizika):")
+            if st.form_submit_button("Odeslat tvé doporučení"):
+                st.success("Skvělá práce! Každá z těchto situací skrývá daňovou past, pokud si lidé myslí, že 'internetové peníze se nedaní'. Odesláno do třídní diskuze.")
+
+        st.markdown("""
+        <div class='box-green'>
+            ✅ <b>Co si zapamatovat z celého bloku Daně a státní rozpočet:</b><br>
+            Daně nejsou jen "kolik mi stát sebere peněz z výplaty". Jsou to pravidla, která financují naši solidaritu, záchranku, školy a dálnice. Regulují to, kolik pijeme alkoholu a kolik vypouštíme smogu. Dobrý občan nemusí být certifikovaný daňový poradce. Měl by ale ovládat základy: chápat rozdíl mezi hrubou a čistou mzdou z brigády, vědět, že podepsat Růžový papír mu zachrání peníze, a rozumět tomu, proč práce 'na ruku' a nelegální prodeje na internetu ničí jeho vlastní důchodovou budoucnost i celou společnost.
+        </div>
+        """, unsafe_allow_html=True)
