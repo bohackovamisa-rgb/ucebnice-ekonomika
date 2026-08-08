@@ -468,51 +468,51 @@ def render():
             st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz")
             st.write("Zvol prvek v nabídce níže, sleduj jeho umístění přímo na bankovce a zjisti, jak ho v praxi ověřit:")
 
-            # Databáze prvků pro vizualizaci
+            # Databáze prvků s přesnými souřadnicemi pro reálný obrázek 2000 Kč bankovky
             prvky_bankovky = {
                 "Vodoznak (pohledem)": {
                     "ikona": "💧",
-                    "top": "35%", "left": "22%",
+                    "top": "50%", "left": "16%",
                     "nazev": "Vodoznak",
                     "misto": "Levý nepotištěný okraj bankovky",
-                    "popis": "Zřetelný portrét osobnosti viditelný z obou stran při pohledu proti světlu.",
+                    "popis": "Zřetelný portrét Emy Destinnové viditelný z obou stran při pohledu proti světlu.",
                     "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na ni proti světlu."
                 },
                 "Ochranný proužek (pohledem)": {
                     "ikona": "📏",
-                    "top": "45%", "left": "38%",
+                    "top": "50%", "left": "33%",
                     "nazev": "Ochranný proužek s mikrotextem",
                     "misto": "Svislý metalický pás zapuštěný do papíru",
-                    "popis": "Tmavý souvislý pás s negativním mikrotextem nominální hodnoty viditelný proti světlu.",
+                    "popis": "Tmavý souvislý pás s negativním mikrotextem '2000 Kč' viditelný proti světlu.",
                     "kontrola": "☀️ **Jak zkontrolovat:** Podívej se na bankovku proti světlu nebo ji nakloň a sleduj proměnu barev."
                 },
                 "Soutisková značka (pohledem)": {
                     "ikona": "🧩",
-                    "top": "15%", "left": "52%",
-                    "nazev": "Soutisková značka",
-                    "misto": "Horní část bankovky",
-                    "popis": "Oboustranný tisk, ze kterého vidíš z každé strany jen část. Proti světlu se přesně doplňuje v celistvý symbol.",
+                    "top": "18%", "left": "43%",
+                    "nazev": "Soutisková značka (ČR)",
+                    "misto": "Horní část bankovky vlevo od portrétu",
+                    "popis": "Oboustranný tisk, který se proti světlu přesně doplňuje v celistvý symbol 'ČR'.",
                     "kontrola": "🔍 **Jak zkontrolovat:** Prohlédni si značku proti světlu – obě strany do sebe musí přesně zapadnout."
                 },
                 "Opticky proměnlivá barva (naklopením)": {
                     "ikona": "🎨",
-                    "top": "60%", "left": "65%",
-                    "nazev": "Opticky proměnlivá barva",
-                    "misto": "Pravá spodní část lícní strany",
-                    "popis": "Speciální tisková barva mění svůj odstín v závislosti na úhlu dopadu světla.",
-                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku – barva se změní např. ze zelené na zlatou."
+                    "top": "72%", "left": "42%",
+                    "nazev": "Opticky proměnlivá barva (Lyra)",
+                    "misto": "Spodní část bankovky u motivu lyry",
+                    "popis": "Speciální tisková barva mění svůj odstín ze zlatavé na zelenou při naklonění bankovky.",
+                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku – barva se změní ze zlaté na zelenou."
                 },
                 "Reliéfní tisk (hmatem)": {
                     "ikona": "🖐️",
-                    "top": "20%", "left": "80%",
+                    "top": "35%", "left": "80%",
                     "nazev": "Reliéfní tisk (Hlubotisk)",
-                    "misto": "Portrét, nominální hodnota a hmatové značky pro nevidomé",
+                    "misto": "Portrét Emy Destinnové a hmatové značky",
                     "popis": "Vystouplý povrch hlubotisku nahmatatelný na lícové straně bankovky.",
-                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď prstem po portrétu nebo čísle – ucítíš výrazný hmatatelný reliéf."
+                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď prstem po portrétu nebo číslu – ucítíš výrazný hmatatelný reliéf."
                 },
                 "UV prvky (pomůckami)": {
                     "ikona": "🔦",
-                    "top": "50%", "left": "50%",
+                    "top": "50%", "left": "55%",
                     "nazev": "UV prvky a fluorescenční vlákna",
                     "misto": "Po celé ploše bankovky",
                     "popis": "Skryté tiskové motivy a světélkující vlákna zapuštěná v papíru.",
@@ -528,16 +528,19 @@ def render():
 
             det = prvky_bankovky[p_sel]
 
-            # Čistý HTML řetězec bez vnitřního odsazení mezerami pro správné vykreslení
+            # URL adresa reálného obrázku české bankovky 2000 Kč z Wikimedia Commons
+            url_bankovky = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/2000_CZK_2007_obverse.jpg/800px-2000_CZK_2007_obverse.jpg"
+
+            # HTML s reálným obrázkem na pozadí a aktivním hotspotem
             html_bankovka = (
-                f'<div style="position: relative; width: 100%; max-width: 600px; height: 220px; '
-                f'background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%); border: 2px solid #64748b; '
-                f'border-radius: 10px; margin: 15px auto; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">'
-                f'<div style="position: absolute; top: 10px; left: 15px; font-weight: bold; color: #334155; font-size: 22px;">2000 Kč</div>'
-                f'<div style="position: absolute; bottom: 10px; right: 15px; font-weight: bold; color: #475569; font-size: 12px;">ČESKÁ NÁRODNÍ BANKA</div>'
-                f'<div style="position: absolute; top: 30%; right: 25%; font-size: 55px; opacity: 0.12; user-select: none;">🏛️</div>'
+                f'<div style="position: relative; width: 100%; max-width: 650px; height: 280px; '
+                f'background-image: url(\'{url_bankovky}\'); background-size: cover; background-position: center; '
+                f'border: 2px solid #64748b; border-radius: 10px; margin: 15px auto; overflow: hidden; '
+                f'box-shadow: 0 4px 12px rgba(0,0,0,0.15);">'
                 f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%);">'
-                f'<div style="background-color: #ef4444; color: white; width: 36px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2px solid white; box-shadow: 0 0 12px #ef4444;">'
+                f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; '
+                f'display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2px solid white; '
+                f'box-shadow: 0 0 15px #ef4444;">'
                 f'{det["ikona"]}'
                 f'</div></div></div>'
             )
