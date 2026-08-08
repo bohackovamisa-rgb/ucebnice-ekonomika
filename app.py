@@ -11,7 +11,7 @@ from kapitoly import (
 
 # --- 1. KONFIGURACE STRÁNKY ---
 st.set_page_config(
-    page_title="Učebnice ekonomiky", page_icon="📚", layout="wide"
+    page_title="Učebnice ekonomiky", page_icon="📖", layout="wide"
 )
 
 
@@ -37,7 +37,7 @@ def check_password():
                 unsafe_allow_html=True,
             )
             st.markdown(
-                "<p style='text-align: center; color: #64748b; font-size:"
+                "<p style='text-align: center; color: #78716c; font-size:"
                 " 0.85rem; margin-bottom: 1.5rem;'>Zadejte přístupové heslo pro"
                 " odemknutí kurzu.</p>",
                 unsafe_allow_html=True,
@@ -60,9 +60,13 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (iOS EDITORIAL / FABLE APP DESIGN) ---
+# --- STYLOVÁNÍ (iOS EDITORIAL & FLATICON UICONS THIN) ---
 st.markdown(
     """
+<!-- Import Flaticon UIcons (Thin Straight) CDN -->
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
@@ -85,17 +89,12 @@ html, body, [class*="css"], .stApp {
 
 div[data-testid="stVerticalBlockBorderWrapper"] { 
     background-color: #FFFFFF !important; 
-    border-radius: 20px !important; 
+    border-radius: 18px !important; 
     border: 1px solid #EAE7DC !important; 
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important; 
     padding: 2rem !important; 
     margin-bottom: 1.5rem !important; 
     transition: all 0.25s ease !important;
-}
-
-div[data-testid="stVerticalBlockBorderWrapper"]:hover { 
-    border-color: #D8D3C4 !important; 
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important; 
 }
 
 /* 3. TYPOGRAFIE & NADPISY */
@@ -137,38 +136,53 @@ p, li, td, th {
     font-weight: 400 !important; 
 }
 
-/* 4. PILL-TLAČÍTKA (ELEGANTNÍ ZAOBLEENÉ KAPSLE) */
-.stButton > button, div.stFormSubmitButton > button { 
+/* 4. TLAČÍTKA V LEVÉM MENU (OPRAVA KONTRASTU A TEXTU) */
+
+/* Aktivní (Primary) tlačítko */
+button[data-testid="baseButton-primary"], 
+button[kind="primary"] { 
     font-family: 'Montserrat', sans-serif !important; 
-    border-radius: 9999px !important; /* Plně zaoblený tvar kapsle */
+    border-radius: 9999px !important; 
     border: 1px solid #111111 !important; 
     background-color: #111111 !important; 
     color: #FFFFFF !important; 
     font-weight: 600 !important; 
     font-size: 0.88rem !important; 
     padding: 0.6rem 1.4rem !important; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important; 
-    transition: all 0.2s ease !important; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; 
+}
+button[data-testid="baseButton-primary"] *, 
+button[kind="primary"] * {
+    color: #FFFFFF !important;
 }
 
-.stButton > button:hover, div.stFormSubmitButton > button:hover { 
-    background-color: #0C382B !important; /* Tmavě zelený akcent */
-    border-color: #0C382B !important; 
-    color: #FFFFFF !important; 
-    transform: translateY(-1px) !important;
-    box-shadow: 0 6px 16px rgba(12, 56, 43, 0.2) !important; 
-}
-
-/* Secondary tlačitka pro neaktivní navigaci v sidebaru */
+/* Neaktivní (Secondary) tlačítko */
+button[data-testid="baseButton-secondary"], 
 button[kind="secondary"] {
+    font-family: 'Montserrat', sans-serif !important; 
+    border-radius: 9999px !important; 
     background-color: #F2EFE9 !important;
-    color: #334155 !important;
+    color: #44403C !important;
     border: 1px solid #E2DEC6 !important;
+    font-weight: 500 !important;
+    font-size: 0.88rem !important;
+    padding: 0.6rem 1.4rem !important;
 }
+button[data-testid="baseButton-secondary"] *, 
+button[kind="secondary"] * {
+    color: #44403C !important;
+}
+
+/* Hover stav pro neaktivní tlačítka */
+button[data-testid="baseButton-secondary"]:hover, 
 button[kind="secondary"]:hover {
     background-color: #111111 !important;
-    color: #FFFFFF !important;
     border-color: #111111 !important;
+    color: #FFFFFF !important;
+}
+button[data-testid="baseButton-secondary"]:hover *, 
+button[kind="secondary"]:hover * {
+    color: #FFFFFF !important;
 }
 
 /* 5. VSTUPNÍ POLA (INPUTY & SELECTBOXY) */
@@ -197,14 +211,64 @@ section[data-testid="stSidebar"] {
     margin-bottom: 0.6rem; 
 }
 
-/* 7. BAREVNÉ INFORMAČNÍ BOXY (KUCHAŘKA) */
-.hero-badge { background: #E0E7FF; color: #4338CA; font-size: 0.72rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; margin-bottom: 0.8rem; }
-.box-blue { background-color: #EFF6FF; border-left: 4px solid #0284C7; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #0F172A; font-size: 0.93rem; }
-.box-yellow { background-color: #FEFCE8; border-left: 4px solid #EAB308; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #0F172A; font-size: 0.93rem; }
-.box-purple { background-color: #FAF5FF; border-left: 4px solid #A855F7; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #0F172A; font-size: 0.93rem; word-wrap: break-word; }
-.box-green { background-color: #F0FDF4; border-left: 4px solid #22C55E; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #0F172A; font-size: 0.93rem; }
-.box-red { background-color: #FEF2F2; border-left: 4px solid #EF4444; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #0F172A; font-size: 0.93rem; }
-.box-gray { background-color: #F2EFE9; border-left: 4px solid #78716C; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #0F172A; font-size: 0.93rem; }
+/* 7. JEMNÉ PASTELOVÉ BAREVNÉ BOXY (EDITORIAL PASTEL PALETTE) */
+.box-blue { 
+    background-color: #F4F7F9 !important; 
+    border-left: 3px solid #8AA2B6 !important; 
+    padding: 1.1rem 1.3rem; 
+    border-radius: 0 12px 12px 0; 
+    margin: 1rem 0; 
+    color: #2C3E50 !important; 
+    font-size: 0.93rem; 
+}
+.box-yellow { 
+    background-color: #FAF7EE !important; 
+    border-left: 3px solid #D8C397 !important; 
+    padding: 1.1rem 1.3rem; 
+    border-radius: 0 12px 12px 0; 
+    margin: 1rem 0; 
+    color: #5C4E31 !important; 
+    font-size: 0.93rem; 
+}
+.box-purple { 
+    background-color: #F8F5F8 !important; 
+    border-left: 3px solid #B4A2B8 !important; 
+    padding: 1.1rem 1.3rem; 
+    border-radius: 0 12px 12px 0; 
+    margin: 1rem 0; 
+    color: #4A3B4E !important; 
+    font-size: 0.93rem; 
+    word-wrap: break-word; 
+}
+.box-green { 
+    background-color: #F3F6F3 !important; 
+    border-left: 3px solid #8DAE93 !important; 
+    padding: 1.1rem 1.3rem; 
+    border-radius: 0 12px 12px 0; 
+    margin: 1rem 0; 
+    color: #2A4231 !important; 
+    font-size: 0.93rem; 
+}
+.box-red { 
+    background-color: #FAF3F3 !important; 
+    border-left: 3px solid #C98A8A !important; 
+    padding: 1.1rem 1.3rem; 
+    border-radius: 0 12px 12px 0; 
+    margin: 1rem 0; 
+    color: #5C2E2E !important; 
+    font-size: 0.93rem; 
+}
+.box-gray { 
+    background-color: #F2EFE9 !important; 
+    border-left: 3px solid #A8A29E !important; 
+    padding: 1.1rem 1.3rem; 
+    border-radius: 0 12px 12px 0; 
+    margin: 1rem 0; 
+    color: #44403C !important; 
+    font-size: 0.93rem; 
+}
+
+.fi { font-size: 1.1rem; vertical-align: middle; margin-right: 6px; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -219,7 +283,7 @@ with st.sidebar:
     st.markdown(
         """
         <div style='padding: 0.5rem 0 0.5rem 0;'>
-            <span style='font-size: 0.7rem; font-weight: 700; color: #0C382B; text-transform: uppercase; letter-spacing: 0.08em;'>E-Learning Portal</span>
+            <span style='font-size: 0.7rem; font-weight: 700; color: #44403C; text-transform: uppercase; letter-spacing: 0.08em;'>E-Learning Portal</span>
             <h2 style='margin: 0; padding: 0; border: none; font-size: 1.25rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
         </div>
     """,
@@ -275,10 +339,10 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown(
         """
     <div class="box-gray">
-        📚 <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
+        <i class="fi fi-ts-book-alt"></i> <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
     </div>
     <div class="box-green">
-        🎯 <b>Cíl učebnice</b><br>
+        <i class="fi fi-ts-target"></i> <b>Cíl učebnice</b><br>
         Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
     </div>
     """,
@@ -302,12 +366,12 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown("### 🧩 Legenda učebnice")
     st.markdown(
         """
-    <div class="box-blue"><b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow"><b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
-    <div class="box-purple"><b>Fialová:</b> AI mentoring a práce s asistencí</div>
-    <div class="box-green"><b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
-    <div class="box-red"><b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
-    <div class="box-gray"><b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
+    <div class="box-blue"><i class="fi fi-ts-info"></i> <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
+    <div class="box-yellow"><i class="fi fi-ts-edit"></i> <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-purple"><i class="fi fi-ts-sparkles"></i> <b>Fialová:</b> AI mentoring a práce s asistencí</div>
+    <div class="box-green"><i class="fi fi-ts-check-circle"></i> <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
+    <div class="box-red"><i class="fi fi-ts-exclamation"></i> <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
+    <div class="box-gray"><i class="fi fi-ts-document"></i> <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
     """,
         unsafe_allow_html=True,
     )
