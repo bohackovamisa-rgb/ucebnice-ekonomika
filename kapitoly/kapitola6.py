@@ -890,7 +890,7 @@ def render():
             * 🎯 **OKR (Objectives & Key Results):** Stanovení 1 ambiciózního cíle a 3–4 konkrétních měřitelných výsledků (např. *Cíl: Zvětšit komunitu. Výsledek: +200 nových členů, 30% aktivita*).
             """)
 
-st.markdown("<div class='box-purple'>📋 <b>Interaktivní Kanban nástěnka</b></div>", unsafe_allow_html=True)
+            st.markdown("<div class='box-purple'>📋 <b>Interaktivní Kanban nástěnka</b></div>", unsafe_allow_html=True)
             st.write("Vyzkoušej si přesouvání úkolů mezi sloupci v reálném čase:")
 
             # Inicializace stavu úkolů v paměti Streamlitu
