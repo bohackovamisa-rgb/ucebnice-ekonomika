@@ -1052,7 +1052,7 @@ def render():
 
         st.write("📊 **Jak se firemní peníze (náklady) rozdělily procentuálně:**")
         st.progress(podil_zamestnanec, text=f"Zaměstnanec dostane cca {int(podil_zamestnanec*100)} % z firemních nákladů (Zbytek bere stát).")
-elif selected_section_4 == "3.6 Slevy na dani a odčitatelné položky":
+    elif selected_section_4 == "3.6 Slevy na dani a odčitatelné položky":
         st.markdown("### 3.6 Slevy na dani, daňové zvýhodnění a odčitatelné položky")
         
         st.write("V oblasti daní se často používají tři pojmy, které znějí podobně, ale fungují úplně jinak. Pokud chcete maximalizovat svou výplatu (nebo vratku daní z finančního úřadu), musíte znát rozdíl!")
