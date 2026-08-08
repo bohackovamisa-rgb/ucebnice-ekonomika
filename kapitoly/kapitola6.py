@@ -890,20 +890,53 @@ def render():
             * 🎯 **OKR (Objectives & Key Results):** Stanovení 1 ambiciózního cíle a 3–4 konkrétních měřitelných výsledků (např. *Cíl: Zvětšit komunitu. Výsledek: +200 nových členů, 30% aktivita*).
             """)
 
-            st.markdown("<div class='box-purple'>📋 <b>Interaktivní Kanban nástěnka</b></div>", unsafe_allow_html=True)
-            st.write("Vyzkoušej si, jak funguje vizualizace práce v nástrojích jako Trello, Asana nebo Notion:")
+st.markdown("<div class='box-purple'>📋 <b>Interaktivní Kanban nástěnka</b></div>", unsafe_allow_html=True)
+            st.write("Vyzkoušej si přesouvání úkolů mezi sloupci v reálném čase:")
+
+            # Inicializace stavu úkolů v paměti Streamlitu
+            if "kanban_tasks" not in st.session_state:
+                st.session_state.kanban_tasks = {
+                    "Připravit grafiku na kampaň": "To Do",
+                    "Sjednat sponzora": "To Do",
+                    "Střih videa pro TikTok": "In Progress",
+                    "Schválení rozpočtu": "Done"
+                }
 
             col_kan1, col_kan2, col_kan3 = st.columns(3)
+
+            # Sloupec 1: To Do
             with col_kan1:
                 st.error("📥 **K vyřešení (To Do)**")
-                st.checkbox("Připravit grafiku na kampaň", value=False)
-                st.checkbox("Sjednat sponzora", value=False)
+                for task, status in list(st.session_state.kanban_tasks.items()):
+                    if status == "To Do":
+                        st.write(f"• {task}")
+                        if st.button("Posunout ➔", key=f"move_in_{task}"):
+                            st.session_state.kanban_tasks[task] = "In Progress"
+                            st.rerun()
+
+            # Sloupec 2: In Progress
             with col_kan2:
                 st.warning("⚙️ **Probíhá (In Progress)**")
-                st.checkbox("Střih videa pro TikTok", value=True)
+                for task, status in list(st.session_state.kanban_tasks.items()):
+                    if status == "In Progress":
+                        st.write(f"• {task}")
+                        c_left, c_right = st.columns(2)
+                        if c_left.button("⬅️", key=f"back_todo_{task}"):
+                            st.session_state.kanban_tasks[task] = "To Do"
+                            st.rerun()
+                        if c_right.button("➔", key=f"move_done_{task}"):
+                            st.session_state.kanban_tasks[task] = "Done"
+                            st.rerun()
+
+            # Sloupec 3: Done
             with col_kan3:
                 st.success("✅ **Hotovo (Done)**")
-                st.checkbox("Schválení rozpočtu", value=True, disabled=True)
+                for task, status in list(st.session_state.kanban_tasks.items()):
+                    if status == "Done":
+                        st.write(f"• {task}")
+                        if st.button("⬅️ Vrátit", key=f"back_in_{task}"):
+                            st.session_state.kanban_tasks[task] = "In Progress"
+                            st.rerun()
 
         with tab_m2:
             st.markdown("##### Koučování, zpětná vazba a psychologické bezpečí")
