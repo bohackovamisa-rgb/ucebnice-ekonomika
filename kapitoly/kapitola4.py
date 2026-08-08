@@ -1760,3 +1760,222 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
                 
                 if st.form_submit_button("Uložit hodnocení z role-play"):
                     st.success("Hodnocení uloženo! Vyjednávání o mzdě chce trénink.")
+# =========================================================================
+    # SEKCE 7: ZÁVĚR KAPITOLY A OPAKOVÁNÍ
+    # =========================================================================
+    elif selected_section_4 == "7.1 Případové studie z praxe" or "7.1" in selected_section_4:
+        st.markdown("### 📚 7.1 Případové studie z praxe")
+        st.write("Teorii už znáte, teď je čas na praxi. Vyzkoušejte si vyřešit reálné situace, do kterých se běžně dostávají absolventi a mladí lidé na trhu práce. Co byste hrdinům poradili?")
+
+        tab_case1, tab_case2, tab_case3, tab_case4, tab_case5, tab_case6 = st.tabs([
+            "🍾 Případ 1", 
+            "🚴 Případ 2", 
+            "💻 Případ 3", 
+            "⚖️ Případ 4", 
+            "☕ Případ 5", 
+            "📄 Případ 6"
+        ])
+
+        # PŘÍPADOVÁ STUDIE 1
+        with tab_case1:
+            st.markdown("#### Případ 1: Studentka na kase a rozbité lahve")
+            st.markdown("""
+            > *Brigádnice pracuje v obchodě. Při vykládání zboží jí spadne přepravka a rozbije se pět lahví drahého alkoholu. Vedoucí jí oznámí, že se částka strhne z výplaty. Brigádnice ale nepodepsala dohodu o hmotné odpovědnosti.*
+            """)
+            
+            with st.form("case1_form"):
+                st.write("**Může zaměstnavatel škodu automaticky strhnout ze mzdy?**")
+                c1_odp = st.radio("Vyber správnou odpověď:", [
+                    "A) Ano, pokud zničila firemní majetek, musí to zaplatit v plné výši a firma to může rovnou strhnout.",
+                    "B) Ne, bez jejího písemného souhlasu se srážkou ze mzdy nebo rozhodnutí soudu jí peníze strhnout nesmí.",
+                    "C) Ano, ale jen do výše 1 000 Kč."
+                ])
+                if st.form_submit_button("Vyhodnotit Případ 1"):
+                    if c1_odp.startswith("B"):
+                        st.success("✅ **Správně!** Srážky ze mzdy k náhradě škody lze provést jen na základě písemné dohody se zaměstnancem. I kdyby škodu zavinila z nedbalosti (tzv. obecná odpovědnost), limit náhrady je max. 4,5násobek jejího průměrného platu.")
+                    else:
+                        st.error("❌ **Špatně.** Svévolné srážky ze mzdy jsou nelegální. Rozdíl je také v 'hmotné odpovědnosti' (např. za peníze v pokladně - tam se hradí celá škoda) a 'obecné odpovědnosti' (za rozbití věci nedbalostí - tam je limit 4,5násobku platu).")
+
+        # PŘÍPADOVÁ STUDIE 2
+        with tab_case2:
+            st.markdown("#### Případ 2: Kurýr na platformě (Gig economy)")
+            st.markdown("""
+            > *Mladý kurýr začne rozvážet jídlo přes aplikaci. Líbí se mu flexibilita, ale zjistí, že po odečtení času, kola, telefonu, dat, pojištění a čekání mezi zakázkami je skutečný výdělek nižší, než čekal.*
+            """)
+            
+            with st.form("case2_form"):
+                st.write("**V čem je hlavní finanční chyták práce přes platformy?**")
+                c2_odp = st.radio("Vyber největší riziko:", [
+                    "A) Tržba za zakázku není čistý zisk. Kurýr musí z tržby zaplatit skryté náklady (palivo/kolo, opotřebení telefonu, mobilní data, vlastní pojištění a daně).",
+                    "B) Aplikace většinou peníze vůbec nepošle, je to podvod.",
+                    "C) Kurýr musí platit za to, že může aplikaci používat, pevnou měsíční částku."
+                ])
+                if st.form_submit_button("Vyhodnotit Případ 2"):
+                    if c2_odp.startswith("A"):
+                        st.success("✅ **Výborně!** Toto je podstata Gig economy. Svoboda (kdy pracovat) je vykoupena obrovskou nejistotou. Čas čekání na zakázku není placen a veškeré náklady a rizika nese pracovník, ne platforma.")
+                    else:
+                        st.error("❌ **To není hlavní problém.** Hlavním problémem je rozdíl mezi *tržbou* a *ziskem* po odečtení všech nákladů.")
+
+        # PŘÍPADOVÁ STUDIE 3
+        with tab_case3:
+            st.markdown("#### Případ 3: Nabídka práce, která vypadá skvěle")
+            st.markdown("""
+            > *Uchazeč dostane nabídku: „Mladý dynamický tým, neomezené výdělky, práce na IČO, full-time docházka do kanceláře, vlastní notebook výhodou, očekáváme loajalitu a flexibilitu.“*
+            """)
+            
+            with st.form("case3_form"):
+                st.write("**Proč je kombinace IČO a 'full-time docházky do kanceláře' problematická?**")
+                c3_odp = st.radio("Identifikuj hlavní problém (Red Flag):", [
+                    "A) Je to nelegální Švarcsystém. Firma vyžaduje chování zaměstnance (docházka), ale přenáší rizika a odvody na IČO pracovníka.",
+                    "B) 'Dynamický tým' znamená, že tam pracují jen studenti a neberou uchazeče nad 30 let.",
+                    "C) Vlastní notebook na práci nestačí, musí mít firemní."
+                ])
+                if st.form_submit_button("Vyhodnotit Případ 3"):
+                    if c3_odp.startswith("A"):
+                        st.success("✅ **Zlaté pravidlo!** Vlastní živnost (IČO) je o svobodě. Pokud musíte sedět full-time v kanceláři a plnit příkazy, je to závislá práce a musíte mít smlouvu, jinak riskujete vy i firma pokutu za Švarcsystém.")
+                    else:
+                        st.error("❌ **Špatně.** Hlavním 'Red flagem' je skrývání klasického zaměstnání za falešné podnikání na IČO.")
+
+        # PŘÍPADOVÁ STUDIE 4
+        with tab_case4:
+            st.markdown("#### Případ 4: Dvě pracovní nabídky (Total Reward)")
+            st.markdown("""
+            > *Uchazečka porovnává dvě nabídky:*
+            > * **A:** 35 000 Kč čistého, kancelář, dojíždění 70 min denně.*
+            > * **B:** 30 000 Kč čistého, home office, flexibilní režim.*
+            """)
+            
+            with st.form("case4_form"):
+                st.write("**Která nabídka je výhodnější a na co nesmí uchazečka při výpočtu zapomenout?**")
+                c4_odp = st.radio("Vyber nejsprávnější úvahu:", [
+                    "A) Nabídka A je o 5 000 Kč vyšší, takže je vždy výhodnější.",
+                    "B) Nabídka B ušetří 70 minut času denně a peníze za dojíždění/obědy, ale doma stoupnou účty za elektřinu a topení. Záleží na tom, jakou hodnotu má pro ni její čas.",
+                    "C) Nabídka B je vždy horší, protože práce z domova není opravdová práce."
+                ])
+                if st.form_submit_button("Vyhodnotit Případ 4"):
+                    if c4_odp.startswith("B"):
+                        st.success("✅ **Přesně tak.** Tomuto se říká Total Reward (celková odměna). 70 minut denně dělá za měsíc přes 24 hodin (3 pracovní směny) strávených zdarma na cestě. Finanční rozdíl 5 000 Kč se po odečtení dopravy může velmi rychle smazat.")
+                    else:
+                        st.error("❌ **Peníze nejsou vše.** K hrubé/čisté mzdě musíte připočítat náklady na čas a dojíždění.")
+
+        # PŘÍPADOVÁ STUDIE 5
+        with tab_case5:
+            st.markdown("#### Případ 5: První brigáda a nejasná dohoda")
+            st.markdown("""
+            > *Klára nastupuje na letní brigádu do kavárny. Zaměstnavatel jí řekne, že „papíry se dořeší později“ a že zatím může chodit podle domluvy přes zprávy. Po dvou týdnech Klára odpracuje několik směn, ale nemá podepsanou DPP ani DPČ. Když se ptá na výplatu, vedoucí odpoví, že „se to nějak spočítá“.*
+            """)
+            
+            with st.form("case5_form"):
+                st.write("**Proč je práce bez papírů problém a co má Klára dělat?**")
+                c5_odp = st.radio("Vyber správný postup:", [
+                    "A) Klára musí počkat, šéf má asi hodně práce.",
+                    "B) Klára by měla ihned přestat pracovat, uložit si výpisy ze zpráv a fotky směn jako důkaz a trvat na sepsání písemné dohody (DPP/DPČ) PŘED další směnou.",
+                    "C) Klára by měla zavolat policii a šéfa zatknout."
+                ])
+                if st.form_submit_button("Vyhodnotit Případ 5"):
+                    if c5_odp.startswith("B"):
+                        st.success("✅ **Správný postup!** Práce na 'dobré slovo' často končí nevyplacením mzdy. DPP i DPČ musí být ze zákona písemné! Klára potřebuje důkazy (zprávy, fotky rozpisu), aby mohla peníze případně vymáhat.")
+                    else:
+                        st.error("❌ **Špatně.** Pokud počká, s největší pravděpodobností své peníze už nikdy neuvidí.")
+
+        # PŘÍPADOVÁ STUDIE 6
+        with tab_case6:
+            st.markdown("#### Případ 6: Výplatní páska, která nesedí")
+            st.markdown("""
+            > *Adam pracuje na částečný úvazek. Na výplatní pásce vidí hrubou mzdu, ale čistá je nižší, než čekal. Adam zjistí, že nepodepsal 'prohlášení poplatníka' (růžový papír) a neuplatňuje se mu tak měsíční sleva na dani.*
+            """)
+            
+            with st.form("case6_form"):
+                st.write("**Jaký je rozdíl mezi daní a odvody a jak získá peníze zpět?**")
+                c6_odp = st.radio("Co musí Adam udělat?", [
+                    "A) Daně a odvody jsou to samé. Adam peníze nenávratně ztratil.",
+                    "B) Daně jdou státu, odvody na zdravotnictví/důchody. Adam o peníze nepřišel úplně – po skončení roku si podá daňové přiznání a stát mu slevu na dani zpětně doplatí.",
+                    "C) Musí jít na policii a nahlásit zaměstnavatele z krádeže."
+                ])
+                if st.form_submit_button("Vyhodnotit Případ 6"):
+                    if c6_odp.startswith("B"):
+                        st.success("✅ **Výborně!** Pokud nepodepíšete růžový papír, zaměstnavatel VÁM MUSÍ strhnout daň (15 %). Peníze propadly státu, ale stát vám je na jaře při daňovém přiznání rád vrátí.")
+                    else:
+                        st.error("❌ **Špatně.** O peníze Adam nepřišel a zaměstnavatel nic neukradl, jen plnil zákonnou povinnost z důvodu Adamovy chyby (nepodepsání prohlášení).")
+
+
+    elif selected_section_4 == "7.2 Slovníček, rychlé opakování a prověrka" or "7.2" in selected_section_4:
+        st.markdown("### 🎓 7.2 Slovníček pojmů a Závěrečná prověrka")
+        
+        st.markdown("#### 📖 Rychlý slovníček pojmů (Pamatujete si?)")
+        st.write("Klikněte na pojem pro zobrazení jeho přesné definice.")
+
+        # Slovníček ve 3 sloupcích
+        col_voc1, col_voc2, col_voc3 = st.columns(3)
+        
+        with col_voc1:
+            with st.expander("Trh práce"):
+                st.markdown("Prostředí, kde se potkává nabídka práce (lidé) a poptávka po práci (firmy).")
+            with st.expander("HR / Personalistika"):
+                st.markdown("Human Resources; činnosti spojené s náborem, smlouvami, odměňováním, rozvojem a péčí o zaměstnance.")
+            with st.expander("Hrubá mzda vs. Čistá mzda"):
+                st.markdown("**Hrubá mzda:** mzda před odvody a daní (na smlouvě).<br>**Čistá mzda:** částka, která přijde zaměstnanci na účet.", unsafe_allow_html=True)
+            with st.expander("Reálná mzda"):
+                st.markdown("Kupní síla mzdy po zohlednění inflace (cen zboží).")
+
+        with col_voc2:
+            with st.expander("Onboarding / Offboarding"):
+                st.markdown("**Onboarding:** zaškolení a začlenění nového člověka.<br>**Offboarding:** proces odchodu zaměstnance z firmy.", unsafe_allow_html=True)
+            with st.expander("DPP a DPČ"):
+                st.markdown("**DPP:** dohoda o provedení práce (max 300h/rok).<br>**DPČ:** dohoda o pracovní činnosti (max 20h/týden).", unsafe_allow_html=True)
+            with st.expander("OSVČ a Freelancer"):
+                st.markdown("**OSVČ:** osoba samostatně výdělečně činná.<br>**Freelancer:** samostatně pracující člověk na zakázkách.", unsafe_allow_html=True)
+            with st.expander("Švarcsystém"):
+                st.markdown("Nelegální zastírání zaměstnání (závislé práce) podnikáním na IČO.")
+
+        with col_voc3:
+            with st.expander("Gig economy"):
+                st.markdown("Práce zprostředkovaná platformami nebo aplikacemi (Foodora, Uber).")
+            with st.expander("ATS"):
+                st.markdown("Systém pro automatické filtrování a třídění životopisů pomocí AI.")
+            with st.expander("Upskilling a Reskilling"):
+                st.markdown("**Upskilling:** rozšiřování dovedností v současném oboru.<br>**Reskilling:** přeškolení do jiné profese.", unsafe_allow_html=True)
+            with st.expander("Wellbeing a Intrapreneurship"):
+                st.markdown("**Wellbeing:** dlouhodobá pracovní pohoda.<br>**Intrapreneurship:** podnikavé chování uvnitř zaměstnání.", unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("<div class='box-red'>📝 <b>Závěrečná prověrka z Kapitoly 4</b></div>", unsafe_allow_html=True)
+        st.write("Otestujte, jestli jste připraveni na trh práce:")
+
+        with st.form("final_quiz_ch4"):
+            q1 = st.radio("1. Proč se konkrétní sazby a částky daní hodí spíše do digitální aplikace než do tištěné učebnice?", 
+                ["A) Protože v učebnici by vypadaly nehezky.", 
+                 "B) Protože se minimální mzda, daňové slevy i limity pro odvody velmi často mění podle nové legislativy.", 
+                 "C) Protože aplikace umí hrát zvuky."])
+                 
+            q2 = st.radio("2. Kdy má člověk nárok na podporu v nezaměstnanosti od Úřadu práce?", 
+                ["A) Kdykoliv, když ztratí jakoukoliv práci.", 
+                 "B) Jen pokud ho propustí pro hrubé porušení předpisů.", 
+                 "C) Pokud má za poslední 2 roky odpracováno alespoň 12 měsíců a neporušil hrubě kázeň."])
+                 
+            q3 = st.radio("3. Co je to 'Celková odměna za práci' (Total Reward)?", 
+                ["A) Jen to, co je napsáno na Mzdovém výměru.", 
+                 "B) Souhrn mzdy, benefitů, pracovních podmínek, ušetřeného času, flexibility a možností růstu.", 
+                 "C) Celkové odvody, které firma pošle státu."])
+                 
+            q4 = st.radio("4. Jak poznáte RED FLAG v pracovním inzerátu?", 
+                ["A) Požadují vysokou školu.", 
+                 "B) Slibují 'Jsme jako rodina', 'dynamické prostředí' a odmítají sdělit byť jen rámcovou mzdu.", 
+                 "C) Nabízejí 5 týdnů dovolené."])
+
+            if st.form_submit_button("Odeslat test k vyhodnocení"):
+                score = 0
+                if q1.startswith("B"): score += 1
+                if q2.startswith("C"): score += 1
+                if q3.startswith("B"): score += 1
+                if q4.startswith("B"): score += 1
+                
+                st.progress(score / 4)
+                
+                if score == 4:
+                    st.success("🏆 **Absolutní expert! 4/4.** Trh práce a byrokratické pasti už na tebe neplatí. Jsi připraven!")
+                    st.balloons()
+                elif score >= 2:
+                    st.warning(f"👍 **Dobrý výkon: {score}/4.** Většinu věcí znáš, ale některé chytáky ti unikly. Doporučujeme projít si slovníček pojmů.")
+                else:
+                    st.error(f"🚨 **Pozor, máš jen {score}/4.** Tohle by tě v reálném životě mohlo stát hodně peněz a nervů. Zkus si kapitolu projít znovu, chráníš tím hlavně sám sebe!")
