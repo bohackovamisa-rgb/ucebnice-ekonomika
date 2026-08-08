@@ -335,10 +335,7 @@ def render():
     # =========================================================================
     # SEKCE 4: GLOBÁLNÍ SOUVISLOSTI
     # =========================================================================
-    elif selected_section_5 == "4. Globální souvislosti a svět bez hranic":
-        st.markdown("### 4. Globální souvislosti a svět bez hranic")
-        st.info("Zde bude obsah pro 4.1 až 4.7 (Globalizace, EU, dodavatelské řetězce...)")
-
+   
     # =========================================================================
     # SEKCE 5: ESG A UDRŽITELNOST
     # =========================================================================
@@ -1134,3 +1131,104 @@ def render():
             Moderní stát s tebou mluví digitálně. Mít datovou schránku a BankID znamená ušetřit dny života strávené na úřadech. A hlavně: Danit nemusíš jen to, co ti stát v zákoně <b>výslovně osvobodí</b>. Aplikace a internetové platformy sice usnadňují výdělek, ale <b>nezbavují tě odpovědnosti znát zákony</b>. Ignorance ("já myslel, že z TikToku se daně neplatí") před finančním úřadem nikdy neobstojí.
         </div>
         """, unsafe_allow_html=True)
+# =========================================================================
+    # SEKCE 4: GLOBÁLNÍ SOUVISLOSTI A SVĚT BEZ HRANIC
+    # =========================================================================
+    elif selected_section_5 == "4. Globální souvislosti a svět bez hranic" or "4." in selected_section_5:
+        st.markdown("### 4. Globální souvislosti a svět bez hranic")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🌐 <b>Moderní hook:</b> Tričko z Temu, mobil navržený v USA, čip z Tchaj-wanu, baterie z Číny, kompletace ve Vietnamu, doprava přes Suez a prodej v Česku. Globalizace znamená, že věci, které denně používáš, nevznikají „v jedné zemi“, ale ve složité síti firem, států, dopravních cest a datových kabelů.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("#### 4.1 Globalizace a mezinárodní obchod: Jak se svět propojil")
+        st.write("Globalizace je neustále rostoucí propojení ekonomik, firem, technologií a lidí napříč státy. Ekonomika jedné země je dnes absolutně závislá na tom, co se děje na druhém konci planety (což jsme viděli, když jedna zaseknutá loď v Suezském průplavu zastavila výrobu aut v Evropě).")
+
+        st.markdown("##### 🤝 Proč státy vůbec obchodují?")
+        st.write("Není efektivní, aby si každý stát vyráběl úplně všechno sám (od banánů přes auta až po mikročipy). Mezinárodní obchod je jako obří **týmová práce**. Státy se specializují podle toho, jaké mají suroviny, klima, technologie a vzdělanost lidí.")
+
+        tab_teorie1, tab_teorie2, tab_teorie3 = st.tabs(["🌍 Mezinárodní dělba práce", "🥇 Absolutní výhoda", "🧠 Komparativní výhoda"])
+        
+        with tab_teorie1:
+            st.markdown("##### Mezinárodní dělba práce")
+            st.write("Země a firmy se specializují na různé části výrobního řetězce.")
+            st.success("📱 **Příklad (iPhone):** Design a software vzniká v USA (vysoká přidaná hodnota), špičkové čipy na Tchaj-wanu (technologický monopol), fotoaparáty v Japonsku a celá kompletace probíhá z důvodu levné a masové pracovní síly v Číně nebo Indii.")
+            
+        with tab_teorie2:
+            st.markdown("##### Absolutní výhoda")
+            st.write("Jeden stát dokáže vyrábět produkt **levněji nebo efektivněji** než ostatní (např. díky přírodě).")
+            st.success("🍌 **Příklad:** Kolumbie má absolutní výhodu v pěstování banánů oproti Norsku. Norsko má zase absolutní výhodu v těžbě ropy a chytání lososů. Nemá smysl, aby Norsko stavělo vyhřívané skleníky na banány – raději prodá lososy a banány si koupí.")
+            
+        with tab_teorie3:
+            st.markdown("##### Komparativní výhoda (Trochu složitější, ale geniální)")
+            st.write("Vyplatí se specializovat na to, v čem jsi **relativně nejlepší (kde máš nejnižší náklady obětované příležitosti)**, i když bys teoreticky zvládl/a skvěle i jiné věci.")
+            st.info("Pochopit komparativní výhodu je klíč k tomu, proč bohaté státy přenechávají výrobu jednoduchých věcí chudším státům, i když by si je uměly vyrobit samy.")
+
+        # Interaktivní vysvětlení komparativní výhody
+        st.markdown("<div class='box-yellow'>👩‍⚖️ <b>Mini kvíz: Pochop komparativní výhodu na příkladu advokátky</b></div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.write("Představ si, že jsi **nejlepší a nejdražší advokátka ve městě** (tvůj čas stojí 3 000 Kč/hod). Zároveň jsi ale dřív pracovala jako asistentka a **píšeš na klávesnici 2x rychleji než jakákoliv asistentka**, kterou by sis mohla najmout (za 300 Kč/hod).")
+            
+            kviz_advokatka = st.radio("Máš před sebou hodiny přepisování nudných smluv. Co uděláš?", [
+                "Vyber řešení...",
+                "A) Přepíšu si to sama. Jsem přece 2x rychlejší než asistentka, ušetřím tak čas i peníze za její plat.",
+                "B) Najmu si asistentku. I když je pomalejší, můj ušetřený čas věnuji právní analýze, za kterou mi klienti platí."
+            ])
+            
+            if "B)" in kviz_advokatka:
+                st.success("✅ **Přesně tak! Objevila jsi komparativní výhodu.** Ačkoliv máš absolutní výhodu v psaní všemi deseti (jsi nejrychlejší), tvá komparativní výhoda je v právu. Pokud bys sama hodinu psala, 'ušetříš' sice 300 Kč za asistentku, ale **přijdeš o 3 000 Kč**, které jsi mohla vydělat jako advokátka. Přesně proto bohaté státy s inženýry (USA, Německo) přenechávají šití triček asijským zemím – jejich 'asistentkám' – i když by ta trička uměly ušít také.")
+            elif "A)" in kviz_advokatka:
+                st.error("❌ Zkus to promyslet jako ekonom. Sice jsi ušetřila 300 Kč za asistentku, ale zabila jsi hodinu času, během které ti mohl klient zaplatit 3 000 Kč za právní radu. Prodělala jsi 2 700 Kč! Správná odpověď je B.")
+
+        st.divider()
+        st.markdown("#### 4.1.1 Temný stín globalizace: Proč je tričko levnější než jízdenka?")
+        st.write("Rychlá móda (Fast fashion) a e-shopy z Asie (Shein, Temu, AliExpress) chrlí extrémně levné zboží. Nízká cena je kombinací masové výroby, levné práce, dotované dopravy, ale často i **skrytých nákladů**.")
+
+        st.markdown("<div class='box-purple'>👕 <b>Pitevna ceny: Co kupuješ za 100 Kč?</b></div>", unsafe_allow_html=True)
+        st.write("Nasimuluj si rozpad ceny levného trička objednaného z asijského tržiště.")
+        
+        cena_tricka = st.slider("Cena trička v e-shopu (Kč):", 50, 500, 100, step=10)
+        
+        ukaz_skryte = st.toggle("👁️ Zobrazit i neviditelnou daň (Externality a skryté náklady pro planetu)")
+        
+        # Orientacni rozpad levneho e-commerce textilu (v procentech)
+        naklad_material = int(cena_tricka * 0.15)
+        naklad_prace = int(cena_tricka * 0.05) # Často jen zlomky procent, max jednotky
+        naklad_doprava = int(cena_tricka * 0.10)
+        naklad_marketing = int(cena_tricka * 0.40) # Platformy a reklamy sypou obrovské peníze do algoritmů
+        zisk_firmy = int(cena_tricka * 0.30)
+        
+        fig_tricko = go.Figure(data=[go.Pie(
+            labels=['Materiál', 'Mzda dělníka', 'Doprava a logistika', 'Marketing a platforma', 'Zisk značky'],
+            values=[naklad_material, naklad_prace, naklad_doprava, naklad_marketing, zisk_firmy],
+            hole=.4,
+            marker_colors=['#94a3b8', '#ef4444', '#f59e0b', '#8b5cf6', '#10b981']
+        )])
+        fig_tricko.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=300)
+        
+        col_t1, col_t2 = st.columns([1, 1])
+        with col_t1:
+            st.plotly_chart(fig_tricko, use_container_width=True)
+        with col_t2:
+            st.write(f"**Rozpad ceny {cena_tricka} Kč na účtence:**")
+            st.markdown(f"🧵 Materiál: **{naklad_material} Kč**")
+            st.markdown(f"🧑‍🏭 Mzda švadleny: **{naklad_prace} Kč** *(ano, takto málo)*")
+            st.markdown(f"🚢 Doprava k tobě: **{naklad_doprava} Kč**")
+            st.markdown(f"📱 Reklama (TikTok/Insta): **{naklad_marketing} Kč**")
+            st.markdown(f"💰 Zisk korporace: **{zisk_firmy} Kč**")
+            
+        if ukaz_skryte:
+            st.markdown("""
+            <div style='background-color: #1f2937; color: #f9fafb; padding: 20px; border-radius: 8px; margin-top: 20px;'>
+                <h4 style='color: #ef4444; margin-top:0;'>☠️ Neviditelná daň (Externality)</h4>
+                <p>Nízká cena na účtence neznamená, že je produkt levný. Znamená to jen, že <b>zbytek ceny zaplatil někdo jiný</b>. Zde je reálná daň, kterou za tvé tričko platí celá planeta:</p>
+                <ul>
+                    <li><b>💧 Toxická voda:</b> Rychlá móda odpovídá za 20 % znečištění průmyslových vod na světě (barviva vypouštěná do řek v Asii).</li>
+                    <li><b>🌍 Uhlíková stopa:</b> Letecká doprava levných balíčků po jednom kusu přímo k zákazníkům generuje extrémní emise.</li>
+                    <li><b>🗑️ Hory odpadu:</b> Levné tričko vydrží pár vyprání. Končí na obřích skládkách textilu v Africe nebo Jižní Americe. Oblečení z polyesteru se bude rozkládat 200 let.</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
