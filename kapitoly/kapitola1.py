@@ -118,7 +118,7 @@ def render():
             <div class='box-blue'>
                 <strong><i class="fi fi-bs-bookmark"></i> Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk.
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
             st.markdown("""
             <div class='box-blue'>
@@ -128,7 +128,7 @@ def render():
                 • <strong>Vlastní jméno:</strong> podnikatel vystupuje vůči zákazníkům, úřadům a partnerům sám za sebe nebo za svou firmu.<br>
                 • <strong>Vlastní odpovědnost:</strong> podnikatel nese následky svých rozhodnutí, včetně rizik, závazků a případných dluhů.
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
             st.info("🤔 **Otázka k zamyšlení:** V čem je podle vás největší rozdíl mezi zaměstnancem a podnikatelem?") #[cite: 1]
 
@@ -1690,56 +1690,6 @@ def render():
                 * Insolvence
                 """)
 
-    # --- Reflexe a sebehodnocení ---
-    elif "Reflexe" in selected_section:
-        st.markdown("<div class='sub-section-header'>ZÁVĚR KURZU</div><h2>Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
-        
-        with st.container(border=True):
-            st.markdown("""
-            <div class='box-green'>
-                <strong>🔄 Formativní hodnocení:</strong> Nejde o známku. Cílem je zjistit, čemu už rozumíš, co umíš použít v praxi a kde ještě potřebuješ další příklad.
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
-            st.text_input("Tvoje otázka k nejasnosti:")
-            
-            st.markdown("""
-            <div class='box-purple'>
-                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vyzkoušej mě z Kapitoly 1 pomocí pěti otázek a potom mi dej zpětnou vazbu.“
-            </div>
-            """, unsafe_allow_html=True)
-
-        with st.container(border=True):
-            st.markdown("### ✍️ Otázky k reflexi")
-            st.text_area("1. Co jsem se dnes naučil/a? (Napiš vlastními slovy 3 věci, které si odnášíš):")
-            st.text_area("2. Co umím vysvětlit vlastními slovy? (Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.):")
-            
-            st.markdown("**3. V čem mám ještě nejasnosti?**")
-            st.multiselect("Vyber oblasti, které ti ještě nejsou zcela jasné:", [
-                "Právní formy",
-                "Ručení",
-                "Podnikatelský záměr",
-                "Lean Canvas",
-                "CSR a ESG",
-                "Švarcsystém",
-                "Ukončení podnikání"
-            ])
-            
-            st.text_area("4. Která právní forma by se hodila pro můj nápad a proč?")
-            st.text_area("5. Jaký je můj první praktický krok? (Průzkum konkurence, rozhovor se zákazníkem, ověření firmy v rejstříku nebo vyplnění Lean Canvasu):")
-
-        with st.container(border=True):
-            st.markdown("### ✅ Sebehodnocení")
-            st.write("Zaškrtni dovednosti, které už bezpečně zvládáš:")
-            
-            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel.")
-            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.")
-            st.checkbox("Chápu rozdíl mezi fyzickou a právnickou osobou.")
-            st.checkbox("Dokážu navrhnout základ podnikatelského záměru.")
-            st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
-            st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
-            st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
 # --- 13. Reflexe a sebehodnocení ---
     elif "13. Reflexe a sebehodnocení" in selected_section or "Reflexe" in selected_section:
         st.markdown("<div class='sub-section-header'>KAPITOLA 13</div><h2>13. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
