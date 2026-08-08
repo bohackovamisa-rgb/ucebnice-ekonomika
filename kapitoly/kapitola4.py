@@ -984,7 +984,7 @@ def render():
 
         st.caption("📌 *Poznámka: Výpočet je zjednodušený pro výukové účely (zaokrouhlování na celé koruny). Skutečné parametry, daňové limity a slevy se mohou v závislosti na legislativě každý rok měnit.*")
 
-elif selected_section_4 == "3.5 Sazby pojištění, daně a náklady zaměstnavatele":
+    elif selected_section_4 == "3.5 Sazby pojištění, daně a náklady zaměstnavatele":
         st.markdown("### 3.5 Sazby pojištění, daně a celkové náklady zaměstnavatele")
         
         st.write("Doposud jsme se dívali na mzdu pohledem zaměstnance (co mi přijde na účet). Nyní se podíváme na mzdu **pohledem firmy**. Pro firmu nejste jen 'hrubá mzda', jste pro ni **mzdový náklad**.")
