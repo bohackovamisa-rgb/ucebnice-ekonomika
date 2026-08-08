@@ -2105,3 +2105,164 @@ def render():
 
             if st.form_submit_button("Uložit Krok 14 a dokončit Blok 3 (Brand, Psychologie & Etika)"):
                 st.success("🎉 Gratulujeme! Blok 3 je kompletně hotový. Tvůj projekt má silný brand, rozumí psychologii a stojí na pevných etických základech!")
+# =====================================================================
+        # PODKAPITOLA 3.4: MODERNÍ FORMY A TRENDY V DIGITÁLNÍM MARKETINGU
+        # =====================================================================
+        st.divider()
+        st.markdown("#### 3.4 Moderní formy a trendy v digitálním marketingu")
+        st.write("Moderní marketing se posouvá na obrazovky telefonů a počítačů. Výhodou digitálního marketingu je přesné cílení na konkrétní lidi, bleskové měření výsledků a možnost testování. Rizikem je naopak přehlcení zákazníků reklamou a boj s neustále se měnícími algoritmy.")
+
+        # ---------------------------------------------------------------------
+        # 3.4.1 DIGITÁLNÍ / ONLINE MARKETING
+        # ---------------------------------------------------------------------
+        st.markdown("##### 3.4.1 Základní nástroje digitálního marketingu")
+
+        tab_dig1, tab_dig2, tab_dig3, tab_dig4 = st.tabs([
+            "🔍 SEO (Organické vyhledávání)", 
+            "🖱️ PPC (Placená reklama)", 
+            "📧 E-mailový marketing", 
+            "⚙️ Automatizace"
+        ])
+
+        with tab_dig1:
+            st.markdown("**SEO (Search Engine Optimization - Optimalizace pro vyhledávače)**")
+            st.write("Úprava obsahu webu tak, aby ho Google nebo Seznam vyhodnotily jako nejlepší odpověď na dotaz uživatele. Zákazníci přicházejí 'zadarmo' bez platby za kliknutí.")
+            st.info("📌 **Příklad:** Napsání odborného článku *„Jak vybrat první běžecké boty“*. Lidé, kteří tento dotaz zadají do Googlu, prokliknou přímo na tvůj e-shop.")
+
+        with tab_dig2:
+            st.markdown("**PPC Reklama (Pay Per Click - Platba za proklik)**")
+            st.write("Placená reklama ve vyhledávačích nebo na sociálních sítích. Neplatíš za zobrazení banneru, ale až ve chvíli, kdy na reklamu zákazník reálně klikne.")
+            st.warning("📌 **Příklad:** Sponzorovaný odkaz na prvním místě v Googlu při vyhledání slova 'studentské batohy' nebo sponzorované video v feedu.")
+
+        with tab_dr3: # tab_dig3
+            st.markdown("**E-mailový marketing (Newslettery)**")
+            st.write("Přímá komunikace se stálými zákazníky přes e-mail. Má nejvyšší návratnost investic (ROI), protože e-mailová databáze je tvým vlastním majetkem (nezáleží na algoritmech).")
+            st.success("📌 **Příklad:** Týdenní newsletter s novinkami, slevový kód k narozeninám nebo připomenutí *'Nezapomněl jsi něco v košíku?'*.")
+
+        with tab_dig4:
+            st.markdown("**Marketingová automatizace**")
+            st.write("Chytré systémy, které posílají zprávy, doporučení nebo nabídky automaticky na základě chování zákazníka na webu.")
+            st.error("📌 **Příklad:** Zákazník si 3× prohlédne konkrétní boty ➔ systém mu za 2 hodiny automaticky pošle e-mail s recenzemi na tyto boty a slevou 5 %.")
+
+        # ---------------------------------------------------------------------
+        # 3.4.2 SOCIAL MEDIA MARKETING A CONTENT MARKETING
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.4.2 Social media marketing a content marketing")
+        st.write("Sociální sítě nejsou jen o prodeji, ale o **tvorbě obsahu (Content marketing)**, který lidi baví, vzdělává nebo inspiruje.")
+
+        col_sm1, col_sm2 = st.columns(2)
+        with col_sm1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #1e40af;">🌐 Přirozený (Organický) dosah</h5>
+                Počet lidí, kteří tvůj obsah uvidí zadarmo díky tomu, že ho algoritmus sám doporučí nebo ho lidé sdílejí.<br><br>
+                <b>Co má algoritmus rád:</b> Vysokou míru dopozerání videa (watch time), ukládání příspěvků, komentáře a sdílení v DMs.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_sm2:
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #b45309;">💰 Placená propagace (Social Ads)</h5>
+                Firma zaplatí platformě (Meta, TikTok, LinkedIn), aby doručila příspěvek konkrétně vybraným lidem.<br><br>
+                <b>Cílení:</b> Lze nastavit např. 'Muži 18–25 let, kteří se zajímají o fitness a žijí v Ostravě'.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>📱 <b>Srovnávač platforem: Která síť se hodí pro tvůj obsah?</b></div>", unsafe_allow_html=True)
+        st.write("Klikni na platformu a podívej se na její hlavní sílu:")
+
+        sits_vyber = st.radio("Vyber sociální síť:", [
+            "🎵 TikTok (Krátká dynamická videa, vysoký virální potenciál)",
+            "📸 Instagram (Vizuální identita, fotky, Reels, budování komunity)",
+            "🎥 YouTube (Delší edukační/zábavný obsah, vysoká životnost videí)",
+            "💼 LinkedIn (B2B marketing, profesní značka, kariéra)",
+            "✉️ Newsletter (Přímý vztah bez závislosti na algoritmu)"
+        ])
+
+        if "TikTok" in sits_vyber:
+            st.info("🎵 **TikTok:** Perfektní pro Gen Z. Algoritmus dokáže dát miliony zhlédnutí i účtu s nulou sledujících, pokud je video chytlavé v prvních 2 sekundách.")
+        elif "Instagram" in sits_vyber:
+            st.info("📸 **Instagram:** Skvělý pro budování estetik brandu, prodej módy, jídla nebo služeb. Příběhy (Stories) udržují každodenní kontakt se štamgasty.")
+        elif "YouTube" in sits_vyber:
+            st.info("🎥 **YouTube:** Na rozdíl od TikToku má video na YouTube hodnotu i po 3 letech. Lidé sem chodí hledat návody, recenze a dlouhé rozhovory.")
+        elif "LinkedIn" in sits_vyber:
+            st.info("💼 **LinkedIn:** Klíčové místo pro prodej firmám (B2B) a budování osobního brandu profesionála. Vyšší kupní síla uživatelů.")
+        else:
+            st.info("✉️ Newsletter:** Nezávislost! Když Meta nebo TikTok změní algoritmus, e-mailová databáze ti zůstane navždy.")
+
+        # ---------------------------------------------------------------------
+        # 3.4.3 INFLUENCER MARKETING A UGC
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.4.3 Influencer marketing a UGC")
+        st.write("Lidé už nevěří anonymním korporátním bannerům. Věří konkrétním tvářím a doporučením od ostatních uživatelů.")
+
+        col_inf1, col_inf2 = st.columns(2)
+        with col_inf1:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #047857;">👥 Mikro-influencer (1k - 50k sledujících)</h5>
+                • <b>Výhody:</b> Obrovská důvěra publika, vysoká míra interakce, cenová dostupnost (často funguje barter).<br>
+                • <b>Nevýhody:</b> Menší celkový zásah.<br>
+                • <b>Vhodné pro:</b> Lokální projekty, specifické obory, niche produkty.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_inf2:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #1d4ed8;">⭐ Makro-influencer (100k+ sledujících)</h5>
+                • <b>Výhody:</b> Obří masový zásah během několika minut, rychlé budování povědomí o novince.<br>
+                • <b>Nevýhody:</b> Vysoká cena, nižší osobní důvěra publika, riziko afér influencera.<br>
+                • <b>Vhodné pro:</b> Velké celostátní značky a masové produkty.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            📸 <b>UGC (User Generated Content):</b> Obsah vytvořený reálnými zákazníky (unboxing, fotka s produktem, recenze). Značky dnes často platí tvůrcům za to, aby natočili autentické 'UGC video', které pak značka sama používá jako svou sponzorovanou reklamu. Působí totiž mnohem přirozeněji!
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 3.4.4 GUERILLA MARKETING A VIRÁLNÍ MARKETING
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.4.4 Guerilla marketing a virální marketing")
+        st.write("Když nemáš miliónové rozpočty na TV reklamu, musíš zapojit šok, vtip, neobvyklost a šokující nápad.")
+
+        col_g1, col_g2 = st.columns(2)
+        with col_g1:
+            st.markdown("""
+            <div style="background-color: #fff7ed; padding: 15px; border-left: 5px solid #f97316; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #c2410c;">🦍 Guerilla marketing</h5>
+                Netradiční, šokující a nízkonákladová propagace na veřejných místech, která kolemjdoucí zaskočí nebo pobaví.<br><br>
+                <b>Příklad:</b> Přemalování přechodu pro chodce na hranolky McDonald's nebo vtipná instalace v ulicích města.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_g2:
+            st.markdown("""
+            <div style="background-color: #fef2f2; padding: 15px; border-left: 5px solid #ef4444; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #b91c1c;">🦠 Virální marketing</h5>
+                Tvorba obsahu tak chytlavého, vtipného nebo kontroverzního, že ho lidé začnou sami masivně přeposílat přátelům.<br><br>
+                <b>Riziko:</b> Šokující kampaň může přinést obří pozornost, ale pokud přepálíte hranici, zničíte si pověst značky!
+            </div>
+            """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 15 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 15: Digitální a sociální strategie projektu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok15"):
+            st.markdown("##### 🌐 Vyber hlavní online kanály pro svůj projekt:")
+            col_d_f1, col_d_f2 = st.columns(2)
+            with col_d_f1:
+                st.selectbox("1. Primární sociální síť:", ["TikTok", "Instagram", "YouTube", "LinkedIn", "Facebook"])
+                st.text_input("2. Jaký typ obsahu (Content marketing) budete tvořit?:", placeholder="např. Krátká zákulisní videa z přípravy, rozhovory")
+            with col_d_f2:
+                st.selectbox("3. Typ influencerů pro spolupráci:", ["Mikro-masoví (Spolužáci/Lidé ze školy)", "Niche odborníci", "Bez influencerů (jen UGC)"])
+                st.text_input("4. Nápad na Guerilla nebo Virální kampaň:", placeholder="např. Polepíme zrcadla na školních záchodech vtipnými samolepkami")
+
+            if st.form_submit_button("Uložit Krok 15 a dokončit celou kapitolu!"):
+                st.success("🎉 Giga-Gratulace! Máš kompletně zpracovaný Projektový pas napříč celou Kapitolou 6 (Management, Marketing, Brand & Digitál)!")
