@@ -13,7 +13,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-# <i class='fi fi-bs-bookmark'></i> JEDNOTNÁ NABÍDKA PODKAPITOL
+# 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_3 = [
         "1.1 Výrobní proces a faktory",
         "1.2 Typy výroby",
@@ -40,8 +40,13 @@ def render():
         "7.2 Závěrečný checklist a prověrka kapitoly"
     ]
     
-    st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+<<<<<<< HEAD
+    selected_section_3 = st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+    st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
+=======
+    st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
     selected_section_3 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
+>>>>>>> 85dc2bec670296c4873213a08bf23888e3d5502e
     st.divider()
 
 # =========================================================================

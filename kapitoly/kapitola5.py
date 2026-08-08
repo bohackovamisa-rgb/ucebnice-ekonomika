@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.graph_objects as go
 
 def render():
-    # <i class='fi fi-bs-bookmark'></i> HLAVIČKA KAPITOLY
+    # 📌 HLAVIČKA KAPITOLY
     st.markdown("<span class='hero-badge'>Kapitola 5</span>", unsafe_allow_html=True)
     st.title("5. Stát, daně a globální souvislosti")
     st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>Stát není jen úřad, formulář nebo položka na výplatní pásce. Je to systém, který vybírá daně, financuje veřejné služby, nastavuje pravidla trhu a reaguje na problémy, které jednotlivci ani firmy sami nevyřeší — od infrastruktury přes digitální stát až po regulaci Big Tech, globální obchod a klimatickou odpovědnost.</p>", unsafe_allow_html=True)
@@ -14,7 +14,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # <i class='fi fi-bs-bookmark'></i> PŘEHLED A NAVIGACE KAPITOLOU
+    # 📌 PŘEHLED A NAVIGACE KAPITOLOU
     with st.expander("🧭 Cíle kapitoly a logická cesta (Rozbalit)", expanded=False):
         c_nav1, c_nav2 = st.columns(2)
         with c_nav1:
@@ -45,7 +45,7 @@ def render():
             5. 🌱 **ESG a udržitelná ekonomika:** Uhlíková stopa, greenwashing a společenská odpovědnost firem.
             """)
 
-    # <i class='fi fi-bs-bookmark'></i> JEDNOTNÁ NABÍDKA PODKAPITOL
+    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     # Sdruženo do 6 hlavních bloků podle tvé osnovy z obrázků pro přehlednost UI
     section_options_5 = [
         "1. Stát jako „hospodář“ — proč ho vůbec máme?",
@@ -56,8 +56,13 @@ def render():
         "6. Aktivity a případové studie na závěr"
     ]
     
-    st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+<<<<<<< HEAD
+    selected_section_5 = st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+    st.selectbox("Přechod na podkapitolu:", section_options_5, index=0, label_visibility="collapsed")
+=======
+    st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
     selected_section_5 = st.selectbox("Přechod na podkapitolu:", section_options_5, index=0, label_visibility="collapsed")
+>>>>>>> 85dc2bec670296c4873213a08bf23888e3d5502e
     st.divider()
 
     # =========================================================================

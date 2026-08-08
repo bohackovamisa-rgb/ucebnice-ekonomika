@@ -23,8 +23,14 @@ def render():
         "14. Reflexe a sebehodnocení",
         "15. Integrované opakování"
     ]
-    st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+<<<<<<< HEAD
+    st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+    selected_section = st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+    st.selectbox("Přechod na podkapitolu:", section_options, index=0, label_visibility="collapsed")
+=======
+    st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
     selected_section = st.selectbox("Přechod na podkapitolu:", section_options, index=0, label_visibility="collapsed")
+>>>>>>> 85dc2bec670296c4873213a08bf23888e3d5502e
     st.divider()
 
 # --- 1. Podnikatel a základní pojmy ---
