@@ -1059,11 +1059,11 @@ def render():
 
         st.markdown("#### ⚖️ Tři klíčové pojmy (Co je co?)")
         st.markdown("""
-        | Pojem | Co snižuje? | Kdy se obvykle uplatňuje | Příklad v praxi |
-        | :--- | :--- | :--- | :--- |
-        | 💎 **Sleva na dani** | Snižuje **přímo vypočtenou daň**. | Často měsíčně (pokud je podepsáno prohlášení poplatníka). | Sleva na poplatníka, základní sleva na invaliditu. |
-        | 👨‍👩‍👧 **Daňové zvýhodnění** | Snižuje daň. Pokud vám daň už klesla na nulu, stát vám peníze **doplatí (daňový bonus)**. | Měsíčně (uplatňuje jen jeden z rodičů). | Daňové zvýhodnění na vyživované dítě. |
-        | 📉 **Odčitatelná položka** | Nesnižuje daň, ale jen **základ, ze kterého se daň počítá**. | Typicky ročně (v daňovém přiznání / ročním zúčtování). | Dary na charitu, úroky z hypotéky, penzijní spoření. |
+        | Pojem | Co přesně snižuje? | Kdy se obvykle uplatňuje |
+        | :--- | :--- | :--- |
+        | 💎 **Sleva na dani** | Snižuje **přímo vypočtenou daň**. Koruna slevy = koruna v kapse. | Často měsíčně (ve výplatě). |
+        | 👨‍👩‍👧 **Daňové zvýhodnění** | Snižuje daň. Pokud vám daň už klesla na nulu, stát vám zbytek slevy **doplatí (Daňový bonus)**. | Měsíčně (uplatňuje jen 1 rodič). |
+        | 📉 **Odčitatelná položka** | Nesnižuje daň, ale jen **základ, ze kterého se daň počítá**. Ušetří vám 15 % ze své hodnoty. | Typicky 1x ročně (v daňovém přiznání). |
         """)
 
         st.markdown("""
@@ -1075,11 +1075,44 @@ def render():
         """, unsafe_allow_html=True)
 
         st.divider()
-        st.markdown("#### 📅 Měsíčně, nebo až za rok?")
-        st.write("Abyste mohli slevy uplatňovat už z měsíční výplaty, musíte v práci podepsat tzv. **Prohlášení poplatníka k dani** (známý „růžový papír“). Pokud ho nepodepíšete, čistá mzda bude nižší a slevy si musíte řešit až ročně v daňovém přiznání.")
+        st.markdown("#### 💎 Přehled: Slevy na dani a Daňové zvýhodnění")
+        st.write("Abyste mohli slevy uplatňovat už z měsíční výplaty, musíte v práci podepsat tzv. **Prohlášení poplatníka k dani** (známý „růžový papír“).")
 
+        with st.expander("Rozklikni pro zobrazení všech Slev a Zvýhodnění (platné pro rok 2026)"):
+            st.markdown("""
+            **1. Základní sleva na poplatníka**
+            * **Kolik to je:** 30 840 Kč ročně (2 570 Kč měsíčně).
+            * **Kdo má nárok:** Každý pracující (i brigádník na DPP/DPČ, pokud podepíše prohlášení).
+
+            **2. Daňové zvýhodnění na děti (lze proměnit v daňový bonus)**
+            * **1. dítě:** 15 204 Kč ročně (1 267 Kč měsíčně).
+            * **2. dítě:** 22 320 Kč ročně (1 860 Kč měsíčně).
+            * **3. a další dítě:** 27 840 Kč ročně (2 320 Kč měsíčně).
+            * *Poznámka:* Uplatnit ho může vždy jen jedna osoba ve společné domácnosti. U dítěte se ZTP/P je částka dvojnásobná.
+
+            **3. Slevy pro osoby se zdravotním postižením (ZTP a invalidita)**
+            * **Základní invalidita (I. a II. stupeň):** 2 520 Kč ročně (210 Kč měsíčně).
+            * **Rozšířená invalidita (III. stupeň):** 5 040 Kč ročně (420 Kč měsíčně).
+            * **Držitel průkazu ZTP/P:** 16 140 Kč ročně (1 345 Kč měsíčně).
+
+            **4. Sleva na manžela/manželku (Uplatňuje se POUZE ročně)**
+            * **Kolik to je:** 24 840 Kč ročně.
+            * **Kdo má nárok:** Pokud má druhý z manželů vlastní příjmy max. 68 000 Kč za rok **A ZÁROVEŇ** pečuje o dítě do 3 let věku.
+            """)
+            st.warning("⚠️ **Zrušené slevy:** Pamatuj, že tzv. 'Sleva na studenta' a 'Školkovné' byly státem nedávno zrušeny. Na brigádě tě dnes chrání výhradně vysoká 'Základní sleva na poplatníka'.")
+
+        st.markdown("#### 📉 Běžné Odčitatelné položky (Nezdanitelné části základu daně)")
+        st.write("Tyto položky řešíte typicky až na jaře v **ročním zúčtování daně** nebo v **daňovém přiznání**. Stát vám díky nim vrátí část zaplacených daní za loňský rok na účet.")
+        
+        st.markdown("""
+        * 🩸 **Dary a darování krve:** Darovali jste peníze na charitu nebo krev? Za 1 bezpříspěvkový odběr krve si snížíte základ daně o 3 000 Kč (což vám na dani reálně ušetří 450 Kč). Odběr kostní dřeně sníží základ o 20 000 Kč.
+        * 🏠 **Úroky z hypotéky:** Ze základu daně si můžete odečíst to, co jste bance zaplatili na úrocích z úvěru na bydlení.
+        * 🐖 **Spoření na stáří:** Penzijní spoření, životní pojištění nebo DIP (Dlouhodobý investiční produkt). Stát vás tak motivuje, abyste si šetřili na důchod.
+        """)
+
+        st.divider()
         st.markdown("<div class='box-yellow'>🧩 <b>Simulátor: Kouzlo daňového bonusu a slev</b></div>", unsafe_allow_html=True)
-        st.write("Nastav hrubou mzdu a přidej životní situaci (např. počet dětí). Sleduj, co to udělá s daní. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?")
+        st.write("Nastav hrubou mzdu a přidej životní situaci. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?")
 
         col_slev1, col_slev2 = st.columns(2)
         with col_slev1:
