@@ -1399,7 +1399,7 @@ def render():
         st.markdown("##### 2.4.1 Product / Produkt: Nabídka hodnoty")
         st.write("Produktem je vše, co uspokojuje potřebu zákazníka — fyzické zboží, služba, aplikace, kurz nebo zážitek.")
 
-        st.markdown("###### 🧅 Vrstvy produktu: Cibule hodnoty")
+        st.markdown("##### 🧅 Vrstvy produktu: Cibule hodnoty")
         st.write("Produkt se skládá ze tří vrstev. Zákazník si málokdy kupuje jen samotnou fyzickou věc:")
 
         tab_p_lay1, tab_p_lay2, tab_p_lay3 = st.tabs(["🎯 Jádro produktu", "📦 Reálný produkt", "🌟 Rozšířený produkt"])
@@ -1419,7 +1419,7 @@ def render():
             st.write("Služby a výhody navíc, které budují věrnost a odlišují nás od konkurence.")
             st.success("🚗 *Příklad Auto:* Záruka 5 let, bezplatný servis, výhodné financování, náhradní vůz zdarma.\n\n👕 *Příklad Školní merch:* Bezplatná výměna velikosti do 30 dnů, osobní doručení do skříňky ve škole.")
 
-        st.markdown("<br>###### 📈 Životní cyklus produktu")
+        st.markdown("##### 📈 Životní cyklus produktu")
         st.write("Každý produkt na trhu se rodí, roste, dospívá a nakonec stárne. V každé fázi musí markeťáci měnit strategii:")
 
         # Plotly křivka životního cyklu
@@ -1488,7 +1488,7 @@ def render():
                 cena_poptavka = st.number_input("Ochota zákazníků zaplatit:", value=890, step=50)
                 st.caption(f"Cena pro zákazníka: **{cena_poptavka} Kč** *(marže +{cena_poptavka-vyrobni_naklady} Kč!)*")
 
-        st.markdown("<br>###### 🎯 Cenové strategie u novinek")
+        st.markdown("##### 🎯 Cenové strategie u novinek")
         col_strat1, col_strat2 = st.columns(2)
         with col_strat1:
             st.markdown("""
@@ -1513,7 +1513,7 @@ def render():
         # ---------------------------------------------------------------------
         st.divider()
         st.markdown("##### 2.4.3 Place / Distribuce: Cesta k zákazníkovi")
-        st.write("Distribuce řeší, jak, kde a kdy si zákazník náš produkt nakoupí a převzneme ho. Můžeš mít nejlepší produkt na světě za skvělou cenu, ale pokud je složité ho koupit, zákazník odejde ke konkurenci.")
+        st.write("Distribuce řeší, jak, kde a kdy si zákazník náš produkt nakoupí a převezme ho. Můžeš mít nejlepší produkt na světě za skvělou cenu, ale pokud je složité ho koupit, zákazník odejde ke konkurenci.")
 
         col_d1, col_d2 = st.columns(2)
         with col_d1:
@@ -1523,7 +1523,7 @@ def render():
 
         st.markdown("""
         <div class='box-gray' style='margin-top: 15px;'>
-            📦 <b>Omni-channel v moderním e-commerce:</b> Moderní zákazník nerozlišuje světy online a offline. Zákazník si tenisky prohlédne na TikToku, objedná na e-shope přes mobil, vyzvedne v kamenné prodejně na pobočce a případnou reklamaci řeší přes WhatsApp chat. Pro zákazníka to musí být <b>jeden plynulý zážitek</b>.
+            📦 <b>Omni-channel v moderním e-commerce:</b> Moderní zákazník nerozlišuje světy online a offline. Zákazník si tenisky prohlédne na TikToku, objedná na e-shopu přes mobil, vyzvedne v kamenné prodejně na pobočce a případnou reklamaci řeší přes WhatsApp chat. Pro zákazníka to musí být <b>jeden plynulý zážitek</b>.
         </div>
         """, unsafe_allow_html=True)
 
