@@ -125,8 +125,9 @@ def render():
         with tab_role1:
             st.markdown("##### Manažer")
             st.write("**Co dělá:** Řídí lidi, procesy nebo část organizace. Odpovídá za splnění cílů a efektivitu.")
-    st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    selected_section_6 = st.selectbox("Přechod na podkapitolu:", section_options_6, index=0, label_visibility="collapsed")
+        st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+        selected_section_6 = st.selectbox("Přechod na podkapitolu:", section_options_6, index=0, label_visibility="collapsed")
+        
         with tab_role2:
             st.markdown("##### Podnikatel")
             st.write("**Co dělá:** Přichází s nápadem, vyhledává příležitosti na trhu, nese riziko a chce vytvořit novou hodnotu.")
