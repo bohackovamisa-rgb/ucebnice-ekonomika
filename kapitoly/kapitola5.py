@@ -507,3 +507,85 @@ def render():
             * 🪙 **Kryptoměny (Bitcoin atd.):** Tady pozor! Z kryptoměn se platí daně ze zisku a *žádný 3letý časový test pro ně neplatí*! Navíc se daní i nákup jední kryptoměny za jinou.
             """)
             st.info("Pravidla investic a osvobození se často mění. Je vždy dobré sledovat aktuální legislativu nebo se poradit s účetním.")
+# =========================================================================
+    # DOKONČENÍ SEKCE 2: NEPŘÍMÉ DANĚ A ROZPOČET (2.6 - 2.9)
+    # =========================================================================
+
+        st.divider()
+        st.markdown("#### 2.6 Nepřímé daně: Neviditelné daně v každém nákupu")
+        st.write("Tyto daně neplatíš finančnímu úřadu přímo ze svého účtu. Jsou už chytře schované v ceně zboží nebo služby, které si kupuješ. Platíš je ty jako zákazník, ale státu je fyzicky posílá obchodník.")
+
+        col_nep1, col_nep2, col_nep3 = st.columns(3)
+        with col_nep1:
+            st.info("🛒 **DPH (Daň z přidané hodnoty)**\nZahrnutá v ceně skoro všeho: oblečení, lístek na koncert, software, jídlo. Je to hlavní zdroj peněz pro stát.")
+        with col_nep2:
+            st.warning("🚬 **Spotřební daň (Daň z hříchu)**\nUvalená na věci s dopadem na zdraví: tabák, alkohol. Stát tím vydělává, ale i odrazuje od spotřeby.")
+        with col_nep3:
+            st.success("🌱 **Ekologická daň**\nDaň na paliva a energie. Cílem je promítnout ničení životního prostředí (např. emise) do ceny, aby si to lidi rozmysleli.")
+
+        st.markdown("<div class='box-purple'>🕹️ <b>Rozpitvej si cenu benzínu!</b></div>", unsafe_allow_html=True)
+        st.write("Myslíš, že peníze za benzín jdou jen naftařům? Zkus si s posuvníkem nasimulovat průměrnou cenu jednoho litru a podívej se, kdo si bere kolik.")
+        
+        cena_benzinu = st.slider("Cena 1 litru Naturalu 95 na pumpě (Kč):", 25.0, 55.0, 40.0, step=0.5)
+        
+        # Orientacni vypocet (Spotrebni dan na benzin je cca 12,84 Kc/litr, DPH je 21% z celku)
+        spotrebni_dan_benzin = 12.84
+        dph_benzin = round(cena_benzinu - (cena_benzinu / 1.21), 2)
+        cista_cena = round(cena_benzinu - spotrebni_dan_benzin - dph_benzin, 2)
+        danove_zatiženi = round(((spotrebni_dan_benzin + dph_benzin) / cena_benzinu) * 100, 1)
+
+        # Vizualizace pomoci plotly (kolacovy graf)
+        fig_palivo = go.Figure(data=[go.Pie(
+            labels=['Samotný benzín a marže pumpy', 'Spotřební daň (pevná částka)', 'DPH (21 % z celku)'],
+            values=[cista_cena, spotrebni_dan_benzin, dph_benzin],
+            hole=.4,
+            marker_colors=['#3b82f6', '#f59e0b', '#ef4444']
+        )])
+        fig_palivo.update_layout(margin=dict(t=20, b=20, l=20, r=20), height=300)
+        
+        col_graf1, col_graf2 = st.columns([1, 1])
+        with col_graf1:
+            st.plotly_chart(fig_palivo, use_container_width=True)
+        with col_graf2:
+            st.markdown(f"**Rozpad ceny {cena_benzinu} Kč za litr:**")
+            st.markdown(f"⛽ Hodnota benzínu a zisk pumpy: **{cista_cena} Kč**")
+            st.markdown(f"💸 DPH státu: **{dph_benzin} Kč**")
+            st.markdown(f"🚬 Spotřební daň státu: **{spotrebni_dan_benzin} Kč**")
+            st.error(f"Z každého litru jde státu cca **{danove_zatiženi} %** ceny!")
+
+        st.divider()
+        st.markdown("#### 2.6.1 Kam ty peníze z daní vlastně tečou?")
+        st.write("Systém se nazývá *Rozpočtové určení daní*. Peníze se podle zákonných tabulek dělí mezi stát, kraje a samotné obce.")
+        
+        with st.expander("Ukaž mi, kdo dostane peníze z jaké daně"):
+            st.markdown("""
+            * **DPH a Daň z příjmů (fyzických i právnických osob):** Jde o tzv. *sdílené daně*. Rozdělují se. Stát z nich platí důchody a armádu, kraje z nich platí střední školy, obce z nich svítí.
+            * **Daň z nemovitosti:** Zůstává 100 % obci, ve které dům stojí. Z toho ti starosta zaplatí chodník a popeláře.
+            * **Spotřební daně (alkohol, benzín):** Jdou primárně přímo státu na jeho chod.
+            """)
+
+        st.divider()
+        st.markdown("#### 2.7 a 2.8 Státní rozpočet (Velká státní peněženka)")
+        st.write("Státní rozpočet je plán příjmů (daně) a výdajů státu, obvykle na 1 rok. Výdaje se dělí do dvou obrovských skupin, a to je důvod, proč politici nemohou snadno 'ušetřit'.")
+
+        col_vyd1, col_vyd2 = st.columns(2)
+        with col_vyd1:
+            st.error("🔒 **Mandatorní výdaje (Povinné)**\nZabírají většinu rozpočtu. Stát je **musí** ze zákona zaplatit a nemůže je jen tak škrtnout. *Např. důchody, podpora v nezaměstnanosti, obsluha státního dluhu.*")
+        with col_vyd2:
+            st.success("🛠️ **Nemandatorní výdaje (Volitelné)**\nO těchto penězích politici vyjednávají a mohou se rozhodnout, zda je utratí, nebo ušetří. *Např. dotace pro firmy, stavba nové dálnice, nákup vybavení.*")
+
+        st.markdown("<div class='box-purple'>⚖️ <b>Rozpočtová váha: Příjmy vs. Výdaje</b></div>", unsafe_allow_html=True)
+        st.write("Co se stane, když se váhy vychýlí? (Jednotky v miliardách Kč)")
+
+        rozpocet_prijmy = st.number_input("Příjmy z daní (mld. Kč):", value=2000, step=100)
+        rozpocet_vydaje = st.number_input("Vládní výdaje a důchody (mld. Kč):", value=2300, step=100)
+        
+        saldo = rozpocet_prijmy - rozpocet_vydaje
+        
+        if saldo > 0:
+            st.success(f"**PŘEBYTEK {saldo} mld. Kč!** Stát vybral více, než utratil. Může vytvářet rezervy nebo splácet staré dluhy (Přebytkový rozpočet).")
+        elif saldo == 0:
+            st.info("**VYROVNANÝ ROZPOČET!** Příjmy se přesně rovnají výdajům.")
+        else:
+            st.error(f"**SCHODEK (DEFICIT) {abs(saldo)} mld. Kč!** Stát utrácí více, než má (Schodkový rozpočet). Kde ty peníze vezme? Musí si je půjčit (např. vydat státní dluhopisy), čímž vytváří dluh pro budoucí generace.")
+            st.write("⚠️ *Život na dluh: Deficit v čase krize může pomoci. Ale pokud se opakuje každý rok, dluh roste rychleji než schopnost ekonomiky ho splatit.*")
