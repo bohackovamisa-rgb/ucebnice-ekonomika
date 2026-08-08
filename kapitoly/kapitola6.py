@@ -1908,3 +1908,103 @@ def render():
 
             if st.form_submit_button("Uložit Krok 12 do Projektového pasu"):
                 st.success("Krok 12 úspěšně uložen! Máš zmapované chování i psychologii svého zákazníka.")
+# ---------------------------------------------------------------------
+        # 3.2.3 RACIONÁLNÍ VS. EMOČNÍ A IMPULZIVNÍ NÁKUPY
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.2.3 Racionální vs. emoční a impulzivní nákupy")
+        st.write("Zákazníci rádi věří, že nakupují chladně a logicky. Psychologie ale ukazuje, že **většina nákupních rozhodnutí vzniká na základě emocí** a rozum následně dodatečně hledá argumenty, jak si nákup obhájit.")
+
+        col_em1, col_em2, col_em3 = st.columns(3)
+        col_em1.info("📊 **Racionální nákup**\nZaložený na faktech, specifikaci, ceně a porovnání recenzí.\n\n*Příklad:* Výběr kalkulačky na maturitu podle povolených funkcí.")
+        col_em2.warning("❤️ **Emoční nákup**\nZaložený na touze, pocitu, statusu, identitě nebo strachu (FOMO).\n\n*Příklad:* Limitovaná edice tenisek od oblíbeného rappera.")
+        col_em3.error("⚡ **Impulzivní nákup**\nBleskové rozhodnutí bez plánování vyvolané podnětem v daný moment.\n\n*Příklad:* Sladkost u pokladny, 'poslední 2 kusy na skladě!'.")
+
+        st.markdown("<div class='box-purple'>🕹️ <b>Trenažér nákupního typu: Co tě přimělo k nákupu?</b></div>", unsafe_allow_html=True)
+        st.write("Poznáš, jaký typ motivace stál za tímto nákupem?")
+
+        nakup_scenar = st.radio("Jdeš kolem kavárny, ucítíš čerstvou vůni skořicových šneků a uvidíš ceduli 'Poslední 3 kusy z dnešního pečení!'. Ačkoliv nemáš hlad, okamžitě si jednoho koupíš.", [
+            "Vyber odpověď...",
+            "A) Racionální nákup – vyhodnotil/a jsi výživovou hodnotu a cenu.",
+            "B) Kombinace Emočního a Impulzivního nákupu (vůně + pocit nedostatku).",
+            "C) Plánovaný nákup."
+        ])
+
+        if "B)" in nakup_scenar:
+            st.success("✅ **Přesně tak!** Smyslový podnět (vůně) a psychologický tlak (nedostatek) vyvolal impulzivní emoční reakci. Rozum byl v tu chvíli na druhé koleji.")
+        elif "A)" in nakup_scenar or "C)" in nakup_scenar:
+            st.error("❌ Kdepak! Vůně a limitovaný počet kusů útočí na emoce a impulzivitu, ne na chladnou logiku. Správně je B.")
+
+        # ---------------------------------------------------------------------
+        # 3.2.4 NEUROMARKETING
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.2.4 Neuromarketing: Tlačítka v lidském mozku")
+        st.write("Neuromarketing zkoumá, jak podvědomí spotřebitele reaguje na barvy, zvuky, vůně, rozložení prodejny, slova nebo tvar tlačítka na webu. Využívá poznatky neurověd k tomu, aby značka snáze získala pozornost.")
+
+        st.markdown("""
+        <div class='box-blue'>
+            🧠 <b>Jak neuromarketing funguje v praxi:</b><br>
+            • <b>Červená a oranžová barva:</b> Vyvolávají pocit naléhavosti (akce, výprodej, tlačítko 'Koupit').<br>
+            • <b>Pomalá hudba v supermarketu:</b> Podvědomě zpomaluje krok zákazníků, ti stráví v obchodě více času a utratí více peněz.<br>
+            • <b>Příjemná vůně pečiva u vchodu:</b> Aktivuje podvědomý pocit hladu a bezpečí.<br>
+            • <b>Rozložení webu:</b> Oči čtou po tvaru písmene 'F' – klíčové tlačítko musí být v pravém horním nebo středním zorném poli.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 3.3 ETIKA, PRÁVO A OCHRANA SPOTŘEBITELE
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("#### 3.3 Etika, právo a ochrana spotřebitele")
+        st.write("Marketing má obrovský vliv na chování společnosti. Proto musí mít jasné hranice. Etický a legální marketing nesmí zákazníka klamat, manipulovat ani zneužívat jeho neznalost.")
+
+        st.markdown("##### 3.3.1 Právní rámec reklamy v ČR a EU")
+        st.write("Podnikání a reklama podléhají přísným zákonům na ochranu spotřebitele a férové hospodářské soutěže:")
+
+        tab_l1, tab_l2, tab_l3, tab_l4 = st.tabs(["⚖️ Zákon o regulaci reklamy", "🚫 Nekalá soutěž & Klamání", "📢 Srovnávací reklama", "🕵️ Skrytá reklama & Influencer marketing"])
+
+        with tab_l1:
+            st.markdown("**Zákon o regulaci reklamy (Omezení pro citlivá odvětví)**")
+            st.write("Přísně reguluje nebo zakazuje reklamu na produkty, které mohou ohrozit zdraví nebo bezpečnost.")
+            st.error("📌 **Příklady:** Reklama na alkohol nesmí vyvolávat dojem, že pití zvyšuje společenský nebo sexuální úspěch. Zákaz reklamy na cigarety, omezení hazardu, přísné podmínky pro energetické nápoje a léky.")
+
+        with tab_l2:
+            st.markdown("**Nekalá soutěž a klamavá reklama**")
+            st.write("Chrání poctivé podnikatele i spotřebitele před lží. Reklama nesmí uvádět nepravdivé nebo zavádějící informace.")
+            st.warning("📌 **Příklady:** Firma tvrdí, že prodává '100% bio lokální produkt', ale surovinou je levný dovoz z Asie. Zákaz parazitování na pověsti cizí značky.")
+
+        with tab_l3:
+            st.markdown("**Srovnávací reklama**")
+            st.write("Porovnávat se s konkurencí je dovoleno, ale jen za velmi přísných podmínek.")
+            st.info("📌 **Pravidlo:** Srovnání musí být **pravdivé, objektivní, ověřitelné** a nesmí konkurenci očerňovat nebo zesměšňovat.")
+
+        with tab_l4:
+            st.markdown("**Skrytá reklama a povinnost označovat spolupráce**")
+            st.write("Komerční sdělení nesmí být maskováno jako 'nezávislé doporučení' nebo 'osobní názor'. Zákazník musí ihned poznat, že jde o reklamu.")
+            st.success("📌 **Pravidlo pro influencery:** Placená spolupráce, sponzorovaný produkt nebo bartering musí být v příspěvku/videu jasně a viditelně označen (např. *#spoluprace*, *Placená propagace*). Nestačí to schovat mezi 30 dalších hashtagů!")
+
+        st.markdown("<br><div class='box-purple'>⚖️ <b>Detektivní aréna: Najdeš právní nebo etický průšvih?</b></div>", unsafe_allow_html=True)
+        st.write("Přečti si 3 reálné marketingové situace a urči, která porušuje pravidla:")
+
+        scenar_pravo = st.selectbox("Vyber situaci k posouzení:", [
+            "1. Tiktokerka natáčí 'ranní rutinu' a líčí se řasenkou. Do videa řekne: 'Tuhle řasenku naprosto miluju, doporučuji všem!'. V popisku videa chybí jakákoliv zmínka o tom, že za video dostala 15 000 Kč od kosmetické značky.",
+            "2. Značka minerálek napíše na billboard: 'Náš nápoj obsahuje o 20 % více hořčíku než běžné pramenité vody v ČR' a na webu zveřejní odkaz na nezávislou laboratorní analýzu.",
+            "3. E-shop se školními potřebami dá týden před začátkem školního roku slevu 20 % na vybrané batohy a napíše 'Sezónní slevová akce'."
+        ])
+
+        if "1." in scenar_pravo:
+            st.error("🚨 **PRÁVNÍ A ETICKÝ PRŮŠVIH (Skrytá reklama)!** Influencerka přijala finanční odměnu, ale předstírala nezávislé doporučení. Jedná se o skrytou reklamu a klamání spotřebitele, za které hrozí pokuta jak influencerovi, tak zadavateli reklamy.")
+        elif "2." in scenar_pravo:
+            st.success("✅ **V POŘÁDKU.** Jedná se o povolenou srovnávací reklamu. Srovnání je objektivní, pravdivé a podložené ověřitelnou analýzou.")
+        else:
+            st.success("✅ **V POŘÁDKU.** Běžná slevová akce v rámci podpory prodeje, pokud e-shop uměle nezdražil cenu den předem.")
+
+        # WORKBOOK KROK 13 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 13: Neuromarketing a Etický kodex projektu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok13"):
+            st.text_area("1. NEUROMARKETING – Jaký smyslový nebo psychologický podnět použiješ pro svůj projekt?:", placeholder="např. Použijeme výrazné kontrastní žluté tlačítko na webu + příjemnou znělku v úvodu podcastu.")
+            st.text_area("2. ETIKA A PRÁVO – Jak zajistíš, aby kampaň tvého projektu nebyla klamavá a dodržovala pravidla?:", placeholder="např. Všechny sponzorované příspěvky od studentů budou v prvním řádku popisku mít jasné označení #spoluprace.")
+
+            if st.form_submit_button("Uložit Krok 13 do Projektového pasu"):
+                st.success("Krok 13 úspěšně uložen! Tvůj projekt je nejen atraktivní, ale i etický a právně čistý.")
