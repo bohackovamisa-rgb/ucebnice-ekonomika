@@ -1732,13 +1732,9 @@ def render():
             *(Vazba na RVP pro SŠ: Udržitelný rozvoj, odpovědné podnikání, environmentální a sociální dopady, spotřebitelské rozhodování, etika, řízení rizik)*
             """)
             
-        st.divider()
+st.divider()
         st.markdown("#### 5.1 Udržitelný rozvoj: Ekonomika, která nespotřebuje budoucnost")
-                
-            st.divider()
-            st.markdown("#### 5.1 Udržitelný rozvoj: Ekonomika, která nespotřebuje budoucnost")
-            st.write("Udržitelný rozvoj znamená takový způsob výroby, spotřeby a života, který **uspokojuje potřeby současné generace, aniž by ohrozil možnosti budoucích generací**. Nejde ale jen o ochranu stromečků a ledních medvědů. Udržitelnost stojí na třech stejně důležitých, vzájemně propojených pilířích:")
-
+        st.write("Udržitelný rozvoj znamená takový způsob výroby, spotřeby a života, který **uspokojuje potřeby současné generace, aniž by ohrozil možnosti budoucích generací**. Nejde ale jen o ochranu stromečků a ledních medvědů. Udržitelnost stojí na třech stejně důležitých, vzájemně propojených pilířích:")
             col_u1, col_u2, col_u3 = st.columns(3)
             with col_u1:
                 st.markdown("""
