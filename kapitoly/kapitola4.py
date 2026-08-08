@@ -815,33 +815,34 @@ def render():
     # SEKCE 3: HODNOTA MÉ PRÁCE: ODMĚŇOVÁNÍ A PENÍZE
     # =========================================================================
     elif selected_section_4 == "3.1 Hrubá mzda, čistá mzda a superhrubé uvažování":
-        st.markdown("### 3.1 Hrubá mzda, čistá mzda a celkové náklady")
+        st.markdown("### 3.1 Hrubá mzda, čistá mzda a „superhrubé uvažování“")
         st.markdown("""
         <div class='box-blue'>
             💵 <b>Základní otázka:</b> Kolik za svou práci skutečně dostanu na účet — a kolik reálně stojím zaměstnavatele?
         </div>
         """, unsafe_allow_html=True)
 
-        st.write("Na pracovním inzerátu vidíte **hrubou mzdu**. Na bankovní účet vám ale přijde částka o něco menší — **čistá mzda**. Váš zaměstnavatel za vás ale měsíčně zaplatí částku ještě mnohem vyšší. Této částce říkáme **celkové náklady zaměstnavatele**.")
+        st.write("Na pracovním inzerátu vidíte **hrubou mzdu**. Na bankovní účet vám ale přijde částka menší — **čistá mzda**. A váš zaměstnavatel musí mít na vaše místo připravenou částku ještě mnohem vyšší — tzv. **celkové náklady zaměstnavatele**.")
 
-        st.markdown("#### 📊 Tři úrovně uvažování o mzdě:")
+        st.markdown("""
+        <div class='box-gray'>
+            🤔 <b>Proč se v názvu kapitoly píše o „superhrubém uvažování“?</b><br>
+            Pojem <i>superhrubá mzda</i> byl v ČR sice v roce 2021 zákonem zrušen a daň se dnes počítá rovnou z hrubé mzdy. Přesto majitelé firem a HR stále musí uplatňovat <b>„superhrubé uvažování“</b>. Tedy uvědomovat si, že když slíbí zaměstnanci 40 000 Kč hrubého, firmu to bude stát celkově skoro 54 000 Kč kvůli povinným státním odvodům za zaměstnance.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### 📊 Tři úrovně financí na trhu práce:")
         
         col_m1, col_m2, col_m3 = st.columns(3)
         with col_m1:
             st.markdown("##### 1️⃣ Čistá mzda")
-            st.info("Peníze, které vám reálně přijdou na bankovní účet. Je to částka po odečtení odvodů (sociální, zdravotní) a daně z příjmu.")
+            st.info("Peníze, které vám reálně přijdou na bankovní účet. Je to částka po odečtení vašich odvodů a daně z příjmu.")
         with col_m2:
             st.markdown("##### 2️⃣ Hrubá mzda")
-            st.warning("Částka uvedená v pracovní smlouvě. Z této částky se počítá, kolik státu odvedete vy a kolik váš zaměstnavatel.")
+            st.warning("Částka ve vaší smlouvě. O této částce se vyjednává na pohovoru a počítají se z ní daně a odvody.")
         with col_m3:
             st.markdown("##### 3️⃣ Celkové náklady")
-            st.error("Skutečná cena vaší práce pro firmu. Obsahuje hrubou mzdu + dalších cca 33,8 %, které za vás firma musí odvést státu.")
-
-        st.markdown("""
-        <div class='box-gray'>
-            💡 <b>Co to znamená v praxi?</b> Pokud máte ve smlouvě hrubou mzdu <b>40 000 Kč</b>, přijde vám na účet zhruba <b>32 000 Kč</b>, ale vašeho zaměstnavatele stojíte téměř <b>54 000 Kč</b>. Rozdíl mezi 32 a 54 tisíci inkasuje stát na daních a pojistném!
-        </div>
-        """, unsafe_allow_html=True)
+            st.error("Skutečná cena vaší práce. Obsahuje hrubou mzdu + dalších cca 33,8 %, které za vás firma MUSÍ odvést státu.")
 
     elif selected_section_4 == "3.2 Nominální a reálná mzda":
         st.markdown("### 3.2 Nominální a reálná mzda (Kupní síla)")
@@ -884,50 +885,69 @@ def render():
                 st.success(f"📈 **Bohatneš!** Tvá reálná mzda vzrostla o {rust_realne_mzdy} %. Mzda překonala zdražování a ty si můžeš dovolit koupit více věcí.")
 
     elif selected_section_4 == "3.3 Výplatní páska a její náležitosti":
-        st.markdown("### 3.3 Výplatní páska a chyby, které se na ní objevují")
-        st.write("Výplatní páska není jen cár papíru. Je to kontrolní dokument, který vám ukazuje, jak se z vaší hrubé mzdy stala mzda čistá, a kolik hodin nebo přesčasů vám zaměstnavatel skutečně zaplatil.")
+        st.markdown("### 3.3 Výplatní páska a co na ní hledat")
+        st.write("Výplatní páska není jen nepřehledný kus papíru plný čísel. Je to klíčový **kontrolní dokument**. Ukazuje vám, zda vás firma nešidí na odpracovaných hodinách, jestli vám proplácí dovolenou a kolik vám z platu sebere stát.")
 
-        st.markdown("#### 🧾 Co na pásce najdete?")
-        st.markdown("""
-        1. **Hrubá mzda:** Základní sjednaná odměna.
-        2. **Odpracované hodiny a dny:** Zkontrolujte, zda souhlasí s vaší docházkou!
-        3. **Příplatky:** Práce o víkendu, v noci, ve svátek nebo přesčas.
-        4. **Srážky:** Zálohy na sociální a zdravotní pojištění a daň z příjmu.
-        5. **Slevy na dani:** Např. základní sleva na poplatníka nebo sleva na studenta.
-        6. **Čistá mzda k výplatě:** Finální částka.
-        """)
+        st.markdown("#### 🧾 Rozpad výplatní pásky v praxi:")
+        
+        with st.expander("Klikni pro detailní vysvětlení položek na výplatní pásce", expanded=True):
+            st.markdown("""
+            1. **Hlavička a kmenová data:** Vaše osobní číslo, kód zdravotní pojišťovny (např. 111 pro VZP).
+            2. **PHV (Průměrný hodinový výdělek):** Důležité číslo! Z tohoto průměru (za minulé čtvrtletí) se vám počítá, kolik peněz dostanete, když si vezmete placenou dovolenou nebo máte svátek.
+            3. **Časový fond:** Kolik hodin měl daný měsíc (např. 168 h) a kolik jste skutečně odpracovali.
+            4. **Základní mzda a příplatky:** Vaše sjednaná hrubá mzda + peníze navíc za přesčasy, víkendy či noční směny.
+            5. **Dovolená:** Kolik dní dovolené jste čerpali a jaký je váš zůstatek do konce roku.
+            6. **Odvody a daně:** Stržené sociální a zdravotní pojištění a záloha na daň.
+            7. **Nezdanitelné části a slevy:** Slevy na dani, které uplatňujete (např. základní sleva na poplatníka nebo na studenta).
+            8. **Srážky:** Například srážky za stravenky, obědy ve firemní kantýně, nebo exekuce.
+            9. **K VÝPLATĚ:** Peníze, které vám reálně dorazí na bankovní účet.
+            """)
 
         st.divider()
         st.markdown("<div class='box-yellow'>🧪 <b>Aktivita: Výplatní páska s chybami</b></div>", unsafe_allow_html=True)
-        st.write("Dostal jsi tuto výplatní pásku za minulý měsíc (byl jsi v práci každý všední den a jeden víkend - celkem 168 hodin + 8 hodin o víkendu). Najdi na výplatní pásce 3 zásadní chyby:")
+        st.write("Jako brigádník / zaměstnanec jsi dostal tuto výplatní pásku za minulý měsíc. Víš jistě, že jsi odpracoval celý měsíc (168 h) a navíc jsi byl jeden den o víkendu (8 h přesčas). Najdi v tomto reálně vypadajícím výpisu **3 zásadní chyby**:")
 
         st.markdown("""
-        <div style="background-color: #f1f5f9; padding: 15px; border: 1px solid #94a3b8; font-family: monospace; font-size: 0.9em; margin-bottom: 15px; border-radius: 5px;">
-        Hrubá základní mzda: 30 000 Kč<br>
-        Odpracované hodiny celkem: 168 h<br>
-        Příplatek za práci o víkendu: 0 Kč<br>
-        Sleva na poplatníka: Nepoužita<br>
-        Zdravotní pojištění: -1 350 Kč<br>
-        Srážka (Pokuta za rozbitý firemní hrníček): -500 Kč<br>
-        <b>ČISTÁ MZDA K VÝPLATĚ: 20 150 Kč</b>
+        <div style="background-color: #fdfdfd; padding: 20px; border: 1px dashed #64748b; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; color: #1e293b; line-height: 1.4; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);">
+            <b>ZAMĚSTNAVATEL:</b> ABC Retail s.r.o. &nbsp;&nbsp;&nbsp; <b>OBDOBÍ:</b> 08/2026<br>
+            <b>ZAMĚSTNANEC:</b> Jan Novák &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>OS. ČÍSLO:</b> 00458<br>
+            <b>ZDR. POJIŠŤOVNA:</b> 111 (VZP) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>PHV:</b> 195,50 Kč/h<br>
+            <hr style="border-top: 1px dashed #64748b;">
+            <b>Mzdové složky:</b><br>
+            Základní hrubá mzda ................ 30 000 Kč<br>
+            Odpracováno ........................ 168 hod<br>
+            Práce o víkendu (8 hod) ............ 0 Kč<br>
+            Náhrada za dovolenou (0 hod) ....... 0 Kč<br>
+            <hr style="border-top: 1px dashed #64748b;">
+            Zůstatek dovolené .................. 12,5 dne<br>
+            Základ daně z příjmů ............... 30 000 Kč<br>
+            Záloha na daň (15 %) ............... -4 500 Kč<br>
+            Sleva na poplatníka (prohlášení) ... Nepodepsáno (0 Kč)<br>
+            Daň po slevě ....................... -4 500 Kč<br>
+            Zdravotní poj. (4,5 %) ............. -1 350 Kč<br>
+            Sociální poj. (7,1 %) .............. -2 130 Kč<br>
+            Ostatní srážky (Pokuta-sklad) ...... -1 500 Kč<br>
+            <hr style="border-top: 2px solid #1e293b;">
+            <b>K VÝPLATĚ NA ÚČET: ................. 20 520 Kč</b>
         </div>
         """, unsafe_allow_html=True)
 
         with st.form("chyby_paska"):
-            st.write("Jaké nesrovnalosti bys měl jít řešit se mzdovou účetní?")
-            chyb1 = st.checkbox("Chybí příplatek za práci o víkendu (8 hodin).")
-            chyb2 = st.checkbox("Odpracované hodiny nesedí (mělo by jich být 100).")
-            chyb3 = st.checkbox("Není uplatněna základní sleva na poplatníka (daň je zbytečně vysoká).")
-            chyb4 = st.checkbox("Srážka (pokuta) za hrníček je provedena jednostranně a nelegálně.")
+            st.write("Kde tě zaměstnavatel (ať už omylem, nebo úmyslně) připravil o peníze?")
+            chyb1 = st.checkbox("Chybí povinný příplatek za práci o víkendu (i když je uvedeno 8 odpracovaných hodin).")
+            chyb2 = st.checkbox("Záloha na daň je špatně vypočítaná (nemá být 15 %).")
+            chyb3 = st.checkbox("Není uplatněna sleva na poplatníka (firma zřejmě nepředložila 'Růžové prohlášení' k podpisu).")
+            chyb4 = st.checkbox("Jednostranná srážka 'Pokuta-sklad' je nelegální.")
+            chyb5 = st.checkbox("Zůstatek dovolené je zapsán v desetinných číslech, což zákoník práce neumožňuje.")
             
             if st.form_submit_button("Odhalit chyby"):
-                if chyb1 and chyb3 and chyb4 and not chyb2:
-                    st.success("✅ **Výborně! Jsi finančně gramotný!**\n\n1. O víkendu jsi pracoval, ale příplatek je 0 Kč.\n2. Zaměstnavatel zapomněl uplatnit tvou měsíční slevu na dani, čímž tě připravil o tisíce korun!\n3. Automatická srážka jako 'pokuta' z platu je nelegální – firma tě nemůže trestat strhnutím peněz bez tvého písemného souhlasu nebo soudu.")
+                if chyb1 and chyb3 and chyb4 and not chyb2 and not chyb5:
+                    st.success("✅ **Výborně! Skvělý postřeh!**\n\n1. **Víkend zadarmo:** Máš tam 8h o víkendu, ale 0 Kč příplatek. Firmy 'zapomínají' platit přesčasy a víkendy velmi často.\n2. **Ztráta tisíců na dani:** Máš neuplatněnou slevu na poplatníka. Buď jsi nepodepsal tzv. růžový papír (Prohlášení k dani), nebo to mzdová účetní zapomněla zadat.\n3. **Nelegální srážka:** Zaměstnavatel ti NESMÍ dát 'pokutu' srážkou ze mzdy bez tvého písemného souhlasu, i kdybys ve skladu něco rozbil.")
                 else:
-                    st.error("Něco ti uniklo. Hodiny sedí (168h je standard za měsíc), ale chybí víkendový příplatek, sleva na dani a srážka za hrníček porušuje zákoník práce!")
+                    st.error("Něco ti uniklo. Záloha 15 % je správně a dovolená se v půldnech evidovat může. Chybí ale peníze za víkend, sleva na dani a srážka jako 'pokuta' porušuje zákoník práce!")
 
     elif selected_section_4 == "3.4 Výpočet čisté mzdy krok za krokem":
-        st.markdown("### 3.4 Ukázka výplatní pásky a odvodů (Krok za krokem)")
+        st.markdown("### 3.4 Výpočet čisté mzdy krok za krokem")
         
         st.markdown("""
         <div class='box-blue'>
@@ -937,15 +957,15 @@ def render():
         """, unsafe_allow_html=True)
 
         st.markdown("#### 🏥 Co platíte státu? Rozpad Sociálního pojištění")
-        st.write("Často slyšíte, že státu odvádíte ze své hrubé mzdy 'sociální pojištění' (v ČR aktuálně ve výši **7,1 %**). Z čeho se ale přesně skládá?")
+        st.write("Ze své hrubé mzdy odvádíte 'sociální pojištění' (v ČR aktuálně ve výši **7,1 %**). Z čeho se ale přesně skládá?")
         
         col_soc1, col_soc2 = st.columns(2)
         with col_soc1:
             st.markdown("##### 👴 Důchodové pojištění (6,5 %)")
-            st.write("Drtivá většina (6,5 %) jde průběžně státu na vyplácení důchodů současným seniorům. Na svůj důchod si z tohoto de facto 'nešetříte', platíte ho generaci před vámi.")
+            st.write("Drtivá většina (6,5 %) jde průběžně státu na vyplácení důchodů současným seniorům. Na svůj důchod si z tohoto de facto 'nešetříte', platíte ho generaci před vámi (tzv. průběžný systém).")
         with col_soc2:
             st.markdown("##### 🤒 Nemocenské pojištění (0,6 %)")
-            st.write("Tato malá část (od r. 2024 znovu zavedená) kryje vaše dávky, pokud onemocníte (tzv. nemocenská od 15. dne nemoci) nebo se staráte o nemocné dítě (OČR).")
+            st.write("Tato malá část (od r. 2024 znovu zavedená i pro zaměstnance) kryje vaše dávky, pokud onemocníte (nemocenská) nebo se staráte o nemocné dítě (OČR).")
 
         st.divider()
         st.markdown("#### 🧾 Modelový výpočet čisté mzdy")
@@ -953,11 +973,11 @@ def render():
         st.markdown("""
         | Krok | Položka | Výpočet | Částka |
         | :--- | :--- | :--- | :--- |
-        | 1. | **Hrubý příjem (základ pro daně)** | Základ (32 000 Kč) + Příplatek (1 200 Kč) | **33 200 Kč** |
+        | 1. | **Hrubý příjem (základ pro daně a odvody)** | Základ (32 000 Kč) + Příplatky (1 200 Kč) | **33 200 Kč** |
         | 2. | **Sociální pojištění (zaměstnanec)** | 33 200 × 7,1 % | **- 2 357 Kč** |
         | 3. | **Zdravotní pojištění (zaměstnanec)**| 33 200 × 4,5 % | **- 1 494 Kč** |
         | 4. | **Daň před slevami (15 %)** | 33 200 × 15 % | 4 980 Kč |
-        | 5. | **Sleva na poplatníka** | Měsíční sleva garantovaná státem všem | **+ 2 570 Kč** |
+        | 5. | **Sleva na poplatníka** | Měsíční daňová sleva garantovaná státem všem pracujícím | **+ 2 570 Kč** |
         | 6. | **Reálná Daň po slevě** | 4 980 Kč (Daň) - 2 570 Kč (Sleva) | **- 2 410 Kč** |
         | 7. | **ČISTÁ MZDA K VÝPLATĚ** | 33 200 - 2 357 - 1 494 - 2 410 | **26 939 Kč** |
         """)
@@ -966,7 +986,7 @@ def render():
 
     elif selected_section_4 == "3.5 Sazby pojištění, daně a náklady zaměstnavatele":
         st.markdown("### 3.5 Kalkulačka: Kolik tvoje práce skutečně stojí firmu?")
-        st.write("V ČR platí odvody na pojištění nejen zaměstnanec, ale výrazně víc platí státu za zaměstnance **zaměstnavatel** (cca 33,8 % navíc nad rámec hrubé mzdy). Tím vznikají skutečné **celkové náklady zaměstnavatele**.")
+        st.write("V ČR platí odvody na pojištění nejen zaměstnanec. **Zaměstnavatel** navíc nad rámec vaší hrubé mzdy platí státu dalších téměř 34 %. Tím vznikají **celkové náklady zaměstnavatele** na vaše pracovní místo.")
 
         st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní simulátor: Celkové náklady a státní kasička</b></div>", unsafe_allow_html=True)
         st.write("Zadej svou vysněnou hrubou mzdu a zjisti, kolik reálně dostaneš na účet ty a kolik spolknou celkové daně a odvody.")
@@ -996,4 +1016,4 @@ def render():
         with col_k3:
             st.metric("Peníze pro stát (Daně a Odvody)", f"{stat_celkem:,} Kč".replace(",", " "))
 
-        st.info(f"💡 Z celkového budgetu **{naklady_firmy:,} Kč**, které na tebe má firma vyhrazené, dostaneš ty reálně do kapsy **{cista:,} Kč**. Zbytek (**{stat_celkem:,} Kč**) tvoří daně a povinné pojištění, které putuje přímo státu.")
+        st.info(f"💡 Z celkového budgetu **{naklady_firmy:,} Kč**, které na tebe má firma každý měsíc vyhrazené, dostaneš ty reálně do kapsy **{cista:,} Kč**. Zbytek (**{stat_celkem:,} Kč**) tvoří daně a povinné pojištění, které putuje přímo státu.")
