@@ -343,9 +343,7 @@ def render():
     # =========================================================================
     # SEKCE 6: AKTIVITY A PŘÍPADOVÉ STUDIE
     # =========================================================================
-    elif selected_section_5 == "6. Aktivity a případové studie na závěr":
-        st.markdown("### 6. Aktivity a případové studie na závěr")
-        st.info("Zde budou interaktivní případové studie (Levné tričko, Student vydělává online, Obec rozhoduje o rozpočtu...)")
+   
 # =========================================================================
     # SEKCE 2: DANĚ A STÁTNÍ ROZPOČET
     # =========================================================================
@@ -1999,5 +1997,190 @@ def render():
         <div class='box-green'>
             ✅ <b>Co si zapamatovat z celého bloku ESG a udržitelná ekonomika (Shrnutí 5. bloku):</b><br>
             ESG není jen "zelená nálepka" nebo moderní reklamní výstřelek. Je to způsob, jak hodnotit <b>dlouhodobá rizika a reálné dopady firem</b> na společnost i přírodu. Udržitelná ekonomika hledá rovnováhu mezi ziskem, lidmi a planetou. Nejde o to, že bychom všichni museli ze dne na den přestat nakupovat nebo podnikat. Jde o to <b>rozhodovat se informovaněji</b> a vytvářet hodnotu bez toho, abychom skryté náklady naši spotřeby přesouvali na chudší státy nebo budoucí generace.
+        </div>
+        """, unsafe_allow_html=True)
+# =========================================================================
+    # SEKCE 6: AKTIVITY A PŘÍPADOVÉ STUDIE NA ZÁVĚR
+    # =========================================================================
+    elif selected_section_5 == section_options_5[5]:
+        st.markdown("### 6. Aktivity a případové studie na závěr")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🧩 <b>Jak pracovat s případovými studiemi:</b> Vyber si jednu studii samostatně, do dvojice nebo skupiny. Nejprve popiš ekonomický problém, potom určete roli státu, daní, trhu, globalizace a odpovědnosti firem. Nakonec navrhněte řešení a obhaj ho.
+        </div>
+        """, unsafe_allow_html=True)
+
+        tab_studie1, tab_studie2, tab_studie3, tab_ukol = st.tabs([
+            "👕 1. Levné tričko za 99 Kč", 
+            "📱 2. Student vydělává online", 
+            "🏙️ 3. Obec rozhoduje o rozpočtu",
+            "✍️ Mini úkol: Cesta produktu"
+        ])
+
+        # ---------------------------------------------------------------------
+        # PŘÍPADOVÁ STUDIE 1
+        # ---------------------------------------------------------------------
+        with tab_studie1:
+            st.markdown("#### Případová studie 1: Levné tričko za 99 Kč")
+            
+            st.markdown("""
+            <div class='box-gray'>
+                👕 <b>Situace:</b> Student si koupí tričko z fast fashion e-shopu za 99 Kč. Na první pohled je to výhodný nákup. Tričko ale vzniklo v globálním dodavatelském řetězci: bavlna, barvení látky, šití, balení, doprava, sklad, reklama, platforma a doručení až ke dveřím.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("##### 📝 Úkoly pro studenty / skupinu:")
+            st.markdown("""
+            1. **Rozepište**, kdo všechno se mohl podílet na cestě trička k zákazníkovi.
+            2. **Určete**, které náklady jsou vidět v ceně a které mohou být skryté.
+            3. **Vysvětlete** pojmy *externalita, globalizace, ESG a greenwashing* na tomto příkladu.
+            4. **Navrhněte**, co může dělat zákazník, firma a stát nebo EU.
+            """)
+
+            with st.form("form_studie1"):
+                st.markdown("##### 🕵️ Tvé řešení Případové studie 1:")
+                ans1_1 = st.text_area("1. Kdo se podílel na cestě trička? (Země, profese, doprava):")
+                ans1_2 = st.text_area("2. Jaké jsou viditelné a jaké skryté náklady? (Emise, voda, mzdy):")
+                ans1_3 = st.text_area("3. Vysvětli pojmy na tomto příkladu (Externalita, ESG...):")
+                ans1_4 = st.text_area("4. Návrh opatření (Pro spotřebitele, firmu a EU):")
+                
+                if st.form_submit_button("Odeslat řešení ke zkontrolování"):
+                    st.success("Řešení bylo zaznamenáno! Porovnej své odpovědi s doporučeným ekonomickým řešením níže:")
+
+            with st.expander("💡 Zobrazit vzorové ekonomické řešení Studio 1"):
+                st.markdown("""
+                * **Dělba práce v řetězci:** Pěstování bavlny (Indie/Uzbekistán) ➔ Barvení látky (Bangladéš) ➔ Šití v továrně ➔ Letecká/Lodní doprava ➔ Evropský sklad a doručení kurýrem.
+                * **Viditelné vs. Skryté náklady:** Vidět je jen 99 Kč na účtence. Skryté náklady (negativní externality) zahrnují spotřebu 2 700 litrů vody na jedno tričko, toxická barviva vypouštěná do řek, emise CO₂ z letecké přepravy a podhodnocenou mzdu švadlen.
+                * **Aplikace pojmů:**
+                  * *Globalizace:* Tričko obletělo půl planety za pár týdnů.
+                  * *Externalita:* Škody na přírodě a zdraví v Asii platí tamní obyvatelé, ne zákazník.
+                  * *ESG & Greenwashing:* Pokud e-shop tvrdí 'Eko-kolekce', ale 99 % jeho oblečení je rychlý odpad, jde o greenwashing.
+                * **Co s tím?** 
+                  * *Stát/EU:* Zavedení uhlíkového cla (CBAM), rušení daňových výjimek pro malé balíčky z Asie, povinné ESG audity dodavatelů.
+                  * *Spotřebitel:* Nakupovat méně věcí, preferovat kvalitu/second-hand, nosit oblečení déle.
+                """)
+
+        # ---------------------------------------------------------------------
+        # PŘÍPADOVÁ STUDIE 2
+        # ---------------------------------------------------------------------
+        with tab_studie2:
+            st.markdown("#### Případová studie 2: Student vydělává online")
+            
+            st.markdown("""
+            <div class='box-gray'>
+                📱 <b>Situace:</b> Student natáčí videa na TikTok, občas dostane barter od značky (bezplatný mobil nebo kosmetiku za recenzi), prodává digitální šablony a jednou za čas mu přijde příjem z affiliate odkazu. Říká si: <i>„Je to jen bokovka, daně ani živnost řešit nemusím.“</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("##### 📝 Úkoly pro studenty / skupinu:")
+            st.markdown("""
+            1. **Rozlište**, co může být peněžní příjem a co nepeněžní příjem.
+            2. **Vysvětlete** rozdíl mezi jednorázovou aktivitou a soustavnou výdělečnou činností.
+            3. **Určete**, jaké otázky by si měl student ověřit u Finanční správy nebo daňového poradce.
+            4. **Diskutujte**, proč digitální ekonomika komplikuje tradiční pohled na práci, podnikání a daně.
+            """)
+
+            with st.form("form_studie2"):
+                st.markdown("##### 🕵️ Tvé řešení Případové studie 2:")
+                ans2_1 = st.text_area("1. Rozdělení příjmů (Peněžní vs. Nepeněžní barter):")
+                ans2_2 = st.text_area("2. Jednorázový příjem vs. Soustavné podnikání:")
+                ans2_3 = st.text_area("3. Na co se musí zeptat Finanční správy / účetního?:")
+                ans2_4 = st.text_area("4. Proč digitální ekonomika plete stará pravidla zdanění?:")
+                
+                if st.form_submit_button("Odeslat řešení ke zkontrolování"):
+                    st.success("Řešení bylo zaznamenáno! Porovnej své odpovědi s doporučeným ekonomickým řešením níže:")
+
+            with st.expander("💡 Zobrazit vzorové ekonomické řešení Studie 2"):
+                st.markdown("""
+                * **Peněžní vs. Nepeněžní příjem:** Peníze z TikToku, prodeje šablon a affiliate jsou klasické peněžní příjmy. **Barter (dárek za reklamu) je nepeněžní příjem** v hodnotě dané věci a stát ho vyžaduje zdanit rovněž.
+                * **Soustavnost vs. Jednorázovost:** Pokud natáčí a prodává opakovaně a plánovitě za účelem zisku, naplňuje definici **podnikání**. Potřebuje živnostenský list (IČO). Jednorázový prodej starého kola na Bazoši podnikání není.
+                * **Co musí ověřit:** Zda nepřekročil roční limit pro podání daňového přiznání, jak vést evidenci příjmů/výdajů, jak platit zdravotní a sociální pojištění (jako student má OSVČ jako vedlejší činnost, což je výhodnější) a jak ocenit barterové dary.
+                * **Proč je to problém digitální doby:** Hranice mezi 'koníčkem' a 'byznysem' splynula. Peníze chodem přes aplikace (PayPal, Stripe) vypadají virtuálně, ale finanční úřady k nim mají přístup.
+                """)
+
+        # ---------------------------------------------------------------------
+        # PŘÍPADOVÁ STUDIE 3
+        # ---------------------------------------------------------------------
+        with tab_studie3:
+            st.markdown("#### Případová studie 3: Obec rozhoduje o rozpočtu")
+            
+            st.markdown("""
+            <div class='box-gray'>
+                🏙️ <b>Situace:</b> Menší obec má rozhodnout, jak využije obecní rozpočet ve výši <b>10 milionů Kč</b>. Část obyvatel chce opravit silnici a chodníky, část chce podpořit školu a volnočasové aktivity, část požaduje snížení místních poplatků a podnikatelé chtějí lepší parkování u náměstí.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("<div class='box-purple'>🕹️ <b>Interaktivní trenažér: Rozděl 10 milionů Kč obce</b></div>", unsafe_allow_html=True)
+            st.write("Jsi zastupitelem/kou obce. Rozděl 10 milionů Kč mezi 4 oblasti a sleduj reakci občanů:")
+
+            col_o1, col_o2 = st.columns(2)
+            with col_o1:
+                m_infra = st.slider("🛤️ Oprava silnic a chodníků (mil. Kč):", 0.0, 10.0, 3.0, step=0.5)
+                m_skola = st.slider("🏫 Školství a mládež (mil. Kč):", 0.0, 10.0, 3.0, step=0.5)
+            with col_o2:
+                m_soc = st.slider("🤝 Sociální podpora a senioři (mil. Kč):", 0.0, 10.0, 2.0, step=0.5)
+                m_biz = st.slider("🏬 Podpora podnikání a parkování (mil. Kč):", 0.0, 10.0, 2.0, step=0.5)
+
+            soucet_mil = m_infra + m_skola + m_soc + m_biz
+
+            if soucet_mil > 10.0:
+                st.error(f"🚨 **Rozpočet překročen!** Rozdělil/a jsi {soucet_mil} mil. Kč. Máš k dispozici jen 10 milionů!")
+            elif soucet_mil < 10.0:
+                st.warning(f"⚠️ **Zbývá rozdělit {round(10.0 - soucet_mil, 1)} mil. Kč.**")
+            else:
+                st.success("✅ **Rozpočet je přesně vyrovnaný (10 mil. Kč)!**")
+
+            st.markdown("##### 🏛️ Prřiřazení funkcí státu a reakce občanů:")
+            col_r1, col_r2 = st.columns(2)
+            with col_r1:
+                st.markdown(f"* **Infrastruktura ({m_infra} mil.):** *Alokační funkce.* (Stavba veřejných statků).")
+                st.markdown(f"* **Školství ({m_skola} mil.):** *Pozitivní externalita.* (Vzdělanost obce).")
+            with col_r2:
+                st.markdown(f"* **Sociální věci ({m_soc} mil.):** *Redistribuční funkce.* (Pomoc potřebným).")
+                st.markdown(f"* **Podnikání ({m_biz} mil.):** *Právní a hospodářský rámec.* (Podpora služeb).")
+
+            with st.expander("💡 Zobrazit vzorové ekonomické řešení Studie 3"):
+                st.markdown("""
+                * **Přiřazení funkcí:**
+                  * *Silnice a chodníky:* Alokační funkce (zajištění veřejného statku, který by soukromník pro všechny nepostavil).
+                  * *Podpora školy:* Investice do rozvoje s obrovskou pozitivní externalitou.
+                  * *Sociální podpora:* Redistribuční funkce (pomoc seniorům a samoživitelům).
+                  * *Parkování pro podnikatele:* Podpora lokální ekonomiky, vytváření podmínek pro trh.
+                * **Kdo získá a kdo bude nespokojený?** Záleží na preferencích. Řidiči budou nadávat, pokud se nepoužije dost peněz na silnice; rodiče budou naštvaní, pokud se seškrtá škola. Všechny požadavky nelze z omezeného rozpočtu uspokojit naráz (vzácnost zdrojů).
+                * **Komunikace obci:** Obec musí transparentně vysvětlit prioritní kritéria, ukázat omezenost kasy a předložit dlouhodobý plán (např. 'letos opravíme silnici, za rok zmodernizujeme učebny').
+                """)
+
+        # ---------------------------------------------------------------------
+        # MINI ÚKOL
+        # ---------------------------------------------------------------------
+        with tab_ukol:
+            st.markdown("#### ✍️ Mini úkol: Cesta běžného produktu")
+            st.markdown("""
+            <div class='box-yellow'>
+                ✍️ <b>Mini úkol:</b> Vyberte si jeden běžný produkt, který máte právě u sebe (mobil, boty, mikinu, sluchátka nebo batoh) a zkuste odhadnout, jaké země, firmy a dopravní kroky mohly být součástí jeho cesty k zákazníkovi.
+            </div>
+            """, unsafe_allow_html=True)
+
+            with st.form("form_mini_ukol_cesta"):
+                moj_produkt = st.text_input("Zvolený produkt (např. Moje tenisky Nike):")
+                st_design = st.text_input("1. Kde vznikl design a vývoj?:")
+                st_suroviny = st.text_input("2. Odkud mohou být suroviny (guma, kůže, plasty)?:")
+                st_dily = st.text_input("3. Kde se vyráběly klíčové díly?:")
+                st_komplet = st.text_input("4. Kde se produkt smontoval / ušil?:")
+                st_doprava = st.text_input("5. Jak se dostal do Česka? (Trasy, doprava):")
+                st_zisk = st.text_input("6. Kdo podle tebe získal největší část zisku (marže)?:")
+
+                if st.form_submit_button("Odeslat analýzu produktu"):
+                    st.success(f"Analýza pro produkt '{moj_produkt}' byla úspěšně uložena! Výborná práce s logistikou a ekonomickou úvahou.")
+
+        # Závěrečné razítko a aktualizace
+        st.divider()
+        st.caption("🗓️ Naposledy aktualizováno: 27. 6. 2026")
+        
+        st.markdown("""
+        <div class='box-green'>
+            ✅ <b>BLAHOPŘEJEME! Dokončil/a jsi celou Kapitolu 5 (Stát, daně a globální souvislosti).</b><br>
+            Nyní rozumíš tomu, proč stát vybírá daně, jak funguje státní rozpočet a dluh, jak zdanit své vlastní výdělky z brigád či internetu, jaké skryté náklady mají levné věci z Asie a proč se firmy musí chovat podle pravidel ESG.
         </div>
         """, unsafe_allow_html=True)
