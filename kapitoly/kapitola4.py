@@ -1487,7 +1487,7 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
             
         st.caption("💡 *Tip z praxe: Je úplně jedno, jestli podáš výpověď 1. nebo 28. v měsíci. Lhůta vždy čeká na začátek dalšího měsíce. Pokud spěcháš, zkus se šéfem raději sepsat Dohodu.*")
 
-elif selected_section_4 == "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace":
+    elif selected_section_4 == "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace":
         st.markdown("### 5.2 Kdy mám nárok na podporu a jak pomáhá Úřad práce")
         st.write("Úřad práce (ÚP) není jen instituce 'pro dlouhodobě nezaměstnané'. Je to klíčový partner, který vám **vyřeší zdravotní pojištění** (bude ho za vás platit stát) a pomůže finančně překlenout dobu hledání nového místa.")
 
