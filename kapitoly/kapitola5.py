@@ -64,48 +64,6 @@ def render():
     # =========================================================================
     if selected_section_5 == "1. Stát jako „hospodář“ — proč ho vůbec máme?":
         st.markdown("### 1. Stát jako „hospodář“ — proč ho vůbec máme?")
-        st.info("Zde bude obsah pro podkapitoly 1.1 až 1.6 (Tržní selhání, funkce státu, magický čtyřúhelník...)")
-        # Sem vložíme kód v dalším kroku...
-
-    # =========================================================================
-    # SEKCE 2: DANĚ A STÁTNÍ ROZPOČET
-    # =========================================================================
-    elif selected_section_5 == "2. Daně, státní rozpočet a ekonomická realita":
-        st.markdown("### 2. Daně, státní rozpočet a ekonomická realita")
-        st.info("Zde bude obsah pro podkapitoly 2.1 až 2.12 (Zásady zdaňování, přímé/nepřímé daně, rozpočet, dluh...)")
-
-    # =========================================================================
-    # SEKCE 3: MOJE DANĚ V PRAXI
-    # =========================================================================
-    elif selected_section_5 == "3. Moje daně v praxi":
-        st.markdown("### 3. Moje daně v praxi")
-        st.info("Zde bude praktický průvodce daněmi pro mladé (brigády, online výdělky, krypto...)")
-
-    # =========================================================================
-    # SEKCE 4: GLOBÁLNÍ SOUVISLOSTI
-    # =========================================================================
-    elif selected_section_5 == "4. Globální souvislosti a svět bez hranic":
-        st.markdown("### 4. Globální souvislosti a svět bez hranic")
-        st.info("Zde bude obsah pro 4.1 až 4.7 (Globalizace, EU, dodavatelské řetězce...)")
-
-    # =========================================================================
-    # SEKCE 5: ESG A UDRŽITELNOST
-    # =========================================================================
-    elif selected_section_5 == "5. ESG a udržitelná ekonomika":
-        st.markdown("### 5. ESG a udržitelná ekonomika")
-        st.info("Zde bude obsah pro 5.1 až 5.6 (Greenwashing, cirkulární ekonomika, odpovědný spotřebitel...)")
-
-    # =========================================================================
-    # SEKCE 6: AKTIVITY A PŘÍPADOVÉ STUDIE
-    # =========================================================================
-    elif selected_section_5 == "6. Aktivity a případové studie na závěr":
-        st.markdown("### 6. Aktivity a případové studie na závěr")
-        st.info("Zde budou interaktivní případové studie (Levné tričko, Student vydělává online, Obec rozhoduje o rozpočtu...)")
-# =========================================================================
-    # SEKCE 1: STÁT JAKO HOSPODÁŘ
-    # =========================================================================
-    if selected_section_5 == "1. Stát jako „hospodář“ — proč ho vůbec máme?":
-        st.markdown("### 1. Stát jako „hospodář“ — proč ho vůbec máme?")
         
         st.markdown("""
         <div class='box-blue'>
@@ -212,7 +170,7 @@ def render():
             if st.form_submit_button("Vydat zprávu do médií"):
                 st.success("Tvá analýza byla přijata k otištění! Právě sis vyzkoušel práci reálného datového analytika.")
 
-# =====================================================================
+        # =====================================================================
         # MAGICKÝ ČTYŘÚHELNÍK (INTERAKTIVNÍ GRAF) A NÁSTROJE STÁTU
         # =====================================================================
 
@@ -351,51 +309,7 @@ def render():
             
             if st.form_submit_button("Uložit mé řešení"):
                 st.success("Skvělá práce! Uvědomil/a sis, že každé rozdělování peněz nese výhody i oběti, přesně jako státní rozpočet.")
-        st.markdown("#### 1.4 Nástroje státu: Hospodářská politika")
-        st.write("Hospodářská politika je soubor nástrojů, kterými stát a veřejné instituce ovlivňují ekonomiku. Nejde jen o vládu, obrovskou roli hraje i centrální banka.")
 
-        st.markdown("""
-        | Nástroj / oblast | Kdo ji používá | Co dělá | Příklad z praxe |
-        | :--- | :--- | :--- | :--- |
-        | 🏛️ **Fiskální politika** | Vláda, parlament, Ministerstvo financí | Pracuje se státním rozpočtem, daněmi, výdaji, dotacemi a investicemi. | Stát zvýší daně, vyplatí pomoc, investuje do dálnic. |
-        | 🏦 **Monetární politika** | ČNB (centrální banka) | Ovlivňuje množství peněz, úrokové sazby a inflaci. | Zvýšení sazeb = dražší hypotéky (brzdí inflaci, ale ztíží bydlení). |
-        | 🤝 **Sociální politika** | Ministerstva, obce | Vytváří záchrannou síť při nemoci, stáří, ztrátě práce. | Důchody, podpora v nezaměstnanosti, nemocenská. |
-        | ⚖️ **Regulační politika** | Úřady, EU | Pravidla pro firmy, ochrana dat a životního prostředí. | Pravidla pro e-shopy, ochrana osobních údajů, emisní limity. |
-        """)
-        
-        st.info("💡 **ČNB a vláda nejsou totéž:** Vláda rozhoduje o rozpočtu a daních. Česká národní banka (ČNB) je nezávislá a hlídá měnu a inflaci. Obě instituce ale ovlivňují stejnou ekonomiku a musí se navzájem doplňovat.")
-
-        st.divider()
-        st.markdown("<div class='box-yellow'>🧠 <b>1.5 Kvíz: Poznáš funkci státu?</b></div>", unsafe_allow_html=True)
-        st.write("U každé situace urči, o jakou funkci nebo nástroj státu jde. Odpověz a pak si zkontroluj řešení:")
-        
-        with st.form("fce_statu_quiz_v2"):
-            q1 = st.selectbox("1. Vláda zvedne daně lidem s vysokými příjmy a peníze použije na podporu samoživitelů.", ["Vyber...", "Alokační funkce", "Redistribuční funkce", "Monetární politika", "Právní rámec"])
-            q2 = st.selectbox("2. Stát financuje opravu mostu, který používají obyvatelé i firmy.", ["Vyber...", "Alokační funkce (Veřejný statek)", "Monetární politika", "Sociální politika", "Redistribuční funkce"])
-            q3 = st.selectbox("3. ČNB zvýší úrokové sazby, aby pomohla brzdit inflaci.", ["Vyber...", "Fiskální politika", "Regulační politika", "Monetární politika (Stabilizační)", "Alokační funkce"])
-            q4 = st.selectbox("4. Úřad řeší firmu, která klame zákazníky falešnou slevou.", ["Vyber...", "Monetární politika", "Právní a institucionální rámec (Regulace)", "Sociální politika", "Redistribuční funkce"])
-            q5 = st.selectbox("5. Stát podporuje vzdělávání, protože z chytrých lidí má přínos i okolí a celá společnost.", ["Vyber...", "Negativní externalita", "Pozitivní externalita", "Monopol", "Platební bilance"])
-            
-            if st.form_submit_button("Zkontrolovat mé odpovědi"):
-                if q1 == "Redistribuční funkce" and q2 == "Alokační funkce (Veřejný statek)" and q3 == "Monetární politika (Stabilizační)" and q4 == "Právní a institucionální rámec (Regulace)" and q5 == "Pozitivní externalita":
-                    st.success("✅ **Všechno správně!** Perfektně rozumíš tomu, jaké páky má stát v ruce.")
-                else:
-                    st.error("❌ Některá z odpovědí je chybná. \n\n*Správné řešení: 1. Redistribuční (přerozdělování). 2. Alokační (veřejná infrastruktura). 3. Monetární (úroky řeší ČNB). 4. Právní (ochrana spotřebitele). 5. Pozitivní externalita.*")
-
-        st.divider()
-        st.markdown("#### 1.6 Mini aktivita: Stát jako správce společného účtu")
-        st.write("Představ si, že tvá třída má společný rozpočet **100 000 Kč** na zlepšení života ve škole.")
-        
-        with st.form("mini_aktivita_16_v2"):
-            st.write("Navrhni řešení a zamysli se nad souvislostmi s ekonomikou státu:")
-            st.text_area("1. Rozděl peníze mezi 3 oblasti: A) bezpečnost/vybavení, B) pomoc slabším studentům, C) akce a rozvoj školy.")
-            st.text_area("2. Ke každé oblasti napiš, jakou funkci státu to připomíná (alokační, redistribuční, stabilizační...):")
-            st.text_area("3. Co by se stalo, kdyby o všem rozhodoval jen trh? (Tedy: kdo zaplatí, ten má službu/pomoc, kdo nezaplatí, nemá nic):")
-            st.text_area("4. Napiš jedno riziko příliš malého a jedno riziko příliš velkého zásahu státu/vedení školy:")
-            
-            if st.form_submit_button("Uložit mé řešení"):
-                st.success("Skvělá práce! Uvědomil/a sis, že každé rozdělování peněz nese výhody i oběti, přesně jako státní rozpočet.")
-        
         st.markdown("""
         <aside>
             🤖 <b>AI mentoring:</b> Zkopíruj tento prompt do ChatGPT nebo Claude a nech si látku vysvětlit:<br>
@@ -408,3 +322,38 @@ def render():
             ✅ <b>Co si z tohoto bloku zapamatovat:</b> Stát v ekonomice není jen výběr daní. Vytváří pravidla hry, financuje veřejné statky, řeší tržní selhání, zmírňuje nerovnosti a snaží se stabilizovat ekonomiku. Zároveň ale každý zásah něco stojí a může mít vedlejší dopady — proto je hospodářská politika neustálé hledání kompromisů (viz magický čtyřúhelník).
         </div>
         """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # SEKCE 2: DANĚ A STÁTNÍ ROZPOČET
+    # =========================================================================
+    elif selected_section_5 == "2. Daně, státní rozpočet a ekonomická realita":
+        st.markdown("### 2. Daně, státní rozpočet a ekonomická realita")
+        st.info("Zde bude obsah pro podkapitoly 2.1 až 2.12 (Zásady zdaňování, přímé/nepřímé daně, rozpočet, dluh...)")
+
+    # =========================================================================
+    # SEKCE 3: MOJE DANĚ V PRAXI
+    # =========================================================================
+    elif selected_section_5 == "3. Moje daně v praxi":
+        st.markdown("### 3. Moje daně v praxi")
+        st.info("Zde bude praktický průvodce daněmi pro mladé (brigády, online výdělky, krypto...)")
+
+    # =========================================================================
+    # SEKCE 4: GLOBÁLNÍ SOUVISLOSTI
+    # =========================================================================
+    elif selected_section_5 == "4. Globální souvislosti a svět bez hranic":
+        st.markdown("### 4. Globální souvislosti a svět bez hranic")
+        st.info("Zde bude obsah pro 4.1 až 4.7 (Globalizace, EU, dodavatelské řetězce...)")
+
+    # =========================================================================
+    # SEKCE 5: ESG A UDRŽITELNOST
+    # =========================================================================
+    elif selected_section_5 == "5. ESG a udržitelná ekonomika":
+        st.markdown("### 5. ESG a udržitelná ekonomika")
+        st.info("Zde bude obsah pro 5.1 až 5.6 (Greenwashing, cirkulární ekonomika, odpovědný spotřebitel...)")
+
+    # =========================================================================
+    # SEKCE 6: AKTIVITY A PŘÍPADOVÉ STUDIE
+    # =========================================================================
+    elif selected_section_5 == "6. Aktivity a případové studie na závěr":
+        st.markdown("### 6. Aktivity a případové studie na závěr")
+        st.info("Zde budou interaktivní případové studie (Levné tričko, Student vydělává online, Obec rozhoduje o rozpočtu...)")
