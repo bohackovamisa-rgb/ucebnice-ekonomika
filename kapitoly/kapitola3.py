@@ -40,8 +40,8 @@ def render():
         "7.2 Závěrečný checklist a prověrka kapitoly"
     ]
     
-st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-selected_section_3 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
+    st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+    selected_section_3 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
     st.divider()
 
 # =========================================================================
