@@ -23,7 +23,7 @@ def render():
         "14. Reflexe a sebehodnocení",
         "15. Integrované opakování"
     ]
-    selected_section = st.selectbox("📌 Přechod na podkapitolu:", section_options, index=0)
+    selected_section = st.selectbox("<i class="fi fi-bs-bookmark"></i> Přechod na podkapitolu:", section_options, index=0)
     st.divider()
 
 # --- 1. Podnikatel a základní pojmy ---
@@ -115,13 +115,13 @@ def render():
 
             st.markdown("""
             <div class='box-blue'>
-                <strong>📌 Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk.
+                <strong><i class="fi fi-bs-bookmark"></i> Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk.
             </div>
             """, unsafe_allow_html=True) #[cite: 1]
 
             st.markdown("""
             <div class='box-blue'>
-                <strong>📌 Čtyři pilíře podnikání:</strong><br>
+                <strong><i class="fi fi-bs-bookmark"></i> Čtyři pilíře podnikání:</strong><br>
                 • <strong>Soustavnost:</strong> nejde o jednorázový prodej, ale o činnost vykonávanou opakovaně nebo dlouhodobě.<br>
                 • <strong>Samostatnost:</strong> podnikatel rozhoduje o tom, co dělá, jak pracuje a jak organizuje svou činnost.<br>
                 • <strong>Vlastní jméno:</strong> podnikatel vystupuje vůči zákazníkům, úřadům a partnerům sám za sebe nebo za svou firmu.<br>
