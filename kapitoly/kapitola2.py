@@ -80,8 +80,8 @@ def render():
         "8. Slovník cizích pojmů"
     ]
     
-    selected_section_2 = st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    st.selectbox("Přechod na podkapitolu:", section_options_2, index=0, label_visibility="collapsed")
+    st.markdown("<i class='fi fi-bs-bookmark'></i> <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
+    selected_section_2 = st.selectbox("Přechod na podkapitolu:", section_options_2, index=0, label_visibility="collapsed")
     st.divider()
 
     # Následuje blok podmínek: if "1.1 Peníze" in selected_section_2: ...
