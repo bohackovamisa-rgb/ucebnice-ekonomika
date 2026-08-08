@@ -1121,3 +1121,124 @@ def render():
             
             if st.form_submit_button("Uložit Krok 6 do Projektového pasu"):
                 st.success("Krok 6 uložen! Tvůj projekt teď pevně stojí na pochopení potřeb.")
+# =====================================================================
+        # PODKAPITOLA 2.2: MARKETINGOVÝ VÝZKUM A ANALÝZA TRHU
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.2 Marketingový výzkum a analýza trhu")
+        st.write("Marketingový výzkum znamená systematický sběr, třídění a vyhodnocování informací o trhu, zákaznících, konkurenci a prostředí firmy. Jeho hlavním cílem je **snížit riziko při rozhodování**.")
+
+        st.markdown("""
+        <div class='box-blue'>
+            🔍 <b>Proč firmy dělají výzkum:</b> Bez dat firma často jen hádá a doufá. Výzkum pomáhá s jistotou zjistit, kdo je zákazník, jaký problém řeší, kolik je ochoten zaplatit, kde nakupuje, jak vnímá naši značku a proč třeba dává přednost konkurenci.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.write("**Správný výzkum ti odpoví na klíčové otázky:**")
+        st.markdown("* *Kdo je náš zákazník a jaký problém mu produkt řeší?* \n* *Jakou cenu je ochoten zaplatit?* \n* *Která reklama funguje lépe?* \n* *Proč lidé opouštějí košík v e-shopu těsně před platbou?*")
+
+        # ---------------------------------------------------------------------
+        # 2.2.1 ZDROJE DAT
+        # ---------------------------------------------------------------------
+        st.markdown("##### 2.2.1 Zdroje dat: Kde vezmeme informace?")
+        
+        col_zd1, col_zd2 = st.columns(2)
+        with col_zd1:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">🥇 Primární data (Data z první ruky)</h5>
+                <b>Co to je:</b> Nově sesbíraná data vytvořená <i>přímo a jen pro tvůj konkrétní účel</i>.<br><br>
+                <b>Výhody:</b> Jsou přesně zaměřená na tvůj problém. Konkurence je nemá.<br>
+                <b>Nevýhody:</b> Sběr je dražší a trvá dlouho.<br><br>
+                <b>Příklady:</b> Vlastní dotazník mezi spolužáky, rozhovor se zákazníkem.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with col_zd2:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #1d4ed8;">🥈 Sekundární data (Data z druhé ruky)</h5>
+                <b>Co to je:</b> Již existující data, která někdo sesbíral dříve nebo pro jiný účel.<br><br>
+                <b>Výhody:</b> Jsou levná (nebo zdarma) a získáš je okamžitě.<br>
+                <b>Nevýhody:</b> Nemusí přesně odpovídat tvému problému. Má je i konkurence.<br><br>
+                <b>Příklady:</b> Statistiky ČSÚ, staré prodejní výkazy e-shopu, veřejné recenze.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🕹️ <b>Kvíz: Primární nebo sekundární?</b></div>", unsafe_allow_html=True)
+        st.write("Jako markeťák potřebuješ zjistit, proč klesají prodeje batohů. Přečti si akci a urči typ dat:")
+
+        kviz_data = st.radio("Jdeš na Heureku a pročítáš si veřejné recenze od lidí, kteří si batoh koupili loni.", [
+            "Vyber odpověď...",
+            "A) Jsou to Primární data, protože to psali reální zákazníci.",
+            "B) Jsou to Sekundární data, protože ta data už existují a leží veřejně na internetu."
+        ])
+
+        if "B)" in kviz_data:
+            st.success("✅ **Přesně tak!** Tím, že data už existovala a ty si je jen 'stáhl/a' z internetu, jde o sekundární výzkum (tzv. výzkum od stolu). Kdybys těm lidem zavolal/a a položil/a jim vlastní nové otázky, šlo by o primární data.")
+        elif "A)" in kviz_data:
+            st.error("❌ Kdepak. Kdo data napsal, není důležité. Důležité je, zda jsi data *nově vytvořil/a*, nebo jen *převzal/a již existující*. Správně je B.")
+
+        # ---------------------------------------------------------------------
+        # 2.2.2 METODY VÝZKUMU
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.2.2 Metody výzkumu: Jak se ptát a co sledovat")
+        
+        tab_v1, tab_v2, tab_v3, tab_v4 = st.tabs(["🔢 Kvantitativní", "💬 Kvalitativní", "👁️ Pozorování", "🧪 Experiment"])
+        
+        with tab_v1:
+            st.markdown("##### Kvantitativní výzkum (Otázka: KOLIK?)")
+            st.write("Pracuje s velkým počtem respondentů a výsledkem jsou tvrdá čísla, procenta a grafy.")
+            st.info("📊 **Příklad:** Pošleš dotazník 300 studentům. Zjistíš, že *75 % studentů by za školní mikinu zaplatilo max 600 Kč.*")
+            
+        with tab_v2:
+            st.markdown("##### Kvalitativní výzkum (Otázka: PROČ?)")
+            st.write("Jde do hloubky. Zkoumá motivace, postoje, pocity a emoce. Nepotřebuješ stovky lidí, stačí pár, se kterými mluvíš dlouho.")
+            st.warning("🗣️ **Příklad:** Pozveš 5 studentů na hloubkový rozhovor (Focus group). Zjistíš, že *mikinu nechtějí nosit proto, že se stydí za staré logo školy.*")
+            
+        with tab_v3:
+            st.markdown("##### Pozorování")
+            st.write("Lidé v dotaznících často lžou (nebo si věci pamatují jinak). Pozorování sleduje jejich **skutečné chování**.")
+            st.error("👀 **Příklad:** Majitelka večerky sleduje na kamerách, že se většina studentů zastaví u regálu s energy drinky celkem na 15 vteřin, ale nakonec si vezmou levnější limonádu o regál vedle.")
+            
+        with tab_v4:
+            st.markdown("##### Experiment (A/B Testování)")
+            st.write("Změníš na trhu (nebo na webu) jednu jedinou věc a sleduješ, jak to ovlivní chování lidí.")
+            st.success("💻 **Příklad:** Polovině návštěvníků e-shopu ukážeš červené tlačítko 'Koupit', druhé polovině zelené. Změříš, které generuje víc nákupů.")
+
+        st.markdown("<br><div class='box-purple'>🧪 <b>Simulátor: Vyhodnoť svůj první A/B Test</b></div>", unsafe_allow_html=True)
+        st.write("Spustil/a jsi e-shop se studentským merchem. Chtěl/a jsi zvýšit prodeje. Nasadil/a jsi experiment: polovině návštěvníků se ukázala **Varianta A**, druhé polovině **Varianta B**. Obě varianty vidělo přesně 1000 lidí. Která dopadla lépe?")
+
+        with st.container(border=True):
+            col_ab1, col_ab2 = st.columns(2)
+            col_ab1.markdown("<div style='text-align:center; padding: 20px; background-color: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px;'><b>Varianta A:</b><br>Tričko za 500 Kč<br>+ Poštovné 100 Kč</div>", unsafe_allow_html=True)
+            col_ab2.markdown("<div style='text-align:center; padding: 20px; background-color: #f1f5f9; border: 2px dashed #3b82f6; border-radius: 8px;'><b>Varianta B:</b><br>Tričko za 600 Kč<br>+ Doprava ZDARMA</div>", unsafe_allow_html=True)
+            
+            st.write("")
+            ab_tip = st.radio("Zákazník zaplatí v obou případech přesně 600 Kč. Jaká verze ale podle tebe přinesla reálně víc nákupů (konverzí)?", [
+                "Vyber svůj tip...",
+                "Varianta A (Nižší cena produktu vypadá na první pohled lépe).",
+                "Varianta B (Slovo 'Doprava zdarma' funguje v psychologii jako magnet)."
+            ])
+
+            if "Varianta B" in ab_tip:
+                st.success("✅ **Výborně! Varianta B vyhrála.** V reálných testech na e-shopech lidé bytostně nesnášejí platit za poštovné (berou to jako peníze vyhozené oknem). Raději zaplatí o stovku víc za produkt samotný, pokud vidí nápis 'ZDARMA'. Takhle marketingový výzkum vydělává peníze!")
+            elif "Varianta A" in ab_tip:
+                st.error("❌ Tady tě data vyvedla z omylu! Ačkoliv je matematika stejná (600 Kč), **vyhrála Varianta B**. Lidé psychologicky nesnáší placení poštovného u pokladny a často kvůli němu opustí košík. Přesně proto firmy experimenty dělají – aby nespoléhaly jen na selský rozum.")
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            📱 <b>Sociální sítě jako průběžný výzkum trhu:</b> Sítě jako TikTok, Instagram nebo YouTube ti neustále ukazují, na co lidé reagují. Počet zhlédnutí, míra dokoukání videa, komentáře nebo uložení jsou jasná analytická data. <b>Pozor ale na jednu věc:</b> Mít vysoký dosah (virál) neznamená automaticky důvěru. Tisíc zhlédnutí od relevantní cílovky prodá víc, než milion zhlédnutí od lidí, co se chtějí jen zasmát.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 7 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 7: Tvůj marketingový výzkum</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok7"):
+            st.text_area("1. Kde získáš SEKUNDÁRNÍ DATA o tvém trhu ještě před startem projektu?:", placeholder="např. Podívám se na konkurenční školní Instagramy a spočítám, jaké typy příspěvků mají nejvíce lajků.")
+            st.text_area("2. Jakou metodu použiješ pro sběr PRIMÁRNÍCH DAT od tvé cílovky?:", placeholder="např. Použiji kvantitativní dotazník (Google Forms) mezi studenty 2. a 3. ročníku, abych zjistil/a max. akceptovatelnou cenu lístku na ples.")
+            
+            if st.form_submit_button("Uložit Krok 7 do Projektového pasu"):
+                st.success("Krok 7 uložen! Než začneš utrácet peníze, víš, že musíš zjistit tvrdá data.")
