@@ -1607,3 +1607,102 @@ def render():
         st.plotly_chart(fig_remote, use_container_width=True)
         
         st.write("💡 **Co z toho vyplývá pro tvou kariéru:** Pokud tvá práce nevyžaduje fyzickou přítomnost (jako u zubaře nebo elektrikáře), tvůj zaměstnavatel může zítra najmout někoho z Asie za zlomek tvé ceny. Abys v globálním světě uspěl/a, musíš nabídnout víc než jen základní " + '"odvedení úkolu"' + " – musíš mít **komunikační schopnosti, kreativitu, kritické myšlení, pochopení místní kultury a umět používat AI lépe než ostatní**.")
+# =====================================================================
+        # PODKAPITOLA 4.7: PŘÍPADOVÁ STUDIE A UHLÍKOVÁ STOPA
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 4.7 Případová studie: Anatomie jednoho smartphonu")
+        st.write("Vezmi do ruky svůj mobil. Tenhle malý kousek skla a kovu je naprostým mistrovským dílem globalizace. Než se dostal do tvé kapsy, doslova obletěl svět.")
+
+        st.markdown("<div class='box-blue'>📱 <b>Cesta tvého telefonu (Krok za krokem):</b></div>", unsafe_allow_html=True)
+        
+        # Vizualizace cesty produktu přes sloupce
+        col_c1, col_c2, col_c3 = st.columns(3)
+        col_c1.markdown("**1. Nápad a Design**\n🇺🇸/🇪🇺/🇰🇷\nVymyšleno v kancelářích v Kalifornii nebo Soulu. Software, patenty, marketing.")
+        col_c2.markdown("**2. Suroviny**\n🇨🇩/🇦🇺/🇨🇱\nKobalt těžený v Kongu, lithium z Chile, vzácné kovy z Austrálie a Číny.")
+        col_c3.markdown("**3. Čipy a Mozek**\n🇹🇼/🇺🇸/🇳🇱\nNejsložitější součástky vymyšlené v USA a vyrobené na Tchaj-wanu stroji z Nizozemska.")
+        
+        col_c4, col_c5, col_c6 = st.columns(3)
+        col_c4.markdown("**4. Komponenty**\n🇯🇵/🇨🇳/🇰🇷\nDisplej z Jižní Koreje, čočka fotoaparátu z Japonska, baterie z Číny.")
+        col_c5.markdown("**5. Kompletace**\n🇨🇳/🇻🇳/🇮🇳\nStovky tisíc dělníků v Číně, Indii nebo Vietnamu to celé fyzicky smontují dohromady.")
+        col_c6.markdown("**6. Doprava a Prodej**\n🚢/🇨🇿\nNákladní loď, kamion, sklad a konečně český e-shop nebo prodejna.")
+
+        st.markdown("<div class='box-purple'>🕹️ <b>Kvíz: Kdo slízne smetanu?</b></div>", unsafe_allow_html=True)
+        st.write("Mobil stojí například 25 000 Kč. Komu z tohoto obřího globálního řetězce podle tebe zůstane **největší část zisku (marže)**?")
+        
+        tip_marze = st.selectbox("Tvůj tip:", [
+            "Vyber možnost...", 
+            "Těžaři surovin v Africe a Jižní Americe", 
+            "Továrna a dělníci, kteří to smontují v Číně/Indii", 
+            "Výrobci hi-tech součástek (displeje, čipy)", 
+            "Samotná značka (Apple, Samsung - design a software)",
+            "Dopravci a prodejci (e-shop, kamenná prodejna)"
+        ])
+        
+        if tip_marze != "Vyber možnost...":
+            if "značka" in tip_marze.lower():
+                st.success("✅ **Přesně tak! Skvělá ekonomická úvaha.**")
+            else:
+                st.error(f"❌ Kdepak, těm zůstanou jen drobné. Největší zisk bere **Samotná značka (Apple, Samsung)**.")
+                
+            st.write("Tady je orientační rozpad ceny špičkového smartphonu (tzv. Smile Curve - Úsměvová křivka). Nejvíce vydělává ten, kdo to vymyslí (Design/Software) a ten, kdo to prodá (Marketing/Značka). Samotná fyzická výroba a montáž má paradoxně ten nejmenší podíl na zisku!")
+            
+            # Graf rozpadu marže iPhonu/Smartphonu
+            fig_marze = go.Figure(go.Waterfall(
+                orientation="v",
+                measure=["relative", "relative", "relative", "relative", "total"],
+                x=["Fyzická výroba a montáž", "Suroviny a Logistika", "Součástky (Displeje, čipy)", "Zisk Značky a Software", "Konečná cena mobilu"],
+                y=[5, 10, 25, 60, 100],
+                connector={"line":{"color":"rgb(63, 63, 63)"}},
+                text=["5 %", "10 %", "25 %", "60 %", "100 %"],
+                textposition="outside"
+            ))
+            fig_marze.update_layout(title="Kdo bere peníze z tvého mobilu? (Orientační rozpad hodnoty)", showlegend=False, height=350, margin=dict(t=40, b=20, l=20, r=20))
+            st.plotly_chart(fig_marze, use_container_width=True)
+
+        st.markdown("<div class='box-yellow'>🌍 <b>Studentská kalkulačka uhlíkové stopy</b></div>", unsafe_allow_html=True)
+        st.write("Cílem není tě obviňovat, že si kupuješ věci. Cílem je ukázat, že naše spotřeba, rychlá móda a levná doprava přes půl planety mají tvrdé, měřitelné dopady. Zkus si nahrubo naklikat svůj roční životní styl:")
+        
+        with st.container(border=True):
+            col_uhlik1, col_uhlik2 = st.columns(2)
+            with col_uhlik1:
+                maso = st.selectbox("Jak často jíš maso/mléčné výrobky?", ["Každý den (vysoká stopa)", "Několikrát týdně", "Jsem vegan/vegetarián (nízká stopa)"])
+                hadry = st.selectbox("Nákupy rychlé módy (Shein, Temu, řetězce):", ["Nakupuji pořád, každý měsíc nové kousky", "Nakupuji jen když něco potřebuji", "Nakupuji převážně v sekáčích / nosím věci roky"])
+            with col_uhlik2:
+                letani = st.selectbox("Létání na dovolenou:", ["Několikrát ročně (např. 3+ zpáteční lety)", "Jednou ročně (letní dovolená)", "Nelétám / jezdím vlakem či autem po okolí"])
+                auto = st.selectbox("Jízda autem:", ["Jezdím autem úplně všude", "Kombinuji auto a MHD", "Jezdím jen MHD, na kole nebo chodím pěšky"])
+
+            # Skrytá bodovací logika pro ukázku
+            body = 0
+            body += 3 if "Každý den" in maso else 1 if "Několikrát" in maso else 0.5
+            body += 3 if "pořád" in hadry else 1.5 if "potřebuji" in hadry else 0.5
+            body += 4 if "Několikrát ročně" in letani else 2 if "Jednou" in letani else 0.5
+            body += 3 if "všude" in auto else 1.5 if "Kombinuji" in auto else 0.5
+            
+            stopa_tuny = round(body, 1)
+            prumer_cr = 9.5
+            
+            st.write("---")
+            st.markdown(f"### Tvá odhadovaná uhlíková stopa: {stopa_tuny} tun CO₂ za rok")
+            st.progress(min(stopa_tuny / 15.0, 1.0))
+            
+            if stopa_tuny > prumer_cr:
+                st.error(f"Tvá stopa je nad průměrem ČR ({prumer_cr} tun). Země by k přežití potřebovala několik planet, kdyby takto žili všichni.")
+            elif stopa_tuny > 4:
+                st.warning(f"Jsi lepší než průměrný Čech ({prumer_cr} tun), ale stále je to z celosvětového pohledu hodně (udržitelný limit pro záchranu klimatu se odhaduje kolem 2-3 tun na osobu).")
+            else:
+                st.success("Fantazie! Tvá stopa je neuvěřitelně nízká. Žiješ velmi udržitelně.")
+                
+            st.markdown("""
+            <div style="font-size: 0.9rem; color: #64748b;">
+                <i>Chceš vědět naprosto přesné číslo na základě detailních dat o tvém bydlení a energiích? Vyzkoušej špičkovou českou kalkulačku od odborníků na: <a href='https://faktaoklimatu.cz/uhlikova-stopa' target='_blank'>Fakta o klimatu</a>.</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class='box-green'>
+            ✅ <b>Co si zapamatovat z Globálních souvislostí (Shrnutí 4. bloku):</b><br>
+            Globalizace nám přinesla neuvěřitelně levné zboží, obrovský výběr, technologické zázraky v kapse a možnost pracovat či studovat v zahraničí (díky EU). Zároveň ale vytvořila extrémní závislosti (krize čipů), zranitelné dodavatelské řetězce (zaseknutý Suezský průplav) a těžké ekologické dopady. Ekonomicky dospělý člověk se u výrobku neptá jen <i>"Kolik to stojí?"</i>, ale také: <b>"Odkud to je, kdo a v jakých podmínkách to vyrobil, jaká rizika to do budoucna vytváří pro naši zemi a kdo z toho skutečně profituje?"</b>
+        </div>
+        """, unsafe_allow_html=True)
