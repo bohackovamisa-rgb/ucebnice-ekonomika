@@ -729,3 +729,60 @@ def render():
         * 📄 [Ministerstvo financí ČR (Státní rozpočet)](https://www.mfcr.cz/cs/verejny-sektor/makroekonomika/statni-rozpocet) — Kompletní dokumenty, návrhy, schválené rozpočty a závěrečné účty.
         * 📈 [Státní dluhopisy ČR](https://www.sporicidluhopisycr.cz/) — Informace pro běžné občany k vybraným státním dluhopisům, pokud do nich chceš investovat.
         """)
+# =====================================================================
+        # DOKONČENÍ SEKCE 2: VÝDAJE ROZPOČTU (2.8)
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.8 Výdaje rozpočtu: Mandatorní a nemandatorní")
+        st.write("V diskusích často zaznívá: *„Stát má velký dluh? Tak ať prostě přestane tolik utrácet a škrtne zbytečnosti!“* V realitě to ale zdaleka tak jednoduché není. Ne všechny výdaje státu se dají „škrtnout“ – většina z nich je totiž pevně daná zákony.")
+
+        col_vyd1, col_vyd2 = st.columns(2)
+        with col_vyd1:
+            st.markdown("""
+            <div style="background-color: #fef2f2; padding: 15px; border-left: 5px solid #ef4444; height: 100%;">
+                <h5 style="margin-top: 0; color: #b91c1c;">🔒 Mandatorní výdaje (Povinné)</h5>
+                <b>Co znamenají:</b> Výdaje pevně dané zákonem nebo smluvními závazky.<br><br>
+                <b>Příklady:</b> Důchody, sociální dávky, podpora v nezaměstnanosti, platy státních zaměstnanců (často i zdravotnictví/školství) a splácení úroků ze státního dluhu.<br><br>
+                <b>Proč jsou problém:</b> Stát je <b>musí</b> platit. Pokud je chce snížit, musí vláda změnit zákony, což musí projít parlamentem, prezidentem a často to vyvolá obrovské protesty veřejnosti. Zabírají zhruba 80 % rozpočtu ČR!
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_vyd2:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">🛠️ Nemandatorní výdaje (Flexibilní)</h5>
+                <b>Co znamenají:</b> Výdaje, o kterých se rozhoduje pružněji při schvalování rozpočtu.<br><br>
+                <b>Příklady:</b> Investice do infrastruktury (nové dálnice), nákup armádní techniky, dotace firmám, věda a výzkum, podpora sportu.<br><br>
+                <b>Proč jsou důležité:</b> Jsou to jediné peníze, o kterých mohou politici při tvorbě rozpočtu reálně a rychle vyjednávat. Právě zde se škrtá nejčastěji, což ale může brzdit budoucí rozvoj země (např. se nedostaví klíčová dálnice).
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🕹️ <b>Reality check: Zahraj si na Ministra financí</b></div>", unsafe_allow_html=True)
+        st.write("Stát má v našem ilustračním příkladu dluh 200 miliard Kč. Tvým úkolem je rozpočet zachránit a výdaje seškrtat. Jak se ti to povede?")
+
+        # Simulátor škrtání rozpočtu
+        with st.container(border=True):
+            st.markdown("**Celkové roční výdaje státu: 2 200 miliard Kč**")
+            st.progress(1.0) # Plný bar indikující 100% utrácení
+            
+            st.write("🔒 **Mandatorní výdaje:** 1 800 miliard Kč *(Tyto peníze jsou uzamčené v zákonech. Nelze je rychle škrtnout)*")
+            
+            st.write("🛠️ **Nemandatorní výdaje (Volné k dispozici):** 400 miliard Kč")
+            skrty = st.slider("Kolik miliard z této volné částky se rozhodneš okamžitě škrtnout, abys snížil/a dluh?", 0, 400, 0, step=10)
+            
+            if skrty == 0:
+                st.info("Zatím jsi neudělal/a žádné škrty. Dluh vesele roste o 200 miliard Kč ročně. Budeš nepopulární u ekonomů, ale voliči jsou zatím v klidu.")
+            elif 0 < skrty < 150:
+                st.warning(f"Ušetřil/a jsi {skrty} miliard Kč. Mírně jsi snížil/a dluh, ale zastavil/a jsi opravy několika dálnic a omezil/a dotace do zemědělství. Dluh ale dál roste.")
+            elif 150 <= skrty < 300:
+                st.error(f"Ušetřil/a jsi obrovských {skrty} miliard Kč! Dluh se zastavuje. Daní za to je ale úplné zastavení výstavby infrastruktury, zamrznutí peněz pro univerzity a nula peněz na inovace firem. Ekonomika může začít stagnovat.")
+            else:
+                st.error(f"Škrtl/a jsi extrémních {skrty} miliard Kč! Sice jsi vymazal/a dluh a ještě vytvořil/a přebytek, ale naprosto jsi ochromil/a chod země. Zrušil/a jsi vesměs všechny investice. V příštích volbách tě pravděpodobně smetou naštvaní voliči a podnikatelé.")
+
+        st.markdown("""
+        <div class='box-gray'>
+            💡 <b>Co kdyby byl stát domácnost?</b><br>
+            Domácnost má povinné platby (mandatorní výdaje): nájem, energie, splátky, jídlo. Těžko je můžeš ze dne na den nezaplatit. Stát to má podobně, ale <b>je tu jeden obrovský rozdíl:</b> Stát není běžná rodina. Na rozdíl od rodiny může stát legálně vybrat daně navíc, nebo vydávat státní dluhopisy a půjčovat si na finančních trzích. Přesto platí základní gravitace – dlouhodobé a neřízené deficity vytvářejí obrovský tlak na to, že v budoucnu bude muset stát buď dramaticky zvednout daně, nebo radikálně snížit kvalitu služeb a důchodů.
+        </div>
+        """, unsafe_allow_html=True)
