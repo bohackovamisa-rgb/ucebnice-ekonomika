@@ -1732,61 +1732,68 @@ def render():
             *(Vazba na RVP pro SŠ: Udržitelný rozvoj, odpovědné podnikání, environmentální a sociální dopady, spotřebitelské rozhodování, etika, řízení rizik)*
             """)
             
-st.divider()
+# =====================================================================
+        # PODKAPITOLA 5.1: UDRŽITELNÝ ROZVOJ
+        # =====================================================================
+
+        st.divider()
         st.markdown("#### 5.1 Udržitelný rozvoj: Ekonomika, která nespotřebuje budoucnost")
         st.write("Udržitelný rozvoj znamená takový způsob výroby, spotřeby a života, který **uspokojuje potřeby současné generace, aniž by ohrozil možnosti budoucích generací**. Nejde ale jen o ochranu stromečků a ledních medvědů. Udržitelnost stojí na třech stejně důležitých, vzájemně propojených pilířích:")
-            col_u1, col_u2, col_u3 = st.columns(3)
-            with col_u1:
-                st.markdown("""
-                <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; height: 100%;">
-                    <h5 style="margin-top: 0; color: #b45309;">💰 Ekonomická rovina</h5>
-                    <b>Co řeší:</b> Zda firma, stát nebo domácnost funguje dlouhodobě finančně zdravě.<br><br>
-                    <b>Příklad:</b> Firma nežije jen z rychlého zisku "teď hned", ale investuje do inovací, nových technologií a nevytváří si neúnosné dluhy. Zkrátka dlouhodobě nezkrachuje.
-                </div>
-                """, unsafe_allow_html=True)
-            with col_u2:
-                st.markdown("""
-                <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; height: 100%;">
-                    <h5 style="margin-top: 0; color: #047857;">🌍 Environmentální rovina</h5>
-                    <b>Co řeší:</b> Dopady na klima, vodu, půdu, odpady, biodiverzitu a spotřebu zdrojů.<br><br>
-                    <b>Příklad:</b> Továrna snižuje emise skleníkových plynů, čistí po sobě odpadní vodu, omezuje plasty a vyrábí elektřinu ze solárních panelů na střeše.
-                </div>
-                """, unsafe_allow_html=True)
-            with col_u3:
-                st.markdown("""
-                <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; height: 100%;">
-                    <h5 style="margin-top: 0; color: #1d4ed8;">🤝 Sociální rovina</h5>
-                    <b>Co řeší:</b> Dopady na lidi – zaměstnance, dodavatele, zákazníky i místní komunity.<br><br>
-                    <b>Příklad:</b> Zákaz dětské práce v celém řetězci, férové mzdy pro dělníky, bezpečné pracovní prostředí a to, že továrna neničí hlukem život lidem v okolí.
-                </div>
-                """, unsafe_allow_html=True)
 
-            st.markdown("<br><div class='box-purple'>🕹️ <b>CEO Trenažér: Udržíš balanc?</b></div>", unsafe_allow_html=True)
-            st.write("Představ si, že jsi ředitel/ka značky, která vyrábí tenisky. Chceš uvést na trh nový model. Udržitelnost znamená, že musíš najít dokonalý balanc mezi třemi pilíři. Jakou cestu zvolíš?")
-
-            with st.container(border=True):
-                volba_tenisky = st.radio("Zvol byznys strategii pro výrobu nových tenisek:", [
-                    "Vyber strategii...",
-                    "A) 🤑 Maximalizace zisku: Výroba v Bangladéši za 50 Kč/kus. Dělníci dělají 14 hodin denně, toxické barvy vypouštíme do řeky. Prodáme za 2000 Kč.",
-                    "B) 🌳 Extrémní ekologie: 100% ruční výroba v ČR z recyklovaných bio materiálů, dělníci mají nadstandardní platy. Výrobní cena je ale 8000 Kč/kus.",
-                    "C) ⚖️ Zlatá střední cesta: Výroba v certifikované továrně ve Vietnamu (hlídané a férové platy), použití recyklovaných plastů, prodejní cena 2500 Kč."
-                ])
-
-                if "A)" in volba_tenisky:
-                    st.error("📉 **Ekonomika: Hvězdná | Ekologie: Katastrofa | Sociální: Katastrofa**")
-                    st.write("Krátkodobě vyděláš obrovské peníze. Ale brzy tě odhalí novináři, tví zákazníci z Gen Z tě zbojkotují, a co víc – banky ti kvůli novým pravidlům odmítnou půjčit peníze na rozvoj. Tvá firma zanedlouho padne.")
-                elif "B)" in volba_tenisky:
-                    st.warning("📉 **Ekonomika: Katastrofa | Ekologie: Hvězdná | Sociální: Hvězdná**")
-                    st.write("Získal/a jsi všechny eko-ceny a zaměstnanci tě milují. Problém? Nikdo si tvé boty za 10 000 Kč nekoupí, protože jsou pro běžné lidi moc drahé. Firma do půl roku zkrachuje. Není totiž EKONOMICKY udržitelná.")
-                elif "C)" in volba_tenisky:
-                    st.success("📈 **Ekonomika: Skvělá | Ekologie: Dobrá | Sociální: Dobrá**")
-                    st.write("Našel/Našla jsi balanc! Zisk sice není tak brutální jako u varianty A, ale tvůj byznys je ZDRAVÝ. Zákazníci ho mají rádi, banka ti dá levnější úvěr a firma tu bude i za 20 let. Tohle je skutečný **udržitelný rozvoj**.")
-
+        col_u1, col_u2, col_u3 = st.columns(3)
+        with col_u1:
             st.markdown("""
-            <div class='box-yellow'>
-                🧠 <b>Jednoduše a stručně:</b> Udržitelná ekonomika se neptá jen <i>"kolik to vydělá letos"</i>, ale také <i>"co to způsobí lidem, přírodě a budoucím nákladům za 10 let"</i>.
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; height: 100%;">
+                <h5 style="margin-top: 0; color: #b45309;">💰 Ekonomická rovina</h5>
+                <b>Co řeší:</b> Zda firma, stát nebo domácnost funguje dlouhodobě finančně zdravě.<br><br>
+                <b>Příklad:</b> Firma nežije jen z rychlého zisku "teď hned", ale investuje do inovací, nových technologií a nevytváří si neúnosné dluhy. Zkrátka dlouhodobě nezkrachuje.
             </div>
             """, unsafe_allow_html=True)
+
+        with col_u2:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">🌍 Environmentální rovina</h5>
+                <b>Co řeší:</b> Dopady na klima, vodu, půdu, odpady, biodiverzitu a spotřebu zdrojů.<br><br>
+                <b>Příklad:</b> Továrna snižuje emise skleníkových plynů, čistí po sobě odpadní vodu, omezuje plasty a vyrábí elektřinu ze solárních panelů na střeše.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_u3:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; height: 100%;">
+                <h5 style="margin-top: 0; color: #1d4ed8;">🤝 Sociální rovina</h5>
+                <b>Co řeší:</b> Dopady na lidi – zaměstnance, dodavatele, zákazníky i místní komunity.<br><br>
+                <b>Příklad:</b> Zákaz dětské práce v celém řetězci, férové mzdy pro dělníky, bezpečné pracovní prostředí a to, že továrna neničí hlukem život lidem v okolí.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🕹️ <b>CEO Trenažér: Udržíš balanc?</b></div>", unsafe_allow_html=True)
+        st.write("Představ si, že jsi ředitel/ka značky, která vyrábí tenisky. Chceš uvést na trh nový model. Udržitelnost znamená, že musíš najít dokonalý balanc mezi třemi pilíři. Jakou cestu zvolíš?")
+
+        with st.container(border=True):
+            volba_tenisky = st.radio("Zvol byznys strategii pro výrobu nových tenisek:", [
+                "Vyber strategii...",
+                "A) 🤑 Maximalizace zisku: Výroba v Bangladéši za 50 Kč/kus. Dělníci dělají 14 hodin denně, toxické barvy vypouštíme do řeky. Prodáme za 2000 Kč.",
+                "B) 🌳 Extrémní ekologie: 100% ruční výroba v ČR z recyklovaných bio materiálů, dělníci mají nadstandardní platy. Výrobní cena je ale 8000 Kč/kus.",
+                "C) ⚖️ Zlatá střední cesta: Výroba v certifikované továrně ve Vietnamu (hlídané a férové platy), použití recyklovaných plastů, prodejní cena 2500 Kč."
+            ])
+
+            if "A)" in volba_tenisky:
+                st.error("📉 **Ekonomika: Hvězdná | Ekologie: Katastrofa | Sociální: Katastrofa**")
+                st.write("Krátkodobě vyděláš obrovské peníze. Ale brzy tě odhalí novináři, tví zákazníci z Gen Z tě zbojkotují, a co víc – banky ti kvůli novým pravidlům odmítnou půjčit peníze na rozvoj. Tvá firma zanedlouho padne.")
+            elif "B)" in volba_tenisky:
+                st.warning("📉 **Ekonomika: Katastrofa | Ekologie: Hvězdná | Sociální: Hvězdná**")
+                st.write("Získal/a jsi všechny eko-ceny a zaměstnanci tě milují. Problém? Nikdo si tvé boty za 10 000 Kč nekoupí, protože jsou pro běžné lidi moc drahé. Firma do půl roku zkrachuje. Není totiž EKONOMICKY udržitelná.")
+            elif "C)" in volba_tenisky:
+                st.success("📈 **Ekonomika: Skvělá | Ekologie: Dobrá | Sociální: Dobrá**")
+                st.write("Našel/Našla jsi balanc! Zisk sice není tak brutální jako u varianty A, ale tvůj byznys je ZDRAVÝ. Zákazníci ho mají rádi, banka ti dá levnější úvěr a firma tu bude i za 20 let. Tohle je skutečný **udržitelný rozvoj**.")
+
+        st.markdown("""
+        <div class='box-yellow'>
+            🧠 <b>Jednoduše a stručně:</b> Udržitelná ekonomika se neptá jen <i>"kolik to vydělá letos"</i>, ale také <i>"co to způsobí lidem, přírodě a budoucím nákladům za 10 let"</i>.
+        </div>
+        """, unsafe_allow_html=True)
 # =====================================================================
         # PODKAPITOLA 5.2: CO ZNAMENÁ ESG
         # =====================================================================
