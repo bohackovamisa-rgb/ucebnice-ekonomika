@@ -87,7 +87,7 @@ def render():
     ]
 
     st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    selected_section_6 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
+    selected_section_6 = st.selectbox("Přechod na podkapitolu:", section_options_6, index=0, label_visibility="collapsed")
 # =========================================================================
     # SEKCE 1: MANAGEMENT – JAK Z CHAOSU UDĚLAT FUNGUJÍCÍ FIRMU
     # =========================================================================
