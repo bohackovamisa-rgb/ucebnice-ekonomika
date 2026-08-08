@@ -2501,3 +2501,99 @@ def render():
 
                 if st.form_submit_button("Odeslat řešení Případové studie 1"):
                     st.success("✅ **Výborná analýza!** Správně jsi identifikoval/a, že základem úspěchu je systém *Print-on-Demand* (předobjednávky bez rizika zásob), zapojení studentů do designu (výzkum) a přizpůsobení ceny ochotě platit.")
+# ---------------------------------------------------------------------
+        # PŘÍPADOVÁ STUDIE 2
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### ☕ Případová studie 2: Kavárna u školy a boj o pozornost")
+
+        with st.container(border=True):
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px;">
+                <h5 style="margin-top:0; color: #1e40af;">☕ Situace:</h5>
+                U střední školy vznikla nová malá kavárna. Majitel chce oslovit studenty, ale konkurence v okolí je silná. Kavárna nabízí skvělé nápoje, ale trpí nízkou návštěvností.<br><br>
+                Po průzkumu majitel zjistí, že studenti hledají <b>místo, kde se dá v klidu učit, nabít telefon, sedět s kamarády a koupit si cenově dostupné menší nápoje</b>.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("<br><b>💡 Návrh řešení podle 4P:</b>", unsafe_allow_html=True)
+            st.markdown("""
+            | Oblast 4P | Možné řešení pro kavárnu |
+            | :--- | :--- |
+            | **Product** | Menší studentské nápoje, dostatek zásuvek, rychlá Wi-Fi, tichý studijní koutek. |
+            | **Price** | Studentská cena na ISIC, věrnostní kartička (10. káva zdarma), ranní kombíčko káva + muffin. |
+            | **Place** | Lokalita přímo u školy + možnost předobjednávky přes Instagram / jednoduchý formulář. |
+            | **Promotion** | Zákulisní Reels videa na TikToku, sdílení studentských recenzí, spolupráce se školním časopisem/akcemi. |
+            """)
+
+            st.markdown("<br><b>🧩 Úkoly k vyřešení případové studie:</b>", unsafe_allow_html=True)
+
+            with st.form("form_case_study_2"):
+                cs2_q1 = st.text_area("1. Vytvoř krátkou SWOT analýzu kavárny (S, W, O, T):", placeholder="Silné stránky: Blízkost u školy, Wi-Fi...\nSlabé stránky: Nízké povědomí...\nPříležitosti: Spolupráce se školním parlamentem...\nHrozby: Konkurence v okolí...")
+                cs2_q2 = st.text_area("2. Navrhni BRAND (Název, hodnoty, vizuální styl a tón komunikace):", placeholder="např. Název: 'Study&Espresso', Hodnoty: Pohoda, Komunita, Dostupnost. Vizuál: Tmavě modrá a žlutá...")
+                cs2_q3 = st.text_area("3. Navrhni 1 ETICKOU kampaň na sociální sítě:", placeholder="např. 'Zkouškový survival balíček' – káva + tipy na efektivní učení bez přikrášlování slibů.")
+                cs2_q4 = st.text_area("4. Jak by kavárna mohla využít UGC (User Generated Content) bez manipulace?:", placeholder="např. Vyhlásit soutěž o 'Nejlepší fotku z učení v kavárně' – studenti sami sdílejí autentické fotky a označují účet kavárny.")
+
+                if st.form_submit_button("Odeslat řešení Případové studie 2"):
+                    st.success("✅ **Skvělá práce!** Úspěšně jsi propojil/a nákupní potřeby studentů s brandingem, 4P a etickým využitím obsahu od uživatelů (UGC).")
+
+        # ---------------------------------------------------------------------
+        # PŘÍPADOVÁ STUDIE 3
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 📱 Případová studie 3: Influencer propaguje „zázračný“ produkt")
+
+        with st.container(border=True):
+            st.markdown("""
+            <div style="background-color: #fef2f2; padding: 15px; border-left: 5px solid #ef4444; border-radius: 4px;">
+                <h5 style="margin-top:0; color: #b91c1c;">🚨 Situace:</h5>
+                Známý tiktoker natočí video o doplňku stravy, který má údajně <i>„rychle zlepšit soustředění a zajistit energii bez únavy“</i>. Video působí jako osobní spontánní doporučení, ale <b>není nikde označeno jako placená spolupráce</b>.<br><br>
+                V komentářích studenti píší, že si produkt hned koupí před maturitou. Na webu produktu navíc běží falešné odpočítávání času s textem <i>„sleva 50 % končí za 10 minut!“</i> a hláška <i>„zbývají poslední 3 kusy na skladě“</i>.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class='box-purple' style='margin-top: 15px;'>
+                ⚠️ <b>Etický a právní rozbor:</b> Kampaň je sice krátkodobě vysoce účinná, ale porušuje zákony i etické normy. Zamlčuje placenou spolupráci, zneužívá stres maturantů, používá Dark patterns na webu a slibuje nedoložené zdravotní účinky.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("<br><b>🧩 Úkoly k vyřešení případové studie:</b>", unsafe_allow_html=True)
+
+            with st.form("form_case_study_3"):
+                cs3_q1 = st.text_area("1. Pojmenuj alespoň 3 manipulativní nebo neetické/protiprávní prvky v kampaňi:", placeholder="1. Skrytá reklama (chybí #spoluprace)\n2. Dark patterns na webu (falešný odpočet a falešné zásoby)\n3. Zneužití zranitelnosti studentů ve stresu...")
+                cs3_q2 = st.text_input("2. Jak měla být spolupráce správně a legálně označena?:", placeholder="např. Jasným nápisem 'Placená spolupráce' nebo '#spoluprace' hned na začátku popisku i ve videu.")
+                cs3_q3 = st.text_area("3. Navrhni FÉROVĚJŠÍ a legální variantu kampaně:", placeholder="např. Transparentně označené video, kde influencer přizná kampaň, netvrdí zázračné účinky a web neobsahuje falešné odpočty.")
+                cs3_q4 = cs3_q4 = st.text_area("4. Jakou roli zde hraje Social Proof a psychologie autority?:", placeholder="např. Studenti věří influencerovi jako své referenční skupině (Social proof) a pod tlakem strachu z neúspěchu kupují bez přemýšlení.")
+
+                if st.form_submit_button("Odeslat řešení Případové studie 3"):
+                    st.success("✅ **Výborně!** Přesně jsi odhalil/a skrytou reklamu, manipulativní Dark patterns i etickou odpovědnost tvorby obsahu.")
+
+        # ---------------------------------------------------------------------
+        # ZÁVĚREČNÁ REFLEXE KAPITOLY
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 🎓 Závěrečná reflexe celou kapitolou")
+
+        st.markdown("""
+        <div class='box-green'>
+            🧠 <b>Klíčové shrnutí Kapitoly 6:</b><br>
+            • <b>Management</b> dává projektům směr, strukturu a řád.<br>
+            • <b>Marketing</b> tvoří reálnou hodnotu pro zákazníka a skládá funkční 4P.<br>
+            • <b>Brand</b> buduje dlouhodobou důvěru a emoce.<br>
+            • <b>Etika</b> hlídá hranici, aby se přesvědčování nezvrhlo v manipulaci a podvod.
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.form("form_zaverecna_reflexe"):
+            st.markdown("<b>Odpověz na finální otázku k libovolně zvolené případové studii:</b>")
+            ref_vyber = st.selectbox("Vyber si případovou studii k reflexi:", [
+                "Případová studie 1: Školní merch",
+                "Případová studie 2: Kavárna u školy",
+                "Případová studie 3: Influencer a zázračný produkt"
+            ])
+            ref_odpoved = st.text_area("Co by měl v této situaci rozhodnout dobrý manažer, jak by měl marketér upravit komunikaci a kde přesně podle tebe leží hranice mezi férovým přesvědčováním a manipulací?:", placeholder="Napiš své myšlenky v 3-5 větách...")
+
+            if st.form_submit_button("Odeslat finální reflexi a UZAVŘÍT KAPITOLU 6"):
+                st.balloons()
+                st.success("🎉 **GRATULUJEME! Kompletně jsi dokončil/a Kapitolu 6 (Management a Marketing).** Tvé odpovědi byly zaznamenány.")
