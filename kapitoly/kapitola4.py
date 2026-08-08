@@ -1547,10 +1547,9 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
 
         st.divider()
 
-        # =========================================================================
-        # PŘESUNUTO Z 5.3 SEM (Nyní se to zobrazí jako součást konce podkapitoly 5.2)
-        # =========================================================================
+elif selected_section_4 == "5.3 Co dělat, když... (Krizový trenažér)":
         st.markdown("### 5.3 Co dělat, když... (Krizový trenažér)")
+        
         st.markdown("""
         <div class='box-red'>
             🧯 <b>Krizová sekce:</b> V této části nejde o teorii. Jde o schopnost chránit sám sebe a svá občanská práva ve vyhrocené situaci na pracovišti.
@@ -1587,7 +1586,6 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
                     st.error("❌ **Stal ses obětí manipulace.** Pokud podepíšeš dohodu o ukončení z vlastní vůle bez odstupného, vzdal ses veškeré právní ochrany. Hrubé porušení by ti musel šéf složitě dokazovat a prohrál by u soudu.")
                 elif k_odp.startswith("C"):
                     st.warning("⚠️ **Pozor na emoce.** Pokud začneš ničit firemní majetek nebo někoho fyzicky napadat, dáváš šéfovi skutečný a legální důvod tě okamžitě vyhodit pro hrubé porušení kázně (tzv. Výpověď na hodinu).")
-
     # =========================================================================
     # SEKCE 6: PRAKTICKÁ DÍLNA (ČISTĚ AKTIVITY 1–5)
     # =========================================================================
