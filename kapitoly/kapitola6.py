@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 
 def render():
     # =========================================================================
-    # 📌 HLAVIČKA KAPITOLY
+    # <i class='fi fi-bs-bookmark'></i> HLAVIČKA KAPITOLY
     # =========================================================================
     st.markdown("<span class='hero-badge'>Kapitola 6</span>", unsafe_allow_html=True)
     st.title("6. Management a marketing")
@@ -72,12 +72,12 @@ def render():
         c_p2.warning("**Blok 2: Marketing**\nUrčíš cílovku (STP) a nastavíš marketingový mix 4P.")
         c_p3.success("**Blok 3: Brand & Etika**\nVytvoříš identitu značky, logo a etickou kampaň.")
 
-        st.markdown(f"<div style='background-color: #f8fafc; padding: 12px; border-radius: 8px; border: 1px dashed #cbd5e1; text-align: center; margin-top: 10px;'>📌 <b>Aktivní projektový pas:</b> <span style='color: #8b5cf6; font-weight: bold;'>{nazev_projektu}</span></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='background-color: #f8fafc; padding: 12px; border-radius: 8px; border: 1px dashed #cbd5e1; text-align: center; margin-top: 10px;'><i class='fi fi-bs-bookmark'></i> <b>Aktivní projektový pas:</b> <span style='color: #8b5cf6; font-weight: bold;'>{nazev_projektu}</span></div>", unsafe_allow_html=True)
 
     st.divider()
 
 # =========================================================================
-    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL (NAVIGACE KAPITOLOU 6)
+    # <i class='fi fi-bs-bookmark'></i> JEDNOTNÁ NABÍDKA PODKAPITOL (NAVIGACE KAPITOLOU 6)
     # =========================================================================
     section_options_6 = [
         "1. Management – Jak z chaosu udělat fungující firmu",
@@ -86,7 +86,7 @@ def render():
         "4. Závěrečný výstup kapitoly a případové studie"
     ]
 
-    selected_section_6 = st.selectbox("📌 Přechod na hlavní blok kapitoly:", section_options_6, index=0)
+    selected_section_6 = st.selectbox("<i class='fi fi-bs-bookmark'></i> Přechod na hlavní blok kapitoly:", section_options_6, index=0)
     st.divider()
 # =========================================================================
     # SEKCE 1: MANAGEMENT – JAK Z CHAOSU UDĚLAT FUNGUJÍCÍ FIRMU
@@ -125,22 +125,22 @@ def render():
         with tab_role1:
             st.markdown("##### Manažer")
             st.write("**Co dělá:** Řídí lidi, procesy nebo část organizace. Odpovídá za splnění cílů a efektivitu.")
-            st.info("📌 **Příklady:** Vedoucí týmu, ředitel školy, manažer pobočky, projektový manažer v IT.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklady:** Vedoucí týmu, ředitel školy, manažer pobočky, projektový manažer v IT.")
 
         with tab_role2:
             st.markdown("##### Podnikatel")
             st.write("**Co dělá:** Přichází s nápadem, vyhledává příležitosti na trhu, nese riziko a chce vytvořit novou hodnotu.")
-            st.info("📌 **Příklady:** Zakladatel e-shopu, majitel kavárny, startupový founder.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklady:** Zakladatel e-shopu, majitel kavárny, startupový founder.")
 
         with tab_role3:
             st.markdown("##### Vlastník (Investor)")
             st.write("**Co dělá:** Vlastní firmu nebo její podíl (akcie). Dává do ní kapitál. Nemusí v ní ale vůbec pracovat ani ji denně řídit.")
-            st.info("📌 **Příklady:** Společník v s.r.o., akcionář, investor z pořadu typu *Den D* / *Shark Tank*.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklady:** Společník v s.r.o., akcionář, investor z pořadu typu *Den D* / *Shark Tank*.")
 
         with tab_role4:
             st.markdown("##### Zaměstnanec")
             st.write("**Co dělá:** Vykonává práci podle pracovní smlouvy/dohody a dostává za ni sjednanou odměnu (mzdu/plat).")
-            st.info("📌 **Příklady:** Programátor, grafik, prodavač, účetní, brigádník.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklady:** Programátor, grafik, prodavač, účetní, brigádník.")
 
         st.markdown("<div class='box-purple'>🕹️ <b>Trenažér rolí: Poznáš, kdo je kdo?</b></div>", unsafe_allow_html=True)
         st.write("Přečti si následující příběh a urči správnou kombinaci rolí:")
@@ -766,7 +766,7 @@ def render():
 
         st.markdown("""
         <div class='box-gray' style='margin-top: 15px;'>
-            📌 <b>Pozor na nejčastější chybu v testech a praxi:</b><br>
+            <i class='fi fi-bs-bookmark'></i> <b>Pozor na nejčastější chybu v testech a praxi:</b><br>
             Silné a slabé stránky jsou <b>uvnitř</b> organizace. Příležitosti a hrozby přicházejí <b>zvenčí</b>.<br>
             • <i>„Máme málo peněz na účtu“</i> ➔ Slabá stránka (W).<br>
             • <i>„Majitel budovy skokově zdraží nájem“</i> ➔ Hrozba (T).
@@ -1253,7 +1253,7 @@ def render():
         col_stp1, col_str2, col_stp3 = st.columns(3)
         col_stp1.info("✂️ **S — Segmentation**\nRozdělíme trh na menší, podobné skupiny lidí.")
         col_str2.warning("🎯 **T — Targeting**\nVybereme nejvhodnější skupinu, na kterou se zaměříme.")
-        col_stp3.success("📌 **P — Positioning**\nUrčíme, jak chceme být zapamatováni v hlavě zákazníka.")
+        col_stp3.success("<i class='fi fi-bs-bookmark'></i> **P — Positioning**\nUrčíme, jak chceme být zapamatováni v hlavě zákazníka.")
 
         # ---------------------------------------------------------------------
         # 2.3.1 SEGMENTACE TRHU
@@ -1266,22 +1266,22 @@ def render():
         with tab_seg1:
             st.markdown("##### Geografická segmentace (KDE?)")
             st.write("Místo, region, město, stát, klima nebo typ lokality.")
-            st.info("📌 **Příklad:** Nabídka kavárny v centru Prahy bude jiná než kavárna na malovesnické návsi. Prodejce zimních bund cílí na horské oblasti, ne na pobřeží Španělska.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Nabídka kavárny v centru Prahy bude jiná než kavárna na malovesnické návsi. Prodejce zimních bund cílí na horské oblasti, ne na pobřeží Španělska.")
 
         with tab_seg2:
             st.markdown("##### Demografická segmentace (KDO?)")
             st.write("Věk, pohlaví, příjem, vzdělání, rodinný stav, povolání.")
-            st.info("📌 **Příklad:** Bankovní účet pro studenty (zdarma), kosmetika pro teenagery s akné, rodinné balení rodinného auta, prémiové hodinky pro vysokopříjmové manažery.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Bankovní účet pro studenty (zdarma), kosmetika pro teenagery s akné, rodinné balení rodinného auta, prémiové hodinky pro vysokopříjmové manažery.")
 
         with tab_seg3:
             st.markdown("##### Psychografická segmentace (JAK MYSLÍ?)")
             st.write("Životní styl, hodnoty, zájmy, osobnost a postoje.")
-            st.info("📌 **Příklad:** Značka Patagonia cílí na lidi milující přírodu a udržitelný životní styl. Jiná značka cílí na extravagantní lidi, co chtějí šokovat okolí.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Značka Patagonia cílí na lidi milující přírodu a udržitelný životní styl. Jiná značka cílí na extravagantní lidi, co chtějí šokovat okolí.")
 
         with tab_seg4:
             st.markdown("##### Behaviorální segmentace (JAK NAKUPUJÍ?)")
             st.write("Nákupní chování, frekvence užívání, věrnost značce, reakce na slevy.")
-            st.info("📌 **Příklad:** E-shop rozlišuje zákazníky na: *lovce slev* (nakoupí jen v akcích), *loajální štamgasty* (nakupují každý měsíc) a *váhavce* (často opouštějí košík).")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** E-shop rozlišuje zákazníky na: *lovce slev* (nakoupí jen v akcích), *loajální štamgasty* (nakupují každý měsíc) a *váhavce* (často opouštějí košík).")
 
         # ---------------------------------------------------------------------
         # 2.3.2 CÍLENÍ (TARGETING)
@@ -1558,27 +1558,27 @@ def render():
         with tab_pr1:
             st.markdown("**Reklama (Advertising)**")
             st.write("Placená, neosobní forma prezentace přes masmédia nebo digitální kanály. Má velký dosah, ale zákazník ví, že si ji firma zaplatila.")
-            st.info("📌 **Příklady:** TV spot, billboard u dálnice, reklama na YouTube, banner na webu, placený sponzorovaný příspěvek na Instagramu nebo TikToku.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklady:** TV spot, billboard u dálnice, reklama na YouTube, banner na webu, placený sponzorovaný příspěvek na Instagramu nebo TikToku.")
 
         with tab_pr2:
             st.markdown("**Podpora prodeje (Sales Promotion)**")
             st.write("Krátkodobé stimuly a výhody, které mají zákazníka přimět k **okamžitému nákupu**.")
-            st.warning("📌 **Příklady:** Slevový kupón v aplikaci, vzorek zdarma v časopise, akce 1+1 zdarma, věrnostní body, soutěž o ceny.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklady:** Slevový kupón v aplikaci, vzorek zdarma v časopise, akce 1+1 zdarma, věrnostní body, soutěž o ceny.")
 
         with tab_pr3:
             st.markdown("**Public Relations (PR / Vztahy s veřejností)**")
             st.write("Budování dobrého jména firmy, důvěry a vztahů s veřejností, médii a komunitou. PR prodává nepřímo přes příběh.")
-            st.success("📌 **Příklady:** Tisková zpráva v novinách, rozhovor se zakladatelem v podcastu, sponzorování dětského domova, zvládnutí krizové komunikace.")
+            st.success("<i class='fi fi-bs-bookmark'></i> **Příklady:** Tisková zpráva v novinách, rozhovor se zakladatelem v podcastu, sponzorování dětského domova, zvládnutí krizové komunikace.")
 
         with tab_pr4:
             st.markdown("**Osobní prodej (Personal Selling)**")
             st.write("Osobní komunikace se zákazníkem tváří v tvář nebo online. Extrémně účinná, ale drahá metoda.")
-            st.error("📌 **Příklady:** Obchodní zástupce prodávající software firmám (B2B), specializovaný konzultant v prodejně elektro, video-ukázka produktu.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklady:** Obchodní zástupce prodávající software firmám (B2B), specializovaný konzultant v prodejně elektro, video-ukázka produktu.")
 
         with tab_pr5:
             st.markdown("**Přímý marketing (Direct Marketing)**")
             st.write("Přímé a adresné oslovení konkrétně vybraných zákazníků z databáze.")
-            st.info("📌 **Příklady:** Personalizovaný e-mailing, SMS s narozeninovou slevou, adresný katalog do schránky, nabídka přímo v mobilní aplikaci.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklady:** Personalizovaný e-mailing, SMS s narozeninovou slevou, adresný katalog do schránky, nabídka přímo v mobilní aplikaci.")
 
         st.markdown("<br>", unsafe_allow_html=True)
         col_mkt_trend1, col_mkt_trend2 = st.columns(2)
@@ -1694,31 +1694,31 @@ def render():
         with tab_b1:
             st.markdown("**Vizuální identita (To, co vidíme)**")
             st.write("Všechny vizuální prvky: název, logo, typografie (písmo), paleta barev, obaly a jednotný grafický styl na sociálních sítích a webu.")
-            st.info("📌 **Příklad:** Typická tyrkysová barva Dáme jídlo / Foodora, červené logo Coca-Coly, minimalistický design Apple boxů.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Typická tyrkysová barva Dáme jídlo / Foodora, červené logo Coca-Coly, minimalistický design Apple boxů.")
 
         with tab_b2:
             st.markdown("**Audio & Senzorická identita (To, co slyšíme a cítíme)**")
             st.write("Zvuky, znělky, hlas značky nebo typické vůně v prodejnách.")
-            st.warning("📌 **Příklad:** Znělka Netflixu (*„Tudum“*), zvuk nastartování počítače Mac, charakteristická vůně v prodejnách Abercrombie & Fitch.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklad:** Znělka Netflixu (*„Tudum“*), zvuk nastartování počítače Mac, charakteristická vůně v prodejnách Abercrombie & Fitch.")
 
         with tab_b3:
             st.markdown("**Storytelling (Příběh značky)**")
             st.write("Příběh o tom, proč značka vznikla, jaké překážky zakladatelé překonali a jaký problém ve světě chce řešit.")
-            st.success("📌 **Příklad:** Příběh garážového vzniku Apple, česká značka Fusakle vracející výrobu ponožek do ČR, příběh nápoje Red Bull a extrémních sportů.")
+            st.success("<i class='fi fi-bs-bookmark'></i> **Příklad:** Příběh garážového vzniku Apple, česká značka Fusakle vracející výrobu ponožek do ČR, příběh nápoje Red Bull a extrémních sportů.")
 
         with tab_b4:
             st.markdown("**Mise a Vize (Smysl a cíl)**")
             st.write("• **Mise:** Říká, proč značka existuje DNES a co dělá pro své zákazníky.\n• **Vize:** Dlouhodobý sen a cíl, kam chce značka směřovat v BUDOUCNOSTI.")
-            st.info("📌 **Příklad Google:** *Mise:* Uspořádat informace celého světa a učinit je univerzálně přístupné. *Vize:* Poskytnout přístup k informacím jedním kliknutím komukoliv na Zemi.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad Google:** *Mise:* Uspořádat informace celého světa a učinit je univerzálně přístupné. *Vize:* Poskytnout přístup k informacím jedním kliknutím komukoliv na Zemi.")
 
         with tab_b5:
             st.markdown("**Hodnoty značky (Etický kompas)**")
             st.write("Zásadní principy, ze kterých značka nikdy nesleví a podle kterých dělá těžká rozhodnutí.")
-            st.error("📌 **Příklad:** Udržitelnost, inovativnost, dostupnost pro všechny, nekompromisní kvalita, transparentnost.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklad:** Udržitelnost, inovativnost, dostupnost pro všechny, nekompromisní kvalita, transparentnost.")
 
         st.markdown("""
         <div class='box-gray' style='margin-top: 15px;'>
-            📌 <b>Pozor na past:</b> Mít hezké logo neznamená mít silnou značku. Pokud se komunikace značky rozchází s realitou (např. značka tvrdí, že je eko, ale balí věci do tří vrstev plastu), zákazník okamžitě ztratí důvěru.
+            <i class='fi fi-bs-bookmark'></i> <b>Pozor na past:</b> Mít hezké logo neznamená mít silnou značku. Pokud se komunikace značky rozchází s realitou (např. značka tvrdí, že je eko, ale balí věci do tří vrstev plastu), zákazník okamžitě ztratí důvěru.
         </div>
         """, unsafe_allow_html=True)
 
@@ -1967,22 +1967,22 @@ def render():
         with tab_l1:
             st.markdown("**Zákon o regulaci reklamy (Omezení pro citlivá odvětví)**")
             st.write("Přísně reguluje nebo zakazuje reklamu na produkty, které mohou ohrozit zdraví nebo bezpečnost.")
-            st.error("📌 **Příklady:** Reklama na alkohol nesmí vyvolávat dojem, že pití zvyšuje společenský nebo sexuální úspěch. Zákaz reklamy na cigarety, omezení hazardu, přísné podmínky pro energetické nápoje a léky.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklady:** Reklama na alkohol nesmí vyvolávat dojem, že pití zvyšuje společenský nebo sexuální úspěch. Zákaz reklamy na cigarety, omezení hazardu, přísné podmínky pro energetické nápoje a léky.")
 
         with tab_l2:
             st.markdown("**Nekalá soutěž a klamavá reklama**")
             st.write("Chrání poctivé podnikatele i spotřebitele před lží. Reklama nesmí uvádět nepravdivé nebo zavádějící informace.")
-            st.warning("📌 **Příklady:** Firma tvrdí, že prodává '100% bio lokální produkt', ale surovinou je levný dovoz z Asie. Zákaz parazitování na pověsti cizí značky.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklady:** Firma tvrdí, že prodává '100% bio lokální produkt', ale surovinou je levný dovoz z Asie. Zákaz parazitování na pověsti cizí značky.")
 
         with tab_l3:
             st.markdown("**Srovnávací reklama**")
             st.write("Porovnávat se s konkurencí je dovoleno, ale jen za velmi přísných podmínek.")
-            st.info("📌 **Pravidlo:** Srovnání musí být **pravdivé, objektivní, ověřitelné** a nesmí konkurenci očerňovat nebo zesměšňovat.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Pravidlo:** Srovnání musí být **pravdivé, objektivní, ověřitelné** a nesmí konkurenci očerňovat nebo zesměšňovat.")
 
         with tab_l4:
             st.markdown("**Skrytá reklama a povinnost označovat spolupráce**")
             st.write("Komerční sdělení nesmí být maskováno jako 'nezávislé doporučení' nebo 'osobní názor'. Zákazník musí ihned poznat, že jde o reklamu.")
-            st.success("📌 **Pravidlo pro influencery:** Placená spolupráce, sponzorovaný produkt nebo bartering musí být v příspěvku/videu jasně a viditelně označen (např. *#spoluprace*, *Placená propagace*). Nestačí to schovat mezi 30 dalších hashtagů!")
+            st.success("<i class='fi fi-bs-bookmark'></i> **Pravidlo pro influencery:** Placená spolupráce, sponzorovaný produkt nebo bartering musí být v příspěvku/videu jasně a viditelně označen (např. *#spoluprace*, *Placená propagace*). Nestačí to schovat mezi 30 dalších hashtagů!")
 
         st.markdown("<br><div class='box-purple'>⚖️ <b>Detektivní aréna: Najdeš právní nebo etický průšvih?</b></div>", unsafe_allow_html=True)
         st.write("Přečti si 3 reálné marketingové situace a urči, která porušuje pravidla:")
@@ -2020,17 +2020,17 @@ def render():
         with tab_os1:
             st.markdown("**Právo na pravdivé a úplné informace**")
             st.write("Zákazník musí před nákupem přesně vědět, co kupuje, kolik to stojí se všemi poplatky a za jakých podmínek.")
-            st.info("📌 **Příklad:** E-shop nesmí cenu dopravy schovávat až do posledního kroku platby nebo tajit, že zboží nemá reálně na skladě.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** E-shop nesmí cenu dopravy schovávat až do posledního kroku platby nebo tajit, že zboží nemá reálně na skladě.")
 
         with tab_os2:
             st.markdown("**Reklamace (Práva z vadného plnění)**")
             st.write("Pokud produkt nefunguje, má vady nebo neodpovídá popisu, má spotřebitel právo na bezplatnou opravu, výměnu zboží, slevu nebo vrácení peněz.")
-            st.warning("📌 **Příklad:** Koupená bezdrátová sluchátka se po týdnu přestanou nabíjet. Obchodník musí reklamaci vyřídit v zákonné lhůtě.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklad:** Koupená bezdrátová sluchátka se po týdnu přestanou nabíjet. Obchodník musí reklamaci vyřídit v zákonné lhůtě.")
 
         with tab_os3:
             st.markdown("**Odstoupení od smlouvy při nákupu online**")
             st.write("Při nákupu na dálku (e-shop) má spotřebitel právo vrátit zboží bez udání důvodu v zákonné lhůtě (v ČR standardně do 14 dnů).")
-            st.success("📌 **Příklad:** Zákazník si objedná mikinu z e-shopu, doma si ji vyzkouší, zjistí, že mu nesedí střih, a do 14 dnů ji pošle zpět s nárokem na vrácení peněz.")
+            st.success("<i class='fi fi-bs-bookmark'></i> **Příklad:** Zákazník si objedná mikinu z e-shopu, doma si ji vyzkouší, zjistí, že mu nesedí střih, a do 14 dnů ji pošle zpět s nárokem na vrácení peněz.")
 
         st.markdown("<br>##### 🛡️ Kdo hlídá férovost na trhu?", unsafe_allow_html=True)
         col_org1, col_org2 = st.columns(2)
@@ -2068,27 +2068,27 @@ def render():
         with tab_un1:
             st.markdown("**Greenwashing (Falešná ekologie)**")
             st.write("Firma se tváří ekologicky a udržitelně, ale jde jen o reklamní trik na obalu bez reálných změn ve výrobě.")
-            st.error("📌 **Příklad:** Plastová lahev má zelený obal, obrázek listu a nápis 'ECO friendly', ale je vyrobena z nerecyklovatelného plastu v továrně znečišťující řeku.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklad:** Plastová lahev má zelený obal, obrázek listu a nápis 'ECO friendly', ale je vyrobena z nerecyklovatelného plastu v továrně znečišťující řeku.")
 
         with tab_un2:
             st.markdown("**Pinkwashing / Rainbow washing**")
             st.write("Firma využívá podporu sociálních témat, menšin nebo charit primárně pro svou marketingovou image, aniž by dané témata reálně podporovala v zákulisí.")
-            st.warning("📌 **Příklad:** Značka si na měsíc hrdosti změní logo na duhové, ale ve vlastních pobočkách nepodporuje rovné příležitosti ani férové mzdy.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklad:** Značka si na měsíc hrdosti změní logo na duhové, ale ve vlastních pobočkách nepodporuje rovné příležitosti ani férové mzdy.")
 
         with tab_un3:
             st.markdown("**Dark Patterns (Temné vzorce na webech)**")
             st.write("Manipulativní prvky v designu webů a e-shopů, které zákazníka podvědomě nutí utratit peníze, zaškrtnout souhlas nebo koupit něco navíc.")
-            st.info("📌 **Příklad:** Předem zaškrtnutá políčka 'Přidat pojištění za 200 Kč', zbytečně složité zrušení účtu, falešné odpočítávání času *'Sleva vyprší za 04:59 min'*, které se po obnovení stránky spustí znovu.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Předem zaškrtnutá políčka 'Přidat pojištění za 200 Kč', zbytečně složité zrušení účtu, falešné odpočítávání času *'Sleva vyprší za 04:59 min'*, které se po obnovení stránky spustí znovu.")
 
         with tab_un4:
             st.markdown("**Falešný sociální důkaz (Fake Social Proof)**")
             st.write("Uplácení nebo vymýšlení popularity pro vyvolání pocitu, že produkt nakupují všichni.")
-            st.error("📌 **Příklad:** Falešné recenze psané AI na e-shopu, nakoupení roboti/komentáře pod příspěvkem, vyskakující okníčka *'Právě nakoupil Jan z Brna'*, která jsou naprogramovaným podvodem.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklad:** Falešné recenze psané AI na e-shopu, nakoupení roboti/komentáře pod příspěvkem, vyskakující okníčka *'Právě nakoupil Jan z Brna'*, která jsou naprogramovaným podvodem.")
 
         with tab_un5:
             st.markdown("**Cílení na zranitelné skupiny**")
             st.write("Reklama zneužívající naivitu, neznalost, strach nebo těžkou životní situaci specifických skupin.")
-            st.warning("📌 **Příklad:** Manipulativní reklama na předražené doplňky stravy cílená na osamělé seniory, agresivní půjčky se skrytými úroky pro lidi v dluhové pasti.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklad:** Manipulativní reklama na předražené doplňky stravy cílená na osamělé seniory, agresivní půjčky se skrytými úroky pro lidi v dluhové pasti.")
 
         st.markdown("""
         <div class='box-gray' style='margin-top: 15px;'>
@@ -2127,22 +2127,22 @@ def render():
         with tab_dig1:
             st.markdown("**SEO (Search Engine Optimization - Optimalizace pro vyhledávače)**")
             st.write("Úprava obsahu webu tak, aby ho Google nebo Seznam vyhodnotily jako nejlepší odpověď na dotaz uživatele. Zákazníci přicházejí 'zadarmo' bez platby za kliknutí.")
-            st.info("📌 **Příklad:** Napsání odborného článku *„Jak vybrat první běžecké boty“*. Lidé, kteří tento dotaz zadají do Googlu, prokliknou přímo na tvůj e-shop.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Napsání odborného článku *„Jak vybrat první běžecké boty“*. Lidé, kteří tento dotaz zadají do Googlu, prokliknou přímo na tvůj e-shop.")
 
         with tab_dig2:
             st.markdown("**PPC Reklama (Pay Per Click - Platba za proklik)**")
             st.write("Placená reklama ve vyhledávačích nebo na sociálních sítích. Neplatíš za zobrazení banneru, ale až ve chvíli, kdy na reklamu zákazník reálně klikne.")
-            st.warning("📌 **Příklad:** Sponzorovaný odkaz na prvním místě v Googlu při vyhledání slova 'studentské batohy' nebo sponzorované video v feedu.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklad:** Sponzorovaný odkaz na prvním místě v Googlu při vyhledání slova 'studentské batohy' nebo sponzorované video v feedu.")
 
         with tab_dig3:  # <-- ZDE BYLA CHYBA (opraveno z tab_dr3 na tab_dig3)
             st.markdown("**E-mailový marketing (Newslettery)**")
             st.write("Přímá komunikace se stálými zákazníky přes e-mail. Má nejvyšší návratnost investic (ROI), protože e-mailová databáze je tvým vlastním majetkem (nezáleží na algoritmech).")
-            st.success("📌 **Příklad:** Týdenní newsletter s novinkami, slevový kód k narozeninám nebo připomenutí *'Nezapomněl jsi něco v košíku?'*.")
+            st.success("<i class='fi fi-bs-bookmark'></i> **Příklad:** Týdenní newsletter s novinkami, slevový kód k narozeninám nebo připomenutí *'Nezapomněl jsi něco v košíku?'*.")
 
         with tab_dig4:
             st.markdown("**Marketingová automatizace**")
             st.write("Chytré systémy, které posílají zprávy, doporučení nebo nabídky automaticky na základě chování zákazníka na webu.")
-            st.error("📌 **Příklad:** Zákazník si 3× prohlédne konkrétní boty ➔ systém mu za 2 hodiny automaticky pošle e-mail s recenzemi na tyto boty a slevou 5 %.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklad:** Zákazník si 3× prohlédne konkrétní boty ➔ systém mu za 2 hodiny automaticky pošle e-mail s recenzemi na tyto boty a slevou 5 %.")
         # ---------------------------------------------------------------------
         # 3.4.2 SOCIAL MEDIA MARKETING A CONTENT MARKETING
         # ---------------------------------------------------------------------
@@ -2283,27 +2283,27 @@ def render():
         with tab_tech1:
             st.markdown("**Datová analytika**")
             st.write("Vyhodnocování chování zákazníků a výkonu kampaní v reálném čase na základě dat.")
-            st.info("📌 **Příklad:** E-shop přesně sleduje, odkud lidé přicházejí, co si prohlížejí a v jakém kroku nejčastěji opouštějí košík.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** E-shop přesně sleduje, odkud lidé přicházejí, co si prohlížejí a v jakém kroku nejčastěji opouštějí košík.")
 
         with tab_tech2:
             st.markdown("**Personalizace nabídky**")
             st.write("Přizpůsobení obsahu, produktů nebo cen konkrétnímu zákazníkovi nebo segmentu podle jeho předchozího chování.")
-            st.warning("📌 **Příklad:** Doporučení *„Mohlo by se vám líbit“* na základě historie nákupů na e-shopech nebo osobní doporučení ve streamovací aplikaci.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklad:** Doporučení *„Mohlo by se vám líbit“* na základě historie nákupů na e-shopech nebo osobní doporučení ve streamovací aplikaci.")
 
         with tab_tech3:
             st.markdown("**Umělá inteligence v obsahu (Generativní AI)**")
             st.write("Pomoc s psaním textů, tvorbou grafiky, videí, generováním nápadů a testováním variant reklam.")
-            st.success("📌 **Příklad:** AI navrhne popisky produktů, e-mailovou kampaň nebo vizuály pro sociální sítě během několika vteřin.")
+            st.success("<i class='fi fi-bs-bookmark'></i> **Příklad:** AI navrhne popisky produktů, e-mailovou kampaň nebo vizuály pro sociální sítě během několika vteřin.")
 
         with tab_tech4:
             st.markdown("**Chatboti a zákaznická podpora**")
             st.write("Automatické odpovědi na časté dotazy a nepřetržitá pomoc zákazníkům s nákupem 24/7.")
-            st.info("📌 **Příklad:** Chatbot pomůže zákazníkovi najít správnou velikost, sledovat stav objednávky nebo vyřešit první kroky reklamace.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Chatbot pomůže zákazníkovi najít správnou velikost, sledovat stav objednávky nebo vyřešit první kroky reklamace.")
 
         with tab_tech5:
             st.markdown("**AI a Deepfake reklama (Rizika)**")
             st.write("Tvorba realistického obrazu, klonování hlasu nebo videa pomocí AI bez vědomí či účasti dané osoby.")
-            st.error("📌 **Příklad:** Virtuální AI influencer nebo klamavé video se známou osobností, která ve skutečnosti danou reklamu nikdy nenatočila.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklad:** Virtuální AI influencer nebo klamavé video se známou osobností, která ve skutečnosti danou reklamu nikdy nenatočila.")
 
         st.markdown("""
         <div class='box-purple' style='margin-top: 15px;'>
@@ -2345,27 +2345,27 @@ def render():
         with tab_tech1:
             st.markdown("**Datová analytika**")
             st.write("Vyhodnocování chování zákazníků a výkonu kampaní v reálném čase na základě dat.")
-            st.info("📌 **Příklad:** E-shop přesně sleduje, odkud lidé přicházejí, co si prohlížejí a v jakém kroku nejčastěji opouštějí košík.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** E-shop přesně sleduje, odkud lidé přicházejí, co si prohlížejí a v jakém kroku nejčastěji opouštějí košík.")
 
         with tab_tech2:
             st.markdown("**Personalizace nabídky**")
             st.write("Přizpůsobení obsahu, produktů nebo cen konkrétnímu zákazníkovi nebo segmentu podle jeho předchozího chování.")
-            st.warning("📌 **Příklad:** Doporučení *„Mohlo by se vám líbit“* na základě historie nákupů na e-shopech nebo osobní doporučení ve streamovací aplikaci.")
+            st.warning("<i class='fi fi-bs-bookmark'></i> **Příklad:** Doporučení *„Mohlo by se vám líbit“* na základě historie nákupů na e-shopech nebo osobní doporučení ve streamovací aplikaci.")
 
         with tab_tech3:
             st.markdown("**Umělá inteligence v obsahu (Generativní AI)**")
             st.write("Pomoc s psaním textů, tvorbou grafiky, videí, generováním nápadů a testováním variant reklam.")
-            st.success("📌 **Příklad:** AI navrhne popisky produktů, e-mailovou kampaň nebo vizuály pro sociální sítě během několika vteřin.")
+            st.success("<i class='fi fi-bs-bookmark'></i> **Příklad:** AI navrhne popisky produktů, e-mailovou kampaň nebo vizuály pro sociální sítě během několika vteřin.")
 
         with tab_tech4:
             st.markdown("**Chatboti a zákaznická podpora**")
             st.write("Automatické odpovědi na časté dotazy a nepřetržitá pomoc zákazníkům s nákupem 24/7.")
-            st.info("📌 **Příklad:** Chatbot pomůže zákazníkovi najít správnou velikost, sledovat stav objednávky nebo vyřešit první kroky reklamace.")
+            st.info("<i class='fi fi-bs-bookmark'></i> **Příklad:** Chatbot pomůže zákazníkovi najít správnou velikost, sledovat stav objednávky nebo vyřešit první kroky reklamace.")
 
         with tab_tech5:
             st.markdown("**AI a Deepfake reklama (Rizika)**")
             st.write("Tvorba realistického obrazu, klonování hlasu nebo videa pomocí AI bez vědomí či účasti dané osoby.")
-            st.error("📌 **Příklad:** Virtuální AI influencer nebo klamavé video se známou osobností, která ve skutečnosti danou reklamu nikdy nenatočila.")
+            st.error("<i class='fi fi-bs-bookmark'></i> **Příklad:** Virtuální AI influencer nebo klamavé video se známou osobností, která ve skutečnosti danou reklamu nikdy nenatočila.")
 
         st.markdown("""
         <div class='box-purple' style='margin-top: 15px;'>

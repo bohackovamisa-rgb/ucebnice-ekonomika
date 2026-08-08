@@ -3,7 +3,7 @@ import os
 # Slovník převodu emoji na černé čárové ikony Flaticon Bold
 REPLACEMENTS = {
     "📖": '<i class="fi fi-bs-book-alt"></i>',
-    "📌": '<i class="fi fi-bs-bookmark"></i>',
+    "<i class='fi fi-bs-bookmark'></i>": '<i class="fi fi-bs-bookmark"></i>',
     "🧩": '<i class="fi fi-bs-puzzle-piece"></i>',
     "🚀": '<i class="fi fi-bs-rocket-lunch"></i>',
     "🤖": '<i class="fi fi-bs-sparkles"></i>',

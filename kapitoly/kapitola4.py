@@ -13,7 +13,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-    # 📌 PŘEHLED A NAVIGACE KAPITOLOU
+    # <i class='fi fi-bs-bookmark'></i> PŘEHLED A NAVIGACE KAPITOLOU
     with st.expander("🧭 Co si z kapitoly odnesete a doporučené pořadí studia", expanded=False):
         c_nav1, c_nav2 = st.columns(2)
         with c_nav1:
@@ -35,7 +35,7 @@ def render():
             5. 🚪 **Když se cesty rozejdou** (výpověď, odstupné, úřad práce, podpora)
             """)
 
-    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
+    # <i class='fi fi-bs-bookmark'></i> JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_4 = [
         "1.1 Proč trh platí různé profese různě",
         "1.2 Trh práce 4.0 a AI",
@@ -69,7 +69,7 @@ def render():
         "7.2 Slovníček, rychlé opakování a prověrka"
     ]
     
-    selected_section_4 = st.selectbox("📌 Přechod na podkapitolu:", section_options_4, index=0)
+    selected_section_4 = st.selectbox("<i class='fi fi-bs-bookmark'></i> Přechod na podkapitolu:", section_options_4, index=0)
     st.divider()
 
     # =========================================================================
@@ -203,7 +203,7 @@ def render():
 
             st.metric("Odhadovaná HRUBÁ mzda v inzerátu", f"{odhad_mzdy:,} Kč".replace(",", " "))
 
-            st.markdown("##### 📌 Co z tohoto odhadu pro žáka vyplývá?")
+            st.markdown("##### <i class='fi fi-bs-bookmark'></i> Co z tohoto odhadu pro žáka vyplývá?")
             if s_praxe == "Absolvent (bez praxe)":
                 st.info("💡 **Nástupní mzda absolventa:** Jako začátečník bez praxe začínáš na nižší částce (cca 80 % průměru). Získaná praxe a spolehlivost jsou hlavní pákou pro růst mzdy v prvních letech.")
             elif s_obor in ["IT, Vývoj softwaru a Kyberbezpečnost", "Management a Vedení týmů"]:
@@ -427,7 +427,7 @@ def render():
         st.markdown("### 2.2 Nábor v éře AI")
         st.write("Nábor u větších firem dnes často nezačíná u člověka. Životopisy nejdříve procházejí přes **ATS (Applicant Tracking System)** — software, který automaticky filtruje uchazeče podle klíčových slov a požadavků z inzerátu.")
 
-        st.markdown("##### 📌 Jak uspět při náboru řízeném AI / ATS:")
+        st.markdown("##### <i class='fi fi-bs-bookmark'></i> Jak uspět při náboru řízeném AI / ATS:")
         st.markdown("""
         * 📄 **Přehledný formát:** Používejte standardní písmo, jasné nadpisy a formát PDF (vyhněte se složitým grafickým sloupcům, které ATS nepřečte).
         * 🔑 **Klíčová slova:** Názvy dovedností v CV přizpůsobte přesně slovům v inzerátu (např. 'pokročilý Excel', 'angličtina B2').
@@ -473,7 +473,7 @@ def render():
                     <div style="background-color: #e2e8f0; width: 70px; height: 85px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #64748b;">[ FOTO ]</div>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <strong style="color: #0284c7; font-size: 0.9rem;">📌 OSOBNÍ A KONTAKTNÍ ÚDAJE</strong><br>
+                    <strong style="color: #0284c7; font-size: 0.9rem;"><i class='fi fi-bs-bookmark'></i> OSOBNÍ A KONTAKTNÍ ÚDAJE</strong><br>
                     <small><b>Telefon:</b> +420 777 123 456 | <b>E-mail:</b> petr.novak@email.cz | <b>Adresa:</b> Praha | <b>LinkedIn:</b> linkedin.com/in/petr-novak</small>
                 </div>
                 <div style="margin-bottom: 15px;">
@@ -983,7 +983,7 @@ def render():
         | 7. | **ČISTÁ MZDA K VÝPLATĚ** | 33 200 - 2 357 - 1 494 - 2 410 | **26 939 Kč** |
         """)
 
-        st.caption("📌 *Poznámka: Výpočet je zjednodušený pro výukové účely (zaokrouhlování na celé koruny). Skutečné parametry, daňové limity a slevy se mohou v závislosti na legislativě každý rok měnit.*")
+        st.caption("<i class='fi fi-bs-bookmark'></i> *Poznámka: Výpočet je zjednodušený pro výukové účely (zaokrouhlování na celé koruny). Skutečné parametry, daňové limity a slevy se mohou v závislosti na legislativě každý rok měnit.*")
 
     elif selected_section_4 == "3.5 Sazby pojištění, daně a náklady zaměstnavatele":
         st.markdown("### 3.5 Sazby pojištění, daně a celkové náklady zaměstnavatele")
