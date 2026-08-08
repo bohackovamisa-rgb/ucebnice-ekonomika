@@ -357,3 +357,119 @@ def render():
     elif selected_section_5 == "6. Aktivity a případové studie na závěr":
         st.markdown("### 6. Aktivity a případové studie na závěr")
         st.info("Zde budou interaktivní případové studie (Levné tričko, Student vydělává online, Obec rozhoduje o rozpočtu...)")
+# =========================================================================
+    # SEKCE 2: DANĚ, STÁTNÍ ROZPOČET A EKONOMICKÁ REALITA
+    # =========================================================================
+    elif selected_section_5 == "2. Daně, státní rozpočet a ekonomická realita" or "2" in selected_section_5:
+        st.markdown("### 2. Daně, státní rozpočet a ekonomická realita")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🧾 <b>Moderní hook:</b> Kolik státu odevzdáš z první brigády, prodeje na Vinted, streamování na Twitchi, spolupráce na TikToku nebo zisku z kryptoměn? Daně nejsou jen nudný formulář. Jsou to pravidla, která propojují tvé soukromé příjmy, veřejné služby, státní rozpočet a solidaritu.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("#### 2.1 Základy daňového systému: co je daň a proč existuje")
+        st.write("Daň je povinná, zákonem stanovená platba do veřejného rozpočtu, za kterou člověk nebo firma obvykle nedostává přímou konkrétní protislužbu. Neplatíš daň z příjmu proto, aby ti stát druhý den opravil přesně tvou ulici. Platíš ji do společného systému.")
+
+        st.markdown("##### ⚖️ Daň vs. Poplatek vs. Clo")
+        col_dan1, col_dan2, col_dan3 = st.columns(3)
+        with col_dan1:
+            st.info("💸 **Daň**\nPovinná platba do společného rozpočtu. *Příklad: Daň z příjmů, DPH.*")
+        with col_dan2:
+            st.warning("🐕 **Poplatek**\nPlatba za konkrétní úkon, službu nebo evidenci. *Příklad: Poplatek za psa, za občanku.*")
+        with col_dan3:
+            st.error("📦 **Clo**\nPlatba spojená s dovozem zboží ze zahraničí (mimo EU). *Příklad: Balík z Asie nebo USA.*")
+
+        st.divider()
+        st.markdown("#### 2.2 Funkce daní a zásady zdaňování")
+        st.write("Dobrá daň by neměla ekonomiku dusit. Měla by být srozumitelná, spravedlivá a efektivní.")
+        
+        with st.expander("Rozklikni pro zobrazení 4 funkcí daní"):
+            st.markdown("""
+            * 💰 **Fiskální:** Přináší peníze do státního rozpočtu na fungování státu.
+            * 🏗️ **Alokační:** Pomáhá financovat veřejné statky (dálnice, hasiči), které by trh sám nepostavil.
+            * 🤝 **Redistribuční:** Přerozděluje bohatství od bohatších k chudším (zmírňuje sociální nerovnosti).
+            * 🚭 **Regulační:** Odrazuje od škodlivého chování (např. spotřební daň na alkohol a cigarety).
+            """)
+
+        st.markdown("##### ⚖️ Progresivní vs. Rovná daň")
+        st.write("Měl by člověk s příjmem 200 000 Kč měsíčně platit vyšší procento než člověk s 30 000 Kč?")
+        
+        st.markdown("""
+        | Typ zdanění | Princip | Výhoda | Riziko / Nevýhoda |
+        | :--- | :--- | :--- | :--- |
+        | 📏 **Rovná daň** | Všichni platí stejné procento ze základu daně. | Je jednoduchá a přehledná. Míň papírování. | Může být vnímána jako nespravedlivá k chudším. |
+        | 📈 **Progresivní daň** | S vyšším příjmem roste procento daňové sazby. | Je solidárnější, bohatí unesou větší zátěž. | Může demotivovat lidi pracovat víc, nebo je nutit k odchodu do zahraničí. |
+        """)
+
+        st.markdown("""
+        <div class='box-gray'>
+            🧠 <b>Mýtus vs. Realita:</b><br>
+            <i>Mýtus:</i> „Když mi přidají v práci a přejdu do vyššího daňového pásma (progrese), vydělám ve výsledku méně peněz, protože mi zdaní všechno víc.“<br>
+            <i>Realita:</i> U běžné progresivní daně se vyšší sazbou obvykle daní AŽ ta část příjmu nad určitou hranicí, nikoliv úplně celý příjem. Člověk po zvýšení platu nikdy nebere méně peněz.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("#### 2.5 Přímé daně: Kdo je platí a z čeho?")
+        st.write("Přímé daně platí konkrétní člověk nebo firma ze svého příjmu, zisku nebo majetku. Jsou přímo spojené s tvým jménem (nebo IČO).")
+
+        col_pr1, col_pr2, col_pr3 = st.columns(3)
+        with col_pr1:
+            st.success("**Daň z příjmů fyzických osob (DPFO)**\nPlatíš ty. Z brigády, mzdy, podnikání, pronájmu nebo investic.")
+        with col_pr2:
+            st.warning("**Daň z příjmů právnických osob (DPPO)**\nPlatí firmy. S.r.o. odvádí státu peníze ze svého čistého zisku.")
+        with col_pr3:
+            st.info("**Daň z nemovitých věcí**\nPlatí majitel. Každý rok platíš obci za to, že vlastníš byt, dům nebo pozemek.")
+
+        st.divider()
+        st.markdown("<div class='box-purple'>💻 <b>Interaktivní průvodce: Musím to zdanit?</b></div>", unsafe_allow_html=True)
+        st.write("Brigády, OnlyFans, kryptoměny nebo Vinted. Pojďme zbořit mýtus, že „z internetu a brigád se daně neplatí“. Zvol si situaci a zjisti, jaká jsou pravidla:")
+
+        tab_brigada, tab_online, tab_vinted, tab_investice = st.tabs(["🍔 Brigáda a růžový papír", "📱 TikTok a Twitch", "👗 Vinted a Bazoš", "🪙 Krypto a Akcie"])
+
+        with tab_brigada:
+            st.markdown("##### Brigáda a „Růžový papír“")
+            st.write("U dohod jako DPP nebo DPČ záleží, jestli podepíšeš **Prohlášení poplatníka k dani** (růžový papír).")
+            st.write("Toto prohlášení ti umožňuje uplatnit tzv. *slevu na poplatníka*, která ti čistou mzdu výrazně zvýší. Pozor: v jednom měsíci ho můžeš mít podepsaný jen u jednoho zaměstnavatele!")
+            
+            st.markdown("🧮 **Mini-kalkulačka DPP (do 10 000 Kč):**")
+            dpp_vydelek = st.slider("Hrubý výdělek na DPP (Kč):", 1000, 10000, 5000, step=500)
+            roz_podepsano = st.radio("Podepsal/a jsi Růžové prohlášení?", ["Ano, mám podepsáno", "Ne, nemám podepsáno"])
+            
+            if "Ano" in roz_podepsano:
+                st.success(f"Díky slevě na dani je tvá daň 0 Kč. Čistá mzda na účet = **{dpp_vydelek} Kč**.")
+            else:
+                srazka = int(dpp_vydelek * 0.15)
+                cista = dpp_vydelek - srazka
+                st.error(f"Zaměstnavatel ti strhne 15% srážkovou daň (-{srazka} Kč). Čistá mzda na účet = **{cista} Kč**. (Tyto stržené peníze si ale můžeš vyžádat zpět od státu v ročním daňovém přiznání).")
+
+        with tab_online:
+            st.markdown("##### Twitch, TikTok, Patreon, OnlyFans a Barter")
+            st.write("Pokud dlouhodobě a soustavně vyděláváš tvorbou obsahu (spolupráce, předplatné, dary, prodej), jde obvykle o zdanitelný příjem a může se jednat o podnikání (na IČO).")
+            st.warning("⚠️ **Pozor na Barter!** Pokud ti firma pošle zdarma drahý telefon nebo boty za to, že jim uděláš reklamu, nejedná se o „dárek“. Je to nepeněžní příjem v hodnotě té věci, a ten se musí také danit!")
+
+        with tab_vinted:
+            st.markdown("##### Prodej na Vinted, Bazoši a Aukru")
+            st.write("Tady je potřeba si položit klíčovou otázku:")
+            
+            vinted_typ = st.radio("Jakým způsobem prodáváš?", [
+                "Prodávám jen občas své vlastní použité oblečení, ze kterého jsem vyrostl/a.",
+                "Soustavně nakupuji levné věci v sekáčích a přeprodávám je s přirážkou za účelem zisku."
+            ])
+            
+            if "své vlastní" in vinted_typ:
+                st.success("Tohle je v pořádku. Prodej vlastních použitých osobních věcí bývá od daně osvobozen. Nejde o podnikání.")
+            else:
+                st.error("Tohle už může být problém! Nakupování za účelem dalšího prodeje a zisku (soustavnost) je definicí podnikání. K tomu potřebuješ živnostenský list a musíš odvádět daně, jinak riskuješ pokutu.")
+
+        with tab_investice:
+            st.markdown("##### Kryptoměny, Akcie a ETF")
+            st.write("Aplikace jako Revolut dělají nákup snadným, ale nezbaví tě povinnosti danit. Pravidla se navíc liší:")
+            st.markdown("""
+            * 📈 **Akcie a ETF:** V ČR existuje *časový test*. Pokud cenné papíry držíš déle než 3 roky, výnos z prodeje nedaníš (případně pokud neprodáš za více než 100 000 Kč za rok).
+            * 🪙 **Kryptoměny (Bitcoin atd.):** Tady pozor! Z kryptoměn se platí daně ze zisku a *žádný 3letý časový test pro ně neplatí*! Navíc se daní i nákup jední kryptoměny za jinou.
+            """)
+            st.info("Pravidla investic a osvobození se často mění. Je vždy dobré sledovat aktuální legislativu nebo se poradit s účetním.")
