@@ -667,27 +667,65 @@ def render():
             if st.form_submit_button("Odeslat názor k zamyšlení"):
                 st.success("Přesně kvůli této otázce se starostové s vládou hádají u každé úpravy zákona o rozpočtovém určení daní! Každý pohled má své silné argumenty.")
         st.divider()
-        st.markdown("#### 2.7 a 2.8 Státní rozpočet (Velká státní peněženka)")
-        st.write("Státní rozpočet je plán příjmů (daně) a výdajů státu, obvykle na 1 rok. Výdaje se dělí do dvou obrovských skupin, a to je důvod, proč politici nemohou snadno 'ušetřit'.")
+# =====================================================================
+        # DOKONČENÍ SEKCE 2: STÁTNÍ ROZPOČET (2.7)
+        # =====================================================================
 
-        col_vyd1, col_vyd2 = st.columns(2)
-        with col_vyd1:
-            st.error("🔒 **Mandatorní výdaje (Povinné)**\nZabírají většinu rozpočtu. Stát je **musí** ze zákona zaplatit a nemůže je jen tak škrtnout. *Např. důchody, podpora v nezaměstnanosti, obsluha státního dluhu.*")
-        with col_vyd2:
-            st.success("🛠️ **Nemandatorní výdaje (Volitelné)**\nO těchto penězích politici vyjednávají a mohou se rozhodnout, zda je utratí, nebo ušetří. *Např. dotace pro firmy, stavba nové dálnice, nákup vybavení.*")
+        st.divider()
+        st.markdown("#### 2.7 Státní rozpočet: Velká státní peněženka")
+        st.write("Státní rozpočet je plán příjmů a výdajů státu na určité období, obvykle na 1 rok. Ukazuje, odkud stát očekává peníze a za co je plánuje utratit.")
 
-        st.markdown("<div class='box-purple'>⚖️ <b>Rozpočtová váha: Příjmy vs. Výdaje</b></div>", unsafe_allow_html=True)
-        st.write("Co se stane, když se váhy vychýlí? (Jednotky v miliardách Kč)")
+        # Tabulka příjmů a výdajů
+        col_prijmy, col_vydaje = st.columns(2)
+        with col_prijmy:
+            st.success("📥 **Příjmy státního rozpočtu (Kde stát bere)**")
+            st.markdown("""
+            * Daně, pojistné a další povinné platby (drtivá většina).
+            * Poplatky, příjmy z majetku státu, evropské dotace a prostředky.
+            * *Případně půjčené peníze, pokud stát hospodaří s deficitem.*
+            """)
+            
+        with col_vydaje:
+            st.error("📤 **Výdaje státního rozpočtu (Za co stát utrácí)**")
+            st.markdown("""
+            * Důchody, sociální dávky, školství, obrana, bezpečnost.
+            * Platy zaměstnanců veřejného sektoru (hasiči, učitelé, policisté), provoz úřadů, investice.
+            * Obsluha státního dluhu (placení úroků), infrastruktura, krizová pomoc.
+            """)
 
-        rozpocet_prijmy = st.number_input("Příjmy z daní (mld. Kč):", value=2000, step=100)
-        rozpocet_vydaje = st.number_input("Vládní výdaje a důchody (mld. Kč):", value=2300, step=100)
+        st.markdown("<br><div class='box-purple'>📊 <b>Kam přesně jdou tvoje daně?</b></div>", unsafe_allow_html=True)
+        st.write("Lidé si často myslí, že nejvíc peněz stát utratí za provoz úřadů nebo platy politiků. Podívej se na ilustrační rozpad rozpočtu. Přejeď myší přes jednotlivé dílky a uvidíš, že většinu peněz spolknou důchody a sociální služby:")
+
+        # Interaktivní koláčový graf (Plotly) s ilustračními daty běžného rozpočtu ČR
+        labels_rozpocet = [
+            'Důchody a sociální věci', 
+            'Školství a vzdělávání', 
+            'Doprava a investice', 
+            'Zdravotnictví (Státní část)', 
+            'Obrana a bezpečnost', 
+            'Obsluha státního dluhu (úroky)', 
+            'Ostatní (Provoz státu, kultura, dotace)'
+        ]
+        values_rozpocet = [42, 13, 11, 9, 8, 5, 12] # Hodnoty v procentech
+
+        fig_rozpocet = go.Figure(data=[go.Pie(
+            labels=labels_rozpocet, 
+            values=values_rozpocet, 
+            hole=.4,
+            marker_colors=['#ef4444', '#3b82f6', '#f59e0b', '#10b981', '#6366f1', '#8b5cf6', '#94a3b8']
+        )])
+        fig_rozpocet.update_layout(margin=dict(t=20, b=20, l=0, r=0), height=400)
         
-        saldo = rozpocet_prijmy - rozpocet_vydaje
+        st.plotly_chart(fig_rozpocet, use_container_width=True)
+
+        st.info("💡 **Kam jdou tvoje daně:** Velká část veřejných výdajů směřuje na sociální systém, důchody, školství, zdravotnictví a bezpečnost. Přesné podíly se samozřejmě každý rok mírně mění podle schváleného rozpočtu.")
+
+        # Klikací zdroje
+        st.markdown("##### 🔗 Odkazy do reality: Podívej se na skutečná data")
+        st.write("Nevěř učebnicím, ověř si to na reálných vládních datech. Tady jsou aktuální zdroje:")
         
-        if saldo > 0:
-            st.success(f"**PŘEBYTEK {saldo} mld. Kč!** Stát vybral více, než utratil. Může vytvářet rezervy nebo splácet staré dluhy (Přebytkový rozpočet).")
-        elif saldo == 0:
-            st.info("**VYROVNANÝ ROZPOČET!** Příjmy se přesně rovnají výdajům.")
-        else:
-            st.error(f"**SCHODEK (DEFICIT) {abs(saldo)} mld. Kč!** Stát utrácí více, než má (Schodkový rozpočet). Kde ty peníze vezme? Musí si je půjčit (např. vydat státní dluhopisy), čímž vytváří dluh pro budoucí generace.")
-            st.write("⚠️ *Život na dluh: Deficit v čase krize může pomoci. Ale pokud se opakuje každý rok, dluh roste rychleji než schopnost ekonomiky ho splatit.*")
+        st.markdown("""
+        * 🏛️ [Monitor státní pokladny](https://monitor.statnipokladna.cz/) — Nejlepší přehled veřejných rozpočtů a reálného hospodaření státu (až na úroveň jednotlivých obcí).
+        * 📄 [Ministerstvo financí ČR (Státní rozpočet)](https://www.mfcr.cz/cs/verejny-sektor/makroekonomika/statni-rozpocet) — Kompletní dokumenty, návrhy, schválené rozpočty a závěrečné účty.
+        * 📈 [Státní dluhopisy ČR](https://www.sporicidluhopisycr.cz/) — Informace pro běžné občany k vybraným státním dluhopisům, pokud do nich chceš investovat.
+        """)
