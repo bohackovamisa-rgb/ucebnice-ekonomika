@@ -984,36 +984,71 @@ def render():
 
         st.caption("📌 *Poznámka: Výpočet je zjednodušený pro výukové účely (zaokrouhlování na celé koruny). Skutečné parametry, daňové limity a slevy se mohou v závislosti na legislativě každý rok měnit.*")
 
-    elif selected_section_4 == "3.5 Sazby pojištění, daně a náklady zaměstnavatele":
-        st.markdown("### 3.5 Kalkulačka: Kolik tvoje práce skutečně stojí firmu?")
-        st.write("V ČR platí odvody na pojištění nejen zaměstnanec. **Zaměstnavatel** navíc nad rámec vaší hrubé mzdy platí státu dalších téměř 34 %. Tím vznikají **celkové náklady zaměstnavatele** na vaše pracovní místo.")
+elif selected_section_4 == "3.5 Sazby pojištění, daně a náklady zaměstnavatele":
+        st.markdown("### 3.5 Sazby pojištění, daně a celkové náklady zaměstnavatele")
+        
+        st.write("Doposud jsme se dívali na mzdu pohledem zaměstnance (co mi přijde na účet). Nyní se podíváme na mzdu **pohledem firmy**. Pro firmu nejste jen 'hrubá mzda', jste pro ni **mzdový náklad**.")
 
-        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní simulátor: Celkové náklady a státní kasička</b></div>", unsafe_allow_html=True)
-        st.write("Zadej svou vysněnou hrubou mzdu a zjisti, kolik reálně dostaneš na účet ty a kolik spolknou celkové daně a odvody.")
+        st.markdown("#### 🏢 Proč jste pro firmu mnohem dražší, než si myslíte?")
+        st.write("Stát firmám nařizuje, aby za každého zaměstnance na hlavní pracovní poměr platily ze svých firemních peněz **povinné odvody**. Zaměstnavatel musí nad rámec vaší hrubé mzdy zaplatit státu dalších **33,8 %**. Tyto peníze jsou pro firmu povinným **nákladem**, který fyzicky odejde z firemního bankovního účtu přímo státu.")
 
-        vysnena_mzda = st.slider("Moje vysněná hrubá mzda (Kč):", 20000, 100000, 40000, step=1000)
+        st.markdown("#### 🔍 Co přesně zaměstnavatel platí státu (Rozpad 33,8 %)")
+        
+        col_odv1, col_odv2 = st.columns(2)
+        with col_odv1:
+            st.markdown("##### 🏥 Zdravotní pojištění (9 %)")
+            st.write("Firma odvádí 9 % z vaší hrubé mzdy vaší zdravotní pojišťovně. Tyto peníze financují chod nemocnic, platy lékařů, operace a léky pro celou společnost.")
+        with col_odv2:
+            st.markdown("##### 🏛️ Sociální pojištění (24,8 %)")
+            st.write("Firma posílá 24,8 % z vaší hrubé mzdy na účet České správy sociálního zabezpečení (ČSSZ). Z čeho se tato velká částka skládá?")
+            st.markdown("""
+            * **21,5 % na důchody:** Z těchto peněz stát rovnou platí penze současným důchodcům.
+            * **2,1 % na nemocenské:** Z toho se platí dávky lidem na dlouhodobé neschopence nebo mateřské.
+            * **1,2 % na politiku zaměstnanosti:** Financuje úřady práce a podpory v nezaměstnanosti pro lidi bez práce.
+            """)
 
-        # Výpočty srážek zaměstnance
+        st.markdown("""
+        <div class='box-red'>
+            💡 <b>Pointa pro finanční gramotnost:</b><br>
+            Když přijdete za šéfem a řeknete si o přidání <b>1 000 Kč k hrubé mzdě</b>, musí šéf ve firemním rozpočtu najít <b>1 338 Kč</b>. Těch 338 Kč navíc spolkne stát. Proto firmy někdy raději nabízejí nefinanční benefity (např. mobil, auto, flexibilitu), které se daní a odvádějí jiným (levnějším) způsobem.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Interaktivní simulátor: Z firemní kasy až k tobě na účet</b></div>", unsafe_allow_html=True)
+        st.write("Vžij se do role majitele firmy. Chceš zaměstnat nového člověka. Zadej hrubou mzdu, kterou mu nabídneš na pohovoru, a sleduj, jak se peníze rozdělí mezi něj a stát:")
+
+        vysnena_mzda = st.slider("Nabízená hrubá mzda na smlouvě (Kč):", 20000, 100000, 40000, step=1000)
+
+        # Výpočty srážek zaměstnance (to, co platí zaměstnanec ze svého)
         soc_zam = int(vysnena_mzda * 0.071)
         zdr_zam = int(vysnena_mzda * 0.045)
         dan_pred = int(vysnena_mzda * 0.15)
-        dan_po = max(0, dan_pred - 2570)
+        dan_po = max(0, dan_pred - 2570)  # Základní sleva na poplatníka
         cista = vysnena_mzda - soc_zam - zdr_zam - dan_po
 
-        # Výpočty odvodů placených zaměstnavatelem
+        # Výpočty odvodů placených zaměstnavatelem (to, co platí firma navíc)
         soc_firma = int(vysnena_mzda * 0.248)
         zdr_firma = int(vysnena_mzda * 0.09)
         naklady_firmy = vysnena_mzda + soc_firma + zdr_firma
 
-        # Peníze, které sebere stát celkem
+        # Peníze, které sebere stát celkem (od firmy i od zaměstnance)
         stat_celkem = soc_zam + zdr_zam + dan_po + soc_firma + zdr_firma
+
+        # Podíly pro progress bar
+        podil_zamestnanec = cista / naklady_firmy
+        podil_stat = stat_celkem / naklady_firmy
 
         col_k1, col_k2, col_k3 = st.columns(3)
         with col_k1:
-            st.metric("Tvoje čistá mzda (na účet)", f"{cista:,} Kč".replace(",", " "))
+            st.metric("1. Náklad firmy celkem", f"{naklady_firmy:,} Kč".replace(",", " "))
+            st.caption("Peníze, které reálně odejdou z účtu firmy.")
         with col_k2:
-            st.metric("Celkové náklady firmy na tebe", f"{naklady_firmy:,} Kč".replace(",", " "))
+            st.metric("2. Peníze pro stát", f"{stat_celkem:,} Kč".replace(",", " "))
+            st.caption("Daně a odvody od firmy i zaměstnance.")
         with col_k3:
-            st.metric("Peníze pro stát (Daně a Odvody)", f"{stat_celkem:,} Kč".replace(",", " "))
+            st.metric("3. Čistá mzda", f"{cista:,} Kč".replace(",", " "))
+            st.caption("To, co přistane zaměstnanci na účtu.")
 
-        st.info(f"💡 Z celkového budgetu **{naklady_firmy:,} Kč**, které na tebe má firma každý měsíc vyhrazené, dostaneš ty reálně do kapsy **{cista:,} Kč**. Zbytek (**{stat_celkem:,} Kč**) tvoří daně a povinné pojištění, které putuje přímo státu.")
+        st.write("📊 **Jak se firemní peníze (náklady) rozdělily procentuálně:**")
+        st.progress(podil_zamestnanec, text=f"Zaměstnanec dostane cca {int(podil_zamestnanec*100)} % z firemních nákladů (Zbytek bere stát).")
