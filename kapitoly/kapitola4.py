@@ -1052,7 +1052,7 @@ def render():
 
         st.write("📊 **Jak se firemní peníze (náklady) rozdělily procentuálně:**")
         st.progress(podil_zamestnanec, text=f"Zaměstnanec dostane cca {int(podil_zamestnanec*100)} % z firemních nákladů (Zbytek bere stát).")
-elif selected_section_4 == "3.6 Sazby pojištění, daně a náklady zaměstnavatele":
+    elif selected_section_4 == "3.6 Sazby pojištění, daně a náklady zaměstnavatele":
         st.markdown("### 3.6 Sazby pojištění a daň z příjmů")
         
         st.markdown("""
