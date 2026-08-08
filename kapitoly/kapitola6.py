@@ -870,3 +870,106 @@ def render():
 
             if st.form_submit_button("Uložit Krok 5 do Projektového pasu"):
                 st.success("Krok 5 úspěšně uložen! Blok 1 (Management) máš kompletně zpracovaný.")
+# =====================================================================
+        # PODKAPITOLA 1.7: MODERNÍ PŘESAH (AGILITA, REMOTE WORK A BURNOUT)
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 1.7 Moderní přesah: Agilní řízení, remote work a burnout")
+        st.write("Současný management se posouvá od pouhého zadávání příkazů k práci s **autonomií, důvěrou, psychologickým bezpečím a průběžnou zpětnou vazbou**. Moderní manažer není policajt hlídající odpracované minuty, ale koordinátor, kouč a stavitel prostředí, ve kterém tým dokáže dlouhodobě podávat výkony bez vyhoření.")
+
+        tab_m1, tab_m2, tab_m3 = st.tabs(["⚡ Agilní metody (Scrum, Kanban, OKR)", "🤝 Vedení & Kultura", "💻 Remote work & Wellbeing"])
+
+        with tab_m1:
+            st.markdown("##### Agilní řízení a moderní metodiky")
+            st.write("Místo ročního plánování 'od stolu' se dnes pracuje v **krátkých cyklech**. Produkt se rychle spustí v základní verzi (MVP) a vylepšuje se za chodu podle reakcí uživatelů.")
+
+            st.markdown("""
+            * 🏃 **Scrum & Sprinty:** Tým pracuje v krátkých časových úsecích (sprinty, např. 2 týdny). Na konci každého sprintu ukáže konkrétní hotový výsledek.
+            * 📋 **Kanban:** Vizualizace úkolů ve sloupcích pro přehlednost (*K vyřešení ➔ Probíhá ➔ Hotovo*).
+            * 🎯 **OKR (Objectives & Key Results):** Stanovení 1 ambiciózního cíle a 3–4 konkrétních měřitelných výsledků (např. *Cíl: Zvětšit komunitu. Výsledek: +200 nových členů, 30% aktivita*).
+            """)
+
+            st.markdown("<div class='box-purple'>📋 <b>Interaktivní Kanban nástěnka</b></div>", unsafe_allow_html=True)
+            st.write("Vyzkoušej si, jak funguje vizualizace práce v nástrojích jako Trello, Asana nebo Notion:")
+
+            col_kan1, col_kan2, col_kan3 = st.columns(3)
+            with col_kan1:
+                st.error("📥 **K vyřešení (To Do)**")
+                st.checkbox("Připravit grafiku na kampaň", value=False)
+                st.checkbox("Sjednat sponzora", value=False)
+            with col_kan2:
+                st.warning("⚙️ **Probíhá (In Progress)**")
+                st.checkbox("Střih videa pro TikTok", value=True)
+            with col_kan3:
+                st.success("✅ **Hotovo (Done)**")
+                st.checkbox("Schválení rozpočtu", value=True, disabled=True)
+
+        with tab_m2:
+            st.markdown("##### Koučování, zpětná vazba a psychologické bezpečí")
+            st.write("Skvělé nástroje jsou k ničemu, pokud se lidé v týmu bojí mluvit.")
+
+            st.markdown("""
+            * ❓ **Koučovací styl:** Místo *"Udělej to přesně takhle"* se manažer ptá: *"Jaký problém v tom vidíš a jaké možnosti řešení navrhuješi?"*
+            * 🔄 **Průběžná zpětná vazba:** Hodnocení neprobíhá 1× za rok, ale v krátkých check-inech ihned po splnění úkolu.
+            * 🛡️ **Psychologické bezpečí:** Prostředí, kde se lidé nebojí přiznat chybu, požádat o pomoc nebo říct odlišný názor bez strachu ze zesměšnění.
+            """)
+
+        with tab_m3:
+            st.markdown("##### Remote work, digitální nástroje a hrozba vyhoření (Burnout)")
+            st.write("Flexibilita a práce z domova přinášejí svobodu, ale také riziko, že se hranice mezi prací a osobním životem úplně smaže.")
+
+            st.markdown("""
+            <div class='box-gray'>
+                💻 <b>Digitální nástroje (Notion, Slack, Teams, Trello):</b> Nepředstavují management samy o sobě. Jsou to jen pomocníci. Důležité je, zda tým rozumí prioritám a má jasně nastavenou kulturu komunikace.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🧮 <b>Burnout kalkulačka: Jak je na tom tvůj tým?</b></div>", unsafe_allow_html=True)
+        st.write("Nasimuluj pracovní podmínky a zjisti riziko vyhoření zaměstnanců:")
+
+        with st.container(border=True):
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                vecerne_zpravy = st.select_slider(
+                    "Očekává se odpovídání na Slack/e-maily večer a o víkendu?",
+                    options=["Nikdy (Respektuje se volno)", "Občas (Při krizích)", "Neustále (Pohotovost 24/7)"]
+                )
+                jasne_priority = st.select_slider(
+                    "Jsou v týmu jasně nastavené priority?",
+                    options=["Ano (Víme, co je hlavní)", "Částečně", "Chaotické (Všechno hoří)"]
+                )
+            with col_b2:
+                pauzy_volno = st.select_slider(
+                    "Podporuje manažer pauzy a čerpání dovolené?",
+                    options=["Ano (Aktivně hlídá odpočinek)", "Neutrálně", "Ne (Dovolená je brána jako lenost)"]
+                )
+
+            # Bodování rizika vyhoření
+            score = 0
+            if "Neustále" in vecerne_zpravy: score += 40
+            elif "Občas" in vecerne_zpravy: score += 15
+            
+            if "Chaotické" in jasne_priority: score += 35
+            elif "Částečně" in jasne_priority: score += 15
+            
+            if "Ne" in pauzy_volno: score += 25
+            elif "Neutrálně" in pauzy_volno: score += 10
+
+            st.write("---")
+            st.markdown(f"##### Odhadované riziko vyhoření v týmu: **{score} %**")
+            st.progress(score / 100.0)
+
+            if score > 60:
+                st.error("🚨 **VYSOKÉ RIZIKO VYHOŘENÍ:** Tým je přetížený neustálou pohotovostí a chaosem. Hrozí odchody lidí, chybovost a toxická atmosféra. Manažer musí okamžitě nastavit hranice a určení priorit!")
+            elif score > 30:
+                st.warning("⚠️ **MÍRNÉ RIZIKO:** Tým funguje, ale dlouhodobě by nejasné priority nebo občasné večerní zprávy mohly vést k únavě. Zlepšete odpočinek.")
+            else:
+                st.success("✅ **ZDRÁVÉ PROSTŘEDÍ:** Tým má skvělé podmínky pro udržitelný výkon, psychologické bezpečí a rovnováhu mezi prací a životem.")
+
+        st.markdown("""
+        <div class='box-green'>
+            ✅ <b>Co si zapamatovat z Bloku 1 (Management):</b><br>
+            Management je schopnost proměnit chaos ve fungující projekt. Stojí na cyklu <b>Plánování (SMART cílů) ➔ Organizování (pravomoc a odpovědnost) ➔ Vedení lidí (Maslowova pyramida a motivace) ➔ Kontrola (porovnání plánu a reality)</b>. Dobrý lídr dokáže střídat styly řízení podle situace, pracuje se SWOT analýzou i riziky a vytváří prostředí, kde lidé mohou bezpečně a udržitelně růst.
+        </div>
+        """, unsafe_allow_html=True)
