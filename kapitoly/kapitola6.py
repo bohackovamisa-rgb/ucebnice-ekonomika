@@ -399,10 +399,10 @@ def render():
             st.markdown("""
             <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px;">
                 <h5 style="margin-top:0; color: #1e40af;">🔍 4 fáze kontrolního procesu</h5>
-                1. <b>Stanovení standardů:</b> Určíme, jak má vypadat dobrý výsledek (např. <i>zisk 50 000 Kč, nula stížností</i>).<br>
+                1. <b>Stanovení standardů:</b> Určíme, jak má vypadat dobrý výsledek (např. <i>zisk 50 000 Kč, nula reklamací</i>).<br>
                 2. <b>Zjištění skutečnosti:</b> Změříme reálná data (např. <i>vybralo se jen 30 000 Kč</i>).<br>
                 3. <b>Srovnání:</b> Porovnáme plán vs. realitu (např. <i>chybí nám 20 000 Kč k cíli</i>).<br>
-                4. <b>Nápravné opatření:</b> Rozhodneme, co upravit (např. <i>přidáme reklamu na sociální sítě</i>).
+                4. <b>Nápravné opatření:</b> Rozhodneme, co upravit (např. <i>přidáme kampaň na sociální sítě</i>).
             </div>
             """, unsafe_allow_html=True)
 
@@ -411,12 +411,11 @@ def render():
             tab_k1, tab_k2, tab_k3 = st.tabs(["🔮 Předběžná", "⚙️ Průběžná", "🏁 Následná"])
             
             with tab_k1:
-                st.info("**Předběžná kontrola (PŘED akcí):** Chráni před zbytečnými krizemi.\n\n*Příklady:* Kontrola rozpočtu, ověření smluv s kapelami, kontrola, zda funguje zvukařská technika 2 hodiny před startem plesu.")
+                st.info("**Předběžná kontrola (PŘED spuštěním):** Chrání před zbytečnými krizemi a průšvihy.\n\n*Příklady:* Kontrola rozpočtu, schválení finálního vzorku zboží před tiskem, otestování nefunkčních odkazů na webu 2 hodiny před spuštěním prodeje.")
             with tab_k2:
-                st.warning("**Průběžná kontrola (BĚHEM akce):** Umožňuje reagovat okamžitě.\n\n*Příklady:* Sledování prodeje lístků online během dne, kontrola front u baru na festivalu, sledování plnění úkolů v Asaně nebo Trellu.")
+                st.warning("**Průběžná kontrola (BĚHEM projektu):** Umožňuje reagovat okamžitě na výkyvy.\n\n*Příklady:* Sledování denních prodejů v e-shopu, kontrola plnění harmonogramu na směně, sledování stavu úkolů v Trello/Notionu.")
             with tab_k3:
-                st.success("**Následná kontrola (PO akci):** Slouží ke poučení pro příště.\n\n*Příklady:* Spočítání čistého zisku, vyhodnocení dotazníků spokojenosti, rozbor chyb na závěrečné poradě.")
-
+                st.success("**Následná kontrola (PO dokončení):** Slouží k vyhodnocení a poučení pro příště.\n\n*Příklady:* Spočítání čistého zisku po kampani, vyhodnocení dotazníků spokojenosti zákazníků, rozbor chyb na závěrečné poradě.")
         # =====================================================================
         # PODKAPITOLA 1.3: OSOBNOST MANAŽERA A DOVEDNOSTI
         # =====================================================================
