@@ -1585,11 +1585,10 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
 # =========================================================================
     # SEKCE 6: PRAKTICKÁ DÍLNA (WORKSHOP)
     # =========================================================================
-    elif selected_section_4 == "6.1 Praktická dílna (Aktivity 1–5)":
+    elif "6.1" in selected_section_4 or "praktická dílna" in selected_section_4.lower():
         st.markdown("### 🛠️ 6.1 Praktická dílna: Otestuj své dovednosti")
         st.write("Teorii už znáš. Nyní je čas převést ji do praxe. Vyber si záložku s aktivitou a vyzkoušej si reálné situace z trhu práce nanečisto.")
 
-        # Vytvoření interaktivních záložek pro 5 aktivit
         tab1, tab2, tab3, tab4, tab5 = st.tabs([
             "🗺️ 1. Profesní mapa", 
             "🕵️ 2. Analýza inzerátu", 
@@ -1621,7 +1620,7 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
             st.markdown("""
             <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #0ea5e9; border-radius: 4px; margin-bottom: 15px;">
                 <b>Hledáme Asistenta/ku do naší dynamické rodiny!</b><br>
-                <i>Baví tě výzvy a nevadí ti práce pod tlakem? Přidej se k nám! Hledáme všestranného člověka.</i><br><br>
+                <i>Baví tě výzvy a nevadí ti práce pod tlakem? Přidej se k nám! Hledáme všestranného človeka.</i><br><br>
                 <b>Požadujeme:</b> Perfektní angličtinu (C1), ŘP skupiny B, odolnost vůči stresu, ochotu pracovat o víkendech.<br>
                 <b>Výhodou:</b> Znalost němčiny nebo španělštiny, základy účetnictví.<br>
                 <b>Nabízíme:</b> Odpovídající plat (dořešíme na pohovoru), super kolektiv, multisportku a po zapracování i notebook.
@@ -1631,7 +1630,7 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
             st.write("📝 **Rychlý kvíz k inzerátu:**")
             a2_q1 = st.checkbox("Znalost španělštiny je nezbytná pro přijetí.")
             a2_q2 = st.checkbox("Fráze 'Plat dořešíme na pohovoru' a 'Práce pod tlakem' jsou Red Flags.")
-            a2_q3 = st.checkbox("Pokud neumím anglicky na úrovi C1, rovnou mě vyřadí z výběru (je to požadavek).")
+            a2_q3 = st.checkbox("Pokud neumím anglicky na úrovni C1, rovnou mě vyřadí z výběru (je to požadavek).")
             
             if st.button("Vyhodnotit inzerát"):
                 if not a2_q1 and a2_q2 and a2_q3:
@@ -1693,13 +1692,13 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
     # =========================================================================
     # SEKCE 7: ZÁVĚR KAPITOLY A OPAKOVÁNÍ
     # =========================================================================
-    elif selected_section_4 == "7.1 Případové studie z praxe" or selected_section_4 == "7.2 Slovníček, rychlé opakování a prověrka":
+    elif "7." in selected_section_4 or "případové" in selected_section_4.lower() or "slovníček" in selected_section_4.lower():
         st.markdown("### 📚 7. Závěrečné shrnutí a opakování")
         st.write("Blížíme se do finále cesty zaměstnance. Shrňme si to nejdůležitější, co tě ochrání před chybami, vyhořením i ztrátou peněz.")
 
         st.markdown("""
         <div class='box-blue'>
-            🎓 <b>5 zlatých pravidel zaměstnance:</b><br>
+            🎓 <b>5 zlatých pravidiel zaměstnance:</b><br>
             1. <b>Smlouvy:</b> Co není psáno, to není dáno. Nikdy se nespoléhejte na „ústní dohody“ u pohovoru.<br>
             2. <b>Hrubá vs. čistá:</b> V inzerátech je vždy hrubá mzda. Daně a odvody vám ukrojí cca 20 % z výplaty.<br>
             3. <b>Švarcsystém:</b> Práce na firemním počítači, v pevnou dobu a s jedním šéfem, ale „na živnostenský list (IČO)“, je nelegální a extrémně riziková.<br>
