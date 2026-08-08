@@ -271,62 +271,6 @@ i.fi {
     vertical-align: -2px !important; 
     margin-right: 8px !important; 
 }
-
-/* 9. AUTOMATICKÉ ČERNÉ IKONY PŘED VŠECHNIKY BOXY V CELÉ UČEBNICI */
-.box-blue::before {
-    content: "\\f116";
-    font-family: "uicons-bold-straight", "uicons-bold-rounded" !important;
-    font-style: normal;
-    color: #111111 !important;
-    font-size: 1.1rem;
-    margin-right: 8px;
-    vertical-align: -1px;
-}
-.box-yellow::before {
-    content: "\\f147";
-    font-family: "uicons-bold-straight", "uicons-bold-rounded" !important;
-    font-style: normal;
-    color: #111111 !important;
-    font-size: 1.1rem;
-    margin-right: 8px;
-    vertical-align: -1px;
-}
-.box-purple::before {
-    content: "\\f207";
-    font-family: "uicons-bold-straight", "uicons-bold-rounded" !important;
-    font-style: normal;
-    color: #111111 !important;
-    font-size: 1.1rem;
-    margin-right: 8px;
-    vertical-align: -1px;
-}
-.box-green::before {
-    content: "\\f134";
-    font-family: "uicons-bold-straight", "uicons-bold-rounded" !important;
-    font-style: normal;
-    color: #111111 !important;
-    font-size: 1.1rem;
-    margin-right: 8px;
-    vertical-align: -1px;
-}
-.box-red::before {
-    content: "\\f12d";
-    font-family: "uicons-bold-straight", "uicons-bold-rounded" !important;
-    font-style: normal;
-    color: #111111 !important;
-    font-size: 1.1rem;
-    margin-right: 8px;
-    vertical-align: -1px;
-}
-.box-gray::before {
-    content: "\\f13f";
-    font-family: "uicons-bold-straight", "uicons-bold-rounded" !important;
-    font-style: normal;
-    color: #111111 !important;
-    font-size: 1.1rem;
-    margin-right: 8px;
-    vertical-align: -1px;
-}
 </style>
 """,
     unsafe_allow_html=True,
@@ -397,10 +341,10 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown(
         """
     <div class="box-gray">
-        <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
+        <i class="fi fi-bs-book-alt"></i> <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
     </div>
     <div class="box-green">
-        <b>Cíl učebnice</b><br>
+        <i class="fi fi-bs-crosshair"></i> <b>Cíl učebnice</b><br>
         Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
     </div>
     """,
@@ -424,12 +368,12 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown("### 🧩 Legenda učebnice")
     st.markdown(
         """
-    <div class="box-blue"><b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow"><b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
-    <div class="box-purple"><b>Fialová:</b> AI mentoring a práce s asistencí</div>
-    <div class="box-green"><b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
-    <div class="box-red"><b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
-    <div class="box-gray"><b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
+    <div class="box-blue"><i class="fi fi-bs-info"></i> <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
+    <div class="box-yellow"><i class="fi fi-bs-edit"></i> <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-purple"><i class="fi fi-bs-sparkles"></i> <b>Fialová:</b> AI mentoring a práce s asistencí</div>
+    <div class="box-green"><i class="fi fi-bs-check"></i> <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
+    <div class="box-red"><i class="fi fi-bs-exclamation"></i> <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
+    <div class="box-gray"><i class="fi fi-bs-document"></i> <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
     """,
         unsafe_allow_html=True,
     )
