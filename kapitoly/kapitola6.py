@@ -88,34 +88,6 @@ def render():
 
     selected_section_6 = st.selectbox("📌 Přechod na hlavní blok kapitoly:", section_options_6, index=0)
     st.divider()
-
-    # =========================================================================
-    # SEKCE 1: MANAGEMENT – JAK Z CHAOSU UDĚLAT FUNGUJÍCÍ FIRMU
-    # =========================================================================
-    if selected_section_6 == section_options_6[0]:
-        st.markdown("### 1. Management – Jak z chaosu udělat fungující firmu")
-        # ... zde pokračuje podkapitola 1 ...
-
-    # =========================================================================
-    # SEKCE 2: MARKETING – HRA O POZORNOST A MARKETINGOVÝ MIX
-    # =========================================================================
-    elif selected_section_6 == section_options_6[1]:
-        st.markdown("### 2. Marketing – Hra o pozornost a marketingový mix")
-        # ... zde pokračuje podkapitola 2 ...
-
-    # =========================================================================
-    # SEKCE 3: BRAND A ETIKA
-    # =========================================================================
-    elif selected_section_6 == section_options_6[2]:
-        st.markdown("### 3. Brand, nákupní psychologie a etika")
-        st.info("Zde bude pokračovat blok 3. Brand a etika...")
-
-    # =========================================================================
-    # SEKCE 4: ZÁVĚREČNÝ VÝSTUP A STUDIE
-    # =========================================================================
-    elif selected_section_6 == section_options_6[3]:
-        st.markdown("### 4. Závěrečný výstup kapitoly a případové studie")
-        st.info("Zde bude zobrazen celkový projektový pas a 3 případové studie...")
 # =========================================================================
     # SEKCE 1: MANAGEMENT – JAK Z CHAOSU UDĚLAT FUNGUJÍCÍ FIRMU
     # =========================================================================
