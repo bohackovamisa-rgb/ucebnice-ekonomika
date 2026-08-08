@@ -2008,3 +2008,100 @@ def render():
 
             if st.form_submit_button("Uložit Krok 13 do Projektového pasu"):
                 st.success("Krok 13 úspěšně uložen! Tvůj projekt je nejen atraktivní, ale i etický a právně čistý.")
+# ---------------------------------------------------------------------
+        # 3.3.2 OCHRANA SPOTŘEBITELE
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.3.2 Ochrana spotřebitele: Práva zákazníka")
+        st.write("Spotřebitel je na trhu vnímán jako slabší strana. Zákon mu proto garantuje jasná práva, která firmy musí bezvýhradně respektovat. Zamlčování podstatných údajů nebo falešný tlak na nákup jsou protiprávní.")
+
+        tab_os1, tab_os2, tab_os3 = st.tabs(["ℹ️ Pravdivé informace", "🔧 Reklamace", "📦 Odstoupení od smlouvy"])
+
+        with tab_os1:
+            st.markdown("**Právo na pravdivé a úplné informace**")
+            st.write("Zákazník musí před nákupem přesně vědět, co kupuje, kolik to stojí se všemi poplatky a za jakých podmínek.")
+            st.info("📌 **Příklad:** E-shop nesmí cenu dopravy schovávat až do posledního kroku platby nebo tajit, že zboží nemá reálně na skladě.")
+
+        with tab_os2:
+            st.markdown("**Reklamace (Práva z vadného plnění)**")
+            st.write("Pokud produkt nefunguje, má vady nebo neodpovídá popisu, má spotřebitel právo na bezplatnou opravu, výměnu zboží, slevu nebo vrácení peněz.")
+            st.warning("📌 **Příklad:** Koupená bezdrátová sluchátka se po týdnu přestanou nabíjet. Obchodník musí reklamaci vyřídit v zákonné lhůtě.")
+
+        with tab_os3:
+            st.markdown("**Odstoupení od smlouvy při nákupu online**")
+            st.write("Při nákupu na dálku (e-shop) má spotřebitel právo vrátit zboží bez udání důvodu v zákonné lhůtě (v ČR standardně do 14 dnů).")
+            st.success("📌 **Příklad:** Zákazník si objedná mikinu z e-shopu, doma si ji vyzkouší, zjistí, že mu nesedí střih, a do 14 dnů ji pošle zpět s nárokem na vrácení peněz.")
+
+        st.markdown("<br>##### 🛡️ Kdo hlídá férovost na trhu?", unsafe_allow_html=True)
+        col_org1, col_org2 = st.columns(2)
+        with col_org1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #1e40af;">🏛️ Česká obchodní inspekce (ČOI)</h5>
+                Státní kontrolní orgán, který dohlíží na dodržování zákonů o ochraně spotřebitele. Může udělovat vysoké pokuty za nekalé praktiky, klamání nebo zamítnuté reklamace.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_org2:
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #b45309;">⚖️ Rada pro reklamu (RPR)</h5>
+                Orgán etické samoregulace. Posuzuje stížnosti občanů na neetickou, vulgární, sexistickou nebo nebezpečnou reklamu a vydává arbitrážní nálezy.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 3.3.3 NEETICKÉ A MANIPULATIVNÍ PRAKTIKY
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.3.3 Neetické a manipulativní praktiky")
+        st.write("Některé nepoctivé firmy se snaží obcházet rozum zákazníka pomocí psychologických triků, manipulací a nepravdivých nálepek.")
+
+        tab_un1, tab_un2, tab_un3, tab_un4, tab_un5 = st.tabs([
+            "🌱 Greenwashing", 
+            "🏳️‍🌈 Pinkwashing", 
+            "🕸️ Dark patterns", 
+            "🎭 Falešný sociální důkaz", 
+            "⚠️ Zranitelné skupiny"
+        ])
+
+        with tab_un1:
+            st.markdown("**Greenwashing (Falešná ekologie)**")
+            st.write("Firma se tváří ekologicky a udržitelně, ale jde jen o reklamní trik na obalu bez reálných změn ve výrobě.")
+            st.error("📌 **Příklad:** Plastová lahev má zelený obal, obrázek listu a nápis 'ECO friendly', ale je vyrobena z nerecyklovatelného plastu v továrně znečišťující řeku.")
+
+        with tab_un2:
+            st.markdown("**Pinkwashing / Rainbow washing**")
+            st.write("Firma využívá podporu sociálních témat, menšin nebo charit primárně pro svou marketingovou image, aniž by dané témata reálně podporovala v zákulisí.")
+            st.warning("📌 **Příklad:** Značka si na měsíc hrdosti změní logo na duhové, ale ve vlastních pobočkách nepodporuje rovné příležitosti ani férové mzdy.")
+
+        with tab_un3:
+            st.markdown("**Dark Patterns (Temné vzorce na webech)**")
+            st.write("Manipulativní prvky v designu webů a e-shopů, které zákazníka podvědomě nutí utratit peníze, zaškrtnout souhlas nebo koupit něco navíc.")
+            st.info("📌 **Příklad:** Předem zaškrtnutá políčka 'Přidat pojištění za 200 Kč', zbytečně složité zrušení účtu, falešné odpočítávání času *'Sleva vyprší za 04:59 min'*, které se po obnovení stránky spustí znovu.")
+
+        with tab_un4:
+            st.markdown("**Falešný sociální důkaz (Fake Social Proof)**")
+            st.write("Uplácení nebo vymýšlení popularity pro vyvolání pocitu, že produkt nakupují všichni.")
+            st.error("📌 **Příklad:** Falešné recenze psané AI na e-shopu, nakoupení roboti/komentáře pod příspěvkem, vyskakující okníčka *'Právě nakoupil Jan z Brna'*, která jsou naprogramovaným podvodem.")
+
+        with tab_un5:
+            st.markdown("**Cílení na zranitelné skupiny**")
+            st.write("Reklama zneužívající naivitu, neznalost, strach nebo těžkou životní situaci specifických skupin.")
+            st.warning("📌 **Příklad:** Manipulativní reklama na předražené doplňky stravy cílená na osamělé seniory, agresivní půjčky se skrytými úroky pro lidi v dluhové pasti.")
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            ⚠️ <b>Rizikové produkty na trhu:</b> Zvláštní opatrnost a přísné etické hranice vyžaduje reklama na <b>alkohol, hazardní hry, energetické nápoje, kryptoměny, rychlé půjčky, doplňky stravy a zázračné léky</b>. V těchto oblastech může neetická reklama způsobit reálnou finanční nebo zdravotní škodu!
+        </div>
+        """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 14 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 14: Garance ochrany spotřebitele u tvého projektu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok14"):
+            st.markdown("##### 🛡️ Prověrka poctivosti tvého projektu:")
+            st.text_area("1. Jak se tvůj projekt vyhne 'Dark patterns' a klamání spotřebitele?:", placeholder="např. Cenu dopravy zobrazíme hned v prvním kroku košíku, žádné předem zaškrtnuté doplňky, reálné recenze.")
+            st.text_area("2. Jak nastavíte pravidla pro odstoupení od smlouvy nebo reklamace?:", placeholder="např. 14 dní na vrrátení bez udání důvodu, reklamaci vyřídíme přes online formulář do 3 dnů.")
+
+            if st.form_submit_button("Uložit Krok 14 a dokončit Blok 3 (Brand, Psychologie & Etika)"):
+                st.success("🎉 Gratulujeme! Blok 3 je kompletně hotový. Tvůj projekt má silný brand, rozumí psychologii a stojí na pevných etických základech!")
