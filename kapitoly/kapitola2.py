@@ -476,7 +476,7 @@ def render():
                     "nazev": "Vodoznak",
                     "misto": "Levý nepotištěný okraj bankovky",
                     "popis": "Zřetelný portrét osobnosti viditelný z obou stran při pohledu proti světlu.",
-                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na ním proti světlu."
+                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na ni proti světlu."
                 },
                 "Ochranný proužek (pohledem)": {
                     "ikona": "📏",
@@ -528,21 +528,21 @@ def render():
 
             det = prvky_bankovky[p_sel]
 
-            # Interaktivní grafika bankovky s dynamickým hotspotem
-            st.markdown(f"""
-            <div style="position: relative; width: 100%; max-width: 600px; height: 220px; background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%); border: 2px solid #64748b; border-radius: 10px; margin: 15px auto; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
-                <div style="position: absolute; top: 10px; left: 15px; font-weight: bold; color: #334155; font-size: 22px;">2000 Kč</div>
-                <div style="position: absolute; bottom: 10px; right: 15px; font-weight: bold; color: #475569; font-size: 12px;">ČESKÁ NÁRODNÍ BANKA</div>
-                <div style="position: absolute; top: 30%; right: 25%; font-size: 55px; opacity: 0.12; user-select: none;">🏛️</div>
-                
-                <!-- Dynamický svítící hotspot -->
-                <div style="position: absolute; top: {det['top']}; left: {det['left']}; transform: translate(-50%, -50%);">
-                    <div style="background-color: #ef4444; color: white; width: 36px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2px solid white; box-shadow: 0 0 12px #ef4444;">
-                        {det['ikona']}
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            # Čistý HTML řetězec bez vnitřního odsazení mezerami pro správné vykreslení
+            html_bankovka = (
+                f'<div style="position: relative; width: 100%; max-width: 600px; height: 220px; '
+                f'background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%); border: 2px solid #64748b; '
+                f'border-radius: 10px; margin: 15px auto; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">'
+                f'<div style="position: absolute; top: 10px; left: 15px; font-weight: bold; color: #334155; font-size: 22px;">2000 Kč</div>'
+                f'<div style="position: absolute; bottom: 10px; right: 15px; font-weight: bold; color: #475569; font-size: 12px;">ČESKÁ NÁRODNÍ BANKA</div>'
+                f'<div style="position: absolute; top: 30%; right: 25%; font-size: 55px; opacity: 0.12; user-select: none;">🏛️</div>'
+                f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%);">'
+                f'<div style="background-color: #ef4444; color: white; width: 36px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2px solid white; box-shadow: 0 0 12px #ef4444;">'
+                f'{det["ikona"]}'
+                f'</div></div></div>'
+            )
+
+            st.markdown(html_bankovka, unsafe_allow_html=True)
 
             # Kartička s detailem
             st.info(f"{det['ikona']} **{det['nazev']}** ({det['misto']})\n\n{det['popis']}\n\n{det['kontrola']}")
