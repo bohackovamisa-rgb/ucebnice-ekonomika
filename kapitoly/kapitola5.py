@@ -210,3 +210,107 @@ def render():
             
             if st.form_submit_button("Vydat zprávu do médií"):
                 st.success("Tvá analýza byla přijata k otištění! Právě sis vyzkoušel práci reálného datového analytika.")
+
+        st.markdown("#### 1.3.1 Magický čtyřúhelník hospodářské politiky")
+        st.write("Hospodářská politika sleduje několik cílů najednou. Klasicky se znázorňují jako **magický čtyřúhelník**. Je „magický“ proto, že **všechny cíle nejdou dokonale splnit současně**. Když se stát snaží rychle podpořit ekonomiku (snížit nezaměstnanost), může tím vyvolat zdražování (zvýšit inflaci). Proto je to vždy hledání rovnováhy.")
+
+        st.markdown("""
+        <div class='box-blue'>
+            📐 <b>Jak si představit magický čtyřúhelník:</b><br>
+            Představ si graf se čtyřmi vrcholy. Čím vyrovnanější jsou všechny čtyři oblasti, tím zdravěji ekonomika působí. Pokud jeden vrchol „ustřelí“, celá ekonomika je pod tlakem.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<div class='box-purple'>🕹️ <b>Interaktivní čtyřúhelník: Prozkoumej vrcholy</b></div>", unsafe_allow_html=True)
+        st.write("Vyber si jeden ze čtyř cílů a podívej se, co znamená a jaké je riziko, když se nedaří:")
+
+        cil = st.selectbox("Vyber vrchol čtyřúhelníku:", [
+            "Vyber...",
+            "📈 Hospodářský růst",
+            "🧑‍🔧 Nízká nezaměstnanost",
+            "🛒 Cenová stabilita",
+            "🌍 Vnější ekonomická rovnováha"
+        ])
+
+        if cil == "📈 Hospodářský růst":
+            st.success("**Hospodářský růst (HDP a tempo růstu)**")
+            st.write("**Co to znamená:** Ekonomika vytváří více hodnoty. Vyrábíme a poskytujeme více služeb než dřív.")
+            st.error("**Riziko, když se nedaří:** Stagnace, firmy méně investují, klesá životní úroveň a společnost chudne.")
+        elif cil == "🧑‍🔧 Nízká nezaměstnanost":
+            st.success("**Nízká nezaměstnanost (Míra nezaměstnanosti)**")
+            st.write("**Co to znamená:** Co nejvíce lidí, kteří chtějí pracovat, má práci. Mají možnost vydělávat a zapojit se do ekonomiky.")
+            st.error("**Riziko, když se nedaří:** Ztráta příjmů domácností, sociální problémy, lidé přestanou nakupovat a to stáhne dolů i firmy.")
+        elif cil == "🛒 Cenová stabilita":
+            st.success("**Cenová stabilita (Míra inflace)**")
+            st.write("**Co to znamená:** Ceny nerostou příliš rychle a peníze si drží svou hodnotu.")
+            st.error("**Riziko, když se nedaří (Inflace):** Znehodnocují se úspory. Za stejné peníze si koupíš mnohem méně věcí. Firmy i lidé se bojí plánovat budoucnost.")
+        elif cil == "🌍 Vnější ekonomická rovnováha":
+            st.success("**Vnější ekonomická rovnováha (Platební bilance)**")
+            st.write("**Co to znamená:** Vyrovnané vztahy se zahraničím — nejsme extrémně závislí na dovozu z ciziny nebo na zahraničním financování.")
+            st.error("**Riziko, když se nedaří:** Tlak na státní měnu (oslabování), obrovská zranitelnost při celosvětových krizích.")
+
+        st.markdown("""
+        <div class='box-gray'>
+            🍦 <b>Reality check: Inflace jako neviditelný zloděj úspor</b><br>
+            Zeptej se doma nebo si vzpomeň: Kolik stál kopeček zmrzliny, kebab nebo lístek do kina před pěti lety? A kolik stojí dnes? Pokud ceny rostou rychleji než příjmy, člověk si za stejné peníze koupí méně.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("#### 1.4 Nástroje státu: Hospodářská politika")
+        st.write("Hospodářská politika je soubor nástrojů, kterými stát a veřejné instituce ovlivňují ekonomiku. Nejde jen o vládu, obrovskou roli hraje i centrální banka.")
+
+        st.markdown("""
+        | Nástroj / oblast | Kdo ji používá | Co dělá | Příklad z praxe |
+        | :--- | :--- | :--- | :--- |
+        | 🏛️ **Fiskální politika** | Vláda, parlament, Ministerstvo financí | Pracuje se státním rozpočtem, daněmi, výdaji, dotacemi a investicemi. | Stát zvýší daně, vyplatí pomoc, investuje do dálnic. |
+        | 🏦 **Monetární politika** | ČNB (centrální banka) | Ovlivňuje množství peněz, úrokové sazby a inflaci. | Zvýšení sazeb = dražší hypotéky (brzdí inflaci, ale ztíží bydlení). |
+        | 🤝 **Sociální politika** | Ministerstva, obce | Vytváří záchrannou síť při nemoci, stáří, ztrátě práce. | Důchody, podpora v nezaměstnanosti, nemocenská. |
+        | ⚖️ **Regulační politika** | Úřady, EU | Pravidla pro firmy, ochrana dat a životního prostředí. | Pravidla pro e-shopy, ochrana osobních údajů, emisní limity. |
+        """)
+        
+        st.info("💡 **ČNB a vláda nejsou totéž:** Vláda rozhoduje o rozpočtu a daních. Česká národní banka (ČNB) je nezávislá a hlídá měnu a inflaci. Obě instituce ale ovlivňují stejnou ekonomiku a musí se navzájem doplňovat.")
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧠 <b>1.5 Kvíz: Poznáš funkci státu?</b></div>", unsafe_allow_html=True)
+        st.write("U každé situace urči, o jakou funkci nebo nástroj státu jde. Odpověz a pak si zkontroluj řešení:")
+        
+        with st.form("fce_statu_quiz_v2"):
+            q1 = st.selectbox("1. Vláda zvedne daně lidem s vysokými příjmy a peníze použije na podporu samoživitelů.", ["Vyber...", "Alokační funkce", "Redistribuční funkce", "Monetární politika", "Právní rámec"])
+            q2 = st.selectbox("2. Stát financuje opravu mostu, který používají obyvatelé i firmy.", ["Vyber...", "Alokační funkce (Veřejný statek)", "Monetární politika", "Sociální politika", "Redistribuční funkce"])
+            q3 = st.selectbox("3. ČNB zvýší úrokové sazby, aby pomohla brzdit inflaci.", ["Vyber...", "Fiskální politika", "Regulační politika", "Monetární politika (Stabilizační)", "Alokační funkce"])
+            q4 = st.selectbox("4. Úřad řeší firmu, která klame zákazníky falešnou slevou.", ["Vyber...", "Monetární politika", "Právní a institucionální rámec (Regulace)", "Sociální politika", "Redistribuční funkce"])
+            q5 = st.selectbox("5. Stát podporuje vzdělávání, protože z chytrých lidí má přínos i okolí a celá společnost.", ["Vyber...", "Negativní externalita", "Pozitivní externalita", "Monopol", "Platební bilance"])
+            
+            if st.form_submit_button("Zkontrolovat mé odpovědi"):
+                if q1 == "Redistribuční funkce" and q2 == "Alokační funkce (Veřejný statek)" and q3 == "Monetární politika (Stabilizační)" and q4 == "Právní a institucionální rámec (Regulace)" and q5 == "Pozitivní externalita":
+                    st.success("✅ **Všechno správně!** Perfektně rozumíš tomu, jaké páky má stát v ruce.")
+                else:
+                    st.error("❌ Některá z odpovědí je chybná. \n\n*Správné řešení: 1. Redistribuční (přerozdělování). 2. Alokační (veřejná infrastruktura). 3. Monetární (úroky řeší ČNB). 4. Právní (ochrana spotřebitele). 5. Pozitivní externalita.*")
+
+        st.divider()
+        st.markdown("#### 1.6 Mini aktivita: Stát jako správce společného účtu")
+        st.write("Představ si, že tvá třída má společný rozpočet **100 000 Kč** na zlepšení života ve škole.")
+        
+        with st.form("mini_aktivita_16_v2"):
+            st.write("Navrhni řešení a zamysli se nad souvislostmi s ekonomikou státu:")
+            st.text_area("1. Rozděl peníze mezi 3 oblasti: A) bezpečnost/vybavení, B) pomoc slabším studentům, C) akce a rozvoj školy.")
+            st.text_area("2. Ke každé oblasti napiš, jakou funkci státu to připomíná (alokační, redistribuční, stabilizační...):")
+            st.text_area("3. Co by se stalo, kdyby o všem rozhodoval jen trh? (Tedy: kdo zaplatí, ten má službu/pomoc, kdo nezaplatí, nemá nic):")
+            st.text_area("4. Napiš jedno riziko příliš malého a jedno riziko příliš velkého zásahu státu/vedení školy:")
+            
+            if st.form_submit_button("Uložit mé řešení"):
+                st.success("Skvělá práce! Uvědomil/a sis, že každé rozdělování peněz nese výhody i oběti, přesně jako státní rozpočet.")
+        
+        st.markdown("""
+        <aside>
+            🤖 <b>AI mentoring:</b> Zkopíruj tento prompt do ChatGPT nebo Claude a nech si látku vysvětlit:<br>
+            <i>„Vysvětli mi funkce státu v ekonomice na příkladu školy jako malé společnosti. Použij pojmy veřejný statek, externalita, monopol, redistribuce, fiskální politika, monetární politika a magický čtyřúhelník.“</i>
+        </aside>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class='box-green'>
+            ✅ <b>Co si z tohoto bloku zapamatovat:</b> Stát v ekonomice není jen výběr daní. Vytváří pravidla hry, financuje veřejné statky, řeší tržní selhání, zmírňuje nerovnosti a snaží se stabilizovat ekonomiku. Zároveň ale každý zásah něco stojí a může mít vedlejší dopady — proto je hospodářská politika neustálé hledání kompromisů (viz magický čtyřúhelník).
+        </div>
+        """, unsafe_allow_html=True)
