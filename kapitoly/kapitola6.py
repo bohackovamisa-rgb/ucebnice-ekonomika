@@ -2327,3 +2327,65 @@ def render():
 
             if st.form_submit_button("Uložit Krok 16 a dokončit celý Blok 3!"):
                 st.success("🎉 Výborně! Základ značky, komunikační kampaň i etická pravidla (Blok 3) jsou kompletně vytvořeny a uloženy v Projektovém pasu!")
+# ---------------------------------------------------------------------
+        # 3.4.5 NOVÉ TECHNOLOGIE V MARKETINGU
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.4.5 Nové technologie v marketingu: AI, data a automatizace")
+        st.write("Nové technologie umožňují marketing více personalizovat, automatizovat a přesně měřit. Zároveň však vyvolávají vážné otázky ohledně soukromí zákazníků, férovosti a transparentnosti.")
+
+        tab_tech1, tab_tech2, tab_tech3, tab_tech4, tab_tech5 = st.tabs([
+            "📊 Datová analytika", 
+            "🎯 Personalizace", 
+            "🤖 AI v obsahu", 
+            "💬 Chatboti", 
+            "⚠️ Deepfake & Etika"
+        ])
+
+        with tab_tech1:
+            st.markdown("**Datová analytika**")
+            st.write("Vyhodnocování chování zákazníků a výkonu kampaní v reálném čase na základě dat.")
+            st.info("📌 **Příklad:** E-shop přesně sleduje, odkud lidé přicházejí, co si prohlížejí a v jakém kroku nejčastěji opouštějí košík.")
+
+        with tab_tech2:
+            st.markdown("**Personalizace nabídky**")
+            st.write("Přizpůsobení obsahu, produktů nebo cen konkrétnímu zákazníkovi nebo segmentu podle jeho předchozího chování.")
+            st.warning("📌 **Příklad:** Doporučení *„Mohlo by se vám líbit“* na základě historie nákupů na e-shopech nebo osobní doporučení ve streamovací aplikaci.")
+
+        with tab_tech3:
+            st.markdown("**Umělá inteligence v obsahu (Generativní AI)**")
+            st.write("Pomoc s psaním textů, tvorbou grafiky, videí, generováním nápadů a testováním variant reklam.")
+            st.success("📌 **Příklad:** AI navrhne popisky produktů, e-mailovou kampaň nebo vizuály pro sociální sítě během několika vteřin.")
+
+        with tab_tech4:
+            st.markdown("**Chatboti a zákaznická podpora**")
+            st.write("Automatické odpovědi na časté dotazy a nepřetržitá pomoc zákazníkům s nákupem 24/7.")
+            st.info("📌 **Příklad:** Chatbot pomůže zákazníkovi najít správnou velikost, sledovat stav objednávky nebo vyřešit první kroky reklamace.")
+
+        with tab_tech5:
+            st.markdown("**AI a Deepfake reklama (Rizika)**")
+            st.write("Tvorba realistického obrazu, klonování hlasu nebo videa pomocí AI bez vědomí či účasti dané osoby.")
+            st.error("📌 **Příklad:** Virtuální AI influencer nebo klamavé video se známou osobností, která ve skutečnosti danou reklamu nikdy nenatočila.")
+
+        st.markdown("""
+        <div class='box-purple' style='margin-top: 15px;'>
+            🧠 <b>Etická otázka AI v marketingu:</b><br>
+            Pokud značka používá umělou inteligenci, měla by dbát na <b>pravdivost, transparentnost, ochranu osobních údajů a férové označování obsahu</b>. Deepfake reklama bez souhlasu dané osoby může být zásadně neetická i právně problematická!
+        </div>
+        """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 16 PRO STUDENTŮV PROJEKT - ETICKÁ KAMPAŇ
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 16: Návrh Etické kampaně a dokončení Bloku 3</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok16"):
+            st.markdown("##### 🚀 Navrhni krátkou etickou kampaň pro svůj projekt:")
+            st.text_input("1. Hlavní sdělení kampaně (Co lidem komunikujeme?):", placeholder="např. 'Obleč se do školy udržitelně a bez zbytečného odpadu.'")
+            col_k1, col_k2 = st.columns(2)
+            with col_k1:
+                st.text_input("2. Kde bude kampaň probíhat? (Místo/Kanály):", placeholder="např. Instagram Reels + plakáty na chodbách školy")
+                st.text_input("3. Jak poznáš, že je kampaň úspěšná? (Měřítko/KPI):", placeholder="např. 100 objednávek v e-shopu, 50 sdílení na sítích")
+            with col_k2:
+                st.text_area("4. Jak se vyhneš manipulaci, klamavé reklamě a greenwashingu?:", placeholder="např. Uvedeme přesné certifikace materiálu bez přikrášlování.")
+                st.text_input("5. Označení spolupráce (Pokud využiješ influencera):", placeholder="např. Viditelné označení #spoluprace v prvním řádku popisku")
+
+            if st.form_submit_button("Uložit Krok 16 a dokončit celý Blok 3!"):
+                st.success("🎉 Výborně! Základ značky, komunikační kampaň i etická pravidla (Blok 3) jsou kompletně vytvořeny a uloženy v Projektovém pasu!")
