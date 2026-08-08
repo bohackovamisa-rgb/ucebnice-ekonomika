@@ -331,9 +331,6 @@ def render():
     # =========================================================================
     # SEKCE 3: MOJE DANĚ V PRAXI
     # =========================================================================
-    elif selected_section_5 == "3. Moje daně v praxi":
-        st.markdown("### 3. Moje daně v praxi")
-        st.info("Zde bude praktický průvodce daněmi pro mladé (brigády, online výdělky, krypto...)")
 
     # =========================================================================
     # SEKCE 4: GLOBÁLNÍ SOUVISLOSTI
