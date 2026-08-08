@@ -63,6 +63,7 @@ def render():
         "4.3 Upskilling a reskilling",
         "5.1 Jak dát a dostat výpověď profesionálně",
         "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace",
+        "5.3 Co dělat, když... (Krizový trenažér)",
         "6.1 Praktická dílna (Aktivity 1–5)",
         "7.1 Případové studie z praxe",
         "7.2 Slovníček, rychlé opakování a prověrka"
