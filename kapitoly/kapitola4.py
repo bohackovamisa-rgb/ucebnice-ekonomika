@@ -1582,3 +1582,131 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
                     st.error("❌ **Stal ses obětí manipulace.** Pokud podepíšeš dohodu o ukončení z vlastní vůle bez odstupného, vzdal ses veškeré právní ochrany. Hrubé porušení by ti musel šéf složitě dokazovat a prohrál by u soudu.")
                 elif k_odp.startswith("C"):
                     st.warning("⚠️ **Pozor na emoce.** Pokud začneš ničit firemní majetek nebo někoho fyzicky napadat, dáváš šéfovi skutečný a legální důvod tě okamžitě vyhodit pro hrubé porušení kázně (tzv. Výpověď na hodinu).")
+# =========================================================================
+    # SEKCE 6: PRAKTICKÁ DÍLNA (WORKSHOP)
+    # =========================================================================
+    elif selected_section_4 == "6.1 Praktická dílna (Aktivity 1–5)":
+        st.markdown("### 🛠️ 6.1 Praktická dílna: Otestuj své dovednosti")
+        st.write("Teorii už znáš. Nyní je čas převést ji do praxe. Vyber si záložku s aktivitou a vyzkoušej si reálné situace z trhu práce nanečisto.")
+
+        # Vytvoření interaktivních záložek pro 5 aktivit
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "🗺️ 1. Profesní mapa", 
+            "🕵️ 2. Analýza inzerátu", 
+            "🤖 3. AI Kouč", 
+            "✉️ 4. Řešení chyb", 
+            "🎭 5. Vyjednávání"
+        ])
+
+        # AKTIVITA 1: PROFESNÍ MAPA
+        with tab1:
+            st.markdown("#### 🗺️ Aktivita 1: Moje profesní mapa")
+            st.write("Vytvoř si jednoduchý kompas své budoucí kariéry. Zamysli se nad tím, co tě baví a kam směřuješ.")
+            
+            with st.form("profesni_mapa"):
+                st.text_input("💡 1. Jaké činnosti tě přirozeně baví? (Co děláš, i když nemusíš?)")
+                st.text_input("🧩 2. Jaké problémy rád/a řešíš? (Baví tě čísla, lidé, nebo technologie?)")
+                st.text_area("🛠️ 3. Jaké dovednosti už máš? (Co ti jde lépe než ostatním ve třídě?)")
+                st.text_area("🎯 4. Jaké dovednosti ti naopak chybí a chceš se je naučit?")
+                st.text_input("🚀 5. Co jednoho zkusíš během příštích 3 měsíců? (Např. online kurz, stáž, kniha)")
+                
+                if st.form_submit_button("Uložit mou profesní mapu"):
+                    st.success("🎉 **Skvělý start!** Prvním krokem k úspěšné kariéře je uvědomit si, kde stojíš a kam jdeš. Zkus svůj cíl z bodu 5 zrealizovat hned tento víkend!")
+
+        # AKTIVITA 2: ANALÝZA INZERÁTU
+        with tab2:
+            st.markdown("#### 🕵️ Aktivita 2: Analýza pracovního inzerátu")
+            st.write("Přečti si tento fiktivní inzerát a zkus ho rozebrat jako profesionál.")
+            
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #0ea5e9; border-radius: 4px; margin-bottom: 15px;">
+                <b>Hledáme Asistenta/ku do naší dynamické rodiny!</b><br>
+                <i>Baví tě výzvy a nevadí ti práce pod tlakem? Přidej se k nám! Hledáme všestranného člověka.</i><br><br>
+                <b>Požadujeme:</b> Perfektní angličtinu (C1), ŘP skupiny B, odolnost vůči stresu, ochotu pracovat o víkendech.<br>
+                <b>Výhodou:</b> Znalost němčiny nebo španělštiny, základy účetnictví.<br>
+                <b>Nabízíme:</b> Odpovídající plat (dořešíme na pohovoru), super kolektiv, multisportku a po zapracování i notebook.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.write("📝 **Rychlý kvíz k inzerátu:**")
+            a2_q1 = st.checkbox("Znalost španělštiny je nezbytná pro přijetí.")
+            a2_q2 = st.checkbox("Fráze 'Plat dořešíme na pohovoru' a 'Práce pod tlakem' jsou Red Flags.")
+            a2_q3 = st.checkbox("Pokud neumím anglicky na úrovi C1, rovnou mě vyřadí z výběru (je to požadavek).")
+            
+            if st.button("Vyhodnotit inzerát"):
+                if not a2_q1 and a2_q2 and a2_q3:
+                    st.success("✅ **Perfektní rozbor!** Španělština je jen výhoda, ale angličtina C1 je nutnost. A skrývání platu s tlakem na stres je klasická červená vlajka!")
+                else:
+                    st.error("Něco nesedí. Pamatuj, že to, co je v sekci 'Požadujeme', je pro firmu nutné (angličtina). To, co je 'Výhodou' (španělština), nutné není. A skrývání platu je vždy Red Flag.")
+
+        # AKTIVITA 3: AI KOUČ
+        with tab3:
+            st.markdown("#### 🤖 Aktivita 3: AI jako tvůj osobní kariérní kouč")
+            st.write("Pohovoru se nemusíš bát, když si ho natrénuješ předem. Generativní AI (ChatGPT, Claude) tě dokáže skvěle otestovat.")
+            
+            pozice_kouc = st.text_input("Napiš pozici, na kterou bys chtěl/a jít na pohovor:", value="Grafik / Recepční / Programátor...")
+            
+            st.markdown("👇 **Zkopíruj si tento vygenerovaný prompt a vlož ho do AI:**")
+            
+            prompt_ai_kouc = f"Pomoz mi připravit se na pohovor na pozici [{pozice_kouc}]. Nejprve mi polož 5 otázek jako personalista. Ptej se po jedné! Po každé mé odpovědi polož doplňující otázku. Na konci vyhodnoť moje silné stránky, slabá místa a navrhni konkrétní formulace mých odpovědí tak, aby zněly profesionálně, ale přirozeně."
+            
+            st.code(prompt_ai_kouc, language="markdown")
+            st.info("💡 Požádej AI, aby byla přísná. Čím těžší bude trénink, tím lehčí bude skutečný pohovor.")
+
+        # AKTIVITA 4: CHYBY A E-MAIL
+        with tab4:
+            st.markdown("#### ✉️ Aktivita 4: Výplatní páska a asertivní e-mail")
+            st.write("Představ si, že jsi na výplatní pásce našel chybu (firma ti nezaplatila 10 hodin víkendových přesčasů). Zákon je na tvé straně, ale teď to musíš vyřešit s mzdovou účetní. **Jaký e-mail jí napíšeš?**")
+
+            email_vyber = st.radio("Vyber nejlepší a nejvíce profesionální způsob komunikace:", [
+                "A) 'Dobrý den, okamžitě mi doplaťte chybějící peníze za víkend, nebo vás nahlásím na inspektorát práce! Tohle si nenechám líbit.'",
+                "B) 'Dobrý den, nezlobte se, že ruším a omlouvám se za zdržení. Asi jsem to špatně pochopil, ale zdá se mi, že mi chybí nějaké peníze. Mohla byste se na to prosím někdy podívat? Děkuji a omlouvám se.'",
+                "C) 'Dobrý den, při kontrole výplatní pásky za minulý měsíc jsem zjistil, že v ní chybí proplacení 10 hodin víkendového přesčasu ze dne 14. 5. Můžete prosím tento nesoulad prověřit a dát mi vědět, jak to napravíme? Předem děkuji.'"
+            ])
+
+            if st.button("Odeslat e-mail účetní"):
+                if email_vyber.startswith("C"):
+                    st.success("✅ **Zlatá medaile za asertivitu!** Přesně takto jedná dospělý profesionál. Jsi slušný, věcný, dodáš důkazy (datum a hodiny) a neútočíš, protože to opravdu mohl být jen lidský omyl účetního systému.")
+                elif email_vyber.startswith("A"):
+                    st.error("❌ **Agresivní přístup.** Tohle je jako jít s kanónem na komára. Účetní se mohla jen překliknout v systému. Vyhrožováním inspektorátem v prvním e-mailu si zničíš vztahy na pracovišti.")
+                elif email_vyber.startswith("B"):
+                    st.warning("⚠️ **Příliš pasivní a omluvné.** Proč se omlouváš za to, že chceš své vlastní legálně vydělané peníze? Nemusíš se doprošovat, stačí slušně a sebevědomě upozornit na chybu.")
+
+        # AKTIVITA 5: ROLE-PLAY VYJEDNÁVÁNÍ
+        with tab5:
+            st.markdown("#### 🎭 Aktivita 5: Role-play vyjednávání o mzdě ve třídě")
+            st.write("Tato aktivita je určena pro práci ve dvojicích nebo trojicích. Každý dostane svou tajnou roli. Cílem není 'vyhrát a zničit druhého', ale najít profesionální kompromis.")
+
+            role = st.selectbox("Vyber si, kým chceš v této scénce být:", [
+                "Zaměstnanec (Uchazeč)", 
+                "Zaměstnavatel (Šéf/HR)", 
+                "Pozorovatel (Porotce)"
+            ])
+
+            if role == "Zaměstnanec (Uchazeč)":
+                st.info("🧑‍💼 **Tvoje role a cíl:** Jsi skvělý pracovník. Chceš nástupní mzdu 40 000 Kč. Zjistil jsi, že průměr v oboru je 38 000 Kč. Máš za sebou stáž a umíš pracovat s AI, což firmě ušetří čas.\n\n**Tvoje strategie:** Argumentuj fakty a tím, co firmě ušetříš. Pokud šéf nemá 40 tisíc, zkus vyjednat 36 000 Kč + 4 dny home office týdně.")
+            elif role == "Zaměstnavatel (Šéf/HR)":
+                st.warning("👔 **Tvoje role a cíl:** Zastupuješ firmu. Máš na tuto pozici rozpočet striktně max 36 000 Kč. Firma ale nabízí skvělé benefity (kurzy, flexibilní dobu).\n\n**Tvoje strategie:** Zkus uchazeče přesvědčit, ať vezme 34 000 Kč. Pokud bude dobrý a argumentovat fakty, můžeš mu dát těch 36 000 Kč nebo mu přidat volno.")
+            elif role == "Pozorovatel (Porotce)":
+                st.success("⚖️ **Tvoje role:** Sleduj rozhovor a dělej si poznámky. Na konci scénky zhodnoť obě strany:\n1. Kdo používal lepší věcné argumenty (důkazy vs. emoce)?\n2. Byli k sobě respektující?\n3. Dokázali najít kompromis, aby oba odcházeli s pocitem výhry?")
+
+    # =========================================================================
+    # SEKCE 7: ZÁVĚR KAPITOLY A OPAKOVÁNÍ
+    # =========================================================================
+    elif selected_section_4 == "7.1 Případové studie z praxe" or selected_section_4 == "7.2 Slovníček, rychlé opakování a prověrka":
+        st.markdown("### 📚 7. Závěrečné shrnutí a opakování")
+        st.write("Blížíme se do finále cesty zaměstnance. Shrňme si to nejdůležitější, co tě ochrání před chybami, vyhořením i ztrátou peněz.")
+
+        st.markdown("""
+        <div class='box-blue'>
+            🎓 <b>5 zlatých pravidel zaměstnance:</b><br>
+            1. <b>Smlouvy:</b> Co není psáno, to není dáno. Nikdy se nespoléhejte na „ústní dohody“ u pohovoru.<br>
+            2. <b>Hrubá vs. čistá:</b> V inzerátech je vždy hrubá mzda. Daně a odvody vám ukrojí cca 20 % z výplaty.<br>
+            3. <b>Švarcsystém:</b> Práce na firemním počítači, v pevnou dobu a s jedním šéfem, ale „na živnostenský list (IČO)“, je nelegální a extrémně riziková.<br>
+            4. <b>Zdraví a Wellbeing:</b> Umět říct šéfovi asertivní NE ve svém volném čase je základní prevence vyhoření.<br>
+            5. <b>Záchranná síť:</b> Úřad práce není ostuda. Je to nástroj, který za vás zaplatí zdravotní pojištění, když hledáte práci.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.divider()
+        st.markdown("*(Tímto končí 4. kapitola Finanční gramotnosti)*")
