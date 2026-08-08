@@ -536,14 +536,14 @@ def render():
 
             det = prvky_bankovky[p_sel]
 
-            # Reálná fotka bankovky 1000 Kč (lícová strana - František Palacký) s referrerpolicy="no-referrer"
-            url_bankovky_1000 = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/1000_Czech_koruna_Obverse.jpg/800px-1000_Czech_koruna_Obverse.jpg"
+            # Použití nezávislého CDN proxy pro spolehlivé načtení obrázku bez blokování
+            url_bankovky_1000 = "https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/3/30/1000_Czech_koruna_Obverse.jpg&w=800"
 
             html_bankovka = (
                 f'<div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; '
-                f'border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); line-height: 0;">'
-                f'<img src="{url_bankovky_1000}" referrerpolicy="no-referrer" alt="1000 Kč - František Palacký" '
-                f'style="width: 100%; height: auto; display: block;" />'
+                f'border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">'
+                f'<img src="{url_bankovky_1000}" alt="1000 Kč - František Palacký" '
+                f'style="width: 100%; height: auto; display: block; border-radius: 10px;" />'
                 f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
                 f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; '
                 f'display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; '
