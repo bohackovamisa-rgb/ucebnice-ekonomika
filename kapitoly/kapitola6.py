@@ -978,4 +978,146 @@ def render():
             Management je schopnost proměnit chaos ve fungující projekt. Stojí na cyklu <b>Plánování (SMART cílů) ➔ Organizování (pravomoc a odpovědnost) ➔ Vedení lidí (Maslowova pyramida a motivace) ➔ Kontrola (porovnání plánu a reality)</b>. Dobrý lídr dokáže střídat styly řízení podle situace, pracuje se SWOT analýzou i riziky a vytváří prostředí, kde lidé mohou bezpečně a udržitelně růst.
         </div>
         """, unsafe_allow_html=True)
+# =========================================================================
+    # SEKCE 2: MARKETING – HRA O POZORNOST A MARKETINGOVÝ MIX
+    # =========================================================================
+    elif selected_section_6 == section_options_6[1]:
+        st.markdown("### 2. Marketing – Hra o pozornost a marketingový mix")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🎯 <b>Moderní hook:</b> <i>„Proč si koupíš značkové tenisky za 4 000 Kč, když skoro stejný fejk stojí 500 Kč a funkčně tě donese na stejné místo?“</i><br>
+            Odpovědí je marketing. Marketing totiž není jen reklama. Je to způsob, jak pochopit, po čem lidé touží, jak vytvořit hodnotu, jak se odlišit od stovek kopií a jak dostat správnou nabídku ke správnému člověku v ten správný čas.
+        </div>
+        """, unsafe_allow_html=True)
 
+        st.divider()
+
+        # =====================================================================
+        # PODKAPITOLA 2.1: PODSTATA A VÝZNAM MARKETINGU
+        # =====================================================================
+        st.markdown("#### 2.1 Podstata a význam marketingu")
+        st.write("Marketing je proces, při kterém firma **zjišťuje potřeby zákazníků, vytváří pro ně hodnotu a uspokojuje tyto potřeby** tak, aby zároveň dosahovala zisku a svých cílů. Nejde tedy jen o to natočit cool video na TikTok nebo vnutit lidem produkt u pokladny.")
+
+        st.markdown("""
+        <div class='box-yellow'>
+            🧠 <b>Jednoduše (Rozdíl mezi prodejem a marketingem):</b><br>
+            • <b>Prodej</b> se ptá: <i>„Jak co nejrychleji prodáme to, co už máme vyrobené?“</i><br>
+            • <b>Marketing</b> se ptá: <i>„Co lidé reálně potřebují? Komu to nabídneme, za jakou cenu, jak jim to doručíme a jak o nás budou vůbec vědět?“</i>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("##### 🛒 Slovníček základních pojmů (Nejsou to synonyma!)")
+        
+        col_m1, col_m2 = st.columns(2)
+        with col_m1:
+            st.info("**Potřeba:** Pocit nedostatku něčeho základního. *Příklad: Mám žízeň, potřebuji pít. Cítím se osamělý, potřebuji patřit do skupiny.*")
+            st.warning("**Přání:** Konkrétní forma potřeby, ovlivněná kulturou, trendy a penězi. *Příklad: Mám žízeň, ale nechci vodu. Chci prémiové Bubble Tea nebo Matcha latté.*")
+        with col_m2:
+            st.error("**Poptávka:** Přání podpořené ochotou a hlavně **schopností to zaplatit**. *Příklad: Chci nové boty a mám na ně 3000 Kč na účtu.*")
+            st.success("**Spotřebitel vs. Zákazník:** Zákazník (Rodič) zaplatí školní batoh. Spotřebitel (Student) ten batoh reálně každý den nosí do školy a používá ho.")
+
+        st.markdown("<div class='box-purple'>🕹️ <b>Detektivka: Co je co?</b></div>", unsafe_allow_html=True)
+        st.write("Přečti si následující větu a správně identifikuj pojmy:")
+
+        with st.container(border=True):
+            st.write("*„Petr má obrovský hlad. Hrozně by si dal dvojitý Smash burger s hranolkama z nové burgrárny v centru. V peněžence má ale jen 50 Kč, takže si jde nakonec koupit suchý rohlík do večerky.“*")
+
+            kviz_potreby = st.radio("Co z toho byla reálná POPTÁVKA (Demand)?", [
+                "Vyber odpověď...",
+                "A) Obrovský hlad.",
+                "B) Dvojitý Smash burger s hranolkama.",
+                "C) Suchý rohlík za 50 Kč."
+            ])
+
+            if "C)" in kviz_potreby:
+                st.success("✅ **Přesně tak!** Petr měl POTŘEBU (hlad), jeho PŘÁNÍ byl (drahý burger), ale jeho reálná POPTÁVKA na trhu byla jen na rohlík, protože poptávka musí být krytá penězi!")
+            elif "A)" in kviz_potreby:
+                st.error("❌ Hlad je pouze základní **Potřeba**, chybí tam ty peníze. Zkus to znovu.")
+            elif "B)" in kviz_potreby:
+                st.error("❌ Smash burger byl pouze Petrovo **Přání**. Neměl na něj peníze, takže nevytvořil reálnou poptávku. Správně je C.")
+
+        # ---------------------------------------------------------------------
+        # 2.1.1 VÝVOJ PODNIKATELSKÝCH KONCEPCÍ
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.1.1 Vývoj podnikatelských koncepcí: Od pásu po záchranu planety")
+        st.write("Firmy se v historii nedívaly na zákazníka vždy stejně. Jejich přístup (tzv. koncepce) se vyvíjel podle toho, jak rostla konkurence a bohatla společnost.")
+
+        st.markdown("<div class='box-purple'>🕰️ <b>Time Machine: Nastup do stroje času</b></div>", unsafe_allow_html=True)
+        st.write("Posouvej se časem od minulosti do současnosti a sleduj, jak se měnil mozek byznysu:")
+
+        casova_osa = st.select_slider(
+            "Vyber si éru trhu:",
+            options=["1. Výrobní (Kvantita)", "2. Výrobková (Kvalita)", "3. Prodejní (Tlak)", "4. Marketingová (Zákazník)", "5. Sociální (Planeta)"]
+        )
+
+        if "Výrobní" in casova_osa:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #94a3b8;">
+                <h5 style="margin-top: 0; color: #475569;">🏭 1. Výrobní koncepce (Důraz na masu a nízkou cenu)</h5>
+                <b>Hlavní myšlenka:</b> Vyrábět levně, rychle a ve velkém. Zákazník koupí cokoliv, hlavně když to bude dostupné.<br><br>
+                <b>Historický příklad:</b> Henry Ford a jeho Model T: <i>"Můžete mít auto v jakékoliv barvě, pokud to bude černá."</i><br>
+                <b>Riziko:</b> Firma úplně ignoruje, co zákazník doopravdy chce. Dnes přežívá jen u superlevných základních surovin.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        elif "Výrobková" in casova_osa:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6;">
+                <h5 style="margin-top: 0; color: #1d4ed8;">🔬 2. Výrobková koncepce (Důraz na technickou dokonalost)</h5>
+                <b>Hlavní myšlenka:</b> Zákazník chce nejlepší kvalitu, inovace a funkce. Musíme vyrobit dokonalý produkt!<br><br>
+                <b>Příklad:</b> Inženýři vyrobí notebook z titanu s brutálním výkonem.<br>
+                <b>Riziko:</b> Tzv. <i>marketingová krátkozrakost</i>. Vyrobíte sice technicky dokonalý produkt, ale nikdo ho nekoupí, protože je zbytečně složitý, drahý a lidem stačí obyčejný lehký tablet.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        elif "Prodejní" in casova_osa:
+            st.markdown("""
+            <div style="background-color: #fef2f2; padding: 15px; border-left: 5px solid #ef4444;">
+                <h5 style="margin-top: 0; color: #b91c1c;">🗣️ 3. Prodejní koncepce (Důraz na tlak a reklamu)</h5>
+                <b>Hlavní myšlenka:</b> Lidé sami od sebe nenakupují dost. Musíme je přemluvit, ukecat a produkt jim vnutit masivní reklamou.<br><br>
+                <b>Příklad:</b> Agresivní teleshopping (<i>"Volejte ihned a dostanete sadu nožů!"</i>), slevoví prodejci, tlak pojišťováků.<br>
+                <b>Riziko:</b> Člověk si věc možná pod tlakem koupí, ale jakmile přijde domů, lituje toho. Ztratíte důvěru a zákazník se už nikdy nevrátí.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        elif "Marketingová" in casova_osa:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981;">
+                <h5 style="margin-top: 0; color: #047857;">🎯 4. Marketingová koncepce (Důraz na zákazníka)</h5>
+                <b>Hlavní myšlenka:</b> Otočení logiky. Nejdřív se zeptáme, co zákazník chce a jaký má problém. Až TEPŘVE POTOM to vyrobíme a prodáme mu to s profitem.<br><br>
+                <b>Příklad:</b> Moderní e-shopy. Zjistí ze svých dat, že lidé nesnáší čekání na poštu ➔ vymyslí AlzaBoxy nebo Zásilkovnu.<br>
+                <b>Riziko:</b> Slepé plnění tužeb zákazníků může vést k tomu, že ignorujete dlouhodobé dopady na přírodu nebo společnost.
+            </div>
+            """, unsafe_allow_html=True)
+            
+        else:
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b;">
+                <h5 style="margin-top: 0; color: #b45309;">🌍 5. Sociální / Etická koncepce (Důraz na udržitelnost a hodnoty)</h5>
+                <b>Hlavní myšlenka:</b> Firma musí uspokojit zákazníka, vydělat peníze, ale ZÁROVEŇ chránit společnost a planetu.<br><br>
+                <b>Příklad:</b> Značky Patagonia (udržitelná móda), bio-potraviny, kosmetika netestovaná na zvířatech.<br>
+                <b>Riziko:</b> <i>Greenwashing</i>. Pokud o tom firma jen lže v reklamách, ale reálně vyrábí toxicky v Asii, dříve či později ji to zničí.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            🧠 <b>Moderní přesah:</b> Dnešní marketing (fáze 4 a 5) už často neprodává jen funkční produkt, ale prodává <b>životní styl, emoci a identitu</b>. Nekupuješ si iPhone jen proto, abys mohl telefonovat (to umí i mobil za dva tisíce). Kupuješ si ho proto, co to o tobě říká a do jaké komunity tě to řadí.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 6 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 6: Podstata a koncepce tvého projektu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok6"):
+            st.text_area("1. Jakou ZÁKLADNÍ POTŘEBU uspokojuje tvůj projekt? (Proč by to měl někdo chtít?):", placeholder="např. Uspokojuje potřebu informovanosti a zábavy během nudné cesty tramvají (školní podcast).")
+            st.selectbox("2. Jaká podnikatelská koncepce by k tvému projektu nejlépe seděla?:", [
+                "Marketingová (Striktně sledujeme, co zákazník chce a my mu to dáme)",
+                "Výrobková (Sázíme na absolutně špičkovou, prémiovou kvalitu bez kompromisů)",
+                "Sociální/Etická (Sázíme na udržitelný, bio a férový přístup)",
+                "Prodejní (Budeme to tvrdě a agresivně tlačit přes slevy a reklamu)"
+            ])
+            
+            if st.form_submit_button("Uložit Krok 6 do Projektového pasu"):
+                st.success("Krok 6 uložen! Tvůj projekt teď pevně stojí na pochopení potřeb.")
