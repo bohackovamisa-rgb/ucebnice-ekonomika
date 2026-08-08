@@ -56,13 +56,8 @@ def render():
         "6. Aktivity a případové studie na závěr"
     ]
     
-<<<<<<< HEAD
-    selected_section_5 = st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    st.selectbox("Přechod na podkapitolu:", section_options_5, index=0, label_visibility="collapsed")
-=======
     st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    selected_section_5 = st.selectbox("Přechod na podkapitolu:", section_options_5, index=0, label_visibility="collapsed")
->>>>>>> 85dc2bec670296c4873213a08bf23888e3d5502e
+    selected_section_5 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
     st.divider()
 
     # =========================================================================
