@@ -60,12 +60,12 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (iOS EDITORIAL & FLATICON UICONS THIN) ---
+# --- STYLOVÁNÍ (iOS EDITORIAL & FLATICON UICONS BOLD) ---
 st.markdown(
     """
-<!-- Import Flaticon UIcons (Thin Straight) CDN -->
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-straight/css/uicons-thin-straight.css'>
-<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+<!-- Import Flaticon UIcons (Bold Straight & Rounded - Černé silné linky) -->
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-straight/css/uicons-bold-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
@@ -76,7 +76,7 @@ st.markdown(
 /* 1. ZÁKLADNÍ POZADÍ A PÍSMO (MONTSERRAT) */
 html, body, [class*="css"], .stApp {
     font-family: 'Montserrat', -apple-system, sans-serif !important;
-    background-color: #FAF8F5 !important; /* Teplé krémové pozadí */
+    background-color: #FAF8F5 !important;
     color: #1C1917 !important;
 }
 
@@ -136,9 +136,7 @@ p, li, td, th {
     font-weight: 400 !important; 
 }
 
-/* 4. TLAČÍTKA V LEVÉM MENU (OPRAVA KONTRASTU A TEXTU) */
-
-/* Aktivní (Primary) tlačítko */
+/* 4. TLAČÍTKA V LEVÉM MENU */
 button[data-testid="baseButton-primary"], 
 button[kind="primary"] { 
     font-family: 'Montserrat', sans-serif !important; 
@@ -156,7 +154,6 @@ button[kind="primary"] * {
     color: #FFFFFF !important;
 }
 
-/* Neaktivní (Secondary) tlačítko */
 button[data-testid="baseButton-secondary"], 
 button[kind="secondary"] {
     font-family: 'Montserrat', sans-serif !important; 
@@ -173,7 +170,6 @@ button[kind="secondary"] * {
     color: #44403C !important;
 }
 
-/* Hover stav pro neaktivní tlačítka */
 button[data-testid="baseButton-secondary"]:hover, 
 button[kind="secondary"]:hover {
     background-color: #111111 !important;
@@ -211,7 +207,7 @@ section[data-testid="stSidebar"] {
     margin-bottom: 0.6rem; 
 }
 
-/* 7. JEMNÉ PASTELOVÉ BAREVNÉ BOXY (EDITORIAL PASTEL PALETTE) */
+/* 7. JEMNÉ PASTELOVÉ BAREVNÉ BOXY */
 .box-blue { 
     background-color: #F4F7F9 !important; 
     border-left: 3px solid #8AA2B6 !important; 
@@ -268,7 +264,13 @@ section[data-testid="stSidebar"] {
     font-size: 0.93rem; 
 }
 
-.fi { font-size: 1.1rem; vertical-align: middle; margin-right: 6px; }
+/* 8. STYLING PRO ČERNÉ ČÁROVÉ IKONY (BOLD FLATICON) */
+i.fi { 
+    font-size: 1.15rem !important; 
+    color: #111111 !important; /* Vždy čistá tmavá linka */
+    vertical-align: -2px !important; 
+    margin-right: 8px !important; 
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -339,10 +341,10 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown(
         """
     <div class="box-gray">
-        <i class="fi fi-ts-book-alt"></i> <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
+        <i class="fi fi-bs-book-alt"></i> <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
     </div>
     <div class="box-green">
-        <i class="fi fi-ts-target"></i> <b>Cíl učebnice</b><br>
+        <i class="fi fi-bs-crosshair"></i> <b>Cíl učebnice</b><br>
         Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
     </div>
     """,
@@ -366,12 +368,12 @@ if st.session_state["current_view"] == "Uvod":
     st.markdown("### 🧩 Legenda učebnice")
     st.markdown(
         """
-    <div class="box-blue"><i class="fi fi-ts-info"></i> <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow"><i class="fi fi-ts-edit"></i> <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
-    <div class="box-purple"><i class="fi fi-ts-sparkles"></i> <b>Fialová:</b> AI mentoring a práce s asistencí</div>
-    <div class="box-green"><i class="fi fi-ts-check-circle"></i> <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
-    <div class="box-red"><i class="fi fi-ts-exclamation"></i> <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
-    <div class="box-gray"><i class="fi fi-ts-document"></i> <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
+    <div class="box-blue"><i class="fi fi-bs-info"></i> <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
+    <div class="box-yellow"><i class="fi fi-bs-edit"></i> <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-purple"><i class="fi fi-bs-sparkles"></i> <b>Fialová:</b> AI mentoring a práce s asistencí</div>
+    <div class="box-green"><i class="fi fi-bs-check"></i> <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
+    <div class="box-red"><i class="fi fi-bs-exclamation"></i> <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
+    <div class="box-gray"><i class="fi fi-bs-document"></i> <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
     """,
         unsafe_allow_html=True,
     )
