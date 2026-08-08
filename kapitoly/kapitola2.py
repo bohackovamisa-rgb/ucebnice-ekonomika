@@ -465,58 +465,66 @@ def render():
             * **pomůckami** — například kontrola pod UV světlem.
             """)
 
-            st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz")
-            st.write("Zvol prvek v nabídce níže, sleduj jeho umístění přímo na bankovce a zjisti, jak ho v praxi ověřit:")
+            st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz (1000 Kč - František Palacký)")
+            st.write("Zvol prvek v nabídce níže, sleduj jeho přesné umístění přímo na reálné bankovce a zjisti, jak ho v praxi ověřit:")
 
-            # Databáze prvků s přesnými souřadnicemi
+            # Databáze prvků pro 1000 Kč s Františkem Palackým
             prvky_bankovky = {
                 "Vodoznak (pohledem)": {
                     "ikona": "💧",
-                    "top": "50%", "left": "16%",
-                    "nazev": "Vodoznak (Ema Destinnová)",
+                    "top": "48%", "left": "14%",
+                    "nazev": "Vodoznak (František Palacký)",
                     "misto": "Levý nepotištěný okraj bankovky",
-                    "popis": "Zřetelný stínovaný portrét Emy Destinnové viditelný z obou stran při pohledu proti světlu.",
-                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na nepotištěný okraj proti světlu."
+                    "popis": "Zřetelný stínovaný portrét Františka Palackého s číselným označením '1000' a motivem lipového listu, viditelný z obou stran při pohledu proti světlu.",
+                    "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na nepotištěný levý okraj proti světelnému zdroji."
                 },
                 "Ochranný proužek (pohledem)": {
                     "ikona": "📏",
-                    "top": "50%", "left": "33%",
+                    "top": "50%", "left": "55.8%",
                     "nazev": "Ochranný proužek s mikrotextem",
-                    "misto": "Svislý metalický pás zapuštěný do papíru",
-                    "popis": "Tmavý souvislý pás s negativním mikrotextem '2000 Kč' viditelný proti světlu.",
-                    "kontrola": "☀️ **Jak zkontrolovat:** Podívej se na bankovku proti světlu nebo ji nakloň a sleduj proměnu barev."
+                    "misto": "Svislý metalický pás zapuštěný do papíru (uprostřed bankovky)",
+                    "popis": "Tmavý okenníkový proužek z pokovené umělé hmoty s negativním mikrotextem 'ČNB 1000 Kč'. Při naklonění mění barvu z hnědofialové na zelenou.",
+                    "kontrola": "☀️ **Jak zkontrolovat:** Podívej se na bankovku proti světlu (vidíš souvislý pás) nebo ji nakloň a sleduj proměnu barev."
                 },
                 "Soutisková značka (pohledem)": {
                     "ikona": "🧩",
-                    "top": "18%", "left": "43%",
-                    "nazev": "Soutisková značka (ČR)",
-                    "misto": "Horní část bankovky vlevo od portrétu",
-                    "popis": "Oboustranný tisk, který se proti světlu přesně doplňuje v celistvý symbol 'ČR'.",
-                    "kontrola": "🔍 **Jak zkontrolovat:** Prohlédni si značku proti světlu – obě strany do sebe musí přesně zapadnout."
+                    "top": "14.5%", "left": "29.5%",
+                    "nazev": "Soutisková značka (CS / ČR)",
+                    "misto": "Horní část bankovky vlevo od stromu",
+                    "popis": "Oboustranný tisk kroužku s písmeny. Z lícní strany vidíš jen část, z rubové druhou část. Proti světlu se přesně doplňují v celistvý symbol.",
+                    "kontrola": "🔍 **Jak zkontrolovat:** Prohlédni si značku proti světlu – obě poloviny vytvoří přesný kruhový symbol."
                 },
                 "Opticky proměnlivá barva (naklopením)": {
                     "ikona": "🎨",
-                    "top": "72%", "left": "42%",
-                    "nazev": "Opticky proměnlivá barva (Lyra)",
-                    "misto": "Spodní část bankovky u motivu lyry",
-                    "popis": "Speciální tisková barva mění svůj odstín ze zlatavé na zelenou při naklonění bankovky.",
-                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku – barva lyry se změní ze zlaté na zelenou."
+                    "top": "18.5%", "left": "41.5%",
+                    "nazev": "Opticky proměnlivá barva (Lipový list)",
+                    "misto": "Horní část stromu nad nápisem TISÍC",
+                    "popis": "Stylizovaný lipový list vytištěný speciální barvou. Při naklonění bankovky mění barvu ze zlatavé/hnědé na zelenou.",
+                    "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku pod úhlem naproti světlu – sleduj proměnu barvy lipového listu."
                 },
                 "Reliéfní tisk (hmatem)": {
                     "ikona": "🖐️",
-                    "top": "38%", "left": "78%",
-                    "nazev": "Reliéfní tisk (Hlubotisk)",
-                    "misto": "Portrét Emy Destinnové a hmatové značky",
-                    "popis": "Vystouplý povrch hlubotisku nahmatatelný na lícové straně bankovky.",
-                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď prstem po portrétu Emy Destinnové nebo číslu '2000' – ucítíš výrazný hmatatelný reliéf."
+                    "top": "48%", "left": "70%",
+                    "nazev": "Reliéfní tisk (Portrét Františka Palackého)",
+                    "misto": "Portrét Palackého, texty a hmatové značky",
+                    "popis": "Vystouplý povrch hlubotisku nahmatatelný prsty na lícové straně bankovky.",
+                    "kontrola": "👉 **Jak zkontrolovat:** Přejeď bříškem prstu po portrétu Františka Palackého nebo po nápisu 'TISÍC KORUN ČESKÝCH'."
+                },
+                "Hmatová značka pro nevidomé (hmatem)": {
+                    "ikona": "🔲",
+                    "top": "9%", "left": "93%",
+                    "nazev": "Hmatová značka pro nevidomé",
+                    "misto": "Pravý horní roh lícní strany",
+                    "popis": "Speciální vystouplé čárky vytištěné hlubotiskem v pravém horním rohu, které slouží zrakově postiženým k rozpoznání hodnoty 1000 Kč.",
+                    "kontrola": "👉 **Jak zkontrolovat:** Nahmatáš prstem vystoupené svislé čárky v pravém rohu."
                 },
                 "UV prvky (pomůckami)": {
                     "ikona": "🔦",
-                    "top": "50%", "left": "55%",
+                    "top": "75%", "left": "41.5%",
                     "nazev": "UV prvky a fluorescenční vlákna",
-                    "misto": "Po celé ploše bankovky",
-                    "popis": "Skryté tiskové motivy a světélkující vlákna zapuštěná v papíru.",
-                    "kontrola": "💡 **Jak zkontrolovat:** Posviť na bankovku UV lampou – skryté prvky světélkují žlutě a zeleně."
+                    "misto": "Kořeny stromu a plocha bankovky",
+                    "popis": "Skryté tiskové motivy (světélkující zelená a žlutá vlákna a tisk v oblasti kořenů), které reagují pod ultrafialovým světlem.",
+                    "kontrola": "💡 **Jak zkontrolovat:** Posviť na bankovku UV lampou v bance nebo v obchodě."
                 }
             }
 
@@ -528,33 +536,18 @@ def render():
 
             det = prvky_bankovky[p_sel]
 
-            # Vektorový grafický model bankovky 2000 Kč s Ematou Destinnovou
+            # Reálná fotka bankovky 1000 Kč (lícová strana - František Palacký) s referrerpolicy="no-referrer"
+            url_bankovky_1000 = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/1000_Czech_koruna_Obverse.jpg/800px-1000_Czech_koruna_Obverse.jpg"
+
             html_bankovka = (
-                f'<div style="position: relative; width: 100%; max-width: 650px; height: 280px; '
-                f'background: linear-gradient(135deg, #d8ece4 0%, #a8d5c8 100%); border: 2px solid #2d6a4f; '
-                f'border-radius: 12px; margin: 15px auto; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: sans-serif;">'
-                f'<!-- Vodoznaková zóna -->'
-                f'<div style="position: absolute; top: 10%; left: 5%; width: 22%; height: 80%; border: 1px dashed #74c69d; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 11px; color: #2d6a4f; text-align: center;">Vodoznam<br>Ema Destinnová</div>'
-                f'<!-- Ochranný proužek -->'
-                f'<div style="position: absolute; top: 0; left: 33%; width: 6px; height: 100%; background: linear-gradient(to bottom, #52b788, #d8ece4, #52b788); border-left: 1px solid #1b4332; border-right: 1px solid #1b4332;"></div>'
-                f'<!-- Text ČNB -->'
-                f'<div style="position: absolute; top: 12px; left: 32%; font-weight: bold; color: #1b4332; font-size: 13px; letter-spacing: 2px;">ČESKÁ NÁRODNÍ BANKA</div>'
-                f'<!-- Nominální hodnota -->'
-                f'<div style="position: absolute; top: 10px; left: 8%; font-weight: 900; color: #1b4332; font-size: 26px;">2000</div>'
-                f'<div style="position: absolute; bottom: 10px; left: 8%; font-weight: bold; color: #2d6a4f; font-size: 14px;">2000 Kč</div>'
-                f'<!-- Motiv Lyry -->'
-                f'<div style="position: absolute; top: 60%; left: 40%; font-size: 32px; opacity: 0.6; color: #d4af37;">🎼</div>'
-                f'<!-- Portrét Ema Destinnová -->'
-                f'<div style="position: absolute; top: 15%; right: 6%; width: 140px; height: 190px; border-radius: 10px; background: rgba(45,106,79,0.15); border: 1px solid #2d6a4f; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #1b4332;">'
-                f'<div style="font-size: 65px; margin-bottom: -10px;">👩‍🎤</div>'
-                f'<div style="font-weight: bold; font-size: 13px; margin-top: 5px;">EMA DESTINNOVÁ</div>'
-                f'<div style="font-size: 10px; opacity: 0.8;">1878–1930</div>'
-                f'</div>'
-                f'<!-- Hmatové značky pro nevidomé -->'
-                f'<div style="position: absolute; top: 15px; right: 15px; font-size: 16px; color: #1b4332;">:::</div>'
-                f'<!-- Dynamický svítící hotspot -->'
+                f'<div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; '
+                f'border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); line-height: 0;">'
+                f'<img src="{url_bankovky_1000}" referrerpolicy="no-referrer" alt="1000 Kč - František Palacký" '
+                f'style="width: 100%; height: auto; display: block;" />'
                 f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
-                f'<div style="background-color: #ef4444; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; border: 3px solid white; box-shadow: 0 0 15px #ef4444;">'
+                f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; '
+                f'display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; '
+                f'box-shadow: 0 0 15px #ef4444;">'
                 f'{det["ikona"]}'
                 f'</div></div></div>'
             )
