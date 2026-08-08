@@ -1215,7 +1215,8 @@ def render():
             """, unsafe_allow_html=True)
 
     elif selected_section_4 == "3.8 Celková odměna za práci a vyjednávání o mzdě":
-        st.markdown("### 3.9 Celková odměna za práci (Total Reward)")
+        st.markdown("### 3.8 Celková odměna za práci a vyjednávání o mzdě")
+        
         st.write("Peníze nejsou jediná odměna. Při výběru práce je potřeba porovnat **celkový balíček** (tzv. Total Reward). Práce s nejvyšší hrubou mzdou totiž může být ve finále ta nejméně výhodná.")
 
         st.markdown("#### ⚖️ Co vše tvoří reálnou hodnotu práce?")
@@ -1229,16 +1230,16 @@ def render():
 
         st.divider()
         st.markdown("<div class='box-yellow'>⚖️ <b>Rozhodovací simulátor: Která nabídka je skutečně lepší?</b></div>", unsafe_allow_html=True)
-        st.write("Dostal jsi dvě pracovní nabídky. Papírově vypadá jedna lépe. Ale co když započítáš náklady na dopravu a tvůj volný čas? (Počítáme, že tvůj volný čas má pro tebe hodnotu 150 Kč/hodina).")
+        st.write("Dostal jsi dvě pracovní nabídky. Papírově vypadá jedna lépe. Ale co když započítáš náklady na dopravu a tvůj volný čas? (Počítáme, že tvůj volný čas má pro tebe hodnotu 150 Kč / hodina).")
 
         col_nab1, col_nab2 = st.columns(2)
         with col_nab1:
             st.markdown("##### 🏢 Nabídka A: Korporát v centru")
             mzda_a = 40000
-            dojizdeni_minuty_a = st.slider("Čas strávený dojížděním denně (tam i zpět):", 0, 180, 90, key="doj_a")
-            naklady_doprava_a = st.slider("Měsíční náklady na dojíždění (palivo/jízdenky):", 0, 5000, 3000, key="nak_a")
+            dojizdeni_minuty_a = st.slider("Čas strávený dojížděním denně tam i zpět (v minutách):", 0, 180, 90, key="doj_a")
+            naklady_doprava_a = st.slider("Měsíční náklady na dojíždění (palivo/jízdenky v Kč):", 0, 5000, 3000, key="nak_a")
             
-            # Výpočet hodnoty ztraceného času (21 prac. dní v měsíci)
+            # Výpočet hodnoty ztraceného času (počítáme 21 prac. dní v měsíci)
             ztraceny_cas_a = (dojizdeni_minuty_a / 60) * 21 * 150
             realna_hodnota_a = mzda_a - naklady_doprava_a - ztraceny_cas_a
 
@@ -1259,16 +1260,18 @@ def render():
 
         if realna_hodnota_b > realna_hodnota_a:
             st.markdown("🚨 **Výsledek:** Přestože je Nabídka B na papíře o 5 000 Kč chudší, **ve skutečnosti je pro tebe výhodnější!** Ušetříš peníze za benzín a hlavně získáš zpět desítky hodin svého života měsíčně.")
+        else:
+            st.markdown("⚖️ **Výsledek:** I přes započítání nákladů na dojíždění se Nabídka A stále finančně vyplatí. Záleží ale i na tom, zda ti stres z dojíždění za ty peníze stojí.")
 
         st.divider()
-        st.markdown("### 3.10 Vyjednávání o mzdě")
+        st.markdown("#### 🗣️ Vyjednávání o mzdě")
         st.write("Vyjednávání není hádka na tržnici. Je to **profesionální obchodní rozhovor o hodnotě tvé práce**. Většina firem počítá s tím, že o prvním návrhu mzdy se bude diskutovat.")
 
-        st.markdown("#### 🛡️ Jak se připravit na vyjednávání:")
+        st.markdown("##### 🛡️ Jak se připravit na vyjednávání:")
         st.markdown("""
         1. **Data:** Zjisti si předem, jaká je běžná mzda v oboru a regionu (např. přes Platy.cz nebo NSP.cz).
         2. **Důkazy, ne pocity:** Neříkej *'potřebuju víc kvůli drahému nájmu'*. Řekni *'přináším praxi se systémem X, což vám ušetří čas v zácviku'* nebo *'za minulý rok jsem firmě zvedl prodeje o 15 %'*.
-        3. **Rozpětí:** Připrav si částku, kterou reálně chceš, ale řekni si o 10 % víc (aby měla firma prostor tě 'smlouvat' dolů a oba jste byli spokojení).
+        3. **Rozpětí:** Připrav si částku, kterou reálně chceš, ale řekni si o 10 % víc (aby měla firma prostor tě 'smlouvat' dolů a oba jste byli nakonec spokojení).
         4. **Plán B:** Když firma nemá peníze na zvýšení platu, vyjednej si aspoň **benefity** (týden dovolené navíc, služební notebook, kurzy angličtiny). To firmu bolí finančně méně, ale pro tebe to má obrovskou hodnotu.
         """)
 
@@ -1278,5 +1281,10 @@ def render():
         prompt_plat = """Hrajeme hru na vyjednávání o mzdě. Ty jsi tvrdý, ale racionální HR manažer firmy. Já jsem zaměstnanec, který pracuje na pozici Junior Marketing Specialista už rok a jde si za tebou říct o zvýšení hrubé mzdy o 15 %. 
 Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. Ty nejprve odmítni a hledej důvody, proč mi přidat nemůžeš. Nenuť mě vyhrát hned. Čekej na mé argumenty. Pokud mé argumenty budou logické, podložené čísly nebo mi navrhneš kompromis v podobě nefinančních benefitů, můžeme se dohodnout. Po 6 výměnách zpráv hru ukonči a dej mi jako AI feedback, jak jsem si ve vyjednávání vedl."""
 
-        st.code(prompt_plat, language="markdown")
-        st.caption("💡 Zkopíruj kód výše a zkus AI přesvědčit, že si ty peníze zasloužíš!")
+        st.markdown(f"""
+        <div style="background-color: #f8f9fa; padding: 15px; border-left: 5px solid #8b5cf6; border-radius: 5px; font-family: monospace; font-size: 1.1em; color: #333; white-space: pre-wrap; word-wrap: break-word; line-height: 1.5;">
+        {prompt_plat}
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.caption("💡 Tip: Zkopíruj text z fialového boxu výše a zkus AI přesvědčit, že si peníze navíc zasloužíš!")
