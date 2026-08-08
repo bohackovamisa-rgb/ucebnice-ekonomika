@@ -1618,3 +1618,151 @@ def render():
 
             if st.form_submit_button("Uložit Krok 10 a dokončit Blok 2 (Marketing)"):
                 st.success("🎉 Gratulujeme! Blok 2 (Marketing) je kompletně zpracovaný. Tvůj projekt má jasný produkt, cenovku, distribuci i promo kampaň!")
+# =========================================================================
+    # SEKCE 3: BRAND, NÁKUPNÍ PSYCHOLOGIE A ETIKA
+    # =========================================================================
+    elif selected_section_6 == section_options_6[2]:
+        st.markdown("### 3. Brand, nákupní psychologie a etika")
+
+        st.markdown("""
+        <div class='box-blue'>
+            🧠 <b>Moderní hook:</b> <i>„Jak tě značky nutí utrácet peníze, které nemáš, za věci, které nepotřebuješ?“</i><br>
+            Marketing nepracuje jen s chladnými číslicemi v tabulkách. Pracuje s lidskými emocemi, pozorností, touhou patřit do komunity a stavěním vlastní identity. Značka je to, co mění obyčejné zboží v objekt touhy. Proto je nutné rozumět tomu, kde končí přesvědčování a začíná manipulace.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # =====================================================================
+        # PODKAPITOLA 3.1: ZNAČKA A BUDOVÁNÍ BRANDU
+        # =====================================================================
+        st.markdown("#### 3.1 Značka a budování brandu")
+        st.write("Značka neboli **brand** není jen grafické logo nebo název vyražený na krabičce. Je to soubor všech představ, emocí, paměťových stop, zkušeností a asociací, které si lidé s produktem nebo firmou spojují v hlavě. Fyzický produkt může mít identické parametry jako konkurenční výrobek, ale značka rozhoduje o tom, jak mu zákazník věří a kolik je za něj ochoten zaplatit.")
+
+        st.markdown("""
+        <div class='box-yellow'>
+            🧠 <b>Jednoduše (Rozdíl mezi produktem a značkou):</b><br>
+            • <b>Produkt</b> je to, co firma fyzicky vyrábí nebo poskytuje (např. látka, plast, kód).<br>
+            • <b>Značka</b> je to, co si o tom zákazník myslí, co při tom cítí a jakou hodnotu tomu přisuzuje.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Trenažér vnímané hodnoty
+        st.markdown("<div class='box-purple'>🕹️ <b>Trenažér vnímané hodnoty: Příběh jednoho trička</b></div>", unsafe_allow_html=True)
+        st.write("Podívej se, jak značka mění ochotu zákazníka zaplatit za stejný základní materiál:")
+
+        with st.container(border=True):
+            col_t1, col_t2 = st.columns(2)
+            with col_t1:
+                st.markdown("""
+                <div style='background-color: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;'>
+                    <h5>👕 Obyčejné bílé tričko</h5>
+                    <b>Materiál:</b> 100% bavlna, 180g/m²<br>
+                    <b>Obal:</b> Plastový sáček<br>
+                    <b>Značka:</b> Bez značky (no-name)<br><br>
+                    <h4 style='color: #475569;'>Cena: 150 Kč</h4>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_t2:
+                st.markdown("""
+                <div style='background-color: #fef2f2; padding: 15px; border-radius: 8px; border: 1px solid #fca5a5; text-align: center;'>
+                    <h5>🔥 Značkové oversized tričko</h5>
+                    <b>Materiál:</b> 100% bavlna, 180g/m² (stejný materiál)<br>
+                    <b>Obal:</b> Designová krabice s nálepkami<br>
+                    <b>Značka:</b> Světová streetwear značka / merch influencera<br><br>
+                    <h4 style='color: #b91c1c;'>Cena: 2 500 Kč</h4>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.caption("👉 *Materiál i základní užitek (zakrytí těla) jsou totožné. Zákazník ale neplatí 2 500 Kč za bavlnu, ale za POCIT, status, příslušnost ke komunitě a styl.*")
+
+        # ---------------------------------------------------------------------
+        # 3.1.1 ANATOMIE A PRVKY ZNAČKY
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.1.1 Anatomie a prvky značky")
+        st.write("Silná značka nevzniká náhodou. Je to pečlivě poskládaná mozaika z několika prvků, které musí fungovat v naprosté harmonii:")
+
+        tab_b1, tab_b2, tab_b3, tab_b4, tab_b5 = st.tabs([
+            "🎨 Vizuální identita", 
+            "🔊 Audio & Senzorika", 
+            "📖 Storytelling", 
+            "🚀 Mise a Vize", 
+            "💎 Hodnoty"
+        ])
+
+        with tab_b1:
+            st.markdown("**Vizuální identita (To, co vidíme)**")
+            st.write("Všechny vizuální prvky: název, logo, typografie (písmo), paleta barev, obaly a jednotný grafický styl na sociálních sítích a webu.")
+            st.info("📌 **Příklad:** Typická tyrkysová barva Dáme jídlo / Foodora, červené logo Coca-Coly, minimalistický design Apple boxů.")
+
+        with tab_b2:
+            st.markdown("**Audio & Senzorická identita (To, co slyšíme a cítíme)**")
+            st.write("Zvuky, znělky, hlas značky nebo typické vůně v prodejnách.")
+            st.warning("📌 **Příklad:** Znělka Netflixu (*„Tudum“*), zvuk nastartování počítače Mac, charakteristická vůně v prodejnách Abercrombie & Fitch.")
+
+        with tab_b3:
+            st.markdown("**Storytelling (Příběh značky)**")
+            st.write("Příběh o tom, proč značka vznikla, jaké překážky zakladatelé překonali a jaký problém ve světě chce řešit.")
+            st.success("📌 **Příklad:** Příběh garážového vzniku Apple, česká značka Fusakle vracející výrobu ponožek do ČR, příběh nápoje Red Bull a extrémních sportů.")
+
+        with tab_b4:
+            st.markdown("**Mise a Vize (Smysl a cíl)**")
+            st.write("• **Mise:** Říká, proč značka existuje DNES a co dělá pro své zákazníky.\n• **Vize:** Dlouhodobý sen a cíl, kam chce značka směřovat v BUDOUCNOSTI.")
+            st.info("📌 **Příklad Google:** *Mise:* Uspořádat informace celého světa a učinit je univerzálně přístupné. *Vize:* Poskytnout přístup k informacím jedním kliknutím komukoliv na Zemi.")
+
+        with tab_b5:
+            st.markdown("**Hodnoty značky (Etický kompas)**")
+            st.write("Zásadní principy, ze kterých značka nikdy nesleví a podle kterých dělá těžká rozhodnutí.")
+            st.error("📌 **Příklad:** Udržitelnost, inovativnost, dostupnost pro všechny, nekompromisní kvalita, transparentnost.")
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            📌 <b>Pozor na past:</b> Mít hezké logo neznamená mít silnou značku. Pokud se komunikace značky rozchází s realitou (např. značka tvrdí, že je eko, ale balí věci do tří vrstev plastu), zákazník okamžitě ztratí důvěru.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 3.1.2 BRAND EQUITY A BRAND LOYALTY
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 3.1.2 Brand equity a brand loyalty")
+        st.write("Dva klíčové pojmy, které rozhodují o finanční hodnotě a stabilitě firmy:")
+
+        col_be1, col_be2 = st.columns(2)
+        with col_be1:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">📈 Brand Equity (Hodnota značky)</h5>
+                <b>Co to je:</b> Dodatečná finanční i nefinanční hodnota, kterou jméno značky přidává k základnímu produktu.<br><br>
+                <b>Projev v praxi:</b> Zákazník je ochoten zaplatit vyšší cenu jen za známe jméno, banky firmě snáze půjčí a dodavatelé dají lepší podmínky.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_be2:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #1d4ed8;">❤️ Brand Loyalty (Věrnost značce)</h5>
+                <b>Co to je:</b> Stupeň věrnosti a emocionálního přimknutí zákazníka ke značce.<br><br>
+                <b>Projev v praxi:</b> Zákazník neporovnává ceny u konkurence. Nakupuje opakovaně, nosí merch, brání značku v diskusích na sítích a doporučuje ji přátelům.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>👥 <b>Síla komunity značky (Brand Community)</b></div>", unsafe_allow_html=True)
+        st.write("Nejvyšší možná úroveň brand loyalty vzniká ve chvíli, kdy kolem značky vznikne **komunita**. Zákazníci se už neztotožňují jen s produktem, ale s ostatními lidmi, kteří značku používají.")
+        st.caption("👉 *Příklady: Řidiči Harley-Davidson, fanoušci Apple vs. Android, komunity kolem CrossFitu nebo zákazníci lokální kavárny.*")
+
+        # WORKBOOK KROK 11 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 11: Identita a Příběh tvé značky</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok11"):
+            st.text_area("1. STORYTELLING – Jaký je příběh tvé značky? (Proč tvůj projekt vznikl a jaký problém řeší?):", placeholder="např. Náš projekt vznikl v rohu školní knihovny, když jsme si uvědomili, že v bufetu chybí zdravé a dostupné jídlo pro studenty...")
+            col_b_f1, col_b_f2 = st.columns(2)
+            with col_b_f1:
+                st.text_input("2. MISE ZNAČKY (Co děláte dnes pro zákazníka):", placeholder="např. Přinášet studentům energii bez cukrového dojezdu.")
+                st.text_input("3. HODNOTY ZNAČKY (3 klíčová slova):", placeholder="např. Autenticita, Čerstvost, Zábava")
+            with col_b_f2:
+                st.text_input("4. VIZUÁLNÍ A AUDIO IDENTITA (Barvy, styl, zvuk):", placeholder="např. Neony, černá a limetkově zelená, lo-fi hudba na pozadí")
+                st.selectbox("5. BRAND LOYALTY STRATEGIE:", ["Odměny za věrnost (Slevy/Kartičky)", "Exkluzivní komunita (Discord/Instagram)", "UGC - Sdílení obsahu zákazníků"])
+
+            if st.form_submit_button("Uložit Krok 11 do Projektového pasu"):
+                st.success("Krok 11 úspěšně uložen! Tvá značka má svůj příběh, vizi i jasnou tvář.")
