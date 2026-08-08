@@ -737,3 +737,136 @@ def render():
             
             if st.form_submit_button("Uložit Krok 4 do Projektového pasu"):
                 st.success("Krok 4 úspěšně uložen! Tvá organizace má jasnou strukturu i pravidla.")
+# =====================================================================
+        # PODKAPITOLA 1.6: ROZHODOVÁNÍ A ANALYTICKÉ METODY
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 1.6 Rozhodování a analytické metody")
+        st.write("Manažer se neustále dostává do situací, kdy musí vybrat jednu z možností: koho přijmout do týmu, jak rozdělit rozpočet, co udělat při zpoždění nebo jak reagovat na krok konkurence. Dobré rozhodování není jen o pocitu v břiše, ale opírá se o data, alternativy a chladné vyhodnocení důsledků.")
+
+        st.markdown("<div class='box-blue'>🧭 <b>5 kroků rozhodovacího procesu:</b><br>1. <b>Identifikace problému:</b> Co přesně řešíme?<br>2. <b>Sběr informací:</b> Co víme a co ještě musíme zjistit?<br>3. <b>Návrh variant:</b> Jaká řešení připadají v úvahu?<br>4. <b>Výběr nejvhodnější varianty:</b> Která možnost nejlépe odpovídá cíli, zdrojům a rizikům?<br>5. <b>Realizace a kontrola:</b> Provedeme rozhodnutí a sledujeme reálný výsledek.</div>", unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 1.6.1 SWOT ANALÝZA
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 1.6.1 SWOT analýza")
+        st.write("SWOT analýza je univerzální nástroj, který pomáhá objektivně zhodnotit situaci firmy, projektu, produktu nebo i tebe samotného. Klíčem je správně rozlišit **vnitřní prostředí** (to, co máš ve svých rukou) a **vnější prostředí** (to, co přichází z okolí a nemůžeš to přímo změnit).")
+
+        col_swot1, col_swot2 = st.columns(2)
+        with col_swot1:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #047857;">💪 S — Strengths (Silné stránky)</h5>
+                <b>Vnitřní prostředí:</b> V čem jsme skvělí, v čem vynikáme a o co se můžeme opřít.<br><br>
+                <i>Otázka: Co nám jde lépe než ostatním? Jaké máme unikátní zdroje?</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_swot2:
+            st.markdown("""
+            <div style="background-color: #fef2f2; padding: 15px; border-left: 5px solid #ef4444; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top: 0; color: #b91c1c;">🩹 W — Weaknesses (Slabé stránky)</h5>
+                <b>Vnitřní prostředí:</b> Co nás brzdí, v čem zaostáváme a co musíme zlepšit.<br><br>
+                <i>Otázka: Kde máme mezery? Co nám chybí oproti konkurenci?</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+        col_swot3, col_swot4 = st.columns(2)
+        with col_swot3:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%; margin-top: 10px;">
+                <h5 style="margin-top: 0; color: #1d4ed8;">🚀 O — Opportunities (Příležitosti)</h5>
+                <b>Vnější prostředí:</b> Vývoj na trhu, nové technologie nebo trendy, kterých můžeme využít.<br><br>
+                <i>Otázka: Jaká změna kolem nás nám může pomoct k růstu?</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_swot4:
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; border-radius: 4px; height: 100%; margin-top: 10px;">
+                <h5 style="margin-top: 0; color: #b45309;">⚠️ T — Threats (Hrozby)</h5>
+                <b>Vnější prostředí:</b> Rizika z okolního světa, která nás mohou ohrozit a nemáme nad nimi plnou kontrolu.<br><br>
+                <i>Otázka: Co se může pokazit v okolí? Co chystá konkurence?</i>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            📌 <b>Pozor na nejčastější chybu v testech a praxi:</b><br>
+            Silné a slabé stránky jsou <b>uvnitř</b> organizace. Příležitosti a hrozby přicházejí <b>zvenčí</b>.<br>
+            • <i>„Máme málo peněz na účtu“</i> ➔ Slabá stránka (W).<br>
+            • <i>„Majitel budovy skokově zdraží nájem“</i> ➔ Hrozba (T).
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🕹️ <b>Trenažér SWOT: Kam patří tento faktor?</b></div>", unsafe_allow_html=True)
+        st.write("Otestuj se, zda dokážeš správně rozlišit vnitřní a vnější vlivy:")
+
+        faktor_kviz = st.radio("Kam správně zařadíš faktor: *„Na trhu se objevil nový trend a mladí lidé začínají masivně vyhledávat udržitelnou módu“*?", [
+            "Vyber odpověď...",
+            "A) Silná stránka (Strengths) – přece je to skvělá věc!",
+            "B) Příležitost (Opportunities) – jde o vnější trend na trhu, kterého můžeme využít.",
+            "C) Slabá stránka (Weaknesses) – protože jsme ji ještě nezačali vyrábět."
+        ])
+
+        if "B)" in faktor_kviz:
+            st.success("✅ **Přesně tak!** Jedná se o vnější trend v chování zákazníků, takže jde o **Příležitost (O)**.")
+        elif "A)" in faktor_kviz or "C)" in faktor_kviz:
+            st.error("❌ Pozor! Změna chování zákazníků přichází z okolního trhu (zvenčí). Správná odpověď je B (Příležitost).")
+
+        # ---------------------------------------------------------------------
+        # 1.6.2 ZÁKLADY ŘÍZENÍ RIZIK
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 1.6.2 Základy řízení rizik")
+        st.write("Řízení rizik neznamená být paranoik, ale být připraven. Dobrý manažer přemýšlí dopředu o tom, co se může pokazit, jak moc je to pravděpodobné, jak velký dopad by to mělo a co udělá v případě krize.")
+
+        st.markdown("<div class='box-purple'>🧮 <b>Interaktivní Matice rizik (Pravděpodobnost × Dopad)</b></div>", unsafe_allow_html=True)
+        st.write("Vyber si riziko a nastav jeho parametery. Zjisti, jakou reakci vyžaduje:")
+
+        with st.container(border=True):
+            col_r1, col_r2 = st.columns(2)
+            with col_r1:
+                pravdepodobnost = st.select_slider(
+                    "Jaká je pravděpodobnost, že k události dojde?",
+                    options=["Nízká (Výjimečně)", "Střední (Možná)", "Vysoká (Téměř jistě)"]
+                )
+            with col_r2:
+                dopad = st.select_slider(
+                    "Jak velký dopad by to mělo na projekt?",
+                    options=["Malý (Drobná nepříjemnost)", "Střední (Zpoždění/Ztráta)", "Kritický (Konec projektu)"]
+                )
+
+            st.write("---")
+            if "Vysoká" in pravdepodobnost and "Kritický" in dopad:
+                st.error("🚨 **KRITICKÉ RIZIKO (Červená zóna):** Nutná okamžitá prevence a detailní Záložní plán B! Tento hazard může zničit celý projekt.")
+            elif "Nízká" in pravdepodobnost and "Malý" in dopad:
+                st.success("🟢 **NÍZKÉ RIZIKO (Zelená zóna):** Můžeme ho akceptovat. Sledovat, ale neplýtvat na něj příliš mnoho zdrojů.")
+            else:
+                st.warning("🟡 **STŘEDNÍ RIZIKO (Žlutá zóna):** Vyžaduje preventivní opatření a přípravu záložního scenáře.")
+
+        st.markdown("""
+        <div class='box-green'>
+            🧠 <b>Pointa řízení rizik:</b> Dobrý manažer není člověk, kterému se nikdy nic nepokazí. Je to člověk, který počítá s tím, že se něco pokazit může, a má v šuplíku připravený funkční <b>Plán B</b>.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 5 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 5: SWOT analýza a Plán B tvého projektu</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok5"):
+            st.markdown("##### 📊 Vyplň jednoduchou SWOTku pro svůj projekt:")
+            col_sw1, col_sw2 = st.columns(2)
+            with col_sw1:
+                p_s = st.text_input("Silné stránky (S - Vnitřní):", placeholder="např. Skvělý grafický design, nadšený tým")
+                p_w = st.text_input("Slabé stránky (W - Vnitřní):", placeholder="např. Nulový rozpočet, málo zkušeností s prodejem")
+            with col_sw2:
+                p_o = st.text_input("Příležitosti (O - Vnější):", placeholder="např. Rostoucí zájem studentů o podcasty")
+                p_t = st.text_input("Hrozby (T - Vnější):", placeholder="např. Konkurenční škola spustí podobný projekt")
+
+            st.markdown("##### 🛡️ Řízení rizik v praxi:")
+            st.text_area("Pojmenuj 1 největší riziko tvého projektu a navrhni konkrétní Plán B:", placeholder="např. Riziko: Hlavní moderátor v den natáčení onemocní. Plán B: Máme předtočené 2 epizody do zásoby a náhradního moderátora.")
+
+            if st.form_submit_button("Uložit Krok 5 do Projektového pasu"):
+                st.success("Krok 5 úspěšně uložen! Blok 1 (Management) máš kompletně zpracovaný.")
