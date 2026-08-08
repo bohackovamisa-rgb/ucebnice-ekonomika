@@ -386,3 +386,209 @@ def render():
             
             if st.form_submit_button("Uložit Krok 2 do Projektového pasu"):
                 st.success("Krok 2 uložen! Tůj cíl je ostrý jako břitva.")
+# =====================================================================
+        # PODKAPITOLA 1.2.4: KONTROLA
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 1.2.4 Kontrola: Není to slídění, ale navigace")
+        st.write("Smyslem kontroly není někoho chytit při chybě a potrestat ho. Kontrola je systém včasného varování, který zjišťuje, zda se **reálný stav shoduje s plánem**, a včas koriguje směr.")
+
+        col_kont1, col_kont2 = st.columns([1, 1])
+        with col_kont1:
+            st.markdown("""
+            <div style="background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px;">
+                <h5 style="margin-top:0; color: #1e40af;">🔍 4 fáze kontrolního procesu</h5>
+                1. <b>Stanovení standardů:</b> Určíme, jak má vypadat dobrý výsledek (např. <i>zisk 50 000 Kč, nula stížností</i>).<br>
+                2. <b>Zjištění skutečnosti:</b> Změříme reálná data (např. <i>vybralo se jen 30 000 Kč</i>).<br>
+                3. <b>Srovnání:</b> Porovnáme plán vs. realitu (např. <i>chybí nám 20 000 Kč k cíli</i>).<br>
+                4. <b>Nápravné opatření:</b> Rozhodneme, co upravit (např. <i>přidáme reklamu na sociální sítě</i>).
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_kont2:
+            st.markdown("##### ⏱️ Typy kontroly podle času")
+            tab_k1, tab_k2, tab_k3 = st.tabs(["🔮 Předběžná", "⚙️ Průběžná", "🏁 Následná"])
+            
+            with tab_k1:
+                st.info("**Předběžná kontrola (PŘED akcí):** Chráni před zbytečnými krizemi.\n\n*Příklady:* Kontrola rozpočtu, ověření smluv s kapelami, kontrola, zda funguje zvukařská technika 2 hodiny před startem plesu.")
+            with tab_k2:
+                st.warning("**Průběžná kontrola (BĚHEM akce):** Umožňuje reagovat okamžitě.\n\n*Příklady:* Sledování prodeje lístků online během dne, kontrola front u baru na festivalu, sledování plnění úkolů v Asaně nebo Trellu.")
+            with tab_k3:
+                st.success("**Následná kontrola (PO akci):** Slouží ke poučení pro příště.\n\n*Příklady:* Spočítání čistého zisku, vyhodnocení dotazníků spokojenosti, rozbor chyb na závěrečné poradě.")
+
+        # =====================================================================
+        # PODKAPITOLA 1.3: OSOBNOST MANAŽERA A DOVEDNOSTI
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 1.3 Osobnost manažera, dovednosti a role")
+        st.write("Dobrý manažer nemůže být specialistou na úplně všechno. Potřebuje namíchat správný koktejl tří základních dovedností podle toho, na jaké úrovni řízení sedí:")
+
+        # Vizualizace dovedností podle úrovně managementu
+        fig_skills = go.Figure()
+        fig_skills.add_trace(go.Bar(
+            y=['Top Management', 'Middle Management', 'First-line Management'],
+            x=[50, 25, 10],
+            name='Koncepční (Vize, strategie)',
+            orientation='h',
+            marker_color='#8b5cf6'
+        ))
+        fig_skills.add_trace(go.Bar(
+            y=['Top Management', 'Middle Management', 'First-line Management'],
+            x=[40, 50, 40],
+            name='Lidské (Empatie, komunikace)',
+            orientation='h',
+            marker_color='#3b82f6'
+        ))
+        fig_skills.add_trace(go.Bar(
+            y=['Top Management', 'Middle Management', 'First-line Management'],
+            x=[10, 25, 50],
+            name='Technické (Detailní znalost oboru)',
+            orientation='h',
+            marker_color='#10b981'
+        ))
+
+        fig_skills.update_layout(
+            barmode='stack',
+            title="Poměr manažerských dovedností podle úrovně řízení (%)",
+            height=280,
+            margin=dict(t=40, b=20, l=10, r=10)
+        )
+        st.plotly_chart(fig_skills, use_container_width=True)
+
+        st.markdown("""
+        <div class='box-gray'>
+            🧠 <b>Moderní pohled:</b> Šéf nemusí umět nejlépe nakódovat web ani napsat nejlepší reklamní text. Musí ale rozumět práci týmu natolik, aby dokázal pokládat správné otázky, poznal kvalitní výsledek a <b>nepřekážel odborníkům</b>, kteří jsou v konkrétní práci silnější než on.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 1.3.1 MINTZBERGOVY ROLE
+        # ---------------------------------------------------------------------
+        st.markdown("##### 1.3.1 Role manažera podle Mintzberga")
+        st.write("Kanadský profesor Henry Mintzberg zjišťoval, co manažeři reálně dělají celý den. Zjistil, že neustále bleskově přepínají mezi **10 rolemi**, které spadají do 3 skupin:")
+
+        col_r1, col_r2, col_r3 = st.columns(3)
+        with col_r1:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 12px; border-radius: 6px; height: 100%;">
+                <h5 style="margin-top:0; color: #1d4ed8;">🤝 Interpersonální role</h5>
+                Vstupuje do vztahů s lidmi.<br><br>
+                • <b>Reprezentant:</b> Vystupuje jménem firmy nařejnosti.<br>
+                • <b>Lídr:</b> Vede a motivuje podřízené.<br>
+                • <b>Spojovatel:</b> Buduje sítě kontaktů.
+            </div>
+            """, unsafe_allow_html=True)
+        with col_r2:
+            st.markdown("""
+            <div style="background-color: #fef3c7; padding: 12px; border-radius: 6px; height: 100%;">
+                <h5 style="margin-top:0; color: #b45309;">📡 Informační role</h5>
+                Sbírá a šíří informace.<br><br>
+                • <b>Monitor:</b> Hledá zprávy na trhu a u konkurence.<br>
+                • <b>Siritel:</b> Předává zásadní zprávy týmu.<br>
+                • <b>Mluvčí:</b> Dává oficiální vyjádření ven.
+            </div>
+            """, unsafe_allow_html=True)
+        with col_r3:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 12px; border-radius: 6px; height: 100%;">
+                <h5 style="margin-top:0; color: #047857;">⚡ Rozhodovací role</h5>
+                Dělá klíčová rozhodnutí.<br><br>
+                • <b>Podnikatel:</b> Vymýšlí inovace a změny.<br>
+                • <b>Hasič krizí:</b> Řeší nečekané průšvihy.<br>
+                • <b>Alokátor zdrojů:</b> Dělí rozpočet a lidi.<br>
+                • <b>Vyjednavač:</b> Smlouvá o cenách a smlouvách.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br><div class='box-purple'>🕹️ <b>Simulátor: Přepni se do Mintzbergovy role</b></div>", unsafe_allow_html=True)
+        st.write("Jsi manažer/ka startupu. Během dopoledne se stane několik událostí. Poznáš, jakou roli právě hraještě?")
+
+        situace_mintz = st.selectbox("Vyber situaci ze dne manažera:", [
+            "1. Vybíráš, kterým 3 projektům z deseti přidělíš peníze z rozpočtu na příští měsíc.",
+            "2. Novinář z Forbesu se ptá na oficiální stanovisko vaší firmy k novým eko-zákonům.",
+            "3. Právě prasklo, že dodavatel serverů skrachoval a vypadly všechny systémy. Musíš okamžitě sehnat náhradní řešení.",
+            "4. Jdeš na kávu se zakladatelem partnerké firmy, abys zjistil/a, jaké novinky chystá vaše konkurence."
+        ])
+
+        if "1." in situace_mintz:
+            st.info("🎯 Hraještě rozhodovací roli **Alokátora zdrojů** (určuješ, kam potečou peníze a kapacity).")
+        elif "2." in situace_mintz:
+            st.info("📢 Hraještě informační roli **Mluvčího** (oficiálně komunikuješ ven jménem organizace).")
+        elif "3." in situace_mintz:
+            st.error("🚨 Hraještě rozhodovací roli **Hasiče krizí (Disturbance handler)** – řešíš akutní ohrožení firmy.")
+        else:
+            st.success("🔎 Hraještě informační roli **Monitora** a interpersonální roli **Spojovatele (Liaison)** – buduješ sítě a nasáváš informace z trhu.")
+
+        # =====================================================================
+        # PODKAPITOLA 1.4: STYLY ŘÍZENÍ
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 1.4 Styly řízení: Jak pracovat s mocí a týmem")
+        st.write("Styl řízení ukazuje, jak manažer přistupuje k rozhodování, pravomocem a lidem. Neexistuje jediný 'dokonalý' styl – špičkový manažer dokáže styl měnit podle situace, zkušeností týmu i časového tlaku (tzv. **situační řízení**).")
+
+        col_st1, col_st2, col_st3 = st.columns(3)
+        with col_st1:
+            st.markdown("""
+            <div style="background-color: #fef2f2; padding: 15px; border-top: 5px solid #ef4444; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #b91c1c;">👑 Autoritativní (Autokratický)</h5>
+                <b>Jak funguje:</b> Manažer rozhoduje sám bez debaty, dává příkazy a přísně kontroluje.<br><br>
+                <b>Výhody:</b> Blesková rychlost, jasný směr, skvělé v krizích a u nezkušeného týmu.<br><br>
+                <b>Rizika:</b> Demotivace lidí, strach z chyb, nula nápadů od týmu, riziko vyhoření.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_st2:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-top: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #1d4ed8;">🤝 Demokratický (Participativní)</h5>
+                <b>Jak funguje:</b> Manažer zapojuje tým do diskuse, naslouchá nápadům a deleguje pravomoci.<br><br>
+                <b>Výhody:</b> Vysoká motivace, skvělé nápady, odpovědnost týmu za výsledek.<br><br>
+                <b>Rizika:</b> Pomalejší rozhodování, riziko nekonečných debat, selhává v akutní krizi.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_st3:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-top: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #047857;">🕊️ Liberální (Laissez-faire)</h5>
+                <b>Jak funguje:</b> Manažer nechává týmu absolutní volnost a zasahuje jen minimálně.<br><br>
+                <b>Výhody:</b> Obrovská svoboda a prostor pro kreativitu špičkových seniorních expertů.<br><br>
+                <b>Rizika:</b> Chaos, nejasné priority, rozpad týmu, selhává u nezkušených lidí.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<br>##### ⚖️ Boss vs. Leader: V čem je zásadní rozdíl?")
+        st.markdown("""
+        | Vlastnost | 👹 Boss (Šéf z minulého století) | 🦁 Leader (Lídr moderní doby) |
+        | :--- | :--- | :--- |
+        | **Autorita** | Stojí na pozici a strachu (*"Udělej to, nebo letíš"*). | Stojí na důvěře a respektu (*"Pojďme to dokázat"*). |
+        | **Při chybě** | Hledá viníka a trestá. | Hledá příčinu a pomáhá ji vyřešit. |
+        | **Komunikace** | Dává příkazy a mluví sám. | Kladne otázky a naslouchá týmu. |
+        | **Znalosti** | Tajní si informace pro sebe, aby byl postradatelný. | Sdílí informace a vychovává z podřízených nové lídry. |
+        | **Zaměření** | Krátkodobý výkon za každou cenu. | Dlouhodobá udržitelnost a rozvoj týmu. |
+        """)
+
+        st.markdown("<div class='box-yellow'>🗣️ <b>Debatní aréna: Autoritativní Musk vs. Demokratické Spotify</b></div>", unsafe_allow_html=True)
+        st.write("Srovnejme dva odlišné světy. **Elon Musk** (Tesla, SpaceX) uplatňuje extrémně autoritativní styl, mikro-management a tvrdý tlak na výkon. Na druhé straně firmy jako **Google nebo Spotify** sází na týmovou autonomii, svobodu a demokratickou kulturu.")
+
+        with st.form("debata_musk_form"):
+            st.write("**Která filozofie řízení je ti bližší a proč?**")
+            postoj_styl = st.radio("Vyber svůj postoj:", [
+                "🚀 Dávám přednost autoritativnímu vizionáři (Musk): Bez tvrdé ruky, vysokých nároků a rychlého rozhodování jedním člověkem nikdy nevzniknou revoluční věci typu přistání na Marsu.",
+                "🎧 Dávám přednost demokratické/svobodné kultuře (Spotify/Google): Lidé pod neustálým strachem vyhoří. Nejlepší inovace vznikají v prostředí, kde mají lidé svobodu, bezpečí a možnost dělat chyby.",
+                "⚖️ Záleží na situaci: V krizích a při záchraně firmy je nutný autokratický styl, při vývoji nových nápadů v klidných dobách je lepší demokratický styl."
+            ])
+            if st.form_submit_button("Odeslat názor do třídní debaty"):
+                st.success("Tůj postoj byl zaznamenán! Přesně tohle je podstata *situačního řízení* – pochopit, že každý styl má své místo v jiné fázi firmy.")
+
+        # WORKBOOK KROK 3 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 3: Styl řízení a kontrolní mechanizmus</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok3"):
+            st.text_area("1. Jaký styl řízení zvolíš pro svůj projekt a proč? (Autoritativní v krizích, Demokratický při nápadech...?):", placeholder="např. Běžně chci řídit tým demokraticky, ale 2 dny před akcí přepnu do autoritativního stylu, aby vše klaplo na minutu.")
+            st.text_area("2. Jak nastavíš PŘEDBĚŽNOU kontrolu pro svůj projekt? (Co zkontroluješ ještě před startem?):", placeholder="např. Zkontroluji funkčnost platební brány e-shopu a dostupnost zboží na skladě týden před spuštěním kampaně.")
+            
+            if st.form_submit_button("Uložit Krok 3 do Projektového pasu"):
+                st.success("Krok 3 úspěšně uložen do tvého projektového pasu!")
