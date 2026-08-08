@@ -1704,33 +1704,36 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 # =========================================================================
-        # SEKCE 5: ESG A UDRŽITELNÁ EKONOMIKA
-        # =========================================================================
-    elif selected_section_5 == "5. ESG a udržitelná ekonomika" or "5." in selected_section_5:
-            st.markdown("### 5. ESG a udržitelná ekonomika")
-            
+    # SEKCE 5: ESG A UDRŽITELNÁ EKONOMIKA
+    # =========================================================================
+    elif selected_section_5 == "5. ESG a udržitelná ekonomika":
+        st.markdown("### 5. ESG a udržitelná ekonomika")
+        
+        st.markdown("""
+        <div class='box-blue'>
+            🌱 <b>Moderní hook:</b> Firma dnes nestačí hodnotit jen podle toho, kolik vydělá. Investoři, banky, zákazníci i zaměstnanci se stále častěji ptají: Jak firma zachází s lidmi? Jakou má uhlíkovou stopu? Nezneužívá dodavatele? Není její „zelená“ reklama jen greenwashing?
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class='box-green'>
+            🎯 <b>Cíl 5. bloku:</b> Pochopíš, co znamená ESG, udržitelný rozvoj, cirkulární ekonomika, greenwashing a odpovědnost firem. Dokážeš posoudit, zda firma vytváří hodnotu dlouhodobě, nebo jen přesouvá náklady na společnost, zaměstnance, dodavatele či životní prostředí.
+        </div>
+        """, unsafe_allow_html=True)
+        
+        with st.expander("📚 Co se v tomto bloku naučíš? (Klikni pro rozbalení)"):
             st.markdown("""
-            <div class='box-blue'>
-                🌱 <b>Moderní hook:</b> Firma dnes nestačí hodnotit jen podle toho, kolik vydělá. Investoři, banky, zákazníci i zaměstnanci se stále častěji ptají: Jak firma zachází s lidmi? Jakou má uhlíkovou stopu? Nezneužívá dodavatele? Není její „zelená“ reklama jen greenwashing?
-            </div>
-            """, unsafe_allow_html=True)
+            * Vysvětlit pojem udržitelný rozvoj.
+            * Rozlišit tři oblasti ESG: Environmental, Social, Governance.
+            * Uvést příklady environmentálních, sociálních a řídicích dopadů firmy.
+            * Vysvětlit pojem greenwashing a popsat princip cirkulární ekonomiky.
+            * Propojit ESG s bankami, investory, dodavatelskými řetězci a chováním spotřebitelů.
+            * Diskutovat dilema: Cena vs. Odpovědnost.
+            *(Vazba na RVP pro SŠ: Udržitelný rozvoj, odpovědné podnikání, environmentální a sociální dopady, spotřebitelské rozhodování, etika, řízení rizik)*
+            """)
             
-            st.markdown("""
-            <div class='box-green'>
-                🎯 <b>Cíl 5. bloku:</b> Pochopíš, co znamená ESG, udržitelný rozvoj, cirkulární ekonomika, greenwashing a odpovědnost firem. Dokážeš posoudit, zda firma vytváří hodnotu dlouhodobě, nebo jen přesouvá náklady na společnost, zaměstnance, dodavatele či životní prostředí.
-            </div>
-            """, unsafe_allow_html=True)
-            
-            with st.expander("📚 Co se v tomto bloku naučíš? (Klikni pro rozbalení)"):
-                st.markdown("""
-                * Vysvětlit pojem udržitelný rozvoj.
-                * Rozlišit tři oblasti ESG: Environmental, Social, Governance.
-                * Uvést příklady environmentálních, sociálních a řídicích dopadů firmy.
-                * Vysvětlit pojem greenwashing a popsat princip cirkulární ekonomiky.
-                * Propojit ESG s bankami, investory, dodavatelskými řetězci a chováním spotřebitelů.
-                * Diskutovat dilema: Cena vs. Odpovědnost.
-                *(Vazba na RVP pro SŠ: Udržitelný rozvoj, odpovědné podnikání, environmentální a sociální dopady, spotřebitelské rozhodování, etika, řízení rizik)*
-                """)
+        st.divider()
+        st.markdown("#### 5.1 Udržitelný rozvoj: Ekonomika, která nespotřebuje budoucnost")
                 
             st.divider()
             st.markdown("#### 5.1 Udržitelný rozvoj: Ekonomika, která nespotřebuje budoucnost")
