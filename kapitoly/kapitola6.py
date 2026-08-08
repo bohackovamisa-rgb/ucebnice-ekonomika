@@ -2389,3 +2389,115 @@ def render():
 
             if st.form_submit_button("Uložit Krok 16 a dokončit celý Blok 3!"):
                 st.success("🎉 Výborně! Základ značky, komunikační kampaň i etická pravidla (Blok 3) jsou kompletně vytvořeny a uloženy v Projektového pasu!")
+# =========================================================================
+    # SEKCE 4: ZÁVĚREČNÝ VÝSTUP KAPITOLY A PŘÍPADOVÉ STUDIE
+    # =========================================================================
+    elif selected_section_6 == section_options_6[3]:
+        st.markdown("### 4. Závěrečný výstup kapitoly a případové studie")
+
+        st.markdown("""
+        <div class='box-blue'>
+            🚀 <b>Finální výstup kapitoly: Od nápadu k reálné kampani</b><br>
+            V předchozích blocích jsi krok za krokem budoval/a svůj vlastním projekt. Nyní je čas dát všechny dílky skládačky dohromady do jednoho uceleného Projektového pasu a prověřit své znalosti na reálné případové studii z praxe!
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # =====================================================================
+        # PODKAPITOLA 4.1: FINÁLNÍ PROJEKTOVÝ PAS & HODNOTICÍ KRITÉRIA
+        # =====================================================================
+        st.markdown("#### 4.1 Finální projektový výstup")
+        st.write("Tvým úkolem je sestavit krátkou prezentaci nebo dokumentaci projektu, která propojuje management, marketing, budování značky a etiku. Zde je přehled hodnoticích kritérií, podle kterých se tvůj projekt posuzuje:")
+
+        # Hodnoticí kritéria - Tabulka
+        st.markdown("""
+        | Kritérium | Co se hodnotí |
+        | :--- | :--- |
+        | **🏛️ Management** | Jasný SMART cíl, rozdělení rolí v týmu, realistický plán a práce s riziky (Plán B). |
+        | **🎯 Marketing** | Smysluplně zvolená cílová skupina (STP), originální positioning a propojený marketingový mix 4P. |
+        | **💎 Brand** | Srozumitelný příběh značky, definované hodnoty, vizuální identita a důvěryhodná komunikace. |
+        | **⚖️ Etika & Právo** | Schopnost rozpoznat manipulaci, klamavou reklamu, greenwashing a dodržení právních pravidel. |
+        | **🎤 Prezentace** | Srozumitelné vysvětlení nápadu, konkrétní příklady a schopnost obhájit svá manažerská rozhodnutí. |
+        """)
+
+        # Generátor/Souhrn Projektového pasu
+        st.markdown("<br><div class='box-yellow'>📝 <b>Generátor finálního Projektového pasu</b></div>", unsafe_allow_html=True)
+        st.write("Klikni na tlačítko níže a zkontroluj kompletní shrnutí tvého projektu pro odevzdání:")
+
+        with st.expander("📄 Zobrazit kompletní Projektový pas k exportu", expanded=False):
+            st.markdown(f"### 🚀 Projektový pas: **{nazev_projektu}**")
+            st.markdown("---")
+            st.markdown("##### 🏛️ BLOK 1: MANAGEMENT & ORGANIZACE")
+            st.markdown("* **Top Management & Vize:** Řízení strategie a směřování projektu.")
+            st.markdown("* **Organizační struktura:** Rozdělení funkcí (Výroba, Marketing, Finance).")
+            st.markdown("* **SMART Cíl:** Konkrétní, měřitelný a časově ohraničený výsledek.")
+            st.markdown("* **SWOT & Plán B:** Identifikovaná rizika a záložní řešení.")
+
+            st.markdown("---")
+            st.markdown("##### 🎯 BLOK 2: MARKETING & STP")
+            st.markdown("* **Cílová skupina (Targeting):** Přesně definovaný segment zákazníků.")
+            st.markdown("* **Positioning & USP:** Unikátní prodejní argument, který nás odlišuje od konkurence.")
+            st.markdown("* **Marketingový mix 4P:**")
+            st.markdown("  - **Product:** Rozšířené služby a řešení reálné potřeby.")
+            st.markdown("  - **Price:** Zvolená cenová metoda a strategie.")
+            st.markdown("  - **Place:** Distribuční cesta a prodejní kanály.")
+            st.markdown("  - **Promotion:** Komunikační mix (Sítě, Podpora prodeje, PR).")
+
+            st.markdown("---")
+            st.markdown("##### 💎 BLOK 3: BRAND & ETIKA")
+            st.markdown("* **Příběh značky (Storytelling):** Proč projekt vznikl a jakým hodnotám věří.")
+            st.markdown("* **Neuromarketingové prvky:** Zapojení smyslových a psychologických podnětů.")
+            st.markdown("* **Etický kodex:** Záruka pravdivosti, označování spoluprací a ochrana spotřebitele.")
+
+        st.markdown("""
+        <div class='box-green' style='margin-top: 20px;'>
+            ✅ <b>Co si z kapitoly navždy zapamatovat:</b><br>
+            • <b>Management</b> pomáhá proměnit chaotický nápad v organizovanou a řízenou akci.<br>
+            • <b>Marketing</b> pomáhá pochopit zákazníka a doručit mu skutečnou hodnotu.<br>
+            • <b>Brand</b> vytváří dlouhodobou důvěru, emoce a osobitou identitu.<br>
+            • <b>Etika</b> připomíná, že prodej za každou cenu není cílem – klíčové je férové jednání, pravdivá komunikace a odpovědnost vůči společnosti.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # =====================================================================
+        # PODKAPITOLA 4.2: PŘÍPADOVÉ STUDIE
+        # =====================================================================
+        st.divider()
+        st.markdown("#### 4.2 Případové studie na závěr kapitoly")
+        st.write("Vyzkoušej si roli konzultanta. Analýzou reálných chyb ostatních firem se naučíš nejvíce!")
+
+        # ---------------------------------------------------------------------
+        # PŘÍPADOVÁ STUDIE 1
+        # ---------------------------------------------------------------------
+        st.markdown("##### 👕 Případová studie 1: Školní merch, který nikdo nekupuje")
+
+        with st.container(border=True):
+            st.markdown("""
+            <div style="background-color: #fff7ed; padding: 15px; border-left: 5px solid #f97316; border-radius: 4px;">
+                <h5 style="margin-top:0; color: #c2410c;">🚨 Situace:</h5>
+                Studentský tým se rozhodl spustit školní merch. Navrhl klasické mikiny s obřím oficiálním logem školy na prsou, nastavil cenu <b>850 Kč</b> a na blind objednal <b>100 kusů dopředu</b> do skladu. <br><br>
+                Po prvním měsíci se prodalo jen 18 mikin. Ostatním studentům přijdou mikiny moc drahé, design je podle nich moc „školní a nudný“ a stěžují si, že se jich předem nikdo neptal, co by reálně chtěli nosit.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("<br><b>🔍 Kde tým udělal zásadní chyby?:</b>", unsafe_allow_html=True)
+            col_cs1, col_cs2 = st.columns(2)
+            with col_cs1:
+                st.error("❌ **Marketingový výzkum:** Úplně chyběl. Tým pracoval s domněnkami místo dat.")
+                st.error("❌ **Positioning:** Nejasný. Mikina nabízela oficiální logo místo stylu.")
+                st.error("❌ **Management:** Obří riziko neprodaných zásob (100 ks bez předobjednávek).")
+            with col_cs2:
+                st.warning("❌ **Product (4P):** Design neodpovídá vkusu cílovky.")
+                st.warning("❌ **Price (4P):** Cena 850 Kč byla příliš vysoká na neověřený produkt.")
+                st.warning("❌ **Place & Promo (4P):** Prodej jen přes papírovou nástěnku bez příběhu.")
+
+            st.markdown("<br><b>🧩 Úkoly k vyřešení případové studie:</b>", unsafe_allow_html=True)
+
+            with st.form("form_case_study_1"):
+                cs1_q1 = st.text_area("1. Jaký MARKETINGOVÝ VÝZKUM měl tým udělat před objednávkou?:", placeholder="např. Kvantitativní dotazník mezi studenty o ceně + hlasování na Instagramu o vzorech designu...")
+                cs1_q2 = st.text_area("2. Jak bys upravil/a MARKETINGOVÝ MIX 4P (Product, Price, Place, Promotion)?:", placeholder="např. Product: moderní minimalistický design, Price: předobjednávková cena 650 Kč, Place: e-shop, Promo: videa od studentů...")
+                cs1_q3 = st.text_area("3. Jak může tým eliminovat RIZIKO neprodaných zásob v managementu?:", placeholder="např. Systém předobjednávek (Print-on-Demand) – vyrobíme jen to, co si studenti předem zaplatí.")
+
+                if st.form_submit_button("Odeslat řešení Případové studie 1"):
+                    st.success("✅ **Výborná analýza!** Správně jsi identifikoval/a, že základem úspěchu je systém *Print-on-Demand* (předobjednávky bez rizika zásob), zapojení studentů do designu (výzkum) a přizpůsobení ceny ochotě platit.")
