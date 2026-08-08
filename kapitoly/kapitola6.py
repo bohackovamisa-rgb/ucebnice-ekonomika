@@ -1371,3 +1371,171 @@ def render():
 
             if st.form_submit_button("Uložit Krok 8 do Projektového pasu"):
                 st.success("Krok 8 úspěšně uložen! Tvá značka má jasně definovaný profil a unikátní hodnotu.")
+# =====================================================================
+        # PODKAPITOLA 2.4: MARKETINGOVÝ MIX (4P)
+        # =====================================================================
+
+        st.divider()
+        st.markdown("#### 2.4 Marketingový mix: Klasické 4P")
+        st.write("Marketingový mix je soubor čtyř základních nástrojů, které firma kombinuje a ladí tak, aby oslovila vybranou cílovou skupinu a splnila své cíle.")
+
+        col_4p1, col_4p2, col_4p3, col_4p4 = st.columns(4)
+        col_4p1.info("📦 **Product**\n*(Produkt)*\nCo nabízíme a jakou hodnotu to přináší?")
+        col_4p2.warning("💸 **Price**\n*(Cena)*\nKolik to stojí a jak cena ovlivní vnímání?")
+        col_4p3.success("🚚 **Place**\n*(Distribuce)*\nKde a jak se produkt dostane k zákazníkovi?")
+        col_4p4.error("📢 **Promotion**\n*(Propagace)*\nJak se o nás zákazník dozví a proč nám má věřit?")
+
+        st.markdown("""
+        <div class='box-blue'>
+            🧩 <b>Pointa 4P: Všechno musí ladit v harmonii!</b><br>
+            Prvky 4P nemohou fungovat odděleně. Luxusní hodinky s prémiovou cenou (Price) prodávané v levném plastovém obalu (Product) na stánku u nádraží (Place) působí jako fejk. Levné zboží s obří drahou kampaní zase finančně nevyjde.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 2.4.1 PRODUCT / PRODUKT
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.4.1 Product / Produkt: Nabídka hodnoty")
+        st.write("Produktem je vše, co uspokojuje potřebu zákazníka — fyzické zboží, služba, aplikace, kurz nebo zážitek.")
+
+        st.markdown("###### 🧅 Vrstvy produktu: Cibule hodnoty")
+        st.write("Produkt se skládá ze tří vrstev. Zákazník si málokdy kupuje jen samotnou fyzickou věc:")
+
+        tab_p_lay1, tab_p_lay2, tab_p_lay3 = st.tabs(["🎯 Jádro produktu", "📦 Reálný produkt", "🌟 Rozšířený produkt"])
+
+        with tab_p_lay1:
+            st.markdown("**1. Jádro produktu (Základní užitek):**")
+            st.write("Základní pocit nebo potřebný užitek, kvůli kterému zákazník utrácí.")
+            st.info("🚗 *Příklad Auto:* Potřeba dostat se bezpečně z bodu A do bodu B.\n\n👕 *Příklad Školní merch:* Pocit příslušnosti ke komunitě školy a vyjádření identity.")
+
+        with tab_p_lay2:
+            st.markdown("**2. Reálný produkt (Konkrétní podoba):**")
+            st.write("To, na co si zákazník může sáhnout: značka, design, materiál, obal, funkce a kvalita.")
+            st.warning("🚗 *Příklad Auto:* Červené SUV značky Škoda, výkon 150 koní, kožený volant.\n\n👕 *Příklad Školní merch:* Oversized mikina, černá bavlna 320g/m², vyšité logo na prsou.")
+
+        with tab_p_lay3:
+            st.markdown("**3. Rozšířený produkt (Doplňkové služby):**")
+            st.write("Služby a výhody navíc, které budují věrnost a odlišují nás od konkurence.")
+            st.success("🚗 *Příklad Auto:* Záruka 5 let, bezplatný servis, výhodné financování, náhradní vůz zdarma.\n\n👕 *Příklad Školní merch:* Bezplatná výměna velikosti do 30 dnů, osobní doručení do skříňky ve škole.")
+
+        st.markdown("<br>###### 📈 Životní cyklus produktu")
+        st.write("Každý produkt na trhu se rodí, roste, dospívá a nakonec stárne. V každé fázi musí markeťáci měnit strategii:")
+
+        # Plotly křivka životního cyklu
+        faze_x = ["1. Zavádění", "2. Růst", "3. Zralost", "4. Pokles"]
+        trzby_y = [10, 50, 95, 30]
+        zisk_y = [-20, 30, 70, 10]
+
+        fig_lc = go.Figure()
+        fig_lc.add_trace(go.Scatter(x=faze_x, y=trzby_y, mode='lines+markers', name='Tržby (Prodeje)', line=dict(color='#3b82f6', width=4)))
+        fig_lc.add_trace(go.Scatter(x=faze_x, y=zisk_y, mode='lines+markers', name='Čistý zisk', line=dict(color='#10b981', width=3, dash='dash')))
+
+        fig_lc.update_layout(
+            title="Křivka životního cyklu produktu (Tržby vs. Zisk)",
+            xaxis_title="Fáze cyklu",
+            yaxis_title="Hodnota (Relativní)",
+            height=320,
+            margin=dict(t=40, b=20, l=10, r=10)
+        )
+        st.plotly_chart(fig_lc, use_container_width=True)
+
+        faze_detail = st.selectbox("🔍 Klikni a zjisti, co má firma v dané fázi dělat:", [
+            "1. Zavádění (Novinka na trhu)",
+            "2. Růst (Hit a raketový vzestup)",
+            "3. Zralost (Vrchol a nasycení trhu)",
+            "4. Pokles (Propad a zastarávání)"
+        ])
+
+        if "Zavádění" in faze_detail:
+            st.error("🚀 **1. Zavádění:** Prodeje rostou pomalu, zisk je v mínusu kvůli vysokým nákladům na vývoj a reklamu. **Úkol marketingu:** Vysvětlit lidem, k čemu produkt je, a získat první nadšence.")
+        elif "Růst" in faze_detail:
+            st.success("📈 **2. Růst:** Tržby i zisk prudce rostou, o produkt je zájem. Přichází ale první konkurence! **Úkol marketingu:** Posilovat značku, odlišit se a rozšiřovat distribuci.")
+        elif "Zralost" in faze_detail:
+            st.warning("👑 **3. Zralost:** Tržby dosahují maxima, ale růst se zastavuje. Trh je nasycený a konkurence svádí cenové války. **Úkol marketingu:** Nabízet slevy, věrnostní programy, inovovat obal nebo hledat nové využití.")
+        else:
+            st.info("📉 **4. Pokles:** Prodeje klesají, zákazníci přecházejí na nové technologie a trendy. **Úkol marketingu:** Rozhodnout, zda produkt omladit, nebo ho včas stáhnout z prodeje.")
+
+        # ---------------------------------------------------------------------
+        # 2.4.2 PRICE / CENA
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.4.2 Price / Cena: Jediný prvek, který vydělává")
+        st.write("Zatímco produkt, distribuce a reklama stojí peníze (náklady), **Cena je jediný prvek mixu, který přináší tržby**. Zároveň skrze cenu zákazník posuzuje kvalitu.")
+
+        st.markdown("<div class='box-purple'>🧮 <b>Trenažér: 3 metody stanovování ceny</b></div>", unsafe_allow_html=True)
+        st.write("Vyzkoušej si, jak různé myšlení vede k úplně jiné cenovce u stejného produktu:")
+
+        with st.container(border=True):
+            vyrobni_naklady = 300
+            st.write(f"📦 *Základní výrobní náklad na 1 kus mikiny je {vyrobni_naklady} Kč.*")
+            
+            c_m1, c_m2, c_m3 = st.columns(3)
+            with c_m1:
+                st.markdown("<b>1. Nákladová metoda</b>")
+                marze_pct = st.slider("Přidáme ziskovou marži (%):", 10, 100, 50)
+                cena_naklad = vyrobni_naklady * (1 + marze_pct/100)
+                st.caption(f"Cena pro zákazníka: **{int(cena_naklad)} Kč**")
+
+            with c_m2:
+                st.markdown("<b>2. Konkurenční metoda</b>")
+                cena_konkurence = st.number_input("Průměrná cena konkurence:", value=590, step=10)
+                st.caption(f"Cena pro zákazníka: **{cena_konkurence} Kč** *(podle trhu)*")
+
+            with c_m3:
+                st.markdown("<b>3. Poptávková metoda</b>")
+                st.caption("Cena vychází z vnímané hodnoty v hlavě zákazníka (limitovaná edice).")
+                cena_poptavka = st.number_input("Ochota zákazníků zaplatit:", value=890, step=50)
+                st.caption(f"Cena pro zákazníka: **{cena_poptavka} Kč** *(marže +{cena_poptavka-vyrobni_naklady} Kč!)*")
+
+        st.markdown("<br>###### 🎯 Cenové strategie u novinek")
+        col_strat1, col_strat2 = st.columns(2)
+        with col_strat1:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #1d4ed8;">🌊 Skimming (Smetání smetany)</h5>
+                <b>Jak funguje:</b> Nasadíme vysokou počáteční cenu pro nadšence, kteří chtějí novinku jako první. Jakmile opadne zájem, cenu postupně snižujeme.<br><br>
+                <b>Příklady:</b> Nové modely iPhone, herní konzole PlayStation při vydání, vlajkové lodi televizorů.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_strat2:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; border-radius: 4px; height: 100%;">
+                <h5 style="margin-top:0; color: #047857;">🚀 Penetrační cena (Pronikání na trh)</h5>
+                <b>Jak funguje:</b> Nasadíme neobvykle nízkou počáteční cenu, abychom bleskově urvali velký podíl na trhu a získali tisíce zákazníků.<br><br>
+                <b>Příklady:</b> Vstup nové streamovací služby (Disney+ za 99 Kč na startu), nová taxislužba.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------------------
+        # 2.4.3 PLACE / DISTRIBUCE
+        # ---------------------------------------------------------------------
+        st.divider()
+        st.markdown("##### 2.4.3 Place / Distribuce: Cesta k zákazníkovi")
+        st.write("Distribuce řeší, jak, kde a kdy si zákazník náš produkt nakoupí a převzneme ho. Můžeš mít nejlepší produkt na světě za skvělou cenu, ale pokud je složité ho koupit, zákazník odejde ke konkurenci.")
+
+        col_d1, col_d2 = st.columns(2)
+        with col_d1:
+            st.info("🛒 **Přímá cesta (Direct):**\nVýrobce prodává přímo spotřebiteli bez jakéhokoliv prostředníka.\n\n*Příklady:* Pekárna prodává ve svém krámku, tvůrce prodává e-book na svém webu, Tesla e-shop.")
+        with col_d2:
+            st.warning("🏬 **Nepřímá cesta (Indirect):**\nMezi výrobcem a spotřebitelem stojí zprostředkovatelé (**Velkoobchod** nakupuje po paletách, **Maloobchod** prodává po kusech).\n\n*Příklady:* Coca-Cola prodává přes Albert a Kaufland.")
+
+        st.markdown("""
+        <div class='box-gray' style='margin-top: 15px;'>
+            📦 <b>Omni-channel v moderním e-commerce:</b> Moderní zákazník nerozlišuje světy online a offline. Zákazník si tenisky prohlédne na TikToku, objedná na e-shope přes mobil, vyzvedne v kamenné prodejně na pobočce a případnou reklamaci řeší přes WhatsApp chat. Pro zákazníka to musí být <b>jeden plynulý zážitek</b>.
+        </div>
+        """, unsafe_allow_html=True)
+
+        # WORKBOOK KROK 9 PRO STUDENTŮV PROJEKT
+        st.markdown("<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 9: Nastavení Produktu, Ceny a Distribuce</b></div>", unsafe_allow_html=True)
+        with st.form("form_projekt_krok9"):
+            st.text_area("1. PRODUKT – Co bude tvořit ROZŠÍŘENÝ PRODUKT tvého projektu? (Služba/výhoda navíc):", placeholder="např. Možnost bezplatné výměny zboží do 30 dnů, věrnostní kartička s nápojem zdarma...")
+            col_p_f1, col_p_f2 = st.columns(2)
+            with col_p_f1:
+                st.selectbox("2. CENA – Jakou metodu tvorby ceny zvolíš?:", ["Poptávková (Podle vnímané hodnoty)", "Konkurenční (Sledujeme trh)", "Nákladová (Náklady + marže)"])
+            with col_p_f2:
+                st.selectbox("3. DISTRIBUCE – Jakou distribuční cestu použiješ?:", ["Přímá (Vlastní e-shop / osobní prodej)", "Nepřímá (Prodej přes partnery/chovatele/stánky)", "Kombinovaná / Omni-channel"])
+
+            if st.form_submit_button("Uložit Krok 9 do Projektového pasu"):
+                st.success("Krok 9 úspěšně uložen! První 3P tvého mixu jsou kompletní.")
