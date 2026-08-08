@@ -1428,3 +1428,135 @@ Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. T
             st.success("**Upskilling na 5 let:**\n* **Zero-waste management a udržitelnost:** Umět sestavit menu tak, aby se nic nevyhazovalo (šetří to firmě obrovské peníze).\n* **Moderní potravinářské technologie:** Práce s konvektomaty řízenými počítačem, fúze klasického vaření s potravinovou chemií.\n* *Kde začít dnes:* Sledovat trendy v udržitelnosti a optimalizaci nákladů v kuchyni.")
         elif profese == "Stavař / Řemeslník":
             st.success("**Upskilling na 5 let:**\n* **Chytrá domácnost (Smart Home):** Elektrikář už nezapojuje jen dráty, ale nastavuje řídící jednotky na Wi-Fi (topení, žaluzie, bezpečnost).\n* **Čtení 3D modelů (BIM):** Místo papírových výkresů se bude na stavbách pracovat s tabletem a 3D modelem budovy.\n* *Kde začít dnes:* Kurz zapojování prvků chytré domácnosti nebo základy práce s CAD programy.")
+# =========================================================================
+    # SEKCE 5: KDYŽ SE CESTY ROZEJDOU: KONEC PRÁCE A KRIZOVÉ SITUACE
+    # =========================================================================
+    elif selected_section_4 == "5.1 Jak dát a dostat výpověď profesionálně":
+        st.markdown("### 5.1 Jak profesionálně odejít (nebo dostat padáka)")
+        st.markdown("""
+        <div class='box-blue'>
+            🧯 <b>Základní otázka:</b> Co dělat, když práce končí — a jak neprásknout dveřmi tak, aby mi to zničilo kariéru?
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.write("Odchod z práce není konec světa, je to běžná součást profesního života. Profesionální odchod vám pomůže zachovat si dobré reference a kontakty do budoucna.")
+
+        col_vyp1, col_vyp2 = st.columns(2)
+        with col_vyp1:
+            st.markdown("##### 🚶‍♂️ Když dávám výpověď já:")
+            st.markdown("""
+            1. **Nejdřív šéf, pak kolegové:** Nikdy neříkejte o odchodu dřív kolegům v kuchyňce než svému šéfovi.
+            2. **Písemná forma:** Zrušení smlouvy musíte podat písemně (na papír, ne zprávou na Messengeru).
+            3. **Nepalte mosty:** Neodcházejte ve vzteku a nenadávejte firmě. Svět (obzvlášť v jednom oboru) je velmi malý.
+            """)
+        with col_vyp2:
+            st.markdown("##### 🚪 Když dostanu výpověď já:")
+            st.markdown("""
+            1. **Nic pod tlakem nepodepisujte:** Nemusíte podepisovat 'Dohodu o ukončení' hned na místě. Vezměte si den na rozmyšlenou!
+            2. **Zkontrolujte důvod:** Výpověď od zaměstnavatele musí mít ze zákona jasný, konkrétní důvod.
+            3. **Mám nárok na odstupné?** Pokud končíte pro nadbytečnost (ruší se místo), máte většinou nárok až na 3 platy navíc.
+            """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>📋 <b>Interaktivní To-Do list: Plán odchodu na míru</b></div>", unsafe_allow_html=True)
+        st.write("Doplň, v jaké situaci se aktuálně nacházíš, a aplikace ti vygeneruje plán, co musíš přesně udělat:")
+
+        duvod_odchodu = st.radio("Jakým způsobem končí tvoje práce?", [
+            "Dávám klasickou výpověď (mám smlouvu na dobu neurčitou)",
+            "Končím ve zkušební době (nelíbí se mi tam)",
+            "Dostal jsem výpověď od zaměstnavatele pro nadbytečnost"
+        ])
+
+        if st.button("Vygenerovat postup"):
+            if "klasickou" in duvod_odchodu:
+                st.info("📝 **Tvůj postup:**\n1. Sepsat jednoduchou výpověď ('Tímto dávám výpověď...').\n2. Doručit ji šéfovi nebo HR.\n3. Pamatuj, že ti začne běžet standardní **dvouměsíční výpovědní lhůta** (od prvního dne následujícího měsíce).\n4. Požádat o Zápočtový list.")
+            elif "zkušební" in duvod_odchodu:
+                st.success("📝 **Tvůj postup:**\n1. Nepsat 'Výpověď', ale **'Zrušení pracovního poměru ve zkušební době'**.\n2. Lze podat ze dne na den a bez udání důvodu.\n3. Předat papír a zítra už do práce nemusíš.")
+            elif "nadbytečnost" in duvod_odchodu:
+                st.warning("📝 **Tvůj postup:**\n1. Pokud firma ruší tvou pozici, **pohlídej si odstupné!**\n2. Nenech se dotlačit k podpisu nevýhodné 'Dohody'.\n3. Trvej na klasické výpovědi pro nadbytečnost, abys dostal své peníze navíc.\n4. Zaregistruj se na Úřadu práce.")
+
+    elif selected_section_4 == "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace":
+        st.markdown("### 5.2 Úřad práce a finanční záchranná síť")
+        st.write("Úřad práce (ÚP) není jen instituce 'pro dlouhodobě nezaměstnané'. Je to klíčový partner, který vám **vyřeší zdravotní pojištění** (bude ho za vás platit stát) a pomůže překlenout dobu hledání nového místa.")
+
+        st.markdown("""
+        <div class='box-gray'>
+            🚩 <b>Častá a drahá chyba mladých lidí:</b> Mnoho lidí na Úřad práce nejde, protože se 'stydí' a myslí si, že si práci rychle najdou sami. Ale pozor! Jakmile nejste zaměstnanci nebo studenti a nejste evidováni na ÚP, <b>musíte si sami ze svého kapsy hradit zdravotní pojištění</b>. Pokud to neuděláte, nabíhá vám obrovský dluh a penále u pojišťovny.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### 💰 Výše podpory v nezaměstnanosti (Pravidla 2026)")
+        st.write("Aby systém motivoval lidi k rychlejšímu hledání práce, podpora se v čase postupně snižuje. Počítá se z vašeho předchozího průměrného čistého příjmu:")
+        
+        st.markdown("""
+        * **1. fáze:** 80 % předchozí mzdy
+        * **2. fáze:** 50 % předchozí mzdy
+        * **3. fáze:** 40 % předchozí mzdy
+        """)
+        st.caption("*(Doba, po kterou podpora běží, závisí na vašem věku. Člověk do 52 let dostává podporu celkem 5 měsíců. Existuje i zákonný strop: v roce 2026 vám dají maximálně 38 537 Kč měsíčně, i kdybyste předtím brali sto tisíc).*")
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧮 <b>Kalkulačka podpory v nezaměstnanosti</b></div>", unsafe_allow_html=True)
+        st.write("Zjisti, kolik peněz reálně od státu dostaneš v prvních měsících hledání práce:")
+
+        predchozi_cista_mzda = st.number_input("Tvoje předchozí čistá mzda (Kč):", min_value=10000, max_value=100000, value=30000, step=1000)
+        
+        podpora_80 = int(predchozi_cista_mzda * 0.8)
+        podpora_50 = int(predchozi_cista_mzda * 0.5)
+        podpora_40 = int(predchozi_cista_mzda * 0.4)
+        
+        MAX_PODPORA_2026 = 38537
+        
+        podpora_80 = min(podpora_80, MAX_PODPORA_2026)
+        podpora_50 = min(podpora_50, MAX_PODPORA_2026)
+        podpora_40 = min(podpora_40, MAX_PODPORA_2026)
+
+        col_pod1, col_pod2, col_pod3 = st.columns(3)
+        with col_pod1:
+            st.metric("První 2 měsíce (80 %)", f"{podpora_80:,} Kč".replace(",", " "))
+        with col_pod2:
+            st.metric("Další 2 měsíce (50 %)", f"{podpora_50:,} Kč".replace(",", " "))
+        with col_pod3:
+            st.metric("Poslední měsíc (40 %)", f"{podpora_40:,} Kč".replace(",", " "))
+            
+        st.info("Pamatujte, že na podporu máte nárok pouze pokud jste za poslední 2 roky odpracovali (byli pojištěni) alespoň 12 měsíců! (Ztráta brigády na DPP do 10 000 Kč k podpoře nevede, z té se totiž pojištění neplatí).")
+
+    elif selected_section_4 == "6.1 Praktická dílna (Aktivity 1–5)" or selected_section_4 == "7.1 Případové studie z praxe" or selected_section_4 == "7.2 Slovníček, rychlé opakování a prověrka":
+        # Spojil jsem sekci pro krizové situace přímo sem, abychom zamezili prázdným místům v menu.
+        st.markdown("### 5.3 Co dělat, když... (Krizový trenažér)")
+        st.markdown("""
+        <div class='box-red'>
+            🧯 <b>Krizová sekce:</b> V této části nejde o teorii. Jde o schopnost chránit sám sebe a svá občanská práva ve vyhrocené situaci na pracovišti.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("#### Tvoje první kroky při průšvihu:")
+        st.markdown("""
+        | Situace | Co udělat jako PRVNÍ | Důkazy, které musíš zajistit |
+        | :--- | :--- | :--- |
+        | 💸 **Nevyplacená mzda** | Upozornit šéfa/účetní PÍSEMNĚ. | Výplatní pásky, smlouva, záznam docházky, odeslané e-maily. |
+        | 🤬 **Šikana (Bossing)** | Zapisovat si konkrétní datum, čas a co přesně se stalo. | E-maily, svědectví kolegů, printscreeny chatu. |
+        | ⚠️ **Nebezpečné prostředí** | Odmítnout práci, která ohrožuje život, a nahlásit to. | Fotky porouchaných strojů / chybějících pomůcek. |
+        | 📝 **Nátlak na IČO** | Zjistit, jestli mě nenutí do nelegálního Švarcsystému. | Důkazy, že mi nařizují pracovní dobu. |
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🚨 <b>Trenažér odolnosti: Útok v kanceláři</b></div>", unsafe_allow_html=True)
+        st.write("Vyzkoušej si, jestli bys dokázal ustát krizovou situaci s manipulativním šéfem. Jak bys zareagoval?")
+
+        with st.form("krize_form"):
+            st.write("**Šéf (hází ti na stůl papír):** *„Tady mi okamžitě podepiš dohodu o ukončení. Končíš! Když to nepodepíšeš hned, napíšu ti do papírů k výpovědi takové věci (hrubé porušení kázně), že si v tomhle městě už nikdy nenajdeš práci.“*")
+            
+            k_odp = st.radio("Vyber své řešení:", [
+                "A) Leknu se. Zjevně má na mě nějaké páky. Radši dohodu podepíšu a odejdu v tichosti.",
+                "B) Papír si vezmu, poděkuji a řeknu: 'Nic hned podepisovat nebudu. Vezmu si to domů, přečtu si to v klidu a poradím se s právníkem. Vyjádřím se zítra.'",
+                "C) Začnu na něj křičet, ať mi vyhrožuje, zmačkám papír a hodím mu ho na hlavu."
+            ])
+            
+            if st.form_submit_button("Odeslat tvou reakci"):
+                if k_odp.startswith("B"):
+                    st.success("✅ **Zlatá medaile za profesionalitu a nervy ze železa!** Nikdo na světě tě nemůže fyzicky donutit podepsat žádnou dohodu proti tvé vůli. Čas je teď tvá nejlepší zbraň. Vezmi papír domů.")
+                elif k_odp.startswith("A"):
+                    st.error("❌ **Stal ses obětí manipulace.** Pokud podepíšeš dohodu o ukončení z vlastní vůle bez odstupného, vzdal ses veškeré právní ochrany. Hrubé porušení by ti musel šéf složitě dokazovat a prohrál by u soudu.")
+                elif k_odp.startswith("C"):
+                    st.warning("⚠️ **Pozor na emoce.** Pokud začneš ničit firemní majetek nebo někoho fyzicky napadatš, dáváš šéfovi skutečný a legální důvod tě okamžitě vyhodit pro hrubé porušení kázně (tzv. Výpověď na hodinu).")
