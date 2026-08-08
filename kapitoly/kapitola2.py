@@ -448,7 +448,7 @@ def render():
         with st.container(border=True):
             st.markdown("### 1.2.4 Hotovost, ochranné prvky bankovek a důvěra v peníze")
             st.write("Jednou z viditelných činností ČNB je péče o hotovostní oběh. ČNB vydává české bankovky a mince, stahuje z oběhu poškozené nebo neplatné peníze a stará se o to, aby hotovost byla důvěryhodná. Právě sem patří také ochranné prvky bankovek.")
-            st.write("Bankovky mají ochranné prvky proto, aby bylo možné ověřit jejich pravost a snížit riziko padělání. Nejde jen o „ozdobu“ bankovky. Ochranné prvky pomáhají běžným lidem, obchodníkům, bankám i státu poznat, zda je bankovka skutečná a zda jí mohou důvěřovať.")
+            st.write("Bankovky mají ochranné prvky proto, aby bylo možné ověřit jejich pravost a snížit riziko padělání. Nejde jen o „ozdobu“ bankovky. Ochranné prvky pomáhají běžným lidem, obchodníkům, bankám i státu poznat, zda je bankovka skutečná a zda jí mohou důvěřovat.")
 
             st.markdown("""
             <div class='box-gray'>
@@ -468,34 +468,33 @@ def render():
             st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz (1000 Kč - František Palacký)")
             st.write("Zvol prvek v nabídce níže, sleduj jeho přesné umístění přímo na reálné bankovce a zjisti, jak ho v praxi ověřit:")
 
-            # Bezpečné načtení obrázku 1000 Kč do Base64
+            # Bezpečné stažení reálné fotky Palackého na serverové straně
             @st.cache_data
-            def get_bankovka_1000_base64():
-                import os, base64
-                # 1. Pokus o načtení z lokálního souboru v repozitáři
-                local_paths = ["1000_czk.jpg", "kapitoly/1000_czk.jpg", "assets/1000_czk.jpg"]
-                for path in local_paths:
-                    if os.path.exists(path):
-                        with open(path, "rb") as img_f:
-                            return f"data:image/jpeg;base64,{base64.b64encode(img_f.read()).decode()}"
+            def nacti_realny_obrazek_palackeho():
+                import urllib.request
+                import base64
+                import ssl
+
+                url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/1000_Czech_koruna_Obverse.jpg/800px-1000_Czech_koruna_Obverse.jpg"
+                ctx = ssl.create_default_context()
+                ctx.check_hostname = False
+                ctx.verify_mode = ssl.CERT_NONE
                 
-                # 2. Stažení z webu s plnými Chrome hlavičkami
+                req = urllib.request.Request(
+                    url, 
+                    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+                )
                 try:
-                    import requests
-                    headers = {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-                    }
-                    url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/1000_Czech_koruna_Obverse.jpg/800px-1000_Czech_koruna_Obverse.jpg"
-                    resp = requests.get(url, headers=headers, timeout=5)
-                    if resp.status_code == 200:
-                        return f"data:image/jpeg;base64,{base64.b64encode(resp.content).decode()}"
+                    with urllib.request.urlopen(req, context=ctx, timeout=8) as response:
+                        img_bytes = response.read()
+                        return f"data:image/jpeg;base64,{base64.b64encode(img_bytes).decode('utf-8')}"
                 except Exception:
-                    pass
-                return None
+                    # Záložní přímé zrcadlo
+                    return "https://images.weserv.nl/?url=upload.wikimedia.org/wikipedia/commons/3/30/1000_Czech_koruna_Obverse.jpg"
 
-            img_base64 = get_bankovka_1000_base64()
+            base64_palacky = nacti_realny_obrazek_palackeho()
 
-            # Databáze prvků pro 1000 Kč s Františkem Palackým
+            # Přesně zaměřené souřadnice prvků na fotce 1000 Kč
             prvky_bankovky = {
                 "Vodoznak (pohledem)": {
                     "ikona": "💧",
@@ -563,31 +562,18 @@ def render():
 
             det = prvky_bankovky[p_sel]
 
-            # Vykreslení obrázku nebo vektorové zálohy
-            if img_base64:
-                html_bankovka = (
-                    f'<div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">'
-                    f'<img src="{img_base64}" alt="1000 Kč - František Palacký" style="width: 100%; height: auto; display: block;" />'
-                    f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
-                    f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; box-shadow: 0 0 15px #ef4444;">'
-                    f'{det["ikona"]}'
-                    f'</div></div></div>'
-                )
-            else:
-                # Vektorová záloha bankovky 1000 Kč
-                html_bankovka = (
-                    f'<div style="position: relative; width: 100%; max-width: 650px; height: 260px; background: linear-gradient(135deg, #f5e6f0 0%, #d8b4e2 100%); border: 2px solid #8e44ad; border-radius: 10px; margin: 15px auto; overflow: hidden; font-family: sans-serif;">'
-                    f'<div style="position: absolute; top: 10px; left: 15px; font-weight: 900; color: #4a154b; font-size: 24px;">1000 Kč</div>'
-                    f'<div style="position: absolute; top: 12px; left: 35%; font-weight: bold; color: #4a154b; font-size: 13px;">ČESKÁ NÁRODNÍ BANKA</div>'
-                    f'<div style="position: absolute; top: 20%; right: 8%; width: 120px; height: 160px; border: 1px solid #8e44ad; border-radius: 8px; background: rgba(255,255,255,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #4a154b;">'
-                    f'<div style="font-size: 50px;">👨‍💼</div>'
-                    f'<div style="font-size: 11px; font-weight: bold; text-align: center;">FRANTIŠEK PALACKÝ</div>'
-                    f'</div>'
-                    f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
-                    f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; box-shadow: 0 0 15px #ef4444;">'
-                    f'{det["ikona"]}'
-                    f'</div></div></div>'
-                )
+            # Vykreslení reálné fotky s přesným interaktivním hotspotem
+            html_bankovka = (
+                f'<div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; '
+                f'border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.25); border: 1px solid #cbd5e1;">'
+                f'<img src="{base64_palacky}" alt="1000 Kč - František Palacký" style="width: 100%; height: auto; display: block;" />'
+                f'<div style="position: absolute; top: {det["top"]}; left: {det["left"]}; transform: translate(-50%, -50%); z-index: 10;">'
+                f'<div style="background-color: #ef4444; color: white; width: 38px; height: 38px; border-radius: 50%; '
+                f'display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2.5px solid white; '
+                f'box-shadow: 0 0 15px #ef4444;">'
+                f'{det["ikona"]}'
+                f'</div></div></div>'
+            )
 
             st.markdown(html_bankovka, unsafe_allow_html=True)
 
