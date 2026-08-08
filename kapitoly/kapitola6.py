@@ -76,7 +76,7 @@ def render():
 
     st.divider()
 
-    # =========================================================================
+# =========================================================================
     # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL (NAVIGACE KAPITOLOU 6)
     # =========================================================================
     section_options_6 = [
@@ -90,13 +90,19 @@ def render():
     st.divider()
 
     # =========================================================================
-    # SEKCE 1: MANAGEMENT
+    # SEKCE 1: MANAGEMENT – JAK Z CHAOSU UDĚLAT FUNGUJÍCÍ FIRMU
     # =========================================================================
-   
+    if selected_section_6 == section_options_6[0]:
+        st.markdown("### 1. Management – Jak z chaosu udělat fungující firmu")
+        # ... zde pokračuje podkapitola 1 ...
+
     # =========================================================================
-    # SEKCE 2: MARKETING
+    # SEKCE 2: MARKETING – HRA O POZORNOST A MARKETINGOVÝ MIX
     # =========================================================================
-   
+    elif selected_section_6 == section_options_6[1]:
+        st.markdown("### 2. Marketing – Hra o pozornost a marketingový mix")
+        # ... zde pokračuje podkapitola 2 ...
+
     # =========================================================================
     # SEKCE 3: BRAND A ETIKA
     # =========================================================================
