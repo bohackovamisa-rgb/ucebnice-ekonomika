@@ -1181,3 +1181,102 @@ def render():
             if cista_mzda_konecna > hruba_slevy:
                 st.balloons()
                 st.markdown("**WOW! Tvá čistá mzda je vyšší než hrubá!** To je možné právě díky státnímu daňovému bonusu za děti.")
+    elif selected_section_4 == "3.8 Kam jdou odvody (sociální a zdravotní pojištění)":
+        st.markdown("### 3.8 Kam jdou odvody? Solidarita v praxi")
+        st.write("Odvody, které vám strhnou z výplaty, nejsou jen 'peníze pryč, které už nikdy neuvidíte'. Financují systémy, které vás a vaši rodinu mají chránit v krizových životních situacích.")
+
+        col_kam1, col_kam2 = st.columns(2)
+        with col_kam1:
+            st.markdown("""
+            <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; border: 1px solid #bbf7d0; height: 100%;">
+                <h4 style="color: #166534; margin-top: 0;">🏥 Zdravotní pojištění</h4>
+                <p style="color: #15803d; font-size: 0.95rem;">Směřuje do systému veřejného zdravotního pojištění. Není to spoření, ale solidární fond. Hradí se z něj:</p>
+                <ul style="color: #166534; font-size: 0.9rem;">
+                    <li>Běžné i specializované návštěvy lékaře</li>
+                    <li>Akutní a nemocniční péče (operace v řádech statisíců)</li>
+                    <li>Část léků a zdravotnických prostředků</li>
+                    <li>Preventivní prohlídky</li>
+                </ul>
+                <p style="font-size: 0.85rem; color: #166534; font-style: italic;">Princip: Bohatý a zdravý platí hodně a nečerpá nic. Chudý a nemocný platí málo, ale čerpá péči za miliony.</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_kam2:
+            st.markdown("""
+            <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; border: 1px solid #bfdbfe; height: 100%;">
+                <h4 style="color: #1e3a8a; margin-top: 0;">🏛️ Sociální pojištění</h4>
+                <p style="color: #1d4ed8; font-size: 0.95rem;">Jde do státního rozpočtu (ČSSZ) a rozděluje se na tři hlavní pilíře, které chrání při výpadku příjmů:</p>
+                <ul style="color: #1e3a8a; font-size: 0.9rem;">
+                    <li><b>Důchodové poj.:</b> Platí se z něj starobní, invalidní a pozůstalostní (sirotčí) důchody.</li>
+                    <li><b>Nemocenské poj.:</b> Vyplácí tzv. nemocenskou (při dlouhé nemoci), mateřskou a ošetřovné.</li>
+                    <li><b>Politika zaměstnanosti:</b> Hradí chod úřadů práce a podpory v nezaměstnanosti.</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
+    elif selected_section_4 == "3.8 Celková odměna za práci a vyjednávání o mzdě":
+        st.markdown("### 3.9 Celková odměna za práci (Total Reward)")
+        st.write("Peníze nejsou jediná odměna. Při výběru práce je potřeba porovnat **celkový balíček** (tzv. Total Reward). Práce s nejvyšší hrubou mzdou totiž může být ve finále ta nejméně výhodná.")
+
+        st.markdown("#### ⚖️ Co vše tvoří reálnou hodnotu práce?")
+        st.markdown("""
+        * 💵 **Finance:** Základní mzda, roční bonusy, příplatky za víkendy, třináctý plat.
+        * 🕒 **Čas a flexibilita:** Možnost pracovat z domova (Home Office), pružná pracovní doba, 5. týden dovolené navíc, Sick days.
+        * 🚗 **Náklady na dojíždění:** Čas strávený v zácpách a peníze za benzín/jízdenky (práce daleko od domova reálně snižuje vaši čistou mzdu).
+        * 🍔 **Další benefity:** Stravenky, příspěvek na penzijní spoření (nedaní se!), Multisport karta, služební auto i k soukromým účelům.
+        * 📈 **Růst a prostředí:** Firemní vzdělávání, zdravá firemní kultura a šéf, který vás neničí stresem.
+        """)
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>⚖️ <b>Rozhodovací simulátor: Která nabídka je skutečně lepší?</b></div>", unsafe_allow_html=True)
+        st.write("Dostal jsi dvě pracovní nabídky. Papírově vypadá jedna lépe. Ale co když započítáš náklady na dopravu a tvůj volný čas? (Počítáme, že tvůj volný čas má pro tebe hodnotu 150 Kč/hodina).")
+
+        col_nab1, col_nab2 = st.columns(2)
+        with col_nab1:
+            st.markdown("##### 🏢 Nabídka A: Korporát v centru")
+            mzda_a = 40000
+            dojizdeni_minuty_a = st.slider("Čas strávený dojížděním denně (tam i zpět):", 0, 180, 90, key="doj_a")
+            naklady_doprava_a = st.slider("Měsíční náklady na dojíždění (palivo/jízdenky):", 0, 5000, 3000, key="nak_a")
+            
+            # Výpočet hodnoty ztraceného času (21 prac. dní v měsíci)
+            ztraceny_cas_a = (dojizdeni_minuty_a / 60) * 21 * 150
+            realna_hodnota_a = mzda_a - naklady_doprava_a - ztraceny_cas_a
+
+            st.write(f"Hrubá mzda: **{mzda_a} Kč**")
+            st.info(f"Peníze vyhozené za dopravu: -{naklady_doprava_a} Kč\n\nHodnota ztraceného času v MHD/autě: -{int(ztraceny_cas_a)} Kč")
+            st.metric("Skutečná hodnota nabídky A:", f"{int(realna_hodnota_a)} Kč")
+
+        with col_nab2:
+            st.markdown("##### 🏠 Nabídka B: Startup na Home Office")
+            mzda_b = 35000
+            st.write("Firma ti dovolí pracovat 100% z domova. Nikam nedojíždíš.")
+            
+            realna_hodnota_b = mzda_b # Žádné srážky za dopravu a ztracený čas
+            
+            st.write(f"Hrubá mzda: **{mzda_b} Kč**")
+            st.success(f"Peníze vyhozené za dopravu: 0 Kč\n\nHodnota ztraceného času v MHD/autě: 0 Kč")
+            st.metric("Skutečná hodnota nabídky B:", f"{int(realna_hodnota_b)} Kč")
+
+        if realna_hodnota_b > realna_hodnota_a:
+            st.markdown("🚨 **Výsledek:** Přestože je Nabídka B na papíře o 5 000 Kč chudší, **ve skutečnosti je pro tebe výhodnější!** Ušetříš peníze za benzín a hlavně získáš zpět desítky hodin svého života měsíčně.")
+
+        st.divider()
+        st.markdown("### 3.10 Vyjednávání o mzdě")
+        st.write("Vyjednávání není hádka na tržnici. Je to **profesionální obchodní rozhovor o hodnotě tvé práce**. Většina firem počítá s tím, že o prvním návrhu mzdy se bude diskutovat.")
+
+        st.markdown("#### 🛡️ Jak se připravit na vyjednávání:")
+        st.markdown("""
+        1. **Data:** Zjisti si předem, jaká je běžná mzda v oboru a regionu (např. přes Platy.cz nebo NSP.cz).
+        2. **Důkazy, ne pocity:** Neříkej *'potřebuju víc kvůli drahému nájmu'*. Řekni *'přináším praxi se systémem X, což vám ušetří čas v zácviku'* nebo *'za minulý rok jsem firmě zvedl prodeje o 15 %'*.
+        3. **Rozpětí:** Připrav si částku, kterou reálně chceš, ale řekni si o 10 % víc (aby měla firma prostor tě 'smlouvat' dolů a oba jste byli spokojení).
+        4. **Plán B:** Když firma nemá peníze na zvýšení platu, vyjednej si aspoň **benefity** (týden dovolené navíc, služební notebook, kurzy angličtiny). To firmu bolí finančně méně, ale pro tebe to má obrovskou hodnotu.
+        """)
+
+        st.markdown("<div class='box-purple'>🤖 <b>Trenažér: Hádej se o plat s AI šéfem</b></div>", unsafe_allow_html=True)
+        st.write("Bojíš se říct si o peníze? Natrénuj si to nanečisto proti umělé inteligenci. Zkopíruj tento prompt a vlož ho do ChatGPT nebo Claude:")
+
+        prompt_plat = """Hrajeme hru na vyjednávání o mzdě. Ty jsi tvrdý, ale racionální HR manažer firmy. Já jsem zaměstnanec, který pracuje na pozici Junior Marketing Specialista už rok a jde si za tebou říct o zvýšení hrubé mzdy o 15 %. 
+Začni konverzaci tím, že se zeptáš, co potřebuji. Já vznesu požadavek. Ty nejprve odmítni a hledej důvody, proč mi přidat nemůžeš. Nenuť mě vyhrát hned. Čekej na mé argumenty. Pokud mé argumenty budou logické, podložené čísly nebo mi navrhneš kompromis v podobě nefinančních benefitů, můžeme se dohodnout. Po 6 výměnách zpráv hru ukonči a dej mi jako AI feedback, jak jsem si ve vyjednávání vedl."""
+
+        st.code(prompt_plat, language="markdown")
+        st.caption("💡 Zkopíruj kód výše a zkus AI přesvědčit, že si ty peníze zasloužíš!")
