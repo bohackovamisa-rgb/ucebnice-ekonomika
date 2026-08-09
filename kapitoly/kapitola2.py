@@ -2301,7 +2301,7 @@ def render():
             
             st.success("🧭 **Jednoduché pravidlo:** Nouzová rezerva patří do bezpečných a dostupných nástrojů. Investice s vyšším rizikem patří až k penězům, které člověk nepotřebuje na běžné výdaje ani na krizové situace.")
 
-   # =========================================================================
+    # =========================================================================
     # 3.3 SPOŘENÍ, INVESTOVÁNÍ A SPEKULACE
     # =========================================================================
     elif "3.3 Spoření" in selected_section_2:
@@ -2319,7 +2319,8 @@ def render():
             """)
             
             st.warning("🧠 **Otázka před každým nákupem investice:** Kupuješ aktivum proto, že rozumíš jeho principu a riziku, nebo proto, že máš strach, že ti „ujede vlak“?")
-# =========================================================================
+
+    # =========================================================================
     # 3.4 CENNÉ PAPÍRY V TEORII I PRAXI
     # =========================================================================
     elif "3.4 Cenné" in selected_section_2:
@@ -2431,7 +2432,7 @@ def render():
             st.write("**Základní typy pokynů:**")
             st.markdown("""
             * **market pokyn** — nákup nebo prodej za aktuální dostupnou cenu,
-            * **limitní pokyn** — investor stanoví maximální nákupní nebo minimální prodejní cenu,
+            * **limit pokyn** — investor stanoví maximální nákupní nebo minimální prodejní cenu,
             * **stop pokyn** — aktivuje se až po dosažení určité ceny.
             """)
             st.warning("⚠️ **Pozor:** To, že lze akcii koupit během pár sekund, neznamená, že je rozhodnutí jednoduché. Investor by měl vědět, co firma dělá, jak vydělává, jaké má dluhy, konkurenci, rizika, měnu obchodování a poplatky.")
@@ -2648,7 +2649,7 @@ def render():
             """)
             st.info("🧠 **Důležité rozlišení:** Když nakupuje fyzická osoba pro sebe, jde o osobní investiční rozhodnutí. Když nakupuje firma, jde o rozhodnutí v rámci podnikání, které může ovlivnit účetnictví, daně, likviditu a odpovědnost vedení.")
 
-# =========================================================================
+        # =========================================================================
         # 3.4.18 Praktická aktivita
         # =========================================================================
         with st.container(border=True):
@@ -2692,6 +2693,10 @@ def render():
                         st.error("Musíš nejdřív něco napsat, než úkol odevzdáš!")
                     else:
                         st.success(f"✅ Výborně! Tvůj rodný list pro **{cp_vyber}** byl úspěšně uložen.")
+                        
+                        pitva_data = f"Vybráno: {cp_vyber} | Obsah: {student_odpoved}"
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 3.4.18 - Pitva cenného papíru", pitva_data)
                 
                 # Zlepšovák: Skrytá ukázka, kterou si student může rozbalit po vypracování
                 with st.expander("💡 Nevíš si rady? Zobrazit vzorový rodný list pro kontrolu"):
@@ -2703,6 +2708,7 @@ def render():
                         st.info("**Ukázka - Akciový podílový fond v bance**\n* **Správce:** Investiční společnost tvé banky.\n* **Podstata:** Podíl ve fondu.\n* **Výnos:** Podle zhodnocení košíku držených akcií.\n* **Rizika:** Tržní riziko (pokles trhů).\n* **Kde se obchoduje:** Přímo u tvé banky/fondu.\n* **Měna:** CZK.\n* **Poplatky:** Vstupní poplatek (cca 2-3 %) + průběžný (cca 1,5 % ročně).\n* **Likvidita:** Dobrá (peníze dorazí za pár dní).\n* **Horizont:** Dlouhý.\n* **Jak prodělám:** Trh se propadne v krizi a ty ze strachu vše odprodáš ve ztrátě dřív, než se trh srovná.")
                     elif cp_vyber == "ETF":
                         st.info("**Ukázka - Globální ETF (S&P 500)**\n* **Správce:** Vanguard / iShares (BlackRock).\n* **Podstata:** Podíl ve fondu (indexu největších firem).\n* **Výnos:** Růst hodnoty amerického trhu a dividendy.\n* **Rizika:** Tržní a měnové.\n* **Kde se obchoduje:** Přímo na mezinárodní burze.\n* **Měna:** USD nebo EUR.\n* **Poplatky:** Velmi nízké správcovské (cca 0,07 % ročně) + poplatek brokerovi.\n* **Likvidita:** Velmi rychlá (okamžitě přes aplikaci).\n* **Horizont:** Velmi dlouhý (10+ let).\n* **Jak prodělám:** Trh se propadne v krizi a ty ze strachu vše odprodáš ve ztrátě dřív, než se trh srovná.")
+        
         # =========================================================================
         # 3.4.19 Srovnání základních produktů
         # =========================================================================
@@ -2718,7 +2724,8 @@ def render():
             | **Fond / ETF** | Podíl v portfoliu více aktiv. | Podle vývoje aktiv. | Tržní pokles, poplatky. | Začátečník i dlouhodobý investor. |
             | **Kryptoměna** | Digitální aktivum v síti. | Růst ceny, případně jiné výnosy podle služby. | Vysoká volatilita, ztráta přístupu, podvod, regulace. | Pouze pro člověka, který chápe technologii a unese ztrátu. |
             """)
-# =========================================================================
+
+    # =========================================================================
     # 3.5 ANALÝZA DAT: INVESTIČNÍ LABORATOŘ
     # =========================================================================
     elif "3.5 Analýza dat" in selected_section_2:
@@ -2764,6 +2771,14 @@ def render():
                     st.warning("To je naprosto upřímné a racionální. Právě proto je důležité znát svou toleranci k riziku a nedávat všechny úspory do příliš kolísavých aktiv.")
                 elif odpoved_lab == "Zatím nevím":
                     st.write("Nevadí. Zkušenost se buduje postupně, ideálně s malými částkami.")
+
+                if st.button("Uložit výsledek psychologického testu 💾", key="btn_k3_lab"):
+                    if odpoved_lab != "Vyber...":
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 3.5 - Investiční laboratoř psychologie", f"Aktivum: {lab_vyber} | Reakce: {odpoved_lab}")
+                        st.success("Tvá odpověď k analytické laboratoři se uložila.")
+                    else:
+                        st.warning("Vyber svou odpověď!")
 
         # 🚀 Simulátor (PROPOJENÍ NA NOVOU STRÁNKU)
         with st.container(border=True):
