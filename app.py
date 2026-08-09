@@ -566,26 +566,62 @@ elif st.session_state["current_view"] == "Ucitel_Materialy":
     st.title("📂 Materiály k výuce a testy")
     st.markdown("""
     <div class="box-gray">
-        Tato sekce je viditelná <b>pouze pro přihlášené učitele</b>. Žáci k ní nemají přístup.
+        Tato sekce je viditelná <b>pouze pro přihlášené učitele</b>. 
+        Najdete zde metodické podklady, prezentace, pracovní listy a testy ke všem kapitolám.
     </div>
     """, unsafe_allow_html=True)
 
-    tab_metodika, tab_testy = st.tabs(["📄 Metodiky ke kapitolám", "📝 Testy pro žáky"])
+    tab_metodika, tab_testy = st.tabs(["📄 Metodické balíčky ke kapitolám", "📝 Písemné práce a testy"])
 
+    # --- ZÁLOŽKA 1: METODIKY ---
     with tab_metodika:
-        st.markdown("### 📘 Metodické pokyny ke Kapitole 1")
-        st.write("Stáhněte si kompletní balíček podkladů:")
+        vybrana_kap = st.selectbox(
+            "Vyberte kapitolu učebnice:",
+            [
+                "Kapitola 1: Podnikavost a startupy",
+                "Kapitola 2: Finance a osobní management",
+                "Kapitola 3: Výroba, náklady a efektivita",
+                "Kapitola 4: Zaměstnanci a trh práce",
+                "Kapitola 5: Stát, daně a ekonomika",
+                "Kapitola 6: Management a marketing"
+            ]
+        )
         
-        try:
-            with open("Influencer - podnikání.zip", "rb") as file:
-                st.download_button(
-                    label="📦 Stáhnout kompletní balíček (ZIP)",
-                    data=file,
-                    file_name="Influencer - podnikání.zip",
-                    mime="application/zip"
-                )
-        except FileNotFoundError:
-            st.warning("Soubor 'Influencer - podnikání.zip' nebyl na GitHubu nalezen. Nahrajte jej tam pod tímto názvem.")
+        st.divider()
+
+        # Zobrazení materiálů pro Kapitolu 1
+        if vybrana_kap == "Kapitola 1: Podnikavost a startupy":
+            st.markdown("### 📘 Materiály ke Kapitole 1")
+            
+            with st.container(border=True):
+                st.markdown("#### 📦 Výukový modul: Influencer jako firma")
+                st.markdown("""
+                **Popis materiálu:**  
+                Komplexní výukový balíček zaměřený na téma podnikání v digitální době a světě influencerů. Obsahuje metodickou příručku pro vyučujícího, prezentaci pro výklad v hodině, pracovní listy pro žáky a praktické případové studie. Žáci na reálných příkladech pochopí principy OSVČ, zdanění příjmů a obchodní modely na sociálních sítích.
+                
+                **Obsah balíčku:**  
+                * 📄 Metodická příručka a průvodní list (PDF / DOCX)
+                * 📊 Prezentace k výkladu (PPTX)
+                * 📝 Pracovní listy a případové studie pro žáky
+                * 📈 Praktická kalkulační tabulka (XLSX)
+                """)
+                
+                try:
+                    with open("Influencer - podnikání.zip", "rb") as file:
+                        st.download_button(
+                            label="📥 Stáhnout balíček: Influencer jako firma (ZIP)",
+                            data=file,
+                            file_name="Influencer_podnikani.zip",
+                            mime="application/zip",
+                            type="primary"
+                        )
+                except FileNotFoundError:
+                    st.warning("Soubor 'Influencer - podnikání.zip' nebyl na GitHubu nalezen.")
+
+        else:
+            st.info(f"Pro **{vybrana_kap}** zatím nebyly nahrány žádné metodické balíčky.")
+
+    # --- ZÁLOŽKA 2: TESTY ---
     with tab_testy:
-        st.markdown("### 📝 Návrhy testů ke stažení")
-        st.write("Tady si časem doplníš tlačítka pro testy...")
+        st.markdown("### 📝 Návrhy písemných prací a testů")
+        st.info("Testy ke stažení se připravují.")
