@@ -294,8 +294,13 @@ with st.sidebar:
 if st.session_state["current_view"] == "Ucitel_Panel":
     st.title("👩‍🏫 Učitelský panel")
     
-    tab_tridy, tab_vysledky = st.tabs(["➕ Správa a tvorba tříd", "📊 Výsledky žáků"])
+    tab_tridy, tab_vysledky, tab_investice = st.tabs([
+        "➕ Správa a tvorba tříd", 
+        "📊 Odpovědi z učebnice", 
+        "📈 Výsledky z simulátoru"
+    ])
     
+    # --- TAB 1: TVORBA TŘÍD ---
     with tab_tridy:
         st.markdown("### Vytvořit novou třídu")
         with st.form("nova_trida_form"):
@@ -335,19 +340,20 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání tříd: {e}")
 
+    # --- TAB 2: ODPOVĚDI Z UČEBNICE (SUPABASE) ---
     with tab_vysledky:
-        st.markdown("### Přehled odevzdaných prací")
+        st.markdown("### Přehled odevzdaných prací z učebnice")
         try:
             t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
             list_trid = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
             
             if list_trid:
-                vybrana_t = st.selectbox("Vyberte třídu:", list_trid)
+                vybrana_t = st.selectbox("Vyberte třídu:", list_trid, key="sel_trida_uc")
                 zaci_res = supabase.table("uzivatele").select("username, jmeno").eq("trida", vybrana_t).execute()
                 
                 if zaci_res.data:
                     zaci_dict = {z["jmeno"]: z["username"] for z in zaci_res.data}
-                    vybrany_zak_jmeno = st.selectbox("Vyberte žáka:", list(zaci_dict.keys()))
+                    vybrany_zak_jmeno = st.selectbox("Vyberte žáka:", list(zaci_dict.keys()), key="sel_zak_uc")
                     vybrany_zak_user = zaci_dict[vybrany_zak_jmeno]
                     
                     odpovedi_res = supabase.table("odpovedi").select("*").eq("username", vybrany_zak_user).execute()
@@ -385,69 +391,45 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-elif st.session_state["current_view"] == "Uvod":
-    st.title("Ekonomika, která dává smysl")
+    # --- TAB 3: VÝSLEDKY ZE SIMULÁTORU (GOOGLE SHEETS) ---
+    with tab_investice:
+        st.markdown("### 📈 Portfolia a obchody žáků v Investičním simulátoru")
+        try:
+            import gspread
+            import json
 
-    st.markdown(
-        """
-    <div class="box-gray">
-        📚 <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
-    </div>
-    <div class="box-green">
-        🎯 <b>Cíl učebnice</b><br>
-        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
+            raw_creds = st.secrets["google_credentials"]
+            if isinstance(raw_creds, str):
+                tajemstvi = json.loads(raw_creds)
+            else:
+                tajemstvi = dict(raw_creds)
+                
+            if "private_key" in tajemstvi:
+                tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
 
-    st.divider()
-
-    st.markdown("### 📖 Jak s učebnicí pracovat")
-    st.markdown("""
-    1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
-    2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
-    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
-    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které ti pomohou s vysvětlením, kontrolou nebo rozvojem tvého projektu.
-    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
-    6. **Závěrečný projekt.** Na úplném konci propojíš všechno dohromady a vytvoříš návrh vlastního odpovědného projektu.
-    """)
-
-    st.divider()
-
-    st.markdown("### 🧩 Legenda učebnice")
-    st.markdown(
-        """
-    <div class="box-blue">📘 <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
-    <div class="box-purple">🤖 <b>Fialová:</b> AI mentoring a práce s asistencí</div>
-    <div class="box-green">✅ <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
-    <div class="box-red">⚠️ <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
-    <div class="box-gray">📄 <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-elif st.session_state["current_view"] == "Kapitola 1":
-    if hasattr(kapitola1, "render"): kapitola1.render()
-    elif hasattr(kapitola1, "show"): kapitola1.show()
-
-elif st.session_state["current_view"] == "Kapitola 2":
-    if hasattr(kapitola2, "render"): kapitola2.render()
-    elif hasattr(kapitola2, "show"): kapitola2.show()
-
-elif st.session_state["current_view"] == "Kapitola 3":
-    if hasattr(kapitola3, "render"): kapitola3.render()
-    elif hasattr(kapitola3, "show"): kapitola3.show()
-
-elif st.session_state["current_view"] == "Kapitola 4":
-    if hasattr(kapitola4, "render"): kapitola4.render()
-    elif hasattr(kapitola4, "show"): kapitola4.show()
-
-elif st.session_state["current_view"] == "Kapitola 5":
-    if hasattr(kapitola5, "render"): kapitola5.render()
-    elif hasattr(kapitola5, "show"): kapitola5.show()
-
-elif st.session_state["current_view"] == "Kapitola 6":
-    if hasattr(kapitola6, "render"): kapitola6.render()
-    elif hasattr(kapitola6, "show"): kapitola6.show()
+            client = gspread.service_account_from_dict(tajemstvi)
+            soubor = client.open("Skolni_Investice_DB")
+            sheet_uziv = soubor.sheet1
+            
+            data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
+            df_inv = pd.DataFrame(data_inv)
+            
+            if not df_inv.empty:
+                if "Role" in df_inv.columns:
+                    df_inv = df_inv[df_inv["Role"] != "UCITEL"]
+                
+                st.markdown("#### 💼 Stav účtů a vlastněná aktiva žáků")
+                st.dataframe(df_inv, use_container_width=True)
+                
+                try:
+                    sheet_trans = soubor.worksheet("Transakce")
+                    data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                    if data_trans:
+                        st.markdown("#### 📜 Historie všech provedených nákupů a prodejů")
+                        st.dataframe(pd.DataFrame(data_trans), use_container_width=True)
+                except Exception:
+                    pass
+            else:
+                st.info("Zatím žádný žák nezačal v simulátoru investovat.")
+        except Exception as e:
+            st.error(f"Chyba při načítání dat z investiční databáze: {e}")
