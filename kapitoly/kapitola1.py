@@ -1750,7 +1750,7 @@ def render():
                     st.warning("Před uložením napiš preventivní krok!")
 
             st.success("🧩 **Praktické minimum pro start:** Počítat s daněmi a odvody, odlišit jednorázový přivýdělek od soustavné činnosti, znát základní pravidla ochrany spotřebitele a nakládat odpovědně s daty.")
-    # --- 10. Švarcsystém ---
+# --- 10. Švarcsystém ---
     elif "10. Švarcsystém" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div><h2>10. Švarcsystém</h2>", unsafe_allow_html=True)
         
@@ -1769,8 +1769,16 @@ def render():
             """)
 
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli příklad spolupráce, která je férová, a příklad, který už by mohl připomínat švarcsystém.</div>", unsafe_allow_html=True)
-            st.text_area("Tvůj příklad obou situací:")
+            st.text_area("Tvůj příklad obou situací:", key="svarc_priklad_ans")
             
+            if st.button("Uložit příklady Švarcsystému 💾", key="btn_svarc"):
+                odp = st.session_state.get("svarc_priklad_ans", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 10.0 - Příklady Švarcsystému", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Zkontroluj modelovou spolupráci a vysvětli, jestli v ní hrozí znaky švarcsystému.“
@@ -1836,18 +1844,32 @@ def render():
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Ověř jednu existující firmu (např. svou oblíbenou značku) v online rejstříku (Justice.cz).</div>", unsafe_allow_html=True)
             c_f1, c_f2 = st.columns(2)
             with c_f1:
-                st.text_input("Název ověřované firmy:")
-                st.text_input("Její právní forma (s.r.o., a.s...):")
+                st.text_input("Název ověřované firmy:", key="overovani_nazev")
+                st.text_input("Její právní forma (s.r.o., a.s...):", key="overovani_forma")
             with c_f2:
-                st.text_input("Kdo za firmu jedná (jméno jednatele)?")
-                st.text_input("Vysvětli, proč je tato kontrola důležitá před spoluprací:")
+                st.text_input("Kdo za firmu jedná (jméno jednatele)?", key="overovani_jednatel")
+                st.text_input("Vysvětli, proč je tato kontrola důležitá před spoluprací:", key="overovani_duvod")
+
+            if st.button("Uložit ověření firmy 💾", key="btn_overovani"):
+                f_data = (
+                    f"Firma: {st.session_state.get('overovani_nazev', '')} | "
+                    f"Forma: {st.session_state.get('overovani_forma', '')} | "
+                    f"Jednatel: {st.session_state.get('overovani_jednatel', '')} | "
+                    f"Důvod kontroly: {st.session_state.get('overovani_duvod', '')}"
+                )
+                if st.session_state.get("overovani_nazev", "").strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 11.0 - Ověření firmy v rejstříku", f_data)
+                else:
+                    st.warning("Před uložením vyplň název firmy!")
 
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Připrav mi kontrolní seznam pro ověření firmy před spoluprací.“
             </div>
             """, unsafe_allow_html=True)
-# --- Ukončení podnikání ---
+
+    # --- Ukončení podnikání ---
     elif "Ukončení podnikání" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA</div><h2>Ukončení podnikání</h2>", unsafe_allow_html=True)
         
@@ -1855,9 +1877,17 @@ def render():
             st.write("Podnikání může skončit dobrovolně (např. splněním cíle, odchodem do důchodu), rozhodnutím soudu nebo v důsledku finančních problémů (insolvence).")
             
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš dva varovné signály, podle kterých by podnikatel poznal, že musí změnit plán nebo podnikání ukončit.</div>", unsafe_allow_html=True)
-            st.text_input("Varovný signál 1:")
-            st.text_input("Varovný signál 2:")
+            s1 = st.text_input("Varovný signál 1:", key="ukonceni_signal1")
+            s2 = st.text_input("Varovný signál 2:", key="ukonceni_signal2")
             
+            if st.button("Uložit varovné signály 💾", key="btn_ukonceni_signaly"):
+                signaly_data = f"Signál 1: {s1} | Signál 2: {s2}"
+                if s1.strip() or s2.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Ukončení podnikání - Varovné signály", signaly_data)
+                else:
+                    st.warning("Před uložením vyplň alespoň jeden varovný signál!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Navrhni plán B pro můj startup, pokud první verze nebude fungovat.“
@@ -1875,8 +1905,16 @@ def render():
                 st.error("**2. Zánik = konec**\n\nDefinitivní okamžik, kdy firma právně přestává existovat. Obchodní korporace zaniká výmazem z obchodního rejstříku.")
 
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu.</div>", unsafe_allow_html=True)
-            st.text_area("Tvůj příklad:")
+            st.text_area("Tvůj příklad:", key="ukonceni_rozdil_ans")
             
+            if st.button("Uložit vysvětlení zrušení a zániku 💾", key="btn_ukonceni_rozdil"):
+                odp = st.session_state.get("ukonceni_rozdil_ans", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Ukončení podnikání - Rozdíl zrušení a zánik", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             st.warning("⚠️ **Důležitá poznámka k insolvenci:** Pokud má firma více dluhů než majetku a není schopna své závazky dlouhodobě splácet, dostává se do úpadku. V takovém případě musí podat insolvenční návrh.")
 
     # --- Logická mapa podnikání ---
@@ -1898,9 +1936,17 @@ def render():
                 "CSR a etika",
                 "Rizika",
                 "Zdroje a ukončení podnikání"
-            ])
-            st.text_input(f"Proč je podle tebe nejdůležitější právě '{nej_vetev}'?")
+            ], key="mapa_vetev_select")
             
+            duvod_ans = st.text_input(f"Proč je podle tebe nejdůležitější právě '{nej_vetev}'?", key="mapa_vetev_duvod")
+            
+            if st.button("Uložit volbu v mapě 💾", key="btn_mapa_volba"):
+                if duvod_ans.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Logická mapa - Nejdůležitější větev", f"Větev: {nej_vetev} | Důvod: {duvod_ans}")
+                else:
+                    st.warning("Před uložením napiš důvod své volby!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vytvoř mi logickou mapu mého startupu podle oblastí: právo, zákazník, finance, rizika a odpovědnost.“
@@ -1923,7 +1969,7 @@ def render():
                 """)
                 
             with st.container(border=True):
-                st.markdown("#### <i class='fi fi-bs-rocket-lunch'></i> 3. Podnikatelský záměr a Lean Canvas")
+                st.markdown("#### 🚀 3. Podnikatelský záměr a Lean Canvas")
                 st.markdown("""
                 * Zákazník & Problém
                 * Řešení & Unikátní hodnota
@@ -1963,7 +2009,6 @@ def render():
                 * Zrušení vs. zánik
                 * Insolvence
                 """)
-
 # --- 13. Reflexe a sebehodnocení ---
     elif "13. Reflexe a sebehodnocení" in selected_section or "Reflexe" in selected_section:
         st.markdown("<div class='sub-section-header'>KAPITOLA 13</div><h2>13. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
