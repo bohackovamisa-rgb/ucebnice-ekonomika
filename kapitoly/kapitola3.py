@@ -13,7 +13,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-# 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
+    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_3 = [
         "1.1 Výrobní proces a faktory",
         "1.2 Typy výroby",
@@ -44,7 +44,7 @@ def render():
     selected_section_3 = st.selectbox("Přechod na podkapitolu:", section_options_3, index=0, label_visibility="collapsed")
     st.divider()
 
-# =========================================================================
+    # =========================================================================
     # SEKCE 1: VÝROBNÍ PROCES A ORGANIZACE VÝROBY
     # =========================================================================
     if selected_section_3 == "1.1 Výrobní proces a faktory":
@@ -92,15 +92,19 @@ def render():
         st.markdown("<div class='box-yellow'>🧩 <b>Kvíz: O jaký typ výroby jde?</b></div>", unsafe_allow_html=True)
         
         with st.form("kviz_vyroba"):
-            q1 = st.selectbox("Nábytek vyrobený přesně podle rozměrů zákazníka:", ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"])
-            q2 = st.selectbox("300 stejných školních mikin:", ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"])
-            q3 = st.selectbox("Tisíce rohlíků každý den:", ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"])
+            q1 = st.selectbox("Nábytek vyrobený přesně podle rozměrů zákazníka:", ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"], key="k3_1_2_q1")
+            q2 = st.selectbox("300 stejných školních mikin:", ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"], key="k3_1_2_q2")
+            q3 = st.selectbox("Tisíce rohlíků každý den:", ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"], key="k3_1_2_q3")
             
-            if st.form_submit_button("Zkontrolovat odpovědi"):
+            if st.form_submit_button("Zkontrolovat a uložit odpovědi 💾"):
                 if q1 == "Kusová" and q2 == "Sériová" and q3 == "Hromadná":
                     st.success("✅ Perfektní! Chápeš to naprosto přesně.")
                 else:
                     st.error("Něco tam ještě nesedí. Zkus to znovu! Nápověda: rohlíky se pečou ve velkém, nábytek na míru je unikát.")
+                
+                kviz_data = f"1:{q1} | 2:{q2} | 3:{q3}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 1.2 - Kvíz Typy výroby", kviz_data)
 
     elif selected_section_3 == "1.3 Výrobní kapacita":
         st.markdown("### 1.3 Výrobní kapacita")
@@ -116,7 +120,7 @@ def render():
         st.write("Představ si, že máš 5 3D tiskáren. Každá zvládne vytisknout maximálně 10 klíčenek za den. Tvá absolutní denní kapacita je tedy **50 klíčenek**.")
         st.write("Otevřeš svůj e-shop. Kolik objednávek na dnešek zákazníkům slíbíš dodat?")
         
-        zakazky = st.slider("Počet slíbených zakázek na dnešek (kusů):", min_value=0, max_value=60, value=40)
+        zakazky = st.slider("Počet slíbených zakázek na dnešek (kusů):", min_value=0, max_value=60, value=40, key="k3_1_3_zakazky")
         
         vyuziti = (zakazky / 50) * 100
         
@@ -136,6 +140,11 @@ def render():
         else:
             st.write("Zatím nemáš žádné objednávky. Stroje leží ladem.")
 
+        if st.button("Uložit nastavení kapacity 💾", key="btn_k3_1_3_kapacita"):
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 1.3 - Výrobní kapacita", f"Slíbené zakázky: {zakazky} ks (Vytížení {vyuziti:.0f}%)")
+            st.success("Nastavení kapacity bylo uloženo!")
+
     elif selected_section_3 == "1.4 Logistika, zásobování a JIT":
         st.markdown("### 1.4 Logistika, zásobování a Just-in-Time")
         st.write("Logistika řeší tok materiálu, výrobků, informací a peněz. Zásobování zajišťuje, aby firma měla správný materiál ve správném množství, kvalitě, čase a za přijatelnou cenu.")
@@ -154,14 +163,17 @@ def render():
         
         st.write("Jsi manažerem automobilky. Dodávky kritických čipů z Asie jsou nespolehlivé. Běžné šroubky máš ze železářství vedle závodu. Jaký systém zásobování zvolíš pro celou firmu?")
         
-        rozhodnuti = st.radio("Vyber strategii:", ["Vyber...", "Vše přes Just-in-Time", "Vše držet jako Pojistnou zásobu", "Kombinace obojího"])
-        zdovodneni = st.text_input("Tvé zdůvodnění:")
+        rozhodnuti = st.radio("Vyber strategii:", ["Vyber...", "Vše přes Just-in-Time", "Vše držet jako Pojistnou zásobu", "Kombinace obojího"], key="k3_1_4_rozhodnuti")
+        zdovodneni = st.text_input("Tvé zdůvodnění:", key="k3_1_4_zdovodneni")
         
-        if st.button("Vyhodnotit rozhodnutí"):
+        if st.button("Vyhodnotit a uložit rozhodnutí 💾", key="btn_k3_1_4_logistika"):
             if rozhodnuti == "Kombinace obojího" and len(zdovodneni) > 2:
                 st.success("Výborně! Kombinace je nejlepší. Šroubky lze brát JIT, ale u kritických čipů potřebuješ pojistnou zásobu.")
             elif rozhodnuti != "Vyber...":
                 st.error("Toto by v praxi pravděpodobně selhalo. Extrémy nesvědčí. Zvaž riziko zastavení linky vs. vázání peněz.")
+            
+            if "uloz_odpoved_fn" in st.session_state and rozhodnuti != "Vyber...":
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 1.4 - Logistika a JIT", f"Strategie: {rozhodnuti} | Důvod: {zdovodneni}")
 
     # =========================================================================
     # SEKCE 2: ŘÍZENÍ JAKOSTI
@@ -188,16 +200,20 @@ def render():
         st.markdown("<div class='box-yellow'>🔍 <b>Kvíz: Jde o kontrolu, nebo prevenci?</b></div>", unsafe_allow_html=True)
         
         with st.form("kviz_kvalita"):
-            k1 = st.radio("Vyřazení vadných výrobků po dokončení:", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True)
-            k2 = st.radio("Školení pracovníků před výrobou:", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True)
-            k3 = st.radio("Poka-Yoke (nástroj/pomůcka znemožňující chybu):", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True)
-            k4 = st.radio("Měření hotového výrobku před odesláním:", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True)
+            k1 = st.radio("Vyřazení vadných výrobků po dokončení:", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True, key="k3_2_1_k1")
+            k2 = st.radio("Školení pracovníků před výrobou:", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True, key="k3_2_1_k2")
+            k3 = st.radio("Poka-Yoke (nástroj/pomůcka znemožňující chybu):", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True, key="k3_2_1_k3")
+            k4 = st.radio("Měření hotového výrobku před odesláním:", ["Kontrola kvality", "Prevence (Řízení jakosti)"], horizontal=True, key="k3_2_1_k4")
             
-            if st.form_submit_button("Zkontrolovat"):
+            if st.form_submit_button("Zkontrolovat a uložit 💾"):
                 if k1 == "Kontrola kvality" and k2 == "Prevence (Řízení jakosti)" and k3 == "Prevence (Řízení jakosti)" and k4 == "Kontrola kvality":
                     st.success("✅ Výborně! Kontrola řeší problém až když vznikne (hotový výrobek). Prevence mu předchází.")
                 else:
                     st.error("Něco je špatně. Pamatuj: Pokud se něco děje až s HOTOVÝM výrobkem, je to vždy kontrola.")
+                
+                kviz_k_data = f"1:{k1} | 2:{k2} | 3:{k3} | 4:{k4}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 2.1 - Kvíz Kontrola vs Prevence", kviz_k_data)
 
     elif selected_section_3 == "2.2 Následky nekvality a TQM":
         st.markdown("### 2.2 Normy, TQM a následky nekvality")
@@ -236,9 +252,9 @@ def render():
         
         c1, c2 = st.columns(2)
         with c1:
-            vyrobeno_ks = st.number_input("Celkový počet vyrobených kusů:", min_value=1, value=1000, step=100)
-            chybovost_pct = st.slider("Chybovost výroby (%)", min_value=0.0, max_value=20.0, value=3.0, step=0.5)
-            naklad_ks = st.number_input("Náklad na výrobu 1 kusu (Kč):", min_value=1, value=500, step=50)
+            vyrobeno_ks = st.number_input("Celkový počet vyrobených kusů:", min_value=1, value=1000, step=100, key="k3_2_2_vyrobeno")
+            chybovost_pct = st.slider("Chybovost výroby (%)", min_value=0.0, max_value=20.0, value=3.0, step=0.5, key="k3_2_2_chybovost")
+            naklad_ks = st.number_input("Náklad na výrobu 1 kusu (Kč):", min_value=1, value=500, step=50, key="k3_2_2_naklad")
             
         vadne_ks = int(vyrobeno_ks * (chybovost_pct / 100))
         ztrata_kc = vadne_ks * naklad_ks
@@ -249,7 +265,14 @@ def render():
             
             if ztrata_kc > 0:
                 st.info(f"O tuto částku ({ztrata_kc:,} Kč) firma přišla kvůli špatné kvalitě. Prevence by byla pravděpodobně levnější.")
-# =========================================================================
+
+        if st.button("Uložit výpočet ztráty zmetků 💾", key="btn_k3_2_2_zmetky"):
+            zmetky_data = f"Vyrobeno: {vyrobeno_ks} ks | Chybovost: {chybovost_pct}% | Vadné: {vadne_ks} ks | Ztráta: {ztrata_kc} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 2.2 - Náklady na zmetky", zmetky_data)
+            st.success("Výpočet ztráty byl uložen!")
+
+    # =========================================================================
     # SEKCE 3: NÁKLADY, VÝNOSY A ZISK
     # =========================================================================
     elif selected_section_3 == "3.1 Náklad vs. výdaj a pojetí zisku":
@@ -282,10 +305,10 @@ def render():
         st.divider()
         st.markdown("#### Tři pohledy na zisk")
         st.markdown("**1. Účetní pohled na zisk**")
-        st.write("Z účetního pohledu se zisk počítá jako rozdíl mezi účetními výnosy a účetními náklady za určité období. Vychází z pravidel účetnictví a zachycuje tržby, mzdy, nájem, energie, odpisy. Odpovídá na otázku: *Kolik firma podle účetnictví vydělala?*")
+        st.write("Z účetního pohledu se zisk počítá jako rozdíl mezi účetními výnosy a účetními náklady za určité období. Vychází z pravidlé účetnictví a zachycuje tržby, mzdy, nájem, energie, odpisy. Odpovídá na otázku: *Kolik firma podle účetnictví vydělala?*")
         
         st.markdown("**2. Pohled finanční analýzy a řízení**")
-        st.write("Finanční řízení nesleduje jen " + "papírový" + " zisk, ale řeší, zda má firma hotovost, není předlužená a zisk se promítá do peněžních toků. Firma může vykázat zisk, ale zkrachovat na tom, že jí zákazníci neplatí včas (nemá hotovost).")
+        st.write("Finanční řízení nesleduje jen papírový zisk, ale řeší, zda má firma hotovost, není předlužená a zisk se promítá do peněžních toků. Firma může vykázat zisk, ale zkrachovat na tom, že jí zákazníci neplatí včas (nemá hotovost).")
         
         st.markdown("**3. Ekonomický zisk**")
         st.write("Ekonomický zisk jde dál než účetní zisk. Zohledňuje nejen skutečně zaplacené (explicitní) náklady, ale také tzv. implicitní (alternativní) náklady — tedy hodnotu nejlepší nevyužité příležitosti.")
@@ -297,11 +320,11 @@ def render():
         
         c_in, c_out = st.columns([1, 1])
         with c_in:
-            vynosy = st.number_input("Celkové roční výnosy (tržby):", value=1500000, step=100000)
-            exp_naklady = st.number_input("Explicitní náklady (materiál, nájem atd.):", value=900000, step=50000)
+            vynosy = st.number_input("Celkové roční výnosy (tržby):", value=1500000, step=100000, key="k3_3_1_vynosy")
+            exp_naklady = st.number_input("Explicitní náklady (materiál, nájem atd.):", value=900000, step=50000, key="k3_3_1_exp_naklady")
             st.markdown("*Alternativní (implicitní) náklady:*")
-            usla_mzda = st.number_input("Ušlá čistá mzda (kdybys pracoval pro jiného):", value=480000, step=20000)
-            usly_urok = st.number_input("Ušlý úrok (kdybys peníze investoval jinam):", value=50000, step=10000)
+            usla_mzda = st.number_input("Ušlá čistá mzda (kdybys pracoval pro jiného):", value=480000, step=20000, key="k3_3_1_usla_mzda")
+            usly_urok = st.number_input("Ušlý úrok (kdybys peníze investoval jinam):", value=50000, step=10000, key="k3_3_1_usly_urok")
             
         with c_out:
             ucetni_zisk = vynosy - exp_naklady
@@ -314,6 +337,12 @@ def render():
                 st.success("✅ Podnikání se ti vyplatí! Vyděláváš víc, než kdybys chodil do práce a peníze měl v bance.")
             else:
                 st.error("⚠️ Ekonomická ztráta! Z účetního pohledu jsi možná v plusu, ale ve skutečnosti by se ti víc vyplatilo jít do běžného zaměstnání.")
+
+        if st.button("Uložit výpočet ekonomického zisku 💾", key="btn_k3_3_1_zisk"):
+            zisk_data = f"Tržby: {vynosy} | Exp. náklady: {exp_naklady} | Účetní zisk: {ucetni_zisk} | Eko zisk: {eko_zisk}"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 3.1 - Účetní vs Ekonomický zisk", zisk_data)
+            st.success("Výpočet byl uložen!")
 
     elif selected_section_3 == "3.2 Členění nákladů a kalkulační vzorec":
         st.markdown("### 3.2 Členění nákladů a kalkulační vzorec")
@@ -348,12 +377,12 @@ def render():
         
         k_in, k_out = st.columns([1, 1])
         with k_in:
-            mat = st.number_input("Přímý materiál (Kč):", value=150, step=10)
-            mzdy = st.number_input("Přímé mzdy (Kč):", value=100, step=10)
-            v_rezie = st.number_input("Výrobní režie (Kč):", value=50, step=10)
-            s_rezie = st.number_input("Správní režie (Kč):", value=30, step=10)
-            o_naklady = st.number_input("Odbytové náklady (marketing, prodej) (Kč):", value=20, step=10)
-            zisk_prirazka = st.slider("Zisková přirážka (%)", min_value=0, max_value=100, value=20)
+            mat = st.number_input("Přímý materiál (Kč):", value=150, step=10, key="k3_3_2_mat")
+            mzdy = st.number_input("Přímé mzdy (Kč):", value=100, step=10, key="k3_3_2_mzdy")
+            v_rezie = st.number_input("Výrobní režie (Kč):", value=50, step=10, key="k3_3_2_vrezie")
+            s_rezie = st.number_input("Správní režie (Kč):", value=30, step=10, key="k3_3_2_srezie")
+            o_naklady = st.number_input("Odbytové náklady (marketing, prodej) (Kč):", value=20, step=10, key="k3_3_2_onaklady")
+            zisk_prirazka = st.slider("Zisková přirážka (%)", min_value=0, max_value=100, value=20, key="k3_3_2_zisk")
             
         with k_out:
             vn_vyroby = mat + mzdy + v_rezie
@@ -367,6 +396,12 @@ def render():
             st.markdown(f"**Úplné vlastní náklady:** {uplne_vn} Kč")
             st.markdown(f"**Zisk ({zisk_prirazka} %):** + {zisk_kc:.1f} Kč")
             st.markdown(f"<h3 style='color: #4f46e5; margin-top: 10px;'>Prodejní cena bez DPH: {cena_bez_dph:.1f} Kč</h3>", unsafe_allow_html=True)
+
+        if st.button("Uložit kalkulaci ceny 💾", key="btn_k3_3_2_cena"):
+            kalk_data = f"Materiál: {mat} | Mzdy: {mzdy} | Úplné náklady: {uplne_vn} Kč | Výsledná cena bez DPH: {cena_bez_dph:.1f} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 3.2 - Kalkulační vzorec", kalk_data)
+            st.success("Kalkulace ceny byla uložena!")
 
     elif selected_section_3 == "3.3 Kalkulace nákladů":
         st.markdown("### 3.3 Kalkulace nákladů")
@@ -392,9 +427,9 @@ def render():
         
         col_in, col_out = st.columns(2)
         with col_in:
-            cena_ks = st.number_input("Prodejní cena za 1 kus (Kč):", value=800)
-            var_ks = st.number_input("Variabilní náklady na 1 kus (Kč):", value=350)
-            prodano_ks = st.number_input("Očekávaný prodej (ks):", value=500)
+            cena_ks = st.number_input("Prodejní cena za 1 kus (Kč):", value=800, key="k3_3_3_cena")
+            var_ks = st.number_input("Variabilní náklady na 1 kus (Kč):", value=350, key="k3_3_3_var")
+            prodano_ks = st.number_input("Očekávaný prodej (ks):", value=500, key="k3_3_3_prodano")
         
         with col_out:
             prispevek_ks = cena_ks - var_ks
@@ -403,6 +438,12 @@ def render():
             st.metric("Příspěvek na úhradu (1 kus)", f"{prispevek_ks} Kč")
             st.metric("Celkový příspěvek na úhradu", f"{prispevek_celkem:,} Kč".replace(",", " "))
             st.info(f"Z této částky {prispevek_celkem:,} Kč musí firma nejprve zaplatit všechny své fixní náklady (nájem, energie). Cokoliv zbyde, je čistý zisk.")
+
+        if st.button("Uložit výpočet příspěvku na úhradu 💾", key="btn_k3_3_3_prispevek"):
+            prispevek_data = f"Cena/ks: {cena_ks} | Var. náklady/ks: {var_ks} | Příspěvek/ks: {prispevek_ks} Kč | Celkem příspěvek: {prispevek_celkem} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 3.3 - Příspěvek na úhradu", prispevek_data)
+            st.success("Příspěvek na úhradu byl uložen!")
 
     elif selected_section_3 == "3.4 Bod zvratu a jeho graf":
         st.markdown("### 3.4 Bod zvratu a postup sestavení kalkulace")
@@ -416,9 +457,9 @@ def render():
         
         col_in, col_out = st.columns([1, 1.2])
         with col_in:
-            be_fix = st.number_input("Fixní náklady za období (Kč):", value=30000, step=1000)
-            be_cena = st.number_input("Prodejní cena kusu (Kč):", value=1000, step=100)
-            be_var = st.number_input("Variabilní náklad kusu (Kč):", value=400, step=100)
+            be_fix = st.number_input("Fixní náklady za období (Kč):", value=30000, step=1000, key="k3_3_4_fix")
+            be_cena = st.number_input("Prodejní cena kusu (Kč):", value=1000, step=100, key="k3_3_4_cena")
+            be_var = st.number_input("Variabilní náklad kusu (Kč):", value=400, step=100, key="k3_3_4_var")
         
         with col_out:
             prispevek = be_cena - be_var
@@ -428,7 +469,14 @@ def render():
                 bod_zvratu = math.ceil(be_fix / prispevek)
                 st.metric("Bod zvratu (musíš prodat)", f"{bod_zvratu} kusů")
                 st.success(f"Při prodeji {bod_zvratu} kusů jsi na nule. Každý další kus = čistý zisk {prispevek} Kč.")
-        
+
+        if st.button("Uložit výpočet Bodu zvratu 💾", key="btn_k3_3_4_bep"):
+            if prispevek > 0:
+                bep_data = f"Fixní: {be_fix} | Cena: {be_cena} | Var: {be_var} | Bod zvratu: {bod_zvratu} ks"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 3.4 - Bod zvratu", bep_data)
+                st.success("Bod zvratu byl uložen!")
+
         if prispevek > 0:
             try:
                 import pandas as pd
@@ -498,10 +546,10 @@ def render():
         
         rc1, rc2 = st.columns(2)
         with rc1:
-            k_trzby = st.number_input("Tržby celkem (Kč):", value=2000000, step=100000)
-            k_naklady = st.number_input("Náklady celkem (Kč):", value=1600000, step=100000)
-            k_pracovnici = st.number_input("Počet pracovníků:", value=5, min_value=1)
-            k_kusy = st.number_input("Počet vyrobených kusů:", value=10000, step=1000)
+            k_trzby = st.number_input("Tržby celkem (Kč):", value=2000000, step=100000, key="k3_3_5_trzby")
+            k_naklady = st.number_input("Náklady celkem (Kč):", value=1600000, step=100000, key="k3_3_5_naklady")
+            k_pracovnici = st.number_input("Počet pracovníků:", value=5, min_value=1, key="k3_3_5_pracovnici")
+            k_kusy = st.number_input("Počet vyrobených kusů:", value=10000, step=1000, key="k3_3_5_kusy")
             
         with rc2:
             k_zisk = k_trzby - k_naklady
@@ -520,7 +568,14 @@ def render():
                 st.warning("Pozor, rentabilita je nízká (pod 10 %).")
             else:
                 st.success("Skvělá práce, rentabilita i výkonnost jsou zdravé.")
-# =========================================================================
+
+        if st.button("Uložit výpočet KPI dashboardu 💾", key="btn_k3_3_5_kpi"):
+            kpi_data = f"Zisk: {k_zisk} | Marže: {rent_trzeb:.1f}% | Prod/pracovník: {prod_ks:.0f} ks | Náklad/ks: {naklad_na_kus:.1f} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 3.5 - Dashboard KPI", kpi_data)
+            st.success("KPI dashboard byl uložen!")
+
+    # =========================================================================
     # SEKCE 4: MAJETEK FIRMY
     # =========================================================================
     elif selected_section_3 == "4.1 Oběžný majetek a plánování zásob":
@@ -563,19 +618,25 @@ def render():
         c_z1, c_z2 = st.columns(2)
         with c_z1:
             st.markdown("**Výpočet Průměrné zásoby**")
-            pocatecni = st.number_input("Počáteční zásoba na začátku měsíce (ks):", value=100)
-            konecna = st.number_input("Konečná zásoba na konci měsíce (ks):", value=50)
+            pocatecni = st.number_input("Počáteční zásoba na začátku měsíce (ks):", value=100, key="k3_4_1_pocatecni")
+            konecna = st.number_input("Konečná zásoba na konci měsíce (ks):", value=50, key="k3_4_1_konecna")
             prumerna = (pocatecni + konecna) / 2
             st.metric("Průměrná zásoba", f"{prumerna} ks")
             
         with c_z2:
             st.markdown("**Výpočet Signální zásoby**")
-            denni_spotreba = st.number_input("Denní spotřeba materiálu (ks):", value=10)
-            dodaci_lhuta = st.number_input("Dodací lhůta od dodavatele (dny):", value=3)
-            pojistna = st.number_input("Pojistná zásoba (ks):", value=20)
+            denni_spotreba = st.number_input("Denní spotřeba materiálu (ks):", value=10, key="k3_4_1_spotreba")
+            dodaci_lhuta = st.number_input("Dodací lhůta od dodavatele (dny):", value=3, key="k3_4_1_lhuta")
+            pojistna = st.number_input("Pojistná zásoba (ks):", value=20, key="k3_4_1_pojistna")
             signalni = (denni_spotreba * dodaci_lhuta) + pojistna
             st.metric("Signální zásoba", f"{signalni} ks")
             st.info(f"Jakmile ti na skladě zbyde {signalni} ks, musíš ihned objednat další materiál.")
+
+        if st.button("Uložit výpočet zásob 💾", key="btn_k3_4_1_zasoby"):
+            zasoby_calc_data = f"Průměrná zásoba: {prumerna} ks | Signální zásoba: {signalni} ks"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 4.1 - Kalkulačka zásob", zasoby_calc_data)
+            st.success("Výpočet zásob byl uložen!")
 
         st.divider()
         st.markdown("#### Pořízení materiálu, evidence a skladování")
@@ -638,8 +699,8 @@ def render():
         
         c_obr1, c_obr2 = st.columns([1, 1.2])
         with c_obr1:
-            rocni_trzby = st.number_input("Roční tržby e-shopu (Kč):", value=3600000, step=100000)
-            hodnota_skladu = st.slider("Průměrná hodnota zboží na skladě (Kč):", min_value=100000, max_value=2000000, value=600000, step=50000)
+            rocni_trzby = st.number_input("Roční tržby e-shopu (Kč):", value=3600000, step=100000, key="k3_4_3_trzby")
+            hodnota_skladu = st.slider("Průměrná hodnota zboží na skladě (Kč):", min_value=100000, max_value=2000000, value=600000, step=50000, key="k3_4_3_sklad")
             
         with c_obr2:
             obratky = rocni_trzby / hodnota_skladu
@@ -654,6 +715,12 @@ def render():
                 st.success("✅ Skvělá práce! Sklad se točí rychle, peníze se ti vrací na účet a můžeš je znovu investovat.")
             else:
                 st.info("⚖️ Standardní rychlost obratu. Dá se to ale ještě optimalizovat (např. Kanbanem).")
+
+        if st.button("Uložit výpočet obratu zásob 💾", key="btn_k3_4_3_obrat"):
+            obrat_data = f"Tržby: {rocni_trzby} | Hodnota skladu: {hodnota_skladu} | Obrátky: {obratky:.1f}x | Doba obratu: {doba_obratu:.0f} dní"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 4.3 - Obrat zásob", obrat_data)
+            st.success("Výpočet byl uložen!")
 
     elif selected_section_3 == "4.4 Dlouhodobý majetek a investice":
         st.markdown("### 4.4 Dlouhodobý majetek a plánování investic")
@@ -676,8 +743,8 @@ def render():
         
         c_i1, c_i2 = st.columns([1, 1])
         with c_i1:
-            cena_stroje = st.number_input("Cena nového stroje vč. instalace (Kč):", value=500000, step=50000)
-            rocni_uspora = st.number_input("Roční finanční přínos stroje (Kč):", value=125000, step=5000)
+            cena_stroje = st.number_input("Cena nového stroje vč. instalace (Kč):", value=500000, step=50000, key="k3_4_4_cena")
+            rocni_uspora = st.number_input("Roční finanční přínos stroje (Kč):", value=125000, step=5000, key="k3_4_4_uspora")
         with c_i2:
             if rocni_uspora > 0:
                 navratnost = cena_stroje / rocni_uspora
@@ -685,6 +752,13 @@ def render():
                 st.success("Pokud stroj fyzicky vydrží déle než vypočítaná doba návratnosti, investice má smysl.")
             else:
                 st.error("Stroj nepřináší zisk.")
+
+        if st.button("Uložit výpočet návratnosti investice 💾", key="btn_k3_4_4_investice"):
+            if rocni_uspora > 0:
+                inv_data = f"Cena stroje: {cena_stroje} | Roční přínos: {rocni_uspora} | Návratnost: {navratnost:.1f} let"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 4.4 - Návratnost investice", inv_data)
+                st.success("Návratnost investice byla uložena!")
 
     elif selected_section_3 == "4.5 Odpisy a evidence majetku":
         st.markdown("### 4.5 Odpisy (Účetní vs. Daňové) a grafické srovnání")
@@ -738,7 +812,7 @@ def render():
         
         c_kalk1, c_kalk2 = st.columns([1, 1.2])
         with c_kalk1:
-            odp_cena = st.number_input("Pořizovací cena majetku (Kč):", value=500000, step=50000, min_value=10000)
+            odp_cena = st.number_input("Pořizovací cena majetku (Kč):", value=500000, step=50000, min_value=10000, key="k3_4_5_cena")
         with c_kalk2:
             skupiny = {
                 "1. skupina (3 roky) - Počítače, nářadí": {"roky": 3, "rov_1": 20, "rov_dalsi": 40, "zrych_1": 3, "zrych_dalsi": 4},
@@ -748,7 +822,7 @@ def render():
                 "5. skupina (30 let) - Cihlové/betonové budovy": {"roky": 30, "rov_1": 1.4, "rov_dalsi": 3.4, "zrych_1": 30, "zrych_dalsi": 31},
                 "6. skupina (50 let) - Kancelářské budovy, hotely": {"roky": 50, "rov_1": 1.02, "rov_dalsi": 2.02, "zrych_1": 50, "zrych_dalsi": 51}
             }
-            vybrana_skupina = st.selectbox("Vyber odpisovou skupinu:", list(skupiny.keys()), index=1)
+            vybrana_skupina = st.selectbox("Vyber odpisovou skupinu:", list(skupiny.keys()), index=1, key="k3_4_5_skupina")
             
         param = skupiny[vybrana_skupina]
         roky = param["roky"]
@@ -793,13 +867,18 @@ def render():
         except ImportError:
             st.warning("Pro zobrazení tabulek a grafů je potřeba knihovna Pandas.")
 
+        if st.button("Uložit kalkulaci odpisů 💾", key="btn_k3_4_5_odpisy"):
+            odpisy_data = f"Cena: {odp_cena} Kč | Skupina: {vybrana_skupina} | Odpis 1. rok (Rovnoměrný/Zrychlený): {rovnomerne[0]}/{zrychlene[0]} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 4.5 - Odpisy majetku", odpisy_data)
+            st.success("Kalkulace odpisů byla uložena!")
+
         st.divider()
         st.markdown("#### Vyřazení a evidence dlouhodobého majetku")
         st.write("Dlouhodobý majetek se z evidence vyřazuje tehdy, když už ho firma nepoužívá. Důvody mohou být: prodej, likvidace, darování, škoda/zničení, krádež nebo převod do osobního užívání.")
         st.markdown("<div class='box-gray'>🗂️ <b>Evidence:</b> Dlouhodobý majetek se eviduje na <i>kartách majetku</i> (inventární číslo, název, pořizovací cena, odpisový plán, oprávky, odpovědná osoba).</div>", unsafe_allow_html=True)
 
-
-# =========================================================================
+    # =========================================================================
     # SEKCE 5: KALKULACE, CENY A CENOVÉ STRATEGIE
     # =========================================================================
     elif selected_section_3 == "5.1 Cenové strategie v praxi":
@@ -853,16 +932,16 @@ def render():
             "Limitovaná edice 50 kusů designer mikin",
             "Taxi služba v pátek v noc po koncertě",
             "Set šamponu, kondicionéru a hřebenu"
-        ])
+        ], key="k3_5_1_prod")
         
         if prod_typ != "Vyber...":
             strat_volba = st.radio("Jaká strategie je pro tento produkt nejvhodnější?", [
                 "Freemium", "Předplatné", "Dynamická cena", "Balíčkování", "Prémiová cena"
-            ], horizontal=True)
+            ], horizontal=True, key="k3_5_1_strat")
             
-            dovud = st.text_input("Zdůvodni, proč tato strategie dává ekonomický smysl:")
+            dovud = st.text_input("Zdůvodni, proč tato strategie dává ekonomický smysl:", key="k3_5_1_dovud")
             
-            if st.button("Vyhodnotit strategii"):
+            if st.button("Vyhodnotit a uložit strategii 💾", key="btn_k3_5_1_strat"):
                 sprat_map = {
                     "Mobilní aplikace na plánování tréninků": ["Freemium", "Předplatné"],
                     "Limitovaná edice 50 kusů designer mikin": ["Prémiová cena"],
@@ -873,6 +952,10 @@ def render():
                     st.success(f"✅ Výborně! Strategie '{strat_volba}' je pro tento případ ideální.")
                 else:
                     st.warning(f"Zvážil/a jsi všechny aspekty? Pro tento typ produktu se častěji využívá {', '.join(sprat_map.get(prod_typ, []))}.")
+                
+                strat_data = f"Produkt: {prod_typ} | Strategie: {strat_volba} | Důvod: {dovud}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 5.1 - Cenové strategie", strat_data)
 
     elif selected_section_3 == "5.2 Náklady v digitálním světě a Asset-Light":
         st.markdown("### 5.2 Náklady v digitálním světě a Asset-Light model")
@@ -910,6 +993,12 @@ def render():
             st.metric("Celkové náklady", f"{d_celk:,} Kč".replace(",", " "))
             st.metric("Průměrný náklad na 1 uživatele", f"{d_prum:.1f} Kč")
 
+        if st.button("Uložit porovnání produktů 💾", key="btn_k3_5_2_porovnani"):
+            digital_data = f"Fyzický průměr/ks: {f_prum:.1f} Kč | Digitální průměr/uživatel: {d_prum:.1f} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 5.2 - Fyzický vs Digitální produkt", digital_data)
+            st.success("Porovnání bylo uloženo!")
+
         st.divider()
         st.markdown("#### Podnikání bez vlastního skladu a strojů (Asset-Light)")
         st.write("Některé moderní firmy se snaží vlastnit co nejméně majetku. Místo skladu, strojů a velkých zásob využívají dodavatele, platformy a outsourcing. Tomuto přístupu se říká **asset-light business**.")
@@ -929,7 +1018,7 @@ def render():
             "Vlastní sklad a nákup zásob dopředu",
             "Print-on-Demand (výroba po objednávce)",
             "Dropshipping"
-        ])
+        ], key="k3_5_2_model")
         
         if model_volba == "Vlastní sklad a nákup zásob dopředu":
             st.info("📊 **Vlastnosti:** Vyšší marže na kus, plná kontrola nad kvalitou a balením. **Riziko:** Vázaný kapitál a neprodané zásoby ležící na skladě.")
@@ -937,6 +1026,12 @@ def render():
             st.success("📊 **Vlastnosti:** Nulové riziko neprodaných zásob, nízký startovací kapitál. **Riziko:** Nižší marže z jednoho kusu, delší doba doručení zákazníkovi.")
         elif model_volba == "Dropshipping":
             st.success("📊 **Vlastnosti:** Nemusíš řešit logistiku ani sklad. **Riziko:** Žádná kontrola nad kvalitou zboží a reklamacemi, vysoká konkurence.")
+
+        if st.button("Uložit volbu obchodního modelu 💾", key="btn_k3_5_2_model"):
+            if model_volba != "Vyber...":
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 5.2 - Asset-Light model", model_volba)
+                st.success("Volba obchodního modelu byla uložena!")
 
     # =========================================================================
     # SEKCE 6: EFEKTIVITA, ŠTÍHLÁ VÝROBA A TECHNOLOGIE
@@ -999,17 +1094,21 @@ def render():
         st.divider()
         st.markdown("<div class='box-yellow'>🔎 <b>Detektiv plýtvání (Lean cvičení)</b></div>", unsafe_allow_html=True)
         sit = st.text_area("Popiš situaci z vaší školní jídelny, dílny nebo brigády, kde vzniká chaos:", 
-                           value="Při výdeji obědů kuchařka musí běhat pro příbory do vedlejší místnosti a studenti čekají ve 20metrové frontě.")
+                           value="Při výdeji obědů kuchařka musí běhat pro příbory do vedlejší místnosti a studenti čekají ve 20metrové frontě.", key="k3_6_1_sit")
         c_l1, c_v2 = st.columns(2)
         with c_l1:
             plytvani_typ = st.multiselect("Jaké druhy plýtvání (MUDA) zde vznikají?", [
                 "Čekání", "Zbytečný pohyb", "Zbytečná doprava", "Chyby a opravy", "Nadbytečné zásoby", "Nadvýroba"
-            ], default=["Čekání", "Zbytečný pohyb"])
+            ], default=["Čekání", "Zbytečný pohyb"], key="k3_6_1_muda")
         with c_v2:
             reseni_lean = st.text_input("Navrhni jedno jednoduché zlepšení (Poka-Yoke / 5S):", 
-                                       value="Příbory umístit přímo k výdejnímu okénku do označeného stojanu (Seiton).")
-        if st.button("Uložit návrh zlepšení"):
+                                       value="Příbory umístit přímo k výdejnímu okénku do označeného stojanu (Seiton).", key="k3_6_1_reseni")
+        
+        if st.button("Uložit návrh zlepšení 💾", key="btn_k3_6_1_lean"):
             st.success("✅ Skvělý postřeh! Přesně takhle uvažují Lean procesní inženýři ve firmách.")
+            lean_data = f"Situace: {sit} | MUDA: {', '.join(plytvani_typ)} | Řešení: {reseni_lean}"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 6.1 - Detektiv plýtvání", lean_data)
 
     elif selected_section_3 == "6.2 Průmysl 4.0, Cirkulární ekonomika a KPI":
         st.markdown("### 6.2 Průmysl 4.0, Cirkulární ekonomika a Dashboardy")
@@ -1028,8 +1127,8 @@ def render():
         
         c_r1, c_r2 = st.columns(2)
         with c_r1:
-            investice_robot = st.number_input("Investiční výdaj na robota/software (Kč):", value=2000000, step=100000)
-            uspora_rok = st.number_input("Roční úspora nákladů / vyšší výkon (Kč):", value=500000, step=50000)
+            investice_robot = st.number_input("Investiční výdaj na robota/software (Kč):", value=2000000, step=100000, key="k3_6_2_inv")
+            uspora_rok = st.number_input("Roční úspora nákladů / vyšší výkon (Kč):", value=500000, step=50000, key="k3_6_2_usp")
         with c_r2:
             if uspora_rok > 0:
                 doba_n = investice_robot / uspora_rok
@@ -1038,6 +1137,13 @@ def render():
                     st.success(f"✅ Doba návratnosti je {doba_n:.1f} let. Investice do automatizace se firmě velmi rychle vrátí!")
                 else:
                     st.warning(f"Doba návratnosti je {doba_n:.1f} let. Firma musí posoudit životnost robota a rizika zastarání.")
+
+        if st.button("Uložit výpočet návratnosti robota 💾", key="btn_k3_6_2_robot"):
+            if uspora_rok > 0:
+                robot_data = f"Investice: {investice_robot} | Úspora/rok: {uspora_rok} | Návratnost: {doba_n:.1f} let"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 6.2 - Návratnost robota", robot_data)
+                st.success("Návratnost byla uložena!")
 
         st.divider()
         st.markdown("#### Cirkulární ekonomika a udržitelná výroba")
@@ -1086,10 +1192,10 @@ def render():
 
         c_kpi1, c_kpi2 = st.columns([1, 1.2])
         with c_kpi1:
-            kpi_navstevnost = st.number_input("Měsíční návštěvnost webu (lidí):", value=10000, step=1000)
-            kpi_konverze = st.slider("Konverzní poměr (%) - kolik % lidí nakoupí:", min_value=0.1, max_value=10.0, value=2.0, step=0.1)
-            kpi_kosik = st.number_input("Průměrná hodnota objednávky (Kč):", value=850, step=50)
-            kpi_vratky = st.slider("Míra vratek a reklamací (%):", min_value=0.0, max_value=30.0, value=5.0, step=1.0)
+            kpi_navstevnost = st.number_input("Měsíční návštěvnost webu (lidí):", value=10000, step=1000, key="k3_6_2_navst")
+            kpi_konverze = st.slider("Konverzní poměr (%) - kolik % lidí nakoupí:", min_value=0.1, max_value=10.0, value=2.0, step=0.1, key="k3_6_2_konv")
+            kpi_kosik = st.number_input("Průměrná hodnota objednávky (Kč):", value=850, step=50, key="k3_6_2_kosik")
+            kpi_vratky = st.slider("Míra vratek a reklamací (%):", min_value=0.0, max_value=30.0, value=5.0, step=1.0, key="k3_6_2_vratky")
 
         with c_kpi2:
             kpi_objednavky = int(kpi_navstevnost * (kpi_konverze / 100))
@@ -1110,6 +1216,13 @@ def render():
 
             if kpi_vratky > 12:
                 st.error("🚨 **Kritická vratkovost!** Zákazníci masivně vracejí zboží. Velikosti nesedí nebo fotky neodpovídají realitě.")
+
+        if st.button("Uložit nastavení KPI Dashboardu 💾", key="btn_k3_6_2_kpi"):
+            kpi_dash_data = f"Objednávky: {kpi_objednavky} ks | Čisté tržby: {kpi_ciste_trzby:.0f} Kč | Ztráta vratky: {kpi_ztrata_vratky:.0f} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 6.2 - Dashboard KPI", kpi_dash_data)
+            st.success("KPI Dashboard byl uložen!")
+
     elif selected_section_3 == "6.3 Projektová dílna: Launch vlastního merche":
         st.markdown("### 6.3 Projektová dílna: Launch vlastního merche / e-shopu")
         st.markdown("""
@@ -1123,11 +1236,11 @@ def render():
         
         cp1, cp2 = st.columns(2)
         with cp1:
-            p_nazev = st.text_input("Název produktu / projektu:", value="Školní edice mikin s kapucí")
-            p_cena = st.number_input("Prodejní cena za 1 kus (Kč):", value=890, step=50)
-            p_var = st.number_input("Variabilní náklady na 1 kus (potisk, textil, obal) (Kč):", value=420, step=20)
-            p_fix = st.number_input("Fixní náklady celkem (grafika, reklama, e-shop) (Kč):", value=15000, step=1000)
-            p_odhad = st.number_input("Očekávaný počet prodaných kusů:", value=50, step=10)
+            p_nazev = st.text_input("Název produktu / projektu:", value="Školní edice mikin s kapucí", key="k3_6_3_nazev")
+            p_cena = st.number_input("Prodejní cena za 1 kus (Kč):", value=890, step=50, key="k3_6_3_cena")
+            p_var = st.number_input("Variabilní náklady na 1 kus (potisk, textil, obal) (Kč):", value=420, step=20, key="k3_6_3_var")
+            p_fix = st.number_input("Fixní náklady celkem (grafika, reklama, e-shop) (Kč):", value=15000, step=1000, key="k3_6_3_fix")
+            p_odhad = st.number_input("Očekávaný počet prodaných kusů:", value=50, step=10, key="k3_6_3_odhad")
             
         with cp2:
             p_prispevek = p_cena - p_var
@@ -1161,21 +1274,29 @@ def render():
         m_model = st.radio("Zvolený model výroby:", [
             "Print-on-Demand (výroba po objednávce - nulové zásoby)",
             "Nákup na sklad dopředu (vyšší marže, ale riziko neprodaných kusů)"
-        ])
+        ], key="k3_6_3_model")
         
         m_kpi = st.multiselect("Které KPI budeš sledovat pro vyhodnocení úspěchu?", [
             "Počet prodaných kusů", "Čistá zisková marže", "Rychlost vyprodání edice", 
             "Návratnost investic do reklamy (ROAS)", "Míra vratek a reklamací"
-        ], default=["Počet prodaných kusů", "Čistá zisková marže"])
+        ], default=["Počet prodaných kusů", "Čistá zisková marže"], key="k3_6_3_kpi")
         
         rozhodnuti_text = st.text_area("Shrnutí strategického rozhodnutí pro prezentaci před třídou/vedením:", 
-                                       value="Projekt spustíme jako limitovanou edici v předprodeji (Print-on-Demand), čímž eliminujeme riziko neprodaných zásob. Počáteční grafické náklady pokryjeme z příspěvku na úhradu po prodeji prvních 32 kusů.")
+                                       value="Projekt spustíme jako limitovanou edici v předprodeji (Print-on-Demand), čímž eliminujeme riziko neprodaných zásob. Počáteční grafické náklady pokryjeme z příspěvku na úhradu po prodeji prvních 32 kusů.", key="k3_6_3_text")
         
-        if st.button("Uložit projektový list"):
+        if st.button("Uložit projektový list 💾", key="btn_k3_6_3_save"):
             st.balloons()
-            st.success("✅ Projektový list byl úspěšně sestaven a připraven k obhajobě!")
+            st.success("✅ Projektový list byl úspěšně sestaven a uložen!")
+            
+            proj_data = (
+                f"Projekt: {p_nazev} | Cena: {p_cena} Kč | Var: {p_var} Kč | Fix: {p_fix} Kč | "
+                f"Odhad prodeje: {p_odhad} ks | Očekávaný zisk: {p_zisk if p_prispevek > 0 else 'N/A'} Kč | "
+                f"Model: {m_model} | Sledovaná KPI: {', '.join(m_kpi)} | Text: {rozhodnuti_text}"
+            )
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 6.3 - Projektová dílna Merch", proj_data)
 
- # =========================================================================
+    # =========================================================================
     # SEKCE 7: PŘÍPADOVÉ STUDIE A ZÁVĚREČNÝ CHECKLIST
     # =========================================================================
     elif selected_section_3 == "7.1 Případové studie z praxe":
@@ -1204,12 +1325,12 @@ def render():
 
         with st.form("form_studie_kavarna"):
             st.markdown("##### 📝 Vyplň řešení:")
-            s1_prispevek = st.number_input("Příspěvek na úhradu na 1 nápoj (Kč):", value=0, step=1)
-            s1_bz = st.number_input("Bod zvratu (kolik nápojů musíte prodat k zaplacení stánku 12 000 Kč?):", value=0, step=1)
-            s1_dostacujici = st.radio("Je plánovaný prodej 500 nápojů dostatečný k dosažení zisku?", ["Vyber...", "Ano", "Ne"], horizontal=True)
-            s1_opatreni = st.text_input("Navrhni jedno opatření, jak snížit riziko ztráty (např. úprava ceny, nákladů, propagace):")
+            s1_prispevek = st.number_input("Příspěvek na úhradu na 1 nápoj (Kč):", value=0, step=1, key="cs_k_prisp")
+            s1_bz = st.number_input("Bod zvratu (kolik nápojů musíte prodat k zaplacení stánku 12 000 Kč?):", value=0, step=1, key="cs_k_bz")
+            s1_dostacujici = st.radio("Je plánovaný prodej 500 nápojů dostatečný k dosažení zisku?", ["Vyber...", "Ano", "Ne"], horizontal=True, key="cs_k_dost")
+            s1_opatreni = st.text_input("Navrhni jedno opatření, jak snížit riziko ztráty (např. úprava ceny, nákladů, propagace):", key="cs_k_opatreni")
 
-            if st.form_submit_button("Zkontrolovat výpočty kavárny"):
+            if st.form_submit_button("Zkontrolovat a uložit výpočty kavárny 💾"):
                 spravny_prispevek = 45 - 18
                 spravny_bz = math.ceil(12000 / spravny_prispevek)
                 
@@ -1218,6 +1339,10 @@ def render():
                     st.balloons()
                 else:
                     st.error(f"Něco tam ještě nesedí.\n• **Příspěvek na úhradu** = 45 − 18 = **27 Kč**.\n• **Bod zvratu** = 12 000 / 27 ≈ **445 nápojů**.")
+
+                cs_kavarna_data = f"Příspěvek: {s1_prispevek} | BZ: {s1_bz} | Stačí 500ks: {s1_dostacujici} | Opatření: {s1_opatreni}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 7.1 - Případová studie Kavárna", cs_kavarna_data)
 
         st.divider()
         st.markdown("#### 👕 2. Mikiny pro školní tým: Sklad, nebo Print-on-Demand?")
@@ -1247,7 +1372,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-        if st.checkbox("📈 Zobrazit grafické srovnání tvorby zisku u obou variant"):
+        if st.checkbox("📈 Zobrazit grafické srovnání tvorby zisku u obou variant", key="chk_k3_7_1_mikiny"):
             try:
                 import pandas as pd
                 kusy_range = list(range(0, 100, 5))
@@ -1266,16 +1391,20 @@ def render():
 
         with st.form("form_studie_mikiny"):
             st.markdown("##### 👕 Vyplň porovnání variant:")
-            m_a_prisp = st.number_input("Varianta A — příspěvek na úhradu na 1 kus (Kč):", value=0)
-            m_b_prisp = st.number_input("Varianta B — příspěvek na úhradu na 1 kus (Kč):", value=0)
-            m_vyssi_marze = st.radio("Která varianta přináší vyšší příspěvek na úhradu (marži) z jednoho kusu?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True)
-            m_nizsi_riziko = st.radio("Která varianta má nižší riziko neprodaných zásob?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True)
+            m_a_prisp = st.number_input("Varianta A — příspěvek na úhradu na 1 kus (Kč):", value=0, key="cs_m_prisp_a")
+            m_b_prisp = st.number_input("Varianta B — příspěvek na úhradu na 1 kus (Kč):", value=0, key="cs_m_prisp_b")
+            m_vyssi_marze = st.radio("Která varianta přináší vyšší příspěvek na úhradu (marži) z jednoho kusu?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True, key="cs_m_vyssi")
+            m_nizsi_riziko = st.radio("Která varianta má nižší riziko neprodaných zásob?", ["Vyber...", "Varianta A (Sklad)", "Varianta B (Print-on-Demand)"], horizontal=True, key="cs_m_nizsi")
 
-            if st.form_submit_button("Zkontrolovat porovnání"):
+            if st.form_submit_button("Zkontrolovat a uložit porovnání 💾"):
                 if m_a_prisp == 330 and m_b_prisp == 190 and m_vyssi_marze == "Varianta A (Sklad)" and m_nizsi_riziko == "Varianta B (Print-on-Demand)":
                     st.success("✅ **Výborně, máš to přesně!**\n* Varianta A přináší z každé mikiny do pokladny **330 Kč**.\n* Varianta B přináší **190 Kč**, ale neriskuješ, že ti zůstanou neprodané kusy.")
                 else:
                     st.error("Zkontroluj výpočty: Varianta A = 750 − 420 = 330 Kč. Varianta B = 750 − 560 = 190 Kč.")
+
+                cs_mikiny_data = f"Příspěvek A: {m_a_prisp} | Příspěvek B: {m_b_prisp} | Vyšší marže: {m_vyssi_marze} | Nižší riziko: {m_nizsi_riziko}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 7.1 - Případová studie Mikiny", cs_mikiny_data)
 
         st.divider()
         st.markdown("#### 🛠️ 3. Výrobní dílna: Problém se zmetkovitostí")
@@ -1289,28 +1418,33 @@ def render():
 
         with st.form("form_studie_zmetky"):
             st.markdown("##### 🛠️ Vyplň analýzu zmetkovitosti:")
-            z_driv = st.number_input("Vadné kusy dříve (ks):", value=0)
-            z_ted = st.number_input("Vadné kusy nyní (ks):", value=0)
-            z_rozdil_kc = st.number_input("O kolik Kč se zvýšily finanční ztráty z nákladů na zmetky? (Kč):", value=0)
+            z_driv = st.number_input("Vadné kusy dříve (ks):", value=0, key="cs_z_driv")
+            z_ted = st.number_input("Vadné kusy nyní (ks):", value=0, key="cs_z_ted")
+            z_rozdil_kc = st.number_input("O kolik Kč se zvýšily finanční ztráty z nákladů na zmetky? (Kč):", value=0, key="cs_z_rozdil")
 
-            if st.form_submit_button("Zkontrolovat analýzu zmetkovitosti"):
+            if st.form_submit_button("Zkontrolovat a uložit analýzu zmetkovitosti 💾"):
                 if z_driv == 30 and z_ted == 110 and z_rozdil_kc == 12800:
                     st.success("🎉 **Skvělá práce!**\n* Vadné kusy dříve: 30 ks (3 % z 1 000).\n* Vadné kusy nyní: 110 ks (11 % z 1 000).\n* Rozdíl je 80 vadných kusů × 160 Kč = **12 800 Kč zbytečné finanční ztráty!**")
                 else:
                     st.error("Nápověda: Dříve = 1 000 × 0,03 = 30 ks. Nyní = 1 000 × 0,11 = 110 ks. Zvýšení o 80 ks × 160 Kč = 12 800 Kč.")
+
+                cs_zmetky_data = f"Dříve: {z_driv} ks | Nyní: {z_ted} ks | Nárůst ztráty: {z_rozdil_kc} Kč"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 7.1 - Případová studie Zmetkovitost", cs_zmetky_data)
+
     elif selected_section_3 == "7.2 Závěrečný checklist a prověrka kapitoly":
         st.markdown("### 7.2 Závěrečný checklist a prověrka kapitoly")
         st.write("Projdi si klíčové dovednosti Kapitoly 3. Zaškrtni všechny body, které bezpečně zvládáš!")
 
         st.markdown("<div class='box-yellow'>✅ <b>Sebehodnotící checklist Kapitoly 3</b></div>", unsafe_allow_html=True)
         
-        ch1 = st.checkbox("Umím rozlišit náklad, výdaj, výnos a příjem a uvést příklady.")
-        ch2 = st.checkbox("Umím spočítat účetní i ekonomický zisk nebo ztrátu.")
-        ch3 = st.checkbox("Umím vysvětlit rozdríl mezi fixními a variabilními náklady.")
-        ch4 = st.checkbox("Umím spočítat bod zvratu v kusech a interpretovat ho.")
-        ch5 = st.checkbox("Rozumím rozdílu mezi účetními a daňovými odpisy (rovnoměrné vs. zrychlené).")
-        ch6 = st.checkbox("Umím vysvětlit principy Lean výroby (plýtvání Muda, Poka-Yoke, metoda 5S, Kanban).")
-        ch7 = st.checkbox("Rozumím moderním cenovým strategiím (Freemium, POD, Asset-Light) a umím navrhnout KPI.")
+        ch1 = st.checkbox("Umím rozlišit náklad, výdaj, výnos a příjem a uvést příklady.", key="k3_7_2_ch1")
+        ch2 = st.checkbox("Umím spočítat účetní i ekonomický zisk nebo ztrátu.", key="k3_7_2_ch2")
+        ch3 = st.checkbox("Umím vysvětlit rozdríl mezi fixními a variabilními náklady.", key="k3_7_2_ch3")
+        ch4 = st.checkbox("Umím spočítat bod zvratu v kusech a interpretovat ho.", key="k3_7_2_ch4")
+        ch5 = st.checkbox("Rozumím rozdílu mezi účetními a daňovými odpisy (rovnoměrné vs. zrychlené).", key="k3_7_2_ch5")
+        ch6 = st.checkbox("Umím vysvětlit principy Lean výroby (plýtvání Muda, Poka-Yoke, metoda 5S, Kanban).", key="k3_7_2_ch6")
+        ch7 = st.checkbox("Rozumím moderním cenovým strategiím (Freemium, POD, Asset-Light) a umím navrhnout KPI.", key="k3_7_2_ch7")
 
         splneno_pocet = sum([ch1, ch2, ch3, ch4, ch5, ch6, ch7])
         procento = int((splneno_pocet / 7) * 100)
@@ -1326,27 +1460,32 @@ def render():
         else:
             st.warning("⚠️ Zkus si projít jednotlivé podkapitoly znovu a vyzkoušet si v nich interaktivní kalkulačky a kvízy.")
 
+        if st.button("Uložit výsledek checklistu 💾", key="btn_k3_7_2_chk"):
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 7.2 - Checklist Kapitoly 3", f"Splněno {splneno_pocet}/7 bodů ({procento}%).")
+            st.success("Výsledek checklistu byl uložen!")
+
         st.divider()
         st.markdown("#### 🏆 Blesková závěrečná prověrka znalostí (5 otázek)")
         
         with st.form("form_proverka_k3"):
             p1 = st.selectbox("1. Nákup nového výrobního stroje zaplacený převodem z účtu je v roce nákupu:", [
                 "Vyber...", "Náklad v plné výši", "Výdaj v plné výši, do nákladů jde postupně přes odpisy", "Příjem firmy"
-            ])
+            ], key="k3_p1")
             p2 = st.selectbox("2. Bod zvratu je okamžik, kdy:", [
                 "Vyber...", "Jsou tržby vyšší než náklady a firma dosahuje maximálního zisku", "Tržby pokryjí celkové náklady a zisk je přesně 0 Kč", "Firma zaplatí své první daně"
-            ])
+            ], key="k3_p2")
             p3 = st.selectbox("3. Počítač z 1. odpisové skupiny se podle českého zákona odpisuje daňově po dobu:", [
                 "Vyber...", "3 roky", "5 let", "10 let"
-            ])
+            ], key="k3_p3")
             p4 = st.selectbox("4. Systém Poka-Yoke ve štíhlé výrobě představuje:", [
                 "Vyber...", "Kontrolu kvality na konci výroby", "Technický nebo procesní prvek znemožňující vznik chyby", "Drahý nákup robotických ramen"
-            ])
+            ], key="k3_p4")
             p5 = st.selectbox("5. Který z následujících ukazatelů je tzv. 'Vanity Metric' (marnivé číslo)?", [
                 "Vyber...", "Konverzní poměr e-shopu", "Čistá zisková marže", "Celkový počet zobrazení stránek (bez ohledu na prodej)"
-            ])
+            ], key="k3_p5")
 
-            if st.form_submit_button("Vyhodnotit prověrku"):
+            if st.form_submit_button("Vyhodnotit a uložit prověrku 💾"):
                 body = 0
                 if p1 == "Výdaj v plné výši, do nákladů jde postupně přes odpisy": body += 1
                 if p2 == "Tržby pokryjí celkové náklady a zisk je přesně 0 Kč": body += 1
@@ -1361,3 +1500,7 @@ def render():
                     st.info(f"🥈 **Dobrá práce! Získal/a jsi {body}/5 bodů.**")
                 else:
                     st.error(f"❌ **Získal/a jsi {body}/5 bodů.** Projděte si ještě jednou odpovídající sekce v nabídce.")
+
+                proverka_data = f"Výsledek testu: {body}/5 bodů. Odpovědi: 1:{p1} | 2:{p2} | 3:{p3} | 4:{p4} | 5:{p5}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 7.2 - Prověrka Kapitoly 3", proverka_data)
