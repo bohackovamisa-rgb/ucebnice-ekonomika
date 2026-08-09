@@ -1,14 +1,21 @@
 import math
+import pandas as pd
 import streamlit as st
 from supabase import create_client, Client
 from kapitoly import kapitola1, kapitola2, kapitola3, kapitola4, kapitola5, kapitola6
 
-# --- 1. KONFIGURACE STRÁNKY ---
+# =========================================================================
+# 1. KONFIGURACE STRÁNKY
+# =========================================================================
 st.set_page_config(
-    page_title="Učebnice ekonomiky", page_icon="📖", layout="wide"
+    page_title="Učebnice ekonomiky",
+    page_icon="📖",
+    layout="wide"
 )
 
-# --- 2. PROPOJENÍ S DATABÁZÍ SUPABASE ---
+# =========================================================================
+# 2. PROPOJENÍ S DATABÁZÍ SUPABASE
+# =========================================================================
 @st.cache_resource
 def init_supabase() -> Client:
     url = st.secrets["connections"]["supabase"]["SUPABASE_URL"]
@@ -17,7 +24,9 @@ def init_supabase() -> Client:
 
 supabase = init_supabase()
 
-# --- 3. STYLOVÁNÍ ---
+# =========================================================================
+# 3. STYLOVÁNÍ
+# =========================================================================
 st.markdown(
     """
 <style>
@@ -62,7 +71,47 @@ section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-
     unsafe_allow_html=True,
 )
 
-# --- 4. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA ---
+# =========================================================================
+# 4. POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ (INICIALIZACE VŠAS)
+# =========================================================================
+def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
+    """Uloží nebo aktualizuje odpověď přihlášeného žáka v Supabase."""
+    username = st.session_state.get("username")
+    if not username:
+        return
+    
+    try:
+        existing = supabase.table("odpovedi")\
+            .select("username")\
+            .eq("username", username)\
+            .eq("kapitola", kapitola)\
+            .eq("otazka_id", otazka_id)\
+            .execute()
+        
+        if existing.data:
+            supabase.table("odpovedi").update({"odpoved": odpoved_text})\
+                .eq("username", username)\
+                .eq("kapitola", kapitola)\
+                .eq("otazka_id", otazka_id)\
+                .execute()
+        else:
+            new_record = {
+                "username": username,
+                "kapitola": kapitola,
+                "otazka_id": otazka_id,
+                "odpoved": odpoved_text
+            }
+            supabase.table("odpovedi").insert(new_record).execute()
+        st.toast("✅ Odpověď byla uložena!", icon="💾")
+    except Exception as e:
+        st.error(f"Chyba při ukládání odpovědi: {e}")
+
+# Zpřístupnění funkce do session_state HNED na začátku
+st.session_state["uloz_odpoved_fn"] = uloz_odpoved
+
+# =========================================================================
+# 5. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA
+# =========================================================================
 def login_screen():
     if st.session_state.get("is_logged_in", False):
         return True
@@ -116,19 +165,19 @@ def login_screen():
                             st.warning("Vyplňte prosím všechna pole!")
                         else:
                             try:
-                                # 1. Ověření, zda kód třídy existuje
+                                # 1. Ověření kódu třídy
                                 trida_res = supabase.table("tridy").select("*").eq("kod_tridy", reg_code.strip().upper()).execute()
                                 if not trida_res.data:
                                     st.error("Zadaný kód třídy neexistuje! Požádejte učitele o správný kód.")
                                 else:
                                     nazev_tridy = trida_res.data[0]["nazev_tridy"]
                                     
-                                    # 2. Kontrola, zda uživatelské jméno již není zabrané
+                                    # 2. Kontrola unikátnosti jména
                                     user_check = supabase.table("uzivatele").select("username").eq("username", reg_username.strip().lower()).execute()
                                     if user_check.data:
                                         st.error("Toto uživatelské jméno je již zabrané. Zvolte jiné.")
                                     else:
-                                        # 3. Uložení nového žáka do Supabase
+                                        # 3. Uložení žáka
                                         new_user = {
                                             "username": reg_username.strip().lower(),
                                             "password": reg_password,
@@ -145,48 +194,12 @@ def login_screen():
 if not login_screen():
     st.stop()
 
-# --- 5. POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ ---
-def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
-    """Uloží nebo aktualizuje odpověď přihlášeného žáka v Supabase."""
-    username = st.session_state.get("username")
-    if not username:
-        return
-    
-    try:
-        # Kontrola existující odpovědi podle username (ne podle id)
-        existing = supabase.table("odpovedi")\
-            .select("username")\
-            .eq("username", username)\
-            .eq("kapitola", kapitola)\
-            .eq("otazka_id", otazka_id)\
-            .execute()
-        
-        if existing.data:
-            supabase.table("odpovedi").update({"odpoved": odpoved_text})\
-                .eq("username", username)\
-                .eq("kapitola", kapitola)\
-                .eq("otazka_id", otazka_id)\
-                .execute()
-        else:
-            new_record = {
-                "username": username,
-                "kapitola": kapitola,
-                "otazka_id": otazka_id,
-                "odpoved": odpoved_text
-            }
-            supabase.table("odpovedi").insert(new_record).execute()
-        st.toast("✅ Odpověď byla uložena!", icon="💾")
-    except Exception as e:
-        st.error(f"Chyba při ukládání odpovědi: {e}")
-
-# Zpřístupnění funkce pro importované kapitoly
-st.session_state["uloz_odpoved_fn"] = uloz_odpoved
-
-# --- NAVIGAČNÍ STAV ---
+# =========================================================================
+# 6. NAVIGAČNÍ STAV A BOČNÍ PANEL
+# =========================================================================
 if "current_view" not in st.session_state:
     st.session_state["current_view"] = "Uvod"
 
-# --- BOČNÍ PANEL S PROFILEM A NAVIGACÍ ---
 with st.sidebar:
     st.markdown(
         f"""
@@ -197,7 +210,7 @@ with st.sidebar:
         <div style='background-color: #F2EFE9; padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #EAE7DC;'>
             <div style='font-size: 0.75rem; color: #78716C; font-weight: 600;'>PŘIHLÁŠEN(A):</div>
             <div style='font-size: 0.95rem; font-weight: 700; color: #1C1917;'>👤 {st.session_state['user_name']}</div>
-            <div style='font-size: 0.8rem; color: #44403C;'>Role: {st.session_state['user_role'].capitalize()}</div>
+            <div style='font-size: 0.8rem; color: #44403C;'>Role: {st.session_state['user_role'].capitalize()} {f"({st.session_state['user_class']})" if st.session_state.get('user_class') else ""}</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -238,8 +251,11 @@ with st.sidebar:
         st.session_state.clear()
         st.rerun()
 
-# --- SMĚROVÁNÍ OBSAHU ---
+# =========================================================================
+# 7. SMĚROVÁNÍ OBSAHU
+# =========================================================================
 
+# --- UČITELSKÝ PANEL ---
 if st.session_state["current_view"] == "Ucitel_Panel":
     st.title("👩‍🏫 Učitelský panel")
     
@@ -256,7 +272,6 @@ if st.session_state["current_view"] == "Ucitel_Panel":
                 if novy_nazev and novy_kod:
                     try:
                         kod_clean = novy_kod.strip().upper()
-                        # Kontrola unikatnosti kodu
                         check = supabase.table("tridy").select("kod_tridy").eq("kod_tridy", kod_clean).execute()
                         if check.data:
                             st.error("Tento Zvací kód již existuje, zvolte jiný.")
@@ -287,14 +302,12 @@ if st.session_state["current_view"] == "Ucitel_Panel":
 
     with tab_vysledky:
         st.markdown("### Přehled odevzdaných prací")
-        # Načtení tříd učitele
         try:
             t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
             list_trid = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
             
             if list_trid:
                 vybrana_t = st.selectbox("Vyberte třídu:", list_trid)
-                # Načtení žáků v dané třídě
                 zaci_res = supabase.table("uzivatele").select("username, jmeno").eq("trida", vybrana_t).execute()
                 
                 if zaci_res.data:
@@ -306,8 +319,19 @@ if st.session_state["current_view"] == "Ucitel_Panel":
                     odpovedi_res = supabase.table("odpovedi").select("*").eq("username", vybrany_zak_user).execute()
                     if odpovedi_res.data:
                         st.markdown(f"#### Odpovědi žáka: {vybrany_zak_jmeno}")
+                        
+                        # Tlačítko pro export odpovědí žáka do CSV
+                        df_export = pd.DataFrame(odpovedi_res.data)
+                        csv_data = df_export.to_csv(index=False).encode('utf-8')
+                        st.download_button(
+                            label="📥 Stáhnout odpovědi v CSV (Excel)",
+                            data=csv_data,
+                            file_name=f"odpovedi_{vybrany_zak_user}.csv",
+                            mime="text/csv"
+                        )
+                        
                         for o in odpovedi_res.data:
-                            with st.expander(f"📘 {o['kapitola']} — Otázka: {o['otazka_id']}"):
+                            with st.expander(f"📘 {o['kapitola']} — Úkol: {o['otazka_id']}"):
                                 st.write(o["odpoved"])
                     else:
                         st.write("Tento žák zatím neodevzdal žádné odpovědi.")
@@ -318,6 +342,7 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
+# --- ÚVODNÍ STRÁNKA ---
 elif st.session_state["current_view"] == "Uvod":
     st.title("Ekonomika, která dává smysl")
 
@@ -361,27 +386,27 @@ elif st.session_state["current_view"] == "Uvod":
         unsafe_allow_html=True,
     )
 
-# KAPITOLY
+# --- VYKRESLENÍ KAPITOL 1–6 ---
 elif st.session_state["current_view"] == "Kapitola 1":
-    if hasattr(kapitola1, "show"): kapitola1.show()
-    elif hasattr(kapitola1, "render"): kapitola1.render()
+    if hasattr(kapitola1, "render"): kapitola1.render()
+    elif hasattr(kapitola1, "show"): kapitola1.show()
 
 elif st.session_state["current_view"] == "Kapitola 2":
-    if hasattr(kapitola2, "show"): kapitola2.show()
-    elif hasattr(kapitola2, "render"): kapitola2.render()
+    if hasattr(kapitola2, "render"): kapitola2.render()
+    elif hasattr(kapitola2, "show"): kapitola2.show()
 
 elif st.session_state["current_view"] == "Kapitola 3":
-    if hasattr(kapitola3, "show"): kapitola3.show()
-    elif hasattr(kapitola3, "render"): kapitola3.render()
+    if hasattr(kapitola3, "render"): kapitola3.render()
+    elif hasattr(kapitola3, "show"): kapitola3.show()
 
 elif st.session_state["current_view"] == "Kapitola 4":
-    if hasattr(kapitola4, "show"): kapitola4.show()
-    elif hasattr(kapitola4, "render"): kapitola4.render()
+    if hasattr(kapitola4, "render"): kapitola4.render()
+    elif hasattr(kapitola4, "show"): kapitola4.show()
 
 elif st.session_state["current_view"] == "Kapitola 5":
-    if hasattr(kapitola5, "show"): kapitola5.show()
-    elif hasattr(kapitola5, "render"): kapitola5.render()
+    if hasattr(kapitola5, "render"): kapitola5.render()
+    elif hasattr(kapitola5, "show"): kapitola5.show()
 
 elif st.session_state["current_view"] == "Kapitola 6":
-    if hasattr(kapitola6, "show"): kapitola6.show()
-    elif hasattr(kapitola6, "render"): kapitola6.render()
+    if hasattr(kapitola6, "render"): kapitola6.render()
+    elif hasattr(kapitola6, "show"): kapitola6.show()
