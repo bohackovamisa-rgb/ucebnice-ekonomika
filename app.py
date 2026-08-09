@@ -145,7 +145,7 @@ def login_screen():
 if not login_screen():
     st.stop()
 
-# --- POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ ŽÁKŮ ---
+# --- 5. POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ ---
 def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     """Uloží nebo aktualizuje odpověď přihlášeného žáka v Supabase."""
     username = st.session_state.get("username")
@@ -153,23 +153,21 @@ def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
         return
     
     try:
-        # Kontrola, zda už odpověď existuje
+        # Kontrola existující odpovědi podle username (ne podle id)
         existing = supabase.table("odpovedi")\
-            .select("id")\
+            .select("username")\
             .eq("username", username)\
             .eq("kapitola", kapitola)\
             .eq("otazka_id", otazka_id)\
             .execute()
         
         if existing.data:
-            # Aktualizace stávající odpovědi
             supabase.table("odpovedi").update({"odpoved": odpoved_text})\
                 .eq("username", username)\
                 .eq("kapitola", kapitola)\
                 .eq("otazka_id", otazka_id)\
                 .execute()
         else:
-            # Vložení nové odpovědi
             new_record = {
                 "username": username,
                 "kapitola": kapitola,
