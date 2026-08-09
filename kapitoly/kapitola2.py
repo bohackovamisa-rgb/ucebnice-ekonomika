@@ -653,7 +653,7 @@ def render():
 
                 st.info(f"{det_rub['ikona']} **{det_rub['nazev']}** ({det_rub['misto']})\n\n{det_rub['popis']}\n\n{det_rub['kontrola']}")
             
-        # 1.2.5 Kdo ČNB řídí
+# 1.2.5 Kdo ČNB řídí
         with st.container(border=True):
             st.markdown("### 1.2.5 Kdo ČNB řídí")
             st.write("Nejvyšším řídicím orgánem ČNB je **bankovní rada**. Ta rozhoduje například o měnové politice, úrokových sazbách a dalších zásadních otázkách fungování ČNB.")
@@ -731,6 +731,14 @@ def render():
 
             st.text_area("Potom napiš krátký komentář: Proč stejné rozhodnutí ČNB může někomu pomoci a jinému uškodit?", key="k2_repo_koment")
 
+            if st.button("Uložit komentář k sazbám 💾", key="btn_k2_repo_koment"):
+                odp = st.session_state.get("k2_repo_koment", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.6 - Repo sazba komentář", f"Sazba: {c_sazba}% | Komentář: {odp}")
+                else:
+                    st.warning("Před uložením nejprve napiš komentář!")
+
             st.write("**Příklad: co se stane, když ČNB zvýší úrokové sazby?** Vyšší sazby obvykle zdražují půjčky. Domácnosti a firmy si proto mohou méně půjčovat a méně utrácet. Zároveň může být výhodnější spořit. Tlak na růst cen se tím může snížit. Nevýhodou je, že dražší úvěry mohou zpomalit investice firem, hypotéky nebo spotřebu.")
 
             st.markdown("#### 🧮 Simulace: Vyšší sazby, inflace a hypotéka")
@@ -800,11 +808,18 @@ def render():
 
             st.text_area("Bonus: U každého výroku vysvětli, jak se dotýká běžného života:", key="k2_v_bonus")
 
-            if st.button("Vyhodnotit třídicí hru", key="k2_v_eval_btn"):
+            if st.button("Vyhodnotit a uložit třídicí hru 💾", key="k2_v_eval_btn"):
                 if v1=="ČNB" and v2=="Komerční banka" and v3=="Komerční banka" and v4=="ČNB" and v5=="Komerční banka" and v6=="ČNB" and v7=="ČNB" and v8=="Komerční banka" and v9=="Souvisí s oběma" and v10=="Souvisí s oběma":
                     st.success("🎉 Skvělé! Všechny položky jsi zařadil/a přesně podle textu.")
                 else:
                     st.error("Některé položky nejsou zařazeny správně. Zkontroluj si zařazení!")
+                
+                hry_vysledek = (
+                    f"1:{v1} | 2:{v2} | 3:{v3} | 4:{v4} | 5:{v5} | 6:{v6} | 7:{v7} | 8:{v8} | 9:{v9} | 10:{v10} | "
+                    f"Bonus: {st.session_state.get('k2_v_bonus', '')}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.7 - Třídicí hra", hry_vysledek)
 
         # 1.2.8 Komerční banky
         with st.container(border=True):
@@ -950,11 +965,15 @@ def render():
             rk6 = st.selectbox("6. Banka vydá vlastní dluhopis:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk6")
             rk7 = st.selectbox("7. Podnikatel používá platební terminál:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk7")
 
-            if st.button("Vyhodnotit rozhodovací karty", key="k2_rk_btn"):
+            if st.button("Vyhodnotit a uložit rozhodovací karty 💾", key="k2_rk_btn"):
                 if rk1=="Pasivní" and rk2=="Aktivní" and rk3=="Neutrální" and rk4=="Aktivní" and rk5=="Neutrální" and rk6=="Pasivní" and rk7=="Neutrální":
                     st.success("🎉 Skvělé! Rozdíly mezi aktivními, pasivními a neutrálními operacemi ovládáš na jedničku.")
                 else:
                     st.error("Některá odpověď nesouhlasí. Zkontroluj tabulku výše!")
+                
+                karty_data = f"1:{rk1}, 2:{rk2}, 3:{rk3}, 4:{rk4}, 5:{rk5}, 6:{rk6}, 7:{rk7}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.11 - Rozhodovací karty", karty_data)
 
         # 1.2.12 Jak banka vydělává a rizika
         with st.container(border=True):
@@ -1008,11 +1027,15 @@ def render():
 
             ma_text = st.text_area("Na závěr napiš doporučení: Co by měla banka zlepšit, aby byla bezpečnější?", key="k2_ma_text")
 
-            if st.button("Vyhodnotit mini audit", key="k2_ma_btn"):
+            if st.button("Vyhodnotit a uložit audit banky 💾", key="k2_ma_btn"):
                 if ma1=="Ano, prověřuje bonitu" and ma2=="Ano, drží likviditní rezervy" and ma3=="Ano, drží vyžadovaný kapitál":
                     st.success("✅ **Správný audit:** Banka splňuje klíčové podmínky obezřetného podnikání a ochrany vkladatelů.")
                 else:
                     st.error("⚠️ **Rizikové zjištění:** Banka nesplňuje bezpečnostní pravidla a hrozí jí zásah ze strany ČNB!")
+                
+                audit_data = f"1:{ma1} | 2:{ma2} | 3:{ma3} | Doporučení: {st.session_state.get('k2_ma_text', '')}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.13 - Mini audit banky", audit_data)
 
         # 1.2.14 Vklady a jejich ochrana
         with st.container(border=True):
