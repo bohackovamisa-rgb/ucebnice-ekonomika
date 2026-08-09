@@ -72,7 +72,7 @@ section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-
 )
 
 # =========================================================================
-# 4. POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ (INICIALIZACE VŠAS)
+# 4. POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ
 # =========================================================================
 def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     """Uloží nebo aktualizuje odpověď přihlášeného žáka v Supabase."""
@@ -106,7 +106,6 @@ def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     except Exception as e:
         st.error(f"Chyba při ukládání odpovědi: {e}")
 
-# Zpřístupnění funkce do session_state HNED na začátku
 st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
 # =========================================================================
@@ -124,7 +123,6 @@ def login_screen():
             
             tab_login, tab_reg = st.tabs(["🔑 Přihlášení", "📝 Registrace žáka"])
             
-            # --- ZÁLOŽKA 1: PŘIHLÁŠENÍ ---
             with tab_login:
                 with st.form("login_form", border=False):
                     username_input = st.text_input("Uživatelské jméno:", placeholder="Zadejte uživatelské jméno...")
@@ -150,7 +148,6 @@ def login_screen():
                         except Exception as e:
                             st.error(f"Chyba připojení: {e}")
 
-            # --- ZÁLOŽKA 2: REGISTRACE ŽÁKA ---
             with tab_reg:
                 with st.form("reg_form", border=False):
                     reg_jmeno = st.text_input("Jméno a příjmení:", placeholder="Jan Novák")
@@ -165,19 +162,15 @@ def login_screen():
                             st.warning("Vyplňte prosím všechna pole!")
                         else:
                             try:
-                                # 1. Ověření kódu třídy
                                 trida_res = supabase.table("tridy").select("*").eq("kod_tridy", reg_code.strip().upper()).execute()
                                 if not trida_res.data:
                                     st.error("Zadaný kód třídy neexistuje! Požádejte učitele o správný kód.")
                                 else:
                                     nazev_tridy = trida_res.data[0]["nazev_tridy"]
-                                    
-                                    # 2. Kontrola unikátnosti jména
                                     user_check = supabase.table("uzivatele").select("username").eq("username", reg_username.strip().lower()).execute()
                                     if user_check.data:
                                         st.error("Toto uživatelské jméno je již zabrané. Zvolte jiné.")
                                     else:
-                                        # 3. Uložení žáka
                                         new_user = {
                                             "username": reg_username.strip().lower(),
                                             "password": reg_password,
@@ -216,7 +209,6 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # UČITELSKÝ PANEL
     if st.session_state["user_role"] == "teacher":
         st.markdown("<div class='sidebar-section-title'>👩‍🏫 UČITELSKÝ PANEL</div>", unsafe_allow_html=True)
         if st.button("📊 Přehled a správa tříd", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Panel" else "secondary"):
@@ -224,7 +216,6 @@ with st.sidebar:
             st.rerun()
         st.divider()
 
-    # KAPITOLY KURZU
     st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
     
     if st.button("Úvodní stránka", use_container_width=True, type="primary" if st.session_state["current_view"] == "Uvod" else "secondary"):
@@ -255,7 +246,6 @@ with st.sidebar:
 # 7. SMĚROVÁNÍ OBSAHU
 # =========================================================================
 
-# --- UČITELSKÝ PANEL ---
 if st.session_state["current_view"] == "Ucitel_Panel":
     st.title("👩‍🏫 Učitelský panel")
     
@@ -300,7 +290,7 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání tříd: {e}")
 
-with tab_vysledky:
+    with tab_vysledky:
         st.markdown("### Přehled odevzdaných prací")
         try:
             t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
@@ -315,19 +305,13 @@ with tab_vysledky:
                     vybrany_zak_jmeno = st.selectbox("Vyberte žáka:", list(zaci_dict.keys()))
                     vybrany_zak_user = zaci_dict[vybrany_zak_jmeno]
                     
-                    # Načtení odpovědí žáka
                     odpovedi_res = supabase.table("odpovedi").select("*").eq("username", vybrany_zak_user).execute()
                     if odpovedi_res.data:
                         st.markdown(f"#### Odpovědi žáka: {vybrany_zak_jmeno}")
                         
-                        # --- ÚPRAVA EXPORTU PRO ČESKÝ EXCEL ---
                         df_export = pd.DataFrame(odpovedi_res.data)
-                        
-                        # Výběr a seřazení sloupců pro přehlednost
                         povolene_sloupce = [c for c in ["username", "kapitola", "otazka_id", "odpoved"] if c in df_export.columns]
                         df_export = df_export[povolene_sloupce]
-                        
-                        # Přejmenování hlaviček pro učitele
                         df_export = df_export.rename(columns={
                             "username": "Žák (Username)",
                             "kapitola": "Kapitola",
@@ -335,7 +319,6 @@ with tab_vysledky:
                             "odpoved": "Odpověď"
                         })
                         
-                        # Export se středníkem (sep=';') a UTF-8-SIG kódováním pro český Excel
                         csv_data = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
                         
                         st.download_button(
@@ -357,8 +340,7 @@ with tab_vysledky:
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-# --- ÚVODNÍ STRÁNKA ---
-    elif st.session_state["current_view"] == "Uvod":
+elif st.session_state["current_view"] == "Uvod":
     st.title("Ekonomika, která dává smysl")
 
     st.markdown(
@@ -401,7 +383,6 @@ with tab_vysledky:
         unsafe_allow_html=True,
     )
 
-# --- VYKRESLENÍ KAPITOL 1–6 ---
 elif st.session_state["current_view"] == "Kapitola 1":
     if hasattr(kapitola1, "render"): kapitola1.render()
     elif hasattr(kapitola1, "show"): kapitola1.show()
