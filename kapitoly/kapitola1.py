@@ -1214,6 +1214,14 @@ def render():
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš svůj podnikatelský nápad ve formátu: „Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit.“</div>", unsafe_allow_html=True)
             st.text_input("Tvůj nápad:", key="zamer_napad")
             
+            if st.button("Uložit nápad 💾", key="btn_zamer_napad"):
+                odp = st.session_state.get("zamer_napad", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.0 - Tvůj nápad", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Zkontroluj můj podnikatelský záměr. Najdi nejasného zákazníka, slabé místo v ceně, podceněné náklady, právní riziko a jednu otázku, kterou musím ověřit rozhovorem se zákazníkem.“
@@ -1239,7 +1247,7 @@ def render():
             st.markdown("""
             | Špatný záměr | Lepší záměr |
             | :--- | :--- |
-            | „Budeme prodávat moderní doplňky pro mladé.“ | „Budeme testovat prodej reflexních přívěsků na batohy pro tebe 1. ročníku, kteří chodí domů za šera a chtějí levný doplněk do 80 Kč.“ |
+            | „Budeme prodávat moderní doplňky pro mladé.“ | „Budeme testovat prodej reflexních přívěsků na batohy pro žáky 1. ročníku, kteří chodí domů za šera a chtějí levný doplněk do 80 Kč.“ |
             | „Cena bude nízká, aby to lidé kupovali.“ | „Cena bude 79 Kč, protože variabilní náklad je 38 Kč, potřebujeme rezervu na neprodané kusy a v dotazníku byla nejčastější ochota platit 60–90 Kč.“ |
             | „Budeme ekologičtí.“ | „Použijeme recyklovatelný obal, budeme evidovat množství odpadu a nebudeme používat tvrzení, která neumíme doložit.“ |
             """)
@@ -1247,7 +1255,16 @@ def render():
         with st.container(border=True):
             st.markdown("### 6.2 Co by měl podnikatelský záměr obsahovat")
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyplň ke svému nápadu zákazníka, problém, hodnotu, konkurenci, cenu, náklady, rizika, právní formu a první test.</div>", unsafe_allow_html=True)
+            st.text_area("Tvá odpověď k prvkům záměru:", key="zamer_struktura_ans")
             
+            if st.button("Uložit prvky záměru 💾", key="btn_zamer_struktura"):
+                odp = st.session_state.get("zamer_struktura_ans", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.2 - Prvky záměru", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             with st.expander("Zobrazit strukturu podnikatelského záměru"):
                 st.markdown("""
                 | Část záměru | Kontrolní otázka | Co má být výstupem |
@@ -1270,7 +1287,16 @@ def render():
             st.write("Než podnikatel začne vyrábět nebo prodávat, musí zjistit, jestli o jeho nabídku někdo stojí. Analýza trhu neznamená jen „vygooglit konkurenci“. Znamená pochopit zákazníka, jeho současné chování a alternativy, ze kterých si vybírá.")
             
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Najdi tři podobné firmy, produkty nebo náhradní řešení. U každého napiš cenu, výhodu, slabinu a příležitost pro tvůj projekt.</div>", unsafe_allow_html=True)
+            st.text_area("Tvá analýza konkurenčních řešení:", key="zamer_analyza_trhu_ans")
             
+            if st.button("Uložit analýzu trhu 💾", key="btn_zamer_analyza_trhu"):
+                odp = st.session_state.get("zamer_analyza_trhu_ans", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.3 - Analýza trhu", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             st.markdown("#### Zákazník není „všichni“")
             st.write("Častá chyba začínajících projektů je tvrzení: „Naším zákazníkem jsou všichni studenti.“ Jenže prvák, maturant, student odborného výcviku, rodič a učitel mají jiné potřeby, rozpočet i motivaci.")
             st.write("**Lepší popis zákazníka:** konkrétní skupina, konkrétní situace, konkrétní problém, konkrétní důvod, proč by změnila chování.")
@@ -1317,6 +1343,11 @@ def render():
                 bod_zvratu = fix_naklad / marze
                 import math
                 st.success(f"**Marže na kus:** {marze} Kč. **Bod zvratu:** Musíš prodat alespoň **{math.ceil(bod_zvratu)} kusů**, abys pokryl fixní náklady. Teprve další prodeje tvoří zisk.")
+                
+                if st.button("Uložit výpočet bodu zvratu 💾", key="btn_zamer_bod_zvratu"):
+                    vysledek = f"Cena: {cena} Kč | Var. náklad: {var_naklad} Kč | Fix. náklad: {fix_naklad} Kč | Marže: {marze} Kč | Bod zvratu: {math.ceil(bod_zvratu)} kusů"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.4 - Kalkulačka bodu zvratu", vysledek)
             else:
                 st.error("Prodejní cena musí být vyšší než variabilní náklad, jinak s každým kusem proděláváš!")
 
@@ -1353,24 +1384,46 @@ def render():
             
             c_s1, c_s2 = st.columns(2)
             with c_s1:
-                st.text_input("Název projektu:")
-                st.text_area("Jedna věta projektu (Pomáháme komu, s čím, jak):")
-                st.text_input("Zákazník:")
-                st.text_input("Problém:")
-                st.text_input("Hodnota pro zákazníka:")
-                st.text_input("Řešení:")
-                st.text_input("Konkurence / alternativy:")
+                st.text_input("Název projektu:", key="zamer_nazev")
+                st.text_area("Jedna věta projektu (Pomáháme komu, s čím, jak):", key="zamer_veta")
+                st.text_input("Zákazník:", key="zamer_zakaznik")
+                st.text_input("Problém:", key="zamer_problem")
+                st.text_input("Hodnota pro zákazníka:", key="zamer_hodnota")
+                st.text_input("Řešení:", key="zamer_reseni")
+                st.text_input("Konkurence / alternativy:", key="zamer_konkurence")
             with c_s2:
-                st.text_input("Cena:")
-                st.text_input("Jednorázové náklady:")
-                st.text_input("Fixní náklady:")
-                st.text_input("Variabilní náklady:")
-                st.text_input("První test & Metrika úspěchu:")
-                st.text_input("Rizika & Právní forma:")
-                st.text_input("Rozhodnutí po testu (pokračovat / upravit / ukončit):")
+                st.text_input("Cena:", key="zamer_cena")
+                st.text_input("Jednorázové náklady:", key="zamer_jednorazove")
+                st.text_input("Fixní náklady:", key="zamer_fixni")
+                st.text_input("Variabilní náklady:", key="zamer_variabilni")
+                st.text_input("První test & Metrika úspěchu:", key="zamer_test_metrika")
+                st.text_input("Rizika & Právní forma:", key="zamer_rizika_forma")
+                st.text_input("Rozhodnutí po testu (pokračovat / upravit / ukončit):", key="zamer_rozhodnuti")
             
-            st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
+            if st.button("Uložit kompletní záměr 💾", key="btn_zamer_komplet"):
+                data_zamer = (
+                    f"Název: {st.session_state.get('zamer_nazev', '')} | "
+                    f"Věta: {st.session_state.get('zamer_veta', '')} | "
+                    f"Zákazník: {st.session_state.get('zamer_zakaznik', '')} | "
+                    f"Problém: {st.session_state.get('zamer_problem', '')} | "
+                    f"Hodnota: {st.session_state.get('zamer_hodnota', '')} | "
+                    f"Řešení: {st.session_state.get('zamer_reseni', '')} | "
+                    f"Konkurence: {st.session_state.get('zamer_konkurence', '')} | "
+                    f"Cena: {st.session_state.get('zamer_cena', '')} | "
+                    f"Jednorázové náklady: {st.session_state.get('zamer_jednorazove', '')} | "
+                    f"Fixní náklady: {st.session_state.get('zamer_fixni', '')} | "
+                    f"Variabilní náklady: {st.session_state.get('zamer_variabilni', '')} | "
+                    f"Test & Metrika: {st.session_state.get('zamer_test_metrika', '')} | "
+                    f"Rizika & Forma: {st.session_state.get('zamer_rizika_forma', '')} | "
+                    f"Rozhodnutí: {st.session_state.get('zamer_rozhodnuti', '')}"
+                )
+                if st.session_state.get("zamer_nazev", "").strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.7 - Jednostránkový záměr", data_zamer)
+                else:
+                    st.warning("Vyplň alespoň název projektu před uložením!")
 
+            st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
     # --- 7. Lean Canvas ---
     elif "7. Lean Canvas" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div><h2>7. Lean Canvas</h2>", unsafe_allow_html=True)
