@@ -2021,8 +2021,16 @@ def render():
             """, unsafe_allow_html=True)
             
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
-            st.text_input("Tvoje otázka pro další konzultaci:")
+            st.text_input("Tvoje otázka pro další konzultaci:", key="reflexe_otazka_ans")
             
+            if st.button("Uložit otázku ke konzultaci 💾", key="btn_reflexe_otazka"):
+                odp = st.session_state.get("reflexe_otazka_ans", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 13 - Otázka ke konzultaci", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš otázku!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Vyzkoušej mě z Kapitoly 1 pomocí pěti otázek a potom mi dej zpětnou vazbu.“
@@ -2033,10 +2041,10 @@ def render():
             st.markdown("### ✍️ Otázky k reflexi (Doplň)")
             
             st.write("**1. Co jsem se dnes naučil/a?**")
-            st.text_area("Napiš vlastními slovy 3 věci, které si z kapitoly odnášíš:", height=100)
+            st.text_area("Napiš vlastními slovy 3 věci, které si z kapitoly odnášíš:", height=100, key="reflexe_co_naucil")
             
             st.write("**2. Co umím vysvětlit vlastními slovy?**")
-            st.text_area("Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.:", height=100)
+            st.text_area("Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.:", height=100, key="reflexe_vysvetleni")
             
             st.write("**3. V čem mám ještě nejasnosti?**")
             st.multiselect("Vyber jednu (nebo více) částí, která ti není jasná:", [
@@ -2047,10 +2055,10 @@ def render():
                 "CSR", 
                 "Švarcsystém", 
                 "Ukončení podnikání"
-            ])
+            ], key="reflexe_nejasnosti")
             
             st.write("**4. Která právní forma by se hodila pro můj nápad?**")
-            st.text_area("Vysvětli, proč bys zvolil/a právě tuto formu:", height=100)
+            st.text_area("Vysvětli, proč bys zvolil/a právě tuto formu:", height=100, key="reflexe_forma")
             
             st.write("**5. Jaký je můj první praktický krok?**")
             st.selectbox("Co udělám jako první?", [
@@ -2059,20 +2067,47 @@ def render():
                 "Rozhovor se zákazníkem",
                 "Ověření firmy v rejstříku",
                 "Vyplnění Lean Canvasu"
-            ])
+            ], key="reflexe_krok")
+
+            if st.button("Uložit kompletní reflexi 💾", key="btn_reflexe_otazky"):
+                nejasnosti_list = st.session_state.get("reflexe_nejasnosti", [])
+                reflexe_data = (
+                    f"Co se naučil: {st.session_state.get('reflexe_co_naucil', '')} | "
+                    f"Vysvětlení rozdílu: {st.session_state.get('reflexe_vysvetleni', '')} | "
+                    f"Nejasnosti: {', '.join(nejasnosti_list)} | "
+                    f"Vybraná forma: {st.session_state.get('reflexe_forma', '')} | "
+                    f"První krok: {st.session_state.get('reflexe_krok', '')}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 13 - Otázky k reflexi", reflexe_data)
 
         with st.container(border=True):
             st.markdown("### ✅ Sebehodnocení")
             st.write("Zaškrtni si dovednosti, které už bezpečně zvládáš:")
             
-            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel.")
-            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.")
-            st.checkbox("Chápu rozdíl mezi fyzickou a právnickou osobou.")
-            st.checkbox("Dokážu navrhnout základ podnikatelského záměru.")
-            st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.")
-            st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.")
-            st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.")
-# --- 15. Integrované opakování ---
+            st.checkbox("Umím vysvětlit, co je podnikání a kdo je podnikatel.", key="chk_seb_1")
+            st.checkbox("Rozliším OSVČ, v.o.s., k.s., s.r.o. a a.s.", key="chk_seb_2")
+            st.checkbox("Chápu rozdíl mezi fyzickou a právnickou osobou.", key="chk_seb_3")
+            st.checkbox("Dokážu navrhnout základ podnikatelského záměru.", key="chk_seb_4")
+            st.checkbox("Umím použít Lean Canvas na jednoduchý nápad.", key="chk_seb_5")
+            st.checkbox("Chápu, proč je důležitá etika, CSR a férové podnikání.", key="chk_seb_6")
+            st.checkbox("Umím ověřit základní údaje o firmě v online rejstříku.", key="chk_seb_7")
+
+            if st.button("Uložit sebehodnocení 💾", key="btn_reflexe_sebehodnoceni"):
+                zvladnute = []
+                if st.session_state.get("chk_seb_1"): zvladnute.append("Podnikání & podnikatel")
+                if st.session_state.get("chk_seb_2"): zvladnute.append("Rozlišení právních forem")
+                if st.session_state.get("chk_seb_3"): zvladnute.append("FO vs PO")
+                if st.session_state.get("chk_seb_4"): zvladnute.append("Podnikatelský záměr")
+                if st.session_state.get("chk_seb_5"): zvladnute.append("Lean Canvas")
+                if st.session_state.get("chk_seb_6"): zvladnute.append("Etika & CSR")
+                if st.session_state.get("chk_seb_7"): zvladnute.append("Ověření v rejstříku")
+                
+                res_text = f"Zvládnuté dovednosti ({len(zvladnute)}/7): " + ", ".join(zvladnute)
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 13 - Sebehodnocení", res_text)
+
+    # --- 15. Integrované opakování ---
     elif "15. Integrované opakování" in selected_section or "Integrované" in selected_section:
         st.markdown("<div class='sub-section-header'>ZÁVĚREČNÝ MODUL</div><h2>15. Integrované opakování: od nápadu k odpovědnému podnikání</h2>", unsafe_allow_html=True)
         
@@ -2113,6 +2148,17 @@ def render():
                 st.text_input("4. Co bych musel/a zjistit, než bych začal/a?", key="posun_4")
                 st.text_input("5. Podle čeho poznám, že můj nápad má smysl?", key="posun_5")
 
+            if st.button("Uložit posun v podnikavosti 💾", key="btn_posun"):
+                posun_data = (
+                    f"1: {st.session_state.get('posun_1', '')} | "
+                    f"2: {st.session_state.get('posun_2', '')} | "
+                    f"3: {st.session_state.get('posun_3', '')} | "
+                    f"4: {st.session_state.get('posun_4', '')} | "
+                    f"5: {st.session_state.get('posun_5', '')}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.1 - Posun v podnikavosti", posun_data)
+
         # 15.2 & 15.3 Podnikatel očima různých lidí
         with st.container(border=True):
             st.markdown("### 👥 15.2 Podnikatel očima různých lidí")
@@ -2132,6 +2178,14 @@ def render():
             st.markdown("#### 🎭 Aktivita: Jedna firma, osm pohledů")
             st.text_area("Vyber si jeden nápad a napiš 3 klíčové otázky, které by položily různé role (např. Zákazník, Investor, Stát):", key="akt_8pohledu")
 
+            if st.button("Uložit 8 pohledů na firmu 💾", key="btn_8pohledu"):
+                odp = st.session_state.get("akt_8pohledu", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.2 - Jedna firma 8 pohledů", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
         # 15.4 & 15.5 Praxe OSVČ a Obchodních korporací
         with st.container(border=True):
             st.markdown("### 💼 15.3 OSVČ vs. Obchodní korporace v praxi")
@@ -2149,8 +2203,8 @@ def render():
             
             col_calc1, col_calc2 = st.columns(2)
             with col_calc1:
-                rezerva_naklady = st.number_input("Přidej % na provozní náklady (nájem, počítač, licence a software):", value=20)
-                rezerva_vypadky = st.number_input("Přidej % na rezervu (nemoc, období bez zakázek):", value=15)
+                rezerva_naklady = st.number_input("Přidej % na provozní náklady (nájem, počítač, licence a software):", value=20, key="m15_naklady")
+                rezerva_vypadky = st.number_input("Přidej % na rezervu (nemoc, období bez zakázek):", value=15, key="m15_vypadky")
             
             doporucena_sazba = zakladni_sazba * (1 + (rezerva_naklady + rezerva_vypadky) / 100)
             
@@ -2158,9 +2212,22 @@ def render():
                 st.metric("Doporučená reálná hodinová sazba", f"{doporucena_sazba:.0f} Kč / hod")
                 st.caption("Tuhle částku musíš účtovat zákazníkovi, aby ti po odečtení nákladů a rizik zůstalo 35 000 Kč.")
 
+            if st.button("Uložit výpočet sazby OSVČ 💾", key="btn_m15_sazba"):
+                calc_res = f"Provozní náklady: {rezerva_naklady}% | Rezerva výpadky: {rezerva_vypadky}% | Výsledná sazba: {doporucena_sazba:.0f} Kč/h"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.3 - Kalkulace sazby OSVČ", calc_res)
+
             st.markdown("---")
             st.markdown("#### 🤝 Aktivita: Zakladatelská dohoda společníků (s.r.o.)")
             st.text_area("Napiš 3 nejdůležitější pravidla do zakladatelské dohody (např. co se stane, když jeden společník nepracuje nebo chce odejít):", key="dohoda_spolecniku")
+
+            if st.button("Uložit zakladatelskou dohodu 💾", key="btn_dohoda_spolecniku"):
+                odp = st.session_state.get("dohoda_spolecniku", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.3 - Zakladatelská dohoda", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
 
         # 15.6 - 15.10 Lean Canvas, Finance & Ekonomika sdílení
         with st.container(border=True):
@@ -2177,9 +2244,18 @@ def render():
             st.markdown("#### 📈 Aktivita: Lajk, nebo zákazník? (Vanity vs. Reálné metriky)")
             col_m1, col_m2 = st.columns(2)
             with col_m1:
-                st.text_area("apiš 3 'vanity metriky' (čísla, která vypadají hezky, ale nepřinášejí reálný zisk):", placeholder="např. počet lajků, zhlédnutí...", key="metriky_vanity")
+                st.text_area("Napiš 3 'vanity metriky' (čísla, která vypadají hezky, ale nepřinášejí reálný zisk):", placeholder="např. počet lajků, zhlédnutí...", key="metriky_vanity")
             with col_m2:
                 st.text_area("Napiš 3 metriky reálného zájmu:", placeholder="např. předobjednávka, zaplacená záloha...", key="metriky_realne")
+
+            if st.button("Uložit metriky 💾", key="btn_metriky"):
+                v_met = st.session_state.get("metriky_vanity", "")
+                r_met = st.session_state.get("metriky_realne", "")
+                if v_met.strip() or r_met.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.4 - Vanity vs Reálné metriky", f"Vanity: {v_met} | Reálné: {r_met}")
+                else:
+                    st.warning("Před uložením vyplň alespoň jedno pole s metriky!")
 
             st.markdown("#### 🏠 Ekonomika sdílení (Airbnb, Uber, Coworking)")
             st.write("Ekonomika sdílení využívá nevyužité kapacity. Není to ale 'peníze zadarmo' — i zde vznikají skryté náklady (amortizace, úklid, provize platformě, daně).")
@@ -2204,14 +2280,27 @@ def render():
             with col_r2:
                 st.markdown("#### 🕵️ Detektiv Švarcsystému")
                 st.write("Posouzení pracovního vztahu:")
-                svarc_check = st.checkbox("Pracovník používá počítač a e-mail firmy, chodí na pevně stanovenou pracovní dobu a má jediného klienta.")
+                svarc_check = st.checkbox("Pracovník používá počítač a e-mail firmy, chodí na pevně stanovenou pracovní dobu a má jediného klienta.", key="svarc_chk_15")
                 if svarc_check:
                     st.error("🚨 VYSOKÉ RIZIKO ŠVARCSYSTÉMU! Vztah vykazuje známky závislé práce a měl by být řešen pracovní smlouvou.")
+
+            if st.button("Uložit rizikový semafor 💾", key="btn_m15_rizika"):
+                riz_res = f"Riziko: {st.session_state.get('riziko_1', '')} | Opatření: {st.session_state.get('opatreni_1', '')}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.5 - Rizikový semafor", riz_res)
 
             st.markdown("---")
             st.markdown("#### 🔍 Ověřování firem v rejstřících")
             st.text_input("Zadej název nebo IČO firmy, kterou chceš prověřit:", key="proverka_ico")
             st.caption("Při prověřování firmy vždy kontroluj: ARES/Obchodní rejstřík, Insolvenční rejstřík, Registr plátců DPH a reálné recenze.")
+
+            if st.button("Uložit prověrku firmy 💾", key="btn_m15_proverka"):
+                odp = st.session_state.get("proverka_ico", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.5 - Prověrka IČO", odp)
+                else:
+                    st.warning("Před uložením zadej název nebo IČO firmy!")
 
         # 15.17 - 15.22 Case Studies & Velká Podnikatelská Mise
         with st.container(border=True):
@@ -2222,7 +2311,7 @@ def render():
                 st.markdown("""
                 * **Náklady na 1 batoh:** Čištění (20 Kč) + Oprava (30 Kč) + Personalizace (25 Kč) + Propagace (10 Kč) + Rezerva (15 Kč) = **100 Kč/kus**
                 * **Prodejní cena:** 180 Kč až 250 Kč podle stavu.
-                * **Férovost (Anti-Greenwashing):** U každého batohu je jasně uveden jeho původní stav a co na něm bylo opraveno. Netvrdíme 'zachraňujeme planetu', ale 'prodlužujeme životnost konkrétního věci'.
+                * **Férovost (Anti-Greenwashing):** U každého batohu je jasně uveden jeho původní stav a co na něm bylo opraveno. Netvrdíme 'zachraňujeme planetu', ale 'prodlužujeme životnost konkrétní věci'.
                 """)
 
             st.markdown("#### 🎤 Aktivita: Pitch ve 3 verzích")
@@ -2230,6 +2319,18 @@ def render():
             st.text_input("Pitch pro spolužáka (neformální):", key="pitch_spoluzak")
             st.text_input("Pitch pro zákazníka (zaměřeno na užitek):", key="pitch_zakaznik")
             st.text_input("Pitch pro investora/učitele (zaměřeno na čísla a logiku):", key="pitch_investor")
+
+            if st.button("Uložit 3 verze pitchů 💾", key="btn_pitche"):
+                pitch_data = (
+                    f"Spolužák: {st.session_state.get('pitch_spoluzak', '')} | "
+                    f"Zákazník: {st.session_state.get('pitch_zakaznik', '')} | "
+                    f"Investor: {st.session_state.get('pitch_investor', '')}"
+                )
+                if any(st.session_state.get(k, "").strip() for k in ["pitch_spoluzak", "pitch_zakaznik", "pitch_investor"]):
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.6 - Pitch ve 3 verzích", pitch_data)
+                else:
+                    st.warning("Napiš alespoň jednu verzi pitche před uložením!")
 
         # Závěrečný Kvíz & Sebehodnocení
         with st.container(border=True):
@@ -2239,11 +2340,13 @@ def render():
             # Kvízové otázky přes expandery
             with st.expander("1. Student prodává náramky a sám nese riziko neprodaných zásob. O který znak podnikání jde?"):
                 q1 = st.radio("Vyber odpověď:", ["Soustavnost", "Vlastní odpovědnost", "Vlastní jméno", "Dosažení 18 let"], key="q1")
-                if st.button("Zkontrolovat Otázku 1"):
+                if st.button("Zkontrolovat Otázku 1", key="btn_q1"):
                     if q1 == "Vlastní odpovědnost":
                         st.success("Správně! Podnikatel nese riziko ztráty nebo špatných rozhodnutí sám.")
                     else:
                         st.error("Špatně. Jedná se o Vlastní odpovědnost.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Závěrečný kvíz - Otázka 1", f"Volba: {q1}")
 
             with st.expander("2. Jaký je hlavní rozdíl v ručení mezi OSVČ a společníkem s.r.o.?"):
                 q2 = st.radio("Vyber odpověď:", [
@@ -2252,20 +2355,24 @@ def render():
                     "OSVČ ručí celým osobním majetkem, společník s.r.o. primárně do výše nesplaceného vkladu.",
                     "OSVČ ručí pouze do 100 000 Kč."
                 ], key="q2")
-                if st.button("Zkontrolovat Otázku 2"):
+                if st.button("Zkontrolovat Otázku 2", key="btn_q2"):
                     if "OSVČ ručí celým osobním majetkem" in q2:
                         st.success("Správně! OSVČ nerozděluje osobní a firemní majetek.")
                     else:
                         st.error("Špatně. Správná je odpověď s ručením celým osobním majetkem u OSVČ.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Závěrečný kvíz - Otázka 2", f"Volba: {q2}")
 
             with st.expander("3. Rychlá kalkulace: Bod zvratu (Break-even point)"):
                 st.write("Prodejní cena obalu = 200 Kč | Variabilní náklady = 120 Kč | Měsíční fixní náklady = 2 400 Kč")
                 odpoved_bv = st.number_input("Kolik kusů obalů musíš měsíčně prodat, aby byl projekt na nule (v bodu zvratu)?", min_value=0, step=1, key="bv_input")
-                if st.button("Zkontrolovat výpočet bodu zvratu"):
+                if st.button("Zkontrolovat výpočet bodu zvratu", key="btn_bv"):
                     if odpoved_bv == 30:
                         st.success("🎉 Skvěle! Marže na kus je 80 Kč (200 - 120). Fixní náklady 2 400 / 80 = přesně 30 kusů!")
                     else:
                         st.error("Zkus to znovu. Nápověda: Nejdřív spočítej marži na 1 kus (Cena - Variabilní náklady) a pak jí vyděl fixní náklady.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Závěrečný kvíz - Bod zvratu", f"Odpověď: {odpoved_bv} kusů")
 
             st.markdown("---")
             st.markdown("#### ✅ Kontrolní checklist odpovědného podnikatele")
@@ -2276,4 +2383,17 @@ def render():
             st.checkbox("Mám navržený test hypotézy (MVP).", key="chk_5")
             st.checkbox("Nepoužívám zavádějící marketing ani greenwashing.", key="chk_6")
             st.checkbox("Vím, jak ověřit firmu ve veřejných rejstřících (ARES, OR, IR).", key="chk_7")
-           # ==========================================
+
+            if st.button("Uložit závěrečný checklist 💾", key="btn_checklist_m15"):
+                chk_items = []
+                if st.session_state.get("chk_1"): chk_items.append("Problém a zákazník")
+                if st.session_state.get("chk_2"): chk_items.append("Důkaz zájmu")
+                if st.session_state.get("chk_3"): chk_items.append("Kalkulace a bod zvratu")
+                if st.session_state.get("chk_4"): chk_items.append("OSVČ vs s.r.o.")
+                if st.session_state.get("chk_5"): chk_items.append("MVP test")
+                if st.session_state.get("chk_6"): chk_items.append("Férový marketing")
+                if st.session_state.get("chk_7"): chk_items.append("Prověrka rejstříků")
+                
+                chk_res = f"Splněno ({len(chk_items)}/7): " + ", ".join(chk_items)
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Závěrečný checklist podnikatele", chk_res)
