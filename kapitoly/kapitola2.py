@@ -5731,7 +5731,7 @@ def render():
                 st.success("Tvá analýza scénáře byla uložena.")
 
 
-    # =========================================================================
+# =========================================================================
     # 5.11 PRAKTICKÁ AKTIVITA: FINANČNÍ MANAŽER NA 45 MINUT
     # =========================================================================
     elif selected_section_2.startswith("5.11"):
@@ -5757,6 +5757,15 @@ def render():
             p_prijmy = st.text_input("Jak z toho máte příjmy (jednorázový prodej, předplatné, reklama)?", key="fm_prijmy")
             p_naklady = st.text_area("Jaké jsou vaše 3 největší náklady?", key="fm_naklady")
 
+            if st.button("Uložit popis podniku (Krok 1) 💾", key="btn_fm_krok1"):
+                krok1_data = f"Firma: {p_nazev} | Produkt: {p_co} | Cílovka: {p_komu} | Příjmy: {p_prijmy} | Náklady: {p_naklady}"
+                if p_nazev.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Krok 1 Podnik", krok1_data)
+                    st.success("Popis podniku byl uložen!")
+                else:
+                    st.warning("Vyplň alespoň název firmy!")
+
         with tab2:
             st.markdown("### Krok 2: Doplňte finanční čísla")
             st.write("Dohodněte se na odhadovaných číslech pro 1 kalendářní rok. Zkuste být realističtí.")
@@ -5780,6 +5789,12 @@ def render():
                 v_penize = st.number_input("Z toho Peníze na účtu [Kč]", value=50000, step=5000, key="fm_penize")
                 v_pohl = st.number_input("Z toho Pohledávky [Kč]", value=40000, step=5000, key="fm_pohl")
                 v_kz = st.number_input("Krátkodobé závazky [Kč]", value=80000, step=5000, key="fm_kz")
+
+            if st.button("Uložit čísla podniku (Krok 2) 💾", key="btn_fm_krok2"):
+                krok2_data = f"Tržby: {v_trzby} | Náklady: {v_naklady} | Zisk: {v_zisk} | Aktiva: {v_aktiva} | VK: {v_vk} | CZ: {v_cz}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Krok 2 Čísla", krok2_data)
+                st.success("Finanční čísla byla uložena!")
 
         with tab3:
             st.markdown("### Krok 3: Automatické výpočty (Analýza)")
@@ -5816,10 +5831,13 @@ def render():
             z_doporuceni = st.text_area("4. Jaké jedno opatření byste doporučili vedení firmy udělat ihned?", key="fm_z4")
             
             if st.button("Generovat a uložit finální report 💾", type="primary", key="btn_fm_report"):
-                st.success("Tento report byl úspěšně uložen do databáze!")
+                nazev_val = st.session_state.get("fm_nazev", "Nezadáno")
+                co_val = st.session_state.get("fm_co", "Nezadáno")
+                komu_val = st.session_state.get("fm_komu", "Nezadáno")
+                
                 report_str = f"""
-**Analýza firmy:** {p_nazev if p_nazev else 'Nezadáno'}  
-**Byznys model:** Prodáváme {p_co} pro {p_komu}.
+**Analýza firmy:** {nazev_val}  
+**Byznys model:** Prodáváme {co_val} pro {komu_val}.
                 
 **Klíčové metriky:** ROS = {ros:.1f} %, Zadluženost = {zadl:.1f} %, Likvidita = {bl:.2f}.
                 
@@ -5828,10 +5846,10 @@ Silnou stránkou je *{z_silna if z_silna else '...'}*. Naopak bojujeme s *{z_sla
 V nejbližších měsících si musíme dát pozor na *{z_riziko if z_riziko else '...'}*.
 Naše doporučení pro majitele zní: **{z_doporuceni if z_doporuceni else '...'}**
 """
+                st.success("Tento report byl úspěšně uložen do databáze!")
                 st.markdown(report_str)
                 if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Finanční manažer", report_str)
-
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Finanční manažer (Finální report)", report_str)
 
     # =========================================================================
     # 5.12 SHRNUTÍ A AI MENTORING
