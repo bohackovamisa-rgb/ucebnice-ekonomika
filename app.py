@@ -391,9 +391,9 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-# --- TAB 3: VÝSLEDKY ZE SIMULÁTORU (STRIKTNÍ FILTR DLE NICKU) ---
+# --- TAB 3: ŽIVÝ ŽEBRÍČEK INVESTIC (SEŘAZENO DLE VÝSLEDKŮ) ---
     with tab_investice:
-        st.markdown("### 📈 Portfolia a obchody žáků v Investičním simulátoru")
+        st.markdown("### 🏆 Živý žebříček investic")
         try:
             # 1. Načtení tříd učitele ze Supabase
             t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
@@ -402,21 +402,20 @@ if st.session_state["current_view"] == "Ucitel_Panel":
             if not list_trid:
                 st.info("Nejprve vytvořte třídu v záložce 'Správa a tvorba tříd'.")
             else:
-                vybrana_trida_inv = st.selectbox("Vyberte třídu pro náhled investic:", list_trid, key="sel_trida_inv")
+                vybrana_trida_inv = st.selectbox("Vyberte třídu pro náhled žebříčku:", list_trid, key="sel_trida_inv")
                 
-                # 2. Zjištění unikatních Nicků (usernames) žáků ve vybrané třídě
-                zaci_res = supabase.table("uzivatele").select("username").eq("trida", vybrana_trida_inv).execute()
-                zaci_nicky = [str(z.get("username", "")).strip().lower() for z in zaci_res.data] if zaci_res.data else []
+                # 2. Zjištění Nicků a Jmen žáků ve vybrané třídě
+                zaci_res = supabase.table("uzivatele").select("username, jmeno").eq("trida", vybrana_trida_inv).execute()
+                zaci_dict = {str(z.get("username", "")).strip().lower(): z.get("jmeno", "Žák") for z in zaci_res.data} if zaci_res.data else {}
+                zaci_nicky = list(zaci_dict.keys())
 
-                # 3. Načtení dat z Google Sheets
                 import gspread
                 import json
+                import yfinance as yf
 
+                # 3. Načtení dat z Google Sheets
                 raw_creds = st.secrets["google_credentials"]
-                if isinstance(raw_creds, str):
-                    tajemstvi = json.loads(raw_creds)
-                else:
-                    tajemstvi = dict(raw_creds)
+                tajemstvi = json.loads(raw_creds) if isinstance(raw_creds, str) else dict(raw_creds)
                     
                 if "private_key" in tajemstvi:
                     tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
@@ -429,23 +428,81 @@ if st.session_state["current_view"] == "Ucitel_Panel":
                 df_inv = pd.DataFrame(data_inv)
                 
                 if not df_inv.empty:
-                    # Striktní filtr: Pouze žáci (ne učitelé), s platným Nickem ze Supabase
-                    def je_z_vybrane_tridy(row):
+                    # Definice aktiv a jejich tickerů
+                    AKTIVA_MAP = {
+                        "AAPL": ("AAPL", "USD"), "TSLA": ("TSLA", "USD"), "MSFT": ("MSFT", "USD"),
+                        "GOOGL": ("GOOGL", "USD"), "AMZN": ("AMZN", "USD"), "NVDA": ("NVDA", "USD"),
+                        "META": ("META", "USD"), "CEZ": ("CEZ.PR", "CZK"), "BTC": ("BTC-USD", "USD"), "ETH": ("ETH-USD", "USD")
+                    }
+
+                    # Stažení živých kurzů trhu
+                    with st.spinner("Načítám aktuální ceny akcií a kryptoměn z burzy..."):
+                        try:
+                            kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
+                        except Exception:
+                            kurz_usd = 23.5
+
+                        ceny_aktiv = {}
+                        for db_col, (ticker, mena) in AKTIVA_MAP.items():
+                            try:
+                                cena = yf.Ticker(ticker).history(period="1d")['Close'].iloc[-1]
+                                ceny_aktiv[db_col] = cena * kurz_usd if mena == "USD" else cena
+                            except Exception:
+                                ceny_aktiv[db_col] = 0.0
+
+                    # Výpočet majetku a zisku pro žáky vybrané třídy
+                    zebricek_data = []
+                    
+                    for _, row in df_inv.iterrows():
                         role = str(row.get("Role", "")).strip().upper()
                         nick = str(row.get("Nick", "")).strip().lower()
                         
-                        if role == "UCITEL" or not nick:
-                            return False
-                        
-                        return nick in zaci_nicky
+                        if role == "UCITEL" or not nick or nick not in zaci_nicky:
+                            continue
 
-                    df_inv_filtr = df_inv[df_inv.apply(je_z_vybrane_tridy, axis=1)]
-
-                    if not df_inv_filtr.empty:
-                        st.markdown(f"#### 💼 Portfolia žáků třídy **{vybrana_trida_inv}**")
-                        st.dataframe(df_inv_filtr, use_container_width=True)
+                        jmeno_zaka = zaci_dict.get(nick, row.get("Jmeno", "Žák"))
+                        zustatek = float(row.get("Zustatek", 0.0))
                         
-                        # Filtrování historie obchodů podle Nicku
+                        # Spočítání hodnoty držených akcií a kryptoměn
+                        hodnota_aktiv = 0.0
+                        for db_col, cena in ceny_aktiv.items():
+                            ks = float(row.get(db_col, 0.0))
+                            if ks > 0:
+                                hodnota_aktiv += (ks * cena)
+
+                        celkovy_majetek = zustatek + hodnota_aktiv
+                        zisk_ztrata = celkovy_majetek - 20000.0  # Počáteční vklad byl 20 000 Kč
+
+                        zebricek_data.append({
+                            "Žák": f"{jmeno_zaka} ({nick})",
+                            "Celkový majetek": round(celkovy_majetek, 2),
+                            "Zisk / Ztráta": round(zisk_ztrata, 2),
+                            "Volná hotovost": round(zustatek, 2)
+                        })
+
+                    if zebricek_data:
+                        df_zebricek = pd.DataFrame(zebricek_data)
+                        
+                        # SERAZENÍ OD NEJVYŠŠÍHO MAJETKU
+                        df_zebricek = df_zebricek.sort_values(by="Celkový majetek", ascending=False).reset_index(drop=True)
+                        df_zebricek.index += 1  # Pořadí 1, 2, 3...
+                        df_zebricek.index.name = "Pořadí"
+
+                        # Barevné odlišení zisku / ztráty
+                        def barva_zisku(val):
+                            color = '#22c55e' if val > 0 else '#ef4444' if val < 0 else '#78716c'
+                            return f'color: {color}; font-weight: bold;'
+
+                        df_styled = df_zebricek.style.map(barva_zisku, subset=["Zisk / Ztráta"]).format({
+                            "Celkový majetek": "{:,.2f} Kč",
+                            "Zisk / Ztráta": "{:+,.2f} Kč",
+                            "Volná hotovost": "{:,.2f} Kč"
+                        })
+
+                        st.markdown(f"#### 🥇 Výsledky třídy **{vybrana_trida_inv}**")
+                        st.dataframe(df_styled, use_container_width=True)
+
+                        # Načtení historie obchodů
                         try:
                             sheet_trans = soubor.worksheet("Transakce")
                             data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
@@ -454,14 +511,12 @@ if st.session_state["current_view"] == "Ucitel_Panel":
                                 df_trans_filtr = df_trans[df_trans["Nick"].astype(str).str.strip().str.lower().isin(zaci_nicky)]
                                 
                                 if not df_trans_filtr.empty:
-                                    st.markdown("#### 📜 Historie obchodů žáků této třídy")
-                                    st.dataframe(df_trans_filtr, use_container_width=True)
-                                else:
-                                    st.caption("Žáci této třídy zatím neprovedli žádné obchody.")
+                                    with st.expander("📜 Historie všech obchodu třídy"):
+                                        st.dataframe(df_trans_filtr, use_container_width=True)
                         except Exception:
                             pass
                     else:
-                        st.info(f"Ve třídě **{vybrana_trida_inv}** zatím žádný žák v simulátoru neinvestoval.")
+                        st.info(f"Ve třídě **{vybrana_trida_inv}** zatím žádný žák nezačal investovat.")
                 else:
                     st.info("Databáze simulátoru je zatím prázdná.")
         except Exception as e:
