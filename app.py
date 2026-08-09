@@ -14,7 +14,7 @@ def ocisti_username(text: str) -> str:
     return text.strip().lower()
 
 # =========================================================================
-# 1. KONFIGURACE STRÁNKY
+# 1. KONFIGURACE STRÁNKY & INICIALIZACE
 # =========================================================================
 st.set_page_config(
     page_title="Učebnice ekonomiky",
@@ -22,6 +22,28 @@ st.set_page_config(
     layout="wide"
 )
 
+# Inicializace výchozích proměnných v paměti relace
+if "is_logged_in" not in st.session_state:
+    st.session_state["is_logged_in"] = False
+if "username" not in st.session_state:
+    st.session_state["username"] = ""
+if "user_name" not in st.session_state:
+    st.session_state["user_name"] = "Uživatel"
+if "user_role" not in st.session_state:
+    st.session_state["user_role"] = "student"
+if "user_class" not in st.session_state:
+    st.session_state["user_class"] = ""
+
+# Pomocná funkce pro ošetření diakritiky v uživatelském jméně
+import unicodedata
+
+def ocisti_username(text: str) -> str:
+    if not text:
+        return ""
+    text = unicodedata.normalize('NFD', text)
+    text = ''.join(c for c in text if unicodedata.category(c) != 'Mn')
+    return text.strip().lower()
+    
 # =========================================================================
 # 2. PROPOJENÍ S DATABÁZÍ SUPABASE
 # =========================================================================
@@ -216,8 +238,8 @@ with st.sidebar:
         </div>
         <div style='background-color: #F2EFE9; padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #EAE7DC;'>
             <div style='font-size: 0.75rem; color: #78716C; font-weight: 600;'>PŘIHLÁŠEN(A):</div>
-            <div style='font-size: 0.95rem; font-weight: 700; color: #1C1917;'>👤 {st.session_state['user_name']}</div>
-            <div style='font-size: 0.8rem; color: #44403C;'>Role: {st.session_state['user_role'].capitalize()} {f"({st.session_state['user_class']})" if st.session_state.get('user_class') else ""}</div>
+            <div style='font-size: 0.95rem; font-weight: 700; color: #1C1917;'>👤 {st.session_state.get('user_name', 'Uživatel')}</div>
+            <div style='font-size: 0.8rem; color: #44403C;'>Role: {st.session_state.get('user_role', 'student').capitalize()} {f"({st.session_state.get('user_class', '')})" if st.session_state.get('user_class') else ""}</div>
         </div>
         """,
         unsafe_allow_html=True,
