@@ -1863,7 +1863,7 @@ def render():
                 🚫 <strong>Častá chyba:</strong> Investovat nouzovou rezervu do rizikových aktiv. Když pak přijde problém, může být človek nucen prodat v nevýhodnou chvíli se ztrátou.
             </div>
             """, unsafe_allow_html=True)
-    # =========================================================================
+# =========================================================================
     # 2.6 PSYCHOLOGIE UTRÁCENÍ
     # =========================================================================
     elif "2.6 Psychologie" in selected_section_2:
@@ -1903,6 +1903,14 @@ def render():
 
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Najdi jednu reklamu nebo nabídku, která tě nedávno zaujala. Popiš, jakou emoci používá: strach, radost, tlak na výkon, pocit výhodné koupě, krásu, úspěch, pohodlí nebo srovnávání s ostatními.</div>", unsafe_allow_html=True)
             st.text_area("Popis reklamy a emoce, kterou využívala:", key="k2_ad_emotion_analysis")
+            
+            if st.button("Uložit analýzu reklamy 💾", key="btn_k2_ad_emotion"):
+                odp = st.session_state.get("k2_ad_emotion_analysis", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.6.2 - Analýza reklamy a emoce", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
 
     # =========================================================================
     # 2.7 KALKULAČKA ČASU NÁKUPU
@@ -1932,6 +1940,11 @@ def render():
                 hours_needed = price_item / wage_hourly
                 st.metric("Počet hodin práce nutný na tento nákup", f"{hours_needed:.1f} hodin")
                 st.info(f"👉 Aby sis mohl/a koupit tuto věc za **{price_item} Kč**, musíš strávit v práci **{hours_needed:.1f} hodin**. Stojí ti to za ten čas?")
+                
+                if st.button("Uložit výpočet času nákupu 💾", key="btn_k2_time_calc"):
+                    time_data = f"Cena věci: {price_item} Kč | Hodinová mzda: {wage_hourly} Kč/h | Potřebný čas: {hours_needed:.1f} h"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.7 - Kalkulačka času", time_data)
 
     # =========================================================================
     # 2.8 OSOBNÍ FINANČNÍ AUDIT
@@ -1952,6 +1965,21 @@ def render():
             st.checkbox("6. Chápu, že inflace snižuje kupní sílu peněz.", key="k2_audit_chk6")
             st.checkbox("7. Umím přepočítat cenu věci na hodiny práce.", key="k2_audit_chk7")
             st.checkbox("8. Vím, že digitální prostředí ovlivňuje moje finanční rozhodování.", key="k2_audit_chk8")
+            
+            if st.button("Uložit výsledek auditu 💾", key="btn_k2_audit"):
+                splneno = []
+                if st.session_state.get("k2_audit_chk1"): splneno.append("Příjmy")
+                if st.session_state.get("k2_audit_chk2"): splneno.append("Výdaje")
+                if st.session_state.get("k2_audit_chk3"): splneno.append("Předplatná")
+                if st.session_state.get("k2_audit_chk4"): splneno.append("Rezerva")
+                if st.session_state.get("k2_audit_chk5"): splneno.append("Potřeby a přání")
+                if st.session_state.get("k2_audit_chk6"): splneno.append("Inflace")
+                if st.session_state.get("k2_audit_chk7"): splneno.append("Časová cena nákupu")
+                if st.session_state.get("k2_audit_chk8"): splneno.append("Digitální vlivy")
+                
+                audit_res = f"Splněné body ({len(splneno)}/8): " + ", ".join(splneno)
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.8 - Finanční audit", audit_res)
 
             st.markdown("""
             <div class='box-purple'>
@@ -1959,10 +1987,11 @@ def render():
                 <em>„Pomoz mi udělat osobní finanční audit. Zeptej se mě postupně na příjmy, pravidelné výdaje, předplatná, rezervu, dluhy a finanční cíle. Na konci mi navrhni tři malé změny na příští měsíc.“</em>
             </div>
             """, unsafe_allow_html=True)
-# =========================================================================
+
+    # =========================================================================
     # 3. FINANČNÍ TRH A ANALÝZA RIZIK
     # =========================================================================
-# =========================================================================
+    # =========================================================================
     # 3.1 CO JE TO FINANČNÍ TRH A BURZA
     # =========================================================================
     elif "3.1 Co je" in selected_section_2:
@@ -2207,10 +2236,15 @@ def render():
             rep_firma = st.text_input("Zadej typickou firmu / cenný papír pro report:", value="ČEZ", key="k3_rep_firm")
             rep_riziko = st.text_input("Hlavní riziko pro běžného investora:", value="Tržní propad a volatilita", key="k3_rep_riziko")
             
-            if st.button("Vygenerovat výstup reportéra", key="k3_rep_btn"):
-                st.success(f"🎙️ **Zpráva z trhu {rep_market}:** „Dobrý den, hlásíme se ze světa financí! Dnes se pozornost investorů zaměřila na {rep_firma}. Nezapomínejme ale na klíčová rizika, mezi kterými dominuje {rep_riziko}. Investujte opatrně, přejeme vám úspěšný den a vracíme slovo do studia!“")
+            if st.button("Vygenerovat a uložit výstup reportéra 💾", key="btn_k3_rep"):
+                zprava = f"🎙️ **Zpráva z trhu {rep_market}:** „Dobrý den, hlásíme se ze světa financí! Dnes se pozornost investorů zaměřila na {rep_firma}. Nezapomínejme ale na klíčová rizika, mezi kterými dominuje {rep_riziko}. Investujte opatrně, přejeme vám úspěšný den a vracíme slovo do studia!“"
+                st.success(zprava)
+                
+                rep_data = f"Trh: {rep_market} | Firma: {rep_firma} | Riziko: {rep_riziko}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 3.1 - Burzovní reportér", rep_data)
+                    
             st.caption("Výstup: Krátká zpráva ve stylu ekonomického podcastu pro spolužáky.")
-
 # =========================================================================
     # 3.2 VÝNOS, RIZIKO, LIKVIDITA A ČAS
     # =========================================================================
