@@ -1424,7 +1424,7 @@ def render():
                     st.warning("Vyplň alespoň název projektu před uložením!")
 
             st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
-    # --- 7. Lean Canvas ---
+# --- 7. Lean Canvas ---
     elif "7. Lean Canvas" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div><h2>7. Lean Canvas</h2>", unsafe_allow_html=True)
         
@@ -1440,6 +1440,14 @@ def render():
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu: „Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…“</div>", unsafe_allow_html=True)
             st.text_input("Tvoje hypotéza:", key="lean_hypoteza")
             
+            if st.button("Uložit hypotézu 💾", key="btn_lean_hypoteza"):
+                odp = st.session_state.get("lean_hypoteza", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 7.0 - Lean Canvas hypotéza", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi převést můj Lean Canvas na ověřitelné hypotézy. U každé napiš test, metriku úspěchu, riziko špatné interpretace a rozhodnutí, co udělat, když test nevyjde.“
@@ -1522,18 +1530,37 @@ def render():
             
             lc_col1, lc_col2, lc_col3 = st.columns(3)
             with lc_col1:
-                st.text_area("🔴 Problém (Co řešíme?)", height=150)
-                st.text_area("🟢 Řešení (Jak to řešíme?)", height=150)
-                st.text_area("🌸 Náklady (Co nás to bude stát?)", height=150)
+                st.text_area("🔴 Problém (Co řešíme?)", height=150, key="lc_problem")
+                st.text_area("🟢 Řešení (Jak to řešíme?)", height=150, key="lc_reseni")
+                st.text_area("🌸 Náklady (Co nás to bude stát?)", height=150, key="lc_naklady")
             with lc_col2:
-                st.text_area("🟡 Unikátní hodnota (Proč my?)", height=150)
-                st.text_area("⚪ Metriky (Jak poznáme úspěch?)", height=150)
-                st.text_area("🟤 Neférová výhoda (Naše eso v rukávu)", height=150)
+                st.text_area("🟡 Unikátní hodnota (Proč my?)", height=150, key="lc_hodnota")
+                st.text_area("⚪ Metriky (Jak poznáme úspěch?)", height=150, key="lc_metriky")
+                st.text_area("🟤 Neférová výhoda (Naše eso v rukávu)", height=150, key="lc_vyhoda")
             with lc_col3:
-                st.text_area("🟠 Zákazník (Kdo to koupí?)", height=150)
-                st.text_area("🔵 Kanály (Kudy k zákazníkovi?)", height=150)
-                st.text_area("🟣 Příjmy (Jak vyděláme?)", height=150)
-   # --- 8. CSR, etika a odpovědné podnikání ---
+                st.text_area("🟠 Zákazník (Kdo to koupí?)", height=150, key="lc_zakaznik")
+                st.text_area("🔵 Kanály (Kudy k zákazníkovi?)", height=150, key="lc_kanaly")
+                st.text_area("🟣 Příjmy (Jak vyděláme?)", height=150, key="lc_prijmy")
+                
+            if st.button("Uložit Lean Canvas 💾", key="btn_lc_komplet"):
+                lc_data = (
+                    f"Problém: {st.session_state.get('lc_problem', '')} | "
+                    f"Řešení: {st.session_state.get('lc_reseni', '')} | "
+                    f"Náklady: {st.session_state.get('lc_naklady', '')} | "
+                    f"Hodnota: {st.session_state.get('lc_hodnota', '')} | "
+                    f"Metriky: {st.session_state.get('lc_metriky', '')} | "
+                    f"Výhoda: {st.session_state.get('lc_vyhoda', '')} | "
+                    f"Zákazník: {st.session_state.get('lc_zakaznik', '')} | "
+                    f"Kanály: {st.session_state.get('lc_kanaly', '')} | "
+                    f"Příjmy: {st.session_state.get('lc_prijmy', '')}"
+                )
+                if any(st.session_state.get(k, "").strip() for k in ["lc_problem", "lc_reseni", "lc_zakaznik"]):
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 7.9 - Interaktivní Lean Canvas", lc_data)
+                else:
+                    st.warning("Před uložením vyplň alespoň problém, řešení nebo zákazníka!")
+
+    # --- 8. CSR, etika a odpovědné podnikání ---
     elif "8. CSR, etika a odpovědné podnikání" in selected_section or "Odpovědné podnikání" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 8</div><h2>8. CSR, etika a odpovědné podnikání (ESG)</h2>", unsafe_allow_html=True)
         
@@ -1569,9 +1596,17 @@ def render():
             st.write("ESG se nemusí týkat jen velkých firem. I školní nebo studentský projekt by měl přemýšlet o odpadech (E), férovém přístupu v týmu (S) a jasných pravidlech pro peníze (G).")
             
             st.markdown("<div class='box-yellow'><strong>🌱 Mini audit odpovědnosti projektu</strong></div>", unsafe_allow_html=True)
-            aud1 = st.text_input("1. Jaký pozitivní i negativní dopad může mít tvůj projekt?")
-            aud2 = st.text_input("2. Jaké pravidlo férového chování si dáte v týmu vůči zákazníkům?")
+            aud1 = st.text_input("1. Jaký pozitivní i negativní dopad může mít tvůj projekt?", key="aud1")
+            aud2 = st.text_input("2. Jaké pravidlo férového chování si dáte v týmu vůči zákazníkům?", key="aud2")
             
+            if st.button("Uložit mini audit 💾", key="btn_csr_audit"):
+                audit_res = f"Dopady: {aud1} | Pravidlo férovosti: {aud2}"
+                if aud1.strip() or aud2.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 8.3 - Mini audit odpovědnosti", audit_res)
+                else:
+                    st.warning("Před uložením vyplň alespoň jednu otázku auditu!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Navrhni pro můj projekt jednoduchý etický kodex v pěti bodech.“
@@ -1615,7 +1650,15 @@ def render():
             5. **Je komunikace důvěryhodná?** (Firma přiznává i limity a oblasti ke zlepšení)
             """)
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.</div>", unsafe_allow_html=True)
-            st.text_input("Tvé hodnocení vybrané firmy:")
+            st.text_input("Tvé hodnocení vybrané firmy:", key="csr_firma_eval")
+            
+            if st.button("Uložit hodnocení firmy 💾", key="btn_csr_firma_eval"):
+                odp = st.session_state.get("csr_firma_eval", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 8.8 - Hodnocení udržitelnosti firmy", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
 
     # --- 9. Rizika podnikání ---
     elif "9. Rizika podnikání" in selected_section:
@@ -1654,16 +1697,30 @@ def render():
             st.warning("🔐 **Digitální bezpečnost:** Hesla, dvoufázové ověření, zálohy, přístupy v týmu a ochrana zákaznických dat jsou součást podnikatelského rizika, ne „IT detail“.")
             
             st.markdown("<div class='box-yellow'><strong>🧯 Aktivita: Krizový plán startupu</strong><br>Vyber jedno riziko a připrav si krizový plán.</div>", unsafe_allow_html=True)
-            kriz_riziko = st.text_input("Jaké riziko řešíš?")
+            kriz_riziko = st.text_input("Jaké riziko řešíš?", key="kriz_riziko")
             
             c_k1, c_k2 = st.columns(2)
             with c_k1:
-                st.text_input("Jak poznáme, že problém nastal?")
-                st.text_input("Koho se problém dotkne?")
+                st.text_input("Jak poznáme, že problém nastal?", key="kriz_poznat")
+                st.text_input("Koho se problém dotkne?", key="kriz_koho")
             with c_k2:
-                st.text_input("Co uděláme během prvních 24 hodin?")
-                st.text_input("Jak budeme komunikovat se zákazníky?")
+                st.text_input("Co uděláme během prvních 24 hodin?", key="kriz_24h")
+                st.text_input("Jak budeme komunikovat se zákazníky?", key="kriz_komunikace")
                 
+            if st.button("Uložit krizový plán 💾", key="btn_krizovy_plan"):
+                kriz_data = (
+                    f"Riziko: {st.session_state.get('kriz_riziko', '')} | "
+                    f"Indikátor: {st.session_state.get('kriz_poznat', '')} | "
+                    f"Dopad na: {st.session_state.get('kriz_koho', '')} | "
+                    f"První 24h: {st.session_state.get('kriz_24h', '')} | "
+                    f"Komunikace: {st.session_state.get('kriz_komunikace', '')}"
+                )
+                if st.session_state.get("kriz_riziko", "").strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 9.3 - Krizový plán", kriz_data)
+                else:
+                    st.warning("Před uložením vyplň alespoň název rizika!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Udělej mi rizikovou analýzu mého startupu a seřaď rizika podle dopadu.“
@@ -1680,11 +1737,19 @@ def render():
                 "Podnikatel podcení daně a odvody",
                 "Vzniknou právní nebo reklamační problémy",
                 "Firma nebude mít dost peněz na provoz"
-            ])
-            st.text_input(f"Jaký je tvůj první preventivní krok proti riziku: '{nej_riziko}'?")
+            ], key="nej_riziko_select")
             
-            st.success("🧩 **Praktické minimum pro start:** Počítat s daněmi a odvody, odlišit jednorázový přivýdělek od soustavné činnosti, znát základní pravidla ochrany spotřebitele a nakládat odpovědně s daty.")
+            st.text_input(f"Jaký je tvůj první preventivní krok proti riziku: '{nej_riziko}'?", key="nej_riziko_krok")
+            
+            if st.button("Uložit preventivní krok 💾", key="btn_riziko_krok"):
+                krok_ans = st.session_state.get("nej_riziko_krok", "")
+                if krok_ans.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 9.4 - Největší riziko a prevence", f"Riziko: {nej_riziko} | Krok: {krok_ans}")
+                else:
+                    st.warning("Před uložením napiš preventivní krok!")
 
+            st.success("🧩 **Praktické minimum pro start:** Počítat s daněmi a odvody, odlišit jednorázový přivýdělek od soustavné činnosti, znát základní pravidla ochrany spotřebitele a nakládat odpovědně s daty.")
     # --- 10. Švarcsystém ---
     elif "10. Švarcsystém" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div><h2>10. Švarcsystém</h2>", unsafe_allow_html=True)
