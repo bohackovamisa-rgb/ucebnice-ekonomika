@@ -562,3 +562,31 @@ if st.session_state["current_view"] == "Ucitel_Panel":
                     st.info("Databáze simulátoru je zatím prázdná.")
         except Exception as e:
             st.error(f"Chyba při načítání dat z investiční databáze: {e}")
+elif st.session_state["current_view"] == "Ucitel_Materialy":
+    st.title("📂 Materiály k výuce a testy")
+    st.markdown("""
+    <div class="box-gray">
+        Tato sekce je viditelná <b>pouze pro přihlášené učitele</b>. Žáci k ní nemají přístup.
+    </div>
+    """, unsafe_allow_html=True)
+
+    tab_metodika, tab_testy = st.tabs(["📄 Metodiky ke kapitolám", "📝 Testy pro žáky"])
+
+    with tab_metodika:
+        st.markdown("### 📘 Metodika ke Kapitole 1")
+        st.write("Stáhněte si kompletní balíček podkladů v jednom ZIP archivu:")
+        
+        try:
+            with open("Metodika_Kapitola1.zip", "rb") as file:
+                st.download_button(
+                    label="📦 Stáhnout kompletní balíček (ZIP)",
+                    data=file,
+                    file_name="Metodika_Kapitola_1.zip",
+                    mime="application/zip"
+                )
+        except FileNotFoundError:
+            st.warning("Soubor 'Metodika_Kapitola1.zip' nebyl na GitHubu nalezen. Nejprve jej tam nahrajte.")
+
+    with tab_testy:
+        st.markdown("### 📝 Návrhy testů ke stažení")
+        st.write("Tady si časem doplníš tlačítka pro testy...")
