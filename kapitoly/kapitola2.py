@@ -4380,6 +4380,39 @@ def render():
             
             if "uloz_odpoved_fn" in st.session_state and rozhodnuti != "Vyber možnost...":
                 st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Srovnávač půjček", rozhodnuti)
+                # =========================================================================
+    # 4.15 SHRNUTÍ: CO SI ODNÉST
+    # =========================================================================
+    elif selected_section_2.startswith("4.15"):
+        st.markdown("<div class='sub-section-header'>15. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown("## 4.15 Shrnutí kapitoly: Co si odnést")
+        
+        st.write("Gratulujeme! Prošel/prošla jsi celou kapitolu o úvěrech, hypotékách a pojištění. Zde jsou nejdůležitější pravidla pro tvůj finanční život:")
+
+        st.markdown("""
+        <div class="box-green">
+            <h3>✅ Klíčová pravidla pro život:</h3>
+            <ul>
+                <li><b>Úvěr není peníze navíc:</b> Je to jen přesun tvé budoucí spotřeby do přítomnosti, za který vždy zaplatíš úrokem a časem.</li>
+                <li><b>RPSN je tvůj nejlepší přítel:</b> Samotný úrok nestačí. Vždy porovnávej <b>RPSN</b> a <b>celkovou zaplacenou částku</b>.</li>
+                <li><b>Dostatečná rezerva:</b> Splátka úvěru musí být nastavena tak, abys dokázal/a žít a tvořit si rezervu i při výpadku příjmu.</li>
+                <li><b>Hypotéka vyžaduje přípravu:</b> Bez vlastních úspor (10–20 % LTV) a dobré platební historie ti banka na bydlení nepůjčí.</li>
+                <li><b>Pozor na impulzivní dlužení:</b> Služby typu <i>BNPL (Kup teď, zaplať později)</i> nebo kontokorenty odbourávají pocit z placení a vedou do dluhové pasti.</li>
+                <li><b>Pojištění chrání před katastrofou:</b> Pojišťuj věci, které by zničily tvůj rozpočet (invalidita, ztráta domu, obří škoda třetí osobě). Drobnosti zvládni z vlastní rezervy.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.divider()
+
+        # --- AI MENTORING BOX ---
+        st.markdown("### 🤖 Vyzkoušej AI Mentora")
+        st.write("Chceš si téma ještě lépe upevnit nebo se zeptat na cokoliv, co ti nebylo jasné? Zkopíruj tento text a vlož ho do svého oblíbeného AI asistenta:")
+
+        prompt_text = "Vysvětli mi rozdíl mezi úrokem a RPSN na jednoduchém příkladu půjčky. Potom mi ukaž, jak banka posuzuje, jestli člověk dostane spotřebitelský úvěr nebo hypotéku."
+        
+        st.code(prompt_text, language="text")
+        st.caption("💡 Tip: Můžeš AI požádat, aby ti položila 3 kontrolní otázky z této kapitoly!")
 
     # =========================================================================
     # 5.1 PROČ PODNIK ŘEŠÍ FINANCE
