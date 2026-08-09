@@ -62,51 +62,84 @@ section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-
     unsafe_allow_html=True,
 )
 
-# --- 4. PŘIHLAŠOVACÍ BRÁNA (NAPOJENÍ NA SUPABASE) ---
+# --- 4. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA ---
 def login_screen():
     if st.session_state.get("is_logged_in", False):
         return True
 
-    col1, col2, col3 = st.columns([1, 1.5, 1])
+    col1, col2, col3 = st.columns([1, 1.8, 1])
     with col2:
-        st.markdown("<br><br><br>", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.markdown("<h2 style='text-align: center; border: none; font-weight: 700; margin-bottom: 0;'>Soukromá učebnice</h2>", unsafe_allow_html=True)
-            st.markdown("<p style='text-align: center; color: #78716c; font-size: 0.85rem; margin-bottom: 1.5rem;'>Zadejte jméno a heslo pro odemknutí kurzu.</p>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align: center; border: none; font-weight: 800; margin-bottom: 0;'>Učebnice ekonomiky</h2>", unsafe_allow_html=True)
             
-            with st.form("login_form", border=False):
-                username_input = st.text_input("Uživatelské jméno:", placeholder="Zadejte uživatelské jméno...")
-                password_input = st.text_input("Heslo:", type="password", placeholder="Vaše heslo...")
-                
-                submit = st.form_submit_button("Vstoupit do učebnice", use_container_width=True)
-                
-                if submit:
-                    try:
-                        # Dotaz do Supabase
-                        response = supabase.table("uzivatele").select("*").eq("username", username_input.strip().lower()).execute()
-                        users = response.data
-
-                        if users:
-                            user = users[0]
-                            if str(user.get("password")) == password_input:
-                                st.session_state["is_logged_in"] = True
-                                st.session_state["username"] = user.get("username")
-                                st.session_state["user_role"] = user.get("role", "student")
-                                st.session_state["user_name"] = user.get("jmeno", "Uživatel")
-                                
-                                if user.get("role") == "teacher":
-                                    tridy_raw = user.get("trida", "")
-                                    st.session_state["user_classes"] = [t.strip() for t in tridy_raw.split(",") if t.strip()]
-                                else:
+            tab_login, tab_reg = st.tabs(["🔑 Přihlášení", "📝 Registrace žáka"])
+            
+            # --- ZÁLOŽKA 1: PŘIHLÁŠENÍ ---
+            with tab_login:
+                with st.form("login_form", border=False):
+                    username_input = st.text_input("Uživatelské jméno:", placeholder="Zadejte uživatelské jméno...")
+                    password_input = st.text_input("Heslo:", type="password", placeholder="Vaše heslo...")
+                    submit = st.form_submit_button("Vstoupit do učebnice", use_container_width=True)
+                    
+                    if submit:
+                        try:
+                            res = supabase.table("uzivatele").select("*").eq("username", username_input.strip().lower()).execute()
+                            if res.data:
+                                user = res.data[0]
+                                if str(user.get("password")) == password_input:
+                                    st.session_state["is_logged_in"] = True
+                                    st.session_state["username"] = user.get("username")
+                                    st.session_state["user_role"] = user.get("role", "student")
+                                    st.session_state["user_name"] = user.get("jmeno", "Uživatel")
                                     st.session_state["user_class"] = user.get("trida", "")
-                                    
-                                st.rerun()
+                                    st.rerun()
+                                else:
+                                    st.error("Nesprávné heslo!")
                             else:
-                                st.error("Nesprávné heslo!")
+                                st.error("Uživatel s tímto jménem neexistuje!")
+                        except Exception as e:
+                            st.error(f"Chyba připojení: {e}")
+
+            # --- ZÁLOŽKA 2: REGISTRACE ŽÁKA ---
+            with tab_reg:
+                with st.form("reg_form", border=False):
+                    reg_jmeno = st.text_input("Jméno a příjmení:", placeholder="Jan Novák")
+                    reg_username = st.text_input("Zvolte uživatelské jméno:", placeholder="jan.novak")
+                    reg_password = st.text_input("Zvolte heslo:", type="password")
+                    reg_code = st.text_input("Zvací kód třídy od učitele:", placeholder="např. EKO3A")
+                    
+                    btn_reg = st.form_submit_button("Vytvořit žákovský účet 🚀", use_container_width=True)
+                    
+                    if btn_reg:
+                        if not (reg_jmeno and reg_username and reg_password and reg_code):
+                            st.warning("Vyplňte prosím všechna pole!")
                         else:
-                            st.error("Uživatel s tímto jménem neexistuje!")
-                    except Exception as e:
-                        st.error(f"Chyba při připojení k databázi: {e}")
+                            try:
+                                # 1. Ověření, zda kód třídy existuje
+                                trida_res = supabase.table("tridy").select("*").eq("kod_tridy", reg_code.strip().upper()).execute()
+                                if not trida_res.data:
+                                    st.error("Zadaný kód třídy neexistuje! Požádejte učitele o správný kód.")
+                                else:
+                                    nazev_tridy = trida_res.data[0]["nazev_tridy"]
+                                    
+                                    # 2. Kontrola, zda uživatelské jméno již není zabrané
+                                    user_check = supabase.table("uzivatele").select("username").eq("username", reg_username.strip().lower()).execute()
+                                    if user_check.data:
+                                        st.error("Toto uživatelské jméno je již zabrané. Zvolte jiné.")
+                                    else:
+                                        # 3. Uložení nového žáka do Supabase
+                                        new_user = {
+                                            "username": reg_username.strip().lower(),
+                                            "password": reg_password,
+                                            "jmeno": reg_jmeno.strip(),
+                                            "role": "student",
+                                            "trida": nazev_tridy
+                                        }
+                                        supabase.table("uzivatele").insert(new_user).execute()
+                                        st.success("Účet byl úspěšně vytvořen! Nyní se můžete přihlásit.")
+                            except Exception as e:
+                                st.error(f"Chyba při registraci: {e}")
     return False
 
 if not login_screen():
