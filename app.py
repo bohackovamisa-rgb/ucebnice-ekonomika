@@ -255,14 +255,13 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-if st.session_state.get("user_role") == "teacher":
+    if st.session_state.get("user_role") == "teacher":
         st.markdown("<div class='sidebar-section-title'>👩‍🏫 UČITELSKÝ PANEL</div>", unsafe_allow_html=True)
         
         if st.button("📊 Přehled a správa tříd", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Panel" else "secondary"):
             st.session_state["current_view"] = "Ucitel_Panel"
             st.rerun()
             
-        # NOVÉ TLAČÍTKO PRO MATERIÁLY
         if st.button("📂 Materiály a testy", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Materialy" else "secondary"):
             st.session_state["current_view"] = "Ucitel_Materialy"
             st.rerun()
@@ -294,46 +293,6 @@ if st.session_state.get("user_role") == "teacher":
     if st.button("Odhlásit se", use_container_width=True):
         st.session_state.clear()
         st.rerun()
-elif st.session_state["current_view"] == "Ucitel_Materialy":
-    st.title("📂 Materiály k výuce a testy")
-    st.markdown("""
-    <div class="box-gray">
-        Tato sekce je viditelná <b>pouze pro přihlášené učitele</b>. Žáci k ní nemají přístup.
-        Najdete zde metodické pokyny k hodinám, připravené testy a správná řešení k úkolům.
-    </div>
-    """, unsafe_allow_html=True)
-
-    tab_metodika, tab_testy, tab_reseni = st.tabs(["📄 Metodiky k výuce", "📝 Testy pro žáky", "🔑 Řešení úkolů"])
-
-    with tab_metodika:
-        st.markdown("### 📘 Metodické pokyny ke kapitolám")
-        st.write("Zde si můžete stáhnout přípravy na hodinu. Obsahují tipy, jak téma uvést, na co si dát pozor a jak vést diskuzi.")
-        
-        st.download_button("📥 Stáhnout metodiku ke Kapitole 1 (PDF)", data=b"Zde bude skutecne PDF s metodikou...", file_name="metodika_kap1.pdf")
-        st.download_button("📥 Stáhnout metodiku ke Kapitole 2 (PDF)", data=b"Zde bude skutecne PDF s metodikou...", file_name="metodika_kap2.pdf")
-
-    with tab_testy:
-        st.markdown("### 📝 Návrhy písemných prací")
-        st.write("Testy jsou připraveny ve formátu Word, abyste si je mohli libovolně upravovat, měnit zadání nebo přidávat vlastní otázky.")
-        
-        st.download_button("📥 Pololetní test - Skupina A (DOCX)", data=b"Zde bude skutecny test A...", file_name="Pololetni_test_A.docx")
-        st.download_button("📥 Pololetní test - Skupina B (DOCX)", data=b"Zde bude skutecny test B...", file_name="Pololetni_test_B.docx")
-
-    with tab_reseni:
-        st.markdown("### 🔑 Rychlý klíč k řešení úkolů v učebnici")
-        
-        with st.expander("Kapitola 1: Podnikavost a startupy"):
-            st.write("**Otázka 1:** Jaký je hlavní rozdíl mezi živností a s.r.o.?")
-            st.markdown("<div style='color: #22c55e; font-weight: bold;'>Očekávaná odpověď: Ručení. Živnostník ručí celým svým majetkem, společník v s.r.o. ručí jen do výše nesplaceného vkladu.</div>", unsafe_allow_html=True)
-            st.divider()
-            st.write("**Úkol: Vymysli problém ve svém okolí**")
-            st.markdown("<div style='color: #22c55e; font-weight: bold;'>Tip na hodnocení: Zde neexistuje špatná odpověď. Hodnoťte, zda žák popsal PROBLÉM (např. chybějící lavičky), ne už rovnou produkt.</div>", unsafe_allow_html=True)
-
-        with st.expander("Kapitola 2: Finance a osobní management"):
-            st.write("Tady si časem doplníš řešení pro druhou kapitolu...")
-            
-        with st.expander("Kapitola 3: Výroba, náklady a efektivita"):
-            st.write("Tady si časem doplníš řešení pro třetí kapitolu...")
 # =========================================================================
 # 7. SMĚROVÁNÍ OBSAHU
 # =========================================================================
