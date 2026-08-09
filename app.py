@@ -3,6 +3,15 @@ import pandas as pd
 import streamlit as st
 from supabase import create_client, Client
 from kapitoly import kapitola1, kapitola2, kapitola3, kapitola4, kapitola5, kapitola6
+import unicodedata
+
+def ocisti_username(text: str) -> str:
+    """Odstraní diakritiku a převede text na malá písmena pro bezpečný dotaz do DB."""
+    if not text:
+        return ""
+    text = unicodedata.normalize('NFD', text)
+    text = ''.join(c for c in text if unicodedata.category(c) != 'Mn')
+    return text.strip().lower()
 
 # =========================================================================
 # 1. KONFIGURACE STRÁNKY
@@ -109,7 +118,7 @@ def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
 st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
 # =========================================================================
-# 5. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA
+# 5. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA (S OŠETŘENÍM DIAKRITIKY)
 # =========================================================================
 def login_screen():
     if st.session_state.get("is_logged_in", False):
@@ -123,6 +132,7 @@ def login_screen():
             
             tab_login, tab_reg = st.tabs(["🔑 Přihlášení", "📝 Registrace žáka"])
             
+            # --- TAB 1: PŘIHLÁŠENÍ (BOD 1) ---
             with tab_login:
                 with st.form("login_form", border=False):
                     username_input = st.text_input("Uživatelské jméno:", placeholder="Zadejte uživatelské jméno...")
@@ -131,7 +141,10 @@ def login_screen():
                     
                     if submit:
                         try:
-                            res = supabase.table("uzivatele").select("*").eq("username", username_input.strip().lower()).execute()
+                            # 1. OŠETŘENÍ DIAKRITIKY PŘI PŘIHLÁŠENÍ
+                            ciste_jmeno = ocisti_username(username_input)
+                            res = supabase.table("uzivatele").select("*").eq("username", ciste_jmeno).execute()
+                            
                             if res.data:
                                 user = res.data[0]
                                 if str(user.get("password")) == password_input:
@@ -146,8 +159,9 @@ def login_screen():
                             else:
                                 st.error("Uživatel s tímto jménem neexistuje!")
                         except Exception as e:
-                            st.error(f"Chyba připojení: {e}")
+                            st.error(f"Chyba při připojování: {e}")
 
+            # --- TAB 2: REGISTRACE (BOD 2) ---
             with tab_reg:
                 with st.form("reg_form", border=False):
                     reg_jmeno = st.text_input("Jméno a příjmení:", placeholder="Jan Novák")
@@ -167,12 +181,16 @@ def login_screen():
                                     st.error("Zadaný kód třídy neexistuje! Požádejte učitele o správný kód.")
                                 else:
                                     nazev_tridy = trida_res.data[0]["nazev_tridy"]
-                                    user_check = supabase.table("uzivatele").select("username").eq("username", reg_username.strip().lower()).execute()
+                                    
+                                    # 2. OŠETŘENÍ DIAKRITIKY PŘI REGISTRACI
+                                    ciste_reg_username = ocisti_username(reg_username)
+                                    user_check = supabase.table("uzivatele").select("username").eq("username", ciste_reg_username).execute()
+                                    
                                     if user_check.data:
                                         st.error("Toto uživatelské jméno je již zabrané. Zvolte jiné.")
                                     else:
                                         new_user = {
-                                            "username": reg_username.strip().lower(),
+                                            "username": ciste_reg_username,
                                             "password": reg_password,
                                             "jmeno": reg_jmeno.strip(),
                                             "role": "student",
@@ -183,10 +201,6 @@ def login_screen():
                             except Exception as e:
                                 st.error(f"Chyba při registraci: {e}")
     return False
-
-if not login_screen():
-    st.stop()
-
 # =========================================================================
 # 6. NAVIGAČNÍ STAV A BOČNÍ PANEL
 # =========================================================================
