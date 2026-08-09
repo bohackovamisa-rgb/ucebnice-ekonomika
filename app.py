@@ -7,14 +7,11 @@ st.set_page_config(
     page_title="Učebnice ekonomiky", page_icon="📖", layout="wide"
 )
 
-
 # --- PŘIHLAŠOVACÍ BRÁNA ---
 def check_password():
     app_pwd = st.secrets.get("APP_PASSWORD")
     if not app_pwd:
-        st.error(
-            "⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD!"
-        )
+        st.error("⚠️ V nastavení Streamlit Secrets chybí proměnná APP_PASSWORD!")
         return False
 
     if st.session_state.get("password_correct", False):
@@ -25,13 +22,13 @@ def check_password():
         st.markdown("<br><br><br>", unsafe_allow_html=True)
         with st.container(border=True):
             st.markdown(
-                "<h2 style='text-align: center; border: none; font-weight: 700;"
-                " margin-bottom: 0;'>Soukromá učebnice</h2>",
+                "<h2 style='text-align: center; border: none; font-weight: 800; color: #0F172A;"
+                " margin-bottom: 0.5rem;'>Soukromá učebnice</h2>",
                 unsafe_allow_html=True,
             )
             st.markdown(
-                "<p style='text-align: center; color: #78716c; font-size:"
-                " 0.85rem; margin-bottom: 1.5rem;'>Zadejte přístupové heslo pro"
+                "<p style='text-align: center; color: #64748B; font-size:"
+                " 0.95rem; margin-bottom: 1.5rem;'>Zadejte přístupové heslo pro"
                 " odemknutí kurzu.</p>",
                 unsafe_allow_html=True,
             )
@@ -41,7 +38,7 @@ def check_password():
                 label_visibility="collapsed",
                 placeholder="Přístupové heslo...",
             )
-            if st.button("Vstoupit do učebnice", use_container_width=True):
+            if st.button("Vstoupit do učebnice", use_container_width=True, type="primary"):
                 if password == app_pwd:
                     st.session_state["password_correct"] = True
                     st.rerun()
@@ -49,11 +46,10 @@ def check_password():
                     st.error("Nesprávné heslo")
     return False
 
-
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (iOS EDITORIAL & EMOJI STYL) ---
+# --- STYLOVÁNÍ (VYLEPŠENÝ EDITORIAL STYL) ---
 st.markdown(
     """
 <style>
@@ -65,8 +61,8 @@ st.markdown(
 /* 1. ZÁKLADNÍ POZADÍ A PÍSMO (MONTSERRAT) */
 html, body, [class*="css"], .stApp {
     font-family: 'Montserrat', -apple-system, sans-serif !important;
-    background-color: #FAF8F5 !important;
-    color: #1C1917 !important;
+    background-color: #F8FAFC !important; /* Lehce čistší a modernější světlý odstín */
+    color: #1E293B !important;
 }
 
 /* 2. ŠÍŘKA OBSAHU A ELEVACE KARET */
@@ -76,14 +72,20 @@ html, body, [class*="css"], .stApp {
     padding-bottom: 5rem !important; 
 }
 
+/* Skleněné a stínované karty s jemnou interakcí */
 div[data-testid="stVerticalBlockBorderWrapper"] { 
     background-color: #FFFFFF !important; 
-    border-radius: 18px !important; 
-    border: 1px solid #EAE7DC !important; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important; 
+    border-radius: 16px !important; 
+    border: 1px solid #E2E8F0 !important; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important; 
     padding: 2rem !important; 
     margin-bottom: 1.5rem !important; 
-    transition: all 0.25s ease !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04) !important;
 }
 
 /* 3. TYPOGRAFIE & NADPISY */
@@ -101,11 +103,11 @@ h2 {
     font-family: 'Montserrat', sans-serif !important; 
     color: #1E293B !important; 
     font-weight: 700 !important; 
-    font-size: 1.35rem !important; 
+    font-size: 1.4rem !important; 
     letter-spacing: -0.02em !important; 
     margin-top: 1.5rem !important; 
-    margin-bottom: 0.85rem !important; 
-    border-bottom: 1px solid #F1F5F9; 
+    margin-bottom: 1rem !important; 
+    border-bottom: 2px solid #F1F5F9; 
     padding-bottom: 0.5rem; 
 }
 
@@ -113,144 +115,143 @@ h3 {
     font-family: 'Montserrat', sans-serif !important; 
     color: #334155 !important; 
     font-weight: 600 !important; 
-    font-size: 1.1rem !important; 
+    font-size: 1.15rem !important; 
     margin-top: 1.25rem !important; 
 }
 
 p, li, td, th { 
     font-family: 'Montserrat', sans-serif !important; 
-    color: #334155 !important; 
+    color: #475569 !important; 
     font-size: 0.95rem !important; 
     line-height: 1.7 !important; 
     font-weight: 400 !important; 
 }
 
-/* 4. TLAČÍTKA V LEVÉM MENU */
+/* 4. MODERNÍ TLAČÍTKA S HOVER EFEKTEM */
 button[data-testid="baseButton-primary"], 
 button[kind="primary"] { 
     font-family: 'Montserrat', sans-serif !important; 
-    border-radius: 9999px !important; 
-    border: 1px solid #111111 !important; 
-    background-color: #111111 !important; 
+    border-radius: 10px !important; 
+    border: none !important; 
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important; 
     color: #FFFFFF !important; 
     font-weight: 600 !important; 
-    font-size: 0.88rem !important; 
+    font-size: 0.9rem !important; 
     padding: 0.6rem 1.4rem !important; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; 
+    box-shadow: 0 4px 6px rgba(15, 23, 42, 0.2) !important; 
+    transition: all 0.2s ease !important;
 }
-button[data-testid="baseButton-primary"] *, 
-button[kind="primary"] * {
-    color: #FFFFFF !important;
+button[data-testid="baseButton-primary"]:hover, 
+button[kind="primary"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(15, 23, 42, 0.3) !important;
 }
 
 button[data-testid="baseButton-secondary"], 
 button[kind="secondary"] {
     font-family: 'Montserrat', sans-serif !important; 
-    border-radius: 9999px !important; 
-    background-color: #F2EFE9 !important;
-    color: #44403C !important;
-    border: 1px solid #E2DEC6 !important;
+    border-radius: 10px !important; 
+    background-color: #FFFFFF !important;
+    color: #475569 !important;
+    border: 1px solid #CBD5E1 !important;
     font-weight: 500 !important;
-    font-size: 0.88rem !important;
+    font-size: 0.9rem !important;
     padding: 0.6rem 1.4rem !important;
+    transition: all 0.2s ease !important;
 }
-button[data-testid="baseButton-secondary"] *, 
-button[kind="secondary"] * {
-    color: #44403C !important;
-}
-
 button[data-testid="baseButton-secondary"]:hover, 
 button[kind="secondary"]:hover {
-    background-color: #111111 !important;
-    border-color: #111111 !important;
-    color: #FFFFFF !important;
-}
-button[data-testid="baseButton-secondary"]:hover *, 
-button[kind="secondary"]:hover * {
-    color: #FFFFFF !important;
+    background-color: #F8FAFC !important;
+    border-color: #94A3B8 !important;
+    color: #0F172A !important;
 }
 
-/* 5. VSTUPNÍ POLA (INPUTY & SELECTBOXY) */
+/* 5. VSTUPNÍ POLA S FOCUS EFEKTEM */
 .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { 
     font-family: 'Montserrat', sans-serif !important; 
-    border-radius: 12px !important; 
-    border: 1px solid #E2DEC6 !important; 
-    background-color: #F2EFE9 !important; 
+    border-radius: 10px !important; 
+    border: 1px solid #CBD5E1 !important; 
+    background-color: #FFFFFF !important; 
     color: #0F172A !important; 
     font-size: 0.92rem !important; 
     padding: 0.65rem 0.9rem !important; 
+    transition: all 0.2s ease !important;
+}
+.stTextInput input:focus, .stTextArea textarea:focus, div[data-baseweb="select"] > div:focus {
+    border-color: #3B82F6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
 }
 
 /* 6. BOČNÍ PANEL (SIDEBAR) */
 section[data-testid="stSidebar"] { 
-    background-color: #F3F0E9 !important; 
-    border-right: 1px solid #E5E0D8 !important; 
+    background-color: #F8FAFC !important; 
+    border-right: 1px solid #E2E8F0 !important; 
 }
 .sidebar-section-title { 
-    font-size: 0.72rem; 
+    font-size: 0.75rem; 
     font-weight: 700; 
-    color: #78716C; 
+    color: #94A3B8; 
     text-transform: uppercase; 
     letter-spacing: 0.08em; 
-    margin-top: 1.4rem; 
-    margin-bottom: 0.6rem; 
+    margin-top: 1.6rem; 
+    margin-bottom: 0.8rem; 
 }
 
-/* 7. JEMNÉ PASTELOVÉ BAREVNÉ BOXY */
+/* 7. JEMNÉ PASTELOVÉ BOXY (VYLADĚNÉ BARVY) */
 .box-blue { 
-    background-color: #F4F7F9 !important; 
-    border-left: 3px solid #8AA2B6 !important; 
-    padding: 1.1rem 1.3rem; 
+    background-color: #EFF6FF !important; 
+    border-left: 4px solid #3B82F6 !important; 
+    padding: 1.2rem 1.4rem; 
     border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #2C3E50 !important; 
-    font-size: 0.93rem; 
+    margin: 1.2rem 0; 
+    color: #1E3A8A !important; 
+    font-size: 0.95rem; 
 }
 .box-yellow { 
-    background-color: #FAF7EE !important; 
-    border-left: 3px solid #D8C397 !important; 
-    padding: 1.1rem 1.3rem; 
+    background-color: #FEFCE8 !important; 
+    border-left: 4px solid #EAB308 !important; 
+    padding: 1.2rem 1.4rem; 
     border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #5C4E31 !important; 
-    font-size: 0.93rem; 
+    margin: 1.2rem 0; 
+    color: #713F12 !important; 
+    font-size: 0.95rem; 
 }
 .box-purple { 
-    background-color: #F8F5F8 !important; 
-    border-left: 3px solid #B4A2B8 !important; 
-    padding: 1.1rem 1.3rem; 
+    background-color: #FAF5FF !important; 
+    border-left: 4px solid #A855F7 !important; 
+    padding: 1.2rem 1.4rem; 
     border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #4A3B4E !important; 
-    font-size: 0.93rem; 
+    margin: 1.2rem 0; 
+    color: #581C87 !important; 
+    font-size: 0.95rem; 
     word-wrap: break-word; 
 }
 .box-green { 
-    background-color: #F3F6F3 !important; 
-    border-left: 3px solid #8DAE93 !important; 
-    padding: 1.1rem 1.3rem; 
+    background-color: #F0FDF4 !important; 
+    border-left: 4px solid #22C55E !important; 
+    padding: 1.2rem 1.4rem; 
     border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #2A4231 !important; 
-    font-size: 0.93rem; 
+    margin: 1.2rem 0; 
+    color: #14532D !important; 
+    font-size: 0.95rem; 
 }
 .box-red { 
-    background-color: #FAF3F3 !important; 
-    border-left: 3px solid #C98A8A !important; 
-    padding: 1.1rem 1.3rem; 
+    background-color: #FEF2F2 !important; 
+    border-left: 4px solid #EF4444 !important; 
+    padding: 1.2rem 1.4rem; 
     border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #5C2E2E !important; 
-    font-size: 0.93rem; 
+    margin: 1.2rem 0; 
+    color: #7F1D1D !important; 
+    font-size: 0.95rem; 
 }
 .box-gray { 
-    background-color: #F2EFE9 !important; 
-    border-left: 3px solid #A8A29E !important; 
-    padding: 1.1rem 1.3rem; 
+    background-color: #F1F5F9 !important; 
+    border-left: 4px solid #64748B !important; 
+    padding: 1.2rem 1.4rem; 
     border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #44403C !important; 
-    font-size: 0.93rem; 
+    margin: 1.2rem 0; 
+    color: #334155 !important; 
+    font-size: 0.95rem; 
 }
 </style>
 """,
@@ -266,8 +267,8 @@ with st.sidebar:
     st.markdown(
         """
         <div style='padding: 0.5rem 0 0.5rem 0;'>
-            <span style='font-size: 0.7rem; font-weight: 700; color: #44403C; text-transform: uppercase; letter-spacing: 0.08em;'>E-Learning Portal</span>
-            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.25rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
+            <span style='font-size: 0.75rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.1em;'>E-Learning Portal</span>
+            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.35rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
         </div>
     """,
         unsafe_allow_html=True,
