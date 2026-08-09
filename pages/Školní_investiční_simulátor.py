@@ -6,10 +6,7 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime
 
-# 1. Konfigurace stránky (Vypnuto - nastavuje hlavní soubor učebnice app.py)
-# st.set_page_config(...) 
-
-# 2. Vylepšený High-Tech CSS Styling s vysokým kontrastem
+# --- 1. VYLEPŠENÝ HIGH-TECH CSS STYLING ---
 HIGH_TECH_CSS = """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
@@ -21,7 +18,7 @@ HIGH_TECH_CSS = """
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* FIX PRO LEVÝ PANEL: Světlý text v navigaci učebnice */
+    /* FIX PRO LEVÝ PANEL */
     [data-testid="stSidebar"] * {
         color: #f0f6fc !important;
     }
@@ -29,7 +26,7 @@ HIGH_TECH_CSS = """
         background-color: #161b22 !important;
     }
 
-/* Schovat výchozí lišty Streamlitu */
+    /* Schovat výchozí lišty Streamlitu */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
@@ -42,13 +39,13 @@ HIGH_TECH_CSS = """
         font-weight: 700 !important;
     }
 
-    /* Popisky políček (Labels) - Vše jasně bílé */
+    /* Popisky políček */
     label, p, span, .stMarkdown {
         color: #f0f6fc !important;
         font-size: 1rem;
     }
 
-    /* Úprava vstupních polí */
+    /* Vstupní pole */
     .stTextInput input {
         background-color: #161b22 !important;
         color: #ffffff !important;
@@ -62,7 +59,7 @@ HIGH_TECH_CSS = """
         box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.3) !important;
     }
 
-    /* Tlačítka - Výrazná s vysokým kontrastem */
+    /* Tlačítka */
     div.stButton > button {
         background: linear-gradient(135deg, #1f6feb 0%, #0d57d5 100%) !important;
         color: #ffffff !important;
@@ -80,7 +77,7 @@ HIGH_TECH_CSS = """
         transform: translateY(-2px);
     }
 
-    /* Stylování záložek (Tabs) - Přehledný kontrast */
+    /* Záložky (Tabs) */
     .stTabs [data-baseweb="tab-list"] {
         background-color: #161b22;
         padding: 6px;
@@ -127,6 +124,8 @@ HIGH_TECH_CSS = """
 </style>
 """
 st.markdown(HIGH_TECH_CSS, unsafe_allow_html=True)
+
+# Tlačítko návratu do hlavní učebnice
 st.page_link("app.py", label="🏠 Zpět do Učebnice ekonomiky")
 
 # --- POMOCNÉ FUNKCE ---
@@ -161,7 +160,7 @@ if "prihlasen" not in st.session_state:
     st.session_state["trida"] = ""
     st.session_state["zustatek"] = 0.0
 
-# --- PŘIPOJENÍ K DATABÁZI ---
+# --- PŘIPOJENÍ K DATABÁZI GOOGLE SHEETS ---
 @st.cache_resource
 def pripojit_databazi():
     raw_creds = st.secrets["google_credentials"]
@@ -171,13 +170,18 @@ def pripojit_databazi():
     else:
         tajemstvi = dict(raw_creds)
         
+    # Ošetření PEM řádkování pro gspread
+    if "private_key" in tajemstvi:
+        tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "")
+
     client = gspread.service_account_from_dict(tajemstvi)
+    # Název tabulky na Google Disku
     soubor = client.open("Skolni_Investice_DB")
     sheet_uzivatele = soubor.sheet1
     
     try:
         sheet_transakce = soubor.worksheet("Transakce")
-    except:
+    except Exception:
         sheet_transakce = None
         
     return sheet_uzivatele, sheet_transakce
@@ -282,7 +286,7 @@ if not st.session_state["prihlasen"]:
 elif st.session_state["role"] == "UCITEL":
     sloupec1, sloupec2 = st.columns([3, 1])
     with sloupec1:
-        st.markdown(f"<h2 style='color: #58a6ff;'>👩‍🏫 Učitelský Panel</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #58a6ff;'>👩‍🏫 Učitelský Panel</h2>", unsafe_allow_html=True)
         st.write(f"Učitel: **{st.session_state['jmeno']}** | Nick: `{st.session_state['nick']}`")
     with sloupec2:
         st.write("")
@@ -529,7 +533,7 @@ else:
                                         try:
                                             cas_ted = datetime.now().strftime("%d.%m.%Y %H:%M")
                                             db_transakce.append_row([cas_ted, st.session_state["nick"], "NÁKUP", vybrane_aktivum, pocet_koupit, cena_koupit])
-                                        except:
+                                        except Exception:
                                             pass
                                     
                                     st.session_state["zustatek"] = novy_zustatek
@@ -564,7 +568,7 @@ else:
                                     try:
                                         cas_ted = datetime.now().strftime("%d.%m.%Y %H:%M")
                                         db_transakce.append_row([cas_ted, st.session_state["nick"], "PRODEJ", vybrane_aktivum, pocet_prodat, cena_prodat])
-                                    except:
+                                    except Exception:
                                         pass
                                 
                                 st.session_state["zustatek"] = novy_zustatek
@@ -580,7 +584,7 @@ else:
             with st.spinner("Oceňuji majetek podle živých dat..."):
                 try:
                     kurz_usd_czk = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
-                except:
+                except Exception:
                     kurz_usd_czk = 23.0 
                 
                 hodnota_aktiv_celkem = 0.0
@@ -605,7 +609,7 @@ else:
                             graf_data["Hodnota (Kč)"].append(hodnota_polozky)
                             
                             st.write(f"⚡ **{nazev}**: `{hezke_kusy(mnozstvi)} ks` — *(hodnota cca {hodnota_polozky:.2f} Kč)*")
-                        except:
+                        except Exception:
                             st.write(f"⚡ **{nazev}**: `{hezke_kusy(mnozstvi)} ks`")
                 
                 if not ma_neco:
@@ -628,7 +632,6 @@ else:
                     
                     fig = px.pie(df_graf, values="Hodnota (Kč)", names="Položka", hole=0.5, template="plotly_dark")
                     
-                    # Úprava kontrastu textů pro Plotly v černém režimu
                     fig.update_layout(
                         paper_bgcolor="rgba(0,0,0,0)",
                         plot_bgcolor="rgba(0,0,0,0)",
@@ -663,7 +666,7 @@ else:
                             st.dataframe(df_transakce, use_container_width=True)
                         else:
                             st.caption("Zatím jsi neprovedl(a) žádné obchody.")
-                    except:
+                    except Exception:
                         st.caption("Historii obchodů se nepodařilo načíst.")
 
     # ---------------- ZÁLOŽKA 3: ŽEBŘÍČEK ŽÁKA ----------------
