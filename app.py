@@ -53,7 +53,7 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (iOS EDITORIAL & EMOJI STYL) ---
+# --- STYLOVÁNÍ (PŮVODNÍ BARVY + VYLEPŠENÁ HLOUBKA A INTERAKCE) ---
 st.markdown(
     """
 <style>
@@ -65,7 +65,7 @@ st.markdown(
 /* 1. ZÁKLADNÍ POZADÍ A PÍSMO (MONTSERRAT) */
 html, body, [class*="css"], .stApp {
     font-family: 'Montserrat', -apple-system, sans-serif !important;
-    background-color: #FAF8F5 !important;
+    background-color: #FAF8F5 !important; /* TVOJE PŮVODNÍ POZADÍ */
     color: #1C1917 !important;
 }
 
@@ -76,14 +76,20 @@ html, body, [class*="css"], .stApp {
     padding-bottom: 5rem !important; 
 }
 
+/* Vyladěné stínování a hover efekt pro kontejnery */
 div[data-testid="stVerticalBlockBorderWrapper"] { 
     background-color: #FFFFFF !important; 
     border-radius: 18px !important; 
     border: 1px solid #EAE7DC !important; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important; 
     padding: 2rem !important; 
     margin-bottom: 1.5rem !important; 
-    transition: all 0.25s ease !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02) !important;
 }
 
 /* 3. TYPOGRAFIE & NADPISY */
@@ -125,7 +131,7 @@ p, li, td, th {
     font-weight: 400 !important; 
 }
 
-/* 4. TLAČÍTKA V LEVÉM MENU */
+/* 4. TLAČÍTKA (PŮVODNÍ BARVY + LEPŠÍ HOVER) */
 button[data-testid="baseButton-primary"], 
 button[kind="primary"] { 
     font-family: 'Montserrat', sans-serif !important; 
@@ -136,7 +142,13 @@ button[kind="primary"] {
     font-weight: 600 !important; 
     font-size: 0.88rem !important; 
     padding: 0.6rem 1.4rem !important; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; 
+    box-shadow: 0 4px 10px rgba(17, 17, 17, 0.15) !important; 
+    transition: all 0.2s ease !important;
+}
+button[data-testid="baseButton-primary"]:hover, 
+button[kind="primary"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(17, 17, 17, 0.25) !important;
 }
 button[data-testid="baseButton-primary"] *, 
 button[kind="primary"] * {
@@ -153,24 +165,25 @@ button[kind="secondary"] {
     font-weight: 500 !important;
     font-size: 0.88rem !important;
     padding: 0.6rem 1.4rem !important;
+    transition: all 0.2s ease !important;
 }
 button[data-testid="baseButton-secondary"] *, 
 button[kind="secondary"] * {
     color: #44403C !important;
 }
-
 button[data-testid="baseButton-secondary"]:hover, 
 button[kind="secondary"]:hover {
     background-color: #111111 !important;
     border-color: #111111 !important;
     color: #FFFFFF !important;
+    transform: translateY(-1px);
 }
 button[data-testid="baseButton-secondary"]:hover *, 
 button[kind="secondary"]:hover * {
     color: #FFFFFF !important;
 }
 
-/* 5. VSTUPNÍ POLA (INPUTY & SELECTBOXY) */
+/* 5. VSTUPNÍ POLA (PŮVODNÍ BARVY + FOCUS EFEKT) */
 .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { 
     font-family: 'Montserrat', sans-serif !important; 
     border-radius: 12px !important; 
@@ -179,6 +192,12 @@ button[kind="secondary"]:hover * {
     color: #0F172A !important; 
     font-size: 0.92rem !important; 
     padding: 0.65rem 0.9rem !important; 
+    transition: all 0.2s ease !important;
+}
+.stTextInput input:focus, .stTextArea textarea:focus, div[data-baseweb="select"] > div:focus {
+    border-color: #111111 !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.1) !important;
 }
 
 /* 6. BOČNÍ PANEL (SIDEBAR) */
@@ -196,7 +215,7 @@ section[data-testid="stSidebar"] {
     margin-bottom: 0.6rem; 
 }
 
-/* 7. JEMNÉ PASTELOVÉ BAREVNÉ BOXY */
+/* 7. TVOJE PŮVODNÍ BAREVNÉ BOXY */
 .box-blue { 
     background-color: #F4F7F9 !important; 
     border-left: 3px solid #8AA2B6 !important; 
