@@ -445,7 +445,7 @@ def render():
                 <strong>💡 Praktické pravidlo pro začátečníka:</strong> Když OSVČ dostane zaplaceno, neměla by všechno utratit. Část peněz si musí odložit na daň, sociální a zdravotní pojištění.
             </div>
             """, unsafe_allow_html=True)
-        # --- NOVÁ KALKULAČKA HODINOVÉ SAZBY ---
+# --- NOVÁ KALKULAČKA HODINOVÉ SAZBY ---
         with st.container(border=True):
             st.markdown("### 🧮 Kalkulačka hodinové sazby OSVČ")
             st.write("Spousta začínajících freelancerů si špatně nastaví hodinovou sazbu, protože zapomenou, že ne každá pracovní hodina je placená (fakturovatelná) a že z příjmů musí platit daně, odvody a provozní náklady.")
@@ -479,6 +479,18 @@ def render():
                     st.metric(label="Tvůj minimální hodinový tarif", value=f"{hourly_rate:,.0f} Kč/h".replace(",", " "))
                     
                 st.info(f"**Vysvětlení:** Abys měl/a čistého **{target_net} Kč**, musíš si vydělat **{total_gross_needed} Kč** (kvůli nákladům a odvodům). Protože reálně pro klienty pracuješ jen **{billable_hours:.0f} hodin**, musíš si za jednu hodinu účtovat alespoň **{hourly_rate:,.0f} Kč**.")
+
+                st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Nastav v kalkulačce hodnoty pro svůj nápad a zhodnoť, zda je takto vypočítaný tarif na trhu reálný.</div>", unsafe_allow_html=True)
+                st.text_area("Tvoje hodnocení (tarif a reálnost na trhu):", key="kalkulacka_sazby_ans")
+                
+                if st.button("Uložit výpočet sazby 💾", key="btn_kalkulacka_sazby"):
+                    odp = st.session_state.get("kalkulacka_sazby_ans", "")
+                    if odp.strip():
+                        if "uloz_odpoved_fn" in st.session_state:
+                            vysledek_text = f"Cílový čistý: {target_net} Kč | Hrubý: {total_gross_needed} Kč | Tarif: {hourly_rate:.0f} Kč/h | Odpověď: {odp}"
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Kalkulačka hodinové sazby", vysledek_text)
+                    else:
+                        st.warning("Před uložením nejprve napiš hodnocení k výpočtu!")
 # --- 4. Obchodní korporace ---
     elif selected_section == "4. Obchodní korporace":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div><h2>4. Obchodní korporace</h2>", unsafe_allow_html=True)
