@@ -391,11 +391,11 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-# --- TAB 3: VÝSLEDKY ZE SIMULÁTORU (FILTROVÁNO DLE TŘÍDY) ---
+# --- TAB 3: VÝSLEDKY ZE SIMULÁTORU (STRIKTNÍ FILTR DLE NICKU) ---
     with tab_investice:
         st.markdown("### 📈 Portfolia a obchody žáků v Investičním simulátoru")
         try:
-            # 1. Načtení seznamu tříd učitele ze Supabase
+            # 1. Načtení tříd učitele ze Supabase
             t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
             list_trid = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
             
@@ -404,12 +404,9 @@ if st.session_state["current_view"] == "Ucitel_Panel":
             else:
                 vybrana_trida_inv = st.selectbox("Vyberte třídu pro náhled investic:", list_trid, key="sel_trida_inv")
                 
-                # 2. Zjištění, kteří žáci patří do vybrané třídy
-                zaci_res = supabase.table("uzivatele").select("username, jmeno").eq("trida", vybrana_trida_inv).execute()
-                zaci_data = zaci_res.data if zaci_res.data else []
-                
-                zaci_nicky = [str(z.get("username", "")).strip().lower() for z in zaci_data if z.get("username")]
-                zaci_jmena = [str(z.get("jmeno", "")).strip().lower() for z in zaci_data if z.get("jmeno")]
+                # 2. Zjištění unikatních Nicků (usernames) žáků ve vybrané třídě
+                zaci_res = supabase.table("uzivatele").select("username").eq("trida", vybrana_trida_inv).execute()
+                zaci_nicky = [str(z.get("username", "")).strip().lower() for z in zaci_res.data] if zaci_res.data else []
 
                 # 3. Načtení dat z Google Sheets
                 import gspread
@@ -432,36 +429,29 @@ if st.session_state["current_view"] == "Ucitel_Panel":
                 df_inv = pd.DataFrame(data_inv)
                 
                 if not df_inv.empty:
-                    # Funkce pro ověření, zda žák patří do vybrané třídy
+                    # Striktní filtr: Pouze žáci (ne učitelé), s platným Nickem ze Supabase
                     def je_z_vybrane_tridy(row):
+                        role = str(row.get("Role", "")).strip().upper()
                         nick = str(row.get("Nick", "")).strip().lower()
-                        jmeno = str(row.get("Jmeno", "")).strip().lower()
-                        trida = str(row.get("Trida", "")).strip().upper()
                         
-                        return (
-                            nick in zaci_nicky or 
-                            jmeno in zaci_jmena or 
-                            trida == vybrana_trida_inv.strip().upper()
-                        )
+                        if role == "UCITEL" or not nick:
+                            return False
+                        
+                        return nick in zaci_nicky
 
-                    # Filtrování portfolií
                     df_inv_filtr = df_inv[df_inv.apply(je_z_vybrane_tridy, axis=1)]
 
                     if not df_inv_filtr.empty:
                         st.markdown(f"#### 💼 Portfolia žáků třídy **{vybrana_trida_inv}**")
                         st.dataframe(df_inv_filtr, use_container_width=True)
                         
-                        # Filtrování historie obchodů
+                        # Filtrování historie obchodů podle Nicku
                         try:
                             sheet_trans = soubor.worksheet("Transakce")
                             data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
                             if data_trans:
                                 df_trans = pd.DataFrame(data_trans)
-                                df_trans_filtr = df_trans[df_trans.apply(
-                                    lambda r: str(r.get("Nick", r.get("Jmeno", ""))).strip().lower() in zaci_nicky or 
-                                              str(r.get("Nick", r.get("Jmeno", ""))).strip().lower() in zaci_jmena, 
-                                    axis=1
-                                )]
+                                df_trans_filtr = df_trans[df_trans["Nick"].astype(str).str.strip().str.lower().isin(zaci_nicky)]
                                 
                                 if not df_trans_filtr.empty:
                                     st.markdown("#### 📜 Historie obchodů žáků této třídy")
