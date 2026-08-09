@@ -2803,7 +2803,7 @@ def render():
 # =========================================================================
     # 3.6 KRYPTOMĚNY: TECHNOLOGIE, PENÍZE, SPEKULACE I RIZIKO
     # =========================================================================
-    if "3.6 Kryptoměny" in selected_section_2:  # Uprav název proměnné podle tvého selectboxu
+    elif "3.6 Kryptoměny" in selected_section_2:
         st.markdown("<div class='sub-section-header'>6. KRYPTOMĚNY A NOVÉ FINANČNÍ TECHNOLOGIE</div>", unsafe_allow_html=True)
         
         st.markdown("## 3.6 Kryptoměny: technologie, peníze, spekulace i riziko")
@@ -3039,7 +3039,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
-# --- ÚKOL (INTERAKTIVNÍ) ---
+        # --- ÚKOL (INTERAKTIVNÍ) ---
         st.markdown("### 🧪 Krypto detektiv: ověř projekt dřív, než mu uvěříš")
         st.write("Vyber libovolný kryptoměnový projekt nebo token. **Nehodnoť, zda ho koupit, ale zda mu rozumíš.**")
         
@@ -3061,46 +3061,32 @@ def render():
                 "🟢 Zelená (Nízké riziko, srozumitelný projekt)", 
                 "🟠 Oranžová (Střední riziko, nejasnosti nebo velká spekulace)", 
                 "🔴 Červená (Vysoké riziko, varovné signály, možný podvod)"
-            ]
+            ],
+            key="k3_detektiv_semafor"
         )
         
         zduvodneni = st.text_area(
             "Napiš max. 3 věty zdůvodnění, proč jsi zvolil/a tuto barvu:", 
             height=100,
-            placeholder="Tento projekt mi přijde rizikový, protože..."
+            placeholder="Tento projekt mi přijde rizikový, protože...",
+            key="k3_detektiv_zduvodneni"
         )
         
-        if st.button("Uložit hodnocení", type="primary"):
+        if st.button("Uložit hodnocení Krypto detektiva", type="primary", key="btn_k3_detektiv"):
             if semafor == "Vyber hodnocení..." or not zduvodneni.strip():
                 st.warning("⚠️ Prosím, vyber barvu na semaforu a napiš své zdůvodnění.")
             else:
                 st.success(f"✅ Skvělá práce, detektive! Hodnocení **{semafor.split(' ')[0]}** bylo zaznamenáno.")
                 st.info(f"**Tvé zdůvodnění:** {zduvodneni}")
+                
+                detektiv_data = f"Hodnocení: {semafor} | Zdůvodnění: {zduvodneni}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 3.6 - Krypto detektiv", detektiv_data)
 
     # =========================================================================
     # 3.7 OCHRANA SPOTŘEBITELE A INVESTIČNÍ REKLAMA
     # =========================================================================
-    elif "3.7 Ochrana" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>3. FINANČNÍ TRH A ANALÝZA RIZIK</div><h2>3.7 Ochrana spotřebitele a investiční reklama</h2>", unsafe_allow_html=True)
-        st.write("Finanční produkty se často prodávají jazykem emocí. Reklama může zdůraznit svobodu, rychlý zisk nebo strach z promarněné šance.")
-        
-        with st.container(border=True):
-            st.markdown("### Typické věty, u kterých zpozornět:")
-            st.markdown("""
-            * „Začni vydělávat pasivně hned.“
-            * „Tuhle příležitost nesmíš propásnout.“
-            * „Garantovaný výnos.“
-            * „Vydělávají na tom všichni.“
-            * „Stačí kopírovat moje obchody.“
-            * „Banky nechtějí, abys to věděl/a.“
-            """)
-            
-            st.success("🛡️ **Ochrana spotřebitele začíná otázkou:** Kdo mi to nabízí, jak na tom vydělává, jaké riziko mi neříká a proč mám rozhodnout právě teď?")
-
-# =========================================================================
-    # 3.7 OCHRANA SPOTŘEBITELE A INVESTIČNÍ REKLAMA
-    # =========================================================================
-    if "3.7 Ochrana spotřebitele" in selected_section_2:  # Uprav název podle položky v selectboxu
+    elif "3.7 Ochrana spotřebitele" in selected_section_2 or "3.7 Ochrana" in selected_section_2:
         st.markdown("<div class='sub-section-header'>7. OCHRANA SPOTŘEBITELE A REKLAMA</div>", unsafe_allow_html=True)
         
         st.markdown("## 3.7 Ochrana spotřebitele a investiční reklama")
@@ -3124,10 +3110,11 @@ def render():
             <b>🛡️ Ochrana spotřebitele začíná otázkou:</b> Kdo mi to nabízí, jak na tom vydělává, jaké riziko mi neříká a proč mám rozhodnout právě teď?
         </div>
         """, unsafe_allow_html=True)
-        # =========================================================================
+
+    # =========================================================================
     # 3.8 INTERAKTIVNÍ AKTIVITY K FINANČNÍMU TRHU
     # =========================================================================
-    if "3.8 Interaktivní aktivity" in selected_section_2:  # Uprav název podle položky v selectboxu
+    elif "3.8 Interaktivní aktivity" in selected_section_2:
         st.markdown("<div class='sub-section-header'>8. INTERAKTIVNÍ AKTIVITY K FINANČNÍMU TRHU</div>", unsafe_allow_html=True)
         st.markdown("## 3.8 Interaktivní aktivity k finančnímu trhu")
         
@@ -3141,19 +3128,19 @@ def render():
         with st.form("trideni_form"):
             col1, col2 = st.columns(2)
             with col1:
-                q1 = st.selectbox("Spořicí účet", kategorie)
-                q2 = st.selectbox("Státní dluhopis", kategorie)
-                q3 = st.selectbox("Akcie jedné firmy (stock picking)", kategorie)
-                q4 = st.selectbox("ETF na široký index", kategorie)
-                q5 = st.selectbox("Podílový fond", kategorie)
+                q1 = st.selectbox("Spořicí účet", kategorie, key="k3_a1_q1")
+                q2 = st.selectbox("Státní dluhopis", kategorie, key="k3_a1_q2")
+                q3 = st.selectbox("Akcie jedné firmy (stock picking)", kategorie, key="k3_a1_q3")
+                q4 = st.selectbox("ETF na široký index", kategorie, key="k3_a1_q4")
+                q5 = st.selectbox("Podílový fond", kategorie, key="k3_a1_q5")
             with col2:
-                q6 = st.selectbox("Termínovaný vklad", kategorie)
-                q7 = st.selectbox("Nákup meme coinu podle TikToku", kategorie)
-                q8 = st.selectbox("Sázení na sport / ruleta", kategorie)
-                q9 = st.selectbox("Kryptoměna držená bez pochopení rizika", kategorie)
-                q10 = st.selectbox("Pravidelná investice do diverzifikovaného fondu", kategorie)
+                q6 = st.selectbox("Termínovaný vklad", kategorie, key="k3_a1_q6")
+                q7 = st.selectbox("Nákup meme coinu podle TikToku", kategorie, key="k3_a1_q7")
+                q8 = st.selectbox("Sázení na sport / ruleta", kategorie, key="k3_a1_q8")
+                q9 = st.selectbox("Kryptoměna držená bez pochopení rizika", kategorie, key="k3_a1_q9")
+                q10 = st.selectbox("Pravidelná investice do diverzifikovaného fondu", kategorie, key="k3_a1_q10")
                 
-            submitted_trideni = st.form_submit_button("Vyhodnotit moje odpovědi", type="primary")
+            submitted_trideni = st.form_submit_button("Vyhodnotit a uložit moje odpovědi", type="primary")
             
         if submitted_trideni:
             if "Vyber..." in [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10]:
@@ -3167,9 +3154,17 @@ def render():
                     * **Spekulace (vyšší riziko, sázka na konkrétní vývoj):** Akcie jedné firmy (stock picking).
                     * **Hazard / Extrémní riziko (vysoká šance na ztrátu všeho):** Nákup meme coinu podle TikToku, Sázení, Kryptoměna držená bez pochopení rizika.
                     """)
+                
+                trideni_data = (
+                    f"1:{q1} | 2:{q2} | 3:{q3} | 4:{q4} | 5:{q5} | "
+                    f"6:{q6} | 7:{q7} | 8:{q8} | 9:{q9} | 10:{q10}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 3.8 - Aktivita 1 Třídění", trideni_data)
         
         st.divider()
-# --- AKTIVITA 2: INVESTIČNÍ POČASÍ (VYLEPŠENÁ VERZE) ---
+
+        # --- AKTIVITA 2: INVESTIČNÍ POČASÍ (VYLEPŠENÁ VERZE) ---
         st.markdown("### 📉 Aktivita 2: Investiční počasí")
         st.write("Jak reagují lidé na výkyvy trhu? Vyber situaci a zkus správně přiřadit, jak se zachová **Impulzivní začátečník** a jak **Informovaný investor**.")
 
@@ -3201,7 +3196,7 @@ def render():
             }
         }
 
-        vybrana_situace = st.selectbox("Vyber situaci na trhu:", list(scenare.keys()))
+        vybrana_situace = st.selectbox("Vyber situaci na trhu:", list(scenare.keys()), key="k3_a2_situace")
 
         if vybrana_situace != "Vyber situaci...":
             data = scenare[vybrana_situace]
@@ -3214,69 +3209,69 @@ def render():
                 col1, col2 = st.columns(2)
                 with col1:
                     st.info(f"**Reakce A:**\n\n{data['reakce_A']}")
-                    odpoved_A = st.radio("Kdo podle tebe provede Akci A?", ["Vyber...", "Impulzivní začátečník", "Informovaný investor"], key="rad_A")
+                    odpoved_A = st.radio("Kdo podle tebe provede Akci A?", ["Vyber...", "Impulzivní začátečník", "Informovaný investor"], key="k3_a2_rad_A")
                     
                 with col2:
                     st.warning(f"**Reakce B:**\n\n{data['reakce_B']}")
-                    odpoved_B = st.radio("Kdo podle tebe provede Akci B?", ["Vyber...", "Impulzivní začátečník", "Informovaný investor"], key="rad_B")
+                    odpoved_B = st.radio("Kdo podle tebe provede Akci B?", ["Vyber...", "Impulzivní začátečník", "Informovaný investor"], key="k3_a2_rad_B")
             
-            if st.button("Vyhodnotit moje skóre", type="primary"):
-                if odpoved_A == "Vyber..." or odpoved_B == "Vyber...":
-                    st.error("⚠️ Nejdřív přiřaď k oběma reakcím příslušného člověka.")
-                elif odpoved_A == odpoved_B:
-                    st.error("⚠️ Nemůžou oba udělat to samé! Jeden je začátečník, druhý investor.")
-                else:
-                    # Zjistíme, jestli se uživatel trefil podle našeho klíče
-                    spravne_A = odpoved_A == "Impulzivní začátečník" if data["zacatecnik"] == "A" else odpoved_A == "Informovaný investor"
-                    spravne_B = odpoved_B == "Impulzivní začátečník" if data["zacatecnik"] == "B" else odpoved_B == "Informovaný investor"
-                    
-                    if spravne_A and spravne_B:
-                        st.success("✅ Přesně tak! Skvěle jsi prokoukl/a psychologii obou přístupů.")
+                if st.button("Vyhodnotit a uložit moje skóre", type="primary", key="btn_k3_a2_pocasí"):
+                    if odpoved_A == "Vyber..." or odpoved_B == "Vyber...":
+                        st.error("⚠️ Nejdřív přiřaď k oběma reakcím příslušného člověka.")
+                    elif odpoved_A == odpoved_B:
+                        st.error("⚠️ Nemůžou oba udělat to samé! Jeden je začátečník, druhý investor.")
                     else:
-                        st.error("❌ Tady ses trochu nechal/a nachytat. Pojďme se podívat proč.")
+                        spravne_A = odpoved_A == "Impulzivní začátečník" if data["zacatecnik"] == "A" else odpoved_A == "Informovaný investor"
+                        spravne_B = odpoved_B == "Impulzivní začátečník" if data["zacatecnik"] == "B" else odpoved_B == "Informovaný investor"
                         
-                    st.markdown(f"""
-                    <div class="box-blue">
-                        <b>💡 Co si z toho odnést:</b><br>{data['vysvetleni']}
-                    </div>
-                    """, unsafe_allow_html=True)
+                        if spravne_A and spravne_B:
+                            st.success("✅ Přesně tak! Skvěle jsi prokoukl/a psychologii obou přístupů.")
+                        else:
+                            st.error("❌ Tady ses trochu nechal/a nachytat. Pojďme se podívat proč.")
+                            
+                        st.markdown(f"""
+                        <div class="box-blue">
+                            <b>💡 Co si z toho odnést:</b><br>{data['vysvetleni']}
+                        </div>
+                        """, unsafe_allow_html=True)
+                        
+                        pocasi_data = f"Situace: {vybrana_situace} | Reakce A: {odpoved_A} | Reakce B: {odpoved_B}"
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 3.8 - Aktivita 2 Investiční počasí", pocasi_data)
 
         st.divider()
 
-# --- AKTIVITA 3: ČTENÍ GRAFU BEZ ILUZÍ (INTERAKTIVNÍ) ---
+        # --- AKTIVITA 3: ČTENÍ GRAFU BEZ ILUZÍ (INTERAKTIVNÍ) ---
         st.markdown("### 📊 Aktivita 3: Čtení grafu bez iluzí (Zoom Efekt)")
         st.write("Grafy mohou vyprávět úplně jiný příběh podle toho, jaký časový výsek si vybereš. Zjisti, jak snadné je nechat se oklamat.")
 
         typ_grafu = st.selectbox(
             "Vyber aktivum k analýze:", 
-            ["Vyber...", "🚀 Aktivum A: Nový revoluční token (Hype)", "📈 Aktivum B: Široký akciový index (S&P 500)"]
+            ["Vyber...", "🚀 Aktivum A: Nový revoluční token (Hype)", "📈 Aktivum B: Široký akciový index (S&P 500)"],
+            key="k3_a3_typ_grafu"
         )
 
         if typ_grafu == "🚀 Aktivum A: Nový revoluční token (Hype)":
             st.markdown("Představ si, že ti kamarád nebo influencer ukáže tento graf se slovy: *„Koukej, za měsíc to udělalo 400 %! Musíme hned nakoupit, než to vyletí ještě výš!“*")
             
-            pohled = st.radio("Zvol úhel pohledu:", ["Pohled začátečníka (Poslední 1 měsíc)", "Pohled experta (Celé 2 roky)"], horizontal=True)
+            pohled = st.radio("Zvol úhel pohledu:", ["Pohled začátečníka (Poslední 1 měsíc)", "Pohled experta (Celé 2 roky)"], horizontal=True, key="k3_a3_rad1")
             
             if "začátečníka" in pohled:
-                # Zobrazíme jen raketový růst (čistá data pro Streamlit line_chart)
                 st.line_chart([100, 150, 220, 350, 500], height=250)
                 st.warning("👀 **Co vidíš:** Nádherný, strmý růst. Graf vyvolává obrovské FOMO. Zdá se, že to může jít jen nahoru.")
             else:
-                # Zobrazíme celou bublinu a následný pád
                 st.line_chart([10, 12, 11, 15, 20, 100, 150, 220, 350, 500, 180, 60, 25, 12, 8, 5, 3], height=250)
                 st.error("📉 **Realita bez iluzí:** Ten úžasný měsíc byla jen špička splaskávající bubliny (tzv. Pump and Dump). Kdo nakoupil na vrcholu plný emocí, přišel o 99 % svých peněz.")
                 
         elif typ_grafu == "📈 Aktivum B: Široký akciový index (S&P 500)":
             st.markdown("Tohle je reálný historický vývoj globálního trhu. Jak vnímáš krize?")
             
-            pohled = st.radio("Zvol úhel pohledu:", ["Pohled panikařícího investora (Krize 2008)", "Dlouhodobý horizont (1990 - 2024)"], horizontal=True)
+            pohled = st.radio("Zvol úhel pohledu:", ["Pohled panikařícího investora (Krize 2008)", "Dlouhodobý horizont (1990 - 2024)"], horizontal=True, key="k3_a3_rad2")
             
             if "panikařícího" in pohled:
-                # Zobrazíme jen propad (cca 2007-2009)
                 st.line_chart([1565, 1400, 1300, 1100, 900, 735, 676], height=250)
                 st.error("👀 **Co vidíš:** Trh padá volným pádem o více než 50 %. Vypadá to jako konec finančního světa. Spousta lidí tady v panice prodala všechno se ztrátou.")
             else:
-                # Zobrazíme dlouhodobý trend s krizí jako pouhým "zubem"
                 st.line_chart([350, 450, 750, 1400, 1100, 800, 1565, 676, 1100, 1800, 2500, 3200, 4700, 3900, 5000], height=250)
                 st.success("📈 **Realita bez iluzí:** Ten hrozivý propad z roku 2008 je v dlouhodobém měřítku jen jeden z mnoha 'zubů'. Trh se časem zotavil a pokračoval v růstu. Dlouhodobý investor krizi jednoduše 'vyseděl'.")
 
@@ -3284,7 +3279,7 @@ def render():
         if typ_grafu != "Vyber...":
             st.divider()
             st.markdown("#### 🧠 Rychlý test emocí")
-            emoc = st.slider("Jakou emoci bys cítil/a, kdybys viděl/a svůj graf padat o 40 % a měl/a v něm své úspory?", 0, 100, 50, help="0 = Extrémní panika a chuť vše prodat, 100 = Zlatá příležitost k nákupu ve slevě")
+            emoc = st.slider("Jakou emoci bys cítil/a, kdybys viděl/a svůj graf padat o 40 % a měl/a v něm své úspory?", 0, 100, 50, help="0 = Extrémní panika a chuť vše prodat, 100 = Zlatá příležitost k nákupu ve slevě", key="k3_a3_emoc")
             
             if emoc < 35:
                 st.info("💡 **Tvá reakce:** To je naprosto přirozená lidská reakce. Právě proto bys do kolísavých aktiv neměl/a dávat peníze, které budeš brzy potřebovat. Železné nervy se budují postupně s praxí.")
@@ -3292,6 +3287,10 @@ def render():
                 st.info("💡 **Tvá reakce:** Skvělý přístup! Propady vnímáš jako výprodej a příležitost. Pozor jen na to, abys nekupoval/a 'padající nůž' u pochybných projektů bez vnitřní hodnoty.")
             else:
                 st.info("💡 **Tvá reakce:** Klidný střed. Nechceš dělat ukvapené závěry, držíš se svého plánu a nejednáš impulzivně. To je pro dlouhodobého investora ten nejdůležitější stav mysli.")
+                
+            if st.button("Uložit výsledek psychologického testu 💾", key="btn_k3_a3_emoc"):
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 3.8 - Aktivita 3 Emoce u grafu", f"Tolerace rizika (0-100): {emoc}")
 # =========================================================================
     # 3.9 SHRNUTÍ: CO SI Z FINANČNÍHO TRHU ODNÉST
     # =========================================================================
