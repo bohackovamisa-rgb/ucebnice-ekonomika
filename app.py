@@ -300,7 +300,7 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání tříd: {e}")
 
-    with tab_vysledky:
+with tab_vysledky:
         st.markdown("### Přehled odevzdaných prací")
         try:
             t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
@@ -320,11 +320,26 @@ if st.session_state["current_view"] == "Ucitel_Panel":
                     if odpovedi_res.data:
                         st.markdown(f"#### Odpovědi žáka: {vybrany_zak_jmeno}")
                         
-                        # Tlačítko pro export odpovědí žáka do CSV
+                        # --- ÚPRAVA EXPORTU PRO ČESKÝ EXCEL ---
                         df_export = pd.DataFrame(odpovedi_res.data)
-                        csv_data = df_export.to_csv(index=False).encode('utf-8')
+                        
+                        # Výběr a seřazení sloupců pro přehlednost
+                        povolene_sloupce = [c for c in ["username", "kapitola", "otazka_id", "odpoved"] if c in df_export.columns]
+                        df_export = df_export[povolene_sloupce]
+                        
+                        # Přejmenování hlaviček pro učitele
+                        df_export = df_export.rename(columns={
+                            "username": "Žák (Username)",
+                            "kapitola": "Kapitola",
+                            "otazka_id": "Úkol / Otázka",
+                            "odpoved": "Odpověď"
+                        })
+                        
+                        # Export se středníkem (sep=';') a UTF-8-SIG kódováním pro český Excel
+                        csv_data = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
+                        
                         st.download_button(
-                            label="📥 Stáhnout odpovědi v CSV (Excel)",
+                            label="📥 Stáhnout odpovědi v CSV (pro Excel)",
                             data=csv_data,
                             file_name=f"odpovedi_{vybrany_zak_user}.csv",
                             mime="text/csv"
