@@ -145,11 +145,6 @@ def login_screen():
 if not login_screen():
     st.stop()
 
-# Spustíme přihlašování. Pokud se nevrátí True (uživatel není přihlášený), aplikace se zde zastaví.
-if not login_screen():
-    st.stop()
-
-
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
     st.session_state["current_view"] = "Uvod"
