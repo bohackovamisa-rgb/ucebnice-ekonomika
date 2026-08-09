@@ -391,45 +391,88 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-    # --- TAB 3: VÝSLEDKY ZE SIMULÁTORU (GOOGLE SHEETS) ---
+# --- TAB 3: VÝSLEDKY ZE SIMULÁTORU (FILTROVÁNO DLE TŘÍDY) ---
     with tab_investice:
         st.markdown("### 📈 Portfolia a obchody žáků v Investičním simulátoru")
         try:
-            import gspread
-            import json
-
-            raw_creds = st.secrets["google_credentials"]
-            if isinstance(raw_creds, str):
-                tajemstvi = json.loads(raw_creds)
-            else:
-                tajemstvi = dict(raw_creds)
-                
-            if "private_key" in tajemstvi:
-                tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
-
-            client = gspread.service_account_from_dict(tajemstvi)
-            soubor = client.open("Skolni_Investice_DB")
-            sheet_uziv = soubor.sheet1
+            # 1. Načtení seznamu tříd učitele ze Supabase
+            t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
+            list_trid = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
             
-            data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
-            df_inv = pd.DataFrame(data_inv)
-            
-            if not df_inv.empty:
-                if "Role" in df_inv.columns:
-                    df_inv = df_inv[df_inv["Role"] != "UCITEL"]
-                
-                st.markdown("#### 💼 Stav účtů a vlastněná aktiva žáků")
-                st.dataframe(df_inv, use_container_width=True)
-                
-                try:
-                    sheet_trans = soubor.worksheet("Transakce")
-                    data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
-                    if data_trans:
-                        st.markdown("#### 📜 Historie všech provedených nákupů a prodejů")
-                        st.dataframe(pd.DataFrame(data_trans), use_container_width=True)
-                except Exception:
-                    pass
+            if not list_trid:
+                st.info("Nejprve vytvořte třídu v záložce 'Správa a tvorba tříd'.")
             else:
-                st.info("Zatím žádný žák nezačal v simulátoru investovat.")
+                vybrana_trida_inv = st.selectbox("Vyberte třídu pro náhled investic:", list_trid, key="sel_trida_inv")
+                
+                # 2. Zjištění, kteří žáci patří do vybrané třídy
+                zaci_res = supabase.table("uzivatele").select("username, jmeno").eq("trida", vybrana_trida_inv).execute()
+                zaci_data = zaci_res.data if zaci_res.data else []
+                
+                zaci_nicky = [str(z.get("username", "")).strip().lower() for z in zaci_data if z.get("username")]
+                zaci_jmena = [str(z.get("jmeno", "")).strip().lower() for z in zaci_data if z.get("jmeno")]
+
+                # 3. Načtení dat z Google Sheets
+                import gspread
+                import json
+
+                raw_creds = st.secrets["google_credentials"]
+                if isinstance(raw_creds, str):
+                    tajemstvi = json.loads(raw_creds)
+                else:
+                    tajemstvi = dict(raw_creds)
+                    
+                if "private_key" in tajemstvi:
+                    tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
+
+                client = gspread.service_account_from_dict(tajemstvi)
+                soubor = client.open("Skolni_Investice_DB")
+                sheet_uziv = soubor.sheet1
+                
+                data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                df_inv = pd.DataFrame(data_inv)
+                
+                if not df_inv.empty:
+                    # Funkce pro ověření, zda žák patří do vybrané třídy
+                    def je_z_vybrane_tridy(row):
+                        nick = str(row.get("Nick", "")).strip().lower()
+                        jmeno = str(row.get("Jmeno", "")).strip().lower()
+                        trida = str(row.get("Trida", "")).strip().upper()
+                        
+                        return (
+                            nick in zaci_nicky or 
+                            jmeno in zaci_jmena or 
+                            trida == vybrana_trida_inv.strip().upper()
+                        )
+
+                    # Filtrování portfolií
+                    df_inv_filtr = df_inv[df_inv.apply(je_z_vybrane_tridy, axis=1)]
+
+                    if not df_inv_filtr.empty:
+                        st.markdown(f"#### 💼 Portfolia žáků třídy **{vybrana_trida_inv}**")
+                        st.dataframe(df_inv_filtr, use_container_width=True)
+                        
+                        # Filtrování historie obchodů
+                        try:
+                            sheet_trans = soubor.worksheet("Transakce")
+                            data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                            if data_trans:
+                                df_trans = pd.DataFrame(data_trans)
+                                df_trans_filtr = df_trans[df_trans.apply(
+                                    lambda r: str(r.get("Nick", r.get("Jmeno", ""))).strip().lower() in zaci_nicky or 
+                                              str(r.get("Nick", r.get("Jmeno", ""))).strip().lower() in zaci_jmena, 
+                                    axis=1
+                                )]
+                                
+                                if not df_trans_filtr.empty:
+                                    st.markdown("#### 📜 Historie obchodů žáků této třídy")
+                                    st.dataframe(df_trans_filtr, use_container_width=True)
+                                else:
+                                    st.caption("Žáci této třídy zatím neprovedli žádné obchody.")
+                        except Exception:
+                            pass
+                    else:
+                        st.info(f"Ve třídě **{vybrana_trida_inv}** zatím žádný žák v simulátoru neinvestoval.")
+                else:
+                    st.info("Databáze simulátoru je zatím prázdná.")
         except Exception as e:
             st.error(f"Chyba při načítání dat z investiční databáze: {e}")
