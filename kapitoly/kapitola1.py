@@ -78,7 +78,7 @@ def render():
             """, unsafe_allow_html=True) #[cite: 1]
 
         with st.container(border=True):
-st.markdown("### 1.3 Podnikatel není jen „někdo, kdo vydělává“")
+            st.markdown("### 1.3 Podnikatel není jen „někdo, kdo vydělává“")
             st.write("Podnikatel vytváří hodnotu pro zákazníka. Peníze jsou důsledkem toho, že někdo považuje produkt nebo službu za užitečnou. Moderní podnikavost proto zahrnuje nejen prodej, ale i schopnost:")
             st.markdown("""
             * vidět problém,
