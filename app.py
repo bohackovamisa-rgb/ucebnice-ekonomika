@@ -25,13 +25,13 @@ def check_password():
         st.markdown("<br><br><br>", unsafe_allow_html=True)
         with st.container(border=True):
             st.markdown(
-                "<h2 style='text-align: center; border: none; font-weight: 700;"
-                " margin-bottom: 0;'>Soukromá učebnice</h2>",
+                "<h2 style='text-align: center; border: none; font-weight: 800; color: #0F172A;"
+                " margin-bottom: 0.2rem; font-size: 1.8rem;'>Soukromá učebnice</h2>",
                 unsafe_allow_html=True,
             )
             st.markdown(
-                "<p style='text-align: center; color: #78716c; font-size:"
-                " 0.85rem; margin-bottom: 1.5rem;'>Zadejte přístupové heslo pro"
+                "<p style='text-align: center; color: #64748B; font-size:"
+                " 0.9rem; margin-bottom: 1.5rem;'>Zadejte přístupové heslo pro"
                 " odemknutí kurzu.</p>",
                 unsafe_allow_html=True,
             )
@@ -41,7 +41,7 @@ def check_password():
                 label_visibility="collapsed",
                 placeholder="Přístupové heslo...",
             )
-            if st.button("Vstoupit do učebnice", use_container_width=True):
+            if st.button("Vstoupit do učebnice 🚀", use_container_width=True):
                 if password == app_pwd:
                     st.session_state["password_correct"] = True
                     st.rerun()
@@ -53,204 +53,236 @@ def check_password():
 if not check_password():
     st.stop()
 
-# --- STYLOVÁNÍ (iOS EDITORIAL & EMOJI STYL) ---
+# --- PREMIOVÝ DESIGN & STYLOVÁNÍ (PREMIUM EDTECH SYSTEM) ---
 st.markdown(
     """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 /* Skrytí výchozí navigace Streamlitu */
 [data-testid="stSidebarNav"] { display: none !important; }
 
-/* 1. ZÁKLADNÍ POZADÍ A PÍSMO (MONTSERRAT) */
+/* 1. GLOBÁLNÍ POZADÍ A PÍSMO (PLUS JAKARTA SANS & OUTFIT) */
 html, body, [class*="css"], .stApp {
-    font-family: 'Montserrat', -apple-system, sans-serif !important;
-    background-color: #FAF8F5 !important;
-    color: #1C1917 !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
+    background: radial-gradient(circle at 50% 0%, #F8FAFC 0%, #F1F5F9 100%) !important;
+    color: #0F172A !important;
 }
 
-/* 2. ŠÍŘKA OBSAHU A ELEVACE KARET */
+/* 2. HLAVNÍ KONTEJNER A SKLENĚNÉ KARTY */
 .main .block-container { 
-    max-width: 920px !important; 
+    max-width: 960px !important; 
     padding-top: 2.5rem !important; 
-    padding-bottom: 5rem !important; 
+    padding-bottom: 6rem !important; 
 }
 
+/* Moderní karty s efektem stínu a mikronajetím */
 div[data-testid="stVerticalBlockBorderWrapper"] { 
-    background-color: #FFFFFF !important; 
-    border-radius: 18px !important; 
-    border: 1px solid #EAE7DC !important; 
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important; 
-    padding: 2rem !important; 
-    margin-bottom: 1.5rem !important; 
-    transition: all 0.25s ease !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    border-radius: 20px !important; 
+    border: 1px solid rgba(226, 232, 240, 0.8) !important; 
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important; 
+    padding: 2.2rem !important; 
+    margin-bottom: 1.8rem !important; 
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease !important;
 }
 
-/* 3. TYPOGRAFIE & NADPISY */
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -4px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* 3. SHARP EXPRESNÍ TYPOGRAFIE */
 h1 { 
-    font-family: 'Montserrat', sans-serif !important; 
+    font-family: 'Outfit', sans-serif !important; 
     color: #0F172A !important; 
     font-weight: 800 !important; 
-    font-size: 2.2rem !important; 
-    letter-spacing: -0.03em !important; 
-    line-height: 1.25 !important; 
-    margin-bottom: 0.75rem !important; 
+    font-size: 2.5rem !important; 
+    letter-spacing: -0.04em !important; 
+    line-height: 1.2 !important; 
+    margin-bottom: 0.85rem !important; 
 }
 
 h2 { 
-    font-family: 'Montserrat', sans-serif !important; 
+    font-family: 'Outfit', sans-serif !important; 
     color: #1E293B !important; 
     font-weight: 700 !important; 
-    font-size: 1.35rem !important; 
-    letter-spacing: -0.02em !important; 
-    margin-top: 1.5rem !important; 
-    margin-bottom: 0.85rem !important; 
-    border-bottom: 1px solid #F1F5F9; 
-    padding-bottom: 0.5rem; 
+    font-size: 1.5rem !important; 
+    letter-spacing: -0.03em !important; 
+    margin-top: 1.8rem !important; 
+    margin-bottom: 1rem !important; 
+    border-bottom: 2px solid #E2E8F0; 
+    padding-bottom: 0.6rem; 
 }
 
 h3 { 
-    font-family: 'Montserrat', sans-serif !important; 
+    font-family: 'Outfit', sans-serif !important; 
     color: #334155 !important; 
     font-weight: 600 !important; 
-    font-size: 1.1rem !important; 
-    margin-top: 1.25rem !important; 
+    font-size: 1.2rem !important; 
+    margin-top: 1.4rem !important; 
 }
 
 p, li, td, th { 
-    font-family: 'Montserrat', sans-serif !important; 
+    font-family: 'Plus Jakarta Sans', sans-serif !important; 
     color: #334155 !important; 
-    font-size: 0.95rem !important; 
-    line-height: 1.7 !important; 
+    font-size: 0.98rem !important; 
+    line-height: 1.75 !important; 
     font-weight: 400 !important; 
 }
 
-/* 4. TLAČÍTKA V LEVÉM MENU */
+/* 4. MODERNÍ NEOMORFNÍ A DYNAMICKÁ TLAČÍTKA */
 button[data-testid="baseButton-primary"], 
 button[kind="primary"] { 
-    font-family: 'Montserrat', sans-serif !important; 
-    border-radius: 9999px !important; 
-    border: 1px solid #111111 !important; 
-    background-color: #111111 !important; 
+    font-family: 'Plus Jakarta Sans', sans-serif !important; 
+    border-radius: 14px !important; 
+    border: none !important; 
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important; 
     color: #FFFFFF !important; 
     font-weight: 600 !important; 
-    font-size: 0.88rem !important; 
-    padding: 0.6rem 1.4rem !important; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; 
+    font-size: 0.9rem !important; 
+    padding: 0.65rem 1.4rem !important; 
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25) !important; 
+    transition: all 0.2s ease !important;
 }
-button[data-testid="baseButton-primary"] *, 
-button[kind="primary"] * {
-    color: #FFFFFF !important;
+button[data-testid="baseButton-primary"]:hover, 
+button[kind="primary"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.35) !important;
 }
 
 button[data-testid="baseButton-secondary"], 
 button[kind="secondary"] {
-    font-family: 'Montserrat', sans-serif !important; 
-    border-radius: 9999px !important; 
-    background-color: #F2EFE9 !important;
-    color: #44403C !important;
-    border: 1px solid #E2DEC6 !important;
-    font-weight: 500 !important;
-    font-size: 0.88rem !important;
-    padding: 0.6rem 1.4rem !important;
-}
-button[data-testid="baseButton-secondary"] *, 
-button[kind="secondary"] * {
-    color: #44403C !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important; 
+    border-radius: 14px !important; 
+    background-color: #FFFFFF !important;
+    color: #475569 !important;
+    border: 1px solid #E2E8F0 !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    padding: 0.65rem 1.4rem !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.2s ease !important;
 }
 
 button[data-testid="baseButton-secondary"]:hover, 
 button[kind="secondary"]:hover {
-    background-color: #111111 !important;
-    border-color: #111111 !important;
-    color: #FFFFFF !important;
-}
-button[data-testid="baseButton-secondary"]:hover *, 
-button[kind="secondary"]:hover * {
-    color: #FFFFFF !important;
+    background-color: #F8FAFC !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
+    transform: translateY(-1px) !important;
 }
 
-/* 5. VSTUPNÍ POLA (INPUTY & SELECTBOXY) */
+/* 5. VSTUPNÍ POLA ZNAČKOVÉHO VZHLEDU */
 .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { 
-    font-family: 'Montserrat', sans-serif !important; 
-    border-radius: 12px !important; 
-    border: 1px solid #E2DEC6 !important; 
-    background-color: #F2EFE9 !important; 
+    font-family: 'Plus Jakarta Sans', sans-serif !important; 
+    border-radius: 14px !important; 
+    border: 1.5px solid #E2E8F0 !important; 
+    background-color: #FFFFFF !important; 
     color: #0F172A !important; 
-    font-size: 0.92rem !important; 
-    padding: 0.65rem 0.9rem !important; 
+    font-size: 0.95rem !important; 
+    padding: 0.7rem 1rem !important; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01) !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-/* 6. BOČNÍ PANEL (SIDEBAR) */
+.stTextInput input:focus, .stTextArea textarea:focus, div[data-baseweb="select"] > div:focus {
+    border-color: #6366F1 !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* 6. SIDEBAR S ELEGANTNÍM TÓNEM */
 section[data-testid="stSidebar"] { 
-    background-color: #F3F0E9 !important; 
-    border-right: 1px solid #E5E0D8 !important; 
+    background: #F8FAFC !important; 
+    border-right: 1px solid #E2E8F0 !important; 
 }
 .sidebar-section-title { 
-    font-size: 0.72rem; 
-    font-weight: 700; 
-    color: #78716C; 
+    font-size: 0.75rem; 
+    font-weight: 800; 
+    color: #94A3B8; 
     text-transform: uppercase; 
-    letter-spacing: 0.08em; 
-    margin-top: 1.4rem; 
-    margin-bottom: 0.6rem; 
+    letter-spacing: 0.1em; 
+    margin-top: 1.6rem; 
+    margin-bottom: 0.7rem; 
 }
 
-/* 7. JEMNÉ PASTELOVÉ BAREVNÉ BOXY */
+/* 7. VYLEPŠENÉ BAREVNÉ BOXY (DESIGN SYSTEM BOXES) */
 .box-blue { 
-    background-color: #F4F7F9 !important; 
-    border-left: 3px solid #8AA2B6 !important; 
-    padding: 1.1rem 1.3rem; 
-    border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #2C3E50 !important; 
-    font-size: 0.93rem; 
+    background: linear-gradient(135deg, #EFF6FF 0%, #E0F2FE 100%) !important; 
+    border-left: 4px solid #0284C7 !important; 
+    padding: 1.25rem 1.4rem; 
+    border-radius: 0 16px 16px 0; 
+    margin: 1.2rem 0; 
+    color: #0C4A6E !important; 
+    font-size: 0.96rem; 
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.05);
 }
 .box-yellow { 
-    background-color: #FAF7EE !important; 
-    border-left: 3px solid #D8C397 !important; 
-    padding: 1.1rem 1.3rem; 
-    border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #5C4E31 !important; 
-    font-size: 0.93rem; 
+    background: linear-gradient(135deg, #FEFCE8 0%, #FEF3C7 100%) !important; 
+    border-left: 4px solid #D97706 !important; 
+    padding: 1.25rem 1.4rem; 
+    border-radius: 0 16px 16px 0; 
+    margin: 1.2rem 0; 
+    color: #78350F !important; 
+    font-size: 0.96rem; 
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.05);
 }
 .box-purple { 
-    background-color: #F8F5F8 !important; 
-    border-left: 3px solid #B4A2B8 !important; 
-    padding: 1.1rem 1.3rem; 
-    border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #4A3B4E !important; 
-    font-size: 0.93rem; 
+    background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%) !important; 
+    border-left: 4px solid #9333EA !important; 
+    padding: 1.25rem 1.4rem; 
+    border-radius: 0 16px 16px 0; 
+    margin: 1.2rem 0; 
+    color: #581C87 !important; 
+    font-size: 0.96rem; 
     word-wrap: break-word; 
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.05);
 }
 .box-green { 
-    background-color: #F3F6F3 !important; 
-    border-left: 3px solid #8DAE93 !important; 
-    padding: 1.1rem 1.3rem; 
-    border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #2A4231 !important; 
-    font-size: 0.93rem; 
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%) !important; 
+    border-left: 4px solid #16A34A !important; 
+    padding: 1.25rem 1.4rem; 
+    border-radius: 0 16px 16px 0; 
+    margin: 1.2rem 0; 
+    color: #14532D !important; 
+    font-size: 0.96rem; 
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.05);
 }
 .box-red { 
-    background-color: #FAF3F3 !important; 
-    border-left: 3px solid #C98A8A !important; 
-    padding: 1.1rem 1.3rem; 
-    border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #5C2E2E !important; 
-    font-size: 0.93rem; 
+    background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%) !important; 
+    border-left: 4px solid #DC2626 !important; 
+    padding: 1.25rem 1.4rem; 
+    border-radius: 0 16px 16px 0; 
+    margin: 1.2rem 0; 
+    color: #7F1D1D !important; 
+    font-size: 0.96rem; 
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.05);
 }
 .box-gray { 
-    background-color: #F2EFE9 !important; 
-    border-left: 3px solid #A8A29E !important; 
-    padding: 1.1rem 1.3rem; 
-    border-radius: 0 12px 12px 0; 
-    margin: 1rem 0; 
-    color: #44403C !important; 
-    font-size: 0.93rem; 
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%) !important; 
+    border-left: 4px solid #64748B !important; 
+    padding: 1.25rem 1.4rem; 
+    border-radius: 0 16px 16px 0; 
+    margin: 1.2rem 0; 
+    color: #334155 !important; 
+    font-size: 0.96rem; 
+    box-shadow: 0 4px 12px rgba(100, 116, 139, 0.05);
+}
+
+/* ODZNÁČEK HERO / KAPITOLA */
+.hero-badge {
+    background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+    color: white !important;
+    padding: 0.35rem 0.9rem;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
 }
 </style>
 """,
@@ -266,8 +298,8 @@ with st.sidebar:
     st.markdown(
         """
         <div style='padding: 0.5rem 0 0.5rem 0;'>
-            <span style='font-size: 0.7rem; font-weight: 700; color: #44403C; text-transform: uppercase; letter-spacing: 0.08em;'>E-Learning Portal</span>
-            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.25rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
+            <span style='font-size: 0.72rem; font-weight: 800; color: #6366F1; text-transform: uppercase; letter-spacing: 0.1em;'>E-Learning Portal</span>
+            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.35rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
         </div>
     """,
         unsafe_allow_html=True,
@@ -278,7 +310,7 @@ with st.sidebar:
     # ÚVODNÍ STRÁNKA
     is_uvod = st.session_state["current_view"] == "Uvod"
     if st.button(
-        "Úvodní stránka",
+        "🏠 Úvodní stránka",
         key="nav_uvod",
         use_container_width=True,
         type="primary" if is_uvod else "secondary",
@@ -311,12 +343,13 @@ with st.sidebar:
 
     st.divider()
 
-    if st.button("Odhlásit se", use_container_width=True):
+    if st.button("🚪 Odhlásit se", use_container_width=True):
         st.session_state["password_correct"] = False
         st.rerun()
 
 # --- SMĚROVÁNÍ OBSAHU ---
 if st.session_state["current_view"] == "Uvod":
+    st.markdown("<span class='hero-badge'>INTERAKTIVNÍ KURZ</span>", unsafe_allow_html=True)
     st.title("Ekonomika, která dává smysl")
 
     st.markdown(
