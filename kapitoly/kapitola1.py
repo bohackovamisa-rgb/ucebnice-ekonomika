@@ -769,7 +769,7 @@ def render():
             | **družstvo** | Střední | Záleží na pravidlech a situaci družstva | Členské vklady | Společný prospěch členů |
             """)
 
-with st.container(border=True):
+        with st.container(border=True):
             st.markdown("### 4.10 Vznik obchodní korporace")
             st.write("Založení právnické osoby, například s.r.o. nebo a.s., je formální proces. Obvykle vyžaduje součinnost s notářem a zápis do obchodního rejstříku.")
             st.markdown("""
