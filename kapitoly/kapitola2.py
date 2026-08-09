@@ -5668,13 +5668,18 @@ def render():
             }
         }
 
-        vybrany_scenar = st.selectbox("Vyber situaci k analýze:", ["Vyber situaci..."] + list(scenare.keys()))
+        vybrany_scenar = st.selectbox("Vyber situaci k analýze:", ["Vyber situaci..."] + list(scenare.keys()), key="k5_10_scenar")
 
         if vybrany_scenar != "Vyber situaci...":
             data_scenare = scenare[vybrany_scenar]
             st.markdown(f"#### Analýza: {vybrany_scenar}")
             st.info(f"🤔 **Finanční otázka manažera:** {data_scenare['otazka']}")
             st.error(f"🚨 **Skryté riziko:** {data_scenare['riziko']}")
+            
+            if st.button("Uložit odhalené riziko 💾", key="btn_k5_10_riziko"):
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.10 - Detektor skrytých rizik", f"Scénář: {vybrany_scenar}")
+                st.success("Tvá analýza scénáře byla uložena.")
 
 
     # =========================================================================
@@ -5697,11 +5702,11 @@ def render():
             st.markdown("### Krok 1: Popište svůj podnik")
             st.write("Vyberte si modelovou firmu (např. e-shop, kavárnu, barber shop, grafické studio, studentský merch, fitness trenéra, food truck, youtubera nebo aplikaci).")
             
-            p_nazev = st.text_input("Název vaší firmy:")
-            p_co = st.text_input("Co přesně prodáváte?")
-            p_komu = st.text_input("Komu to prodáváte (cílová skupina)?")
-            p_prijmy = st.text_input("Jak z toho máte příjmy (jednorázový prodej, předplatné, reklama)?")
-            p_naklady = st.text_area("Jaké jsou vaše 3 největší náklady?")
+            p_nazev = st.text_input("Název vaší firmy:", key="fm_nazev")
+            p_co = st.text_input("Co přesně prodáváte?", key="fm_co")
+            p_komu = st.text_input("Komu to prodáváte (cílová skupina)?", key="fm_komu")
+            p_prijmy = st.text_input("Jak z toho máte příjmy (jednorázový prodej, předplatné, reklama)?", key="fm_prijmy")
+            p_naklady = st.text_area("Jaké jsou vaše 3 největší náklady?", key="fm_naklady")
 
         with tab2:
             st.markdown("### Krok 2: Doplňte finanční čísla")
@@ -5710,22 +5715,22 @@ def render():
             c1, c2 = st.columns(2)
             with c1:
                 st.markdown("**Výsledovka**")
-                v_trzby = st.number_input("Tržby celkem [Kč]", value=500000, step=50000)
-                v_naklady = st.number_input("Náklady celkem [Kč]", value=400000, step=50000)
+                v_trzby = st.number_input("Tržby celkem [Kč]", value=500000, step=50000, key="fm_trzby")
+                v_naklady = st.number_input("Náklady celkem [Kč]", value=400000, step=50000, key="fm_naklady_val")
                 v_zisk = v_trzby - v_naklady
                 st.metric("Automatický Zisk [Kč]", f"{v_zisk:,}".replace(",", " "))
             
             with c2:
                 st.markdown("**Rozvaha a Cashflow**")
-                v_aktiva = st.number_input("Aktiva (Celkový majetek) [Kč]", value=300000, step=10000)
-                v_vk = st.number_input("Vlastní kapitál [Kč]", value=200000, step=10000)
-                v_cz = st.number_input("Cizí zdroje (Dluhy) [Kč]", value=100000, step=10000)
+                v_aktiva = st.number_input("Aktiva (Celkový majetek) [Kč]", value=300000, step=10000, key="fm_aktiva")
+                v_vk = st.number_input("Vlastní kapitál [Kč]", value=200000, step=10000, key="fm_vk")
+                v_cz = st.number_input("Cizí zdroje (Dluhy) [Kč]", value=100000, step=10000, key="fm_cz")
                 
                 st.divider()
-                v_oa = st.number_input("Oběžná aktiva celkem [Kč]", value=150000, step=10000)
-                v_penize = st.number_input("Z toho Peníze na účtu [Kč]", value=50000, step=5000)
-                v_pohl = st.number_input("Z toho Pohledávky [Kč]", value=40000, step=5000)
-                v_kz = st.number_input("Krátkodobé závazky [Kč]", value=80000, step=5000)
+                v_oa = st.number_input("Oběžná aktiva celkem [Kč]", value=150000, step=10000, key="fm_oa")
+                v_penize = st.number_input("Z toho Peníze na účtu [Kč]", value=50000, step=5000, key="fm_penize")
+                v_pohl = st.number_input("Z toho Pohledávky [Kč]", value=40000, step=5000, key="fm_pohl")
+                v_kz = st.number_input("Krátkodobé závazky [Kč]", value=80000, step=5000, key="fm_kz")
 
         with tab3:
             st.markdown("### Krok 3: Automatické výpočty (Analýza)")
@@ -5756,24 +5761,27 @@ def render():
             st.markdown("### Krok 4: Manažerský závěr")
             st.write("Prohlédněte si spočítané ukazatele a napište slovní hodnocení vaší firmy.")
             
-            z_silna = st.text_area("1. Co je podle čísel silná stránka firmy?")
-            z_slaba = st.text_area("2. Co je naopak slabina nebo problém?")
-            z_riziko = st.text_area("3. Jaké riziko hrozí do 3 měsíců (např. ohledně hotovosti)?")
-            z_doporuceni = st.text_area("4. Jaké jedno opatření byste doporučili vedení firmy udělat ihned?")
+            z_silna = st.text_area("1. Co je podle čísel silná stránka firmy?", key="fm_z1")
+            z_slaba = st.text_area("2. Co je naopak slabina nebo problém?", key="fm_z2")
+            z_riziko = st.text_area("3. Jaké riziko hrozí do 3 měsíců (např. ohledně hotovosti)?", key="fm_z3")
+            z_doporuceni = st.text_area("4. Jaké jedno opatření byste doporučili vedení firmy udělat ihned?", key="fm_z4")
             
-            if st.button("Generovat finální report pro učitele/investora"):
-                st.success("Tento report si můžete zkopírovat nebo přečíst třídě:")
-                st.markdown(f"""
-                **Analýza firmy:** {p_nazev if p_nazev else 'Nezadáno'}  
-                **Byznys model:** Prodáváme {p_co} pro {p_komu}.
+            if st.button("Generovat a uložit finální report 💾", type="primary", key="btn_fm_report"):
+                st.success("Tento report byl úspěšně uložen do databáze!")
+                report_str = f"""
+**Analýza firmy:** {p_nazev if p_nazev else 'Nezadáno'}  
+**Byznys model:** Prodáváme {p_co} pro {p_komu}.
                 
-                **Klíčové metriky:** ROS = {ros:.1f} %, Zadluženost = {zadl:.1f} %, Likvidita = {bl:.2f}.
+**Klíčové metriky:** ROS = {ros:.1f} %, Zadluženost = {zadl:.1f} %, Likvidita = {bl:.2f}.
                 
-                **Manažerské shrnutí:**  
-                Silnou stránkou je *{z_silna if z_silna else '...'}*. Naopak bojujeme s *{z_slaba if z_slaba else '...'}*.
-                V nejbližších měsících si musíme dát pozor na *{z_riziko if z_riziko else '...'}*.
-                Naše doporučení pro majitele zní: **{z_doporuceni if z_doporuceni else '...'}**
-                """)
+**Manažerské shrnutí:**  
+Silnou stránkou je *{z_silna if z_silna else '...'}*. Naopak bojujeme s *{z_slaba if z_slaba else '...'}*.
+V nejbližších měsících si musíme dát pozor na *{z_riziko if z_riziko else '...'}*.
+Naše doporučení pro majitele zní: **{z_doporuceni if z_doporuceni else '...'}**
+"""
+                st.markdown(report_str)
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Finanční manažer", report_str)
 
 
     # =========================================================================
@@ -5799,7 +5807,7 @@ def render():
         
         checked_count = 0
         for i, point in enumerate(points):
-            if st.checkbox(point, key=f"sum_{i}"):
+            if st.checkbox(point, key=f"sum_5_12_{i}"):
                 checked_count += 1
                 
         progress = int((checked_count / len(points)) * 100)
@@ -5809,6 +5817,11 @@ def render():
         if progress == 100:
             st.balloons()
             st.success("Skvělá práce! Rozumíš základům finančního řízení jako pravý CFO.")
+
+        if st.button("Uložit můj pokrok 💾", key="btn_k5_12_pokrok"):
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.12 - Shrnutí financí podniku", f"Splněno {checked_count}/{len(points)} bodů ({progress}%).")
+            st.success("Tvůj pokrok byl uložen.")
 
         st.divider()
 
@@ -5830,7 +5843,9 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
             <i>Tip: Stačí kliknout na ikonku kopírování vpravo nahoře v rámečku a můžeš prompt rovnou vložit do svého oblíbeného AI nástroje.</i>
         </div>
         """, unsafe_allow_html=True)
-# =========================================================================
+
+
+    # =========================================================================
     # KAPITOLA 6: INTERAKTIVNÍ VRSTVA CELÉ KAPITOLY (PRACOVNÍ SEŠIT)
     # =========================================================================
     elif selected_section_2.startswith("6"):
@@ -5866,6 +5881,17 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 st.slider("Dokážu poznat rizikovou finanční nabídku (podvod)?", 0, 10, 5, key="diag_2")
                 st.slider("Rozumím, proč může být firma zisková, ale přesto nemá na účtu peníze na výplaty?", 0, 10, 5, key="diag_3")
                 st.slider("Vím, co přesně znamená hrubá a čistá mzda?", 0, 10, 5, key="diag_4")
+                
+                if st.button("Uložit startovací diagnostiku 💾", key="btn_k6_diag"):
+                    diag_data = (
+                        f"ČNB vs Banka: {st.session_state.get('diag_1', 0)}/10 | "
+                        f"Podvod: {st.session_state.get('diag_2', 0)}/10 | "
+                        f"Zisk vs Peníze: {st.session_state.get('diag_3', 0)}/10 | "
+                        f"Hrubá/čistá mzda: {st.session_state.get('diag_4', 0)}/10"
+                    )
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Diagnostika", diag_data)
+                    st.success("Hodnocení tvých znalostí bylo uloženo!")
 
             st.info("💡 **Úkol pro tebe:** Po prostudování všech kapitol se sem vrať. Pokud se tvé skóre posunulo z 5 na 9, kapitola splnila svůj účel!")
 
@@ -5895,6 +5921,17 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                         else:
                             st.error(f"❌ Tohle by tě stálo peníze! **Proč je to špatně:** {zprava['vysvetleni']}")
 
+            if st.button("Uložit výsledky detektiva podvodů 💾", key="btn_k6_podvod"):
+                podvod_data = (
+                    f"Zpráva 1: {st.session_state.get('msg_sec_0', '')} | "
+                    f"Zpráva 2: {st.session_state.get('msg_sec_1', '')} | "
+                    f"Zpráva 3: {st.session_state.get('msg_sec_2', '')} | "
+                    f"Zpráva 4: {st.session_state.get('msg_sec_3', '')}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Poznej podvod", podvod_data)
+                st.success("Výsledky z Bezpečnostní challenge byly uloženy.")
+
         # --- AKTIVITA 3: ALGORITMY UTRÁCENÍ ---
         elif workbook_section == "📱 Algoritmy utrácení":
             st.markdown("### 🧠 Algoritmy utrácení: Kdo mě ovlivňuje?")
@@ -5921,6 +5958,20 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 if mzda > 0:
                     hodiny = cena / mzda
                     st.info(f"💡 Tento nákup tě stál **{hodiny:.1f} hodin čistého času** (práce). Stálo ti to za to?")
+                    
+                if st.button("Uložit analýzu utrácení 💾", key="btn_k6_utraceni"):
+                    if st.session_state.get('alg_1', '').strip():
+                        alg_data = (
+                            f"Nákup: {st.session_state.get('alg_1', '')} | "
+                            f"Emoce: {st.session_state.get('alg_2', '')} | "
+                            f"Bez slevy by koupil: {st.session_state.get('alg_3', '')} | "
+                            f"Stálo to: {hodiny:.1f} hodin práce."
+                        )
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Algoritmy utrácení", alg_data)
+                        st.success("Tvá analýza nákupu byla úspěšně uložena.")
+                    else:
+                        st.warning("Vyplň název toho, co jsi koupil/a!")
 
         # --- AKTIVITA 4: SIMULÁTOR REZERVY ---
         elif workbook_section == "🛟 Simulátor nečekané události":
@@ -5944,7 +5995,7 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 "Spadl ti mobil a rozbilo se sklo (Oprava: 3 500 Kč)",
                 "Kvůli zkouškám/nemoci jsi přišel o 2 týdny brigády (Ztráta: 4 000 Kč)",
                 "Přišel nedoplatek za energie a internet na bytě (Výdaj: 2 800 Kč)"
-            ], key="sim_udalost")
+            ], key="sim_udalost_k6")
 
             if udalost != "Zvol krizový scénář...":
                 if "mobil" in udalost:
@@ -5967,6 +6018,12 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 else:
                     st.error(f"🚨 Tvůj airbag praskl! Tvá rezerva nestačila. Na zaplacení ti **chybí {abs(zbytek)} Kč**.")
                     st.warning("⚠️ Jak to vyřešíš? Budeš si muset půjčit nevýhodně, nebo požádat rodiče?")
+                    
+                if st.button("Uložit výsledek nárazu 💾", key="btn_k6_naraz"):
+                    naraz_data = f"Událost: {udalost} | Zbylá rezerva / deficit: {zbytek} Kč"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Nečekaná událost", naraz_data)
+                    st.success("Uloženo!")
 
         # --- AKTIVITA 5: BOD ZVRATU (OPRAVENO) ---
         elif workbook_section == "🧮 Můj první byznys (Bod zvratu)":
@@ -5977,13 +6034,13 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
             )
 
             with st.container(border=True):
-                produkt = st.text_input("Co budeš prodávat?", "Školní plátěná taška (Merch)", key="bz_produkt")
+                produkt = st.text_input("Co budeš prodávat?", "Školní plátěná taška (Merch)", key="bz_produkt_k6")
                 
                 c1, c2 = st.columns(2)
                 # Oprava: min_value nastavena na 1, aby šly zadávat i velmi levné produkty (např. samolepky za 10 Kč)
-                s_cena = c1.number_input("Prodejní cena za 1 ks [Kč]", min_value=1, value=300, step=10, key="bz_cena")
-                s_vn = c2.number_input("Variabilní náklad na 1 ks (Nákup materiálu) [Kč]", min_value=1, value=150, step=10, key="bz_vn")
-                s_fn = st.number_input("Fixní náklady celkem (E-shop, reklama, design) [Kč]", min_value=0, value=3000, step=500, key="bz_fn")
+                s_cena = c1.number_input("Prodejní cena za 1 ks [Kč]", min_value=1, value=300, step=10, key="bz_cena_k6")
+                s_vn = c2.number_input("Variabilní náklad na 1 ks (Nákup materiálu) [Kč]", min_value=1, value=150, step=10, key="bz_vn_k6")
+                s_fn = st.number_input("Fixní náklady celkem (E-shop, reklama, design) [Kč]", min_value=0, value=3000, step=500, key="bz_fn_k6")
 
                 if s_cena <= s_vn:
                     st.error("Chyba! Prodejní cena musí být vyšší než variabilní náklad na kus, jinak proděláváš už při výrobě.")
@@ -5996,28 +6053,38 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                     
                     st.success(f"🎯 **Tvá marže je {marze} Kč z každého kusu.**")
                     st.info(f"🚀 **Bod zvratu:** Musíš prodat **{bep_kusy} kusů** ({produkt}), abys pokryl/a fixní náklady. Od kusu číslo {bep_kusy + 1} začínáš generovat čistý zisk!")
+                    
+                    if st.button("Uložit byznys plán 💾", key="btn_k6_bz"):
+                        bz_data = f"Produkt: {produkt} | Cena/ks: {s_cena} Kč | Var. n.: {s_vn} Kč | Fix. n.: {s_fn} Kč | Bod zvratu: {bep_kusy} kusů"
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Byznys bod zvratu", bz_data)
 
-# --- AKTIVITA 6: EXIT TICKET (ZABALENO DO FORMULÁŘE) ---
+        # --- AKTIVITA 6: EXIT TICKET (ZABALENO DO FORMULÁŘE) ---
         elif workbook_section == "✅ Exit ticket (Co si odnáším)":
             st.markdown("### ✅ Exit ticket: Závěrečná reflexe")
             st.write("Představ si, že bys měl/a předstoupit před třídu a shrnout, co sis z financí odnesl/a. Vyplň tyto body:")
 
             # Zabalíme to do st.form – tím se zabrání nechtěnému načítání stránky
             with st.form("exit_ticket_form"):
-                t1 = st.text_area("1. Jedna věc, kterou jsem pochopil/a nově:")
-                t2 = st.text_area("2. Jedno finanční rozhodnutí, u kterého příště zpomalím:")
-                t3 = st.text_area("3. Jedna otázka, kterou bych položil/a finančnímu poradci nebo podnikateli:")
+                t1 = st.text_area("1. Jedna věc, kterou jsem pochopil/a nově:", key="et_t1")
+                t2 = st.text_area("2. Jedno finanční rozhodnutí, u kterého příště zpomalím:", key="et_t2")
+                t3 = st.text_area("3. Jedna otázka, kterou bych položil/a finančnímu poradci nebo podnikateli:", key="et_t3")
 
                 # Tlačítko pro odeslání formuláře
-                submitted = st.form_submit_button("Uložit moji reflexi")
+                submitted = st.form_submit_button("Uložit moji reflexi 💾")
 
                 if submitted:
                     if t1.strip() != "" and t2.strip() != "" and t3.strip() != "":
                         st.balloons()
                         st.success("Tvá reflexe je úspěšně uložená. Gratulujeme k úspěšnému absolvování bloku o financích!")
+                        exit_data = f"1: {t1} | 2: {t2} | 3: {t3}"
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Exit ticket", exit_data)
                     else:
                         st.warning("Zkus prosím vyplnit všechna tři pole, ať je tvá reflexe kompletní.")
-# =========================================================================
+
+
+    # =========================================================================
     # KAPITOLA 7: AKTIVITA - OPTIMALIZACE VÝDAJŮ
     # =========================================================================
     elif selected_section_2.startswith("7"):
@@ -6060,7 +6127,7 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
             v3_zmena = c3.text_input("Změna 3", key="v3_z", label_visibility="collapsed")
             v3_nova = c4.number_input("Nová cena 3", min_value=0, value=800, step=50, key="v3_no", label_visibility="collapsed")
 
-            submitted = st.form_submit_button("Spočítat moji roční úsporu")
+            submitted = st.form_submit_button("Spočítat a uložit moji roční úsporu 💾")
 
             if submitted:
                 uspora_mesic = (v1_stara - v1_nova) + (v2_stara - v2_nova) + (v3_stara - v3_nova)
@@ -6068,11 +6135,20 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
 
                 st.divider()
                 if uspora_rok > 0:
-                    st.success("Tohle je síla drobných změn! 🎉")
+                    st.success("Tohle je síla drobných změn! 🎉 Data byla uložena.")
                     col_a, col_b = st.columns(2)
                     col_a.metric("Měsíční úspora", f"{uspora_mesic:,} Kč".replace(",", " "))
                     col_b.metric("Ušetřeno za 1 rok", f"{uspora_rok:,} Kč".replace(",", " "))
                     st.info(f"💡 Za ušetřených **{uspora_rok:,} Kč** už by se dalo pořídit něco mnohem hodnotnějšího (investice, cestování, vzdělání), než byly původní výdaje.")
+                    
+                    uspora_data = (
+                        f"Položka 1: {v1_nazev} ({v1_stara} -> {v1_nova} Kč) | "
+                        f"Položka 2: {v2_nazev} ({v2_stara} -> {v2_nova} Kč) | "
+                        f"Položka 3: {v3_nazev} ({v3_stara} -> {v3_nova} Kč) | "
+                        f"Celková úspora za rok: {uspora_rok} Kč"
+                    )
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Aktivita 7 - Optimalizace rozpočtu", uspora_data)
                 else:
                     st.warning("Zatím to nevypadá na žádnou úsporu. Zkus navrhnout radikálnější změnu v kolonce 'Nová cena'.")
 
@@ -6165,8 +6241,8 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                 st.markdown(f"#### Tvé slovo je: **{vybrany_pojem['Pojem']}**")
                 
                 with st.form("flashcard_form", clear_on_submit=False):
-                    priklad = st.text_input("Napiš sem svůj vlastní příklad ze života (např. 'Je to jako když...'):")
-                    ukazat_odpoved = st.form_submit_button("Zkontrolovat správnou definici")
+                    priklad = st.text_input("Napiš sem svůj vlastní příklad ze života (např. 'Je to jako když...'):", key="fc_priklad")
+                    ukazat_odpoved = st.form_submit_button("Zkontrolovat správnou definici a uložit 💾")
                     
                     if ukazat_odpoved:
                         st.divider()
@@ -6175,3 +6251,6 @@ Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno op
                             st.success("Skvěle! Pokud se tvůj příklad shoduje s logikou výše, právě jsi tento pojem dokonale pochopil/a.")
                         else:
                             st.warning("Zkus příště napsat reálný příklad, víc si to tak zapamatuješ!")
+                            
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Slovník - Flashcards", f"Pojem: {vybrany_pojem['Pojem']} | Vlastní příklad: {priklad}")
