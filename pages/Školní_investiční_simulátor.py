@@ -204,11 +204,11 @@ AKTIVA = {
     "Bitcoin": ("BTC-USD", "USD", "BTC"),
     "Ethereum": ("ETH-USD", "USD", "ETH")
 }
-with tab_vysledky:
+    with tab_vysledky:
     # ... dosavadní kód pro odpovědi z učebnice ...
 
 # Přidání záložky pro náhled investičních portfolií žáků
-with tab_investice:
+    with tab_investice:
     st.markdown("### 📈 Portfolia žáků v Investičním simulátoru")
     try:
         import gspread
