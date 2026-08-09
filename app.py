@@ -572,7 +572,7 @@ elif st.session_state["current_view"] == "Ucitel_Materialy":
 
     tab_metodika, tab_testy = st.tabs(["📄 Metodiky ke kapitolám", "📝 Testy pro žáky"])
 
-with tab_metodika:
+    with tab_metodika:
         st.markdown("### 📘 Metodické pokyny ke Kapitole 1")
         st.write("Stáhněte si kompletní balíček podkladů:")
         
