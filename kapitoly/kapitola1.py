@@ -78,8 +78,8 @@ def render():
             """, unsafe_allow_html=True) #[cite: 1]
 
         with st.container(border=True):
-            st.markdown("### 1.3 Podnikatel není jen „někdo, kdo vydělává“") #[cite: 1]
-            st.write("Podnikatel vytváří hodnotu pro zákazníka. Peníze jsou důsledkem toho, že někdo považuje produkt nebo službu za užitečnou. Moderní podnikavost proto zahrnuje nejen prodej, ale i schopnost:") #[cite: 1]
+st.markdown("### 1.3 Podnikatel není jen „někdo, kdo vydělává“")
+            st.write("Podnikatel vytváří hodnotu pro zákazníka. Peníze jsou důsledkem toho, že někdo považuje produkt nebo službu za užitečnou. Moderní podnikavost proto zahrnuje nejen prodej, ale i schopnost:")
             st.markdown("""
             * vidět problém,
             * navrhnout řešení,
@@ -89,30 +89,53 @@ def render():
             * nést odpovědnost,
             * učit se z chyb,
             * používat technologie bezpečně a smysluplně.
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("<div class='box-yellow'><strong>🧪 Tvůj úkol: Je to podnikání?</strong><br>U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdělek, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
-            st.selectbox("1. Student jednou prodá starý mobil.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q1") #[cite: 1]
-            st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q2") #[cite: 1]
-            st.selectbox("3. Student pracuje v kavárně podle rozpisu směn.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q3") #[cite: 1]
-            st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q4") #[cite: 1]
-            st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q5") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧪 Tvůj úkol: Je to podnikání?</strong><br>U každé situace rozhodni, zda jde spíš o koníček, jednorázový přivýdělek, zaměstnání, nebo podnikání. Zdůvodni odpověď podle čtyř znaků podnikání.</div>", unsafe_allow_html=True)
+            st.selectbox("1. Student jednou prodá starý mobil.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q1")
+            st.selectbox("2. Student každý týden prodává vlastnoručně vyráběné náramky přes Instagram.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q2")
+            st.selectbox("3. Student pracuje v kavárně podle rozpisu směn.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q3")
+            st.selectbox("4. Student nabízí grafiku loga pro malé podniky a sám si domlouvá cenu.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q4")
+            st.selectbox("5. Student vytvoří placený online kurz pro mladší žáky.", ["Vyber odpověď...", "Koníček", "Jednorázový přivýdělek", "Zaměstnání", "Podnikání"], key="p1_q5")
+
+            # Uložení kvízových výběrů
+            if st.button("Uložit kvíz 💾", key="btn_p1_quiz"):
+                q1 = st.session_state.get("p1_q1", "")
+                q2 = st.session_state.get("p1_q2", "")
+                q3 = st.session_state.get("p1_q3", "")
+                q4 = st.session_state.get("p1_q4", "")
+                q5 = st.session_state.get("p1_q5", "")
+                vysledky = f"1: {q1} | 2: {q2} | 3: {q3} | 4: {q4} | 5: {q5}"
+                if "Vyber odpověď..." not in vysledky:
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Úkol 1.3 - Kvíz typu činnosti", vysledky)
+                else:
+                    st.warning("Před uložením odpověz na všechny otázky kvízu!")
 
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> „Zeptej se mě na můj nápad a podle čtyř znaků podnikání mi vysvětli, jestli už jde o podnikání. U každého znaku mi dej jednu kontrolní otázku.“
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost.</div>", unsafe_allow_html=True) #[cite: 1]
-            st.text_area("Tvoje odpověď:", key="p1_idea") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Popiš svůj nápad jednou větou a označ, jak v něm bude vidět soustavnost, samostatnost a odpovědnost.</div>", unsafe_allow_html=True)
+            st.text_area("Tvoje odpověď:", key="p1_idea")
+
+            # Uložení textové odpovědi
+            if st.button("Uložit popis nápadu 💾", key="btn_p1_idea"):
+                odp = st.session_state.get("p1_idea", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Úkol 1.3 - Popis nápadu", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
 
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Pomoz mi rozlišit, jestli je můj nápad spíš jednorázová aktivita, nebo skutečné podnikání.“
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
             st.markdown("""
             <div class='box-blue'>
@@ -131,7 +154,6 @@ def render():
             """, unsafe_allow_html=True)
 
             st.info("🤔 **Otázka k zamyšlení:** V čem je podle vás největší rozdíl mezi zaměstnancem a podnikatelem?")
-
    # --- 2. Slovníček základních pojmů ---
     elif selected_section == "2. Slovníček základních pojmů":
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 2</div><h2>2. Slovníček základních pojmů</h2>", unsafe_allow_html=True)
