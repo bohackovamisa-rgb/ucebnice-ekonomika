@@ -1,5 +1,6 @@
 import math
 import streamlit as st
+from supabase import create_client, Client
 from kapitoly import kapitola1, kapitola2, kapitola3, kapitola4, kapitola5, kapitola6
 
 # --- 1. KONFIGURACE STRÁNKY ---
@@ -7,53 +8,34 @@ st.set_page_config(
     page_title="Učebnice ekonomiky", page_icon="📖", layout="wide"
 )
 
-# --- 2. STYLOVÁNÍ (TVOJE PŮVODNÍ BARVY S FOCUS EFEKTEM A STÍNY) ---
-# Toto musí být na začátku, aby se design propsal i do přihlašovací obrazovky!
+# --- 2. PROPOJENÍ S DATABÁZÍ SUPABASE ---
+@st.cache_resource
+def init_supabase() -> Client:
+    url = st.secrets["connections"]["supabase"]["SUPABASE_URL"]
+    key = st.secrets["connections"]["supabase"]["SUPABASE_KEY"]
+    return create_client(url, key)
+
+supabase = init_supabase()
+
+# --- 3. STYLOVÁNÍ ---
 st.markdown(
     """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
-/* Skrytí výchozí navigace Streamlitu */
 [data-testid="stSidebarNav"] { display: none !important; }
 
-/* 1. ZÁKLADNÍ POZADÍ A PÍSMO (MONTSERRAT) */
-html, body, [class*="css"], .stApp {
-    font-family: 'Montserrat', -apple-system, sans-serif !important;
-    background-color: #FAF8F5 !important; 
-    color: #1C1917 !important;
-}
+html, body, [class*="css"], .stApp { font-family: 'Montserrat', -apple-system, sans-serif !important; background-color: #FAF8F5 !important; color: #1C1917 !important; }
+.main .block-container { max-width: 920px !important; padding-top: 2.5rem !important; padding-bottom: 5rem !important; }
 
-/* 2. ŠÍŘKA OBSAHU A ELEVACE KARET */
-.main .block-container { 
-    max-width: 920px !important; 
-    padding-top: 2.5rem !important; 
-    padding-bottom: 5rem !important; 
-}
+div[data-testid="stVerticalBlockBorderWrapper"] { background-color: #FFFFFF !important; border-radius: 18px !important; border: 1px solid #EAE7DC !important; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important; padding: 2rem !important; margin-bottom: 1.5rem !important; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important; }
+div[data-testid="stVerticalBlockBorderWrapper"]:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02) !important; }
 
-/* Vyladěné stínování a hover efekt pro kontejnery */
-div[data-testid="stVerticalBlockBorderWrapper"] { 
-    background-color: #FFFFFF !important; 
-    border-radius: 18px !important; 
-    border: 1px solid #EAE7DC !important; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important; 
-    padding: 2rem !important; 
-    margin-bottom: 1.5rem !important; 
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
-}
-
-div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02) !important;
-}
-
-/* 3. TYPOGRAFIE & NADPISY */
 h1 { font-family: 'Montserrat', sans-serif !important; color: #0F172A !important; font-weight: 800 !important; font-size: 2.2rem !important; letter-spacing: -0.03em !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
 h2 { font-family: 'Montserrat', sans-serif !important; color: #1E293B !important; font-weight: 700 !important; font-size: 1.35rem !important; letter-spacing: -0.02em !important; margin-top: 1.5rem !important; margin-bottom: 0.85rem !important; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.5rem; }
 h3 { font-family: 'Montserrat', sans-serif !important; color: #334155 !important; font-weight: 600 !important; font-size: 1.1rem !important; margin-top: 1.25rem !important; }
 p, li, td, th { font-family: 'Montserrat', sans-serif !important; color: #334155 !important; font-size: 0.95rem !important; line-height: 1.7 !important; font-weight: 400 !important; }
 
-/* 4. TLAČÍTKA (PŮVODNÍ BARVY + LEPŠÍ HOVER) */
 button[data-testid="baseButton-primary"], button[kind="primary"] { font-family: 'Montserrat', sans-serif !important; border-radius: 9999px !important; border: 1px solid #111111 !important; background-color: #111111 !important; color: #FFFFFF !important; font-weight: 600 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; box-shadow: 0 4px 10px rgba(17, 17, 17, 0.15) !important; transition: all 0.2s ease !important; }
 button[data-testid="baseButton-primary"]:hover, button[kind="primary"]:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(17, 17, 17, 0.25) !important; }
 button[data-testid="baseButton-primary"] *, button[kind="primary"] * { color: #FFFFFF !important; }
@@ -63,15 +45,12 @@ button[data-testid="baseButton-secondary"] *, button[kind="secondary"] * { color
 button[data-testid="baseButton-secondary"]:hover, button[kind="secondary"]:hover { background-color: #111111 !important; border-color: #111111 !important; color: #FFFFFF !important; transform: translateY(-1px); }
 button[data-testid="baseButton-secondary"]:hover *, button[kind="secondary"]:hover * { color: #FFFFFF !important; }
 
-/* 5. VSTUPNÍ POLA (PŮVODNÍ BARVY + FOCUS EFEKT) */
 .stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { font-family: 'Montserrat', sans-serif !important; border-radius: 12px !important; border: 1px solid #E2DEC6 !important; background-color: #F2EFE9 !important; color: #0F172A !important; font-size: 0.92rem !important; padding: 0.65rem 0.9rem !important; transition: all 0.2s ease !important; }
 .stTextInput input:focus, .stTextArea textarea:focus, div[data-baseweb="select"] > div:focus { border-color: #111111 !important; background-color: #FFFFFF !important; box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.1) !important; }
 
-/* 6. BOČNÍ PANEL (SIDEBAR) S VLASTNÍ BARVOU */
 section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-right: 1px solid #E5E0D8 !important; }
 .sidebar-section-title { font-size: 0.72rem; font-weight: 700; color: #78716C; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1.4rem; margin-bottom: 0.6rem; }
 
-/* 7. BAREVNÉ BOXY */
 .box-blue { background-color: #F4F7F9 !important; border-left: 3px solid #8AA2B6 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2C3E50 !important; font-size: 0.93rem; }
 .box-yellow { background-color: #FAF7EE !important; border-left: 3px solid #D8C397 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C4E31 !important; font-size: 0.93rem; }
 .box-purple { background-color: #F8F5F8 !important; border-left: 3px solid #B4A2B8 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #4A3B4E !important; font-size: 0.93rem; word-wrap: break-word; }
@@ -83,13 +62,7 @@ section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-
     unsafe_allow_html=True,
 )
 
-# --- 3. DATABÁZE UŽIVATELŮ (Zatím přímo v kódu pro testování) ---
-USERS_DB = {
-    "ucitel": {"heslo": "1234", "jmeno": "Mgr. Učitel", "role": "teacher", "tridy": ["3.A", "4.B"]},
-    "zak": {"heslo": "1234", "jmeno": "Student Novák", "role": "student", "trida": "3.A"}
-}
-
-# --- 4. PŘIHLAŠOVACÍ BRÁNA S ROLEMI (A ODESLÁNÍM PŘES ENTER) ---
+# --- 4. PŘIHLAŠOVACÍ BRÁNA (NAPOJENÍ NA SUPABASE) ---
 def login_screen():
     if st.session_state.get("is_logged_in", False):
         return True
@@ -101,30 +74,43 @@ def login_screen():
             st.markdown("<h2 style='text-align: center; border: none; font-weight: 700; margin-bottom: 0;'>Soukromá učebnice</h2>", unsafe_allow_html=True)
             st.markdown("<p style='text-align: center; color: #78716c; font-size: 0.85rem; margin-bottom: 1.5rem;'>Zadejte jméno a heslo pro odemknutí kurzu.</p>", unsafe_allow_html=True)
             
-            # Zabaleno do formuláře, aby fungovalo zmáčknutí ENTER na klávesnici!
             with st.form("login_form", border=False):
-                username = st.text_input("Uživatelské jméno:", placeholder="Napiš: ucitel nebo zak")
-                password = st.text_input("Heslo:", type="password", placeholder="Napiš: 1234")
+                username_input = st.text_input("Uživatelské jméno:", placeholder="Zadejte uživatelské jméno...")
+                password_input = st.text_input("Heslo:", type="password", placeholder="Vaše heslo...")
                 
                 submit = st.form_submit_button("Vstoupit do učebnice", use_container_width=True)
                 
                 if submit:
-                    if username in USERS_DB and USERS_DB[username]["heslo"] == password:
-                        user_data = USERS_DB[username]
-                        st.session_state["is_logged_in"] = True
-                        st.session_state["username"] = username
-                        st.session_state["user_role"] = user_data["role"]
-                        st.session_state["user_name"] = user_data["jmeno"]
-                        
-                        if user_data["role"] == "teacher":
-                            st.session_state["user_classes"] = user_data["tridy"]
+                    try:
+                        # Dotaz do Supabase
+                        response = supabase.table("uzivatele").select("*").eq("username", username_input.strip().lower()).execute()
+                        users = response.data
+
+                        if users:
+                            user = users[0]
+                            if str(user.get("password")) == password_input:
+                                st.session_state["is_logged_in"] = True
+                                st.session_state["username"] = user.get("username")
+                                st.session_state["user_role"] = user.get("role", "student")
+                                st.session_state["user_name"] = user.get("jmeno", "Uživatel")
+                                
+                                if user.get("role") == "teacher":
+                                    tridy_raw = user.get("trida", "")
+                                    st.session_state["user_classes"] = [t.strip() for t in tridy_raw.split(",") if t.strip()]
+                                else:
+                                    st.session_state["user_class"] = user.get("trida", "")
+                                    
+                                st.rerun()
+                            else:
+                                st.error("Nesprávné heslo!")
                         else:
-                            st.session_state["user_class"] = user_data["trida"]
-                            
-                        st.rerun()
-                    else:
-                        st.error("Nesprávné uživatelské jméno nebo heslo!")
+                            st.error("Uživatel s tímto jménem neexistuje!")
+                    except Exception as e:
+                        st.error(f"Chyba při připojení k databázi: {e}")
     return False
+
+if not login_screen():
+    st.stop()
 
 # Spustíme přihlašování. Pokud se nevrátí True (uživatel není přihlášený), aplikace se zde zastaví.
 if not login_screen():
