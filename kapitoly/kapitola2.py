@@ -1095,7 +1095,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-    # =========================================================================
+# =========================================================================
     # 1.3 PLATEBNÍ STYK
     # =========================================================================
     elif "1.3 Platební styk" in selected_section_2:
@@ -1152,13 +1152,20 @@ def render():
             act_6 = st.selectbox("6. Vybírám peníze z bankomatu:", ["Vyber...", "Hotovostní operace / Tuzemská / Jednorázová", "Bezhotovostní převod"], key="k2_act6")
             act_7 = st.selectbox("7. Platím kartou na dovolené v cizině:", ["Vyber...", "Bezhotovostní / Zahraniční / Jednorázová", "Hotovostní / Tuzemská"], key="k2_act7")
 
-            st.text_area("Bonus: U každé situace navrhni nejbezpečnější platební nástroj:", key="k2_act_bonus")
+            act_bonus = st.text_area("Bonus: U každé situace navrhni nejbezpečnější platební nástroj:", key="k2_act_bonus")
 
-            if st.button("Vyhodnotit aktivitu plateb", key="k2_act_btn"):
+            if st.button("Vyhodnotit a uložit aktivitu plateb 💾", key="k2_act_btn"):
                 if act_1=="Hotovostní / Tuzemská / Jednorázová" and act_2=="Bezhotovostní / Tuzemská / Opakovaná" and act_3=="Bezhotovostní / Zahraniční / Opakovaná" and act_4=="Bezhotovostní / Zahraniční / Jednorázová" and act_5=="Bezhotovostní / Tuzemská / Jednorázová" and act_6=="Hotovostní operace / Tuzemská / Jednorázová" and act_7=="Bezhotovostní / Zahraniční / Jednorázová":
                     st.success("🎉 Skvělá práce! Všechny typy plateb jsi určil/a zcela správně.")
                 else:
                     st.error("Některý z typů plateb je vybrán špatně. Zkontroluj správné zařazení!")
+                
+                vysledek_data = (
+                    f"1:{act_1} | 2:{act_2} | 3:{act_3} | 4:{act_4} | 5:{act_5} | 6:{act_6} | 7:{act_7} | "
+                    f"Bonus: {act_bonus}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.2 - Typy plateb", vysledek_data)
 
         # 1.3.3
         with st.container(border=True):
@@ -1184,6 +1191,14 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             st.text_area("Zapiš své 3 platby:", key="k2_3_my_payments")
+            
+            if st.button("Uložit mé 3 platby 💾", key="btn_k2_3_my_payments"):
+                odp = st.session_state.get("k2_3_my_payments", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.3 - Mé poslední platby", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
 
         # 1.3.4
         with st.container(border=True):
@@ -1252,15 +1267,22 @@ def render():
             s_krok6 = st.selectbox("6. krok:", ["Vyber...", "přiložení karty nebo mobilu k terminálu", "terminál načte platební údaje", "obchodník odešle požadavek přes platební síť", "banka ověří kartu, limit a bezpečnostní pravidla", "platba se schválí nebo zamítne", "později proběhne zúčtování mezi bankami a obchodníkem"], key="k2_sk6")
 
             st.write("**Otázky k zamyšlení:**")
-            st.text_input("1. Kde může platba selhat?", key="k2_q_fail")
-            st.text_input("2. Kdo všechno se platby účastní?", key="k2_q_who")
-            st.text_input("3. Proč platba mobilem není „kouzlo“, ale datový proces?", key="k2_q_magic")
+            q_fail = st.text_input("1. Kde může platba selhat?", key="k2_q_fail")
+            q_who = st.text_input("2. Kdo všechno se platby účastní?", key="k2_q_who")
+            q_magic = st.text_input("3. Proč platba mobilem není „kouzlo“, ale datový proces?", key="k2_q_magic")
 
-            if st.button("Vyhodnotit skládačku platby kartou", key="k2_sk_eval_btn"):
+            if st.button("Vyhodnotit a uložit skládačku 💾", key="k2_sk_eval_btn"):
                 if s_krok1=="přiložení karty nebo mobilu k terminálu" and s_krok2=="terminál načte platební údaje" and s_krok3=="obchodník odešle požadavek přes platební síť" and s_krok4=="banka ověří kartu, limit a bezpečnostní pravidla" and s_krok5=="platba se schválí nebo zamítne" and s_krok6=="později proběhne zúčtování mezi bankami a obchodníkem":
                     st.success("🎉 Skvělé! Kompletní řetězec platby kartou máš seřazený zcela přesně.")
                 else:
                     st.error("Některý krok v pořadí nesouhlasí. Zkontroluj seznam v bodě 1.3.5!")
+                
+                skladacka_data = (
+                    f"Kroky: 1:{s_krok1}, 2:{s_krok2}, 3:{s_krok3}, 4:{s_krok4}, 5:{s_krok5}, 6:{s_krok6} | "
+                    f"Q1: {q_fail} | Q2: {q_who} | Q3: {q_magic}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.5 - Cesta platby", skladacka_data)
 
         # 1.3.6
         with st.container(border=True):
@@ -1295,11 +1317,15 @@ def render():
 
             st.info("🛡️ **Pravidlo přežití:** Banka po telefonu ani přes zprávu nechce heslo, PIN ani autorizační kód. Když cítíš tlak na rychlost, zpomal a ověřuj oficiální cestou.")
 
-            if st.button("Vyhodnotit Phishing Escape Room", key="k2_er_eval_btn"):
+            if st.button("Vyhodnotit a uložit Escape Room 💾", key="k2_er_eval_btn"):
                 if er1=="Podezřelá / Nebezpečná (Phishing)" and er2=="Podezřelá / Nebezpečná (Vishing)" and er3=="Podezřelá / Nebezpečná (Podvod)" and er4=="Podezřelá / Nebezpečná (Phishing)" and er5=="Standardní funkce platební brány":
                     st.success("🎉 Skvělé! Bezpečně jsi rozpoznal/a všechna rizika digitálního světa.")
                 else:
                     st.error("Některá zpráva byla vyhodnocena špatně. Pozor na falešný tlak na čas a žádosti o kódy!")
+                
+                er_data = f"1:{er1}, 2:{er2}, 3:{er3}, 4:{er4}, 5:{er5}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.6 - Phishing Escape Room", er_data)
 
     # =========================================================================
     # 1.4 FINTECH REVOLUCE
@@ -1426,8 +1452,18 @@ def render():
             au_pc = st.text_area("6. Výhody a rizika:", key="k2_au_pc")
             au_rec = st.radio("7. Doporučení spolužákovi:", ["Doporučil/a bych", "Nedoporučil/a bych"], key="k2_au_rec")
 
-            if st.button("Uložit audit aplikace", key="k2_au_btn"):
-                st.success(f"Audit pro aplikaci **{au_name}** byl zaznamenán! Výstup: recenze „Pomáhá mi tahle aplikace řídit peníze, nebo mě spíš tlačí k utrácení?“")
+            if st.button("Uložit audit aplikace 💾", key="k2_au_btn"):
+                st.success(f"Audit pro aplikaci **{au_name}** byl zaznamenán!")
+                au_komplet = (
+                    f"Název: {au_name} | Provozovatel: {au_owner} | "
+                    f"Funkce: {au_feat} | Příjmy: {au_rev} | "
+                    f"Data: {au_data} | Výhody/Rizika: {au_pc} | Doporučení: {au_rec}"
+                )
+                if au_name.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.4.5 - Audit aplikace", au_komplet)
+                else:
+                    st.warning("Před uložením vyplň alespoň název aplikace!")
 
             st.markdown("---")
 
@@ -1438,7 +1474,14 @@ def render():
             with col_deb2:
                 st.error("🔴 **Tým B (Past):**\nFintech zrychluje impulzivní utrácení, zjednodušuje neuvážené zadlužování, využívá gamifikaci k investičnímu riziku a sbírá osobní data.")
 
-            st.text_area("Vaše argumenty a příklad z běžného života:", key="k2_deb_text")
+            deb_text = st.text_area("Vaše argumenty a příklad z běžného života:", key="k2_deb_text")
+            
+            if st.button("Uložit argumenty do debaty 💾", key="btn_k2_deb"):
+                if deb_text.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.4.5 - Fintech debata", deb_text)
+                else:
+                    st.warning("Před uložením napiš své argumenty!")
 # =========================================================================
     # 2.1 OSOBNÍ FINANCE V 21. STOLETÍ
     # =========================================================================
