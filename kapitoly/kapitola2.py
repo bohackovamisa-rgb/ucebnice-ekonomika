@@ -3294,7 +3294,7 @@ def render():
 # =========================================================================
     # 3.9 SHRNUTÍ: CO SI Z FINANČNÍHO TRHU ODNÉST
     # =========================================================================
-    if "3.9 Shrnutí" in selected_section_2:  # Zkontroluj název podle tvého selectboxu
+    elif "3.9 Shrnutí" in selected_section_2:  # Zkontroluj název podle tvého selectboxu
         st.markdown("<div class='sub-section-header'>9. SHRNUTÍ KAPITOLY</div>", unsafe_allow_html=True)
         
         st.markdown("## 3.9 Shrnutí: co si z finančního trhu odnést")
@@ -3323,10 +3323,11 @@ def render():
         
         st.write("") # prázdný řádek pro vizuální oddělení
         st.success("🎉 Gratuluji k dokončení kapitoly o finančních trzích! Nyní jsi připraven/a využít tyto znalosti v praxi.")
-# =========================================================================
+
+    # =========================================================================
     # 3.10 PRÁVNÍ A ETICKÝ DISCLAIMER
     # =========================================================================
-    if "3.10 Právní a etický disclaimer" in selected_section_2:  # Zkontroluj název podle tvého selectboxu
+    elif "3.10 Právní a etický disclaimer" in selected_section_2:  # Zkontroluj název podle tvého selectboxu
         st.markdown("<div class='sub-section-header'>10. ZÁVĚREČNÉ UPOZORNĚNÍ</div>", unsafe_allow_html=True)
         
         st.markdown("## 3.10 Právní a etický disclaimer")
@@ -3358,7 +3359,8 @@ def render():
             <b>🎓 Závěrečná rada:</b> Než začneš na skutečném trhu investovat své reálné peníze, ujisti se, že máš vybudovanou <b>dostatečnou finanční rezervu na bezpečně dostupném místě</b> (např. spořicí účet). Pro složitá životní rozhodnutí se neboj využít služeb nezávislého odborníka, který je placený přímo tebou za radu, nikoliv z tajných provizí za prodej konkrétních produktů.
         </div>
         """, unsafe_allow_html=True)
-        # =========================================================================
+
+    # =========================================================================
     # 4.1 CO JE ÚVĚR
     # =========================================================================
     elif "4.1 " in selected_section_2:
@@ -3437,20 +3439,26 @@ def render():
             st.info("Příběh: **Klára (25)** potřebuje auto na dojíždění do práce. Půjčí si **200 000 Kč** od **Banky XY**. Dohodnou se, že Klára bude platit **4 500 Kč** každý měsíc po dobu **5 let**. Celková cena úvěru se všemi poplatky vychází na **8,5 % ročně**.")
             
             # Kvíz
-            q1 = st.selectbox("Kdo je v tomto příběhu VĚŘITEL?", ["Vyber odpověď...", "Klára", "Banka XY", "Prodejce aut"])
-            q2 = st.selectbox("Co představuje částka 200 000 Kč?", ["Vyber odpověď...", "Jistinu", "Úrok", "RPSN"])
-            q3 = st.selectbox("Co představuje hodnota 8,5 %?", ["Vyber odpověď...", "Splatnost", "Jistinu", "RPSN"])
-            q4 = st.selectbox("Co představuje doba 5 let?", ["Vyber odpověď...", "Splatnost", "Zajištění", "Splátku"])
+            q1 = st.selectbox("Kdo je v tomto příběhu VĚŘITEL?", ["Vyber odpověď...", "Klára", "Banka XY", "Prodejce aut"], key="k4_1_q1")
+            q2 = st.selectbox("Co představuje částka 200 000 Kč?", ["Vyber odpověď...", "Jistinu", "Úrok", "RPSN"], key="k4_1_q2")
+            q3 = st.selectbox("Co představuje hodnota 8,5 %?", ["Vyber odpověď...", "Splatnost", "Jistinu", "RPSN"], key="k4_1_q3")
+            q4 = st.selectbox("Co představuje doba 5 let?", ["Vyber odpověď...", "Splatnost", "Zajištění", "Splátku"], key="k4_1_q4")
             
-            if st.button("Zkontrolovat mé odpovědi", type="primary"):
+            if st.button("Zkontrolovat a uložit mé odpovědi 💾", type="primary", key="btn_k4_1_uver"):
                 if "Vyber odpověď..." in [q1, q2, q3, q4]:
                     st.warning("⚠️ Nejdříve vyber všechny odpovědi!")
-                elif q1 == "Banka XY" and q2 == "Jistinu" and q3 == "RPSN" and q4 == "Splatnost":
-                    st.success("✅ Výborně! Všechny pojmy jsi správně zařadil/a. Můžeme pokračovat dál.")
-                    st.balloons()
                 else:
-                    st.error("❌ Někde je chybka. Zkus to ještě jednou. Nápovědu najdeš ve slovníčku výše.")
-                    # =========================================================================
+                    if q1 == "Banka XY" and q2 == "Jistinu" and q3 == "RPSN" and q4 == "Splatnost":
+                        st.success("✅ Výborně! Všechny pojmy jsi správně zařadil/a. Můžeme pokračovat dál.")
+                        st.balloons()
+                    else:
+                        st.error("❌ Někde je chybka. Zkus to ještě jednou. Nápovědu najdeš ve slovníčku výše.")
+                        
+                    odpovedi = f"1: {q1} | 2: {q2} | 3: {q3} | 4: {q4}"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.1 - Úvěr v praxi", odpovedi)
+
+    # =========================================================================
     # 4.2 ÚROK: CENA PŮJČENÝCH PENĚZ
     # =========================================================================
     elif "4.2" in selected_section_2:
@@ -3458,7 +3466,7 @@ def render():
         st.markdown("## 4.2 Úrok: cena půjčených peněz")
         
         st.write(
-            "Úrok je odměna věřiteli za to, že dlužník může používat jeho peníze. Úrok zároveň kompenzuje riziko, "
+            "Úrok is odměna věřiteli za to, že dlužník může používat jeho peníze. Úrok zároveň kompenzuje riziko, "
             "že dlužník nesplatí, a čas, po který věřitel peníze nemůže využít jinak."
         )
         st.write("Úroková sazba se obvykle uvádí v procentech za rok. Pokud je úroková sazba **10 % p. a.**, znamená to „per annum“, tedy ročně.")
@@ -3503,7 +3511,7 @@ def render():
         st.markdown("### 🧮 Interaktivní zóna: Jak délka úvěru prodražuje půjčku")
         st.write("Vyzkoušej si, co se stane, když si půjčíš 100 000 Kč s úrokem 8 % a budeš měnit dobu splácení.")
         
-        doba_splaceni = st.slider("Doba splácení (v letech):", min_value=1, max_value=10, value=5)
+        doba_splaceni = st.slider("Doba splácení (v letech):", min_value=1, max_value=10, value=5, key="k4_doba_splaceni")
         
         # Jednoduchý anuitní výpočet pro ukázku
         sazba_mesicni = 0.08 / 12
@@ -3520,6 +3528,11 @@ def render():
         col3.metric("Přeplatek (čistý úrok)", f"{int(preplatek):,} Kč".replace(",", " "), delta_color="inverse")
         
         st.info("💡 **Všimni si:** Čím déle splácíš, tím je sice měsíční splátka menší (vypadá to lákavě), ale tím víc peněz celkově vyhodíš oknem na úrocích!")
+
+        if st.button("Uložit výpočet úvěru 💾", key="btn_k4_uver_calc"):
+            uver_data = f"Půjčka 100 000 na {doba_splaceni} let | Splátka: {int(splatka)} Kč | Přeplatek: {int(preplatek)} Kč"
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.2 - Kalkulačka úvěru", uver_data)
 
     # =========================================================================
     # 4.3 RPSN: SKUTEČNĚJŠÍ CENA ÚVĚRU
@@ -3558,24 +3571,30 @@ def render():
         st.write("Před podpisem jakékoliv smlouvy bys měl/a znát odpovědi na všechny tyto body. Zkus si je odškrtat!")
         
         # Interaktivní checklist
-        c1 = st.checkbox("Vím, kolik si půjčuji a kolik přesně celkem vrátím.")
-        c2 = st.checkbox("Znám výši měsíční splátky a vím, jak dlouho budu splácet.")
-        c3 = st.checkbox("Znám nejen úrokovou sazbu, ale hlavně RPSN.")
-        c4 = st.checkbox("Vím o všech dalších poplatcích (za vedení, sjednání atd.).")
-        c5 = st.checkbox("Vím, zda je úvěr zajištěný mým majetkem (a o co můžu přijít).")
-        c6 = st.checkbox("Vím, jaké jsou sankce, když se se splátkou opozdím.")
-        c7 = st.checkbox("Vím, zda a za kolik můžu úvěr splatit předčasně.")
+        c1 = st.checkbox("Vím, kolik si půjčuji a kolik přesně celkem vrátím.", key="k4_chk_1")
+        c2 = st.checkbox("Znám výši měsíční splátky a vím, jak dlouho budu splácet.", key="k4_chk_2")
+        c3 = st.checkbox("Znám nejen úrokovou sazbu, ale hlavně RPSN.", key="k4_chk_3")
+        c4 = st.checkbox("Vím o všech dalších poplatcích (za vedení, sjednání atd.).", key="k4_chk_4")
+        c5 = st.checkbox("Vím, zda je úvěr zajištěný mým majetkem (a o co můžu přijít).", key="k4_chk_5")
+        c6 = st.checkbox("Vím, jaké jsou sankce, když se se splátkou opozdím.", key="k4_chk_6")
+        c7 = st.checkbox("Vím, zda a za kolik můžu úvěr splatit předčasně.", key="k4_chk_7")
         
         if c1 and c2 and c3 and c4 and c5 and c6 and c7:
             st.success("✅ Výborně! Jsi zodpovědný spotřebitel. Takhle by měla vypadat tvá kontrola před každým podpisem.")
             
+        if st.button("Uložit checklist před úvěrem 💾", key="btn_k4_predletova"):
+            skore = sum([c1, c2, c3, c4, c5, c6, c7])
+            chk_data = f"Odškrtnuto předletové kontroly: {skore}/7 bodů."
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.3 - Předletová kontrola úvěru", chk_data)
+
         st.markdown("""
         <div class="box-blue">
             <b>🧮 Pravidlo bezpečné splátky:</b> Splátka nemá být nastavena tak, že člověk přežije jen v ideálním měsíci. Musí počítat i s nemocí, výpadkem brigády, zdražením energií nebo nečekanou opravou.
         </div>
         """, unsafe_allow_html=True)
 
-# =========================================================================
+    # =========================================================================
     # 4.4 NE KAŽDÝ ÚVĚR DOSTANE
     # =========================================================================
     elif "4.4" in selected_section_2:
@@ -3635,7 +3654,8 @@ def render():
         * Nemovitost, kterou chceš koupit, má podle odhadce banky nižší hodnotu, než za ni chceš zaplatit prodejci.
         * Nemáš dostatek vlastních naspořených peněz pro základ vkladu.
         """)
-        # =========================================================================
+
+    # =========================================================================
     # 4.5 POSTUP POSKYTNUTÍ SPOTŘEBITELSKÉHO ÚVĚRU
     # =========================================================================
     elif "4.5" in selected_section_2:
@@ -3716,8 +3736,8 @@ def render():
 
         with st.container(border=True):
             st.markdown("#### 🧮 Otestuj si LTV")
-            cena_nemovitosti = st.slider("Hodnota nemovitosti (Kč):", 1000000, 10000000, 4000000, step=100000)
-            vlastni_penize = st.slider("Tvé vlastní úspory (Kč):", 0, 5000000, 800000, step=50000)
+            cena_nemovitosti = st.slider("Hodnota nemovitosti (Kč):", 1000000, 10000000, 4000000, step=100000, key="k4_cena_nem")
+            vlastni_penize = st.slider("Tvé vlastní úspory (Kč):", 0, 5000000, 800000, step=50000, key="k4_vlastni_pen")
             
             pozadovany_uver = cena_nemovitosti - vlastni_penize
             
@@ -3739,6 +3759,11 @@ def render():
             else:
                 col3.metric("LTV", f"{ltv:.1f} %", delta="Ideální (pod 80 %)", delta_color="normal")
                 st.success("✅ Tvé LTV je v bezpečné zóně. Z tohoto pohledu by banka úvěr schválila.")
+
+            if st.button("Uložit výpočet LTV 💾", key="btn_k4_ltv"):
+                ltv_data = f"Nemovitost: {cena_nemovitosti} Kč | Vlastní: {vlastni_penize} Kč | LTV: {ltv:.1f}%"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.6 - Kalkulačka LTV", ltv_data)
 
         st.markdown("""
         <div class="box-red">
@@ -3785,7 +3810,8 @@ def render():
         | **Zajištění** | Většinou bez zajištění | Zástavní právo k nemovitosti |
         | **Posouzení** | Příjem, výdaje, registry | To samé + hodnota nemovitosti, vlastní zdroje a LTV |
         """)
-# =========================================================================
+
+    # =========================================================================
     # 4.7 PODNIKATELSKÉ ÚVĚRY
     # =========================================================================
     elif "4.7" in selected_section_2:
@@ -3851,11 +3877,18 @@ def render():
         with st.container(border=True):
             st.markdown("### 🚑 Záchranný plán: Co dělat, když hrozí problém")
             st.write("Odškrtni si kroky, které bys měl okamžitě podniknout:")
-            st.checkbox("Zastavit jakékoliv další zadlužování (žádné nové půjčky na zaplacení starých!).")
-            st.checkbox("Spočítat si krutě upřímný a reálný měsíční rozpočet (kde můžu osekat výdaje).")
-            st.checkbox("Kontaktovat věřitele co nejdříve (banky preferují lidi, kteří problém hlásí předem).")
-            st.checkbox("Požádat banku o úpravu splátek, odklad nebo restrukturalizaci (pokud to jde).")
-            st.checkbox("Vyhledat odbornou pomoc zdarma (např. Poradna při finanční tísni, občanská poradna).")
+            zk1 = st.checkbox("Zastavit jakékoliv další zadlužování (žádné nové půjčky na zaplacení starých!).", key="k4_8_chk1")
+            zk2 = st.checkbox("Spočítat si krutě upřímný a reálný měsíční rozpočet (kde můžu osekat výdaje).", key="k4_8_chk2")
+            zk3 = st.checkbox("Kontaktovat věřitele co nejdříve (banky preferují lidi, kteří problém hlásí předem).", key="k4_8_chk3")
+            zk4 = st.checkbox("Požádat banku o úpravu splátek, odklad nebo restrukturalizaci (pokud to jde).", key="k4_8_chk4")
+            zk5 = st.checkbox("Vyhledat odbornou pomoc zdarma (např. Poradna při finanční tísni, občanská poradna).", key="k4_8_chk5")
+
+            if st.button("Uložit záchranný plán 💾", key="btn_k4_8_zachrana"):
+                skore = sum([zk1, zk2, zk3, zk4, zk5])
+                plan_data = f"Odškrtnuto kroků záchrany: {skore}/5"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.8 - Záchranný plán", plan_data)
+                st.success(f"Zaznamenáno: {skore}/5 kroků k přežití krize.")
 
         st.divider()
 
@@ -3908,7 +3941,7 @@ def render():
                               "Lístky na letní festival s kamarády (3 500 Kč)", 
                               "Objednávka jídla na večerní párty (1 500 Kč)",
                               "Nový herní doplněk / skiny (1 000 Kč)",
-                              "Rozbitý mobil, bez kterého nemůžu fungovat do školy/práce (5 000 Kč)"])
+                              "Rozbitý mobil, bez kterého nemůžu fungovat do školy/práce (5 000 Kč)"], key="k4_bnpl_nakup")
 
         if nakup != "Vyber...":
             with st.container(border=True):
@@ -3923,7 +3956,7 @@ def render():
                 q3 = st.radio("3. Co se stane, když ti výplata/brigáda za měsíc nepřijde nebo přijde nižší?", 
                               ["Mám železnou rezervu, doplatím to z ní", "Budu mít velký problém a nezbude mi na nájem/jídlo"], key="bnpl_3")
 
-                if st.button("Vyhodnotit nákup", type="primary"):
+                if st.button("Vyhodnotit a uložit nákup BNPL 💾", type="primary", key="btn_k4_bnpl_eval"):
                     if "potřeba" in q1.lower() and "Ano" in q2 and "rezervu" in q3:
                         st.success("✅ **Zelená:** Jde o promyšlený nákup. Máš rezervu a jde o potřebu. Odloženou platbu můžeš bezpečně využít jako nástroj pro cashflow.")
                     elif "přání" in q1.lower() and "Ne" in q2:
@@ -3932,7 +3965,12 @@ def render():
                         st.warning("⚠️ **Riziko:** Sice to možná zaplatíš, ale hraješ ruskou ruletu. Nemáš rezervu a spoléháš, že se příští měsíc nic nepokazí. Co když onemocníš? Raději počkej, až peníze reálně naspoříš.")
                     else:
                         st.info("💡 **Výsledek k zamyšlení:** Tvé odpovědi jsou na pomezí. Než klikneš na 'Koupit', dej si pravidlo 24 hodin. Vrať se k tomu zítra – často zjistíš, že už tu věc vlastně nechceš.")
-# =========================================================================
+                    
+                    bnpl_data = f"Nákup: {nakup} | Potřeba/Přání: {q1} | Hotovost: {q2} | Rezerva: {q3}"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.9 - BNPL Analyzátor", bnpl_data)
+
+    # =========================================================================
     # 4.10 POJIŠTĚNÍ: OCHRANA PŘED FINANČNÍM NÁRAZEM
     # =========================================================================
     elif "4.10" in selected_section_2:
@@ -3965,7 +4003,7 @@ def render():
         st.write("Vyzkoušej si, jak by tvůj rozpočet ustál různé životní situace. Nastav si svou pomyslnou finanční rezervu a vyber událost.")
 
         with st.container(border=True):
-            rezerva = st.slider("Jak velkou máš naspořenou rezervu na účtu?", 0, 500000, 50000, step=10000, format="%d Kč")
+            rezerva = st.slider("Jak velkou máš naspořenou rezervu na účtu?", 0, 500000, 50000, step=10000, format="%d Kč", key="k4_10_rezerva")
             
             udalost = st.selectbox("Co se ti právě stalo?", [
                 "Vyber událost...",
@@ -3974,7 +4012,7 @@ def render():
                 "Vytopil jsem sousedy pod sebou (Škoda: 180 000 Kč)",
                 "Měl jsem vážný úraz a rok nebudu pracovat (Ztráta: 400 000 Kč)",
                 "Dům mi lehl popelem (Škoda: 6 000 000 Kč)"
-            ])
+            ], key="k4_10_udalost")
 
             if udalost != "Vyber událost...":
                 # Extrakce škody z textu
@@ -3989,6 +4027,11 @@ def render():
                     st.success(f"✅ **Tohle zvládneš!** Po zaplacení škody ti zbude {zustatek:,} Kč. Tuto věc (pokud to není zákonná povinnost) nutně pojišťovat nemusíš, zvládneš to pokrýt z vlastních peněz.".replace(",", " "))
                 else:
                     st.error(f"🚨 **Kritický náraz!** Tvá rezerva nestačí. Chybělo by ti {abs(zustatek):,} Kč. Dostal/a by ses do tvrdých dluhů nebo bys přišel/a o střechu nad hlavou. **Toto je přesně situace, kterou by mělo krýt pojištění.**".replace(",", " "))
+                
+                if st.button("Uložit výsledek nárazu 💾", key="btn_k4_10_naraz"):
+                    naraz_data = f"Rezerva: {rezerva} Kč | Událost: {udalost} | Zůstatek/Deficit: {zustatek} Kč"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.10 - Finanční náraz", naraz_data)
 
 
     # =========================================================================
@@ -4025,11 +4068,11 @@ def render():
         st.write("Ne každý potřebuje platit tisíce měsíčně za životko. Odpověz na 3 otázky a zjisti svou situaci:")
 
         with st.container(border=True):
-            a1 = st.checkbox("1. Živím někoho dalšího (děti, partner/ka na mateřské, závislý rodič).")
-            a2 = st.checkbox("2. Mám hypotéku nebo jiný vysoký úvěr, který bych nedokázal/a splatit najednou.")
-            a3 = st.checkbox("3. Kdybych zítra přišel/a o příjem, NEMÁM majetek nebo rezervu na přežití delší než 1 rok.")
+            a1 = st.checkbox("1. Živím někoho dalšího (děti, partner/ka na mateřské, závislý rodič).", key="k4_11_a1")
+            a2 = st.checkbox("2. Mám hypotéku nebo jiný vysoký úvěr, který bych nedokázal/a splatit najednou.", key="k4_11_a2")
+            a3 = st.checkbox("3. Kdybych zítra přišel/a o příjem, NEMÁM majetek nebo rezervu na přežití delší než 1 rok.", key="k4_11_a3")
             
-            if st.button("Vyhodnotit mou situaci", type="primary"):
+            if st.button("Vyhodnotit a uložit mou situaci 💾", type="primary", key="btn_k4_11_analyzator"):
                 skore = sum([a1, a2, a3])
                 
                 if skore == 0:
@@ -4038,6 +4081,10 @@ def render():
                     st.warning("⚠️ **Stojí za zvážení.** Máš alespoň jeden rizikový faktor. Ztráta tvé schopnosti pracovat by bolela, měl/a bys zvážit pokrytí těch nejvážnějších rizik (invalidita, vážné nemoci).")
                 else:
                     st.error("🚨 **Kritická potřeba!** Tvá rodina nebo tvé bydlení je existenčně závislé na tom, že jsi zdravý/á a vyděláváš. Kvalitní životní pojištění kryjící invaliditu, smrt a dlouhodobý výpadek příjmu by pro tebe mělo být absolutní prioritou.")
+                
+                zivotko_data = f"Skóre potřeby: {skore}/3 rizika odškrtnuta."
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.11 - Analyzátor životního pojištění", zivotko_data)
 
         st.divider()
 
@@ -4071,7 +4118,8 @@ def render():
             st.markdown("**Situace:** Martin si při amatérském adrenalinovém závodě na horských kolech (downhill) zlomil obě nohy. Pojišťovna mu úrazové plnění krátila o 50 %. Proč?")
             with st.expander("Zobrazit řešení"):
                 st.error("❌ **Výluka:** Extrémní a rizikové sporty vyžadují speciální připojištění. Běžná pojistka tě kryje při rekreačním sportu, ale ne při závodech s vysokým rizikem zranění. Pojišťovna může plnění také krátit, pokud byl v krvi alkohol.")
-# =========================================================================
+
+    # =========================================================================
     # 4.12 NEŽIVOTNÍ POJIŠTĚNÍ
     # =========================================================================
     elif "4.12" in selected_section_2:
@@ -4109,19 +4157,23 @@ def render():
             
             c_q1, c_q2 = st.columns(2)
             with c_q1:
-                ans1 = st.selectbox("Vestavěná kuchyňská linka na míru:", ["Vyber...", "Nemovitost", "Domácnost"])
-                ans2 = st.selectbox("Notebook a herní konzole:", ["Vyber...", "Nemovitost", "Domácnost"])
+                ans1 = st.selectbox("Vestavěná kuchyňská linka na míru:", ["Vyber...", "Nemovitost", "Domácnost"], key="k4_12_ans1")
+                ans2 = st.selectbox("Notebook a herní konzole:", ["Vyber...", "Nemovitost", "Domácnost"], key="k4_12_ans2")
             with c_q2:
-                ans3 = st.selectbox("Radiátory a kotel:", ["Vyber...", "Nemovitost", "Domácnost"])
-                ans4 = st.selectbox("Drahý koberec a sedací souprava:", ["Vyber...", "Nemovitost", "Domácnost"])
+                ans3 = st.selectbox("Radiátory a kotel:", ["Vyber...", "Nemovitost", "Domácnost"], key="k4_12_ans3")
+                ans4 = st.selectbox("Drahý koberec a sedací souprava:", ["Vyber...", "Nemovitost", "Domácnost"], key="k4_12_ans4")
                 
-            if st.button("Zkontrolovat", type="primary"):
+            if st.button("Zkontrolovat a uložit 💾", type="primary", key="btn_k4_12_kviz"):
                 if "Vyber..." in [ans1, ans2, ans3, ans4]:
                     st.warning("Vyber všechny odpovědi!")
                 elif ans1 == "Nemovitost" and ans2 == "Domácnost" and ans3 == "Nemovitost" and ans4 == "Domácnost":
                     st.success("✅ Skvěle! Pochopil/a jsi to naprosto přesně. Vestavěné a pevné věci = nemovitost. Volné věci = domácnost.")
                 else:
                     st.error("❌ Někde je chyba. Vzpomeň si na trik s třesením domu!")
+                
+                majetek_data = f"Linka: {ans1} | Notebook: {ans2} | Kotel: {ans3} | Koberec: {ans4}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.12 - Třídění majetku", majetek_data)
 
         st.divider()
 
@@ -4173,8 +4225,8 @@ def render():
             st.markdown("#### 🧮 Simulátor tvrdé reality")
             st.write("Představ si, že jsi před 10 lety koupil dům a pojistil ho na tehdejší cenu. Dnes má dům dvojnásobnou hodnotu, ale pojistku jsi neaktualizoval. Vichřice ti strhne část střechy (škoda za 500 000 Kč).")
             
-            pojistna_castka = st.slider("Na kolik je dům papírově pojištěn (Smlouva):", 2000000, 10000000, 3000000, step=500000)
-            skutecna_hodnota = st.slider("Jakou má dům skutečnou hodnotu dnes:", 2000000, 15000000, 6000000, step=500000)
+            pojistna_castka = st.slider("Na kolik je dům papírově pojištěn (Smlouva):", 2000000, 10000000, 3000000, step=500000, key="k4_13_poj_castka")
+            skutecna_hodnota = st.slider("Jakou má dům skutečnou hodnotu dnes:", 2000000, 15000000, 6000000, step=500000, key="k4_13_skut_hodnota")
             skoda = 500000
             
             # Výpočet plnění (vzorec podpojištění)
@@ -4191,10 +4243,17 @@ def render():
                 st.error(f"🚨 **Banka/Pojišťovna tě nachytala na matematice!** Protože jsi měl dům pojištěný jen na {int(koeficient*100)} % jeho reálné hodnoty, pojišťovna ti i z blbé škody na střeše vyplatí pouze {int(koeficient*100)} %! Zbytek musíš zaplatit ze svého.")
             
             else:
+                vyplaceno = skoda
+                doplatis_sam = 0
                 col_a, col_b = st.columns(2)
                 col_a.metric("Škoda na střeše", f"{skoda:,} Kč".replace(",", " "))
                 col_b.metric("Pojišťovna zaplatí", f"{skoda:,} Kč".replace(",", " "))
                 st.success("✅ **Vše v pořádku.** Pojistná částka odpovídá reálné hodnotě domu. Pojišťovna zaplatí celou škodu na střeše (mínus případná spoluúčast).")
+
+            if st.button("Uložit výsledek podpojištění 💾", key="btn_k4_13_podpojisteni"):
+                podpojisteni_data = f"Pojištěno na: {pojistna_castka} Kč | Skutečnost: {skutecna_hodnota} Kč | Vyplaceno: {int(vyplaceno)} Kč"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.13 - Podpojištění domu", podpojisteni_data)
 # =========================================================================
     # 4.14 PRAKTICKÉ ROZHODNŮVÁNÍ: ÚVĚR A POJIŠTĚNÍ DOHROMADY
     # =========================================================================
