@@ -322,9 +322,46 @@ if st.session_state["current_view"] == "Ucitel_Panel":
 
 elif st.session_state["current_view"] == "Uvod":
     st.title("Ekonomika, která dává smysl")
+
+    st.markdown(
+        """
+    <div class="box-gray">
+        📚 <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
+    </div>
+    <div class="box-green">
+        🎯 <b>Cíl učebnice</b><br>
+        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    st.divider()
+
+    st.markdown("### 📖 Jak s učebnicí pracovat")
     st.markdown("""
-    <div class="box-gray">📚 <b>Moderní učebnice ekonomiky pro střední školy</b></div>
-    """, unsafe_allow_html=True)
+    1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
+    2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
+    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
+    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které ti pomohou s vysvětlením, kontrolou nebo rozvojem tvého projektu.
+    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
+    6. **Závěrečný projekt.** Na úplném konci propojíš všechno dohromady a vytvoříš návrh vlastního odpovědného projektu.
+    """)
+
+    st.divider()
+
+    st.markdown("### 🧩 Legenda učebnice")
+    st.markdown(
+        """
+    <div class="box-blue">📘 <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
+    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-purple">🤖 <b>Fialová:</b> AI mentoring a práce s asistencí</div>
+    <div class="box-green">✅ <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
+    <div class="box-red">⚠️ <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
+    <div class="box-gray">📄 <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
+    """,
+        unsafe_allow_html=True,
+    )
 
 # KAPITOLY
 elif st.session_state["current_view"] == "Kapitola 1":
