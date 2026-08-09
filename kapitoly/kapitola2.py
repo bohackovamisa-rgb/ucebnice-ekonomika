@@ -4255,7 +4255,7 @@ def render():
                 if "uloz_odpoved_fn" in st.session_state:
                     st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.13 - Podpojištění domu", podpojisteni_data)
 # =========================================================================
-    # 4.14 PRAKTICKÉ ROZHODNŮVÁNÍ: ÚVĚR A POJIŠTĚNÍ DOHROMADY
+    # 4.14 PRAKTICKÉ ROZHODNOVÁNÍ: ÚVĚR A POJIŠTĚNÍ DOHROMADY
     # =========================================================================
     elif "4.14" in selected_section_2:
         st.markdown("<div class='sub-section-header'>14. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
@@ -4282,7 +4282,7 @@ def render():
             "Žadatel A: Petr (22 let) – První auto na úvěr (150 000 Kč)",
             "Žadatelka B: Eva a Martin (30 let) – Hypotéka na byt (5 000 000 Kč)",
             "Žadatel C: Pavel (35 let) – Spotřebitelský úvěr na dovolenou (60 000 Kč)"
-        ])
+        ], key="k4_14_profil")
 
         if profil.startswith("Žadatel A"):
             with st.container(border=True):
@@ -4296,11 +4296,13 @@ def render():
                 sim_a1 = st.radio("1. Jak vyhodnotíš bonitu a schválení?", ["Schválit v plné výši", "Zamítnout nebo nabídnout nižší částku", "Schválit 100% částku bez doložení"], key="sim_a1")
                 sim_a2 = st.radio("2. Jaké je pro Petra největší riziko?", ["Pokles ceny auta", "Ztráta práce / nemoc bez finanční rezervy", "Zvýšení úrokových sazeb u hypotéky"], key="sim_a2")
                 
-                if st.button("Vyhodnotit jako banka"):
+                if st.button("Vyhodnotit jako banka a uložit 💾", key="btn_sim_a"):
                     if "Zamítnout" in sim_a1 and "Ztráta práce" in sim_a2:
                         st.success("✅ **Správně!** Petr má extrémně nízkou rezervu (jen 5 000 Kč). Měsíčně mu po výdajích zbývá 10 000 Kč, ze kterých by splátka auta vzala většinu. Banka mu buď nabídne nižší částku, nebo doporučí nejdříve naspořit rezervu.")
                     else:
                         st.error("❌ **Chybně.** Jako bankéř bys riskoval/a. Petr nemá téměř žádné úspory a v případě nemoci by hned v prvním měsíci spadl do nesplácení.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Bankéř (Petr)", f"1:{sim_a1} | 2:{sim_a2}")
 
         elif profil.startswith("Žadatelka B"):
             with st.container(border=True):
@@ -4313,11 +4315,13 @@ def render():
                 sim_b1 = st.radio("1. Kolik vlastních peněz musí dát ze svého?", ["Alespoň 10–20 % (tj. min. 500 000 Kč)", "Nemusí dát nic, banka půjčí 100 %", "Musí mít naspořeno 50 %"], key="sim_b1")
                 sim_b2 = st.radio("2. Jaké pojištění by měli absolutně prioritně sjednat?", ["Pojištění displeje mobilu", "Pojištění nemovitosti + Životní pojištění pro případ invalidity/smrti", "Havarijní pojištění auta"], key="sim_b2")
                 
-                if st.button("Vyhodnotit jako banka"):
+                if st.button("Vyhodnotit jako banka a uložit 💾", key="btn_sim_b"):
                     if "10–20 %" in sim_b1 and "Pojištění nemovitosti" in sim_b2:
                         st.success("✅ **Výborně!** Žadatelé mají dostatečný příjem i vlastní úspory na LTV 90 %. Pojištění nemovitosti bude vyžadovat sama banka jako zástavu a životní pojištění ochrání jejich společný rozpočet.")
                     else:
                         st.error("❌ **Chyba v posouzení.** U hypotéky je nutný vlastní základ a krytí životních rizik při takto velkém dluhu.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Bankéř (Eva a Martin)", f"1:{sim_b1} | 2:{sim_b2}")
 
         elif profil.startswith("Žadatel C"):
             with st.container(border=True):
@@ -4326,8 +4330,10 @@ def render():
                 st.markdown("- **Čistý příjem:** 32 000 Kč/měsíc")
                 st.markdown("- **Stávající dluhy:** Splácí už kontokorent (20 000 Kč) a kreditku (30 000 Kč)")
                 
-                if st.button("Vyhodnotit jako banka"):
+                if st.button("Vyhodnotit jako banka a uložit 💾", key="btn_sim_c"):
                     st.error("🚨 **ZAMÍTNUTO!** Pavel vykazuje jasné známky předlužení (kumuluje spotřebitelské dluhy) a chce si půjčit na zážitek/spotřebu, která nemá žádnou trvalou hodnotu. Banka úvěr zamítne z důvodu ochrany spotřebitele i vysokého rizika dlužníka.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Bankéř (Pavel)", "Zamítnuto (Předlužení)")
 
         st.divider()
 
@@ -4362,50 +4368,20 @@ def render():
             "Zvolil/a bych Nabídku A",
             "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)",
             "Nepůjčil/a bych si vůbec – našetřil/a bych nebo koupil/a levnější repasovaný notebook"
-        ])
+        ], key="k4_14_nabidka")
 
-        if rozhodnuti == "Zvolil/a bych Nabídku A":
-            st.success("✅ **Dobrá volba spotřebitele:** Nabídka A má sice o něco vyšší udávaný úrok, ale díky nízkému RPSN a absenci skrytých poplatků tě celkově stojí o 11 616 Kč MÉNĚ než Nabídka B.")
-        elif rozhodnuti == "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)":
-            st.error("❌ **Skočil/a jsi na marketingový trik!** Nízký úrok 4,9 % je jen návnada. Kvůli obřím poplatkům za sjednání a vedení účtu je RPSN celých 28,5 % a přeplatíš o více než 11 tisíc korun navíc!")
-        elif "Nepůjčil/a bych si vůbec" in rozhodnuti:
-            st.success("🏆 **Nejlepší finanční rozhodnutí!** Na věci běžné spotřeby nebo elektroniku je vždy nejbezpečnější si našetřit z vlastních zdrojů nebo zvolit dostupnější alternativu bez zadlužování.")
-
+        if st.button("Uložit mé rozhodnutí o půjčce 💾", key="btn_k4_14_srovnani"):
+            if rozhodnuti == "Zvolil/a bych Nabídku A":
+                st.success("✅ **Dobrá volba spotřebitele:** Nabídka A má sice o něco vyšší udávaný úrok, ale díky nízkému RPSN a absenci skrytých poplatků tě celkově stojí o 11 616 Kč MÉNĚ než Nabídka B.")
+            elif rozhodnuti == "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)":
+                st.error("❌ **Skočil/a jsi na marketingový trik!** Nízký úrok 4,9 % je jen návnada. Kvůli obřím poplatkům za sjednání a vedení účtu je RPSN celých 28,5 % a přeplatíš o více než 11 tisíc korun navíc!")
+            elif "Nepůjčil/a bych si vůbec" in rozhodnuti:
+                st.success("🏆 **Nejlepší finanční rozhodnutí!** Na věci běžné spotřeby nebo elektroniku je vždy nejbezpečnější si našetřit z vlastních zdrojů nebo zvolit dostupnější alternativu bez zadlužování.")
+            
+            if "uloz_odpoved_fn" in st.session_state and rozhodnuti != "Vyber možnost...":
+                st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Srovnávač půjček", rozhodnuti)
 
     # =========================================================================
-    # 4.15 SHRNUTÍ: CO SI ODNÉST
-    # =========================================================================
-    elif "4.15" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>15. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
-        st.markdown("## 4.15 Shrnutí kapitoly: Co si odnést")
-        
-        st.write("Gratulujeme! Prošel/prošla jsi celou kapitolu o úvěrech, hypotékách a pojištění. Zde jsou nejdůležitější pravidla pro tvůj finanční život:")
-
-        st.markdown("""
-        <div class="box-green">
-            <h3>✅ Klíčová pravidla pro život:</h3>
-            <ul>
-                <li><b>Úvěr není peníze navíc:</b> Je to jen přesun tvé budoucí spotřeby do přítomnosti, za který vždy zaplatíš úrokem a časem.</li>
-                <li><b>RPSN je tvůj nejlepší přítel:</b> Samotný úrok nestačí. Vždy porovnávej <b>RPSN</b> a <b>celkovou zaplacenou částku</b>.</li>
-                <li><b>Dostatečná rezerva:</b> Splátka úvěru musí být nastavena tak, abys dokázal/a žít a tvořit si rezervu i při výpadku příjmu.</li>
-                <li><b>Hypotéka vyžaduje přípravu:</b> Bez vlastních úspor (10–20 % LTV) a dobré platební historie ti banka na bydlení nepůjčí.</li>
-                <li><b>Pozor na impulzivní dlužení:</b> Služby typu <i>BNPL (Kup teď, zaplať později)</i> nebo kontokorenty odbourávají pocit z placení a vedou do dluhové pasti.</li>
-                <li><b>Pojištění chrání před katastrofou:</b> Pojišťuj věci, které by zničily tvůj rozpočet (invalidita, ztráta domu, obří škoda třetí osobě). Drobnosti zvládni z vlastní rezervy.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.divider()
-
-        # --- AI MENTORING BOX ---
-        st.markdown("### 🤖 Vyzkoušej AI Mentora")
-        st.write("Chceš si téma ještě lépe upevnit nebo se zeptat na cokoliv, co ti nebylo jasné? Zkopíruj tento text a vlož ho do svého oblíbeného AI asistenta:")
-
-        prompt_text = "Vysvětli mi rozdíl mezi úrokem a RPSN na jednoduchém příkladu půjčky. Potom mi ukaž, jak banka posuzuje, jestli člověk dostane spotřebitelský úvěr nebo hypotéku."
-        
-        st.code(prompt_text, language="text")
-        st.caption("💡 Tip: Můžeš AI požádat, aby ti položila 3 kontrolní otázky z této kapitoly!")
-# =========================================================================
     # 5.1 PROČ PODNIK ŘEŠÍ FINANCE
     # =========================================================================
     elif selected_section_2.startswith("5.1 "):
@@ -4438,7 +4414,7 @@ def render():
             st.markdown("#### 🧪 Mini-simulátor: Proč zkrachoval úspěšný Food Truck?")
             st.write("Představ si food truck prodávající prémiové burgery. Místní ho milují, fronta je až za roh!")
             
-            prodejni_cena = st.slider("Prodejní cena burgeru (Kč):", 100, 300, 180, step=10)
+            prodejni_cena = st.slider("Prodejní cena burgeru (Kč):", 100, 300, 180, step=10, key="k5_1_cena_burgeru")
             naklady_suroviny = 110 # Suroviny
             ostatni_naklady_na_burger = 80 # Mzdy, nájem auta, elektřina rozpočtená na 1 ks
             
@@ -4515,7 +4491,7 @@ def render():
             }
         }
 
-        vybrany_akter = st.selectbox("Vyber skupinu, jejíž pohled tě zajímá:", list(aktéri.keys()))
+        vybrany_akter = st.selectbox("Vyber skupinu, jejíž pohled tě zajímá:", list(aktéri.keys()), key="k5_1_akter")
 
         if vybrany_akter:
             data = aktéri[vybrany_akter]
@@ -4532,13 +4508,19 @@ def render():
         st.write("Vyber si libovolnou firmu z okolí své školy nebo bydliště (např. lokální kavárnu, autoservis, e-shop nebo tělocvičnu) a zkus se zamyslet nad řetězovou reakcí.")
 
         with st.container(border=True):
-            st.text_input("Napiš název/typ vybrané firmy z okolí:", placeholder="Např. Kavárna U Školáka / Lokální autoservis Procházka")
-            st.text_area("Co všechno by se stalo a kdo by utrpěl škodu, kdyby tato firma přestala ze dne na den platit své závazky?", 
-                         placeholder="Např. Zaměstnanci by nedostali výplatu a nemohli zaplatit nájem. Dodavatel kávy by přišel o velkého odběratele...")
+            firma = st.text_input("Napiš název/typ vybrané firmy z okolí:", placeholder="Např. Kavárna U Školáka / Lokální autoservis Procházka", key="k5_1_firma")
+            nasledky = st.text_area("Co všechno by se stalo a kdo by utrpěl škodu, kdyby tato firma přestala ze dne na den platit své závazky?", 
+                                     placeholder="Např. Zaměstnanci by nedostali výplatu a nemohli zaplatit nájem. Dodavatel kávy by přišel o velkého odběratele...", key="k5_1_nasledky")
             
-            if st.button("Uložit mé zamyšlení", type="primary"):
-                st.success("✅ Skvělá úvaha! Takhle funguje ekonomický ekosystém. Finanční problém jedné firmy se jako domino šíří k desítkám dalších lidí.")
-# =========================================================================
+            if st.button("Uložit mé zamyšlení o domino efektu 💾", type="primary", key="btn_k5_1_domino"):
+                if firma.strip() and nasledky.strip():
+                    st.success("✅ Skvělá úvaha! Takhle funguje ekonomický ekosystém. Finanční problém jedné firmy se jako domino šíří k desítkám dalších lidí.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.1 - Domino efekt", f"Firma: {firma} | Následky: {nasledky}")
+                else:
+                    st.warning("Před uložením vyplň obě pole!")
+
+    # =========================================================================
     # 5.2 ZÁKLADNÍ FINANČNÍ VÝKAZY: MAPA FIRMY V ČÍSLECH
     # =========================================================================
     elif selected_section_2.startswith("5.2 "):
@@ -4694,8 +4676,7 @@ def render():
             
             st.info("💡 **Poučení:** Firma nespravovala své Cashflow. Zákazníkům nabídla příliš dlouhou splatnost (60 dní), zatímco své vlastní výdaje musela platit hned.")
 
-
-# =========================================================================
+    # =========================================================================
     # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
     # =========================================================================
     elif selected_section_2.startswith("5.3"):
@@ -4756,11 +4737,11 @@ def render():
         with st.container(border=True):
             col1, col2, col3 = st.columns(3)
             with col1:
-                fixni = st.number_input("Fixní náklady [Kč]", min_value=0, value=50000, step=1000)
+                fixni = st.number_input("Fixní náklady [Kč]", min_value=0, value=50000, step=1000, key="k5_bep_fix")
             with col2:
-                variabilni = st.number_input("Variabilní náklady/ks [Kč]", min_value=0, value=200, step=10)
+                variabilni = st.number_input("Variabilní náklady/ks [Kč]", min_value=0, value=200, step=10, key="k5_bep_var")
             with col3:
-                cena = st.number_input("Prodejní cena/ks [Kč]", min_value=0, value=400, step=10)
+                cena = st.number_input("Prodejní cena/ks [Kč]", min_value=0, value=400, step=10, key="k5_bep_cena")
 
             marze = cena - variabilni
 
@@ -4853,7 +4834,8 @@ def render():
                 "💡 *Vysvětlivka: Plocha označená červeně představuje ztrátu, zelená zisk. "
                 "Modrá přerušovaná čára ukazuje vývoj zisku (pod nulou je podnik ve ztrátě, v bodě zvratu protíná nulu a roste do zisku).*"
             )
-            # =========================================================================
+
+    # =========================================================================
     # 5.4 ZDROJE FINANCOVÁNÍ PODNIKU
     # =========================================================================
     elif selected_section_2.startswith("5.4 "):
@@ -4897,7 +4879,7 @@ def render():
             "Vezmu si bankovní úvěr (Půjčka na 1 milion Kč).",
             "Najdu investora a dám mu 30 % firmy za 1 milion Kč.",
             "Odmítnu to. Pojedu si dál svůj malý e-shop a bootstrapping."
-        ])
+        ], key="k5_4_finance")
 
         if volba_finance == "Vezmu si bankovní úvěr (Půjčka na 1 milion Kč).":
             st.info("🏦 **Cesta dluhu:** Zůstane ti 100 % firmy! Pokud se prodeje v supermarketu uchytí, vyděláš balík. Ale pozor – pokud supermarket zboží neprodá a vrátí ti ho, zůstane ti na krku dluh, který tě může zničit.")
@@ -4953,16 +4935,16 @@ def render():
         with st.container(border=True):
             st.markdown("#### 📥 Zadej data o firmě (v Kč)")
             c1, c2, c3, c4 = st.columns(4)
-            trzby = c1.number_input("Celkové Tržby", value=1000000, step=100000)
-            zisk = c2.number_input("Čistý zisk", value=80000, step=10000)
-            aktiva = c3.number_input("Aktiva (Majetek)", value=2000000, step=100000)
-            vlastni_kapital = c4.number_input("Vlastní kapitál", value=1100000, step=100000)
+            trzby = c1.number_input("Celkové Tržby", value=1000000, step=100000, key="k5_5_trzby")
+            zisk = c2.number_input("Čistý zisk", value=80000, step=10000, key="k5_5_zisk")
+            aktiva = c3.number_input("Aktiva (Majetek)", value=2000000, step=100000, key="k5_5_aktiva")
+            vlastni_kapital = c4.number_input("Vlastní kapitál", value=1100000, step=100000, key="k5_5_vk")
 
             c5, c6, c7, c8 = st.columns(4)
-            cizi_zdroje = c5.number_input("Cizí zdroje (Dluhy)", value=900000, step=100000)
-            obezna_aktiva = c6.number_input("Oběžná aktiva", value=500000, step=50000)
-            kratkodobe_zavazky = c7.number_input("Krátk. závazky (do roka)", value=300000, step=50000)
-            penize = c8.number_input("Peníze v hotovosti/na účtu", value=150000, step=10000)
+            cizi_zdroje = c5.number_input("Cizí zdroje (Dluhy)", value=900000, step=100000, key="k5_5_cz")
+            obezna_aktiva = c6.number_input("Oběžná aktiva", value=500000, step=50000, key="k5_5_oa")
+            kratkodobe_zavazky = c7.number_input("Krátk. závazky (do roka)", value=300000, step=50000, key="k5_5_kz")
+            penize = c8.number_input("Peníze v hotovosti/na účtu", value=150000, step=10000, key="k5_5_penize")
 
         # Prevence dělení nulou
         trzby = max(trzby, 1)
@@ -4973,7 +4955,7 @@ def render():
         # Záložky pro jednotlivé skupiny
         tab_rent, tab_likv, tab_zadl, tab_akt = st.tabs(["📈 Rentabilita (Ziskovost)", "💧 Likvidita (Platební schopnost)", "💳 Zadluženost", "⚙️ Aktivita"])
 
-# --- 5.5.3 RENTABILITA ---
+        # --- 5.5.3 RENTABILITA ---
         with tab_rent:
             st.markdown("#### 5.5.3 Ukazatele rentability: Vydělává podnik dost?")
             st.write("Rentabilita ukazuje, jak dobře firma vytváří zisk.")
@@ -5091,8 +5073,8 @@ def render():
             st.write("Tyto ukazatele měří rychlost oběhu. Dosaď sem hodnoty zásob a pohledávek pro výpočet dní.")
             
             c_a1, c_a2 = st.columns(2)
-            zasoby = c_a1.number_input("Hodnota zásob na skladě", value=200000, step=10000)
-            pohledavky = c_a2.number_input("Pohledávky (Zákazníci dluží nám)", value=150000, step=10000)
+            zasoby = c_a1.number_input("Hodnota zásob na skladě", value=200000, step=10000, key="k5_5_zas")
+            pohledavky = c_a2.number_input("Pohledávky (Zákazníci dluží nám)", value=150000, step=10000, key="k5_5_pohl")
             
             obrat_aktiv = trzby / aktiva
             doba_zasob = (zasoby / trzby) * 365
@@ -5118,7 +5100,9 @@ def render():
                 <b>💡 Praktický význam:</b> Pokud firma čeká na peníze od zákazníků 60 dní (Doba inkasa), ale dodavatelům musí platit do 14 dní (Doba splatnosti), vyčerpá si hotovost a může zkrachovat na cashflow problém, i když je zisková!
             </div>
             """, unsafe_allow_html=True)
-# =========================================================================
+
+
+    # =========================================================================
     # 5.6 MODELOVÁ FINANČNÍ ANALÝZA: E-SHOP DROPZONE
     # =========================================================================
     elif selected_section_2.startswith("5.6"):
@@ -5273,8 +5257,8 @@ def render():
                 st.error("💀 **Firma je ve ztrátě.** Než začneš řešit likviditu a zásoby, musíš spravit samotný byznys model (zvýšit tržby nebo osekat náklady).")
             else:
                 st.info("Firma je stabilní, zkus si pohrát s hodnotami a najít ideální poměr mezi ziskem a hotovostí.")
-                
-# =========================================================================
+
+    # =========================================================================
     # 5.7 PRÁZDNÁ ŠABLONA FINANČNÍ ANALÝZY
     # =========================================================================
     elif selected_section_2.startswith("5.7"):
@@ -5432,23 +5416,23 @@ def render():
                     "Tržby i zisk stabilně rostou.",
                     "Firma je v zisku, ale marže klesá.",
                     "Firma propadla do ztráty."
-                ])
+                ], key="k5_8_zisk")
                 gen_likvidita = st.selectbox("2. Co peníze a likvidita?", [
                     "Hotovosti je dostatek, závazky platíme včas.",
                     "Likvidita se zhoršuje, peníze chybí.",
                     "Hrozí okamžitá platební neschopnost!"
-                ])
+                ], key="k5_8_likv")
             with col_g2:
                 gen_dluh = st.selectbox("3. Jaká je zadluženost?", [
                     "Zadlužení je nízké a bezpečné.",
                     "Dluh roste, ale zatím je zvládnutelný.",
                     "Firma je předlužena a dusí ji splátky."
-                ])
+                ], key="k5_8_dluh")
                 gen_sklad = st.selectbox("4. Co zásoby a zákazníci?", [
                     "Zákazníci platí včas, sklad se točí.",
                     "Peníze se začínají zasekávat ve skladu.",
                     "Zákazníci neplatí a zásoby leží ladem."
-                ])
+                ], key="k5_8_sklad")
 
             st.markdown("##### 📄 Výsledný report pro majitele:")
             
@@ -5468,7 +5452,13 @@ def render():
                 doporuceni = "✅ **Doporučení pro růst:** Firma je ve výborné kondici. Doporučuji udržet stávající kurz, volnou hotovost reinvestovat do marketingu a zvážit bezpečné využití úvěru pro rychlejší expanzi."
 
             st.info(f"**Shrnutí:** {report_text}\n\n{doporuceni}")
-# =========================================================================
+
+            if st.button("Uložit vygenerovaný report 💾", key="btn_k5_8_report"):
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.8 - Manažerské shrnutí", report_text + " | " + doporuceni)
+
+
+    # =========================================================================
     # 5.9 CASE STUDY: INFLUENCER JAKO FIRMA
     # =========================================================================
     elif selected_section_2.startswith("5.9"):
@@ -5552,7 +5542,7 @@ def render():
 
             with st.container(border=True):
                 q1 = st.radio("1. Koupil sis nový iPhone za 35 000 Kč. Točíš na něj 90 % svých videí na TikTok.", 
-                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."])
+                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."], key="inf_tax1")
                 if q1 == "Ano, je to uznatelný náklad.":
                     st.success("✅ Správně. Slouží k tvorbě tvého produktu (obsahu).")
                 elif q1 == "Ne, je to osobní spotřeba.":
@@ -5561,7 +5551,7 @@ def render():
                 st.divider()
 
                 q2 = st.radio("2. Koupil sis herní konzoli za 15 000 Kč, abys na ní hrál o víkendu po večerech s kamarády. Nejsi herní streamer (děláš fitness).", 
-                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."])
+                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."], key="inf_tax2")
                 if q2 == "Ne, je to osobní spotřeba.":
                     st.success("✅ Přesně tak! Finanční úřad by ti to vyhodil. Nesouvisí to s tvým fitness podnikáním.")
                 elif q2 == "Ano, je to uznatelný náklad.":
@@ -5570,7 +5560,7 @@ def render():
                 st.divider()
 
                 q3 = st.radio("3. Zaplatil jsi 5 000 Kč za kampaň na Instagramu, která láká lidi na tvůj nový e-book.", 
-                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."])
+                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."], key="inf_tax3")
                 if q3 == "Ano, je to uznatelný náklad.":
                     st.success("✅ Ano! Je to klasický výdaj na reklamu a propagaci za účelem dosažení zisku.")
                 elif q3 == "Ne, je to osobní spotřeba.":
@@ -5595,7 +5585,7 @@ def render():
                 "Scénář A: Změna algoritmu YouTube/Tiktoku (Ztráta dosahu)",
                 "Scénář B: Hlavní sponzor odstoupil",
                 "Scénář C: Vyhoření (Burnout) – měsíc netvoříš"
-            ])
+            ], key="k5_9_scenar")
 
             # Původní hodnoty ze simulátoru
             krizovy_prijem = prijmy_celkem
@@ -5629,6 +5619,11 @@ def render():
             else:
                 col_k3.metric("Nový zisk", f"{novy_zisk:,.0f} Kč".replace(",", " "), f"{novy_zisk - zisk_pred_zdanenim:,.0f} Kč", delta_color="inverse")
                 st.error("🚨 Zkrachoval jsi! Tvé příjmy nedokázaly pokrýt ani běžné náklady. Pokud nemáš finanční rezervu vytvořenou z minulých měsíců, končíš s podnikáním.")
+
+            if st.button("Uložit výsledek krizového scénáře 💾", key="btn_k5_9_krize"):
+                krize_data = f"Scénář: {scenar} | Příjem po krizi: {krizovy_prijem} | Zisk/ztráta: {novy_zisk}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.9 - Krizový scénář influencera", krize_data)
 
             st.markdown("""
             <div class="box-purple">
