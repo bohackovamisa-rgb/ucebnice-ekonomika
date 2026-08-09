@@ -7,34 +7,90 @@ st.set_page_config(
     page_title="Učebnice ekonomiky", page_icon="📖", layout="wide"
 )
 
-# --- 2. DATABÁZE UŽIVATELŮ (Zatím přímo v kódu pro testování) ---
-# V budoucnu se toto dá napojit na Google Sheets, Supabase nebo Firebase
-USERS_DB = {
-    # UČITELÉ
-    "ucitel": {
-        "heslo": "admin123",
-        "jmeno": "Mgr. Jan Komenský",
-        "role": "teacher",
-        "tridy": ["3.A", "4.B", "4.C"]
-    },
-    # ŽÁCI
-    "z_novak": {
-        "heslo": "zák123",
-        "jmeno": "Tomáš Novák",
-        "role": "student",
-        "trida": "3.A"
-    },
-    "z_dvorakova": {
-        "heslo": "zák123",
-        "jmeno": "Eliška Dvořáková",
-        "role": "student",
-        "trida": "4.B"
-    }
+# --- 2. STYLOVÁNÍ (TVOJE PŮVODNÍ BARVY S FOCUS EFEKTEM A STÍNY) ---
+# Toto musí být na začátku, aby se design propsal i do přihlašovací obrazovky!
+st.markdown(
+    """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+/* Skrytí výchozí navigace Streamlitu */
+[data-testid="stSidebarNav"] { display: none !important; }
+
+/* 1. ZÁKLADNÍ POZADÍ A PÍSMO (MONTSERRAT) */
+html, body, [class*="css"], .stApp {
+    font-family: 'Montserrat', -apple-system, sans-serif !important;
+    background-color: #FAF8F5 !important; 
+    color: #1C1917 !important;
 }
 
-# --- 3. PŘIHLAŠOVACÍ BRÁNA S ROLEMI ---
+/* 2. ŠÍŘKA OBSAHU A ELEVACE KARET */
+.main .block-container { 
+    max-width: 920px !important; 
+    padding-top: 2.5rem !important; 
+    padding-bottom: 5rem !important; 
+}
+
+/* Vyladěné stínování a hover efekt pro kontejnery */
+div[data-testid="stVerticalBlockBorderWrapper"] { 
+    background-color: #FFFFFF !important; 
+    border-radius: 18px !important; 
+    border: 1px solid #EAE7DC !important; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important; 
+    padding: 2rem !important; 
+    margin-bottom: 1.5rem !important; 
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* 3. TYPOGRAFIE & NADPISY */
+h1 { font-family: 'Montserrat', sans-serif !important; color: #0F172A !important; font-weight: 800 !important; font-size: 2.2rem !important; letter-spacing: -0.03em !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
+h2 { font-family: 'Montserrat', sans-serif !important; color: #1E293B !important; font-weight: 700 !important; font-size: 1.35rem !important; letter-spacing: -0.02em !important; margin-top: 1.5rem !important; margin-bottom: 0.85rem !important; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.5rem; }
+h3 { font-family: 'Montserrat', sans-serif !important; color: #334155 !important; font-weight: 600 !important; font-size: 1.1rem !important; margin-top: 1.25rem !important; }
+p, li, td, th { font-family: 'Montserrat', sans-serif !important; color: #334155 !important; font-size: 0.95rem !important; line-height: 1.7 !important; font-weight: 400 !important; }
+
+/* 4. TLAČÍTKA (PŮVODNÍ BARVY + LEPŠÍ HOVER) */
+button[data-testid="baseButton-primary"], button[kind="primary"] { font-family: 'Montserrat', sans-serif !important; border-radius: 9999px !important; border: 1px solid #111111 !important; background-color: #111111 !important; color: #FFFFFF !important; font-weight: 600 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; box-shadow: 0 4px 10px rgba(17, 17, 17, 0.15) !important; transition: all 0.2s ease !important; }
+button[data-testid="baseButton-primary"]:hover, button[kind="primary"]:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(17, 17, 17, 0.25) !important; }
+button[data-testid="baseButton-primary"] *, button[kind="primary"] * { color: #FFFFFF !important; }
+
+button[data-testid="baseButton-secondary"], button[kind="secondary"] { font-family: 'Montserrat', sans-serif !important; border-radius: 9999px !important; background-color: #F2EFE9 !important; color: #44403C !important; border: 1px solid #E2DEC6 !important; font-weight: 500 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; transition: all 0.2s ease !important; }
+button[data-testid="baseButton-secondary"] *, button[kind="secondary"] * { color: #44403C !important; }
+button[data-testid="baseButton-secondary"]:hover, button[kind="secondary"]:hover { background-color: #111111 !important; border-color: #111111 !important; color: #FFFFFF !important; transform: translateY(-1px); }
+button[data-testid="baseButton-secondary"]:hover *, button[kind="secondary"]:hover * { color: #FFFFFF !important; }
+
+/* 5. VSTUPNÍ POLA (PŮVODNÍ BARVY + FOCUS EFEKT) */
+.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { font-family: 'Montserrat', sans-serif !important; border-radius: 12px !important; border: 1px solid #E2DEC6 !important; background-color: #F2EFE9 !important; color: #0F172A !important; font-size: 0.92rem !important; padding: 0.65rem 0.9rem !important; transition: all 0.2s ease !important; }
+.stTextInput input:focus, .stTextArea textarea:focus, div[data-baseweb="select"] > div:focus { border-color: #111111 !important; background-color: #FFFFFF !important; box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.1) !important; }
+
+/* 6. BOČNÍ PANEL (SIDEBAR) S VLASTNÍ BARVOU */
+section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-right: 1px solid #E5E0D8 !important; }
+.sidebar-section-title { font-size: 0.72rem; font-weight: 700; color: #78716C; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1.4rem; margin-bottom: 0.6rem; }
+
+/* 7. BAREVNÉ BOXY */
+.box-blue { background-color: #F4F7F9 !important; border-left: 3px solid #8AA2B6 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2C3E50 !important; font-size: 0.93rem; }
+.box-yellow { background-color: #FAF7EE !important; border-left: 3px solid #D8C397 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C4E31 !important; font-size: 0.93rem; }
+.box-purple { background-color: #F8F5F8 !important; border-left: 3px solid #B4A2B8 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #4A3B4E !important; font-size: 0.93rem; word-wrap: break-word; }
+.box-green { background-color: #F3F6F3 !important; border-left: 3px solid #8DAE93 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2A4231 !important; font-size: 0.93rem; }
+.box-red { background-color: #FAF3F3 !important; border-left: 3px solid #C98A8A !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C2E2E !important; font-size: 0.93rem; }
+.box-gray { background-color: #F2EFE9 !important; border-left: 3px solid #A8A29E !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #44403C !important; font-size: 0.93rem; }
+</style>
+""",
+    unsafe_allow_html=True,
+)
+
+# --- 3. DATABÁZE UŽIVATELŮ (Zatím přímo v kódu pro testování) ---
+USERS_DB = {
+    "ucitel": {"heslo": "1234", "jmeno": "Mgr. Učitel", "role": "teacher", "tridy": ["3.A", "4.B"]},
+    "zak": {"heslo": "1234", "jmeno": "Student Novák", "role": "student", "trida": "3.A"}
+}
+
+# --- 4. PŘIHLAŠOVACÍ BRÁNA S ROLEMI (A ODESLÁNÍM PŘES ENTER) ---
 def login_screen():
-    # Pokud už je uživatel přihlášen, rovnou ho pustíme dál
     if st.session_state.get("is_logged_in", False):
         return True
 
@@ -42,28 +98,19 @@ def login_screen():
     with col2:
         st.markdown("<br><br><br>", unsafe_allow_html=True)
         with st.container(border=True):
-            st.markdown(
-                "<h2 style='text-align: center; border: none; font-weight: 800; color: #0F172A;"
-                " margin-bottom: 0.2rem; font-size: 1.8rem;'>E-Learning Portál</h2>",
-                unsafe_allow_html=True,
-            )
-            st.markdown(
-                "<p style='text-align: center; color: #64748B; font-size:"
-                " 0.9rem; margin-bottom: 1.5rem;'>Přihlaste se svým uživatelským jménem a heslem.</p>",
-                unsafe_allow_html=True,
-            )
+            st.markdown("<h2 style='text-align: center; border: none; font-weight: 700; margin-bottom: 0;'>Soukromá učebnice</h2>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; color: #78716c; font-size: 0.85rem; margin-bottom: 1.5rem;'>Zadejte jméno a heslo pro odemknutí kurzu.</p>", unsafe_allow_html=True)
             
+            # Zabaleno do formuláře, aby fungovalo zmáčknutí ENTER na klávesnici!
             with st.form("login_form", border=False):
-                username = st.text_input("Uživatelské jméno:", placeholder="např. z_novak")
-                password = st.text_input("Heslo:", type="password", placeholder="Vaše heslo...")
+                username = st.text_input("Uživatelské jméno:", placeholder="Napiš: ucitel nebo zak")
+                password = st.text_input("Heslo:", type="password", placeholder="Napiš: 1234")
                 
-                submit = st.form_submit_button("Přihlásit se 🚀", use_container_width=True)
+                submit = st.form_submit_button("Vstoupit do učebnice", use_container_width=True)
                 
                 if submit:
-                    # Kontrola, zda uživatel existuje v naší databázi a heslo sedí
                     if username in USERS_DB and USERS_DB[username]["heslo"] == password:
                         user_data = USERS_DB[username]
-                        # Uložení dat o uživateli do "paměti" aplikace
                         st.session_state["is_logged_in"] = True
                         st.session_state["username"] = username
                         st.session_state["user_role"] = user_data["role"]
@@ -79,93 +126,42 @@ def login_screen():
                         st.error("Nesprávné uživatelské jméno nebo heslo!")
     return False
 
-# --- STYLOVÁNÍ (Zůstává tvůj krásný Glassmorphism design) ---
-st.markdown(
-    """
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
-
-[data-testid="stSidebarNav"] { display: none !important; }
-
-html, body, [class*="css"], .stApp {
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
-    background: radial-gradient(circle at 50% 0%, #F8FAFC 0%, #F1F5F9 100%) !important;
-    color: #0F172A !important;
-}
-
-.main .block-container { max-width: 960px !important; padding-top: 2.5rem !important; padding-bottom: 6rem !important; }
-
-div[data-testid="stVerticalBlockBorderWrapper"] { 
-    background: rgba(255, 255, 255, 0.85) !important;
-    backdrop-filter: blur(12px) !important;
-    border-radius: 20px !important; 
-    border: 1px solid rgba(226, 232, 240, 0.8) !important; 
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important; 
-    padding: 2.2rem !important; 
-    margin-bottom: 1.8rem !important; 
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease !important;
-}
-
-div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -4px rgba(0, 0, 0, 0.03) !important;
-}
-
-h1 { font-family: 'Outfit', sans-serif !important; color: #0F172A !important; font-weight: 800 !important; font-size: 2.5rem !important; letter-spacing: -0.04em !important; line-height: 1.2 !important; margin-bottom: 0.85rem !important; }
-h2 { font-family: 'Outfit', sans-serif !important; color: #1E293B !important; font-weight: 700 !important; font-size: 1.5rem !important; letter-spacing: -0.03em !important; margin-top: 1.8rem !important; margin-bottom: 1rem !important; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.6rem; }
-h3 { font-family: 'Outfit', sans-serif !important; color: #334155 !important; font-weight: 600 !important; font-size: 1.2rem !important; margin-top: 1.4rem !important; }
-p, li, td, th { font-family: 'Plus Jakarta Sans', sans-serif !important; color: #334155 !important; font-size: 0.98rem !important; line-height: 1.75 !important; font-weight: 400 !important; }
-
-button[data-testid="baseButton-primary"], button[kind="primary"] { font-family: 'Plus Jakarta Sans', sans-serif !important; border-radius: 14px !important; border: none !important; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important; color: #FFFFFF !important; font-weight: 600 !important; font-size: 0.9rem !important; padding: 0.65rem 1.4rem !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25) !important; transition: all 0.2s ease !important; }
-button[data-testid="baseButton-primary"]:hover, button[kind="primary"]:hover { transform: translateY(-1px) !important; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.35) !important; }
-
-button[data-testid="baseButton-secondary"], button[kind="secondary"] { font-family: 'Plus Jakarta Sans', sans-serif !important; border-radius: 14px !important; background-color: #FFFFFF !important; color: #475569 !important; border: 1px solid #E2E8F0 !important; font-weight: 600 !important; font-size: 0.9rem !important; padding: 0.65rem 1.4rem !important; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important; transition: all 0.2s ease !important; }
-button[data-testid="baseButton-secondary"]:hover, button[kind="secondary"]:hover { background-color: #F8FAFC !important; border-color: #CBD5E1 !important; color: #0F172A !important; transform: translateY(-1px) !important; }
-
-.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { font-family: 'Plus Jakarta Sans', sans-serif !important; border-radius: 14px !important; border: 1.5px solid #E2E8F0 !important; background-color: #FFFFFF !important; color: #0F172A !important; font-size: 0.95rem !important; padding: 0.7rem 1rem !important; transition: border-color 0.2s ease, box-shadow 0.2s ease !important; }
-.stTextInput input:focus, .stTextArea textarea:focus, div[data-baseweb="select"] > div:focus { border-color: #6366F1 !important; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important; }
-
-section[data-testid="stSidebar"] { background: #F8FAFC !important; border-right: 1px solid #E2E8F0 !important; }
-.sidebar-section-title { font-size: 0.75rem; font-weight: 800; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 1.6rem; margin-bottom: 0.7rem; }
-
-.box-blue { background: linear-gradient(135deg, #EFF6FF 0%, #E0F2FE 100%) !important; border-left: 4px solid #0284C7 !important; padding: 1.25rem 1.4rem; border-radius: 0 16px 16px 0; margin: 1.2rem 0; color: #0C4A6E !important; font-size: 0.96rem; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.05); }
-.box-yellow { background: linear-gradient(135deg, #FEFCE8 0%, #FEF3C7 100%) !important; border-left: 4px solid #D97706 !important; padding: 1.25rem 1.4rem; border-radius: 0 16px 16px 0; margin: 1.2rem 0; color: #78350F !important; font-size: 0.96rem; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.05); }
-.box-purple { background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%) !important; border-left: 4px solid #9333EA !important; padding: 1.25rem 1.4rem; border-radius: 0 16px 16px 0; margin: 1.2rem 0; color: #581C87 !important; font-size: 0.96rem; word-wrap: break-word; box-shadow: 0 4px 12px rgba(147, 51, 234, 0.05); }
-.box-green { background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%) !important; border-left: 4px solid #16A34A !important; padding: 1.25rem 1.4rem; border-radius: 0 16px 16px 0; margin: 1.2rem 0; color: #14532D !important; font-size: 0.96rem; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.05); }
-.box-red { background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%) !important; border-left: 4px solid #DC2626 !important; padding: 1.25rem 1.4rem; border-radius: 0 16px 16px 0; margin: 1.2rem 0; color: #7F1D1D !important; font-size: 0.96rem; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.05); }
-.box-gray { background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%) !important; border-left: 4px solid #64748B !important; padding: 1.25rem 1.4rem; border-radius: 0 16px 16px 0; margin: 1.2rem 0; color: #334155 !important; font-size: 0.96rem; box-shadow: 0 4px 12px rgba(100, 116, 139, 0.05); }
-.hero-badge { background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%); color: white !important; padding: 0.35rem 0.9rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; margin-bottom: 0.8rem; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); }
-</style>
-""", unsafe_allow_html=True)
-
-# Spustit přihlašovací obrazovku. Zbytek kódu se načte, až když login_screen vrátí True.
+# Spustíme přihlašování. Pokud se nevrátí True (uživatel není přihlášený), aplikace se zde zastaví.
 if not login_screen():
     st.stop()
+
 
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
     st.session_state["current_view"] = "Uvod"
 
-# --- BOČNÍ PANEL (SIDEBAR) S PROFILEM ---
+# --- BOČNÍ PANEL S PROFILEM ---
 with st.sidebar:
     st.markdown(
-        f"""
-        <div style='padding: 0.5rem 0 1rem 0;'>
-            <span style='font-size: 0.75rem; font-weight: 800; color: #6366F1; text-transform: uppercase; letter-spacing: 0.1em;'>E-Learning Portal</span>
-            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.35rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
-        </div>
-        <div style='background-color: #EFF6FF; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid #BFDBFE;'>
-            <div style='font-size: 0.8rem; color: #64748B; font-weight: 600;'>PŘIHLÁŠEN(A):</div>
-            <div style='font-size: 1.05rem; font-weight: 700; color: #1E3A8A;'>👤 {st.session_state['user_name']}</div>
-            <div style='font-size: 0.85rem; color: #3B82F6; margin-top: 0.2rem;'>Role: {st.session_state['user_role'].capitalize()}</div>
+        """
+        <div style='padding: 0.5rem 0 0.5rem 0;'>
+            <span style='font-size: 0.7rem; font-weight: 700; color: #44403C; text-transform: uppercase; letter-spacing: 0.08em;'>E-Learning Portal</span>
+            <h2 style='margin: 0; padding: 0; border: none; font-size: 1.25rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # UČITELSKÝ PANEL (Viditelný pouze pro roli "teacher")
+    # Profilový rámeček s informací, kdo je přihlášený
+    st.markdown(
+        f"""
+        <div style='background-color: #F2EFE9; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; border: 1px solid #EAE7DC;'>
+            <div style='font-size: 0.75rem; color: #78716C; font-weight: 600;'>PŘIHLÁŠEN(A):</div>
+            <div style='font-size: 1.05rem; font-weight: 700; color: #1C1917;'>👤 {st.session_state['user_name']}</div>
+            <div style='font-size: 0.85rem; color: #44403C; margin-top: 0.2rem;'>Role: {st.session_state['user_role'].capitalize()}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # UČITELSKÝ PANEL (Viditelný pouze pro učitele)
     if st.session_state["user_role"] == "teacher":
-        st.markdown("<div class='sidebar-section-title' style='color: #9333EA;'>👩‍🏫 UČITELSKÝ PANEL</div>", unsafe_allow_html=True)
+        st.markdown("<div class='sidebar-section-title'>👩‍🏫 UČITELSKÝ PANEL</div>", unsafe_allow_html=True)
         vybrana_trida = st.selectbox("Spravovat třídu:", st.session_state["user_classes"], label_visibility="collapsed")
         
         if st.button("📊 Přehled výsledků třídy", use_container_width=True, type="secondary"):
@@ -173,11 +169,19 @@ with st.sidebar:
             st.rerun()
         st.divider()
 
-    # KAPITOLY KURZU (Pro všechny)
-    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
+    # KAPITOLY KURZU
+    st.markdown(
+        "<div class='sidebar-section-title'>KAPITOLY KURZU</div>",
+        unsafe_allow_html=True,
+    )
     
     is_uvod = st.session_state["current_view"] == "Uvod"
-    if st.button("🏠 Úvodní stránka", key="nav_uvod", use_container_width=True, type="primary" if is_uvod else "secondary"):
+    if st.button(
+        "Úvodní stránka",
+        key="nav_uvod",
+        use_container_width=True,
+        type="primary" if is_uvod else "secondary",
+    ):
         st.session_state["current_view"] = "Uvod"
         st.rerun()
 
@@ -193,26 +197,25 @@ with st.sidebar:
     for key, title in chapters.items():
         is_active = st.session_state["current_view"] == key
         btn_type = "primary" if is_active else "secondary"
-        if st.button(title, key=f"nav_{key}", use_container_width=True, type=btn_type):
+        if st.button(
+            title, key=f"nav_{key}", use_container_width=True, type=btn_type
+        ):
             st.session_state["current_view"] = key
             st.rerun()
 
     st.divider()
 
-    if st.button("🚪 Odhlásit se", use_container_width=True):
-        st.session_state.clear() # Smaže všechna data uživatele z paměti
+    if st.button("Odhlásit se", use_container_width=True):
+        st.session_state.clear()
         st.rerun()
 
 # --- SMĚROVÁNÍ OBSAHU ---
 
-# Zde se vyrenderuje učitelský panel, pokud na něj učitel klikne
 if st.session_state["current_view"] == "Ucitel_Panel":
-    st.markdown("<span class='hero-badge'>Učitelský přístup</span>", unsafe_allow_html=True)
     st.title("📊 Přehled výsledků žáků")
-    st.info("Zde budeme moci v budoucnu zobrazovat výsledky kvízů, průchod učebnicí nebo odevzdané Projektové pasy od žáků z tvých tříd.")
+    st.info("Zde jako učitel v budoucnu uvidíš výsledky kvízů, průchod učebnicí nebo odevzdané Projektové pasy od žáků z tvých tříd.")
 
 elif st.session_state["current_view"] == "Uvod":
-    st.markdown("<span class='hero-badge'>INTERAKTIVNÍ KURZ</span>", unsafe_allow_html=True)
     st.title("Ekonomika, která dává smysl")
 
     st.markdown(
@@ -255,7 +258,6 @@ elif st.session_state["current_view"] == "Uvod":
         unsafe_allow_html=True,
     )
 
-# --- ZBYTEK KÓDU (IMPORTY KAPITOL ZŮSTÁVAJÍ STEJNÉ) ---
 elif st.session_state["current_view"] == "Kapitola 1":
     if hasattr(kapitola1, "show"):
         kapitola1.show()
