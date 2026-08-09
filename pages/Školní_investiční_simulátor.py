@@ -204,7 +204,36 @@ AKTIVA = {
     "Bitcoin": ("BTC-USD", "USD", "BTC"),
     "Ethereum": ("ETH-USD", "USD", "ETH")
 }
+with tab_vysledky:
+    # ... dosavadní kód pro odpovědi z učebnice ...
 
+# Přidání záložky pro náhled investičních portfolií žáků
+with tab_investice:
+    st.markdown("### 📈 Portfolia žáků v Investičním simulátoru")
+    try:
+        import gspread
+        import json
+        import yfinance as yf
+        
+        # Načtení dat z Google Sheets
+        raw_creds = dict(st.secrets["google_credentials"])
+        raw_creds["private_key"] = raw_creds["private_key"].replace("\\n", "\n").replace("\r", "").strip()
+        
+        gc = gspread.service_account_from_dict(raw_creds)
+        sh = gc.open("Skolni_Investice_DB")
+        sheet_uziv = sh.sheet1
+        
+        data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
+        df_inv = pd.DataFrame(data_inv)
+        
+        if not df_inv.empty:
+            # Zobrazení přehledné tabulky majetku pro učitele
+            povolene_sloupce = [c for c in ["Trida", "Jmeno", "Nick", "Zustatek"] if c in df_inv.columns]
+            st.dataframe(df_inv[povolene_sloupce], use_container_width=True)
+        else:
+            st.info("Zatím žádný žák nezačal investovat.")
+    except Exception as e:
+        st.error(f"Chyba při načítání dat investic: {e}")
 # ==========================================
 # --- A: OBRAZOVKA PRO NEPŘIHLÁŠENÉ ---
 # ==========================================
