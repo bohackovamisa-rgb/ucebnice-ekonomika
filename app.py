@@ -572,21 +572,20 @@ elif st.session_state["current_view"] == "Ucitel_Materialy":
 
     tab_metodika, tab_testy = st.tabs(["📄 Metodiky ke kapitolám", "📝 Testy pro žáky"])
 
-    with tab_metodika:
-        st.markdown("### 📘 Metodika ke Kapitole 1")
-        st.write("Stáhněte si kompletní balíček podkladů v jednom ZIP archivu:")
+with tab_metodika:
+        st.markdown("### 📘 Metodické pokyny ke Kapitole 1")
+        st.write("Stáhněte si kompletní balíček podkladů:")
         
         try:
-            with open("Metodika_Kapitola1.zip", "rb") as file:
+            with open("Influencer - podnikání.zip", "rb") as file:
                 st.download_button(
                     label="📦 Stáhnout kompletní balíček (ZIP)",
                     data=file,
-                    file_name="Metodika_Kapitola_1.zip",
+                    file_name="Influencer - podnikání.zip",
                     mime="application/zip"
                 )
         except FileNotFoundError:
-            st.warning("Soubor 'Metodika_Kapitola1.zip' nebyl na GitHubu nalezen. Nejprve jej tam nahrajte.")
-
+            st.warning("Soubor 'Influencer - podnikání.zip' nebyl na GitHubu nalezen. Nahrajte jej tam pod tímto názvem.")
     with tab_testy:
         st.markdown("### 📝 Návrhy testů ke stažení")
         st.write("Tady si časem doplníš tlačítka pro testy...")
