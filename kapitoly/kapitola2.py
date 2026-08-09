@@ -13,7 +13,7 @@ def render():
         </div>
         """, unsafe_allow_html=True)
 
- # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
+    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_2 = [
         # Sekce 1: Bankovní systém
         "1.1 Peníze jako digitální data",
@@ -83,8 +83,6 @@ def render():
     st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
     selected_section_2 = st.selectbox("Přechod na podkapitolu:", section_options_2, index=0, label_visibility="collapsed")
     st.divider()
-
-    # Následuje blok podmínek: if "1.1 Peníze" in selected_section_2: ...
 
     # =========================================================================
     # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA
@@ -164,6 +162,14 @@ def render():
             
             st.text_area("Slovní obhajoba tvojí volby:", key="k2_1_1_2_txt")
 
+            if st.button("Uložit volbu komodity 💾", key="btn_k2_1_1_2"):
+                odp = st.session_state.get("k2_1_1_2_txt", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.2 - Volba komodity", f"Komodita: {kom_sel} | Obhajoba: {odp}")
+                else:
+                    st.warning("Před uložením nejprve napiš obhajobu!")
+
         # 1.1.3 MINCE A 1.1.4 PAPÍROVÉ PENÍZE
         with st.container(border=True):
             st.markdown("### 1.1.3 Mince: hodnota se začíná standardizovat")
@@ -225,6 +231,14 @@ def render():
             v_sys = st.radio("Který systém obhajuješ?", ["Peníze kryté zlatem", "Fiat peníze (dnešní systém)"], key="k2_1_1_8_rad")
             st.text_area(f"Vaše obhajoba pro {v_sys}:", key="k2_1_1_8_txt")
 
+            if st.button("Uložit obhajobu systému 💾", key="btn_k2_1_1_8"):
+                odp = st.session_state.get("k2_1_1_8_txt", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.8 - Zlatý standard vs Fiat", f"Vybráno: {v_sys} | Obhajoba: {odp}")
+                else:
+                    st.warning("Před uložením nejprve napiš obhajobu!")
+
         # 1.1.9 & 1.1.10 BEZHOOTOVOSTNÍ PENÍZE A KARTY
         with st.container(border=True):
             st.markdown("### 1.1.9 Bezhotovostní peníze: peníze jako účetní záznam")
@@ -270,9 +284,11 @@ def render():
             p_chk3 = st.checkbox("Text vytváří tlak na rychlé rozhodnutí", key="k2_1_1_11_ph3")
             p_chk4 = st.checkbox("Nebezpečný odkaz nevedoucí na ofic. web banky", key="k2_1_1_11_ph4")
 
-            if st.button("Vyhodnotit hrozbu phishingu", key="k2_1_1_11_btn"):
+            if st.button("Vyhodnotit hrozbu phishingu 💾", key="k2_1_1_11_btn"):
                 if p_chk1 and p_chk3 and p_chk4 and not p_chk2:
                     st.success("Správně! Odhalil jsi všechny 3 varovné signály. Správná reakce: Neklikat na odkaz, nic nevyplňovat a situaci ověřit v oficiální aplikaci banky.")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.11 - Phishing trenažér", "Úspěšně odhaleno (odesílatel, časový tlak, podezřelý odkaz)")
                 else:
                     st.error("Zkus to znovu. Označ 3 varovné znaky (odesílatel, tlak na čas, podezřelý odkaz).")
 
@@ -347,7 +363,15 @@ def render():
             st.write("Ve dvojici vyberte jednu platbu z běžného dne. Popište cestu peněz: kdo platí, komu, jaký nástroj použije a kde vzniká digitální záznam.")
             st.text_area("Odpověď na mikroaktivitu:", key="k2_1_1_15_micro")
 
-# =========================================================================
+            if st.button("Uložit mikroaktivitu 💾", key="btn_k2_1_1_15"):
+                odp = st.session_state.get("k2_1_1_15_micro", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.15 - Mikroaktivita Cesta peněz", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
+    # =========================================================================
     # 1.2 ČNB A KOMERČNÍ BANKY
     # =========================================================================
     elif "1.2 ČNB" in selected_section_2:
@@ -425,8 +449,20 @@ def render():
             q4 = st.text_input("4. Komu vaše rozhodnutí pomůže a komu může zkomplikovat život?", key="k2_q4_komu")
             q5 = st.text_input("5. Jaké riziko vznikne, pokud se rozhodnete špatně?", key="k2_q5_riziko")
 
-            if st.button("Výstup: Jedna minuta tiskové konference", key="k2_1_2_2_rada_btn"):
+            if st.button("Výstup: Jedna minuta tiskové konference a uložení 💾", key="k2_1_2_2_rada_btn"):
                 st.markdown(f"**Tiskové prohlášení Bankovní rady:** „ČNB dnes rozhodla, že {c_rada_action}...“")
+                st.success("✅ Rozhodnutí Bankovní rady bylo uloženo!")
+                
+                rada_data = (
+                    f"Akce sazeb: {c_rada_action} | "
+                    f"Úvěry: {q1} | "
+                    f"Spoření: {q2} | "
+                    f"Dopad inflace: {q3} | "
+                    f"Komu pomůže: {q4} | "
+                    f"Riziko: {q5}"
+                )
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.2 - Simulace Bankovní rady ČNB", rada_data)
 
         # 1.2.3 Co přesně ČNB dělá
         with st.container(border=True):
@@ -445,7 +481,7 @@ def render():
             | **Banka státu** | Vede účty státu a poskytuje vybrané služby veřejnému sektoru. | Souvisí s pohybem peněz státu, například při placení výdajů veřejných institucí. |
             """)
 
-# 1.2.4 Hotovost a ochranné prvky
+        # 1.2.4 Hotovost a ochranné prvky
         with st.container(border=True):
             st.markdown("### 1.2.4 Hotovost, ochranné prvky bankovek a důvěra v peníze")
             st.write("Jednou z viditelných činností ČNB je péče o hotovostní oběh. ČNB vydává české bankovky a mince, stahuje z oběhu poškozené nebo neplatné peníze a stará se o to, aby hotovost byla důvěryhodná. Právě sem patří také ochranné prvky bankovek.")
