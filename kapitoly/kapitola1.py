@@ -769,45 +769,45 @@ def render():
             | **družstvo** | Střední | Záleží na pravidlech a situaci družstva | Členské vklady | Společný prospěch členů |
             """)
 
-        with st.container(border=True):
-            st.markdown("### 4.10 Vznik obchodní korporace") #[cite: 1]
-            st.write("Založení právnické osoby, například s.r.o. nebo a.s., je formální proces. Obvykle vyžaduje součinnost s notářem a zápis do obchodního rejstříku.") #[cite: 1]
+with st.container(border=True):
+            st.markdown("### 4.10 Vznik obchodní korporace")
+            st.write("Založení právnické osoby, například s.r.o. nebo a.s., je formální proces. Obvykle vyžaduje součinnost s notářem a zápis do obchodního rejstříku.")
             st.markdown("""
             1. Sepsání společenské smlouvy nebo zakladatelské listiny.
             2. Splacení vkladu nebo základního kapitálu.
             3. Získání živnostenského oprávnění, pokud je potřeba.
             4. Zápis do obchodního rejstříku.
-            """) #[cite: 1]
-            st.markdown("<div class='box-blue'><strong>🏛️ Důležité pravidlo:</strong> Obchodní korporace vzniká až dnem zápisu do obchodního rejstříku.</div>", unsafe_allow_html=True) #[cite: 1]
+            """)
+            st.markdown("<div class='box-blue'><strong>🏛️ Důležité pravidlo:</strong> Obchodní korporace vzniká až dnem zápisu do obchodního rejstříku.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.11 Co se zapisuje do obchodního rejstříku") #[cite: 1]
-            st.write("Obchodní rejstřík je veřejný seznam. Díky němu si může zákazník, dodavatel, banka, úřad nebo budoucí zaměstnanec ověřit základní údaje o firmě.") #[cite: 1]
-            st.write("Typicky se zapisuje: název firmy, sídlo, právní forma, identifikační číslo osoby, předmět podnikání nebo činnosti, statutární orgán a způsob jednání, společníci, výše vkladů, základní kapitál, změny, zrušení, likvidace.") #[cite: 1]
+            st.markdown("### 4.11 Co se zapisuje do obchodního rejstříku")
+            st.write("Obchodní rejstřík je veřejný seznam. Díky němu si může zákazník, dodavatel, banka, úřad nebo budoucí zaměstnanec ověřit základní údaje o firmě.")
+            st.write("Typicky se zapisuje: název firmy, sídlo, právní forma, identifikační číslo osoby, předmět podnikání nebo činnosti, statutární orgán a způsob jednání, společníci, výše vkladů, základní kapitál, změny, zrušení, likvidace.")
 
         with st.container(border=True):
-            st.markdown("### 4.12 Zrušení, likvidace a zánik obchodní korporace") #[cite: 1]
-            st.write("Obchodní korporace nemusí existovat navždy. Může být zrušena dobrovolně, rozhodnutím orgánu společnosti, uplynutím doby, splněním účelu, rozhodnutím soudu nebo z jiných zákonných důvodů.") #[cite: 1]
+            st.markdown("### 4.12 Zrušení, likvidace a zánik obchodní korporace")
+            st.write("Obchodní korporace nemusí existovat navždy. Může být zrušena dobrovolně, rozhodnutím orgánu společnosti, uplynutím doby, splněním účelu, rozhodnutím soudu nebo z jiných zákonných důvodů.")
             st.markdown("""
             | Pojem | Jednoduché vysvětlení | Příklad |
             | :--- | :--- | :--- |
             | **Zrušení** | Firma vstoupí do fáze ukončování. | Společníci rozhodnou, že s.r.o. už nebude pokračovat. |
             | **Likvidace** | Firma vypořádá majetek, dluhy a pohledávky. | Prodá vybavení, zaplatí závazky a rozdělí zbytek podle pravidel. |
             | **Zánik** | Firma právně přestane existovat. | Po výmazu z obchodního rejstříku už korporace neexistuje. |
-            """) #[cite: 1]
+            """)
 
         with st.container(border=True):
-            st.markdown("### 4.13 Daně a odvody u obchodních korporací úplně jednoduše") #[cite: 1]
-            st.write("U obchodních korporací je důležité rozlišit firmu a člověka, který z ní dostává peníze. Firma může platit daň ze svého zisku. Pokud má zaměstnance, řeší také mzdy, sociální a zdravotní pojištění za zaměstnance. Když si vlastník vyplácí podíl na zisku, řeší se další zdanění podle pravidel pro daný typ příjmu.") #[cite: 1]
-            st.markdown("<div class='box-red'><strong>⚠️ Důležité zjednodušení:</strong> V první kapitole nejde o přesný výpočet účetnictví. Cílem je pochopit, že s.r.o. nebo a.s. není „bez daní“. Jen se peníze daní jinak než u OSVČ.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("### 4.13 Daně a odvody u obchodních korporací úplně jednoduše")
+            st.write("U obchodních korporací je důležité rozlišit firmu a člověka, který z ní dostává peníze. Firma může platit daň ze svého zisku. Pokud má zaměstnance, řeší také mzdy, sociální a zdravotní pojištění za zaměstnance. Když si vlastník vyplácí podíl na zisku, řeší se další zdanění podle pravidel pro daný typ příjmu.")
+            st.markdown("<div class='box-red'><strong>⚠️ Důležité zjednodušení:</strong> V první kapitole nejde o přesný výpočet účetnictví. Cílem je pochopit, že s.r.o. nebo a.s. není „bez daní“. Jen se peníze daní jinak než u OSVČ.</div>", unsafe_allow_html=True)
             
-            st.write("**Co může platit například s.r.o.?**") #[cite: 1]
+            st.write("**Co může platit například s.r.o.?**")
             st.markdown("""
             * **Daň z příjmů právnických osob:** platí ji firma ze svého zisku; sazba je 21 %.
             * **Sociální a zdravotní pojištění za zaměstnance:** pokud firma zaměstnává lidi, odvádí za ně pojistné a část strhává ze mzdy.
             * **Daň ze mzdy:** pokud si zakladatel vyplácí mzdu jako zaměstnanec nebo jednatel, řeší se zdanění mzdy.
             * **Zdanění podílu na zisku:** pokud si společník vyplácí zisk, nejde o běžnou tržbu, ale o výplatu podílu na zisku.
-            """) #[cite: 1]
+            """)
             
             st.markdown("""
             | Situace | Kdo platí | Co je pointa |
@@ -816,12 +816,12 @@ def render():
             | **s.r.o. vytvoří zisk** | Firma jako právnická osoba | Firma platí daň ze zisku. |
             | **s.r.o. má zaměstnance** | Firma jako zaměstnavatel | Řeší mzdu, daň ze mzdy a odvody na sociální a zdravotní pojištění. |
             | **Společník si vyplatí zisk** | Společník / firma podle pravidel výplaty | Nejde o totéž jako tržba. Výplata zisku má vlastní daňová pravidla. |
-            """) #[cite: 1]
+            """)
             
-            st.markdown("<div class='box-yellow'><strong>💡 Praktické srovnání:</strong> OSVČ bývá jednodušší na start, ale ručí osobním majetkem. Společnost s ručením omezeným lépe odděluje firmu od osobního života, ale má složitější administrativu, účetnictví a pravidla pro daně.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>💡 Praktické srovnání:</strong> OSVČ bývá jednodušší na start, ale ručí osobním majetkem. Společnost s ručením omezeným lépe odděluje firmu od osobního života, ale má složitější administrativu, účetnictví a pravidla pro daně.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.14 Srovnání OSVČ a s.r.o. pro tvůj projekt") #[cite: 1]
+            st.markdown("### 4.14 Srovnání OSVČ a s.r.o. pro tvůj projekt")
             st.markdown("""
             | Otázka | OSVČ | s.r.o. |
             | :--- | :--- | :--- |
@@ -830,28 +830,42 @@ def render():
             | **Důvěryhodnost pro větší partnery** | Může stačit pro menší služby. | Často působí vhodněji pro tým, investora nebo větší zakázky. |
             | **Administrativa** | Jednodušší evidence podle situace. | Vyšší nároky, účetnictví, orgány, zápisy a rozhodování. |
             | **Vhodné pro** | Freelancing, malé služby, start jednotlivce. | Rostoucí projekt, tým, vyšší rizika, investice nebo potřeba oddělit majetek. |
-            """) #[cite: 1]
+            """)
 
         with st.container(border=True):
-            st.markdown("### 4.15 Aktivita: Vyber právní formu podle situace") #[cite: 1]
-            st.write("U každé situace rozhodni, která právní forma dává největší smysl na začátku. Své rozhodnutí zdůvodni podle ručení, administrativy, počtu osob, kapitálu a rizika.") #[cite: 1]
-            st.selectbox("Student nabízí grafické služby třem lokálním firmám.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_1") #[cite: 1]
-            st.selectbox("Dva kamarádi chtějí dlouhodobě provozovat e-shop s vlastní značkou.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_2") #[cite: 1]
-            st.selectbox("Skupina pěti lidí chce společně sdílet vybavení a prodávat výrobky členů.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_3") #[cite: 1]
-            st.selectbox("Startup hledá investora a plánuje rychlý růst.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_4") #[cite: 1]
-            st.selectbox("Dva společníci chtějí podnikat společně, ale projekt může vytvářet vysoké dluhy.", ["Vyber odpověď...", "v.o.s.", "s.r.o.", "Družstvo", "OSVČ"], key="pf_5") #[cite: 1]
-            st.selectbox("Tým studentů chce jednorázově prodávat výrobky na školní akci.", ["Vyber odpověď...", "Jednorázová aktivita bez ŽL (do limitu)", "OSVČ", "s.r.o.", "a.s."], key="pf_6") #[cite: 1]
+            st.markdown("### 4.15 Aktivita: Vyber právní formu podle situace")
+            st.write("U každé situace rozhodni, která právní forma dává největší smysl na začátku. Své rozhodnutí zdůvodni podle ručení, administrativy, počtu osob, kapitálu a rizika.")
+            st.selectbox("Student nabízí grafické služby třem lokálním firmám.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_1")
+            st.selectbox("Dva kamarádi chtějí dlouhodobě provozovat e-shop s vlastní značkou.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_2")
+            st.selectbox("Skupina pěti lidí chce společně sdílet vybavení a prodávat výrobky členů.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_3")
+            st.selectbox("Startup hledá investora a plánuje rychlý růst.", ["Vyber odpověď...", "OSVČ", "s.r.o.", "Družstvo", "a.s."], key="pf_4")
+            st.selectbox("Dva společníci chtějí podnikat společně, ale projekt může vytvářet vysoké dluhy.", ["Vyber odpověď...", "v.o.s.", "s.r.o.", "Družstvo", "OSVČ"], key="pf_5")
+            st.selectbox("Tým studentů chce jednorázově prodávat výrobky na školní akci.", ["Vyber odpověď...", "Jednorázová aktivita bez ŽL (do limitu)", "OSVČ", "s.r.o.", "a.s."], key="pf_6")
             
+            if st.button("Uložit aktivity právních forem 💾", key="btn_pf_aktivita"):
+                ans1 = st.session_state.get("pf_1", "")
+                ans2 = st.session_state.get("pf_2", "")
+                ans3 = st.session_state.get("pf_3", "")
+                ans4 = st.session_state.get("pf_4", "")
+                ans5 = st.session_state.get("pf_5", "")
+                ans6 = st.session_state.get("pf_6", "")
+                vysledky = f"1: {ans1} | 2: {ans2} | 3: {ans3} | 4: {ans4} | 5: {ans5} | 6: {ans6}"
+                if "Vyber odpověď..." not in vysledky:
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 4.15 - Vyber právní formu", vysledky)
+                else:
+                    st.warning("Před uložením odpověz na všechny situace!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Porovnej pro můj projekt OSVČ, s.r.o., v.o.s., k.s., a.s. a družstvo. U každé formy napiš výhodu, riziko, zákonný znak a otázku, kterou si musím ověřit.“
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.16 Jiné formy podnikání v ČR a v rámci EU") #[cite: 1]
-            st.write("Vedle OSVČ a obchodních korporací existují i další způsoby, jak může podnikání fungovat. Některé jsou běžné v českém prostředí, jiné pomáhají podnikat napříč státy Evropské unie.") #[cite: 1]
-            st.markdown("<div class='box-blue'><strong>🌍 Proč to znát:</strong> V praxi se podnikání nemusí vždy vejít jen do jednoduchého rozdělení OSVČ vs. s.r.o. Firma může mít pobočku, podnikatel může spolupracovat smluvně s dalšími osobami, nezisková organizace může vykonávat doplňkovou hospodářskou činnost a větší podniky mohou využívat evropské právní formy.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("### 4.16 Jiné formy podnikání v ČR a v rámci EU")
+            st.write("Vedle OSVČ a obchodních korporací existují i další způsoby, jak může podnikání fungovat. Některé jsou běžné v českém prostředí, jiné pomáhají podnikat napříč státy Evropské unie.")
+            st.markdown("<div class='box-blue'><strong>🌍 Proč to znát:</strong> V praxi se podnikání nemusí vždy vejít jen do jednoduchého rozdělení OSVČ vs. s.r.o. Firma může mít pobočku, podnikatel může spolupracovat smluvně s dalšími osobami, nezisková organizace může vykonávat doplňkovou hospodářskou činnost a větší podniky mohou využívat evropské právní formy.</div>", unsafe_allow_html=True)
             
             st.markdown("""
             | Forma | Kde se používá | Jednoduché vysvětlení | Na co si dát pozor |
@@ -864,15 +878,15 @@ def render():
             | **Evropská společnost (SE)** | EU | Akciová společnost evropského typu, která může usnadnit podnikání ve více členských státech EU. | Hodí se spíše pro větší podniky; má vyšší nároky na kapitál, správu a přeshraniční fungování. |
             | **Evropské hospodářské zájmové sdružení (EHZS)** | EU | Forma spolupráce podnikatelů nebo firem z různých států EU. Pomáhá členům rozvíjet jejich činnost, například společný projekt, výzkum, nákup nebo obchod. | Smyslem není samostatně nahrazovat podnikání členů, ale podporovat jejich spolupráci. |
             | **Evropské družstvo (SCE)** | EU | Družstvo evropského typu, které umožňuje členům podnikat nebo spolupracovat přes hranice členských států. | Je vhodné hlavně pro přeshraniční družstevní projekty, ne pro běžný malý start. |
-            """) #[cite: 1]
+            """)
 
-            st.write("**Co si z toho odnést?**") #[cite: 1]
+            st.write("**Co si z toho odnést?**")
             st.markdown("""
             * Pro běžný začátek podnikání v ČR se nejčastěji řeší OSVČ nebo s.r.o.
             * Pokud podnikání roste do zahraničí, může být důležitá pobočka, odštěpný závod nebo evropská právní forma.
             * Neziskové organizace mohou vykonávat hospodářskou činnost, ale jejich hlavní smysl je jiný než rozdělování zisku vlastníkům.
             * V Evropské unii existují formy, které mají usnadnit přeshraniční podnikání a spolupráci.
-            """) 
+            """)
 # --- 5. Startup: nápad, který hledá funkční byznys ---
     elif "5. Startup" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div><h2>5. Startup: nápad, který hledá funkční byznys</h2>", unsafe_allow_html=True)
