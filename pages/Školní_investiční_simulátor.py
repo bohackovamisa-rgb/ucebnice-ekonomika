@@ -11,14 +11,12 @@ HIGH_TECH_CSS = """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
     
-    /* Základní temný motiv */
     .stApp {
         background-color: #0d1117;
         color: #ffffff !important;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* FIX PRO LEVÝ PANEL */
     [data-testid="stSidebar"] * {
         color: #f0f6fc !important;
     }
@@ -26,26 +24,22 @@ HIGH_TECH_CSS = """
         background-color: #161b22 !important;
     }
 
-    /* Schovat výchozí lišty Streamlitu */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     [data-testid="stSidebarNav"] {visibility: hidden;}
 
-    /* Nadpisy */
     h1, h2, h3, h4 {
         color: #ffffff !important;
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-weight: 700 !important;
     }
 
-    /* Popisky políček */
     label, p, span, .stMarkdown {
         color: #f0f6fc !important;
         font-size: 1rem;
     }
 
-    /* Vstupní pole */
     .stTextInput input {
         background-color: #161b22 !important;
         color: #ffffff !important;
@@ -59,7 +53,6 @@ HIGH_TECH_CSS = """
         box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.3) !important;
     }
 
-    /* Tlačítka */
     div.stButton > button {
         background: linear-gradient(135deg, #1f6feb 0%, #0d57d5 100%) !important;
         color: #ffffff !important;
@@ -77,7 +70,6 @@ HIGH_TECH_CSS = """
         transform: translateY(-2px);
     }
 
-    /* Záložky (Tabs) */
     .stTabs [data-baseweb="tab-list"] {
         background-color: #161b22;
         padding: 6px;
@@ -99,7 +91,6 @@ HIGH_TECH_CSS = """
         border: 1px solid #58a6ff !important;
     }
 
-    /* Metriky a karty */
     div[data-testid="stMetric"] {
         background: #161b22;
         border: 1px solid #30363d;
@@ -116,7 +107,6 @@ HIGH_TECH_CSS = """
         font-size: 1.8rem !important;
     }
 
-    /* Tabulky */
     .stDataFrame {
         border: 1px solid #30363d;
         border-radius: 10px;
@@ -170,12 +160,10 @@ def pripojit_databazi():
     else:
         tajemstvi = dict(raw_creds)
         
-    # Ošetření PEM řádkování pro gspread
     if "private_key" in tajemstvi:
-        tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "")
+        tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
 
     client = gspread.service_account_from_dict(tajemstvi)
-    # Název tabulky na Google Disku
     soubor = client.open("Skolni_Investice_DB")
     sheet_uzivatele = soubor.sheet1
     
@@ -204,36 +192,37 @@ AKTIVA = {
     "Bitcoin": ("BTC-USD", "USD", "BTC"),
     "Ethereum": ("ETH-USD", "USD", "ETH")
 }
-    with tab_vysledky:
-    # ... dosavadní kód pro odpovědi z učebnice ...
 
-# Přidání záložky pro náhled investičních portfolií žáků
-    with tab_investice:
-    st.markdown("### 📈 Portfolia žáků v Investičním simulátoru")
+# ==========================================
+# --- AUTOMATICKÉ PROPOJENÍ S UČEBNICÍ ---
+# ==========================================
+if st.session_state.get("is_logged_in", False) and not st.session_state.get("prihlasen", False):
+    st.session_state["prihlasen"] = True
+    st.session_state["nick"] = st.session_state.get("username", "zak")
+    st.session_state["jmeno"] = st.session_state.get("user_name", "Žák")
+    st.session_state["trida"] = st.session_state.get("user_class", "Nezadána")
+    st.session_state["role"] = "UCITEL" if st.session_state.get("user_role") == "teacher" else "ZAK"
+    
     try:
-        import gspread
-        import json
-        import yfinance as yf
+        zaznamy = db_uzivatele.get_all_records(value_render_option="UNFORMATTED_VALUE")
+        moje_db_data = next((r for r in zaznamy if str(r.get("Nick", "")).strip().lower() == st.session_state["nick"].lower()), None)
         
-        # Načtení dat z Google Sheets
-        raw_creds = dict(st.secrets["google_credentials"])
-        raw_creds["private_key"] = raw_creds["private_key"].replace("\\n", "\n").replace("\r", "").strip()
-        
-        gc = gspread.service_account_from_dict(raw_creds)
-        sh = gc.open("Skolni_Investice_DB")
-        sheet_uziv = sh.sheet1
-        
-        data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
-        df_inv = pd.DataFrame(data_inv)
-        
-        if not df_inv.empty:
-            # Zobrazení přehledné tabulky majetku pro učitele
-            povolene_sloupce = [c for c in ["Trida", "Jmeno", "Nick", "Zustatek"] if c in df_inv.columns]
-            st.dataframe(df_inv[povolene_sloupce], use_container_width=True)
+        if moje_db_data:
+            st.session_state["zustatek"] = bezpecny_float(moje_db_data.get("Zustatek", 20000.0))
         else:
-            st.info("Zatím žádný žák nezačal investovat.")
+            role_str = st.session_state["role"]
+            db_uzivatele.append_row([
+                role_str, 
+                st.session_state["nick"], 
+                st.session_state["jmeno"], 
+                st.session_state["trida"], 
+                "0000",
+                20000.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+            ])
+            st.session_state["zustatek"] = 20000.0
     except Exception as e:
-        st.error(f"Chyba při načítání dat investic: {e}")
+        st.warning(f"Chyba při automatickém načítání účtu: {e}")
+
 # ==========================================
 # --- A: OBRAZOVKA PRO NEPŘIHLÁŠENÉ ---
 # ==========================================
