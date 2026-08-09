@@ -255,11 +255,18 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    if st.session_state.get("user_role") == "teacher":
+if st.session_state.get("user_role") == "teacher":
         st.markdown("<div class='sidebar-section-title'>👩‍🏫 UČITELSKÝ PANEL</div>", unsafe_allow_html=True)
+        
         if st.button("📊 Přehled a správa tříd", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Panel" else "secondary"):
             st.session_state["current_view"] = "Ucitel_Panel"
             st.rerun()
+            
+        # NOVÉ TLAČÍTKO PRO MATERIÁLY
+        if st.button("📂 Materiály a testy", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Materialy" else "secondary"):
+            st.session_state["current_view"] = "Ucitel_Materialy"
+            st.rerun()
+            
         st.divider()
 
     st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
