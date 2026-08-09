@@ -537,40 +537,81 @@ section[data-testid="stSidebar"] {
     unsafe_allow_html=True,
 )
 
+# --- POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ ŽÁKŮ ---
+def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
+    """Uloží nebo aktualizuje odpověď přihlášeného žáka v Supabase."""
+    username = st.session_state.get("username")
+    if not username:
+        return
+    
+    try:
+        # Kontrola, zda už odpověď existuje
+        existing = supabase.table("odpovedi")\
+            .select("id")\
+            .eq("username", username)\
+            .eq("kapitola", kapitola)\
+            .eq("otazka_id", otazka_id)\
+            .execute()
+        
+        if existing.data:
+            # Aktualizace stávající odpovědi
+            supabase.table("odpovedi").update({"odpoved": odpoved_text})\
+                .eq("username", username)\
+                .eq("kapitola", kapitola)\
+                .eq("otazka_id", otazka_id)\
+                .execute()
+        else:
+            # Vložení nové odpovědi
+            new_record = {
+                "username": username,
+                "kapitola": kapitola,
+                "otazka_id": otazka_id,
+                "odpoved": odpoved_text
+            }
+            supabase.table("odpovedi").insert(new_record).execute()
+        st.toast("✅ Odpověď byla uložena!", icon="💾")
+    except Exception as e:
+        st.error(f"Chyba při ukládání odpovědi: {e}")
+
+# Zpřístupnění funkce pro importované kapitoly
+st.session_state["uloz_odpoved_fn"] = uloz_odpoved
+
 # --- NAVIGAČNÍ STAV ---
 if "current_view" not in st.session_state:
     st.session_state["current_view"] = "Uvod"
 
-# --- BOČNÍ PANEL ---
+# --- BOČNÍ PANEL S PROFILEM A NAVIGACÍ ---
 with st.sidebar:
     st.markdown(
-        """
-        <div style='padding: 0.5rem 0 0.5rem 0;'>
-            <span style='font-size: 0.7rem; font-weight: 700; color: #44403C; text-transform: uppercase; letter-spacing: 0.08em;'>E-Learning Portal</span>
+        f"""
+        <div style='padding: 0.5rem 0;'>
+            <span style='font-size: 0.72rem; font-weight: 800; color: #78716C; text-transform: uppercase;'>E-Learning Portal</span>
             <h2 style='margin: 0; padding: 0; border: none; font-size: 1.25rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
         </div>
-    """,
+        <div style='background-color: #F2EFE9; padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #EAE7DC;'>
+            <div style='font-size: 0.75rem; color: #78716C; font-weight: 600;'>PŘIHLÁŠEN(A):</div>
+            <div style='font-size: 0.95rem; font-weight: 700; color: #1C1917;'>👤 {st.session_state['user_name']}</div>
+            <div style='font-size: 0.8rem; color: #44403C;'>Role: {st.session_state['user_role'].capitalize()}</div>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
 
-    st.divider()
+    # UČITELSKÝ PANEL
+    if st.session_state["user_role"] == "teacher":
+        st.markdown("<div class='sidebar-section-title'>👩‍🏫 UČITELSKÝ PANEL</div>", unsafe_allow_html=True)
+        if st.button("📊 Přehled a správa tříd", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Panel" else "secondary"):
+            st.session_state["current_view"] = "Ucitel_Panel"
+            st.rerun()
+        st.divider()
 
-    # ÚVODNÍ STRÁNKA
-    is_uvod = st.session_state["current_view"] == "Uvod"
-    if st.button(
-        "Úvodní stránka",
-        key="nav_uvod",
-        use_container_width=True,
-        type="primary" if is_uvod else "secondary",
-    ):
+    # KAPITOLY KURZU
+    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
+    
+    if st.button("Úvodní stránka", use_container_width=True, type="primary" if st.session_state["current_view"] == "Uvod" else "secondary"):
         st.session_state["current_view"] = "Uvod"
         st.rerun()
 
-    # KAPITOLY KURZU
-    st.markdown(
-        "<div class='sidebar-section-title'>KAPITOLY KURZU</div>",
-        unsafe_allow_html=True,
-    )
     chapters = {
         "Kapitola 1": "1. Podnikavost a startupy",
         "Kapitola 2": "2. Finance a osobní management",
@@ -582,95 +623,122 @@ with st.sidebar:
 
     for key, title in chapters.items():
         is_active = st.session_state["current_view"] == key
-        btn_type = "primary" if is_active else "secondary"
-        if st.button(
-            title, key=f"nav_{key}", use_container_width=True, type=btn_type
-        ):
+        if st.button(title, key=f"nav_{key}", use_container_width=True, type="primary" if is_active else "secondary"):
             st.session_state["current_view"] = key
             st.rerun()
 
     st.divider()
-
     if st.button("Odhlásit se", use_container_width=True):
-        st.session_state["password_correct"] = False
+        st.session_state.clear()
         st.rerun()
 
 # --- SMĚROVÁNÍ OBSAHU ---
-if st.session_state["current_view"] == "Uvod":
+
+if st.session_state["current_view"] == "Ucitel_Panel":
+    st.title("👩‍🏫 Učitelský panel")
+    
+    tab_tridy, tab_vysledky = st.tabs(["➕ Správa a tvorba tříd", "📊 Výsledky žáků"])
+    
+    with tab_tridy:
+        st.markdown("### Vytvořit novou třídu")
+        with st.form("nova_trida_form"):
+            novy_nazev = st.text_input("Název třídy (např. 4.B - Ekonomika):")
+            novy_kod = st.text_input("Zvolte Zvací kód pro žáky (např. EKO4B):", help="Tento kód dají žáci při registraci.")
+            btn_vytvorit = st.form_submit_button("Vytvořit třídu 🚀")
+            
+            if btn_vytvorit:
+                if novy_nazev and novy_kod:
+                    try:
+                        kod_clean = novy_kod.strip().upper()
+                        # Kontrola unikatnosti kodu
+                        check = supabase.table("tridy").select("kod_tridy").eq("kod_tridy", kod_clean).execute()
+                        if check.data:
+                            st.error("Tento Zvací kód již existuje, zvolte jiný.")
+                        else:
+                            new_trida = {
+                                "kod_tridy": kod_clean,
+                                "nazev_tridy": novy_nazev.strip(),
+                                "ucitel_username": st.session_state["username"]
+                            }
+                            supabase.table("tridy").insert(new_trida).execute()
+                            st.success(f"Třída '{novy_nazev}' vytvořena! Kód pro žáky: **{kod_clean}**")
+                    except Exception as e:
+                        st.error(f"Chyba při vytváření třídy: {e}")
+                else:
+                    st.warning("Vyplňte název i kód třídy!")
+
+        st.divider()
+        st.markdown("### Vaše existující třídy")
+        try:
+            moje_tridy = supabase.table("tridy").select("*").eq("ucitel_username", st.session_state["username"]).execute()
+            if moje_tridy.data:
+                for t in moje_tridy.data:
+                    st.info(f"📍 **{t['nazev_tridy']}** | Zvací kód pro žáky: `{t['kod_tridy']}`")
+            else:
+                st.write("Zatím jste nevytvořil(a) žádnou třídu.")
+        except Exception as e:
+            st.error(f"Chyba při načítání tříd: {e}")
+
+    with tab_vysledky:
+        st.markdown("### Přehled odevzdaných prací")
+        # Načtení tříd učitele
+        try:
+            t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
+            list_trid = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
+            
+            if list_trid:
+                vybrana_t = st.selectbox("Vyberte třídu:", list_trid)
+                # Načtení žáků v dané třídě
+                zaci_res = supabase.table("uzivatele").select("username, jmeno").eq("trida", vybrana_t).execute()
+                
+                if zaci_res.data:
+                    zaci_dict = {z["jmeno"]: z["username"] for z in zaci_res.data}
+                    vybrany_zak_jmeno = st.selectbox("Vyberte žáka:", list(zaci_dict.keys()))
+                    vybrany_zak_user = zaci_dict[vybrany_zak_jmeno]
+                    
+                    # Načtení odpovědí žáka
+                    odpovedi_res = supabase.table("odpovedi").select("*").eq("username", vybrany_zak_user).execute()
+                    if odpovedi_res.data:
+                        st.markdown(f"#### Odpovědi žáka: {vybrany_zak_jmeno}")
+                        for o in odpovedi_res.data:
+                            with st.expander(f"📘 {o['kapitola']} — Otázka: {o['otazka_id']}"):
+                                st.write(o["odpoved"])
+                    else:
+                        st.write("Tento žák zatím neodevzdal žádné odpovědi.")
+                else:
+                    st.write("V této třídě zatím nejsou zaregistrovaní žádní žáci.")
+            else:
+                st.write("Nejprve vytvořte třídu v záložce 'Správa a tvorba tříd'.")
+        except Exception as e:
+            st.error(f"Chyba při načítání výsledků: {e}")
+
+elif st.session_state["current_view"] == "Uvod":
     st.title("Ekonomika, která dává smysl")
-
-    st.markdown(
-        """
-    <div class="box-gray">
-        📚 <b>Moderní učebnice ekonomiky pro střední školy:</b> Podnikavost, finance & ekonomika v souvislostech.
-    </div>
-    <div class="box-green">
-        🎯 <b>Cíl učebnice</b><br>
-        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-    st.divider()
-
-    st.markdown("### 📖 Jak s učebnicí pracovat")
     st.markdown("""
-    1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
-    2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
-    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
-    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které ti pomohou s vysvětlením, kontrolou nebo rozvojem tvého projektu.
-    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
-    6. **Závěrečný projekt.** Na úplném konci propojíš všechno dohromady a vytvoříš návrh vlastního odpovědného projektu.
-    """)
+    <div class="box-gray">📚 <b>Moderní učebnice ekonomiky pro střední školy</b></div>
+    """, unsafe_allow_html=True)
 
-    st.divider()
-
-    st.markdown("### 🧩 Legenda učebnice")
-    st.markdown(
-        """
-    <div class="box-blue">📘 <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
-    <div class="box-purple">🤖 <b>Fialová:</b> AI mentoring a práce s asistencí</div>
-    <div class="box-green">✅ <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
-    <div class="box-red">⚠️ <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
-    <div class="box-gray">📄 <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
-    """,
-        unsafe_allow_html=True,
-    )
-
+# KAPITOLY
 elif st.session_state["current_view"] == "Kapitola 1":
-    if hasattr(kapitola1, "show"):
-        kapitola1.show()
-    elif hasattr(kapitola1, "render"):
-        kapitola1.render()
+    if hasattr(kapitola1, "show"): kapitola1.show()
+    elif hasattr(kapitola1, "render"): kapitola1.render()
 
 elif st.session_state["current_view"] == "Kapitola 2":
-    if hasattr(kapitola2, "show"):
-        kapitola2.show()
-    elif hasattr(kapitola2, "render"):
-        kapitola2.render()
+    if hasattr(kapitola2, "show"): kapitola2.show()
+    elif hasattr(kapitola2, "render"): kapitola2.render()
 
 elif st.session_state["current_view"] == "Kapitola 3":
-    if hasattr(kapitola3, "show"):
-        kapitola3.show()
-    elif hasattr(kapitola3, "render"):
-        kapitola3.render()
+    if hasattr(kapitola3, "show"): kapitola3.show()
+    elif hasattr(kapitola3, "render"): kapitola3.render()
 
 elif st.session_state["current_view"] == "Kapitola 4":
-    if hasattr(kapitola4, "show"):
-        kapitola4.show()
-    elif hasattr(kapitola4, "render"):
-        kapitola4.render()
+    if hasattr(kapitola4, "show"): kapitola4.show()
+    elif hasattr(kapitola4, "render"): kapitola4.render()
 
 elif st.session_state["current_view"] == "Kapitola 5":
-    if hasattr(kapitola5, "show"):
-        kapitola5.show()
-    elif hasattr(kapitola5, "render"):
-        kapitola5.render()
+    if hasattr(kapitola5, "show"): kapitola5.show()
+    elif hasattr(kapitola5, "render"): kapitola5.render()
 
 elif st.session_state["current_view"] == "Kapitola 6":
-    if hasattr(kapitola6, "show"):
-        kapitola6.show()
-    elif hasattr(kapitola6, "render"):
-        kapitola6.render()
+    if hasattr(kapitola6, "show"): kapitola6.show()
+    elif hasattr(kapitola6, "render"): kapitola6.render()
