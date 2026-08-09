@@ -496,8 +496,8 @@ def render():
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 4</div><h2>4. Obchodní korporace</h2>", unsafe_allow_html=True)
         
         with st.container(border=True):
-            st.write("Obchodní korporace jsou právnické osoby založené podle zákona o obchodních korporacích. Patří mezi ně obchodní společnosti a družstva. V praxi vytvářejí samostatný subjekt — firmu, která má vlastní název, sídlo, majetek, orgány, pravidla rozhodování a odpovědnost.") #[cite: 1]
-            st.write("Je důležité pochopit, že obchodní korporace není jen „větší podnikání“. Je to právní forma, která určuje:") #[cite: 1]
+            st.write("Obchodní korporace jsou právnické osoby založené podle zákona o obchodních korporacích. Patří mezi ně obchodní společnosti a družstva. V praxi vytvářejí samostatný subjekt — firmu, která má vlastní název, sídlo, majetek, orgány, pravidla rozhodování a odpovědnost.")
+            st.write("Je důležité pochopit, že obchodní korporace není jen „větší podnikání“. Je to právní forma, která určuje:")
             st.markdown("""
             * kdo podnik vlastní,
             * kdo za něj jedná,
@@ -507,23 +507,23 @@ def render():
             * jak se rozděluje zisk,
             * jak firma vzniká a zaniká,
             * jakou administrativu musí plnit.
-            """) #[cite: 1]
+            """)
             st.markdown("""
             <div class='box-blue'>
                 <strong>📘 Proč je to důležité:</strong> Právní forma podnikání ovlivňuje ručení, povinnosti, daně, administrativu i důvěryhodnost vůči zákazníkům, bankám a partnerům. Nejde o učení paragrafů nazpaměť, ale o pochopení, proč se právní forma volí odpovědně.
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.1 Proč právní forma není formalita") #[cite: 1]
-            st.write("Právní forma rozhoduje o tom, kdo nese riziko, kdo jedná za podnik, jak se rozděluje zisk, jak složitá je administrativa a jak podnik působí na banky, investory, dodavatele i zákazníky.") #[cite: 1]
-            st.write("Pro současnou generaci je důležité pochopit, že právní forma není „nudná kolonka ve formuláři“. Je to bezpečnostní a strategické rozhodnutí.") #[cite: 1]
+            st.markdown("### 4.1 Proč právní forma není formalita")
+            st.write("Právní forma rozhoduje o tom, kdo nese riziko, kdo jedná za podnik, jak se rozděluje zisk, jak složitá je administrativa a jak podnik působí na banky, investory, dodavatele i zákazníky.")
+            st.write("Pro současnou generaci je důležité pochopit, že právní forma není „nudná kolonka ve formuláři“. Je to bezpečnostní a strategické rozhodnutí.")
             
             st.markdown("""
             <div class='box-gray'>
                 <strong>⚖️ Zákonný základ:</strong> Obchodní korporace upravuje zejména zákon o obchodních korporacích. Jejich vznik, zápis a veřejné údaje souvisejí také s občanským zákoníkem, živnostenským zákonem, zákonem o veřejných rejstřících a daňovými předpisy.
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
             
             st.markdown("""
             | Otázka | Proč je důležitá | Příklad |
@@ -532,11 +532,11 @@ def render():
             | **Podnikám sám/sama, nebo v týmu?** | Ovlivňuje rozhodování, podíly a odpovědnost. | Dva zakladatelé e-shopu potřebují jasná pravidla. |
             | **Potřebuji investora?** | Investor obvykle chce přehlednou vlastnickou strukturu. | Startup může kvůli investorovi zvolit s.r.o. nebo a.s. |
             | **Jak moc poroste podnikání?** | Růst zvyšuje rizika, počet smluv, zaměstnance a finance. | Malý freelancing zvládne OSVČ, větší tým spíš firma. |
-            """) #[cite: 1]
+            """)
 
         with st.container(border=True):
-            st.markdown("### 4.2 Co patří mezi obchodní korporace") #[cite: 1]
-            st.write("Obchodní korporace se dělí na obchodní společnosti a družstva. Obchodní společnosti se dále dělí na osobní společnosti (v.o.s., k.s.) a kapitálové společnosti (s.r.o., a.s.).") #[cite: 1]
+            st.markdown("### 4.2 Co patří mezi obchodní korporace")
+            st.write("Obchodní korporace se dělí na obchodní společnosti a družstva. Obchodní společnosti se dále dělí na osobní společnosti (v.o.s., k.s.) a kapitálové společnosti (s.r.o., a.s.).")
             
             st.markdown("""
             | Skupina | Formy | Typický znak |
@@ -544,11 +544,11 @@ def render():
             | **Osobní společnosti** | v.o.s., k.s. | Důležitá je osobní účast společníků, důvěra a často vyšší míra ručení. |
             | **Kapitálové společnosti** | s.r.o., a.s. | Důležitý je vklad kapitálu, podíly nebo akcie a oddělení firmy od osobního majetku vlastníků. |
             | **Družstva** | družstvo, evropská družstevní forma | Důležité je členství, spolupráce a společný prospěch členů. |
-            """) #[cite: 1]
+            """)
 
         with st.container(border=True):
-            st.markdown("### 4.3 Obecné zákonné podmínky vzniku obchodní korporace") #[cite: 1]
-            st.write("Každá obchodní korporace má svá specifická pravidla, ale některé kroky se opakují u většiny forem.") #[cite: 1]
+            st.markdown("### 4.3 Obecné zákonné podmínky vzniku obchodní korporace")
+            st.write("Každá obchodní korporace má svá specifická pravidla, ale některé kroky se opakují u většiny forem.")
             
             st.markdown("""
             | Krok | Co znamená | Proč je důležitý |
@@ -560,69 +560,90 @@ def render():
             | **Vklady** | Peníze nebo jiné hodnoty, které společníci nebo členové do korporace vkládají. | Ukazují majetkovou účast a mohou ovlivnit podíl na zisku i hlasování. |
             | **Orgány korporace** | Osoby nebo skupiny, které rozhodují a jednají za firmu. | Bez jasných orgánů není zřejmé, kdo firmu řídí a kdo ji zastupuje navenek. |
             | **Zápis do obchodního rejstříku** | Veřejný zápis základních údajů o korporaci. | Obchodní korporace zpravidla vzniká až zápisem do obchodního rejstříku. |
-            """) #[cite: 1]
+            """)
             
             st.markdown("""
             <div class='box-gray'>
                 <strong>🔍 Praktická poznámka pro tebe:</strong> Firma nezačíná jen logem a Instagramem. Nejdřív musí být jasné, kdo ji zakládá, za jakým účelem, jak ručí, kdo rozhoduje a jaké údaje budou veřejně dohledatelné.
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.4 Volba právní formy podle situace") #[cite: 1]
-            st.markdown("<div class='box-yellow'><strong>🧭 9 otázek: OSVČ, nebo s.r.o.?</strong><br>U každé otázky zaškrtni tu odpověď, která lépe odpovídá tvému projektu. Na konci se podívej, kterých odpovědí máš víc.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("### 4.4 Volba právní formy podle situace")
+            st.markdown("<div class='box-yellow'><strong>🧭 9 otázek: OSVČ, nebo s.r.o.?</strong><br>U každé otázky zaškrtni tu odpověď, která lépe odpovídá tvému projektu. Na konci se podívej, kterých odpovědí máš víc.</div>", unsafe_allow_html=True)
             
-            q1 = st.radio("1️⃣ Plánuješ podnikat sám/sama, nebo v týmu?", ["Spíš OSVČ: Podnikám sám/sama a rozhoduji hlavně za sebe.", "Spíš s.r.o.: Podnikáme v týmu a potřebujeme jasně rozdělit role, odpovědnost a podíly."], key="kviz_q1") #[cite: 1]
-            q2 = st.radio("2️⃣ Jde hlavně o osobní práci, nebo projekt s růstem?", ["Spíš OSVČ: Nabízím hlavně vlastní práci, službu nebo dovednost.", "Spíš s.r.o.: Projekt má růst, rozšiřovat se a fungovat jako samostatná firma."], key="kviz_q2") #[cite: 1]
-            q3 = st.radio("3️⃣ Potřebujete řešit podíly a zakladatelskou dohodu?", ["Spíš OSVČ: Zatím nepotřebuji řešit podíly mezi více zakladateli.", "Spíš s.r.o.: Je nás víc a potřebujeme jasně určit, kdo má jaký podíl a kdo o čem rozhoduje."], key="kviz_q3") #[cite: 1]
-            q4 = st.radio("4️⃣ Hrozí větší finanční závazky?", ["Spíš OSVČ: Náklady jsou nízké a projekt lze rychle zastavit bez velkých dluhů.", "Spíš s.r.o.: Projekt vyžaduje větší nákupy, úvěr, sklad, drahé vybavení nebo dlouhodobé smlouvy."], key="kviz_q4") #[cite: 1]
-            q5 = st.radio("5️⃣ Může vzniknout škoda, reklamace nebo odpovědnost vůči zákazníkům?", ["Spíš OSVČ: Riziko škody nebo reklamací je malé a dobře zvládnutelné.", "Spíš s.r.o.: Chyba může způsobit větší škodu, reklamace nebo právní odpovědnost."], key="kviz_q5") #[cite: 1]
-            q6 = st.radio("6️⃣ Potřebuješ chránit osobní majetek?", ["Spíš OSVČ: Riziko je malé a nevadí mi vyšší osobní odpovědnost.", "Spíš s.r.o.: Chci lépe oddělit osobní majetek od podnikání."], key="kviz_q6") #[cite: 1]
-            q7 = st.radio("7️⃣ Budeš potřebovat investora, banku nebo větší partnery?", ["Spíš OSVČ: Nepotřebuji investora ani složitější vlastnickou strukturu.", "Spíš s.r.o.: Chci jednat s investorem, bankou nebo většími obchodními partnery."], key="kviz_q7") #[cite: 1]
-            q8 = st.radio("8️⃣ Chceš rychle otestovat nápad, nebo budovat firmu?", ["Spíš OSVČ: Chci začít jednoduše a nejdřív si ověřit, jestli nápad funguje.", "Spíš s.r.o.: Od začátku počítám s budováním značky, týmu a dlouhodobé firmy."], key="kviz_q8") #[cite: 1]
-            q9 = st.radio("9️⃣ Bude projekt pracovat s dalšími lidmi?", ["Spíš OSVČ: Většinu práce zvládne jeden člověk nebo občasná jednoduchá spolupráce.", "Spíš s.r.o.: Projekt bude potřebovat tým, zaměstnance, dodavatele nebo jasnější řízení spolupráce."], key="kviz_q9") #[cite: 1]
+            q1 = st.radio("1️⃣ Plánuješ podnikat sám/sama, nebo v týmu?", ["Spíš OSVČ: Podnikám sám/sama a rozhoduji hlavně za sebe.", "Spíš s.r.o.: Podnikáme v týmu a potřebujeme jasně rozdělit role, odpovědnost a podíly."], key="kviz_q1")
+            q2 = st.radio("2️⃣ Jde hlavně o osobní práci, nebo projekt s růstem?", ["Spíš OSVČ: Nabízím hlavně vlastní práci, službu nebo dovednost.", "Spíš s.r.o.: Projekt má růst, rozšiřovat se a fungovat jako samostatná firma."], key="kviz_q2")
+            q3 = st.radio("3️⃣ Potřebujete řešit podíly a zakladatelskou dohodu?", ["Spíš OSVČ: Zatím nepotřebuji řešit podíly mezi více zakladateli.", "Spíš s.r.o.: Je nás víc a potřebujeme jasně určit, kdo má jaký podíl a kdo o čem rozhoduje."], key="kviz_q3")
+            q4 = st.radio("4️⃣ Hrozí větší finanční závazky?", ["Spíš OSVČ: Náklady jsou nízké a projekt lze rychle zastavit bez velkých dluhů.", "Spíš s.r.o.: Projekt vyžaduje větší nákupy, úvěr, sklad, drahé vybavení nebo dlouhodobé smlouvy."], key="kviz_q4")
+            q5 = st.radio("5️⃣ Může vzniknout škoda, reklamace nebo odpovědnost vůči zákazníkům?", ["Spíš OSVČ: Riziko škody nebo reklamací je malé a dobře zvládnutelné.", "Spíš s.r.o.: Chyba může způsobit větší škodu, reklamace nebo právní odpovědnost."], key="kviz_q5")
+            q6 = st.radio("6️⃣ Potřebuješ chránit osobní majetek?", ["Spíš OSVČ: Riziko je malé a nevadí mi vyšší osobní odpovědnost.", "Spíš s.r.o.: Chci lépe oddělit osobní majetek od podnikání."], key="kviz_q6")
+            q7 = st.radio("7️⃣ Budeš potřebovat investora, banku nebo větší partnery?", ["Spíš OSVČ: Nepotřebuji investora ani složitější vlastnickou strukturu.", "Spíš s.r.o.: Chci jednat s investorem, bankou nebo většími obchodními partnery."], key="kviz_q7")
+            q8 = st.radio("8️⃣ Chceš rychle otestovat nápad, nebo budovat firmu?", ["Spíš OSVČ: Chci začít jednoduše a nejdřív si ověřit, jestli nápad funguje.", "Spíš s.r.o.: Od začátku počítám s budováním značky, týmu a dlouhodobé firmy."], key="kviz_q8")
+            q9 = st.radio("9️⃣ Bude projekt pracovat s dalšími lidmi?", ["Spíš OSVČ: Většinu práce zvládne jeden člověk nebo občasná jednoduchá spolupráce.", "Spíš s.r.o.: Projekt bude potřebovat tým, zaměstnance, dodavatele nebo jasnější řízení spolupráce."], key="kviz_q9")
             
-            if st.button("Vyhodnotit test"):
+            if st.button("Vyhodnotit test a uložit 💾", key="btn_kviz_44"):
                 odpovedi = [q1, q2, q3, q4, q5, q6, q7, q8, q9]
                 sro_body = sum([1 for odpoved in odpovedi if "s.r.o." in odpoved])
                 osvc_body = 9 - sro_body
                 st.write(f"**Skóre:** OSVČ ({osvc_body}/9) | s.r.o. ({sro_body}/9)")
-                st.info("💡 **Jak si výsledek vyložit:** Pokud převažují zaškrtnuté odpovědi Spíš OSVČ, bude pro začátek pravděpodobně vhodnější OSVČ. Pokud převažují zaškrtnuté odpovědi Spíš s.r.o., bude pro projekt pravděpodobně vhodnější uvažovat o s.r.o. Nejde o právní radu, ale o pomůcku k rozhodování podle rizika, týmu, růstu a odpovědnosti.") #[cite: 1]
+                st.info("💡 **Jak si výsledek vyložit:** Pokud převažují zaškrtnuté odpovědi Spíš OSVČ, bude pro začátek pravděpodobně vhodnější OSVČ. Pokud převažují zaškrtnuté odpovědi Spíš s.r.o., bude pro projekt pravděpodobně vhodnější uvažovat o s.r.o.")
+                
+                vysledek_text = f"OSVČ body: {osvc_body}/9 | s.r.o. body: {sro_body}/9"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 4.4 - Kvíz OSVČ vs s.r.o.", vysledek_text)
 
         with st.container(border=True):
-            st.markdown("### 4.5 Moderní pohled: firma jako důvěryhodná značka") #[cite: 1]
-            st.write("Zákazník dnes často posuzuje firmu podle webu, sociálních sítí, recenzí a transparentnosti. Právní forma může ovlivnit důvěru: zákazník chce vědět, s kým uzavírá smlouvu, dodavatel chce vědět, kdo zaplatí fakturu, banka chce vědět, kdo ručí, investor chce vědět, kdo vlastní podíly, zaměstnanec chce vědět, kdo ho zaměstnává.") #[cite: 1]
+            st.markdown("### 4.5 Moderní pohled: firma jako důvěryhodná značka")
+            st.write("Zákazník dnes často posuzuje firmu podle webu, sociálních sítí, recenzí a transparentnosti. Právní forma může ovlivnit důvěru: zákazník chce vědět, s kým uzavírá smlouvu, dodavatel chce vědět, kdo zaplatí fakturu, banka chce vědět, kdo ručí, investor chce vědět, kdo vlastní podíly, zaměstnanec chce vědět, kdo ho zaměstnává.")
             
             st.markdown("""
             <div class='box-gray'>
                 <strong>🔍 Digitální stopa firmy:</strong> U každého podnikání je dobré ověřit název, IČO, právní formu, osobu jednající za firmu, web, recenze a veřejné rejstříky. Důvěryhodnost dnes vzniká i tím, že informace souhlasí napříč zdroji.
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Rozhodni, jestli by tvému projektu pomohlo oddělit firmu od osobního majetku zakladatele. Napiš jeden důvod.</div>", unsafe_allow_html=True) #[cite: 1]
-            st.text_input("Tvoje odpověď:", key="firma_vyzva_oddělení") #[cite: 1]
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Rozhodni, jestli by tvému projektu pomohlo oddělit firmu od osobního majetku zakladatele. Napiš jeden důvod.</div>", unsafe_allow_html=True)
+            st.text_input("Tvoje odpověď:", key="firma_vyzva_oddeleni")
             
+            if st.button("Uložit odpověď k oddělení majetku 💾", key="btn_firma_vyzva_oddeleni"):
+                odp = st.session_state.get("firma_vyzva_oddeleni", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 4.5 - Oddělení majetku", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             st.markdown("""
             <div class='box-purple'>
                 <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Porovnej pro můj projekt OSVČ, s.r.o. a a.s. podle rizika, administrativy a růstu.“
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
             
             st.markdown("""
             <div class='box-blue'>
                 <strong>📚 Jednoduše řečeno:</strong> Právní forma je „kabát“, ve kterém podnikání vystupuje navenek. Jinak se podniká jako jednotlivec na živnost a jinak jako firma.<br><br>
                 <strong>🔍 Proč to souvisí s důvěryhodností:</strong> Zákazník, dodavatel i investor se podle právní formy lépe orientují v tom, s kým jednají, kdo rozhoduje a kdo nese odpovědnost.
             </div>
-            """, unsafe_allow_html=True) #[cite: 1]
+            """, unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.6 Osobní společnosti") #[cite: 1]
-            st.write("Osobní společnosti stojí hlavně na osobní účasti, důvěře a odpovědnosti společníků.") #[cite: 1]
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš, kdy by ve tvém projektu dávalo smysl podnikat s další osobou na základě vysoké důvěry.</div>", unsafe_allow_html=True) #[cite: 1]
+            st.markdown("### 4.6 Osobní společnosti")
+            st.write("Osobní společnosti stojí hlavně na osobní účasti, důvěře a odpovědnosti společníků.")
+            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš, kdy by ve tvém projektu dávalo smysl podnikat s další osobou na základě vysoké důvěry.</div>", unsafe_allow_html=True)
+            st.text_area("Tvá odpověď:", key="p1_46_duvera")
             
+            if st.button("Uložit odpověď k osobním společnostem 💾", key="btn_p1_46_duvera"):
+                odp = st.session_state.get("p1_46_duvera", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 4.6 - Důvěra a osobní společnosti", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
+
             with st.expander("Veřejná obchodní společnost (v.o.s.)"):
-                st.write("Veřejná obchodní společnost je osobní společnost, ve které podnikají alespoň dvě osoby pod společnou firmou. Zákonně jde o formu vhodnou spíše pro osoby, které si velmi důvěřují. Důvod je jednoduchý: společníci ručí za dluhy společnosti společně a nerozdílně celým svým majetkem. To znamená, že věřitel se může domáhat splnění dluhu i po jednom ze společníků, a ten si potom případně vypořádává vztahy s ostatními.") #[cite: 1]
-                st.write("**Zákonné a praktické znaky v.o.s.:**") #[cite: 1]
+                st.write("Veřejná obchodní společnost je osobní společnost, ve které podnikají alespoň dvě osoby pod společnou firmou. Zákonně jde o formu vhodnou spíše pro osoby, které si velmi důvěřují. Důvod je jednoduchý: společníci ručí za dluhy společnosti společně a nerozdílně celým svým majetkem. To znamená, že věřitel se může domáhat splnění dluhu i po jednom ze společníků, a ten si potom případně vypořádává vztahy s ostatními.")
+                st.write("**Zákonné a praktické znaky v.o.s.:**")
                 st.markdown("""
                 * zakládají ji alespoň dvě osoby,
                 * společnost vzniká zápisem do obchodního rejstříku,
@@ -630,21 +651,21 @@ def render():
                 * společníci se podílejí na podnikání a ručí osobním majetkem,
                 * zisk a ztráta se rozdělují podle společenské smlouvy, jinak podle zákonných pravidel,
                 * kvůli vysokému ručení je potřeba silná důvěra mezi společníky.
-                """) #[cite: 1]
-                st.markdown("<div class='box-red'><strong>⚠️ Hlavní nevýhoda v.o.s.:</strong> vysoké osobní riziko společníků.</div>", unsafe_allow_html=True) #[cite: 1]
-                st.markdown("<div class='box-green'><strong>✅ Hlavní výhoda v.o.s.:</strong> jednoduché založení a silná osobní důvěra mezi společníky.</div>", unsafe_allow_html=True) #[cite: 1]
-                st.write("🏪 *Příklad z praxe — v.o.s.: Jako veřejná obchodní společnost v ČR působí například Kaufland Česká republika v.o.s. Právní formu je vždy nejlepší ověřit podle přesného názvu nebo IČO v obchodním rejstříku.*") #[cite: 1]
+                """)
+                st.markdown("<div class='box-red'><strong>⚠️ Hlavní nevýhoda v.o.s.:</strong> vysoké osobní riziko společníků.</div>", unsafe_allow_html=True)
+                st.markdown("<div class='box-green'><strong>✅ Hlavní výhoda v.o.s.:</strong> jednoduché založení a silná osobní důvěra mezi společníky.</div>", unsafe_allow_html=True)
+                st.write("🏪 *Příklad z praxe — v.o.s.: Jako veřejná obchodní společnost v ČR působí například Kaufland Česká republika v.o.s. Právní formu je vždy nejlepší ověřit podle přesného názvu nebo IČO v obchodním rejstříku.*")
 
             with st.expander("Komanditní společnost (k.s.)"):
-                st.write("Komanditní společnost kombinuje prvky osobní a kapitálové společnosti. Vždy v ní vystupují dva typy společníků:") #[cite: 1]
+                st.write("Komanditní společnost kombinuje prvky osobní a kapitálové společnosti. Vždy v ní vystupují dva typy společníků:")
                 st.markdown("""
                 | Role | Komplementář | Komanditista |
                 | :--- | :--- | :--- |
                 | **Postavení** | Aktivně řídí společnost. | Spíše vkládá kapitál. |
                 | **Ručení** | Ručí celým svým majetkem. | Ručí do výše nesplaceného vkladu. |
                 | **Typická role** | „Ten, kdo podnik řídí.“ | „Ten, kdo přináší kapitál.“ |
-                """) #[cite: 1]
-                st.write("**Zákonné a praktické znaky k.s.:**") #[cite: 1]
+                """)
+                st.write("**Zákonné a praktické znaky k.s.:**")
                 st.markdown("""
                 * musí mít alespoň jednoho komplementáře a alespoň jednoho komanditistu,
                 * komplementář řídí společnost a ručí za její dluhy celým svým majetkem,
@@ -652,16 +673,16 @@ def render():
                 * společnost vzniká zápisem do obchodního rejstříku,
                 * obchodní firma obsahuje označení „komanditní společnost“ nebo zkratku „k.s.“,
                 * hodí se pro situace, kdy jeden člověk projekt aktivně řídí a druhý spíše poskytuje kapitál.
-                """) #[cite: 1]
-                st.markdown("<div class='box-gray'><strong>⚖️ Riziko pro komplementáře:</strong> Komplementář je v k.s. v podobné rizikové pozici jako společník v.o.s. Pokud projekt vytváří vysoké závazky, je potřeba velmi dobře zvážit, zda je tato forma bezpečná.</div>", unsafe_allow_html=True) #[cite: 1]
+                """)
+                st.markdown("<div class='box-gray'><strong>⚖️ Riziko pro komplementáře:</strong> Komplementář je v k.s. v podobné rizikové pozici jako společník v.o.s. Pokud projekt vytváří vysoké závazky, je potřeba velmi dobře zvážit, zda je tato forma bezpečná.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.7 Kapitálové společnosti") #[cite: 1]
-            st.write("Kapitálové společnosti stojí více na vloženém kapitálu než na osobní účasti společníků. Typicky lépe oddělují firmu od osobního majetku vlastníků.") #[cite: 1]
+            st.markdown("### 4.7 Kapitálové společnosti")
+            st.write("Kapitálové společnosti stojí více na vloženém kapitálu než na osobní účasti společníků. Typicky lépe oddělují firmu od osobního majetku vlastníků.")
             
             with st.expander("Společnost s ručením omezeným (s.r.o.)"):
-                st.write("Společnost s ručením omezeným je jednou z nejčastějších forem podnikání v ČR. Je oblíbená proto, že umožňuje poměrně dostupné založení firmy a zároveň lépe odděluje podnikání od osobního života zakladatele. S.r.o. je vhodná pro menší a střední podnikání, rodinné firmy, startupy, e-shopy, služby i týmové projekty.") #[cite: 1]
-                st.write("**Zákonné a praktické podmínky s.r.o.:**") #[cite: 1]
+                st.write("Společnost s ručením omezeným je jednou z nejčastějších forem podnikání v ČR. Je oblíbená proto, že umožňuje poměrně dostupné založení firmy a zároveň lépe odděluje podnikání od osobního života zakladatele. S.r.o. je vhodná pro menší a střední podnikání, rodinné firmy, startupy, e-shopy, služby i týmové projekty.")
+                st.write("**Zákonné a praktické podmínky s.r.o.:**")
                 st.markdown("""
                 * může ji založit jedna nebo více osob,
                 * zakládá se společenskou smlouvou nebo zakladatelskou listinou,
@@ -673,7 +694,7 @@ def render():
                 * společníci ručí za dluhy společnosti jen do výše, v jaké nesplnili vkladovou povinnost podle zápisu v obchodním rejstříku,
                 * statutárním orgánem je jeden nebo více jednatelů,
                 * nejvyšším orgánem je valná hromada, případně jediný společník vykonává její působnost.
-                """) #[cite: 1]
+                """)
                 st.markdown("""
                 | Otázka u s.r.o. | Co máš pochopit |
                 | :--- | :--- |
@@ -681,12 +702,12 @@ def render():
                 | **Ručí společník osobním majetkem?** | Společník obvykle neručí jako OSVČ celým majetkem, ale musí splnit vkladovou povinnost. Odpovědnost jednatele je samostatné téma. |
                 | **Kdo jedná za firmu?** | Jednatel. Je zapsaný v obchodním rejstříku a má povinnost jednat s péčí řádného hospodáře. |
                 | **Kdo rozhoduje o důležitých věcech?** | Valná hromada společníků nebo jediný společník. Rozhoduje například o zásadních otázkách, změnách smlouvy nebo rozdělení zisku. |
-                """) #[cite: 1]
-                st.markdown("<div class='box-yellow'><strong>💡 Praktické pravidlo:</strong> OSVČ bývá jednodušší pro start. S.r.o. dává větší smysl tehdy, když podnikání roste, přibývají rizika, vzniká tým nebo je potřeba oddělit osobní majetek od podnikání.</div>", unsafe_allow_html=True) #[cite: 1]
+                """)
+                st.markdown("<div class='box-yellow'><strong>💡 Praktické pravidlo:</strong> OSVČ bývá jednodušší pro start. S.r.o. dává větší smysl tehdy, když podnikání roste, přibývají rizika, vzniká tým nebo je potřeba oddělit osobní majetek od podnikání.</div>", unsafe_allow_html=True)
 
             with st.expander("Akciová společnost (a.s.)"):
-                st.write("Akciová společnost je kapitálová společnost vhodná spíše pro větší projekty, investory a podnikání s významnějším kapitálem. Její základní kapitál je rozdělen na akcie.") #[cite: 1]
-                st.write("**Zákonné a praktické podmínky a.s.:**") #[cite: 1]
+                st.write("Akciová společnost je kapitálová společnost vhodná spíše pro větší projekty, investory a podnikání s významnějším kapitálem. Její základní kapitál je rozdělen na akcie.")
+                st.write("**Zákonné a praktické podmínky a.s.:**")
                 st.markdown("""
                 * zakládá se přijetím stanov,
                 * vzniká zápisem do obchodního rejstříku,
@@ -697,19 +718,19 @@ def render():
                 * akcie vyjadřují podíl akcionáře na společnosti a jsou s nimi spojena práva,
                 * společnost má složitější strukturu řízení a vyšší administrativní nároky než s.r.o.,
                 * hodí se pro větší podnikání, investory, významnější kapitál a projekty s ambicí růstu.
-                """) #[cite: 1]
-                st.write("**Orgány a.s. a dva systémy řízení:**") #[cite: 1]
+                """)
+                st.write("**Orgány a.s. a dva systémy řízení:**")
                 st.markdown("""
                 * **Nejvyšší orgán:** valná hromada — rozhodují na ní akcionáři.
                 * **Dualistický systém:** statutární orgán je představenstvo a kontrolní orgán je dozorčí rada. Řízení a kontrola jsou oddělené.
                 * **Monistický systém:** statutárním orgánem je správní rada. V praxi soustřeďuje řízení a kontrolu blíže k jednomu orgánu.
                 * **Zisk:** rozděluje se až po zdanění daní z příjmů právnických osob a po schválení valnou hromadou. Podíl akcionáře na zisku se nazývá dividenda.
-                """) #[cite: 1]
-                st.info("💡 Jednoduše: A.s. není vhodná pro většinu malých školních projektů. Je důležitá hlavně proto, abys pochopil/a svět větších firem, investorů, akcií, dividend a řízení kapitálové společnosti.") #[cite: 1]
+                """)
+                st.info("💡 Jednoduše: A.s. není vhodná pro většinu malých školních projektů. Je důležitá hlavně proto, abys pochopil/a svět větších firem, investorů, akcií, dividend a řízení kapitálové společnosti.")
 
             with st.expander("Družstvo"):
-                st.write("Družstvo je právnická osoba založená na členství. Jeho smyslem není jen zisk pro vlastníky, ale také společný prospěch členů — například bydlení, práce, prodej výrobků nebo společné využívání služeb.") #[cite: 1]
-                st.write("**Zákonné a praktické znaky družstva:**") #[cite: 1]
+                st.write("Družstvo je právnická osoba založená na členství. Jeho smyslem není jen zisk pro vlastníky, ale také společný prospěch členů — například bydlení, práce, prodej výrobků nebo společné využívání služeb.")
+                st.write("**Zákonné a praktické znaky družstva:**")
                 st.markdown("""
                 * je založeno na členství,
                 * má zpravidla alespoň tři členy,
@@ -719,12 +740,12 @@ def render():
                 * orgány družstva typicky zahrnují členskou schůzi, představenstvo a kontrolní komisi; u menších družstev mohou být pravidla jednodušší podle zákonných možností,
                 * smyslem může být podnikání i zajišťování potřeb členů,
                 * hodí se tam, kde je důležitá spolupráce a společný prospěch.
-                """) #[cite: 1]
-                st.markdown("<div class='box-blue'><strong>👥 Funkce družstva:</strong> Družstvo umožňuje lidem spojit síly, sdílet náklady, společně rozhodovat a řešit potřebu, kterou by jednotlivec zvládal obtížněji.</div>", unsafe_allow_html=True) #[cite: 1]
+                """)
+                st.markdown("<div class='box-blue'><strong>👥 Funkce družstva:</strong> Družstvo umožňuje lidem spojit síly, sdílet náklady, společně rozhodovat a řešit potřebu, kterou by jednotlivec zvládal obtížněji.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.8 Povinnosti členů orgánů: péče řádného hospodáře") #[cite: 1]
-            st.write("Osoby, které řídí obchodní korporaci nebo za ni jednají, nemohou rozhodovat libovolně. Musí jednat informovaně, pečlivě, loajálně a v zájmu korporace. Tento princip se označuje jako péče řádného hospodáře. Pro tebe je to důležité hlavně u jednatele s.r.o., členů představenstva a dalších osob ve vedení. Pokud někdo firmu řídí nezodpovědně, může nést právní následky.") #[cite: 1]
+            st.markdown("### 4.8 Povinnosti členů orgánů: péče řádného hospodáře")
+            st.write("Osoby, které řídí obchodní korporaci nebo za ni jednají, nemohou rozhodovat libovolně. Musí jednat informovaně, pečlivě, loajálně a v zájmu korporace. Tento princip se označuje jako péče řádného hospodáře. Pro tebe je to důležité hlavně u jednatele s.r.o., členů představenstva a dalších osob ve vedení. Pokud někdo firmu řídí nezodpovědně, může nést právní následky.")
             
             st.markdown("""
             | Situace | Odpovědné jednání | Rizikové jednání |
@@ -732,11 +753,11 @@ def render():
             | **Firma podepisuje velkou smlouvu.** | Vedení si ověří cenu, rizika, závazky a schopnost plnit. | Podepíše smlouvu bez čtení, jen proto, že „to vypadá dobře“. |
             | **Firma má finanční problémy.** | Vedení sleduje cashflow, jedná s věřiteli a řeší situaci včas. | Ignoruje dluhy a objednává další služby, i když ví, že nezaplatí. |
             | **Firma pracuje s daty zákazníků.** | Nastaví přístupy, ochranu dat a jasná pravidla. | Sdílí zákaznická data v nechráněné tabulce bez pravidel. |
-            """) #[cite: 1]
-            st.markdown("<div class='box-gray'><strong>⚖️ Didaktická pointa:</strong> Omezené ručení neznamená nulovou odpovědnost. Společník, jednatel, člen představenstva nebo člen družstva musí chápat svou roli a rozhodovat odpovědně.</div>", unsafe_allow_html=True) #[cite: 1]
+            """)
+            st.markdown("<div class='box-gray'><strong>⚖️ Didaktická pointa:</strong> Omezené ručení neznamená nulovou odpovědnost. Společník, jednatel, člen představenstva nebo člen družstva musí chápat svou roli a rozhodovat odpovědně.</div>", unsafe_allow_html=True)
 
         with st.container(border=True):
-            st.markdown("### 4.9 Přehled právních forem") #[cite: 1]
+            st.markdown("### 4.9 Přehled právních forem")
             st.markdown("""
             | Forma | Administrativní náročnost | Míra rizika | Kapitál | Typický znak |
             | :--- | :--- | :--- | :--- | :--- |
@@ -746,7 +767,7 @@ def render():
             | **s.r.o.** | Střední | Nižší — oddělení firmy od osobního majetku | Od 1 Kč, reálně více nákladů | Dostupná firemní forma |
             | **a.s.** | Vysoká | Nižší — akcionáři osobně neručí | Vyšší základní kapitál | Akcie, investoři, větší kapitál |
             | **družstvo** | Střední | Záleží na pravidlech a situaci družstva | Členské vklady | Společný prospěch členů |
-            """) #[cite: 1]
+            """)
 
         with st.container(border=True):
             st.markdown("### 4.10 Vznik obchodní korporace") #[cite: 1]
