@@ -5491,7 +5491,7 @@ def render():
                     st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.8 - Manažerské shrnutí", report_text + " | " + doporuceni)
 
 
-    # =========================================================================
+# =========================================================================
     # 5.9 CASE STUDY: INFLUENCER JAKO FIRMA
     # =========================================================================
     elif selected_section_2.startswith("5.9"):
@@ -5555,6 +5555,12 @@ def render():
                     st.metric("Zisk (Před zdaněním)", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), "- Ztráta", delta_color="inverse")
                     st.error("Jsi ve ztrátě! Takhle to dlouho nevydrží. Musíš buď získat víc sponzorů, nebo osekat náklady.")
 
+            if st.button("Uložit nastavení byznysu 💾", key="btn_k5_9_sim"):
+                sim_data = f"Příjmy: {prijmy_celkem} Kč | Náklady: {naklady_celkem} Kč | Zisk: {zisk_pred_zdanenim} Kč"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.9 - Simulátor byznysu", sim_data)
+                st.success("Nastavení byznysu bylo uloženo!")
+
             # Vizualizace struktury příjmů
             if prijmy_celkem > 0:
                 st.markdown("##### Odkud plynou tvé peníze? (Diverzifikace)")
@@ -5599,6 +5605,15 @@ def render():
                 elif q3 == "Ne, je to osobní spotřeba.":
                     st.error("❌ Špatně. Reklama propagující tvůj komerční produkt je jasný uznatelný náklad.")
 
+                if st.button("Uložit odpovědi k daním 💾", key="btn_k5_9_dane"):
+                    if "Vyber odpověď..." not in [q1, q2, q3]:
+                        dane_data = f"iPhone: {q1} | Konzole: {q2} | Reklama: {q3}"
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.9 - Hra na účetního", dane_data)
+                        st.success("Odpovědi byly uloženy!")
+                    else:
+                        st.warning("Před uložením odpověz na všechny otázky!")
+
             st.markdown("""
             <div class="box-red">
                 <b>⚠️ Důležité:</b> Mnoho začínajících tvůrců míchá firemní a osobní peníze. Když si z firemního účtu platí osobní obědy a dovolené (které nevydávají za tvorbu obsahu), zadělávají si na obrovský problém s finančním úřadem.
@@ -5635,7 +5650,6 @@ def render():
             
             elif scenar == "Scénář C: Vyhoření (Burnout) – měsíc netvoříš":
                 krizovy_prijem = 0 + 0 + (p_affil * 0.5) + (p_subs * 0.8) + (p_merch * 0.3)
-                # Náklady ale běží dál!
                 popis_krize = "Nemůžeš natáčet. Spolupráce stojí, nová reklama nenabíhá. Zůstávají ti jen pasivní příjmy (staré affiliate odkazy) a věrní předplatitelé (i když jich 20 % odešlo kvůli neaktivitě). ALE POZOR: Fixní náklady (nájem studia, software, účetní) musíš zaplatit stejně!"
 
             novy_zisk = krizovy_prijem - krizovy_naklad
@@ -5654,15 +5668,17 @@ def render():
                 st.error("🚨 Zkrachoval jsi! Tvé příjmy nedokázaly pokrýt ani běžné náklady. Pokud nemáš finanční rezervu vytvořenou z minulých měsíců, končíš s podnikáním.")
 
             if st.button("Uložit výsledek krizového scénáře 💾", key="btn_k5_9_krize"):
-                krize_data = f"Scénář: {scenar} | Příjem po krizi: {krizovy_prijem} | Zisk/ztráta: {novy_zisk}"
+                krize_data = f"Scénář: {scenar} | Příjem po krizi: {krizovy_prijem} Kč | Zisk/ztráta: {novy_zisk} Kč"
                 if "uloz_odpoved_fn" in st.session_state:
                     st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.9 - Krizový scénář influencera", krize_data)
+                st.success("Výsledek krizového scénáře byl uložen!")
 
             st.markdown("""
             <div class="box-purple">
                 <b>🧠 Poučení z analýzy:</b> Influencer musí mít vytvořenou finanční rezervu (alespoň na 3–6 měsíců života) a nesmí být závislý jen na jedné sociální síti nebo jednom sponzorovi.
             </div>
             """, unsafe_allow_html=True)
+        
 # =========================================================================
     # 5.10 DIGITÁLNÍ GENERACE A FINANČNÍ ŘÍZENÍ
     # =========================================================================
