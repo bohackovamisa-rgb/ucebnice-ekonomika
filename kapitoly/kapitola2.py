@@ -1510,7 +1510,7 @@ def render():
         with st.container(border=True):
             st.markdown("""
             <div class='box-red'>
-                ⚠️ <strong>Současný problém:</strong> Mnoho lidí nemá problém jen s nedostatkem informací, ale s prostředím, které podporuje okamžité rozhodování. Telefon umožňuje nakoupit, objednat, investovat nebo půjčit si během několika sekund. Finančníchyba tak může vzniknout rychleji než dřív.
+                ⚠️ <strong>Současný problém:</strong> Mnoho lidí nemá problém jen s nedostatkem informací, ale s prostředím, které podporuje okamžité rozhodování. Telefon umožňuje nakoupit, objednat, investovat nebo půjčit si během několika sekund. Finanční chyba tak může vzniknout rychleji než dřív.
             </div>
             """, unsafe_allow_html=True)
 
@@ -1542,11 +1542,15 @@ def render():
             p_q4 = st.selectbox("4. Každodenní objednávání hotového jídla přes rozvoz:", ["Vyber...", "Potřeba", "Přání"], key="k2_p_q4")
             p_q5 = st.selectbox("5. Předepsané léky nebo jízdné do školy:", ["Vyber...", "Potřeba", "Přání"], key="k2_p_q5")
 
-            if st.button("Vyhodnotit potřeby a přání", key="k2_potreby_btn"):
+            if st.button("Vyhodnotit a uložit třídič 💾", key="k2_potreby_btn"):
                 if p_q1 == "Potřeba" and p_q2 == "Přání" and p_q3 == "Potřeba" and p_q4 == "Přání" and p_q5 == "Potřeba":
                     st.success("🎉 Skvěle! Přesně rozumíš hranici mezi nezbytnou potřebou a volitelným přáním.")
                 else:
                     st.error("Některé položky jsou zařazeny špatně. Potřeba je nutná k přežití a fungování, přání zvyšuje komfort.")
+                
+                tridic_data = f"1:{p_q1}, 2:{p_q2}, 3:{p_q3}, 4:{p_q4}, 5:{p_q5}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.1.1 - Potřeba vs. Přání", tridic_data)
 
     # =========================================================================
     # 2.2 ROZPOČET: MAPA PENĚZ
@@ -1591,6 +1595,14 @@ def render():
 
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Projdi si posledních 10 plateb v mobilním bankovnictví. Rozděl je na potřeby, přání a skryté nebo automatické výdaje.</div>", unsafe_allow_html=True)
             st.text_area("Zapiš svou analýzu posledních 10 plateb:", key="k2_last_10_payments")
+            
+            if st.button("Uložit analýzu plateb 💾", key="btn_k2_last_10"):
+                odp = st.session_state.get("k2_last_10_payments", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.2.2 - 10 posledních plateb", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
 
         # 2.2.3 Pravidlo 50-30-20
         with st.container(border=True):
@@ -1619,6 +1631,11 @@ def render():
             col_b1.metric("Potřeby (50 %)", f"{c_needs:,.0f} Kč".replace(",", " "))
             col_b2.metric("Přání (30 %)", f"{c_wants:,.0f} Kč".replace(",", " "))
             col_b3.metric("Rezerva / Úspory (20 %)", f"{c_saves:,.0f} Kč".replace(",", " "))
+
+            if st.button("Uložit výpočet rozpočtu 💾", key="btn_k2_budget"):
+                roz_data = f"Příjem: {b_income} Kč | Potřeby: {c_needs} Kč | Přání: {c_wants} Kč | Rezerva: {c_saves} Kč"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.2.3 - Kalkulačka rozpočtu", roz_data)
 
     # =========================================================================
     # 2.3 ALGORITMY BOHATSTVÍ
@@ -1732,6 +1749,11 @@ def render():
             c_u_res2.metric("Složené úročení", f"{res_slozene:,.2f} Kč".replace(",", " "))
             c_u_res3.metric("Rozdíl ve prospěch složeného", f"+{diff_urok:,.2f} Kč".replace(",", " "))
 
+            if st.button("Uložit výpočet úročení 💾", key="btn_k2_uroceni"):
+                ur_data = f"Vklad: {jistina_input} Kč | Sazba: {sazba_input}% | Čas: {roky_input} let | Jednoduché: {res_jednoduse:.2f} Kč | Složené: {res_slozene:.2f} Kč | Rozdíl: {diff_urok:.2f} Kč"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.4.2 - Úročení kalkulačka", ur_data)
+
             with st.expander("✍️ Procvičování: Spočítej úročení (3 příklady)"):
                 st.write("**1. Jednoduché úročení:** Vložíš 8 000 Kč na 2 roky při sazbě 4 % p.a.")
                 ex1_ans = st.number_input("Zadej vypočtenou konečnou částku (Kč):", value=0, key="k2_ex1_val")
@@ -1762,6 +1784,14 @@ def render():
 
             st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber pět věcí, které pravidelně kupuješ. Zjisti nebo odhadni, kolik stály dříve a kolik stojí dnes. Která položka zdražila nejvíc?</div>", unsafe_allow_html=True)
             st.text_area("Seznam 5 věcí a odhad změny ceny:", key="k2_inflation_5_items")
+            
+            if st.button("Uložit výzvu k inflaci 💾", key="btn_k2_inflace"):
+                odp = st.session_state.get("k2_inflation_5_items", "")
+                if odp.strip():
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.4.3 - Inflace 5 věcí", odp)
+                else:
+                    st.warning("Před uložením nejprve napiš odpověď!")
 
     # =========================================================================
     # 2.5 FINANČNÍ REZERVA
@@ -1813,6 +1843,11 @@ def render():
             col_res1.metric("Minimální základní rezerva", f"{r_min:,.0f} Kč".replace(",", " "))
             col_res2.metric("Doporučená optimální rezerva", f"{r_target:,.0f} Kč".replace(",", " "))
 
+            if st.button("Uložit výpočet finanční rezervy 💾", key="btn_k2_rezerva"):
+                rez_data = f"Situace: {user_sit} | Měsíční výdaje: {m_exp} Kč | Min. rezerva: {r_min} Kč | Opt. rezerva: {r_target} Kč"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.5.1 - Kalkulačka rezervy", rez_data)
+
         with st.container(border=True):
             st.markdown("### 2.5.2 Kde rezervu držet")
             st.write("Rezerva má být bezpečná a dostupná. Není určena k riskantnímu investování. Vhodné vlastnosti:")
@@ -1828,7 +1863,6 @@ def render():
                 🚫 <strong>Častá chyba:</strong> Investovat nouzovou rezervu do rizikových aktiv. Když pak přijde problém, může být človek nucen prodat v nevýhodnou chvíli se ztrátou.
             </div>
             """, unsafe_allow_html=True)
-
     # =========================================================================
     # 2.6 PSYCHOLOGIE UTRÁCENÍ
     # =========================================================================
