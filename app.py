@@ -358,7 +358,7 @@ with tab_vysledky:
             st.error(f"Chyba při načítání výsledků: {e}")
 
 # --- ÚVODNÍ STRÁNKA ---
-elif st.session_state["current_view"] == "Uvod":
+    elif st.session_state["current_view"] == "Uvod":
     st.title("Ekonomika, která dává smysl")
 
     st.markdown(
