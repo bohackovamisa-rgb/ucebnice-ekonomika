@@ -48,7 +48,7 @@ def init_supabase() -> Client:
 supabase = init_supabase()
 
 
-# --- 1. FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY ---
+# --- FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
 def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     st.markdown(f"**{text_otazky}**")
     staved_text = ulozene_odpovedi.get(otazka_id, "")
@@ -80,6 +80,7 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
                 st.session_state["ulozene_odpovedi"] = {}
             st.session_state["ulozene_odpovedi"][otazka_id] = odpoved_zaka
             
+            st.toast("Odpověď byla uložena!", icon="💾")
             st.rerun()
         except Exception as e:
             st.error(f"Chyba při zápisu do databáze: {e}")
@@ -87,40 +88,43 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
 st.session_state["vykresli_otazku_fn"] = vykresli_otazku
 
 
-# --- 2. UNIVERZÁLNÍ RENDEROVÁNÍ A NAČÍTÁNÍ KAPITOL (v sekci 7.4) ---
-kapitoly_map = {
-    "Kapitola 1": (kapitola1, "1"),
-    "Kapitola 2": (kapitola2, "2"),
-    "Kapitola 3": (kapitola3, "3"),
-    "Kapitola 4": (kapitola4, "4"),
-    "Kapitola 5": (kapitola5, "5"),
-    "Kapitola 6": (kapitola6, "6"),
-}
-
-if st.session_state.get("current_view") in kapitoly_map:
-    modul, kap_num = kapitoly_map[st.session_state["current_view"]]
+# --- FUNKCE PRO POMOCNÉ UKLÁDÁNÍ RŮZNÝCH INTERAKTIVNÍCH AKTIVIT ---
+def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
+    username = st.session_state.get("username")
+    if not username:
+        return
     
-    st.session_state["ulozene_odpovedi"] = {}
-    if st.session_state.get("username"):
-        kap_nazev = f"Kapitola {kap_num}"
-        res = (
-            supabase.table("odpovedi")
-            .select("otazka_id, odpoved")
-            .eq("username", st.session_state["username"])
-            .in_("kapitola", [kap_nazev, str(kap_num)])
+    try:
+        existing = supabase.table("odpovedi")\
+            .select("username")\
+            .eq("username", username)\
+            .eq("kapitola", kapitola)\
+            .eq("otazka_id", otazka_id)\
             .execute()
-        )
-        if res.data:
-            st.session_state["ulozene_odpovedi"] = {
-                row["otazka_id"]: row["odpoved"] for row in res.data
+        
+        if existing.data:
+            supabase.table("odpovedi").update({"odpoved": odpoved_text})\
+                .eq("username", username)\
+                .eq("kapitola", kapitola)\
+                .eq("otazka_id", otazka_id)\
+                .execute()
+        else:
+            new_record = {
+                "username": username,
+                "kapitola": kapitola,
+                "otazka_id": otazka_id,
+                "odpoved": odpoved_text
             }
+            supabase.table("odpovedi").insert(new_record).execute()
+        st.toast("✅ Odpověď byla uložena!", icon="💾")
+    except Exception as e:
+        st.error(f"Chyba při ukládání odpovědi: {e}")
 
-    if hasattr(modul, "render"):
-        modul.render()
-    elif hasattr(modul, "show"):
-        modul.show()
- # =========================================================================
-# 📝 ŽÁKOVSKÝ PANEL (Funkce definovaná nahoře před vykreslením)
+st.session_state["uloz_odpoved_fn"] = uloz_odpoved
+
+
+# =========================================================================
+# 📝 ŽÁKOVSKÝ PANEL (PŘEHLED VŠECH ODPOVĚDÍ)
 # =========================================================================
 def zakovsky_panel():
     st.title("📝 Moje odpovědi a přehled úkolů")
@@ -187,47 +191,6 @@ def zakovsky_panel():
 
 
 # =========================================================================
-# --- 2. UNIVERZÁLNÍ RENDEROVÁNÍ A NAČÍTÁNÍ KAPITOL (A PANELŮ) ---
-# =========================================================================
-
-# Pokud si žák v menu přepne na Žákovský panel:
-if st.session_state.get("current_view") == "Moje odpovědi 📝":
-    zakovsky_panel()
-
-# Běžné načítání kapitol učebnice:
-else:
-    kapitoly_map = {
-        "Kapitola 1": (kapitola1, "1"),
-        "Kapitola 2": (kapitola2, "2"),
-        "Kapitola 3": (kapitola3, "3"),
-        "Kapitola 4": (kapitola4, "4"),
-        "Kapitola 5": (kapitola5, "5"),
-        "Kapitola 6": (kapitola6, "6"),
-    }
-
-    if st.session_state.get("current_view") in kapitoly_map:
-        modul, kap_num = kapitoly_map[st.session_state["current_view"]]
-        
-        st.session_state["ulozene_odpovedi"] = {}
-        if st.session_state.get("username"):
-            kap_nazev = f"Kapitola {kap_num}"
-            res = (
-                supabase.table("odpovedi")
-                .select("otazka_id, odpoved")
-                .eq("username", st.session_state["username"])
-                .in_("kapitola", [kap_nazev, str(kap_num)])
-                .execute()
-            )
-            if res.data:
-                st.session_state["ulozene_odpovedi"] = {
-                    row["otazka_id"]: row["odpoved"] for row in res.data
-                }
-
-        if hasattr(modul, "render"):
-            modul.render()
-        elif hasattr(modul, "show"):
-            modul.show()       
-# =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
 st.markdown(
@@ -293,45 +256,9 @@ section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-
     unsafe_allow_html=True,
 )
 
-# =========================================================================
-# 4. POMOCNÁ FUNKCE PRO UKLÁDÁNÍ ODPOVĚDÍ
-# =========================================================================
-def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
-    """Uloží nebo aktualizuje odpověď přihlášeného žáka v Supabase."""
-    username = st.session_state.get("username")
-    if not username:
-        return
-    
-    try:
-        existing = supabase.table("odpovedi")\
-            .select("username")\
-            .eq("username", username)\
-            .eq("kapitola", kapitola)\
-            .eq("otazka_id", otazka_id)\
-            .execute()
-        
-        if existing.data:
-            supabase.table("odpovedi").update({"odpoved": odpoved_text})\
-                .eq("username", username)\
-                .eq("kapitola", kapitola)\
-                .eq("otazka_id", otazka_id)\
-                .execute()
-        else:
-            new_record = {
-                "username": username,
-                "kapitola": kapitola,
-                "otazka_id": otazka_id,
-                "odpoved": odpoved_text
-            }
-            supabase.table("odpovedi").insert(new_record).execute()
-        st.toast("✅ Odpověď byla uložena!", icon="💾")
-    except Exception as e:
-        st.error(f"Chyba při ukládání odpovědi: {e}")
-
-st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
 # =========================================================================
-# 5. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA (S OŠETŘENÍM DIAKRITIKY)
+# 5. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA
 # =========================================================================
 def login_screen():
     if st.session_state.get("is_logged_in", False):
@@ -412,12 +339,13 @@ def login_screen():
                                 st.error(f"Chyba při registraci: {e}")
     return False
 
-# --- KLÍČOVÉ BRZDĚNÍ PRO NEPŘIHLÁŠENÉ UŽIVATELE ---
+# Stopne vykreslování, pokud uživatel není přihlášen
 if not login_screen():
     st.stop()
 
+
 # =========================================================================
-# 6. NAVIGAČNÍ STAV A BOČNÍ PANEL
+# 6. BOČNÍ NAVIGAČNÍ PANEL (SIDEBAR)
 # =========================================================================
 with st.sidebar:
     st.markdown(
@@ -435,10 +363,11 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
+    # Učitelský panel jen pro učitele
     if st.session_state.get("user_role") == "teacher":
         st.markdown("<div class='sidebar-section-title'>👩‍🏫 UČITELSKÝ PANEL</div>", unsafe_allow_html=True)
         
-        if st.button("📊 Přehled a správa tříd", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Panel" else "secondary"):
+        if st.button("📊 Správa tříd a odpovědí", use_container_width=True, type="primary" if st.session_state["current_view"] == "Ucitel_Panel" else "secondary"):
             st.session_state["current_view"] = "Ucitel_Panel"
             st.rerun()
             
@@ -448,13 +377,18 @@ with st.sidebar:
             
         st.divider()
 
-    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sidebar-section-title'>PŘEHLED A ŽÁK</div>", unsafe_allow_html=True)
     
-    if st.button("Úvodní stránka", use_container_width=True, type="primary" if st.session_state["current_view"] == "Uvod" else "secondary"):
+    if st.button("Úvodní stránka 🏠", use_container_width=True, type="primary" if st.session_state["current_view"] == "Uvod" else "secondary"):
         st.session_state["current_view"] = "Uvod"
         st.rerun()
 
-# Úprava: Zobrazení kapitol podle toho, kdo je přihlášený
+    if st.button("Moje odpovědi 📝", use_container_width=True, type="primary" if st.session_state["current_view"] == "Moje_Odpovedi" else "secondary"):
+        st.session_state["current_view"] = "Moje_Odpovedi"
+        st.rerun()
+
+    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
+    
     if st.session_state.get("username") == "demo.nakladatel":
         chapters = {
             "Kapitola 1": "1. Podnikavost a startupy",
@@ -477,13 +411,21 @@ with st.sidebar:
             st.rerun()
 
     st.divider()
-    if st.button("Odhlásit se", use_container_width=True):
+    if st.button("Odhlásit se 🚪", use_container_width=True):
         st.session_state.clear()
         st.rerun()
+
+
 # =========================================================================
-# 7. SMĚROVÁNÍ OBSAHU
+# 7. SMĚROVÁNÍ OBSAHU (ROUTING)
 # =========================================================================
-if st.session_state["current_view"] == "Ucitel_Panel":
+
+# 1. Žákovský panel
+if st.session_state["current_view"] == "Moje_Odpovedi":
+    zakovsky_panel()
+
+# 2. Učitelský panel
+elif st.session_state["current_view"] == "Ucitel_Panel":
     st.title("👩‍🏫 Učitelský panel")
     
     tab_tridy, tab_vysledky, tab_investice = st.tabs([
@@ -492,12 +434,11 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         "📈 Výsledky z simulátoru"
     ])
     
-    # --- TAB 1: TVORBA TŘÍD ---
     with tab_tridy:
         st.markdown("### Vytvořit novou třídu")
         with st.form("nova_trida_form"):
             novy_nazev = st.text_input("Název třídy (např. 4.B - Ekonomika):")
-            novy_kod = st.text_input("Zvolte Zvací kód pro žáky (např. EKO4B):", help="Tento kód dají žáci při registraci.")
+            novy_kod = st.text_input("Zvolte Zvací kód pro žáky (např. EKO4B):", help="Tento kód zadají žáci při registraci.")
             btn_vytvorit = st.form_submit_button("Vytvořit třídu 🚀")
             
             if btn_vytvorit:
@@ -532,7 +473,6 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání tříd: {e}")
 
-    # --- TAB 2: ODPOVĚDI Z UČEBNICE (SUPABASE) ---
     with tab_vysledky:
         st.markdown("### Přehled odevzdaných prací z učebnice")
         try:
@@ -583,239 +523,18 @@ if st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-# --- TAB 3: ŽIVÝ ŽEBRÍČEK INVESTIC A DETAIL ŽÁKA ---
     with tab_investice:
         st.markdown("### 🏆 Živý žebříček investic a historie obchodů")
-        try:
-            # 1. Načtení tříd učitele ze Supabase
-            t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
-            list_trid = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
-            
-            if not list_trid:
-                st.info("Nejprve vytvořte třídu v záložce 'Správa a tvorba tříd'.")
-            else:
-                vybrana_trida_inv = st.selectbox("Vyberte třídu pro náhled investic:", list_trid, key="sel_trida_inv")
-                
-                # 2. Zjištění Nicků a Jmen žáků ve vybrané třídě
-                zaci_res = supabase.table("uzivatele").select("username, jmeno").eq("trida", vybrana_trida_inv).execute()
-                zaci_dict = {str(z.get("username", "")).strip().lower(): z.get("jmeno", "Žák") for z in zaci_res.data} if zaci_res.data else {}
-                zaci_nicky = list(zaci_dict.keys())
+        st.info("Zde probíhá propojování na investiční simulátor.")
 
-                import gspread
-                import json
-                import yfinance as yf
-
-                # 3. Načtení dat z Google Sheets
-                raw_creds = st.secrets["google_credentials"]
-                tajemstvi = json.loads(raw_creds) if isinstance(raw_creds, str) else dict(raw_creds)
-                    
-                if "private_key" in tajemstvi:
-                    tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
-
-                client = gspread.service_account_from_dict(tajemstvi)
-                soubor = client.open("Skolni_Investice_DB")
-                sheet_uziv = soubor.sheet1
-                
-                data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
-                df_inv = pd.DataFrame(data_inv)
-                
-                if not df_inv.empty:
-                    AKTIVA_MAP = {
-                        "AAPL": ("Apple (AAPL)", "USD"), "TSLA": ("Tesla (TSLA)", "USD"), "MSFT": ("Microsoft (MSFT)", "USD"),
-                        "GOOGL": ("Google (GOOGL)", "USD"), "AMZN": ("Amazon (AMZN)", "USD"), "NVDA": ("Nvidia (NVDA)", "USD"),
-                        "META": ("Meta (META)", "USD"), "CEZ": ("ČEZ", "CZK"), "BTC": ("Bitcoin", "USD"), "ETH": ("Ethereum", "USD")
-                    }
-
-                    with st.spinner("Načítám aktuální ceny akcií a kryptoměn z burzy..."):
-                        try:
-                            kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
-                        except Exception:
-                            kurz_usd = 23.5
-
-                        ceny_aktiv = {}
-                        for db_col, (ticker_name, mena) in AKTIVA_MAP.items():
-                            try:
-                                ticker_symbol = "CEZ.PR" if db_col == "CEZ" else ("BTC-USD" if db_col == "BTC" else ("ETH-USD" if db_col == "ETH" else db_col))
-                                cena = yf.Ticker(ticker_symbol).history(period="1d")['Close'].iloc[-1]
-                                ceny_aktiv[db_col] = cena * kurz_usd if mena == "USD" else cena
-                            except Exception:
-                                ceny_aktiv[db_col] = 0.0
-
-                    zebricek_data = []
-                    zaci_pro_detail = {} # Slovník pro uložení přesných aktiv pro pozdější zobrazení
-                    
-                    for _, row in df_inv.iterrows():
-                        role = str(row.get("Role", "")).strip().upper()
-                        nick = str(row.get("Nick", "")).strip().lower()
-                        
-                        if role == "UCITEL" or not nick or nick not in zaci_nicky:
-                            continue
-
-                        jmeno_zaka = zaci_dict.get(nick, row.get("Jmeno", "Žák"))
-                        zustatek = float(row.get("Zustatek", 0.0))
-                        
-                        hodnota_aktiv = 0.0
-                        drzena_aktiva = {}
-                        
-                        for db_col, (nazev, _) in AKTIVA_MAP.items():
-                            ks = float(row.get(db_col, 0.0))
-                            if ks > 0:
-                                hodnota_aktiv += (ks * ceny_aktiv.get(db_col, 0))
-                                drzena_aktiva[nazev] = ks
-
-                        celkovy_majetek = zustatek + hodnota_aktiv
-                        zisk_ztrata = celkovy_majetek - 20000.0
-                        
-                        popisek_zaka = f"{jmeno_zaka} ({nick})"
-
-                        zebricek_data.append({
-                            "Žák": popisek_zaka,
-                            "Celkový majetek": round(celkovy_majetek, 2),
-                            "Zisk / Ztráta": round(zisk_ztrata, 2),
-                            "Volná hotovost": round(zustatek, 2)
-                        })
-                        
-                        # Uložení detailů do paměti pro roletku s detaily
-                        zaci_pro_detail[popisek_zaka] = {
-                            "nick": nick,
-                            "zustatek": zustatek,
-                            "drzena_aktiva": drzena_aktiva
-                        }
-
-                    if zebricek_data:
-                        df_zebricek = pd.DataFrame(zebricek_data)
-                        df_zebricek = df_zebricek.sort_values(by="Celkový majetek", ascending=False).reset_index(drop=True)
-                        df_zebricek.index += 1
-                        df_zebricek.index.name = "Pořadí"
-
-                        def barva_zisku(val):
-                            color = '#22c55e' if val > 0 else '#ef4444' if val < 0 else '#78716c'
-                            return f'color: {color}; font-weight: bold;'
-
-                        df_styled = df_zebricek.style.map(barva_zisku, subset=["Zisk / Ztráta"]).format({
-                            "Celkový majetek": "{:,.2f} Kč",
-                            "Zisk / Ztráta": "{:+,.2f} Kč",
-                            "Volná hotovost": "{:,.2f} Kč"
-                        })
-
-                        st.markdown(f"#### 🥇 Žebříček třídy **{vybrana_trida_inv}**")
-                        st.dataframe(df_styled, use_container_width=True)
-
-                        st.divider()
-                        
-                        # --- SEKCE: DETAIL ŽÁKA ---
-                        st.markdown("#### 🔍 Detail portfolia a historie obchodů")
-                        vybrany_zak_str = st.selectbox("Vyberte žáka pro zobrazení detailů:", list(zaci_pro_detail.keys()))
-                        
-                        detail = zaci_pro_detail[vybrany_zak_str]
-                        vybrany_nick = detail["nick"]
-                        
-                        col1, col2 = st.columns([1, 2.5])
-                        
-                        with col1:
-                            st.write(f"💵 **Volná hotovost:**\n`{detail['zustatek']:,.2f} Kč`")
-                            st.write("")
-                            st.write("**Aktuálně držená aktiva:**")
-                            if detail["drzena_aktiva"]:
-                                for aktivum, kusy in detail["drzena_aktiva"].items():
-                                    st.write(f"⚡ {aktivum}: `{kusy} ks`")
-                            else:
-                                st.caption("Žák momentálně nedrží žádné akcie ani kryptoměny.")
-                        
-                        with col2:
-                            st.write("**Historie nákupů a prodejů:**")
-                            try:
-                                sheet_trans = soubor.worksheet("Transakce")
-                                data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
-                                if data_trans:
-                                    df_trans = pd.DataFrame(data_trans)
-                                    
-                                    # Vyfiltrujeme pouze transakce vybraného žáka (ignorujeme velikost písmen)
-                                    df_trans_zak = df_trans[df_trans["Nick"].astype(str).str.strip().str.lower() == vybrany_nick]
-                                    
-                                    if not df_trans_zak.empty:
-                                        # Skryjeme sloupec s Nickem, protože učitel už ví, na koho se dívá
-                                        sloupce_k_zobrazeni = [c for c in df_trans_zak.columns if c not in ["Nick", "Jmeno"]]
-                                        st.dataframe(df_trans_zak[sloupce_k_zobrazeni], use_container_width=True)
-                                    else:
-                                        st.info("Tento žák zatím neprovedl žádný obchod.")
-                                else:
-                                    st.info("Zatím nebyly zaznamenány žádné obchody.")
-                            except Exception:
-                                st.warning("Nepodařilo se načíst list 'Transakce'.")
-                    else:
-                        st.info(f"Ve třídě **{vybrana_trida_inv}** zatím žádný žák nezačal investovat.")
-                else:
-                    st.info("Databáze simulátoru je zatím prázdná.")
-        except Exception as e:
-            st.error(f"Chyba při načítání dat z investiční databáze: {e}")
+# 3. Učitelské materiály
 elif st.session_state["current_view"] == "Ucitel_Materialy":
     st.title("📂 Materiály k výuce a testy")
-    st.markdown("""
-    <div class="box-gray">
-        Tato sekce je viditelná <b>pouze pro přihlášené učitele</b>. 
-        Najdete zde metodické podklady, prezentace, pracovní listy a testy ke všem kapitolám.
-    </div>
-    """, unsafe_allow_html=True)
+    st.info("Metodické balíčky a testy pro učitele.")
 
-    tab_metodika, tab_testy = st.tabs(["📄 Metodické balíčky ke kapitolám", "📝 Písemné práce a testy"])
-
-    # --- ZÁLOŽKA 1: METODIKY ---
-    with tab_metodika:
-        vybrana_kap = st.selectbox(
-            "Vyberte kapitolu učebnice:",
-            [
-                "Kapitola 1: Podnikavost a startupy",
-                "Kapitola 2: Finance a osobní management",
-                "Kapitola 3: Výroba, náklady a efektivita",
-                "Kapitola 4: Zaměstnanci a trh práce",
-                "Kapitola 5: Stát, daně a ekonomika",
-                "Kapitola 6: Management a marketing"
-            ]
-        )
-        
-        st.divider()
-
-        # Zobrazení materiálů pro Kapitolu 1
-        if vybrana_kap == "Kapitola 1: Podnikavost a startupy":
-            st.markdown("### 📘 Materiály ke Kapitole 1")
-            
-            with st.container(border=True):
-                st.markdown("#### 📦 Výukový modul: Influencer jako firma")
-                st.markdown("""
-                **Popis materiálu:**  
-                Komplexní výukový balíček zaměřený na téma podnikání v digitální době a světě influencerů. Obsahuje metodickou příručku pro vyučujícího, prezentaci pro výklad v hodině, pracovní listy pro žáky a praktické případové studie. Žáci na reálných příkladech pochopí principy OSVČ, zdanění příjmů a obchodní modely na sociálních sítích.
-                
-                **Obsah balíčku:**  
-                * 📄 Metodická příručka a průvodní list (PDF / DOCX)
-                * 📊 Prezentace k výkladu (PPTX)
-                * 📝 Pracovní listy a případové studie pro žáky
-                * 📈 Praktická kalkulační tabulka (XLSX)
-                """)
-                
-                try:
-                    with open("Influencer - podnikání.zip", "rb") as file:
-                        st.download_button(
-                            label="📥 Stáhnout balíček: Influencer jako firma (ZIP)",
-                            data=file,
-                            file_name="Influencer_podnikani.zip",
-                            mime="application/zip",
-                            type="primary"
-                        )
-                except FileNotFoundError:
-                    st.warning("Soubor 'Influencer - podnikání.zip' nebyl na GitHubu nalezen.")
-
-        else:
-            st.info(f"Pro **{vybrana_kap}** zatím nebyly nahrány žádné metodické balíčky.")
-
-    # --- ZÁLOŽKA 2: TESTY ---
-    with tab_testy:
-        st.markdown("### 📝 Návrhy písemných prací a testů")
-        st.info("Testy ke stažení se připravují.")
-# --- 7.3 ÚVODNÍ STRÁNKA UČEBNICE ---
+# 4. Úvodní stránka
 elif st.session_state["current_view"] == "Uvod":
     st.title("Ekonomika, která dává smysl")
-
     st.markdown(
         """
     <div class="box-gray">
@@ -823,72 +542,42 @@ elif st.session_state["current_view"] == "Uvod":
     </div>
     <div class="box-green">
         🎯 <b>Cíl učebnice</b><br>
-        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
+        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku.
     </div>
     """,
         unsafe_allow_html=True,
     )
 
-    st.divider()
+# 5. Načítání konkrétních kapitol (1 až 6)
+else:
+    kapitoly_map = {
+        "Kapitola 1": (kapitola1, "1"),
+        "Kapitola 2": (kapitola2, "2"),
+        "Kapitola 3": (kapitola3, "3"),
+        "Kapitola 4": (kapitola4, "4"),
+        "Kapitola 5": (kapitola5, "5"),
+        "Kapitola 6": (kapitola6, "6"),
+    }
 
-    st.markdown("### 📖 Jak s učebnicí pracovat")
-    st.markdown("""
-    1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
-    2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
-    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
-    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které ti pomohou s vysvětlením, kontrolou nebo rozvojem tvého projektu.
-    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
-    6. **Závěrečný projekt.** Na úplném konci propojíš všechno dohromady a vytvoříš návrh vlastního odpovědného projektu.
-    """)
+    if st.session_state["current_view"] in kapitoly_map:
+        modul, kap_num = kapitoly_map[st.session_state["current_view"]]
 
-    st.divider()
+        st.session_state["ulozene_odpovedi"] = {}
+        if st.session_state.get("username"):
+            kap_nazev = f"Kapitola {kap_num}"
+            res = (
+                supabase.table("odpovedi")
+                .select("otazka_id, odpoved")
+                .eq("username", st.session_state["username"])
+                .in_("kapitola", [kap_nazev, str(kap_num)])
+                .execute()
+            )
+            if res.data:
+                st.session_state["ulozene_odpovedi"] = {
+                    row["otazka_id"]: row["odpoved"] for row in res.data
+                }
 
-    st.markdown("### 🧩 Legenda učebnice")
-    st.markdown(
-        """
-    <div class="box-blue">📘 <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
-    <div class="box-purple">🤖 <b>Fialová:</b> AI mentoring a práce s asistencí</div>
-    <div class="box-green">✅ <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
-    <div class="box-red">⚠️ <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
-    <div class="box-gray">📄 <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
-    """,
-        unsafe_allow_html=True,
-    )
-
-# --- 7.4 RENDEROVÁNÍ JEDNOTLIVÝCH KAPITOL (UNIVERZÁLNÍ) ---
-kapitoly_map = {
-    "Kapitola 1": (kapitola1, "1"),
-    "Kapitola 2": (kapitola2, "2"),
-    "Kapitola 3": (kapitola3, "3"),
-    "Kapitola 4": (kapitola4, "4"),
-    "Kapitola 5": (kapitola5, "5"),
-    "Kapitola 6": (kapitola6, "6"),
-}
-
-if st.session_state["current_view"] in kapitoly_map:
-    modul, kap_num = kapitoly_map[st.session_state["current_view"]]
-
-# 1. Načtení uložených odpovědí pro aktuální kapitolu
-    st.session_state["ulozene_odpovedi"] = {}
-    if st.session_state.get("username"):
-        # Připravíme si obě možné varianty zápisu kapitoly
-        kap_nazev = f"Kapitola {kap_num}" if not str(kap_num).startswith("Kapitola") else kap_num
-        
-        res = (
-            supabase.table("odpovedi")
-            .select("otazka_id, odpoved")
-            .eq("username", st.session_state["username"])
-            .in_("kapitola", [kap_nazev, str(kap_num)]) # Načte jak "Kapitola 1", tak "1"
-            .execute()
-        )
-        if res.data:
-            st.session_state["ulozene_odpovedi"] = {
-                row["otazka_id"]: row["odpoved"] for row in res.data
-            }
-
-    # 2. Vykreslení kapitoly
-    if hasattr(modul, "render"):
-        modul.render()
-    elif hasattr(modul, "show"):
-        modul.show()
+        if hasattr(modul, "render"):
+            modul.render()
+        elif hasattr(modul, "show"):
+            modul.show()
