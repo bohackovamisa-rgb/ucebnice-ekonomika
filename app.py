@@ -274,14 +274,21 @@ with st.sidebar:
         st.session_state["current_view"] = "Uvod"
         st.rerun()
 
-    chapters = {
-        "Kapitola 1": "1. Podnikavost a startupy",
-        "Kapitola 2": "2. Finance a osobní management",
-        "Kapitola 3": "3. Výroba, náklady a efektivita",
-        "Kapitola 4": "4. Zaměstnanci a trh práce",
-        "Kapitola 5": "5. Stát, daně a ekonomika",
-        "Kapitola 6": "6. Management a marketing",
-    }
+# Úprava: Zobrazení kapitol podle toho, kdo je přihlášený
+    if st.session_state.get("username") == "demo.nakladatel":
+        chapters = {
+            "Kapitola 1": "1. Podnikavost a startupy",
+            "Kapitola 2": "2. Finance a osobní management",
+        }
+    else:
+        chapters = {
+            "Kapitola 1": "1. Podnikavost a startupy",
+            "Kapitola 2": "2. Finance a osobní management",
+            "Kapitola 3": "3. Výroba, náklady a efektivita",
+            "Kapitola 4": "4. Zaměstnanci a trh práce",
+            "Kapitola 5": "5. Stát, daně a ekonomika",
+            "Kapitola 6": "6. Management a marketing",
+        }
 
     for key, title in chapters.items():
         is_active = st.session_state["current_view"] == key
