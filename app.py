@@ -61,13 +61,15 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     odpoved_zaka = st.text_area("Tvoje odpověď:", value=staved_text, key=f"in_{otazka_id}")
     
     if st.button("Uložit odpověď", key=f"btn_{otazka_id}"):
+        # Sjednocení názvu kapitoly pro databázi
+        nazev_kapitoly = f"Kapitola {kapitola_id}" if not kapitola_id.startswith("Kapitola") else kapitola_id
+        
         supabase.table("odpovedi").upsert({
             "username": st.session_state["username"],
-            "kapitola": kapitola_id,
+            "kapitola": nazev_kapitoly,
             "otazka_id": otazka_id,
             "odpoved": odpoved_zaka
         }).execute()
-        st.success("Odpověď byla úspěšně uložena!")
         st.rerun()
         st.session_state["vykresli_otazku_fn"] = vykresli_otazku
 # =========================================================================
@@ -712,14 +714,17 @@ kapitoly_map = {
 if st.session_state["current_view"] in kapitoly_map:
     modul, kap_num = kapitoly_map[st.session_state["current_view"]]
 
-    # 1. Načtení uložených odpovědí pro aktuální kapitolu
+# 1. Načtení uložených odpovědí pro aktuální kapitolu
     st.session_state["ulozene_odpovedi"] = {}
     if st.session_state.get("username"):
+        # Připravíme si obě možné varianty zápisu kapitoly
+        kap_nazev = f"Kapitola {kap_num}" if not str(kap_num).startswith("Kapitola") else kap_num
+        
         res = (
             supabase.table("odpovedi")
             .select("otazka_id, odpoved")
             .eq("username", st.session_state["username"])
-            .eq("kapitola", kap_num)
+            .in_("kapitola", [kap_nazev, str(kap_num)]) # Načte jak "Kapitola 1", tak "1"
             .execute()
         )
         if res.data:
