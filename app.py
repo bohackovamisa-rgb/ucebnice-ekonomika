@@ -48,7 +48,7 @@ def init_supabase() -> Client:
 supabase = init_supabase()
 
 
-# --- FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
+# --- 1. FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
 def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     st.markdown(f"**{text_otazky}**")
     staved_text = ulozene_odpovedi.get(otazka_id, "")
@@ -124,7 +124,7 @@ st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
 
 # =========================================================================
-# 📝 ŽÁKOVSKÝ PANEL (PŘEHLED VŠECH ODPOVĚDÍ)
+# 📝 ŽÁKOVSKÝ PANEL (PŘEHLED VŠECH ODPOVĚDÍ S PROGRESSEM)
 # =========================================================================
 def zakovsky_panel():
     st.title("📝 Moje odpovědi a přehled úkolů")
@@ -146,11 +146,6 @@ def zakovsky_panel():
         st.info("💡 **Zatím nemáš uložené žádné odpovědi.** Otevři kapitolu, vyplň úkol a klikni na *Uložit odpověď*.")
         return
 
-    # -------------------------------------------------------------------------
-    # 🎯 NASTAVENÍ CELKOVÉHO POČTU ÚKOLŮ V KAPITOLÁCH PRO VÝPOČET PROCENT
-    # (Tato čísla si můžeš kdykoliv upravit podle toho, kolik žlutých boxů s 
-    # funkcí vykresli_otazku_fn v dané kapitole reálně máš)
-    # -------------------------------------------------------------------------
     CELKEM_UKOLU = {
         "Kapitola 1": 15,
         "Kapitola 2": 11,
@@ -172,23 +167,17 @@ def zakovsky_panel():
     col_m2.metric("Rozpracovaných kapitol", len(kapitoly_dict))
     st.divider()
 
-    # Vykreslení jednotlivých kapitol s Progress Barem
     for kap_nazev in sorted(kapitoly_dict.keys()):
         slozene_odpovedi = kapitoly_dict[kap_nazev]
         
-        # Výpočet postupu
         hotovo = len(slozene_odpovedi)
-        # Pokud pro kapitolu neznáme cíl, budeme brát 100% z toho, co je hotovo
         celkem = CELKEM_UKOLU.get(kap_nazev, hotovo) 
         
-        # Ochrana před chybou (kdyby náhodou žák vyplnil víc úkolů, než je cíl)
         procento_cislo = min((hotovo / celkem), 1.0) if celkem > 0 else 1.0
         procento_zobrazeni = int(procento_cislo * 100)
         
-        # Název rozbalovacího panelu rovnou ukazuje procenta
         with st.expander(f"📚 {kap_nazev} ({hotovo}/{celkem} úkolů) — {procento_zobrazeni} %", expanded=False):
             
-            # Barevný Progress Bar
             st.progress(procento_cislo, text=f"Stav: {hotovo} z {celkem} hotovo ({procento_zobrazeni} %)")
             st.markdown("<br>", unsafe_allow_html=True)
             
@@ -219,6 +208,8 @@ def zakovsky_panel():
                         except Exception as ex:
                             st.error(f"Chyba při ukládání: {ex}")
                 st.markdown("---")
+
+
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
@@ -504,6 +495,17 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
 
     with tab_vysledky:
         st.markdown("### Přehled odevzdaných prací z učebnice")
+        
+        # 🎯 Cílové počty úkolů pro výpočet procent
+        CELKEM_UKOLU = {
+            "Kapitola 1": 15,
+            "Kapitola 2": 11,
+            "Kapitola 3": 12,
+            "Kapitola 4": 15,
+            "Kapitola 5": 14,
+            "Kapitola 6": 21
+        }
+        
         try:
             t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
             list_trid = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
@@ -514,13 +516,51 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                 
                 if zaci_res.data:
                     zaci_dict = {z["jmeno"]: z["username"] for z in zaci_res.data}
-                    vybrany_zak_jmeno = st.selectbox("Vyberte žáka:", list(zaci_dict.keys()), key="sel_zak_uc")
+                    
+                    # ---------------------------------------------------------
+                    # 📊 1. HROMADNÝ PŘEHLED CELÉ TŘÍDY
+                    # ---------------------------------------------------------
+                    st.markdown(f"#### 📊 Celkový pokrok třídy **{vybrana_t}**")
+                    usernames_tridy = list(zaci_dict.values())
+                    vsechny_odp_res = supabase.table("odpovedi").select("username, kapitola").in_("username", usernames_tridy).execute()
+                    
+                    if vsechny_odp_res.data:
+                        pokrok_data = []
+                        celkem_vsech_ukolu = sum(CELKEM_UKOLU.values())
+                        
+                        for jmeno, uname in zaci_dict.items():
+                            odp_zaka = [o for o in vsechny_odp_res.data if o["username"] == uname]
+                            zak_stats = {"Žák": jmeno}
+                            celkem_hotovo_zaka = 0
+                            
+                            for kap, celkem_kap in CELKEM_UKOLU.items():
+                                hotovo_kap = len([o for o in odp_zaka if o["kapitola"] == kap])
+                                celkem_hotovo_zaka += hotovo_kap
+                                zak_stats[kap] = f"{hotovo_kap} / {celkem_kap}"
+                            
+                            pct_celkem = int((celkem_hotovo_zaka / celkem_vsech_ukolu) * 100) if celkem_vsech_ukolu > 0 else 0
+                            zak_stats["✅ Celkem hotovo"] = f"{celkem_hotovo_zaka} úkolů"
+                            zak_stats["📈 Úspěšnost"] = f"{pct_celkem} %"
+                            pokrok_data.append(zak_stats)
+                            
+                        df_pokrok = pd.DataFrame(pokrok_data)
+                        st.dataframe(df_pokrok, use_container_width=True, hide_index=True)
+                    else:
+                        st.info("Zatím žádný žák v této třídě neodevzdal odpověď.")
+                    
+                    st.divider()
+
+                    # ---------------------------------------------------------
+                    # 🔍 2. DETAIL A EXPORT KONKRÉTNÍHO ŽÁKA
+                    # ---------------------------------------------------------
+                    st.markdown("#### 🔍 Detailní odpovědi konkrétního žáka")
+                    vybrany_zak_jmeno = st.selectbox("Vyberte žáka pro zobrazení textů:", list(zaci_dict.keys()), key="sel_zak_uc")
                     vybrany_zak_user = zaci_dict[vybrany_zak_jmeno]
                     
                     odpovedi_res = supabase.table("odpovedi").select("*").eq("username", vybrany_zak_user).execute()
+                    
                     if odpovedi_res.data:
-                        st.markdown(f"#### Odpovědi žáka: {vybrany_zak_jmeno}")
-                        
+                        # Příprava dat pro export do CSV
                         df_export = pd.DataFrame(odpovedi_res.data)
                         povolene_sloupce = [c for c in ["username", "kapitola", "otazka_id", "odpoved"] if c in df_export.columns]
                         df_export = df_export[povolene_sloupce]
@@ -530,21 +570,42 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                             "otazka_id": "Úkol / Otázka",
                             "odpoved": "Odpověď"
                         })
-                        
                         csv_data = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
                         
                         st.download_button(
-                            label="📥 Stáhnout odpovědi v CSV (pro Excel)",
+                            label=f"📥 Stáhnout odpovědi žáka {vybrany_zak_jmeno} v CSV (pro Excel)",
                             data=csv_data,
                             file_name=f"odpovedi_{vybrany_zak_user}.csv",
                             mime="text/csv"
                         )
+                        st.write("")
                         
+                        # Seskupení odpovědí podle kapitol pro zobrazení s Progress Barem
+                        kapitoly_zaka_dict = {}
                         for o in odpovedi_res.data:
-                            with st.expander(f"📘 {o['kapitola']} — Úkol: {o['otazka_id']}"):
-                                st.write(o["odpoved"])
+                            k = o.get("kapitola", "Ostatní")
+                            if k not in kapitoly_zaka_dict:
+                                kapitoly_zaka_dict[k] = []
+                            kapitoly_zaka_dict[k].append(o)
+                            
+                        # Vykreslení kapitol
+                        for kap_nazev in sorted(kapitoly_zaka_dict.keys()):
+                            odp_v_kapitole = kapitoly_zaka_dict[kap_nazev]
+                            hotovo = len(odp_v_kapitole)
+                            celkem = CELKEM_UKOLU.get(kap_nazev, hotovo)
+                            pct_cislo = min((hotovo / celkem), 1.0) if celkem > 0 else 1.0
+                            pct_zobrazeni = int(pct_cislo * 100)
+                            
+                            with st.expander(f"📘 {kap_nazev} — splněno {hotovo}/{celkem} ({pct_zobrazeni} %)", expanded=False):
+                                st.progress(pct_cislo)
+                                st.write("")
+                                # Výpis odpovědí seřazených podle ID
+                                for o in sorted(odp_v_kapitole, key=lambda x: str(x.get("otazka_id"))):
+                                    st.markdown(f"**Úkol:** `{o['otazka_id']}`")
+                                    st.info(o["odpoved"])
+                                    st.write("")
                     else:
-                        st.write("Tento žák zatím neodevzdal žádné odpovědi.")
+                        st.write("Tento žák zatím neodevzdal žádné odpovědi ke kontrole.")
                 else:
                     st.write("V této třídě zatím nejsou zaregistrovaní žádní žáci.")
             else:
