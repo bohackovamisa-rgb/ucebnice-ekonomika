@@ -699,7 +699,7 @@ def render():
                 unsafe_allow_html=True,
             )
 
-        # --- NOVÁ KALKULAČKA HODINOVÉ SAZBY ---
+# --- NOVÁ KALKULAČKA HODINOVÉ SAZBY ---
         with st.container(border=True):
             st.markdown("### 🧮 Kalkulačka hodinové sazby OSVČ")
             st.write(
@@ -781,15 +781,22 @@ def render():
                     f" hodinu účtovat alespoň **{hourly_rate:,.0f} Kč**."
                 )
 
-                if "vykresli_otazku_fn" in st.session_state:
-                    st.session_state["vykresli_otazku_fn"](
+                # Bezpečné vykreslení otázky a tlačítka Uložit
+                vykresli = st.session_state.get("vykresli_otazku_fn")
+                if vykresli:
+                    vykresli(
                         "1.3.5",
-                        "🧩 Interaktivní výzva: Nastav v kalkulačce hodnoty pro"
-                        " svůj nápad a zhodnoť, zda je takto vypočítaný tarif na"
-                        " trhu reálný.",
+                        "🧩 Interaktivní výzva: Nastav v kalkulačce hodnoty pro svůj nápad a zhodnoť, zda je takto vypočítaný tarif na trhu reálný.",
                         "1",
-                        st.session_state.get("ulozene_odpovedi", {}),
+                        st.session_state.get("ulozene_odpovedi", {})
                     )
+                else:
+                    st.markdown("**🧩 Interaktivní výzva: Nastav v kalkulačce hodnoty pro svůj nápad a zhodnoť, zda je takto vypočítaný tarif na trhu reálný.**")
+                    odp_kalk = st.text_area("Tvoje odpověď:", key="in_1.3.5")
+                    if st.button("Uložit odpověď", key="btn_1.3.5"):
+                        if "uloz_odpoved_fn" in st.session_state:
+                            st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Kalkulačka hodinové sazby", odp_kalk)
+                        st.rerun()
 
     # --- 4. Obchodní korporace ---
     elif selected_section == "4. Obchodní korporace":
