@@ -119,6 +119,114 @@ if st.session_state.get("current_view") in kapitoly_map:
         modul.render()
     elif hasattr(modul, "show"):
         modul.show()
+ # =========================================================================
+# 📝 ŽÁKOVSKÝ PANEL (Funkce definovaná nahoře před vykreslením)
+# =========================================================================
+def zakovsky_panel():
+    st.title("📝 Moje odpovědi a přehled úkolů")
+    st.write("Zde vidíš všechny své uložené odpovědi napříč celou učebnicí ze Supabase.")
+
+    username = st.session_state.get("username")
+    if not username:
+        st.warning("Nejprve se prosím přihlaste.")
+        return
+
+    try:
+        res = supabase.table("odpovedi").select("*").eq("username", username).execute()
+        odpovedi_data = res.data if res.data else []
+    except Exception as e:
+        st.error(f"❌ **Chyba při načítání ze Supabase:** {e}")
+        return
+
+    if not odpovedi_data:
+        st.info("💡 **Zatím nemáš uložené žádné odpovědi.** Otevři kapitolu, vyplň úkol a klikni na *Uložit odpověď*.")
+        return
+
+    kapitoly_dict = {}
+    for row in odpovedi_data:
+        kap = row.get("kapitola", "Ostatní")
+        if kap not in kapitoly_dict:
+            kapitoly_dict[kap] = []
+        kapitoly_dict[kap].append(row)
+
+    col_m1, col_m2 = st.columns(2)
+    col_m1.metric("Vyplněných úkolů", f"{len(odpovedi_data)} ks")
+    col_m2.metric("Rozpracovaných kapitol", len(kapitoly_dict))
+    st.divider()
+
+    for kap_nazev in sorted(kapitoly_dict.keys()):
+        slozene_odpovedi = kapitoly_dict[kap_nazev]
+        with st.expander(f"📚 {kap_nazev} ({len(slozene_odpovedi)} odpovědí)", expanded=True):
+            slozene_odpovedi = sorted(slozene_odpovedi, key=lambda x: str(x.get("otazka_id")))
+            for row in slozene_odpovedi:
+                otazka_id = row.get("otazka_id", "Neuvedeno")
+                stare_text = row.get("odpoved", "")
+
+                st.markdown(f"**Identifikátor úkolu:** `{otazka_id}`")
+                nova_odpoved = st.text_area("Tvá odpověď:", value=stare_text, key=f"panel_in_{kap_nazev}_{otazka_id}")
+
+                if st.button("Uložit změnu 💾", key=f"panel_btn_{kap_nazev}_{otazka_id}"):
+                    if nova_odpoved.strip():
+                        try:
+                            supabase.table("odpovedi").upsert({
+                                "username": username,
+                                "kapitola": kap_nazev,
+                                "otazka_id": otazka_id,
+                                "odpoved": nova_odpoved
+                            }).execute()
+                            
+                            if "ulozene_odpovedi" not in st.session_state:
+                                st.session_state["ulozene_odpovedi"] = {}
+                            st.session_state["ulozene_odpovedi"][otazka_id] = nova_odpoved
+                            
+                            st.toast("Odpověď byla upravena!", icon="✅")
+                            st.rerun()
+                        except Exception as ex:
+                            st.error(f"Chyba při ukládání: {ex}")
+                st.markdown("---")
+
+
+# =========================================================================
+# --- 2. UNIVERZÁLNÍ RENDEROVÁNÍ A NAČÍTÁNÍ KAPITOL (A PANELŮ) ---
+# =========================================================================
+
+# Pokud si žák v menu přepne na Žákovský panel:
+if st.session_state.get("current_view") == "Moje odpovědi 📝":
+    zakovsky_panel()
+
+# Běžné načítání kapitol učebnice:
+else:
+    kapitoly_map = {
+        "Kapitola 1": (kapitola1, "1"),
+        "Kapitola 2": (kapitola2, "2"),
+        "Kapitola 3": (kapitola3, "3"),
+        "Kapitola 4": (kapitola4, "4"),
+        "Kapitola 5": (kapitola5, "5"),
+        "Kapitola 6": (kapitola6, "6"),
+    }
+
+    if st.session_state.get("current_view") in kapitoly_map:
+        modul, kap_num = kapitoly_map[st.session_state["current_view"]]
+        
+        st.session_state["ulozene_odpovedi"] = {}
+        if st.session_state.get("username"):
+            kap_nazev = f"Kapitola {kap_num}"
+            res = (
+                supabase.table("odpovedi")
+                .select("otazka_id, odpoved")
+                .eq("username", st.session_state["username"])
+                .in_("kapitola", [kap_nazev, str(kap_num)])
+                .execute()
+            )
+            if res.data:
+                st.session_state["ulozene_odpovedi"] = {
+                    row["otazka_id"]: row["odpoved"] for row in res.data
+                }
+
+        if hasattr(modul, "render"):
+            modul.render()
+        elif hasattr(modul, "show"):
+            modul.show()       
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
