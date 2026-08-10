@@ -723,3 +723,14 @@ elif st.session_state["current_view"] == "Kapitola 5":
 elif st.session_state["current_view"] == "Kapitola 6":
     if hasattr(kapitola6, "render"): kapitola6.render()
     elif hasattr(kapitola6, "show"): kapitola6.show()
+elif st.session_state["current_view"] == "Kapitola 1":
+    # Načtení uložených odpovědí pro Kapitolu 1
+    st.session_state["ulozene_odpovedi"] = {}
+    if st.session_state.get("username"):
+        res = supabase.table("odpovedi").select("otazka_id, odpoved").eq("username", st.session_state["username"]).eq("kapitola", "1").execute()
+        if res.data:
+            st.session_state["ulozene_odpovedi"] = {row["otazka_id"]: row["odpoved"] for row in res.data}
+
+    # Spuštění kapitoly
+    if hasattr(kapitola1, "render"): kapitola1.render()
+    elif hasattr(kapitola1, "show"): kapitola1.show()
