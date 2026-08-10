@@ -1682,7 +1682,7 @@ def render():
             st.markdown("#### 🚀 Aktivita: Startup za 30 minut")
             st.write("Ve skupině vyberte jeden problém ze školy nebo běžného života.")
             st.markdown("""
-            1. Popište problém jednou větou.
+            1. Popište problém jednou věrou.
             2. Určete konkrétního zákazníka.
             3. Navrhněte nejjednodušší řešení.
             4. Sepište jednu hypotézu.
@@ -1691,16 +1691,13 @@ def render():
             """)
             st.info("**Výstup:** Jedna stránka „nápad → hypotéza → test → metrika“.")
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli jeden problém, který lidé kolem tebe řeší, a napiš, jaké jednoduché řešení by mohlo vzniknout jako startup.</div>", unsafe_allow_html=True)
-            st.text_input("Tvoje odpověď:", key="startup_vymysli_problem")
-            
-            if st.button("Uložit návrh startupu 💾", key="btn_startup_problem"):
-                odp = st.session_state.get("startup_vymysli_problem", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 5.3 - Vymysli problém a řešení", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.5.1",
+                    "🧩 Interaktivní výzva: Vymysli jeden problém, který lidé kolem tebe řeší, a napiš, jaké jednoduché řešení by mohlo vzniknout jako startup.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -1712,16 +1709,14 @@ def render():
         with st.container(border=True):
             st.markdown("### 5.4 Jak startup vzniká")
             st.write("Startup obvykle nevzniká tak, že někdo rovnou napíše dokonalý podnikatelský plán. Častější cesta je postupné ověřování. Tým nejdřív pracuje s nejistotou: má domněnky o zákazníkovi, problému, řešení, ceně a způsobu prodeje. Teprve když získá důkazy, rozhoduje, jestli pokračovat, upravit směr, nebo projekt ukončit.")
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden krok z následujícího postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.</div>", unsafe_allow_html=True)
-            st.text_area("Tvá odpověď (krok a konkrétní akce):", key="startup_krok_postupu")
             
-            if st.button("Uložit krok postupu 💾", key="btn_startup_krok"):
-                odp = st.session_state.get("startup_krok_postupu", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 5.4 - Krok postupu u nápadu", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.5.2",
+                    "🧩 Interaktivní výzva: Vyber jeden krok z následujícího postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             * **Problém:** někdo si všimne potřeby, nespokojenosti nebo neefektivního řešení.
@@ -1819,16 +1814,14 @@ def render():
             | **Metrika** | Číslo nebo pozorování, podle kterého rozhodneme. | Měříme skutečný zájem, nebo jen popularitu? |
             | **Vyhodnocení** | Krátký závěr: co data znamenají. | Je rozhodnutí opřené o důkaz? |
             """)
-            st.markdown("<div class='box-yellow'><strong>🧩 Aktivita: Lean Startup sprint na 45 minut</strong><br>Popiš problém, urči zákazníka, napiš hypotézu, navrhni MVP test, urči metriku úspěchu a rozhodni se, co uděláš podle výsledku.</div>", unsafe_allow_html=True)
-            st.text_area("Tvoje zpracování sprintu (Problém, Zákazník, Hypotéza, MVP, Metrika):", key="lean_sprint_ans")
             
-            if st.button("Uložit Lean Startup sprint 💾", key="btn_lean_sprint"):
-                odp = st.session_state.get("lean_sprint_ans", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 5.9 - Lean Startup sprint", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.5.3",
+                    "🧩 Aktivita: Lean Startup sprint na 45 minut – Popiš problém, urči zákazníka, napiš hypotézu, navrhni MVP test, urči metriku úspěchu a rozhodni se, co uděláš podle výsledku.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -1862,16 +1855,13 @@ def render():
             st.write("Moderní startup dnes často nestaví jen na nápadu a právní formě. Musí umět chytře využívat technologie, pracovat efektivně, komunikovat s komunitou a zároveň myslet na dlouhodobou udržitelnost práce zakladatele.")
             st.markdown("<div class='box-blue'><strong>🚀 Moderní startupové pilíře:</strong> AI-First, Solopreneurship, Build in Public a Founder Wellbeing pomáhají přemýšlet o tom, jak bude projekt fungovat v praxi — nejen co prodává, ale také jak se tvoří, komunikuje a dlouhodobě zvládá.</div>", unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jeden pilíř z tabulky a doplň, jak by se mohl projevit ve tvém startupu.</div>", unsafe_allow_html=True)
-            st.text_area("Tvoje odpověď (vybraný pilíř a jeho aplikace):", key="startup_pilir_ans")
-            
-            if st.button("Uložit pilíř startupu 💾", key="btn_startup_pilir"):
-                odp = st.session_state.get("startup_pilir_ans", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 5.12 - Moderní startupové pilíře", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.5.4",
+                    "🧩 Interaktivní výzva: Vyber jeden pilíř z tabulky a doplň, jak by se mohl projevit ve tvém startupu.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             | Téma | Proč na tom záleží | Jak to implementuji v mém projektu? |
@@ -1892,7 +1882,8 @@ def render():
             """)
             
             st.info("**Je dobré si pamatovat:** Startup začíná hypotézou, ne jistotou. Nejdřív se ověřuje problém a zákazník, potom se řeší velké investice. Podpora může mít podobu rad, kontaktů, prostoru, soutěže, programu nebo financování. I neúspěšný test má hodnotu, protože šetří čas a peníze.")
-# --- 6. Podnikatelský záměr ---
+
+    # --- 6. Podnikatelský záměr ---
     elif "6. Podnikatelský záměr" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 6</div><h2>6. Podnikatelský záměr</h2>", unsafe_allow_html=True)
         
@@ -1905,16 +1896,13 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš svůj podnikatelský nápad ve formátu: „Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit.“</div>", unsafe_allow_html=True)
-            st.text_input("Tvůj nápad:", key="zamer_napad")
-            
-            if st.button("Uložit nápad 💾", key="btn_zamer_napad"):
-                odp = st.session_state.get("zamer_napad", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.0 - Tvůj nápad", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.6.1",
+                    "🧩 Interaktivní výzva: Napiš svůj podnikatelský nápad ve formátu: „Pomáhám komu, s čím, pomocí čeho a proč by za to měl někdo zaplatit.“",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -1948,16 +1936,14 @@ def render():
 
         with st.container(border=True):
             st.markdown("### 6.2 Co by měl podnikatelský záměr obsahovat")
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyplň ke svému nápadu zákazníka, problém, hodnotu, konkurenci, cenu, náklady, rizika, právní formu a první test.</div>", unsafe_allow_html=True)
-            st.text_area("Tvá odpověď k prvkům záměru:", key="zamer_struktura_ans")
             
-            if st.button("Uložit prvky záměru 💾", key="btn_zamer_struktura"):
-                odp = st.session_state.get("zamer_struktura_ans", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.2 - Prvky záměru", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.6.2",
+                    "🧩 Interaktivní výzva: Vyplň ke svému nápadu zákazníka, problém, hodnotu, konkurenci, cenu, náklady, rizika, právní formu a první test.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             with st.expander("Zobrazit strukturu podnikatelského záměru"):
                 st.markdown("""
@@ -1980,16 +1966,13 @@ def render():
             st.markdown("### 6.3 Analýza trhu")
             st.write("Než podnikatel začne vyrábět nebo prodávat, musí zjistit, jestli o jeho nabídku někdo stojí. Analýza trhu neznamená jen „vygooglit konkurenci“. Znamená pochopit zákazníka, jeho současné chování a alternativy, ze kterých si vybírá.")
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Najdi tři podobné firmy, produkty nebo náhradní řešení. U každého napiš cenu, výhodu, slabinu a příležitost pro tvůj projekt.</div>", unsafe_allow_html=True)
-            st.text_area("Tvá analýza konkurenčních řešení:", key="zamer_analyza_trhu_ans")
-            
-            if st.button("Uložit analýzu trhu 💾", key="btn_zamer_analyza_trhu"):
-                odp = st.session_state.get("zamer_analyza_trhu_ans", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 6.3 - Analýza trhu", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.6.3",
+                    "🧩 Interaktivní výzva: Najdi tři podobné firmy, produkty nebo náhradní řešení. U každého napiš cenu, výhodu, slabinu a příležitost pro tvůj projekt.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("#### Zákazník není „všichni“")
             st.write("Častá chyba začínajících projektů je tvrzení: „Naším zákazníkem jsou všichni studenti.“ Jenže prvák, maturant, student odborného výcviku, rodič a učitel mají jiné potřeby, rozpočet i motivaci.")
@@ -2035,7 +2018,6 @@ def render():
             if cena > var_naklad:
                 marze = cena - var_naklad
                 bod_zvratu = fix_naklad / marze
-                import math
                 st.success(f"**Marže na kus:** {marze} Kč. **Bod zvratu:** Musíš prodat alespoň **{math.ceil(bod_zvratu)} kusů**, abys pokryl fixní náklady. Teprve další prodeje tvoří zisk.")
                 
                 if st.button("Uložit výpočet bodu zvratu 💾", key="btn_zamer_bod_zvratu"):
@@ -2118,7 +2100,8 @@ def render():
                     st.warning("Vyplň alespoň název projektu před uložením!")
 
             st.markdown("<div class='box-green'><strong>✅ Výstup pro mini projekt:</strong> Máš umět představit podnikatelský záměr v jedné stránce a obhájit, proč dává ekonomický, právní a etický smysl.</div>", unsafe_allow_html=True)
-# --- 7. Lean Canvas ---
+
+    # --- 7. Lean Canvas ---
     elif "7. Lean Canvas" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 7</div><h2>7. Lean Canvas</h2>", unsafe_allow_html=True)
         
@@ -2131,16 +2114,13 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu: „Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…“</div>", unsafe_allow_html=True)
-            st.text_input("Tvoje hypotéza:", key="lean_hypoteza")
-            
-            if st.button("Uložit hypotézu 💾", key="btn_lean_hypoteza"):
-                odp = st.session_state.get("lean_hypoteza", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 7.0 - Lean Canvas hypotéza", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.7.1",
+                    "🧩 Interaktivní výzva: Vyber jednu domněnku ze svého Lean Canvasu a přepiš ji jako ověřitelnou hypotézu: „Věříme, že…, ověříme to pomocí…, úspěch poznáme podle…“",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -2343,16 +2323,14 @@ def render():
             4. **Má pravidla řízení?** (Etický kodex, ochrana dat)
             5. **Je komunikace důvěryhodná?** (Firma přiznává i limity a oblasti ke zlepšení)
             """)
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.</div>", unsafe_allow_html=True)
-            st.text_input("Tvé hodnocení vybrané firmy:", key="csr_firma_eval")
             
-            if st.button("Uložit hodnocení firmy 💾", key="btn_csr_firma_eval"):
-                odp = st.session_state.get("csr_firma_eval", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 8.8 - Hodnocení udržitelnosti firmy", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.8.1",
+                    "🧩 Interaktivní výzva: Vyber jednu firmu působící v ČR a najdi její stránku o udržitelnosti. Vypiš jednu silnou stránku a jednu otázku, kterou bys firmě položil/a.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
     # --- 9. Rizika podnikání ---
     elif "9. Rizika podnikání" in selected_section:
@@ -2379,7 +2357,7 @@ def render():
             | :--- | :--- | :--- | :--- |
             | **Nízký zájem zákazníků** | Střední až vysoká | Vysoký | Ověřit problém rozhovory a předobjednávkou. |
             | **Vyšší náklady než plán** | Střední | Vysoký | Přidat rezervu, spočítat bod zvratu, porovnat dodavatele. |
-            | **Právní chyba** | Střední | Vysoký | Ověřit živnost, smlouvy, obchodní podmínky a ochranu spotřebitele. |
+            | **Právníchyba** | Střední | Vysoký | Ověřit živnost, smlouvy, obchodní podmínky a ochranu spotřebitele. |
             | **Závislost na 1 platformě**| Vysoká | Střední až vysoký | Budovat vlastní databázi kontaktů, web, e-mail a více kanálů. |
             | **Konflikt v týmu** | Střední | Střední až vysoký | Dohodnout role, podíly, rozhodování a pravidla předem. |
             | **Poškození reputace** | Střední | Vysoký | Pravdivá komunikace, rychlé řešení reklamací, etický kodex. |
@@ -2433,18 +2411,17 @@ def render():
                 "Firma nebude mít dost peněz na provoz"
             ], key="nej_riziko_select")
             
-            st.text_input(f"Jaký je tvůj první preventivní krok proti riziku: '{nej_riziko}'?", key="nej_riziko_krok")
-            
-            if st.button("Uložit preventivní krok 💾", key="btn_riziko_krok"):
-                krok_ans = st.session_state.get("nej_riziko_krok", "")
-                if krok_ans.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 9.4 - Největší riziko a prevence", f"Riziko: {nej_riziko} | Krok: {krok_ans}")
-                else:
-                    st.warning("Před uložením napiš preventivní krok!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.9.1",
+                    f"Jaký je tvůj první preventivní krok proti riziku: '{nej_riziko}'?",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.success("🧩 **Praktické minimum pro start:** Počítat s daněmi a odvody, odlišit jednorázový přivýdělek od soustavné činnosti, znát základní pravidla ochrany spotřebitele a nakládat odpovědně s daty.")
-# --- 10. Švarcsystém ---
+
+    # --- 10. Švarcsystém ---
     elif "10. Švarcsystém" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 10</div><h2>10. Švarcsystém</h2>", unsafe_allow_html=True)
         
@@ -2462,16 +2439,13 @@ def render():
             * vystupuje jménem firmy (firemní e-mail, vizitky).
             """)
 
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vymysli příklad spolupráce, která je férová, a příklad, který už by mohl připomínat švarcsystém.</div>", unsafe_allow_html=True)
-            st.text_area("Tvůj příklad obou situací:", key="svarc_priklad_ans")
-            
-            if st.button("Uložit příklady Švarcsystému 💾", key="btn_svarc"):
-                odp = st.session_state.get("svarc_priklad_ans", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 10.0 - Příklady Švarcsystému", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.10.1",
+                    "🧩 Interaktivní výzva: Vymysli příklad spolupráce, která je férová, a příklad, který už by mohl připomínat švarcsystém.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -2570,17 +2544,13 @@ def render():
         with st.container(border=True):
             st.write("Podnikání může skončit dobrovolně (např. splněním cíle, odchodem do důchodu), rozhodnutím soudu nebo v důsledku finančních problémů (insolvence).")
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Napiš dva varovné signály, podle kterých by podnikatel poznal, že musí změnit plán nebo podnikání ukončit.</div>", unsafe_allow_html=True)
-            s1 = st.text_input("Varovný signál 1:", key="ukonceni_signal1")
-            s2 = st.text_input("Varovný signál 2:", key="ukonceni_signal2")
-            
-            if st.button("Uložit varovné signály 💾", key="btn_ukonceni_signaly"):
-                signaly_data = f"Signál 1: {s1} | Signál 2: {s2}"
-                if s1.strip() or s2.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Ukončení podnikání - Varovné signály", signaly_data)
-                else:
-                    st.warning("Před uložením vyplň alespoň jeden varovný signál!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.12.1",
+                    "🧩 Interaktivní výzva: Napiš dva varovné signály, podle kterých by podnikatel poznal, že musí změnit plán nebo podnikání ukončit.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -2598,16 +2568,13 @@ def render():
             with col_z2:
                 st.error("**2. Zánik = konec**\n\nDefinitivní okamžik, kdy firma právně přestává existovat. Obchodní korporace zaniká výmazem z obchodního rejstříku.")
 
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu.</div>", unsafe_allow_html=True)
-            st.text_area("Tvůj příklad:", key="ukonceni_rozdil_ans")
-            
-            if st.button("Uložit vysvětlení zrušení a zániku 💾", key="btn_ukonceni_rozdil"):
-                odp = st.session_state.get("ukonceni_rozdil_ans", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Ukončení podnikání - Rozdíl zrušení a zánik", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.12.2",
+                    "🧩 Interaktivní výzva: Vysvětli vlastními slovy rozdíl mezi zrušením a zánikem firmy na jednoduchém příkladu.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.warning("⚠️ **Důležitá poznámka k insolvenci:** Pokud má firma více dluhů než majetku a není schopna své závazky dlouhodobě splácet, dostává se do úpadku. V takovém případě musí podat insolvenční návrh.")
 
@@ -2632,14 +2599,13 @@ def render():
                 "Zdroje a ukončení podnikání"
             ], key="mapa_vetev_select")
             
-            duvod_ans = st.text_input(f"Proč je podle tebe nejdůležitější právě '{nej_vetev}'?", key="mapa_vetev_duvod")
-            
-            if st.button("Uložit volbu v mapě 💾", key="btn_mapa_volba"):
-                if duvod_ans.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Logická mapa - Nejdůležitější větev", f"Větev: {nej_vetev} | Důvod: {duvod_ans}")
-                else:
-                    st.warning("Před uložením napiš důvod své volby!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.13.1",
+                    f"Proč je podle tebe nejdůležitější právě '{nej_vetev}'?",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -2649,7 +2615,6 @@ def render():
 
         st.markdown("### 🗺️ Vizuální mapa předmětu")
         
-        # Mřížka logické mapy (2x3 karty)
         m_col1, m_col2 = st.columns(2)
         
         with m_col1:
@@ -2703,7 +2668,8 @@ def render():
                 * Zrušení vs. zánik
                 * Insolvence
                 """)
-# --- 13. Reflexe a sebehodnocení ---
+
+    # --- 13. Reflexe a sebehodnocení ---
     elif "13. Reflexe a sebehodnocení" in selected_section or "Reflexe" in selected_section:
         st.markdown("<div class='sub-section-header'>KAPITOLA 13</div><h2>13. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
         
@@ -2714,16 +2680,13 @@ def render():
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.</div>", unsafe_allow_html=True)
-            st.text_input("Tvoje otázka pro další konzultaci:", key="reflexe_otazka_ans")
-            
-            if st.button("Uložit otázku ke konzultaci 💾", key="btn_reflexe_otazka"):
-                odp = st.session_state.get("reflexe_otazka_ans", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 13 - Otázka ke konzultaci", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš otázku!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.14.1",
+                    "🧩 Interaktivní výzva: Po dokončení kapitoly si vyber jednu oblast, ve které máš největší nejistotu, a napiš otázku pro další konzultaci.",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
             st.markdown("""
             <div class='box-purple'>
@@ -2734,11 +2697,9 @@ def render():
         with st.container(border=True):
             st.markdown("### ✍️ Otázky k reflexi (Doplň)")
             
-            st.write("**1. Co jsem se dnes naučil/a?**")
-            st.text_area("Napiš vlastními slovy 3 věci, které si z kapitoly odnášíš:", height=100, key="reflexe_co_naucil")
-            
-            st.write("**2. Co umím vysvětlit vlastními slovy?**")
-            st.text_area("Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.:", height=100, key="reflexe_vysvetleni")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"]("1.14.2", "1. Co jsem se dnes naučil/a? (Napiš vlastním slovy 3 věci, které si z kapitoly odnášíš)", "1", st.session_state.get("ulozene_odpovedi", {}))
+                st.session_state["vykresli_otazku_fn"]("1.14.3", "2. Co umím vysvětlit vlastními slovy? (Zkus vysvětlit rozdíl mezi zaměstnancem, OSVČ a s.r.o.)", "1", st.session_state.get("ulozene_odpovedi", {}))
             
             st.write("**3. V čem mám ještě nejasnosti?**")
             st.multiselect("Vyber jednu (nebo více) částí, která ti není jasná:", [
@@ -2751,8 +2712,8 @@ def render():
                 "Ukončení podnikání"
             ], key="reflexe_nejasnosti")
             
-            st.write("**4. Která právní forma by se hodila pro můj nápad?**")
-            st.text_area("Vysvětli, proč bys zvolil/a právě tuto formu:", height=100, key="reflexe_forma")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"]("1.14.4", "4. Která právní forma by se hodila pro můj nápad a proč?", "1", st.session_state.get("ulozene_odpovedi", {}))
             
             st.write("**5. Jaký je můj první praktický krok?**")
             st.selectbox("Co udělám jako první?", [
@@ -2762,18 +2723,6 @@ def render():
                 "Ověření firmy v rejstříku",
                 "Vyplnění Lean Canvasu"
             ], key="reflexe_krok")
-
-            if st.button("Uložit kompletní reflexi 💾", key="btn_reflexe_otazky"):
-                nejasnosti_list = st.session_state.get("reflexe_nejasnosti", [])
-                reflexe_data = (
-                    f"Co se naučil: {st.session_state.get('reflexe_co_naucil', '')} | "
-                    f"Vysvětlení rozdílu: {st.session_state.get('reflexe_vysvetleni', '')} | "
-                    f"Nejasnosti: {', '.join(nejasnosti_list)} | "
-                    f"Vybraná forma: {st.session_state.get('reflexe_forma', '')} | "
-                    f"První krok: {st.session_state.get('reflexe_krok', '')}"
-                )
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Podkapitola 13 - Otázky k reflexi", reflexe_data)
 
         with st.container(border=True):
             st.markdown("### ✅ Sebehodnocení")
@@ -2869,16 +2818,13 @@ def render():
             | **Společnost** | Etika, udržitelnost, ekologie, dopad | Firma vytváří hodnotu, ale může tvořit i škody. |
             """)
             
-            st.markdown("#### 🎭 Aktivita: Jedna firma, osm pohledů")
-            st.text_area("Vyber si jeden nápad a napiš 3 klíčové otázky, které by položily různé role (např. Zákazník, Investor, Stát):", key="akt_8pohledu")
-
-            if st.button("Uložit 8 pohledů na firmu 💾", key="btn_8pohledu"):
-                odp = st.session_state.get("akt_8pohledu", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.2 - Jedna firma 8 pohledů", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.15.1",
+                    "🎭 Aktivita: Vyber si jeden nápad a napiš 3 klíčové otázky, které by položily různé role (např. Zákazník, Investor, Stát):",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
         # 15.4 & 15.5 Praxe OSVČ a Obchodních korporací
         with st.container(border=True):
@@ -2912,23 +2858,20 @@ def render():
                     st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.3 - Kalkulace sazby OSVČ", calc_res)
 
             st.markdown("---")
-            st.markdown("#### 🤝 Aktivita: Zakladatelská dohoda společníků (s.r.o.)")
-            st.text_area("Napiš 3 nejdůležitější pravidla do zakladatelské dohody (např. co se stane, když jeden společník nepracuje nebo chce odejít):", key="dohoda_spolecniku")
-
-            if st.button("Uložit zakladatelskou dohodu 💾", key="btn_dohoda_spolecniku"):
-                odp = st.session_state.get("dohoda_spolecniku", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 1", "Modul 15.3 - Zakladatelská dohoda", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "1.15.2",
+                    "🤝 Aktivita: Zakladatelská dohoda společníků (s.r.o.) – Napiš 3 nejdůležitější pravidla do zakladatelské dohody (např. co se stane, když jeden společník nepracuje nebo chce odejít):",
+                    "1",
+                    st.session_state.get("ulozene_odpovedi", {})
+                )
 
         # 15.6 - 15.10 Lean Canvas, Finance & Ekonomika sdílení
         with st.container(border=True):
             st.markdown("### 📊 15.4 Lean Canvas, Finance a Ekonomika sdílení")
             
             st.markdown("""
-            | Častá chyba v záměru | Jak vypadá | Jak ji opravit |
+            | Častáchyba v záměru | Jak vypadá | Jak ji opravit |
             | :--- | :--- | :--- |
             | **Příliš obecný zákazník** | „Naši zákazníci jsou všichni mladí lidé.“ | Popiš konkrétní skupinu, situaci a potřebu. |
             | **Neověřený problém** | „Myslíme si, že to lidé chtějí.“ | Udělej rozhovory, dotazník nebo předobjednávku. |
@@ -3031,7 +2974,6 @@ def render():
             st.markdown("### 🧠 Závěrečné integrované testování")
             st.write("Ověř si své znalosti z celé učebnice:")
 
-            # Kvízové otázky přes expandery
             with st.expander("1. Student prodává náramky a sám nese riziko neprodaných zásob. O který znak podnikání jde?"):
                 q1 = st.radio("Vyber odpověď:", ["Soustavnost", "Vlastní odpovědnost", "Vlastní jméno", "Dosažení 18 let"], key="q1")
                 if st.button("Zkontrolovat Otázku 1", key="btn_q1"):
