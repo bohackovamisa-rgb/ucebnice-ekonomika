@@ -128,7 +128,7 @@ st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 # =========================================================================
 def zakovsky_panel():
     st.title("📝 Moje odpovědi a přehled úkolů")
-    st.write("Zde vidíš všechny své uložené odpovědi napříč celou učebnicí ze Supabase.")
+    st.write("Zde vidíš všechny své uložené odpovědi napříč celou učebnicí. Můžeš sledovat svůj pokrok a odpovědi upravovat.")
 
     username = st.session_state.get("username")
     if not username:
@@ -146,6 +146,20 @@ def zakovsky_panel():
         st.info("💡 **Zatím nemáš uložené žádné odpovědi.** Otevři kapitolu, vyplň úkol a klikni na *Uložit odpověď*.")
         return
 
+    # -------------------------------------------------------------------------
+    # 🎯 NASTAVENÍ CELKOVÉHO POČTU ÚKOLŮ V KAPITOLÁCH PRO VÝPOČET PROCENT
+    # (Tato čísla si můžeš kdykoliv upravit podle toho, kolik žlutých boxů s 
+    # funkcí vykresli_otazku_fn v dané kapitole reálně máš)
+    # -------------------------------------------------------------------------
+    CELKEM_UKOLU = {
+        "Kapitola 1": 15,
+        "Kapitola 2": 11,
+        "Kapitola 3": 12,
+        "Kapitola 4": 15,
+        "Kapitola 5": 14,
+        "Kapitola 6": 21
+    }
+
     kapitoly_dict = {}
     for row in odpovedi_data:
         kap = row.get("kapitola", "Ostatní")
@@ -154,19 +168,36 @@ def zakovsky_panel():
         kapitoly_dict[kap].append(row)
 
     col_m1, col_m2 = st.columns(2)
-    col_m1.metric("Vyplněných úkolů", f"{len(odpovedi_data)} ks")
+    col_m1.metric("Vyplněných úkolů celkem", f"{len(odpovedi_data)} ks")
     col_m2.metric("Rozpracovaných kapitol", len(kapitoly_dict))
     st.divider()
 
+    # Vykreslení jednotlivých kapitol s Progress Barem
     for kap_nazev in sorted(kapitoly_dict.keys()):
         slozene_odpovedi = kapitoly_dict[kap_nazev]
-        with st.expander(f"📚 {kap_nazev} ({len(slozene_odpovedi)} odpovědí)", expanded=True):
+        
+        # Výpočet postupu
+        hotovo = len(slozene_odpovedi)
+        # Pokud pro kapitolu neznáme cíl, budeme brát 100% z toho, co je hotovo
+        celkem = CELKEM_UKOLU.get(kap_nazev, hotovo) 
+        
+        # Ochrana před chybou (kdyby náhodou žák vyplnil víc úkolů, než je cíl)
+        procento_cislo = min((hotovo / celkem), 1.0) if celkem > 0 else 1.0
+        procento_zobrazeni = int(procento_cislo * 100)
+        
+        # Název rozbalovacího panelu rovnou ukazuje procenta
+        with st.expander(f"📚 {kap_nazev} ({hotovo}/{celkem} úkolů) — {procento_zobrazeni} %", expanded=False):
+            
+            # Barevný Progress Bar
+            st.progress(procento_cislo, text=f"Stav: {hotovo} z {celkem} hotovo ({procento_zobrazeni} %)")
+            st.markdown("<br>", unsafe_allow_html=True)
+            
             slozene_odpovedi = sorted(slozene_odpovedi, key=lambda x: str(x.get("otazka_id")))
             for row in slozene_odpovedi:
                 otazka_id = row.get("otazka_id", "Neuvedeno")
                 stare_text = row.get("odpoved", "")
 
-                st.markdown(f"**Identifikátor úkolu:** `{otazka_id}`")
+                st.markdown(f"**Úkol:** `{otazka_id}`")
                 nova_odpoved = st.text_area("Tvá odpověď:", value=stare_text, key=f"panel_in_{kap_nazev}_{otazka_id}")
 
                 if st.button("Uložit změnu 💾", key=f"panel_btn_{kap_nazev}_{otazka_id}"):
@@ -188,8 +219,6 @@ def zakovsky_panel():
                         except Exception as ex:
                             st.error(f"Chyba při ukládání: {ex}")
                 st.markdown("---")
-
-
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
