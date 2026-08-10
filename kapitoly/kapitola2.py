@@ -1,17 +1,29 @@
-import streamlit as st
+import base64
 import math
+import os
+import streamlit as st
+
 
 def render():
-    st.markdown("<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True)
+    st.markdown(
+        "<span class='hero-badge'>Kapitola 2</span>", unsafe_allow_html=True
+    )
     st.title("2. Finance a osobní management")
-    st.markdown("<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>Finance v běžném životě: peníze, rozhodování a odpovědnost.</p>", unsafe_allow_html=True)
-    
+    st.markdown(
+        "<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>"
+        "Finance v běžném životě: peníze, rozhodování a odpovědnost.</p>",
+        unsafe_allow_html=True,
+    )
+
     with st.container(border=True):
-        st.markdown("""
+        st.markdown(
+            """
         <div class='box-blue'>
             <strong>🪙 Pointa kapitoly:</strong> Finanční gramotnost není jen znalost pojmů. Je to schopnost rozumět penězům jako systému, bezpečně se rozhodovat, vyhodnocovat rizika a plánovat osobní i podnikové finance tak, aby člověk dokázal reagovat na běžné i krizové situace.
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
     # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_2 = [
@@ -20,7 +32,6 @@ def render():
         "1.2 ČNB a komerční banky",
         "1.3 Platební styk",
         "1.4 Fintech revoluce",
-        
         # Sekce 2: Osobní finance
         "2.1 Osobní finance v 21. století",
         "2.2 Rozpočet: mapa peněz",
@@ -30,7 +41,6 @@ def render():
         "2.6 Psychologie utrácení",
         "2.7 Kalkulačka času nákupu",
         "2.8 Osobní finanční audit",
-        
         # Sekce 3: Finanční trh
         "3.1 Co je to finanční trh a burza",
         "3.2 Výnos, riziko, likvidita a časový horizont",
@@ -42,7 +52,6 @@ def render():
         "3.8 Interaktivní aktivity a cvičebnice",
         "3.9 Shrnutí: Co si z finančního trhu odnést",
         "3.10 Právní a etický disclaimer",
-
         # Sekce 4: Úvěry, pojištění a ochrana majetku
         "4.1 Co je úvěr",
         "4.2 Úrok: cena půjčených peněz",
@@ -59,7 +68,6 @@ def render():
         "4.13 Jak poznat dobré pojištění",
         "4.14 Praktické rozhodování: úvěr a pojištění dohromady",
         "4.15 Shrnutí: co si odnést",
-
         # Sekce 5: Finanční řízení v podniku — most k podnikavosti
         "5.1 Proč podnik řeší finance",
         "5.2 Základní finanční výkazy: mapa firmy v číslech",
@@ -73,27 +81,46 @@ def render():
         "5.10 Digitální generace a finanční řízení",
         "5.11 Praktická aktivita: finanční manažer na 45 minut",
         "5.12 Shrnutí: co si odnést",
-
         # Závěrečné moduly
         "6. Interaktivní vrstva celé kapitoly",
         "7. Aktivita",
-        "8. Slovník cizích pojmů"
+        "8. Slovník cizích pojmů",
     ]
-    
-    st.markdown("📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True)
-    selected_section_2 = st.selectbox("Přechod na podkapitolu:", section_options_2, index=0, label_visibility="collapsed")
+
+    st.markdown(
+        "📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True
+    )
+    selected_section_2 = st.selectbox(
+        "Přechod na podkapitolu:",
+        section_options_2,
+        index=0,
+        label_visibility="collapsed",
+    )
     st.divider()
 
     # =========================================================================
     # 1.1 PENÍZE JAKO DIGITÁLNÍ DATA
     # =========================================================================
     if "1.1 Peníze jako digitální data" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.1 Peníze jako digitální data</h2>", unsafe_allow_html=True)
-        
-        st.write("21. století není jen éra umělé inteligence a sociálních sítí. Je to především éra totální transformace toho, jak vnímáme hodnotu. Ještě před pár desítkami let znamenalo „být v bance“ fyzickou návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes? Bankovní systém se stal neviditelným operačním systémem našeho života. Běží na pozadí každého našeho kliknutí, každého „pípnutí“ mobilem u pokladny a každého online nákupu.")
+        st.markdown(
+            "<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21."
+            " STOLETÍ</div><h2>1.1 Peníze jako digitální data</h2>",
+            unsafe_allow_html=True,
+        )
+
+        st.write(
+            "21. století není jen éra umělé inteligence a sociálních sítí. Je"
+            " to především éra totální transformace toho, jak vnímáme hodnotu."
+            " Ještě před pár desítkami let znamenalo „být v bance“ fyzickou"
+            " návštěvu přepážky, papírování a čekání na úřední hodiny. Dnes?"
+            " Bankovní systém se stal neviditelným operačním systémem našeho"
+            " života. Běží na pozadí každého našeho kliknutí, každého „pípnutí“"
+            " mobilem u pokladny a každého online nákupu."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 <strong>💡 Proč je to důležité právě teď?</strong>
                 <ul>
@@ -105,75 +132,143 @@ def render():
             <div class='box-purple'>
                 <strong>🎯 Cíl této sekce:</strong> Nechceme se učit zastaralé definice. Chceme pochopit, jak technologie mění pravidla hry, jaké nástroje máme dnes v kapse a jak je používat tak, aby nám peníze sloužily — a ne naopak.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-        st.write("Peníze dnes často nevypadají jako mince nebo bankovky. Když platíš kartou, mobilem nebo hodinkami, většinou se nepřesouvá žádný fyzický předmět. V bankovním systému se změní digitální záznam: jednomu účtu se částka odečte a druhému připíše. Abychom tomu rozuměli, je dobré projít si vývoj peněz od nejstarších forem směny až po současná digitální data.")
+        st.write(
+            "Peníze dnes často nevypadají jako mince nebo bankovky. Když platíš"
+            " kartou, mobilem nebo hodinkami, většinou se nepřesouvá žádný"
+            " fyzický předmět. V bankovním systému se změní digitální záznam:"
+            " jednomu účtu se částka odečte a druhému připíše. Abychom tomu"
+            " rozuměli, je dobré projít si vývoj peněz od nejstarších forem"
+            " směny až po současná digitální data."
+        )
 
-        st.markdown("""
+        st.markdown(
+            """
         <div class='box-gray'>
             <strong>💡 Základní myšlenka:</strong> Peníze nejsou jen „věc“. Jsou to hlavně důvěryhodný záznam hodnoty, kterému lidé, firmy a stát věří. V různých dobách měl tento záznam podobu dobytka, obilí, kovu, mince, papírové bankovky, bankovního účtu nebo digitální platby v mobilu.
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
         # 1.1.1 PROČ PENÍZE VŮBEC VZNIKLY
         with st.container(border=True):
             st.markdown("### 1.1.1 Proč peníze vůbec vznikly")
-            st.write("Na úplném začátku lidé používali **naturální směnu** — vyměňovali zboží za zboží nebo službu za službu. Například někdo měl obilí a potřeboval boty, jiný uměl boty vyrobit a potřeboval jídlo.")
-            st.write("Problém byl v tom, že směna fungovala jen tehdy, když se potkaly dvě potřeby najednou. Tomu se říká **dvojí shoda potřeb**.")
-            
+            st.write(
+                "Na úplném začátku lidé používali **naturální směnu** —"
+                " vyměňovali zboží za zboží nebo službu za službu. Například"
+                " někdo měl obilí a potřeboval boty, jiný uměl boty vyrobit a"
+                " potřeboval jídlo."
+            )
+            st.write(
+                "Problém byl v tom, že směna fungovala jen tehdy, když se"
+                " potkaly dvě potřeby najednou. Tomu se říká **dvojí shoda"
+                " potřeb**."
+            )
+
             st.info("""
             **🍞 Příklad dvojí shoda potřeb:**  
             Pekař chce nové boty. Švec by mu je mohl vyrobit, ale zrovna nepotřebuje chleba. Pekař tedy musí najít někoho dalšího, kdo chce chleba a zároveň má něco, co chce švec. Taková směna je nepraktická, pomalá a omezuje obchod.
             """)
-            st.write("Proto se postupně objevily předměty, které lidé přijímali ne proto, že je hned sami potřebovali, ale protože věřili, že je později vymění s někým dalším. Tak vznikl základ peněz.")
+            st.write(
+                "Proto se postupně objevily předměty, které lidé přijímali ne"
+                " proto, že je hned sami potřebovali, ale protože věřili, že"
+                " je později vymění s někým dalším. Tak vznikl základ peněz."
+            )
 
         # 1.1.2 KOMODITNÍ PENÍZE
         with st.container(border=True):
-            st.markdown("### 1.1.2 Komoditní peníze: hodnota ukrytá ve věci")
-            st.write("První peníze měly často podobu komodit — tedy věcí, které měly hodnotu samy o sobě. Mohlo jít například o sůl, obilí, dobytek, kožešiny, mušle, drahé kovy nebo jiné vzácné a žádané předměty.")
-            
-            st.markdown("""
+            st.markdown(
+                "### 1.1.2 Komoditní peníze: hodnota ukrytá ve věci"
+            )
+            st.write(
+                "První peníze měly často podobu komodit — tedy věcí, které"
+                " měly hodnotu samy o sobě. Mohlo jít například o sůl, obilí,"
+                " dobytek, kožešiny, mušle, drahé kovy nebo jiné vzácné a žádané"
+                " předměty."
+            )
+
+            st.markdown(
+                """
             <div class='box-gray'>
                 <strong>🧵 Česká stopa: plátno jako platidlo</strong><br>
                 V českých zemích se podle zprávy cestovatele Ibráhíma ibn Jákúba z 10. století používaly jako prostředek směny také kousky plátna. Právě s tím se často spojuje původ českých slov <em>platit</em>, <em>platba</em> nebo <em>platidlo</em> — tedy dát „plátno“ jako hodnotu při směně. Je to dobrý příklad toho, že peníze nemusely být vždy mince nebo bankovky. Mohly mít podobu věci, které lidé v dané společnosti důvěřovali a kterou byli ochotni přijímat.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Forma peněz | Výhoda | Problém |
             | :--- | :--- | :--- |
             | **Dobytek, obilí, sůl** | Lidé je uměli použít v běžném životě. | Špatně se dělily, skladovaly nebo převážely. |
             | **Mušle, kožešiny, vzácné předměty** | Byly rozpoznatelné a někde společensky ceněné. | Jejich hodnota závisela na místě a zvyklostech. |
             | **Zlato a stříbro** | Byly vzácné, trvanlivé a dobře dělitelné. | Bylo nutné ověřovat ryzost a hmotnost. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("##### 🧠 Interaktivní výzva: Vyber komoditu pro platbu")
-            st.write("Vyber jednu komoditu, která by mohla sloužit jako peníze. Napiš, v čem by byla praktická a v čem by naopak selhávala:")
-            
-            kom_sel = st.selectbox("Zvol komoditu:", ["Vyber...", "Sůl 🧂", "Dobytek / Kráva 🐄", "Mušle 🐚", "Zlatý prach ✨"], key="k2_1_1_2_kom")
+            st.markdown(
+                "##### 🧠 Interaktivní výzva: Vyber komoditu pro platbu"
+            )
+            st.write(
+                "Vyber jednu komoditu, která by mohla sloužit jako peníze."
+                " Napiš, v čem by byla praktická a v čem by naopak selhávala:"
+            )
+
+            kom_sel = st.selectbox(
+                "Zvol komoditu:",
+                [
+                    "Vyber...",
+                    "Sůl 🧂",
+                    "Dobytek / Kráva 🐄",
+                    "Mušle 🐚",
+                    "Zlatý prach ✨",
+                ],
+                key="k2_1_1_2_kom",
+            )
             if kom_sel == "Sůl 🧂":
-                st.info("Sůl je sice užitečná k jídlu, ale při kontaktu s vodou se rozpustí a zničí!")
+                st.info(
+                    "Sůl je sice užitečná k jídlu, ale při kontaktu s vodou se"
+                    " rozpustí a zničí!"
+                )
             elif kom_sel == "Dobytek / Kráva 🐄":
-                st.error("❌ Kráva se špatně dělí (jak zaplatíš za jedno kafe?) a navíc ji musíš neustále krmit.")
+                st.error(
+                    "❌ Kráva se špatně dělí (jak zaplatíš za jedno kafe?) a"
+                    " navíc ji musíš neustále krmit."
+                )
             elif kom_sel == "Mušle 🐚":
-                st.warning("⚠️ Hodnota závisí na zvyklostech. Pokud je kavárník neuznává, kávu ti nedá.")
+                st.warning(
+                    "⚠️ Hodnota závisí na zvyklostech. Pokud je kavárník"
+                    " neuznává, kávu ti nedá."
+                )
             elif kom_sel == "Zlatý prach ✨":
-                st.success("✅ Skvělé k uchování hodnoty, ale barista musí prach u kasy složitě vážit a ověřovat ryzost.")
-            
-            st.text_area("Slovní obhajoba tvojí volby:", key="k2_1_1_2_txt")
+                st.success(
+                    "✅ Skvělé k uchování hodnoty, ale barista musí prach u"
+                    " kasy složitě vážit a ověřovat ryzost."
+                )
 
-            if st.button("Uložit volbu komodity 💾", key="btn_k2_1_1_2"):
-                odp = st.session_state.get("k2_1_1_2_txt", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.2 - Volba komodity", f"Komodita: {kom_sel} | Obhajoba: {odp}")
-                else:
-                    st.warning("Před uložením nejprve napiš obhajobu!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.1.1",
+                    f"Slovní obhajoba tvojí volby pro komoditu ({kom_sel}):",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
         # 1.1.3 MINCE A 1.1.4 PAPÍROVÉ PENÍZE
         with st.container(border=True):
             st.markdown("### 1.1.3 Mince: hodnota se začíná standardizovat")
-            st.write("Velký posun nastal se vznikem mincí. Mince měly určenou hmotnost, kov, tvar a označení autority, která je vydala. Díky tomu nebylo nutné při každé platbě znovu vážit kus kovu a ověřovat jeho kvalitu.")
+            st.write(
+                "Velký posun nastal se vznikem mincí. Mince měly určenou"
+                " hmotnost, kov, tvar a označení autority, která je vydala. Díky"
+                " tomu nebylo nutné při každé platbě znovu vážit kus kovu a"
+                " ověřovat jeho kvalitu."
+            )
             st.write("Mince tedy přinesly:")
             st.markdown("""
             * jednodušší placení,
@@ -182,28 +277,55 @@ def render():
             * možnost vybírat daně a platit vojsko,
             * silnější roli státu nebo panovníka.
             """)
-            st.info("⚖️ **Důležitý princip:** Čím více obchod roste, tím důležitější je, aby lidé věřili, že peníze mají jasnou hodnotu a že je ostatní přijmou.")
+            st.info(
+                "⚖️ **Důležitý princip:** Čím více obchod roste, tím důležitější"
+                " je, aby lidé věřili, že peníze mají jasnou hodnotu a že je"
+                " ostatní přijmou."
+            )
 
-            st.markdown("### 1.1.4 Papírové peníze: od potvrzení ke státní měně")
-            st.write("Papírové peníze vznikaly postupně. Původně mohly fungovat jako potvrzení, že má člověk někde uložený drahý kov nebo jinou hodnotu. Místo přenášení těžkého zlata bylo jednodušší předat papírový doklad.")
-            st.write("Později se z těchto potvrzení staly bankovky. Jejich hodnota už nespočívala v samotném papíru, ale v důvěře, že je přijme společnost a že za nimi stojí banka nebo stát.")
-            
-            st.markdown("""
+            st.markdown(
+                "### 1.1.4 Papírové peníze: od potvrzení ke státní měně"
+            )
+            st.write(
+                "Papírové peníze vznikaly postupně. Původně mohly fungovat jako"
+                " potvrzení, že má člověk někde uložený drahý kov nebo jinou"
+                " hodnotu. Místo přenášení těžkého zlata bylo jednodušší předat"
+                " papírový doklad."
+            )
+            st.write(
+                "Později se z těchto potvrzení staly bankovky. Jejich hodnota"
+                " už nespočívala v samotném papíru, ale v důvěře, že je přijme"
+                " společnost a že za nimi stojí banka nebo stát."
+            )
+
+            st.markdown(
+                """
             <div class='box-blue'>
                 <strong>Proč má bankovka hodnotu, když je to jen papír?</strong><br>
                 Bankovka má hodnotu proto, že ji stát uznává jako zákonné platidlo a lidé věří, že s ní zaplatí i jinde. Hodnota tedy není v materiálu, ale v důvěře, pravidlech a fungujícím systému.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.1.5 až 1.1.8 ZLATÝ STANDARD, BRETTONWOODS, NIXON A FIAT
         with st.container(border=True):
-            st.markdown("### 1.1.5 Zlatý standard: když byly peníze navázané na zlato")
-            st.write("Dlouhou dobu nebyly papírové peníze chápány jen jako samostatná hodnota. Často fungovaly jako slib, že je lze vyměnit za určité množství zlata. Tomu se říká **zlatý standard**.")
-            st.markdown("""
+            st.markdown(
+                "### 1.1.5 Zlatý standard: když byly peníze navázané na zlato"
+            )
+            st.write(
+                "Dlouhou dobu nebyly papírové peníze chápány jen jako samostatná"
+                " hodnota. Často fungovaly jako slib, že je lze vyměnit za"
+                " určité množství zlata. Tomu se říká **zlatý standard**."
+            )
+            st.markdown(
+                """
             <div class='box-gray'>
                 🥇 <strong>Zlatý standard jednoduše:</strong> Stát nebo centrální banka slíbily, že měna je krytá zlatem. Peníze tedy nebyly jen papírky. Měly být navázané na zásoby zlata, které měl stát nebo centrální banka k dispozici.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
             st.write("V praxi to znamenalo, že:")
             st.markdown("""
             * měna měla pevně stanovený vztah ke zlatu,
@@ -213,48 +335,86 @@ def render():
             * mezinárodní obchod měl pevnější pravidla.
             """)
 
-            st.markdown("### 1.1.6 Brettonwoodský systém: dolar, zlato a svět po druhé světové válce")
-            st.write("Po druhé světové válce vznikl nový mezinárodní měnový systém nazývaný **Brettonwoodský systém** (1944). Americký dolar byl navázán na zlato (35 USD za trojskou unci) a ostatní měny na americký dolar.")
+            st.markdown(
+                "### 1.1.6 Brettonwoodský systém: dolar, zlato a svět po druhé"
+                " světové válce"
+            )
+            st.write(
+                "Po druhé světové válce vznikl nový mezinárodní měnový systém"
+                " nazývaný **Brettonwoodský systém** (1944). Americký dolar byl"
+                " navázán na zlato (35 USD za trojskou unci) a ostatní měny na"
+                " americký dolar."
+            )
 
             st.markdown("### 1.1.7 Konec vazby na zlato: Nixonův šok")
-            st.write("V roce 1971 americký prezident Richard Nixon pozastavil směnitelnost dolaru za zlato (**Nixonův šok**). Tím se svět posunul k systému dnešních **fiat peněz**, jejichž hodnota stojí výhradně na důvěře ve stát, centrální banku a ekonomiku.")
+            st.write(
+                "V roce 1971 americký prezident Richard Nixon pozastavil"
+                " směnitelnost dolaru za zlato (**Nixonův šok**). Tím se svět"
+                " posunul k systému dnešních **fiat peněz**, jejichž hodnota"
+                " stojí výhradně na důvěře ve stát, centrální banku a ekonomiku."
+            )
 
             st.markdown("### 1.1.8 Je lepší mít peníze kryté zlatem, nebo ne?")
-            st.markdown("""
+            st.markdown(
+                """
             | Systém | Výhody | Nevýhody |
             | :--- | :--- | :--- |
             | **Peníze navázané na zlato** | Omezují přílišné „tištění peněz“, podporují dlouhodobou důvěru a stabilnější měnové kurzy. | Svazují ekonomiku množstvím zlata, ztěžují reakci na krize a mohou prohlubovat poklesy. |
             | **Fiat peníze (dnešní)** | Centrální banka může pružněji reagovat na krize, inflaci, nezaměstnanost. | Vyžadují důvěru v odpovědnou politiku. Při špatném řízení hrozí vysoká inflace. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("##### 🧩 Aktivita: Zlatý standard vs. dnešní peníze")
-            v_sys = st.radio("Který systém obhajuješ?", ["Peníze kryté zlatem", "Fiat peníze (dnešní systém)"], key="k2_1_1_8_rad")
-            st.text_area(f"Vaše obhajoba pro {v_sys}:", key="k2_1_1_8_txt")
+            v_sys = st.radio(
+                "Který systém obhajuješ?",
+                ["Peníze kryté zlatem", "Fiat peníze (dnešní systém)"],
+                key="k2_1_1_8_rad",
+            )
 
-            if st.button("Uložit obhajobu systému 💾", key="btn_k2_1_1_8"):
-                odp = st.session_state.get("k2_1_1_8_txt", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.8 - Zlatý standard vs Fiat", f"Vybráno: {v_sys} | Obhajoba: {odp}")
-                else:
-                    st.warning("Před uložením nejprve napiš obhajobu!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.1.2",
+                    f"Vaše obhajoba pro systém ({v_sys}):",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
         # 1.1.9 & 1.1.10 BEZHOOTOVOSTNÍ PENÍZE A KARTY
         with st.container(border=True):
-            st.markdown("### 1.1.9 Bezhotovostní peníze: peníze jako účetní záznam")
-            st.write("S rozvojem bank se začaly stále více používat bezhotovostní peníze. Člověk nemusel držet všechny peníze v hotovosti. Mohl je mít uložené v bance a platit převodem, šekem, později kartou nebo internetovým bankovnictvím.")
-            st.info("🏦 **Jednoduše řečeno:** Když máš na účtu 2 000 Kč, neleží někde v bance krabička s bankovkami označená tvým jménem. Banka vede záznam, že máš vůči ní nárok na určitou částku.")
+            st.markdown(
+                "### 1.1.9 Bezhotovostní peníze: peníze jako účetní záznam"
+            )
+            st.write(
+                "S rozvojem bank se začaly stále více používat bezhotovostní"
+                " peníze. Člověk nemusel držet všechny peníze v hotovosti. Mohl"
+                " je mít uložené v bance a platit převodem, šekem, později kartou"
+                " nebo internetovým bankovnictvím."
+            )
+            st.info(
+                "🏦 **Jednoduše řečeno:** Když máš na účtu 2 000 Kč, neleží někde"
+                " v bance krabička s bankovkami označená tvým jménem. Banka"
+                " vede záznam, že máš vůči ní nárok na určitou částku."
+            )
 
             st.markdown("### 1.1.10 Platební karta: plastový klíč k účtu")
-            st.write("Platební karta sama o sobě nejsou peníze. Je to nástroj, kterým dáváš pokyn k platbě.")
-            
-            st.markdown("""
+            st.write(
+                "Platební karta sama o sobě nejsou peníze. Je to nástroj,"
+                " kterým dáváš pokyn k platbě."
+            )
+
+            st.markdown(
+                """
             <div class='box-red'>
                 <strong>🔐 Bezpečnostní pravidlo:</strong> Karta, mobil nebo hodinky nejsou „peníze samy o sobě“. Jsou to vstupní brány k penězům na účtu nebo k úvěrovému limitu. Kdo získá přístup k platebnímu nástroji a k ověřovacím prvkům, může dát pokyn k platbě.
             </div>
-            """, unsafe_allow_html=True)
-            
-            with st.expander("🛡️ Jaké technologie platbu chrání (Detailní rozbor)"):
+            """,
+                unsafe_allow_html=True,
+            )
+
+            with st.expander(
+                "🛡️ Jaké technologie platbu chrání (Detailní rozbor)"
+            ):
                 st.markdown("""
                 * **PIN** — číselný kód pro autorizaci.
                 * **Biometrie** — otisk prstu / FaceID v telefonu.
@@ -269,9 +429,14 @@ def render():
         # 1.1.11 & 1.1.12 BANKOVNICTVÍ V MOBILU, PHISHING A FINTECH
         with st.container(border=True):
             st.markdown("### 1.1.11 Internetové a mobilní bankovnictví")
-            st.write("Správa peněz přes mobil je pohodlná, ale vyžaduje obezřetnost před podvody.")
+            st.write(
+                "Správa peněz přes mobil je pohodlná, ale vyžaduje obezřetnost"
+                " před podvody."
+            )
 
-            st.markdown("##### 🚨 Ukázka podvodného e-mailu (Phishing trenažér)")
+            st.markdown(
+                "##### 🚨 Ukázka podvodného e-mailu (Phishing trenažér)"
+            )
             st.info("""
             **Od:** bezpecnost@bnka-podpora-klientu.cz  
             **Předmět:** ZABLOKOVANÝ ÚČET - OKAMŽITÁ AKCE!  
@@ -279,52 +444,117 @@ def render():
             👉 [www.mojebanka-rychle-overeni.com/login](https://#)
             """)
 
-            p_chk1 = st.checkbox("Podezřelá e-mailová adresa odesílatele (překlepy)", key="k2_1_1_11_ph1")
-            p_chk2 = st.checkbox("Výzva k nahlášení na Policii", key="k2_1_1_11_ph2")
-            p_chk3 = st.checkbox("Text vytváří tlak na rychlé rozhodnutí", key="k2_1_1_11_ph3")
-            p_chk4 = st.checkbox("Nebezpečný odkaz nevedoucí na ofic. web banky", key="k2_1_1_11_ph4")
+            p_chk1 = st.checkbox(
+                "Podezřelá e-mailová adresa odesílatele (překlepy)",
+                key="k2_1_1_11_ph1",
+            )
+            p_chk2 = st.checkbox(
+                "Výzva k nahlášení na Policii", key="k2_1_1_11_ph2"
+            )
+            p_chk3 = st.checkbox(
+                "Text vytváří tlak na rychlé rozhodnutí", key="k2_1_1_11_ph3"
+            )
+            p_chk4 = st.checkbox(
+                "Nebezpečný odkaz nevedoucí na ofic. web banky",
+                key="k2_1_1_11_ph4",
+            )
 
             if st.button("Vyhodnotit hrozbu phishingu 💾", key="k2_1_1_11_btn"):
                 if p_chk1 and p_chk3 and p_chk4 and not p_chk2:
-                    st.success("Správně! Odhalil jsi všechny 3 varovné signály. Správná reakce: Neklikat na odkaz, nic nevyplňovat a situaci ověřit v oficiální aplikaci banky.")
+                    st.success(
+                        "Správně! Odhalil jsi všechny 3 varovné signály."
+                        " Správná reakce: Neklikat na odkaz, nic nevyplňovat a"
+                        " situaci ověřit v oficiální aplikaci banky."
+                    )
                     if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.11 - Phishing trenažér", "Úspěšně odhaleno (odesílatel, časový tlak, podezřelý odkaz)")
+                        st.session_state["uloz_odpoved_fn"](
+                            "Kapitola 2",
+                            "Podkapitola 1.1.11 - Phishing trenažér",
+                            "Úspěšně odhaleno (odesílatel, časový tlak,"
+                            " podezřelý odkaz)",
+                        )
                 else:
-                    st.error("Zkus to znovu. Označ 3 varovné znaky (odesílatel, tlak na čas, podezřelý odkaz).")
+                    st.error(
+                        "Zkus to znovu. Označ 3 varovné znaky (odesílatel, časový"
+                        " tlak, podezřelý odkaz)."
+                    )
 
             st.markdown("### 1.1.12 Okamžité platby, QR platby a fintech")
-            st.write("Okamžité platby doručí peníze během sekund, QR kód šetří čas při opisování účtu a **fintech firmy** přinášejí přehledné mobilní správy rozpočtů.")
+            st.write(
+                "Okamžité platby doručí peníze během sekund, QR kód šetří čas"
+                " při opisování účtu a **fintech firmy** přinášejí přehledné"
+                " mobilní správy rozpočtů."
+            )
 
         # 1.1.13 KRYPTOMĚNY A BLOCKCHAIN
         with st.container(border=True):
             st.markdown("### 1.1.13 Kryptoměny a blockchain")
-            st.write("Kryptoměny fungují na technologii **blockchain** — sdílené digitální účetní knize bez centrální banky.")
-            st.write("Princip stojí na **decentralizaci**, **transparentnosti**, **nevratnosti** a **vlastní odpovědnosti** za soukromý klíč.")
+            st.write(
+                "Kryptoměny fungují na technologii **blockchain** — sdílené"
+                " digitální účetní knize bez centrální banky."
+            )
+            st.write(
+                "Princip stojí na **decentralizaci**, **transparentnosti**,"
+                " **nevratnosti** a **vlastní odpovědnosti** za soukromý klíč."
+            )
 
-            st.markdown("##### 🧮 Modelový příklad pravidelného investování (DCA):")
-            st.write("Model vkladu 1 000 Kč na začátku + 200 Kč měsíčně po dobu 5 let (Celkem vložených **13 000 Kč**):")
-            
-            scen_sel = st.selectbox("Vyber modelový scénář vývoje kryptoměny:", [
-                "Pesimistický scénář (-20 % ročně)",
-                "Nulový scénář (0 % ročně)",
-                "Mírně růstový scénář (+5 % ročně)",
-                "Silně růstový scénář (+15 % ročně)",
-                "Extrémně růstový scénář (+30 % ročně)"
-            ], key="k2_dca_1_1_13_sel")
+            st.markdown(
+                "##### 🧮 Modelový příklad pravidelného investování (DCA):"
+            )
+            st.write(
+                "Model vkladu 1 000 Kč na začátku + 200 Kč měsíčně po dobu 5"
+                " let (Celkem vložených **13 000 Kč**):"
+            )
+
+            scen_sel = st.selectbox(
+                "Vyber modelový scénář vývoje kryptoměny:",
+                [
+                    "Pesimistický scénář (-20 % ročně)",
+                    "Nulový scénář (0 % ročně)",
+                    "Mírně růstový scénář (+5 % ročně)",
+                    "Silně růstový scénář (+15 % ročně)",
+                    "Extrémně růstový scénář (+30 % ročně)",
+                ],
+                key="k2_dca_1_1_13_sel",
+            )
 
             if "Pesimistický" in scen_sel:
-                st.metric("Orientační hodnota po 5 letech", "cca 7 700 Kč", delta="-5 300 Kč (ztráta)")
+                st.metric(
+                    "Orientační hodnota po 5 letech",
+                    "cca 7 700 Kč",
+                    delta="-5 300 Kč (ztráta)",
+                )
             elif "Nulový" in scen_sel:
-                st.metric("Orientační hodnota po 5 letech", "13 000 Kč", delta="0 Kč (bez zisku)")
+                st.metric(
+                    "Orientační hodnota po 5 letech",
+                    "13 000 Kč",
+                    delta="0 Kč (bez zisku)",
+                )
             elif "Mírně růstový" in scen_sel:
-                st.metric("Orientační hodnota po 5 letech", "cca 14 800 Kč", delta="+1 800 Kč zisk")
+                st.metric(
+                    "Orientační hodnota po 5 letech",
+                    "cca 14 800 Kč",
+                    delta="+1 800 Kč zisk",
+                )
             elif "Silně růstový" in scen_sel:
-                st.metric("Orientační hodnota po 5 letech", "cca 19 300 Kč", delta="+6 300 Kč zisk")
+                st.metric(
+                    "Orientační hodnota po 5 letech",
+                    "cca 19 300 Kč",
+                    delta="+6 300 Kč zisk",
+                )
             else:
-                st.metric("Orientační hodnota po 5 letech", "cca 30 700 Kč", delta="+17 700 Kč zisk")
+                st.metric(
+                    "Orientační hodnota po 5 letech",
+                    "cca 30 700 Kč",
+                    delta="+17 700 Kč zisk",
+                )
 
-            st.markdown("##### 🏦 Srovnání: Kryptoměny vs. Spořicí účet vs. Penzijní spoření")
-            st.markdown("""
+            st.markdown(
+                "##### 🏦 Srovnání: Kryptoměny vs. Spořicí účet vs. Penzijní"
+                " spoření"
+            )
+            st.markdown(
+                """
             | Možnost | Modelové zhodnocení | Orientační hodnota po 5 letech | Co je hlavní rozdíl |
             | :--- | :--- | :--- | :--- |
             | **Spořicí účet** | cca 3,5 % p.a. | cca 14 200 Kč | Peníze jsou dostupné rychle, výnos je nižší. |
@@ -332,15 +562,24 @@ def render():
             | **Penzijní spoření** | cca 3–5 % p.a. + podpora | cca 14 100–15 100 Kč | Dlouhodobý produkt na stáří se státní podporou. |
             | **Krypto (Nulový scen.)**| 0 % ročně | 13 000 Kč | Bez růstu ceny nevzniká zisk, působí inflace. |
             | **Krypto (Pesim. scen.)**| -20 % ročně | cca 7 700 Kč | U kryptoměn je reálná i výrazná ztráta hodnoty. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.1.14 & 1.1.15 CBDC A SHRNUTÍ VÝVOJE PENĚZ
         with st.container(border=True):
-            st.markdown("### 1.1.14 Digitální měny centrálních bank (CBDC)")
-            st.write("CBDC představují digitální peníze vydávané přímo centrální bankou (např. Digitální Euro). Na rozdíl od kryptoměny za nimi stojí stát a zákony.")
+            st.markdown(
+                "### 1.1.14 Digitální měny centrálních bank (CBDC)"
+            )
+            st.write(
+                "CBDC představují digitální peníze vydávané přímo centrální"
+                " bankou (např. Digitální Euro). Na rozdíl od kryptoměny za"
+                " nimi stojí stát a zákony."
+            )
 
             st.markdown("### 1.1.15 Shrnutí vývoje peněz")
-            st.markdown("""
+            st.markdown(
+                """
             | Období / forma | Co sloužilo jako peníze | Na čem stála důvěra |
             | :--- | :--- | :--- |
             | **Naturální směna** | Zboží za zboží | Na přímé dohodě dvou lidí |
@@ -350,36 +589,52 @@ def render():
             | **Bezhotovostní peníze** | Zůstatek na účtu | Na bankovním systému, pravidlech a dohledu |
             | **Digitální platby** | Data v bankovních systémech | Na ověření identity a bezpečnosti infrastruktury |
             | **Kryptoměny** | Distribuovaný digitální záznam | Na technologii, síti uživatelů a protokolu |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-purple'>
                 🤖 <strong>AI mentoring prompt:</strong> Zkopíruj tento prompt do AI asistenta:<br>
                 <em>„Vysvětli mi vývoj peněz od směny po digitální platby na příkladu běžného nákupu oběda.“</em>
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("🎮 **Mikroaktivita: Peníze nejsou jen papír**")
-            st.write("Ve dvojici vyberte jednu platbu z běžného dne. Popište cestu peněz: kdo platí, komu, jaký nástroj použije a kde vzniká digitální záznam.")
-            st.text_area("Odpověď na mikroaktivitu:", key="k2_1_1_15_micro")
 
-            if st.button("Uložit mikroaktivitu 💾", key="btn_k2_1_1_15"):
-                odp = st.session_state.get("k2_1_1_15_micro", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.1.15 - Mikroaktivita Cesta peněz", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.1.3",
+                    "Ve dvojici vyberte jednu platbu z běžného dne. Popište"
+                    " cestu peněz: kdo platí, komu, jaký nástroj použije a kde"
+                    " vzniká digitální záznam.",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
     # =========================================================================
     # 1.2 ČNB A KOMERČNÍ BANKY
     # =========================================================================
     elif "1.2 ČNB" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.2 ČNB a komerční banky</h2>", unsafe_allow_html=True)
-        st.write("Bankovní systém není jen síť poboček a bankomatů. Je to jeden z nejdůležitějších „nervových systémů“ ekonomiky. Přes banky tečou mzdy, platby za zboží, splátky úvěrů, daně, sociální dávky, investice i peníze firem. Aby tento systém fungoval, musí mu lidé věřit.")
+        st.markdown(
+            "<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21."
+            " STOLETÍ</div><h2>1.2 ČNB a komerční banky</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Bankovní systém není jen síť poboček a bankomatů. Je to jeden z"
+            " nejdůležitějších „nervových systémů“ ekonomiky. Přes banky tečou"
+            " mzdy, platby za zboží, splátky úvěrů, daně, sociální dávky,"
+            " investice i peníze firem. Aby tento systém fungoval, musí mu lidé"
+            " věřit."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 🏦 <strong>Základní rozlišení:</strong><br>
                 • <strong>Česká národní banka (ČNB):</strong> Centrální banka České republiky. Nejde o běžnou banku pro občany. Je to instituce, která hlídá stabilitu měny, finančního systému a pravidla pro banky.<br>
@@ -388,88 +643,209 @@ def render():
             <div class='box-purple'>
                 🧠 <strong>Pointa pro běžný život:</strong> Když platíš kartou, bereš si hypotéku, dostáváš výplatu na účet nebo sleduješ inflaci, nepřímo se setkáváš s rozhodnutími centrální banky i se službami komerčních bank.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.2.1 Postavení ČNB v ČR
         with st.container(border=True):
             st.markdown("### 1.2.1 Postavení ČNB v České republice")
-            st.write("Česká národní banka je centrální banka České republiky. Její postavení je zakotveno v právním řádu ČR a její činnost upravuje zejména zákon o České národní bance. ČNB je veřejnoprávní instituce se zvláštním postavením: není komerční firmou, neusiluje o zisk jako běžný podnik a neposkytuje běžné bankovní služby občanům.")
-            
-            st.markdown("""
+            st.write(
+                "Česká národní banka je centrální banka České republiky. Její"
+                " postavení je zakotveno v právním řádu ČR a její činnost"
+                " upravuje zejména zákon o České národní bance. ČNB je"
+                " veřejnoprávní instituce se zvláštním postavením: není"
+                " komerční firmou, neusiluje o zisk jako běžný podnik a"
+                " neposkytuje běžné bankovní služby občanům."
+            )
+
+            st.markdown(
+                """
             <div class='box-gray'>
                 ⚖️ <strong>Důležité:</strong> ČNB je při plnění svých hlavních úkolů nezávislá. To znamená, že vláda jí nemá diktovat, jak má nastavovat úrokové sazby nebo měnovou politiku. Smyslem nezávislosti je chránit stabilitu měny a finančního systému před krátkodobým politickým tlakem.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.write("ČNB sídlí v Praze a působí pro celou Českou republiku. Je součástí Evropského systému centrálních bank, protože Česká republika je členem Evropské unie. Dokud ale ČR nepřijme euro, ČNB provádí vlastní měnovou politiku pro českou korunu.")
+            st.write(
+                "ČNB sídlí v Praze a působí pro celou Českou republiku. Je"
+                " součástí Evropského systému centrálních bank, protože Česká"
+                " republika je členem Evropské unie. Dokud ale ČR nepřijme euro,"
+                " ČNB provádí vlastní měnovou politiku pro českou korunu."
+            )
 
-            with st.expander("🇪🇺 ČNB a euro: proč je česká situace trochu jiná"):
-                st.write("To, že má Česká republika vlastní měnu (korunu) a vlastní centrální banku, která samostatně nastavuje měnovou politiku, není v Evropské unii u všech států běžné. Mnoho členských zemí EU už přijalo euro a patří do eurozóny. V těchto zemích nerozhoduje o hlavních úrokových sazbách jejich národní centrální banka samostatně, ale společně systém vedený Evropskou centrální bankou (ECB).")
-                st.write("**Příklad:** Slovensko přijalo euro v roce 2009. Národní banka Slovenska dál existuje, ale už nevydává vlastní slovenskou korunu a samostatně neurčuje měnovou politiku pro vlastní měnu. Podílí se na fungování eurozóny, dohledu a finanční stabilitě, ale hlavní měnová politika se řeší na evropské úrovni přes ECB.")
-                st.write("**Jak by to fungovalo po přijetí eura v ČR:** Česká koruna by byla nahrazena eurem. ČNB by nezanikla, ale změnila by se její role. Dál by působila jako národní centrální banka, dohlížela by na finanční trh, pečovala o hotovostní oběh eura v ČR, podílela se na finanční stabilitě a byla by součástí Eurosystému. O hlavních úrokových sazbách pro eurozónu by se ale rozhodovalo společně v rámci ECB, nikoli samostatně jen podle české ekonomiky.")
-                st.write("**Konkrétní modelový příklad rozdílu:** Představ si, že v Česku je inflace vyšší než v eurozóně a česká ekonomika potřebuje brzdit zdražování. Pokud má ČR vlastní korunu, může ČNB zvýšit úrokové sazby výrazněji — například na 6–7 %. Tím zdraží úvěry, hypotéky i půjčky, ale zároveň podpoří spoření a může pomoci tlumit inflaci. Pokud by ČR už platila eurem, sazby by se nastavovaly pro celou eurozónu. ECB by se dívala na průměrnou situaci mnoha zemí, například Německa, Francie, Itálie, Slovenska nebo Španělska. Kdyby eurozóna jako celek potřebovala mírnější politiku, mohly by být sazby třeba jen 3–4 %, i když by Česku samostatně vyhovovaly vyšší sazby.")
-                st.write("**Co by to znamenalo v běžném životě:** Po přijetí eura by úrokové sazby v ČR mohly být v některých obdobích nižší, než jaké by nastavila samostatná ČNB. To by mohlo zlevnit hypotéky a úvěry, ale zároveň by to mohlo méně brzdit inflaci, pokud by české ceny rostly rychleji než v eurozóně. Výhoda eura je větší měnová stabilita a jednodušší obchodování v eurozóně. Nevýhoda je menší možnost přizpůsobit měnovou politiku jen české ekonomice.")
-                
-                euro_sim = st.radio("Zvol simulovaný režim při vysoké české inflaci:", [
-                    "Vlastní měna (CZK) — ČNB zvýší sazby na 7 %",
-                    "Společné Euro (EUR) — ECB drží sazby na 3,5 %"
-                ], key="k2_1_2_1_euro_sim")
+            with st.expander(
+                "🇪🇺 ČNB a euro: proč je česká situace trochu jiná"
+            ):
+                st.write(
+                    "To, že má Česká republika vlastní měnu (korunu) a vlastní"
+                    " centrální banku, která samostatně nastavuje měnovou"
+                    " politiku, není v Evropské unii u všech států běžné. Mnoho"
+                    " členských zemí EU už přijalo euro a patří do eurozóny. V"
+                    " těchto zemích nerozhoduje o hlavních úrokových sazbách"
+                    " jejich národní centrální banka samostatně, ale společně"
+                    " systém vedený Evropskou centrální bankou (ECB)."
+                )
+                st.write(
+                    "**Příklad:** Slovensko přijalo euro v roce 2009. Národní"
+                    " banka Slovenska dál existuje, ale už nevydává vlastní"
+                    " slovenskou korunu a samostatně neurčuje měnovou politiku"
+                    " pro vlastní měnu. Podílí se na fungování eurozóny,"
+                    " dohledu a finanční stabilitě, ale hlavní měnová politika"
+                    " se řeší na evropské úrovni přes ECB."
+                )
+                st.write(
+                    "**Jak by to fungovalo po přijetí eura v ČR:** Česká koruna"
+                    " by byla nahrazena eurem. ČNB by nezanikla, ale změnila by"
+                    " se její role. Dál by působila jako národní centrální"
+                    " banka, dohlížela by na finanční trh, pečovala o"
+                    " hotovostní oběh eura v ČR, podílela se na finanční"
+                    " stabilitě a byla by součástí Eurosystému. O hlavních"
+                    " úrokových sazbách pro eurozónu by se ale rozhodovalo"
+                    " společně v rámci ECB, nikoli samostatně jen podle české"
+                    " ekonomiky."
+                )
+                st.write(
+                    "**Konkrétní modelový příklad rozdílu:** Představ si, že v"
+                    " Česku je inflace vyšší než v eurozóně a česká ekonomika"
+                    " potřebuje brzdit zdražování. Pokud má ČR vlastní korunu,"
+                    " může ČNB zvýšit úrokové sazby výrazněji — například na"
+                    " 6–7 %. Tím zdraží úvěry, hypotéky i půjčky, ale zároveň"
+                    " podpoří spoření a může pomoci tlumit inflaci. Pokud by ČR"
+                    " už platila eurem, sazby by se nastavovaly pro celou"
+                    " eurozónu. ECB by se dívala na průměrnou situaci mnoha"
+                    " zemí, například Německa, Francie, Itálie, Slovenska nebo"
+                    " Španělska. Kdyby eurozóna jako celek potřebovala mírnější"
+                    " politiku, mohly by být sazby třeba jen 3–4 %, i když by"
+                    " Česku samostatně vyhovovaly vyšší sazby."
+                )
+                st.write(
+                    "**Co by to znamenalo v běžném životě:** Po přijetí eura"
+                    " by úrokové sazby v ČR mohly být v některých obdobích"
+                    " nižší, než jaké by nastavila samostatná ČNB. To by mohlo"
+                    " zlevnit hypotéky a úvěry, ale zároveň by to mohlo méně"
+                    " brzdit inflaci, pokud by české ceny rostly rychleji než"
+                    " v eurozóně. Výhoda eura je větší měnová stabilita a"
+                    " jednodušší obchodování v eurozóně. Nevýhoda je menší"
+                    " možnost přizpůsobit měnovou politiku jen české"
+                    " ekonomice."
+                )
+
+                euro_sim = st.radio(
+                    "Zvol simulovaný režim při vysoké české inflaci:",
+                    [
+                        "Vlastní měna (CZK) — ČNB zvýší sazby na 7 %",
+                        "Společné Euro (EUR) — ECB drží sazby na 3,5 %",
+                    ],
+                    key="k2_1_2_1_euro_sim",
+                )
                 if "CZK" in euro_sim:
-                    st.success("✅ **Samostatná ČNB:** Vyšší sazby zdraží úvěry a hypotéky v ČR, ale účinněji tlumí inflaci a chrání úspory.")
+                    st.success(
+                        "✅ **Samostatná ČNB:** Vyšší sazby zdraží úvěry a"
+                        " hypotéky v ČR, ale účinněji tlumí inflaci a chrání"
+                        " úspory."
+                    )
                 else:
-                    st.warning("⚠️ **Společné Euro (ECB):** Zůstávají levnější úvěry, ale inflace v ČR může trvat déle a více znehodnocovat kupní sílu.")
+                    st.warning(
+                        "⚠️ **Společné Euro (ECB):** Zůstávají levnější úvěry,"
+                        " ale inflace v ČR může trvat déle a více"
+                        " znehodnocovat kupní sílu."
+                    )
 
         # 1.2.2 Hlavní cíl ČNB
         with st.container(border=True):
             st.markdown("### 1.2.2 Hlavní cíl ČNB")
-            st.write("Hlavním cílem ČNB je péče o cenovou stabilitu. Jinými slovy: ČNB se snaží, aby peníze neztrácely hodnotu příliš rychle a aby inflace nebyla dlouhodobě příliš vysoká ani nebezpečně nízká.")
-            
-            st.markdown("""
+            st.write(
+                "Hlavním cílem ČNB je péče o cenovou stabilitu. Jinými slovy:"
+                " ČNB se snaží, aby peníze neztrácely hodnotu příliš rychle a"
+                " aby inflace nebyla dlouhodobě příliš vysoká ani nebezpečně"
+                " nízká."
+            )
+
+            st.markdown(
+                """
             <div class='box-gray'>
                 🎯 <strong>Cenová stabilita jednoduše:</strong> Neznamená, že se nikdy nic nezdraží. Znamená, že růst cen má být dlouhodobě předvídatelný a zvládnutelný. Když je inflace příliš vysoká, lidem klesá kupní síla, firmám se hůř plánuje a ekonomika ztrácí stabilitu.
             </div>
-            """, unsafe_allow_html=True)
-            st.write("ČNB v praxi používá inflační cílování. To znamená, že sleduje vývoj inflace a nastavuje nástroje měnové politiky tak, aby se inflace ve střednědobém horizontu pohybovala kolem stanoveného cíle.")
+            """,
+                unsafe_allow_html=True,
+            )
+            st.write(
+                "ČNB v praxi používá inflační cílování. To znamená, že sleduje"
+                " vývoj inflace a nastavuje nástroje měnové politiky tak, aby"
+                " se inflace ve střednědobém horizontu pohybovala kolem"
+                " stanoveného cíle."
+            )
 
             st.markdown("#### 🎮 Interaktivní simulace: Jsi bankovní rada ČNB")
-            st.write("**Situace:** Inflace je vysoká, lidé si stěžují na zdražování, hypotéky jsou drahé a firmy říkají, že zákazníci méně utrácejí. Tvoje skupina představuje bankovní radu ČNB.")
-            
-            c_rada_action = st.radio("Rozhodněte o sazbách:", [
-                "zvýšíte úrokové sazby",
-                "snížíte úrokové sazby",
-                "ponecháte sazby beze změny",
-                "použijete komunikaci směrem k veřejnosti",
-                "budete zvažovat devizové intervence"
-            ], key="k2_1_2_2_rada_act")
+            st.write(
+                "**Situace:** Inflace je vysoká, lidé si stěžují na zdražování,"
+                " hypotéky jsou drahé a firmy říkají, že zákazníci méně"
+                " utrácejí. Tvoje skupina představuje bankovní radu ČNB."
+            )
+
+            c_rada_action = st.radio(
+                "Rozhodněte o sazbách:",
+                [
+                    "zvýšíte úrokové sazby",
+                    "snížíte úrokové sazby",
+                    "ponecháte sazby beze změny",
+                    "použijete komunikaci směrem k veřejnosti",
+                    "budete zvažovat devizové intervence",
+                ],
+                key="k2_1_2_2_rada_act",
+            )
 
             st.write("**Musíte zdůvodnit:**")
             q1 = st.text_input("1. Co se stane s úvěry?", key="k2_q1_uvery")
             q2 = st.text_input("2. Co se stane se spořením?", key="k2_q2_sporeni")
-            q3 = st.text_input("3. Jaký může být dopad na inflaci?", key="k2_q3_inflace")
-            q4 = st.text_input("4. Komu vaše rozhodnutí pomůže a komu může zkomplikovat život?", key="k2_q4_komu")
-            q5 = st.text_input("5. Jaké riziko vznikne, pokud se rozhodnete špatně?", key="k2_q5_riziko")
+            q3 = st.text_input(
+                "3. Jaký může být dopad na inflaci?", key="k2_q3_inflace"
+            )
+            q4 = st.text_input(
+                "4. Komu vaše rozhodnutí pomůže a komu může zkomplikovat"
+                " život?",
+                key="k2_q4_komu",
+            )
+            q5 = st.text_input(
+                "5. Jaké riziko vznikne, pokud se rozhodnete špatně?",
+                key="k2_q5_riziko",
+            )
 
-            if st.button("Výstup: Jedna minuta tiskové konference a uložení 💾", key="k2_1_2_2_rada_btn"):
-                st.markdown(f"**Tiskové prohlášení Bankovní rady:** „ČNB dnes rozhodla, že {c_rada_action}...“")
+            if st.button(
+                "Výstup: Jedna minuta tiskové konference a uložení 💾",
+                key="k2_1_2_2_rada_btn",
+            ):
+                st.markdown(
+                    "**Tiskové prohlášení Bankovní rady:** „ČNB dnes rozhodla,"
+                    f" že {c_rada_action}...“"
+                )
                 st.success("✅ Rozhodnutí Bankovní rady bylo uloženo!")
-                
+
                 rada_data = (
-                    f"Akce sazeb: {c_rada_action} | "
-                    f"Úvěry: {q1} | "
-                    f"Spoření: {q2} | "
-                    f"Dopad inflace: {q3} | "
-                    f"Komu pomůže: {q4} | "
-                    f"Riziko: {q5}"
+                    f"Akce sazeb: {c_rada_action} | Úvěry: {q1} | Spoření:"
+                    f" {q2} | Dopad inflace: {q3} | Komu pomůže: {q4} |"
+                    f" Riziko: {q5}"
                 )
                 if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.2 - Simulace Bankovní rady ČNB", rada_data)
+                    st.session_state["uloz_odpoved_fn"](
+                        "Kapitola 2",
+                        "Podkapitola 1.2.2 - Simulace Bankovní rady ČNB",
+                        rada_data,
+                    )
 
         # 1.2.3 Co přesně ČNB dělá
         with st.container(border=True):
             st.markdown("### 1.2.3 Co přesně ČNB dělá")
-            st.write("ČNB má několik klíčových funkčních oblastí. Každá z nich se týká jiné části ekonomiky, ale dohromady tvoří systém důvěry v peníze.")
+            st.write(
+                "ČNB má několik klíčových funkčních oblastí. Každá z nich se"
+                " týká jiné části ekonomiky, ale dohromady tvoří systém důvěry"
+                " v peníze."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Funkce ČNB | Co to znamená | Příklad dopadu na běžný život |
             | :--- | :--- | :--- |
             | **Měnová politika** | Nastavuje podmínky pro hodnotu peněz, hlavně pomocí úrokových sazeb. | Ovlivňuje úroky u hypoték, spoření i úvěrů. |
@@ -479,22 +855,43 @@ def render():
             | **Platební systémy** | Provozuje a dohlíží na důležité platební a zúčtovací systémy. | Pomáhá tomu, aby převody mezi bankami fungovaly bezpečně a spolehlivě. |
             | **Správa devizových rezerv** | Spravuje zásoby zahraničních měn a dalších aktiv státu. | Pomáhá stabilitě měny a důvěře v ekonomiku. |
             | **Banka státu** | Vede účty státu a poskytuje vybrané služby veřejnému sektoru. | Souvisí s pohybem peněz státu, například při placení výdajů veřejných institucí. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.2.4 Hotovost a ochranné prvky
         with st.container(border=True):
-            st.markdown("### 1.2.4 Hotovost, ochranné prvky bankovek a důvěra v peníze")
-            st.write("Jednou z viditelných činností ČNB je péče o hotovostní oběh. ČNB vydává české bankovky a mince, stahuje z oběhu poškozené nebo neplatné peníze a stará se o to, aby hotovost byla důvěryhodná. Právě sem patří také ochranné prvky bankovek.")
-            st.write("Bankovky mají ochranné prvky proto, aby bylo možné ověřit jejich pravost a snížit riziko padělání. Nejde jen o „ozdobu“ bankovky. Ochranné prvky pomáhají běžným lidem, obchodníkům, bankám i státu poznat, zda je bankovka skutečná a zda jí mohou důvěřovat.")
+            st.markdown(
+                "### 1.2.4 Hotovost, ochranné prvky bankovek a důvěra v peníze"
+            )
+            st.write(
+                "Jednou z viditelných činností ČNB je péče o hotovostní oběh."
+                " ČNB vydává české bankovky a mince, stahuje z oběhu poškozené"
+                " nebo neplatné peníze a stará se o to, aby hotovost byla"
+                " důvěryhodná. Právě sem patří také ochranné prvky bankovek."
+            )
+            st.write(
+                "Bankovky mají ochranné prvky proto, aby bylo možné ověřit"
+                " jejich pravost a snížit riziko padělání. Nejde jen o „ozdobu“"
+                " bankovky. Ochranné prvky pomáhají běžným lidem, obchodníkům,"
+                " bankám i státu poznat, zda je bankovka skutečná a zda jí mohou"
+                " důvěřovat."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-gray'>
                 🛡️ <strong>Proč ochranné prvky patří k tématu ČNB?</strong><br>
                 ČNB odpovídá za českou měnu a hotovostní oběh. Pokud by bylo snadné bankovky padělat, lidé i obchody by se báli hotovost přijímat. Ochranné prvky proto chrání důvěru v peníze, ztěžují padělání a umožňují rychlou kontrolu pravosti při běžném placení.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.write("Ochranné prvky můžeme rozdělit podle toho, jak je člověk kontroluje:")
+            st.write(
+                "Ochranné prvky můžeme rozdělit podle toho, jak je člověk"
+                " kontroluje:"
+            )
             st.markdown("""
             * **pohledem** — například vodoznak, ochranný proužek, soutisková značka nebo proměnlivá barva,
             * **hmatem** — například speciální papír a reliéfní tisk,
@@ -502,16 +899,23 @@ def render():
             * **pomůckami** — například kontrola pod UV světlem.
             """)
 
-            st.markdown("##### 🔎 Interaktivní aktivita: Ochranné prvky peněz (1000 Kč - František Palacký)")
-            st.write("Prohlédni si přední (lícovou) i zadní (rubovou) stranu tisícikoruny a prozkoumej její ochranné prvky:")
+            st.markdown(
+                "##### 🔎 Interaktivní aktivita: Ochranné prvky peněz (1000 Kč"
+                " - František Palacký)"
+            )
+            st.write(
+                "Prohlédni si přední (lícovou) i zadní (rubovou) stranu"
+                " tisícikoruny a prozkoumej její ochranné prvky:"
+            )
 
-            # Funkce pro načtení obrázků z repozitáře
             @st.cache_data
             def nacist_obrazek_bankovky(nazvy_souboru):
-                import base64
-                import os
                 for nazev in nazvy_souboru:
-                    mozne_cesty = [nazev, f"kapitoly/{nazev}", f"assets/{nazev}"]
+                    mozne_cesty = [
+                        nazev,
+                        f"kapitoly/{nazev}",
+                        f"assets/{nazev}",
+                    ]
                     for cesta in mozne_cesty:
                         if os.path.exists(cesta):
                             with open(cesta, "rb") as f:
@@ -519,65 +923,134 @@ def render():
                                 return f"data:image/jpeg;base64,{encoded}"
                 return None
 
-            img_lic_base64 = nacist_obrazek_bankovky(["1000_czk_lic.jpg", "1000_czk.jpg"])
+            img_lic_base64 = nacist_obrazek_bankovky(
+                ["1000_czk_lic.jpg", "1000_czk.jpg"]
+            )
             img_rub_base64 = nacist_obrazek_bankovky(["1000_czk_rub.jpg"])
 
-            tab_lic, tab_rub = st.tabs(["📄 Lícní strana (Přední - Palacký)", "🦅 Rubová strana (Zadní - Orlice)"])
+            tab_lic, tab_rub = st.tabs([
+                "📄 Lícní strana (Přední - Palacký)",
+                "🦅 Rubová strana (Zadní - Orlice)",
+            ])
 
-            # -----------------------------------------------------------------
-            # LÍCNÍ STRANA
-            # -----------------------------------------------------------------
             with tab_lic:
                 prvky_lic = {
                     "Vodoznak (pohledem)": {
-                        "ikona": "💧", "top": "48%", "left": "14%",
+                        "ikona": "💧",
+                        "top": "48%",
+                        "left": "14%",
                         "nazev": "Vodoznak (František Palacký)",
                         "misto": "Levý nepotištěný okraj bankovky",
-                        "popis": "Zřetelný stínovaný portrét Františka Palackého s číselným označením '1000' a motivem lipového listu, viditelný z obou stran při pohledu proti světlu.",
-                        "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na nepotištěný levý okraj proti světelnému zdroji."
+                        "popis": (
+                            "Zřetelný stínovaný portrét Františka Palackého s"
+                            " číselným označením '1000' a motivem lipového"
+                            " listu, viditelný z obou stran při pohledu proti"
+                            " světlu."
+                        ),
+                        "kontrola": (
+                            "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej"
+                            " se na nepotištěný levý okraj proti světelnému"
+                            " zdroji."
+                        ),
                     },
                     "Ochranný proužek (pohledem)": {
-                        "ikona": "📏", "top": "50%", "left": "55.8%",
+                        "ikona": "📏",
+                        "top": "50%",
+                        "left": "55.8%",
                         "nazev": "Ochranný proužek s mikrotextem",
-                        "misto": "Svislý metalický pás zapuštěný do papíru (uprostřed)",
-                        "popis": "Tmavý okenníkový proužek z pokovené umělé hmoty s negativním mikrotextem 'ČNB 1000 Kč'. Při naklonění mění barvu z hnědofialové na zelenou.",
-                        "kontrola": "☀️ **Jak zkontrolovat:** Podívej se na bankovku proti světlu (vidíš souvislý pás) nebo ji nakloň a sleduj proměnu barev."
+                        "misto": (
+                            "Svislý metalický pás zapuštěný do papíru"
+                            " (uprostřed)"
+                        ),
+                        "popis": (
+                            "Tmavý okenníkový proužek z pokovené umělé hmoty s"
+                            " negativním mikrotextem 'ČNB 1000 Kč'. Při"
+                            " naklonění mění barvu z hnědofialové na zelenou."
+                        ),
+                        "kontrola": (
+                            "☀️ **Jak zkontrolovat:** Podívej se na bankovku"
+                            " proti světlu (vidíš souvislý pás) nebo ji nakloň"
+                            " a sleduj proměnu barev."
+                        ),
                     },
                     "Soutisková značka (pohledem)": {
-                        "ikona": "🧩", "top": "14.5%", "left": "29.5%",
+                        "ikona": "🧩",
+                        "top": "14.5%",
+                        "left": "29.5%",
                         "nazev": "Soutisková značka (Lícní část)",
                         "misto": "Horní část bankovky vlevo od stromu",
-                        "popis": "Lícní část kroužku s písmeny. Při pohledu proti světlu se přesně spojí s druhou částí vytištěnou na rubu v celistvý symbol.",
-                        "kontrola": "🔍 **Jak zkontrolovat:** Prohlédni si značku proti světlu – obě poloviny (z líce i rubu) vytvoří přesný kruhový symbol."
+                        "popis": (
+                            "Lícní část kroužku s písmeny. Při pohledu proti"
+                            " světlu se přesně spojí s druhou částí vytištěnou"
+                            " na rubu v celistvý symbol."
+                        ),
+                        "kontrola": (
+                            "🔍 **Jak zkontrolovat:** Prohlédni si značku"
+                            " proti světlu – obě poloviny (z líce i rubu)"
+                            " vytvoří přesný kruhový symbol."
+                        ),
                     },
                     "Opticky proměnlivá barva (naklopením)": {
-                        "ikona": "🎨", "top": "18.5%", "left": "41.5%",
+                        "ikona": "🎨",
+                        "top": "18.5%",
+                        "left": "41.5%",
                         "nazev": "Opticky proměnlivá barva (Lipový list)",
                         "misto": "Horní část stromu nad nápisem TISÍC",
-                        "popis": "Stylizovaný lipový list vytištěný speciální barvou. Při naklonění bankovky mění barvu ze zlatavé/hnědé na zelenou.",
-                        "kontrola": "🔄 **Jak zkontrolovat:** Nakloň bankovku pod úhlem naproti světlu – sleduj proměnu barvy lipového listu."
+                        "popis": (
+                            "Stylizovaný lipový list vytištěný speciální"
+                            " barvou. Při naklonění bankovky mění barvu ze"
+                            " zlatavé/hnědé na zelenou."
+                        ),
+                        "kontrola": (
+                            "🔄 **Jak zkontrolovat:** Nakloň bankovku pod"
+                            " úhlem naproti světlu – sleduj proměnu barvy"
+                            " lipového listu."
+                        ),
                     },
                     "Reliéfní tisk (hmatem)": {
-                        "ikona": "🖐️", "top": "48%", "left": "70%",
+                        "ikona": "🖐️",
+                        "top": "48%",
+                        "left": "70%",
                         "nazev": "Reliéfní tisk (Portrét Františka Palackého)",
                         "misto": "Portrét Palackého, texty a hmatové značky",
-                        "popis": "Vystouplý povrch hlubotisku nahmatatelný prsty na lícové straně bankovky.",
-                        "kontrola": "👉 **Jak zkontrolovat:** Přejeď bříškem prstu po portrétu Františka Palackého nebo po nápisu 'TISÍC KORUN ČESKÝCH'."
+                        "popis": (
+                            "Vystouplý povrch hlubotisku nahmatatelný prsty na"
+                            " lícové straně bankovky."
+                        ),
+                        "kontrola": (
+                            "👉 **Jak zkontrolovat:** Přejeď bříškem prstu po"
+                            " portrétu Františka Palackého nebo po nápisu"
+                            " 'TISÍC KORUN ČESKÝCH'."
+                        ),
                     },
                     "Hmatová značka pro nevidomé (hmatem)": {
-                        "ikona": "🔲", "top": "9%", "left": "93%",
+                        "ikona": "🔲",
+                        "top": "9%",
+                        "left": "93%",
                         "nazev": "Hmatová značka pro nevidomé",
                         "misto": "Pravý horní roh lícní strany",
-                        "popis": "Speciální vystouplé čárky vytištěné hlubotiskem v pravém horním rohu k rozpoznání hodnoty 1000 Kč hmatem.",
-                        "kontrola": "👉 **Jak zkontrolovat:** Nahmatáš prstem vystoupené svislé čárky v pravém rohu."
-                    }
+                        "popis": (
+                            "Speciální vystouplé čárky vytištěné hlubotiskem v"
+                            " pravém horním rohu k rozpoznání hodnoty 1000 Kč"
+                            " hmatem."
+                        ),
+                        "kontrola": (
+                            "👉 **Jak zkontrolovat:** Nahmatáš prstem"
+                            " vystoupené svislé čárky v pravém rohu."
+                        ),
+                    },
                 }
 
-                p_sel_lic = st.selectbox("Zvol prvek na lícní straně:", list(prvky_lic.keys()), key="k2_lic_sel")
+                p_sel_lic = st.selectbox(
+                    "Zvol prvek na lícní straně:",
+                    list(prvky_lic.keys()),
+                    key="k2_lic_sel",
+                )
                 det_lic = prvky_lic[p_sel_lic]
 
                 if img_lic_base64:
-                    st.markdown(f'''
+                    st.markdown(
+                        f"""
                     <div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid #cbd5e1;">
                         <img src="{img_lic_base64}" alt="1000 Kč - Líc" style="width: 100%; height: auto; display: block;" />
                         <div style="position: absolute; top: {det_lic["top"]}; left: {det_lic["left"]}; transform: translate(-50%, -50%); z-index: 10;">
@@ -586,59 +1059,111 @@ def render():
                             </div>
                         </div>
                     </div>
-                    ''', unsafe_allow_html=True)
+                    """,
+                        unsafe_allow_html=True,
+                    )
                 else:
-                    st.warning("⚠️ Obrázek '1000_czk_lic.jpg' nebyl nalezen v repozitáři.")
+                    st.warning(
+                        "⚠️ Obrázek '1000_czk_lic.jpg' nebyl nalezen v"
+                        " repozitáři."
+                    )
 
-                st.info(f"{det_lic['ikona']} **{det_lic['nazev']}** ({det_lic['misto']})\n\n{det_lic['popis']}\n\n{det_lic['kontrola']}")
+                st.info(
+                    f"{det_lic['ikona']} **{det_lic['nazev']}**"
+                    f" ({det_lic['misto']})\n\n{det_lic['popis']}\n\n{det_lic['kontrola']}"
+                )
 
-            # -----------------------------------------------------------------
-            # RUBOVÁ STRANA
-            # -----------------------------------------------------------------
             with tab_rub:
                 prvky_rub = {
                     "Soutisková značka z rubu (pohledem)": {
-                        "ikona": "🧩", "top": "14.5%", "left": "70.5%",
+                        "ikona": "🧩",
+                        "top": "14.5%",
+                        "left": "70.5%",
                         "nazev": "Soutisková značka (Rubová část)",
                         "misto": "Pravá horní část rubové strany",
-                        "popis": "Druhá polovina soutiskové značky. Z rubu je vidět zrcadlově doplněná část kroužku. Proti světlu vytváří kompletní symbol.",
-                        "kontrola": "🔍 **Jak zkontrolovat:** Při pohledu proti světlu zapadne do lícní části."
+                        "popis": (
+                            "Druhá polovina soutiskové značky. Z rubu je vidět"
+                            " zrcadlově doplněná část kroužku. Proti světlu"
+                            " vytváří kompletní symbol."
+                        ),
+                        "kontrola": (
+                            "🔍 **Jak zkontrolovat:** Při pohledu proti světlu"
+                            " zapadne do lícní části."
+                        ),
                     },
                     "Vodoznak z rubu (pohledem)": {
-                        "ikona": "💧", "top": "48%", "left": "86%",
+                        "ikona": "💧",
+                        "top": "48%",
+                        "left": "86%",
                         "nazev": "Vodoznak (pohled z rubu)",
                         "misto": "Pravý nepotištěný okraj rubové strany",
-                        "popis": "Vodoznak je stranově převrácený (zrcadlový) portrét Františka Palackého, viditelný stejně zřetelně i z rubové strany.",
-                        "kontrola": "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej se na pravý nepotištěný okraj proti světlu."
+                        "popis": (
+                            "Vodoznak je stranově převrácený (zrcadlový)"
+                            " portrét Františka Palackého, viditelný stejně"
+                            " zřetelně i z rubové strany."
+                        ),
+                        "kontrola": (
+                            "👀 **Jak zkontrolovat:** Zvedni bankovku a podívej"
+                            " se na pravý nepotištěný okraj proti světlu."
+                        ),
                     },
                     "Sériové číslo vodorovné": {
-                        "ikona": "🔢", "top": "85%", "left": "60%",
+                        "ikona": "🔢",
+                        "top": "85%",
+                        "left": "60%",
                         "nazev": "Sériové číslo (černé vodorovné)",
                         "misto": "Pravá spodní část pod státním znakem",
-                        "popis": "Vodorovně tištěné sériové číslo bankovky v černé barvě, které pod UV světlem zeleně světélkuje.",
-                        "kontrola": "💡 **Jak zkontrolovat:** Zkontroluj číslo očima nebo pod UV lampou."
+                        "popis": (
+                            "Vodorovně tištěné sériové číslo bankovky v černé"
+                            " barvě, které pod UV světlem zeleně světélkuje."
+                        ),
+                        "kontrola": (
+                            "💡 **Jak zkontrolovat:** Zkontroluj číslo očima"
+                            " nebo pod UV lampou."
+                        ),
                     },
                     "Sériové číslo svislé": {
-                        "ikona": "🔤", "top": "50%", "left": "5%",
+                        "ikona": "🔤",
+                        "top": "50%",
+                        "left": "5%",
                         "nazev": "Sériové číslo (červené svislé)",
                         "misto": "Levý okraj rubové strany",
-                        "popis": "Svisle tištěná série a číslo bankovky v červené barvě.",
-                        "kontrola": "👀 **Jak zkontrolovat:** Zkontroluj shodu série s vodorovným číslem."
+                        "popis": (
+                            "Svisle tištěná série a číslo bankovky v červené"
+                            " barvě."
+                        ),
+                        "kontrola": (
+                            "👀 **Jak zkontrolovat:** Zkontroluj shodu série s"
+                            " vodorovným číslem."
+                        ),
                     },
                     "Státní znak ČR": {
-                        "ikona": "🦁", "top": "48%", "left": "63%",
+                        "ikona": "🦁",
+                        "top": "48%",
+                        "left": "63%",
                         "nazev": "Velký státní znak ČR",
                         "misto": "Pravá středová část rubu",
-                        "popis": "Vyobrazení velkého státního znaku České republiky v rohu nad zámeckým motivem.",
-                        "kontrola": "🔍 **Jak zkontrolovat:** Detailní tisk státního znaku."
-                    }
+                        "popis": (
+                            "Vyobrazení velkého státního znaku České republiky"
+                            " v rohu nad zámeckým motivem."
+                        ),
+                        "kontrola": (
+                            "🔍 **Jak zkontrolovat:** Detailní tisk státního"
+                            " znaku."
+                        ),
+                    },
                 }
 
-                p_sel_rub = st.selectbox("Zvol prvek na rubové straně:", list(prvky_rub.keys()), key="k2_rub_sel")
+                p_sel_rub = st.selectbox(
+                    "Zvol prvek na rubové straně:",
+                    list(prvky_rub.keys()),
+                    key="k2_rub_sel",
+                )
                 det_rub = prvky_rub[p_sel_rub]
 
                 if img_rub_base64:
-                    st.markdown(f'''
+                    st.markdown(
+                        f"""
                     <div style="position: relative; width: 100%; max-width: 650px; margin: 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid #cbd5e1;">
                         <img src="{img_rub_base64}" alt="1000 Kč - Rub" style="width: 100%; height: auto; display: block;" />
                         <div style="position: absolute; top: {det_rub["top"]}; left: {det_rub["left"]}; transform: translate(-50%, -50%); z-index: 10;">
@@ -647,34 +1172,58 @@ def render():
                             </div>
                         </div>
                     </div>
-                    ''', unsafe_allow_html=True)
+                    """,
+                        unsafe_allow_html=True,
+                    )
                 else:
-                    st.warning("⚠️ Obrázek '1000_czk_rub.jpg' nebyl nalezen v repozitáři.")
+                    st.warning(
+                        "⚠️ Obrázek '1000_czk_rub.jpg' nebyl nalezen v"
+                        " repozitáři."
+                    )
 
-                st.info(f"{det_rub['ikona']} **{det_rub['nazev']}** ({det_rub['misto']})\n\n{det_rub['popis']}\n\n{det_rub['kontrola']}")
-            
-# 1.2.5 Kdo ČNB řídí
+                st.info(
+                    f"{det_rub['ikona']} **{det_rub['nazev']}**"
+                    f" ({det_rub['misto']})\n\n{det_rub['popis']}\n\n{det_rub['kontrola']}"
+                )
+
+        # 1.2.5 Kdo ČNB řídí
         with st.container(border=True):
             st.markdown("### 1.2.5 Kdo ČNB řídí")
-            st.write("Nejvyšším řídicím orgánem ČNB je **bankovní rada**. Ta rozhoduje například o měnové politice, úrokových sazbách a dalších zásadních otázkách fungování ČNB.")
+            st.write(
+                "Nejvyšším řídicím orgánem ČNB je **bankovní rada**. Ta"
+                " rozhoduje například o měnové politice, úrokových sazbách a"
+                " dalších zásadních otázkách fungování ČNB."
+            )
             st.write("Bankovní rada má **sedm členů**:")
             st.markdown("""
             * guvernér,
             * dva viceguvernéři,
             * čtyři další členové bankovní rady.
             """)
-            st.write("Členy bankovní rady jmenuje prezident republiky. V čele ČNB stojí guvernér. Guvernér reprezentuje ČNB navenek a řídí jednání bankovní rady. V současnosti je guvernérem ČNB Aleš Michl.")
-            
-            st.markdown("""
+            st.write(
+                "Členy bankovní rady jmenuje prezident republiky. V čele ČNB"
+                " stojí guvernér. Guvernér reprezentuje ČNB navenek a řídí"
+                " jednání bankovní rady. V současnosti je guvernérem ČNB Aleš"
+                " Michl."
+            )
+
+            st.markdown(
+                """
             <div class='box-gray'>
                 🧭 <strong>Jak si to představit:</strong> Bankovní rada je jako „řídicí tým“ centrální banky. Nerozhoduje o tom, komu banka dá spotřebitelský úvěr. Rozhoduje o pravidlech a nastavení systému, který ovlivňuje všechny banky a celou ekonomiku.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.2.6 Jak ČNB zasahuje do ekonomiky
         with st.container(border=True):
             st.markdown("### 1.2.6 Jak ČNB zasahuje do ekonomiky")
-            st.write("ČNB neřídí ekonomiku příkazem typu „zdražte“ nebo „zlevněte“. Ovlivňuje ekonomiku hlavně nepřímo — přes cenu peněz, důvěru a pravidla finančního trhu.")
+            st.write(
+                "ČNB neřídí ekonomiku příkazem typu „zdražte“ nebo „zlevněte“."
+                " Ovlivňuje ekonomiku hlavně nepřímo — přes cenu peněz, důvěru"
+                " a pravidla finančního trhu."
+            )
             st.write("Nejdůležitější nástroje jsou:")
             st.markdown("""
             * **úrokové sazby** — když ČNB sazby zvýší, úvěry bývají dražší a spoření atraktivnější; když sazby sníží, úvěry mohou zlevnit a ekonomická aktivita se může podpořit,
@@ -685,13 +1234,17 @@ def render():
             * **dohled a regulace** — kontroluje, zda finanční instituce dodržují pravidla a mají dostatečnou odolnost.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-gray'>
                 🧰 <strong>Hlavní nástroje ČNB:</strong> ČNB používá hlavně nástroje měnové politiky, nástroje pro řízení likvidity bankovního systému, devizové nástroje, dohledové nástroje a makroobezřetnostní pravidla. Nejde o jeden „kouzelný knoflík“, ale o kombinaci opatření, která ovlivňují cenu peněz, množství peněz v oběhu, chování bank a stabilitu finančního systému.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Nástroj ČNB | Jak funguje | Co ovlivňuje |
             | :--- | :--- | :--- |
             | **Základní úrokové sazby** | ČNB nastavuje sazby, za kterých si banky ukládají peníze u ČNB nebo si od ní krátkodobě půjčují. Nejsledovanější je dvoutýdenní repo sazba. | Cenu úvěrů, výnosnost spoření, kurz koruny, inflaci a ochotu domácností i firem utrácet nebo investovat. |
@@ -704,10 +1257,19 @@ def render():
             | **Makroobezřetnostní limity** | ČNB může nastavovat pravidla pro bezpečnější úvěrování, například u hypoték sleduje vztah výše úvěru k hodnotě nemovitosti nebo příjmům žadatele. | Zadlužení domácností, stabilitu bank a riziko cenových bublin. |
             | **Kapitálové požadavky na banky**| Banky musí mít dost vlastního kapitálu, aby zvládly ztráty. | Odolnost bank při krizi a ochranu finančního systému. |
             | **Dohled a sankce** | ČNB kontroluje finanční instituce, může požadovat nápravu nebo uložit sankce. | Dodržování pravidel, ochranu klientů a důvěru ve finanční trh. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("##### Repo sazba lidsky")
-            st.write("Když média říkají, že „ČNB zvýšila sazby“, často mluví hlavně o repo sazbě. Ta je důležitým signálem pro celý finanční trh. Banky podle ní upravují vlastní sazby u úvěrů a vkladů. Neznamená to, že se hypotéka nebo spořicí účet změní přes noc stejně u všech bank, ale směr rozhodnutí ČNB se do bankovních produktů postupně promítá.")
+            st.write(
+                "Když média říkají, že „ČNB zvýšila sazby“, často mluví hlavně"
+                " o repo sazbě. Ta je důležitým signálem pro celý finanční trh."
+                " Banky podle ní upravují vlastní sazby u úvěrů a vkladů."
+                " Neznamená to, že se hypotéka nebo spořicí účet změní přes"
+                " noc stejně u všech bank, ale směr rozhodnutí ČNB se do"
+                " bankovních produktů postupně promítá."
+            )
 
             st.markdown("#### 🧮 Mini kalkulačka: Repo sazba v praxi")
             st.write("Porovnej dvě situace:")
@@ -718,34 +1280,71 @@ def render():
             | **Vyšší sazby** | vyšší výnos | dražší půjčky | větší motivace spořit, menší chuť se zadlužovat |
             """)
 
-            st.write("**Úkol:** Vyber částku 20 000 Kč na spořicím účtu a půjčku 100 000 Kč. Spočítej orientačně, jak se změní roční úrok při sazbě 3 %, 5 % a 7 %:")
-            
-            c_sazba = st.select_slider("Zvol úrokovou sazbu:", options=[3.0, 5.0, 7.0], value=5.0, key="k2_exact_repo_slider")
-            
+            st.write(
+                "**Úkol:** Vyber částku 20 000 Kč na spořicím účtu a půjčku 100"
+                " 000 Kč. Spočítej orientačně, jak se změní roční úrok při"
+                " sazbě 3 %, 5 % a 7 %:"
+            )
+
+            c_sazba = st.select_slider(
+                "Zvol úrokovou sazbu:",
+                options=[3.0, 5.0, 7.0],
+                value=5.0,
+                key="k2_exact_repo_slider",
+            )
+
             calc_vynos = 20000 * (c_sazba / 100)
             calc_urok = 100000 * (c_sazba / 100)
 
             res_c1, res_c2 = st.columns(2)
-            res_c1.metric("Roční výnos ze spoření (20 000 Kč)", f"{calc_vynos:,.0f} Kč".replace(",", " "))
-            res_c2.metric("Roční úrok z půjčky (100 000 Kč)", f"{calc_urok:,.0f} Kč".replace(",", " "))
+            res_c1.metric(
+                "Roční výnos ze spoření (20 000 Kč)",
+                f"{calc_vynos:,.0f} Kč".replace(",", " "),
+            )
+            res_c2.metric(
+                "Roční úrok z půjčky (100 000 Kč)",
+                f"{calc_urok:,.0f} Kč".replace(",", " "),
+            )
 
-            st.text_area("Potom napiš krátký komentář: Proč stejné rozhodnutí ČNB může někomu pomoci a jinému uškodit?", key="k2_repo_koment")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.2.1",
+                    "Napiš krátký komentář: Proč stejné rozhodnutí ČNB může"
+                    " někomu pomoci a jinému uškodit?",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
-            if st.button("Uložit komentář k sazbám 💾", key="btn_k2_repo_koment"):
-                odp = st.session_state.get("k2_repo_koment", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.6 - Repo sazba komentář", f"Sazba: {c_sazba}% | Komentář: {odp}")
-                else:
-                    st.warning("Před uložením nejprve napiš komentář!")
+            st.write(
+                "**Příklad: co se stane, když ČNB zvýší úrokové sazby?** Vyšší"
+                " sazby obvykle zdražují půjčky. Domácnosti a firmy si proto"
+                " mohou méně půjčovat a méně utrácet. Zároveň může být"
+                " výhodnější spořit. Tlak na růst cen se tím může snížit."
+                " Nevýhodou je, že dražší úvěry mohou zpomalit investice firem,"
+                " hypotéky nebo spotřebu."
+            )
 
-            st.write("**Příklad: co se stane, když ČNB zvýší úrokové sazby?** Vyšší sazby obvykle zdražují půjčky. Domácnosti a firmy si proto mohou méně půjčovat a méně utrácet. Zároveň může být výhodnější spořit. Tlak na růst cen se tím může snížit. Nevýhodou je, že dražší úvěry mohou zpomalit investice firem, hypotéky nebo spotřebu.")
+            st.markdown(
+                "#### 🧮 Simulace: Vyšší sazby, inflace a hypotéka"
+            )
+            st.write(
+                "Situace: ČNB drží měnovou politiku přísnější, aby brzdila"
+                " inflaci. V roce 2026 byla repo sazba ČNB kolem 3,5 %,"
+                " průměrné hypoteční sazby se u nových hypoték pohybovaly"
+                " přibližně okolo 5 % p.a. a nižší inflaci budeme v modelu"
+                " počítat jako 2 %, protože přibližně kolem této hodnoty se"
+                " pohybujeme v dlouhodobém inflačním cíli ČNB."
+            )
+            st.write(
+                "Aby to bylo na první pohled: Porovnáme jednu domácnost ve dvou"
+                " světech. V obou světech má stejnou hypotéku 3 000 000 Kč na"
+                " 25 let a stejné běžné měsíční výdaje 40 000 Kč bez"
+                " hypotéky. Liší se jen úroky a inflace."
+            )
 
-            st.markdown("#### 🧮 Simulace: Vyšší sazby, inflace a hypotéka")
-            st.write("Situace: ČNB drží měnovou politiku přísnější, aby brzdila inflaci. V roce 2026 byla repo sazba ČNB kolem 3,5 %, průměrné hypoteční sazby se u nových hypoték pohybovaly přibližně okolo 5 % p.a. a nižší inflaci budeme v modelu počítat jako 2 %, protože přibližně kolem této hodnoty se pohybujeme v dlouhodobém inflačním cíli ČNB.")
-            st.write("Aby to bylo na první pohled: Porovnáme jednu domácnost ve dvou světech. V obou světech má stejnou hypotéku 3 000 000 Kč na 25 let a stejné běžné měsíční výdaje 40 000 Kč bez hypotéky. Liší se jen úroky a inflace.")
-
-            with st.expander("Co znamená „koš 40 000 Kč“ (Detailní rozpis)"):
+            with st.expander(
+                "Co znamená „koš 40 000 Kč“ (Detailní rozpis)"
+            ):
                 st.markdown("""
                 | Položka v měsíčním koši | Modelová částka | Co si pod tím představit |
                 | :--- | :--- | :--- |
@@ -766,15 +1365,42 @@ def render():
             | **Rozdíl** | hypotéka je dražší asi o 4 000 Kč měsíčně | běžné výdaje rostou asi o 1 200 Kč měsíčně méně | domácnost s hypotékou je v tomto modelu pořád asi 2 800 Kč měsíčně v mínusu |
             """)
 
-            st.write("**Jednoduchý závěr pro žáka:** Pokud má domácnost velkou hypotéku, vyšší sazby ji bolí hned a velmi viditelně. Nižší inflace jí sice pomáhá, protože nákupy nezdražují tak rychle, ale v tomto modelu to nestačí vyrovnat dražší hypotéku. Proto lidé často reagují na vysoké sazby jako na „červenou na býka“ — splátka úvěru je jedna konkrétní částka na účtu, zatímco přínos nižší inflace je rozptýlený v cenách mnoha nákupů.")
-            st.write("**Pozor:** To neznamená, že vyšší sazby jsou zbytečné. Pomáhají brzdit inflaci v celé ekonomice, chránit hodnotu mezd a úspor a bránit tomu, aby se zdražování utrhlo z řetězu. Jen je potřeba rozlišit pohled celé ekonomiky a pohled konkrétní zadlužené domácnosti.")
+            st.write(
+                "**Jednoduchý závěr pro žáka:** Pokud má domácnost velkou"
+                " hypotéku, vyšší sazby ji bolí hned a velmi viditelně. Nižší"
+                " inflace jí sice pomáhá, protože nákupy nezdražují tak"
+                " rychle, ale v tomto modelu to nestačí vyrovnat dražší"
+                " hypotéku. Proto lidé často reagují na vysoké sazby jako na"
+                " „červenou na býka“ — splátka úvěru je jedna konkrétní částka"
+                " na účtu, zatímco přínos nižší inflace je rozptýlený v cenách"
+                " mnoho nákupů."
+            )
+            st.write(
+                "**Pozor:** To neznamená, že vyšší sazby jsou zbytečné."
+                " Pomáhají brzdit inflaci v celé ekonomice, chránit hodnotu"
+                " mezd a úspor a bránit tomu, aby se zdražování utrhlo z řetězu."
+                " Jen je potřeba rozlišit pohled celé ekonomiky a pohled"
+                " konkrétní zadlužené domácnosti."
+            )
 
-            st.write("**Příklad: co se stane, když ČNB sníží úrokové sazby?** Nižší sazby mohou zlevnit úvěry a podpořit spotřebu i investice. Lidé a firmy si mohou snadněji půjčovat. Pokud je ale ekonomika už přehřátá, příliš levné peníze mohou podporovat inflaci nebo vznik cenových bublin, například na trhu nemovitostí.")
+            st.write(
+                "**Příklad: co se stane, když ČNB sníží úrokové sazby?** Nižší"
+                " sazby mohou zlevnit úvěry a podpořit spotřebu i investice."
+                " Lidé a firmy si mohou snadněji půjčovat. Pokud je ale"
+                " ekonomika už přehřátá, příliš levné peníze mohou podporovat"
+                " inflaci nebo vznik cenových bublin, například na trhu"
+                " nemovitostí."
+            )
 
         # 1.2.7 Koho a co ČNB řídí
         with st.container(border=True):
             st.markdown("### 1.2.7 Koho a co ČNB „řídí“ a koho ne")
-            st.write("ČNB neřídí osobní účty občanů a neurčuje jednotlivým lidem, kolik si mohou půjčit. Neřídí ani každodenní obchodní rozhodnutí komerčních bank. Má ale silný vliv na pravidla a prostředí, ve kterém banky a další finanční instituce fungují.")
+            st.write(
+                "ČNB neřídí osobní účty občanů a neurčuje jednotlivým lidem,"
+                " kolik si mohou půjčit. Neřídí ani každodenní obchodní"
+                " rozhodnutí komerčních bank. Má ale silný vliv na pravidla a"
+                " prostředí, ve kterém banky a další finanční instituce fungují."
+            )
             st.write("ČNB zejména:")
             st.markdown("""
             * uděluje vybraným finančním institucím povolení k činnosti,
@@ -786,57 +1412,140 @@ def render():
             * ovlivňuje cenu peněz v ekonomice.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-red'>
                 ⚠️ <strong>Pozor na častý omyl:</strong> ČNB není „nadřízená pobočka“ tvojí banky, která řeší každou reklamaci platební karty. Reklamaci řeší nejdříve tvoje banka. ČNB ale dohlíží na to, aby finanční instituce dodržovaly pravidla.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("#### 🧩 Třídicí hra: ČNB, nebo komerční banka?")
-            st.write("Rozděl výroky do tří skupin: ČNB, komerční banka, souvisí s oběma:")
+            st.write(
+                "Rozděl výroky do tří skupin: ČNB, komerční banka, souvisí s"
+                " oběma:"
+            )
 
-            v1 = st.selectbox("1. vydává bankovky a mince:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v1")
-            v2 = st.selectbox("2. vede běžný účet:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v2")
-            v3 = st.selectbox("3. poskytuje hypotéku:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v3")
-            v4 = st.selectbox("4. nastavuje základní úrokové sazby:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v4")
-            v5 = st.selectbox("5. vydává platební kartu:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v5")
-            v6 = st.selectbox("6. dohlíží na banky:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v6")
-            v7 = st.selectbox("7. spravuje devizové rezervy:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v7")
-            v8 = st.selectbox("8. umožňuje platbu mobilem:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v8")
-            v9 = st.selectbox("9. podílí se na důvěře ve finanční systém:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v9")
-            v10 = st.selectbox("10. souvisí s platebním stykem:", ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"], key="k2_v10")
+            v1 = st.selectbox(
+                "1. vydává bankovky a mince:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v1",
+            )
+            v2 = st.selectbox(
+                "2. vede běžný účet:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v2",
+            )
+            v3 = st.selectbox(
+                "3. poskytuje hypotéku:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v3",
+            )
+            v4 = st.selectbox(
+                "4. nastavuje základní úrokové sazby:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v4",
+            )
+            v5 = st.selectbox(
+                "5. vydává platební kartu:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v5",
+            )
+            v6 = st.selectbox(
+                "6. dohlíží na banky:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v6",
+            )
+            v7 = st.selectbox(
+                "7. spravuje devizové rezervy:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v7",
+            )
+            v8 = st.selectbox(
+                "8. umožňuje platbu mobilem:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v8",
+            )
+            v9 = st.selectbox(
+                "9. podílí se na důvěře ve finanční systém:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v9",
+            )
+            v10 = st.selectbox(
+                "10. souvisí s platebním stykem:",
+                ["Vyber...", "ČNB", "Komerční banka", "Souvisí s oběma"],
+                key="k2_v10",
+            )
 
-            st.text_area("Bonus: U každého výroku vysvětli, jak se dotýká běžného života:", key="k2_v_bonus")
-
-            if st.button("Vyhodnotit a uložit třídicí hru 💾", key="k2_v_eval_btn"):
-                if v1=="ČNB" and v2=="Komerční banka" and v3=="Komerční banka" and v4=="ČNB" and v5=="Komerční banka" and v6=="ČNB" and v7=="ČNB" and v8=="Komerční banka" and v9=="Souvisí s oběma" and v10=="Souvisí s oběma":
-                    st.success("🎉 Skvělé! Všechny položky jsi zařadil/a přesně podle textu.")
-                else:
-                    st.error("Některé položky nejsou zařazeny správně. Zkontroluj si zařazení!")
-                
-                hry_vysledek = (
-                    f"1:{v1} | 2:{v2} | 3:{v3} | 4:{v4} | 5:{v5} | 6:{v6} | 7:{v7} | 8:{v8} | 9:{v9} | 10:{v10} | "
-                    f"Bonus: {st.session_state.get('k2_v_bonus', '')}"
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.2.2",
+                    "Bonus k třídicí hře: U každého výroku vysvětli, jak se"
+                    " dotýká běžného života:",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
                 )
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.7 - Třídicí hra", hry_vysledek)
+
+            if st.button(
+                "Vyhodnotit třídicí hru 💾", key="k2_v_eval_btn"
+            ):
+                if (
+                    v1 == "ČNB"
+                    and v2 == "Komerční banka"
+                    and v3 == "Komerční banka"
+                    and v4 == "ČNB"
+                    and v5 == "Komerční banka"
+                    and v6 == "ČNB"
+                    and v7 == "ČNB"
+                    and v8 == "Komerční banka"
+                    and v9 == "Souvisí s oběma"
+                    and v10 == "Souvisí s oběma"
+                ):
+                    st.success(
+                        "🎉 Skvělé! Všechny položky jsi zařadil/a přesně podle"
+                        " textu."
+                    )
+                else:
+                    st.error(
+                        "Některé položky nejsou zařazeny správně. Zkontroluj si"
+                        " zařazení!"
+                    )
 
         # 1.2.8 Komerční banky
         with st.container(border=True):
             st.markdown("### 1.2.8 Komerční banky: banky pro občany a firmy")
-            st.write("Komerční banky jsou finanční instituce, které podnikají na finančním trhu. Jejich hlavní činností je přijímat vklady, poskytovat úvěry a zprostředkovávat platební styk. Potřebují bankovní licenci a podléhají dohledu ČNB.")
-            
-            st.markdown("""
+            st.write(
+                "Komerční banky jsou finanční instituce, které podnikají na"
+                " finančním trhu. Jejich hlavní činností je přijímat vklady,"
+                " poskytovat úvěry a zprostředkovávat platební styk. Potřebují"
+                " bankovní licenci a podléhají dohledu ČNB."
+            )
+
+            st.markdown(
+                """
             <div class='box-blue'>
                 🏧 <strong>Komerční banka v jedné větě:</strong> Přijímá peníze od klientů, vede jim účty, umožňuje platby a část získaných zdrojů půjčuje jiným klientům formou úvěrů.
             </div>
-            """, unsafe_allow_html=True)
-            st.write("Komerční banky jsou obchodní společnosti. Řídí je jejich vlastní orgány, například představenstvo a management banky, a kontrolují je vlastníci, dozorčí orgány, auditoři a regulátor. Zároveň musí dodržovat zákony, pravidla kapitálové přiměřenosti, pravidla proti praní špinavých peněz, pravidla ochrany spotřebitele a další regulaci.")
+            """,
+                unsafe_allow_html=True,
+            )
+            st.write(
+                "Komerční banky jsou obchodní společnosti. Řídí je jejich"
+                " vlastní orgány, například představenstvo a management banky,"
+                " a kontrolují je vlastníci, dozorčí orgány, auditoři a"
+                " regulátor. Zároveň musí dodržovat zákony, pravidla"
+                " kapitálové přiměřenosti, pravidla proti praní špinavých peněz,"
+                " pravidla ochrany spotřebitele a další regulaci."
+            )
 
         # 1.2.9 Co poskytují občanům
         with st.container(border=True):
             st.markdown("### 1.2.9 Co komerční banky poskytují občanům")
-            st.write("Pro běžného člověka je banka hlavně místem, kde se spravují každodenní peníze. Banka může poskytovat například:")
+            st.write(
+                "Pro běžného člověka je banka hlavně místem, kde se spravují"
+                " každodenní peníze. Banka může poskytovat například:"
+            )
             st.markdown("""
             * běžný účet,
             * spořicí účet,
@@ -856,16 +1565,22 @@ def render():
             * bezpečnostní nástroje, například limity plateb, 3D Secure nebo potvrzování v aplikaci.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-purple'>
                 📱 <strong>Moderní realita:</strong> Pro mnoho mladých lidí už banka není pobočka. Je to aplikace, ve které vidí zůstatek, platí mobilem, nastavují limity, blokují kartu, kontrolují předplatná a posílají peníze přes QR kód.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.2.10 Co poskytují firmám
         with st.container(border=True):
             st.markdown("### 1.2.10 Co komerční banky poskytují firmám")
-            st.write("Firmy potřebují banky nejen k placení faktur. Banky jim pomáhají financovat provoz, investice a obchod.")
+            st.write(
+                "Firmy potřebují banky nejen k placení faktur. Banky jim"
+                " pomáhají financovat provoz, investice a obchod."
+            )
             st.write("Firmám banky poskytují například:")
             st.markdown("""
             * podnikatelské účty,
@@ -883,25 +1598,43 @@ def render():
 
         # 1.2.11 Aktivní, pasivní a neutrální operace
         with st.container(border=True):
-            st.markdown("### 1.2.11 Aktivní, pasivní a neutrální operace bank")
-            st.write("Činnosti komerčních bank se často rozdělují na pasivní, aktivní a neutrální operace.")
+            st.markdown(
+                "### 1.2.11 Aktivní, pasivní a neutrální operace bank"
+            )
+            st.write(
+                "Činnosti komerčních bank se často rozdělují na pasivní,"
+                " aktivní a neutrální operace."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Typ operace | Co znamená | Příklady |
             | :--- | :--- | :--- |
             | **Pasivní operace** | Banka získává zdroje. Z pohledu banky jde o závazky vůči klientům nebo investorům. | běžné účty, spořicí účty, termínované vklady, vydané bankovní dluhopisy, přijaté mezibankovní úvěry |
             | **Aktivní operace** | Banka peníze umísťuje tak, aby vydělávala. Z pohledu banky jde o aktiva. | spotřebitelské úvěry, hypotéky, podnikatelské úvěry, kontokorenty, kreditní karty, nákup cenných papírů, mezibankovní úvěry poskytnuté jiným bankám |
             | **Neutrální operace** | Banka poskytuje služby, ze kterých získává poplatky nebo provize, ale přímo při nich nepůjčuje vlastní peníze jako u úvěru. | platební styk, vedení účtu, směna měn, zprostředkování investic, úschova cenností, poradenství, bankovní záruky, inkaso, dokumentární akreditiv |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-gray'>
                 🧮 <strong>Jednoduchá logika banky:</strong> Banka přijímá vklady za určitý úrok a půjčuje peníze za vyšší úrok. Rozdíl mezi úrokem z úvěrů a úrokem z vkladů je jedním ze zdrojů jejích výnosů. Dalším zdrojem jsou poplatky a provize za služby.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            with st.expander("Pasivní operace: jak banka získává peníze (Podrobně)"):
-                st.write("Pasivní operace jsou činnosti, při kterých banka získává zdroje. Říká se jim pasivní proto, že z pohledu bankovní rozvahy vzniká bance závazek: banka peníze klientovi dluží.")
+            with st.expander(
+                "Pasivní operace: jak banka získává peníze (Podrobně)"
+            ):
+                st.write(
+                    "Pasivní operace jsou činnosti, při kterých banka získává"
+                    " zdroje. Říká se jim pasivní proto, že z pohledu bankovní"
+                    " rozvahy vzniká bance závazek: banka peníze klientovi"
+                    " dluží."
+                )
                 st.markdown("""
                 * **běžné účty** — klient má peníze dostupné pro každodenní platby; banka je eviduje jako závazek vůči klientovi,
                 * **spořicí účty** — klient ukládá peníze s vyšším úrokem než na běžném účtu, ale obvykle s vysokou dostupností,
@@ -911,10 +1644,22 @@ def render():
                 * **mezibankovní úvěry přijaté** — banka si půjčí od jiné banky,
                 * **vlastní kapitál banky** — peníze vlastníků, které slouží jako bezpečnostní polštář.
                 """)
-                st.info("📥 **Příklad pasivní operace:** Student si uloží 5 000 Kč na spořicí účet. Pro studenta je to úspora. Pro banku je to zdroj peněz a zároveň závazek, protože banka musí umožnit výběr podle podmínek účtu.")
+                st.info(
+                    "📥 **Příklad pasivní operace:** Student si uloží 5 000 Kč"
+                    " na spořicí účet. Pro studenta je to úspora. Pro banku je to"
+                    " zdroj peněz a zároveň závazek, protože banka musí umožnit"
+                    " výběr podle podmínky účtu."
+                )
 
-            with st.expander("Aktivní operace: jak banka peníze používá (Podrobně)"):
-                st.write("Aktivní operace jsou činnosti, při kterých banka umisťuje získané peníze tak, aby vydělávala. Z pohledu banky jde o aktiva: banka má pohledávku za klientem nebo vlastní určitý finanční nástroj.")
+            with st.expander(
+                "Aktivní operace: jak banka peníze používá (Podrobně)"
+            ):
+                st.write(
+                    "Aktivní operace jsou činnosti, při kterých banka umísťuje"
+                    " získané peníze tak, aby vydělávala. Z pohledu banky jde o"
+                    " aktiva: banka má pohledávku za klientem nebo vlastní"
+                    " určitý finanční nástroj."
+                )
                 st.markdown("""
                 * **spotřebitelské úvěry** — půjčky domácnostem například na vybavení, auto nebo jiné potřeby,
                 * **hypoteční úvěry** — dlouhodobé úvěry na bydlení zajištěné nemovitostí,
@@ -926,10 +1671,20 @@ def render():
                 * **nákup cenných papírů** — banka může část peněz investovat do bezpečnějších i výnosnějších aktiv podle pravidel řízení rizik,
                 * **mezibankovní úvěry poskytnuté** — banka půjčí jiné bance.
                 """)
-                st.info("📤 **Příklad aktivní operace:** Banka poskytne rodině hypotéku. Rodina získá peníze na bydlení, ale bance vzniká pohledávka: rodina musí úvěr splácet i s úrokem.")
+                st.info(
+                    "📤 **Příklad aktivní operace:** Banka poskytne rodině"
+                    " hypotéku. Rodina získá peníze na bydlení, ale bance vzniká"
+                    " pohledávka: rodina musí úvěr splácet i s úrokem."
+                )
 
-            with st.expander("Neutrální operace: služby za poplatky a provize (Podrobně)"):
-                st.write("Neutrální operace nejsou hlavně o tom, že banka přijímá vklady nebo poskytuje úvěry. Banka při nich zajišťuje služby a vydělává například na poplatcích nebo provizích.")
+            with st.expander(
+                "Neutrální operace: služby za poplatky a provize (Podrobně)"
+            ):
+                st.write(
+                    "Neutrální operace nejsou hlavně o tom, že banka přijímá"
+                    " vklady nebo poskytuje úvěry. Banka při nich zajišťuje"
+                    " služby a vydělává například na poplatcích nebo provizích."
+                )
                 st.markdown("""
                 * vedení účtu,
                 * zpracování plateb,
@@ -954,31 +1709,77 @@ def render():
             | Klient si vymění koruny za eura. | **Neutrální** | Banka poskytuje směnárenskou službu a může vydělat na kurzu nebo poplatku. |
             """)
 
-            st.markdown("#### 🧩 Rozhodovací karty: aktivní, pasivní, nebo neutrální?")
-            st.write("U každé situace urči typ bankovní operace a vysvětli ji z pohledu banky:")
+            st.markdown(
+                "#### 🧩 Rozhodovací karty: aktivní, pasivní, nebo neutrální?"
+            )
+            st.write(
+                "U každé situace urči typ bankovní operace a vysvětli ji z"
+                " pohledu banky:"
+            )
 
-            rk1 = st.selectbox("1. Klient vloží 10 000 Kč na spořicí účet:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk1")
-            rk2 = st.selectbox("2. Rodina si vezme hypotéku:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk2")
-            rk3 = st.selectbox("3. Student zaplatí kartou v kavárně:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk3")
-            rk4 = st.selectbox("4. Firma požádá o provozní úvěr:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk4")
-            rk5 = st.selectbox("5. Klient si smění koruny na eura:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk5")
-            rk6 = st.selectbox("6. Banka vydá vlastní dluhopis:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk6")
-            rk7 = st.selectbox("7. Podnikatel používá platební terminál:", ["Vyber...", "Pasivní", "Aktivní", "Neutrální"], key="k2_rk7")
+            rk1 = st.selectbox(
+                "1. Klient vloží 10 000 Kč na spořicí účet:",
+                ["Vyber...", "Pasivní", "Aktivní", "Neutrální"],
+                key="k2_rk1",
+            )
+            rk2 = st.selectbox(
+                "2. Rodina si vezme hypotéku:",
+                ["Vyber...", "Pasivní", "Aktivní", "Neutrální"],
+                key="k2_rk2",
+            )
+            rk3 = st.selectbox(
+                "3. Student zaplatí kartou v kavárně:",
+                ["Vyber...", "Pasivní", "Aktivní", "Neutrální"],
+                key="k2_rk3",
+            )
+            rk4 = st.selectbox(
+                "4. Firma požádá o provozní úvěr:",
+                ["Vyber...", "Pasivní", "Aktivní", "Neutrální"],
+                key="k2_rk4",
+            )
+            rk5 = st.selectbox(
+                "5. Klient si smění koruny na eura:",
+                ["Vyber...", "Pasivní", "Aktivní", "Neutrální"],
+                key="k2_rk5",
+            )
+            rk6 = st.selectbox(
+                "6. Banka vydá vlastní dluhopis:",
+                ["Vyber...", "Pasivní", "Aktivní", "Neutrální"],
+                key="k2_rk6",
+            )
+            rk7 = st.selectbox(
+                "7. Podnikatel používá platební terminál:",
+                ["Vyber...", "Pasivní", "Aktivní", "Neutrální"],
+                key="k2_rk7",
+            )
 
-            if st.button("Vyhodnotit a uložit rozhodovací karty 💾", key="k2_rk_btn"):
-                if rk1=="Pasivní" and rk2=="Aktivní" and rk3=="Neutrální" and rk4=="Aktivní" and rk5=="Neutrální" and rk6=="Pasivní" and rk7=="Neutrální":
-                    st.success("🎉 Skvělé! Rozdíly mezi aktivními, pasivními a neutrálními operacemi ovládáš na jedničku.")
+            if st.button("Vyhodnotit rozhodovací karty 💾", key="k2_rk_btn"):
+                if (
+                    rk1 == "Pasivní"
+                    and rk2 == "Aktivní"
+                    and rk3 == "Neutrální"
+                    and rk4 == "Aktivní"
+                    and rk5 == "Neutrální"
+                    and rk6 == "Pasivní"
+                    and rk7 == "Neutrální"
+                ):
+                    st.success(
+                        "🎉 Skvělé! Rozdíly mezi aktivními, pasivními a"
+                        " neutrálními operacemi ovládáš na jedničku."
+                    )
                 else:
-                    st.error("Některá odpověď nesouhlasí. Zkontroluj tabulku výše!")
-                
-                karty_data = f"1:{rk1}, 2:{rk2}, 3:{rk3}, 4:{rk4}, 5:{rk5}, 6:{rk6}, 7:{rk7}"
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.11 - Rozhodovací karty", karty_data)
+                    st.error(
+                        "Některá odpověď nesouhlasí. Zkontroluj tabulku výše!"
+                    )
 
         # 1.2.12 Jak banka vydělává a rizika
         with st.container(border=True):
-            st.markdown("### 1.2.12 Jak banka vydělává a proč musí hlídat riziko")
-            st.write("Banka nevydělává jen tím, že „má peníze“. Vydělává hlavně na:")
+            st.markdown(
+                "### 1.2.12 Jak banka vydělává a proč musí hlídat riziko"
+            )
+            st.write(
+                "Banka nevydělává jen tím, že „má peníze“. Vydělává hlavně na:"
+            )
             st.markdown("""
             * úrokové marži,
             * poplatcích,
@@ -996,16 +1797,24 @@ def render():
             * **kybernetické riziko** — útok na digitální bankovnictví nebo data klientů.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-red'>
                 🔐 <strong>Proč existuje regulace:</strong> Kdyby banky riskovaly příliš mnoho, neohrozily by jen sebe. Ohrozily by vklady klientů, firmy, platební systém i celou ekonomiku. Proto jsou banky přísně regulované a dohlížené.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.2.13 Licence a dohled
         with st.container(border=True):
             st.markdown("### 1.2.13 Bankovní licence a dohled")
-            st.write("Banka nemůže začít fungovat jen proto, že si někdo založí aplikaci a napíše „banka“. K poskytování bankovních služeb potřebuje povolení. V České republice nad bankami dohlíží ČNB.")
+            st.write(
+                "Banka nemůže začít fungovat jen proto, že si někdo založí"
+                " aplikaci a napíše „banka“. K poskytování bankovních služeb"
+                " potřebuje povolení. V České republice nad bankami dohlíží"
+                " ČNB."
+            )
             st.write("ČNB sleduje například:")
             st.markdown("""
             * zda banka má dost kapitálu,
@@ -1016,98 +1825,202 @@ def render():
             * zda je schopna zvládnout krizové situace.
             """)
 
-            st.write("**Proč banka nemůže půjčit úplně všechno, co má?** Protože musí zvládnout běžné výběry klientů, platby, regulatorní požadavky a krizové situace. Banka musí držet určité rezervy a kapitál. Pokud by půjčovala příliš rizikově, mohla by ohrozit důvěru klientů i stabilitu celého systému.")
+            st.write(
+                "**Proč banka nemůže půjčit úplně všechno, co má?** Protože"
+                " musí zvládnout běžné výběry klientů, platby, regulatorní"
+                " požadavky a krizové situace. Banka musí držet určité rezervy"
+                " a kapitál. Pokud by půjčovala příliš rizikově, mohla by"
+                " ohrozit důvěru klientů i stabilitu celého systému."
+            )
 
             st.markdown("#### 🛠️ Mini audit banky")
-            st.write("Představ si, že jsi bankovní analytik. Máš posoudit, jestli banka nepodstupuje moc velké riziko. Sleduj tři otázky:")
+            st.write(
+                "Představ si, že jsi bankovní analytik. Máš posoudit, jestli"
+                " banka nepodstupuje moc velké riziko. Sleduj tři otázky:"
+            )
 
-            ma1 = st.radio("1. Půjčuje banka lidem a firmám, kteří pravděpodobně zvládnou splácet?", ["Ano, prověřuje bonitu", "Ne, půjčí úplně každému bez kontroly"], key="k2_ma1")
-            ma2 = st.radio("2. Má dost peněz pro běžné výběry a platby klientů?", ["Ano, drží likviditní rezervy", "Ne, všechno rozjala do 30letých půjček"], key="k2_ma2")
-            ma3 = st.radio("3. Má dost kapitálu, aby zvládla případné ztráty?", ["Ano, drží vyžadovaný kapitál", "Ne, nemá žádný vlastní kapitál"], key="k2_ma3")
+            ma1 = st.radio(
+                "1. Půjčuje banka lidem a firmám, kteří pravděpodobně zvládnou"
+                " splácet?",
+                [
+                    "Ano, prověřuje bonitu",
+                    "Ne, půjčí úplně každému bez kontroly",
+                ],
+                key="k2_ma1",
+            )
+            ma2 = st.radio(
+                "2. Má dost peněz pro běžné výběry a platby klientů?",
+                [
+                    "Ano, drží likviditní rezervy",
+                    "Ne, všechno rozjala do 30letých půjček",
+                ],
+                key="k2_ma2",
+            )
+            ma3 = st.radio(
+                "3. Má dost kapitálu, aby zvládla případné ztráty?",
+                [
+                    "Ano, drží vyžadovaný kapitál",
+                    "Ne, nemá žádný vlastní kapitál",
+                ],
+                key="k2_ma3",
+            )
 
-            ma_text = st.text_area("Na závěr napiš doporučení: Co by měla banka zlepšit, aby byla bezpečnější?", key="k2_ma_text")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.2.3",
+                    "Na závěr napiš doporučení: Co by měla banka zlepšit, aby"
+                    " byla bezpečnější?",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
-            if st.button("Vyhodnotit a uložit audit banky 💾", key="k2_ma_btn"):
-                if ma1=="Ano, prověřuje bonitu" and ma2=="Ano, drží likviditní rezervy" and ma3=="Ano, drží vyžadovaný kapitál":
-                    st.success("✅ **Správný audit:** Banka splňuje klíčové podmínky obezřetného podnikání a ochrany vkladatelů.")
+            if st.button("Vyhodnotit audit banky 💾", key="k2_ma_btn"):
+                if (
+                    ma1 == "Ano, prověřuje bonitu"
+                    and ma2 == "Ano, drží likviditní rezervy"
+                    and ma3 == "Ano, drží vyžadovaný kapitál"
+                ):
+                    st.success(
+                        "✅ **Správný audit:** Banka splňuje klíčové podmínky"
+                        " obezřetného podnikání a ochrany vkladatelů."
+                    )
                 else:
-                    st.error("⚠️ **Rizikové zjištění:** Banka nesplňuje bezpečnostní pravidla a hrozí jí zásah ze strany ČNB!")
-                
-                audit_data = f"1:{ma1} | 2:{ma2} | 3:{ma3} | Doporučení: {st.session_state.get('k2_ma_text', '')}"
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.2.13 - Mini audit banky", audit_data)
+                    st.error(
+                        "⚠️ **Rizikové zjištění:** Banka nesplňuje bezpečnostní"
+                        " pravidla a hrozí jí zásah ze strany ČNB!"
+                    )
 
         # 1.2.14 Vklady a jejich ochrana
         with st.container(border=True):
             st.markdown("### 1.2.14 Vklady a jejich ochrana")
-            st.write("Vklady klientů v bankách jsou v zákonem stanoveném rozsahu chráněny systémem pojištění vkladů. Smyslem je posílit důvěru lidí v bankovní systém a snížit riziko paniky při problémech banky.")
+            st.write(
+                "Vklady klientů v bankách jsou v zákonem stanoveném rozsahu"
+                " chráněny systémem pojištění vkladů. Smyslem je posílit důvěru"
+                " lidí v bankovní systém a snížit riziko paniky při problémech"
+                " banky."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 🛟 <strong>Do jaké výše jsou vklady pojištěny:</strong> V České republice jsou pojištěné vklady u bank, družstevních záložen a stavebních spořitelen chráněny zpravidla do výše 100 000 EUR na jednoho klienta u jedné banky. V přepočtu jde přibližně o 2,4–2,5 milionu Kč, podle aktuálního kurzu. Pokud má člověk u jedné banky více účtů, limit se obvykle počítá dohromady za daného klienta u dané banky, ne zvlášť za každý účet.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Situace | Jak to zjednodušeně funguje | Příklad |
             | :--- | :--- | :--- |
             | **Klient má u jedné banky 500 000 Kč** | Částka je pod limitem pojištění vkladů. | Při krachu banky by měla být chráněna celá částka. |
             | **Klient má u jedné banky 2 000 000 Kč** | Částka je stále přibližně pod limitem 100 000 EUR. | Vklad by byl obvykle chráněn celý. |
             | **Klient má u jedné banky 4 000 000 Kč** | Část přesahuje základní limit pojištění. | Pojištěna by byla jen část do limitu; zbytek by nesl riziko. |
             | **Klient má 2 000 000 Kč v jedné bance a 2 000 000 Kč v jiné bance** | Limit se posuzuje u každé banky zvlášť. | Rozložení peněz mezi banky může snížit riziko překročení limitu. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.write("**Kdo pojištění vkladů zajišťuje?** V České republice výplatu náhrad zajišťuje Garanční systém finančního trhu prostřednictvím Fondu pojištění vkladů. Pokud by banka zkrachovala a nebyla schopná vyplatit klientům vklady, systém pojištění vkladů slouží k tomu, aby klienti dostali náhradu do zákonem stanoveného limitu.")
+            st.write(
+                "**Kdo pojištění vkladů zajišťuje?** V České republice"
+                " výplatu náhrad zajišťuje Garanční systém finančního trhu"
+                " prostřednictvím Fondu pojištění vkladů. Pokud by banka"
+                " zkrachovala a nebyla schopná vyplatit klientům vklady,"
+                " systém pojištění vkladů slouží k tomu, aby klienti dostali"
+                " náhradu do zákonem stanoveného limitu."
+            )
 
-            st.markdown("##### Výběr hotovosti: kolik lze vybrat a kdy to hlásit bance")
-            st.write("To, že má člověk peníze na účtu, neznamená, že si může kdykoliv bez přípravy odnést z pobočky libovolně vysokou hotovost. Banka musí mít hotovost fyzicky připravenou na pobočce a zároveň musí plnit pravidla proti praní špinavých peněz.")
+            st.markdown(
+                "##### Výběr hotovosti: kolik lze vybrat a kdy to hlásit bance"
+            )
+            st.write(
+                "To, že má člověk peníze na účtu, neznamená, že si může kdykoliv"
+                " bez přípravy odnést z pobočky libovolně vysokou hotovost."
+                " Banka musí mít hotovost fyzicky připravenou na pobočce a"
+                " zároveň musí plnit pravidla proti praní špinavých peněz."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Typ výběru | Jak to běžně funguje | Na co si dát pozor |
             | :--- | :--- | :--- |
             | **Výběr z bankomatu** | Řídí se limitem platební karty a limitem konkrétního bankomatu. | Limit si člověk často nastavuje v aplikaci, ale bankomat může mít i vlastní technické omezení. |
             | **Menší výběr na pobočce** | Obvykle lze vybrat bez předchozího objednání, pokud má pobočka hotovost k dispozici. | Každá banka může mít vlastní pravidla a limity. |
             | **Větší hotovostní výběr** | Často je vhodné nebo nutné oznámit ho bance předem, ale hranice se mezi bankami výrazně liší. | Například u ČSOB je podle zveřejněných informací potřeba předem objednat až částku převyšující 300 000 Kč; u KB se naopak uvádí hlášení už nad 100 000 Kč. |
             | **Velmi vysoký výběr** | Banka může požadovat písemné oznámení, objednání hotovosti nebo vysvětlení účelu. | Nejde o zvědavost pokladníka, ale o provozní a zákonné povinnosti banky. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-red'>
-                ⚠️ <strong>Důležité:</strong> Neexistuje jedno univerzální číslo, které by platilo pro všechny banky jako „do této částky nikdy nic nehlaš“. U velkých výběrů hotovosti záleží na pravidlech konkrétní banky, typu pobočky, měně, dostupnosti hotovosti a bezpečnostních pravidlech. Proto je lepší neuvádět 100 000 Kč jako obecnou hranici pro celý trh. Realističtější formulace je: u některých bank může být hranice nižší, u jiných lze bez předchozího objednání vybrat i vyšší částky — například u ČSOB se jako hranice pro objednání uvádí až částka nad 300 000 Kč.
+                ⚠️ <strong>Důležité:</strong> Neexistuje jedno univerzální číslo, které by platilo pro všechny banky jako „do této částky nikdy nic nehlaš“. U velkých výběrů hotovosti záleží na pravidlech konkrétní banky, typu pobočky, měně, dostupnosti hotovosti a bezpečnostních pravidlech.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-purple'>
                 🧠 <strong>Proč banka řeší velké hotovostní výběry:</strong><br>
                 • <strong>Provozní důvod:</strong> pobočka nemusí mít okamžitě připravené velké množství hotovosti.<br>
                 • <strong>Bezpečnost:</strong> převoz a výdej vysoké hotovosti je rizikový.<br>
-                • <strong>AML pravidla:</strong> banka musí sledovat podezřelé transakce a původ peněz, aby se bránilo praní špinavých peněz a financování nelegálních aktivit.<br>
+                • <strong>AML pravidla:</strong> banka musí sledovat podezřelé transakce a původ peněz.<br>
                 • <strong>Ochrana klienta:</strong> neobvyklý výběr může být i signál, že je klient pod tlakem podvodníka.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.write("**Příklad: výběr 300 000 Kč nebo 600 000 Kč na koupi auta:** Pokud chce klient vybrat 300 000 Kč v hotovosti, u některých bank to může být ještě běžně proveditelné bez zvláštního objednání, pokud má pobočka hotovost a klient splňuje limity účtu nebo karty. Například ČSOB uvádí, že předem je potřeba objednat až částku převyšující 300 000 Kč, případně výběr v cizí měně nebo požadovanou konkrétní skladbu bankovek. Pokud ale chce klient vybrat třeba 600 000 Kč, už je mnohem pravděpodobnější, že banka bude chtít výběr předem objednat. Potřebuje připravit hotovost, zajistit bezpečný provoz pobočky a splnit pravidla proti praní špinavých peněz. Neznamená to, že peníze nejsou klienta. Znamená to, že vysoká hotovost je pro banku provozní, bezpečnostní a regulatorní situace.")
+            st.write(
+                "**Příklad: výběr 300 000 Kč nebo 600 000 Kč na koupi auta:**"
+                " Pokud chce klient vybrat 300 000 Kč v hotovosti, u některých"
+                " bank to může být ještě běžně proveditelné bez zvláštního"
+                " objednání, pokud má pobočka hotovost a klient splňuje limity"
+                " účtu nebo karty. Například ČSOB uvádí, že předem je potřeba"
+                " objednat až částku převyšující 300 000 Kč. Pokud ale chce"
+                " klient vybrat třeba 600 000 Kč, už je mnohem"
+                " pravděpodobnější, že banka bude chtít výběr předem objednat."
+                " Potřebuje připravit hotovost, zajistit bezpečný provoz"
+                " pobočky a splnit pravidla proti praní špinavých peněz."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
-                🛟 <strong>Co si zapamatovat:</strong> Peníze na běžném nebo spořicím účtu nejsou totéž jako hotovost v peněžence. Jsou to pohledávky vůči bance. Proto je důležité, aby banky byly regulované, dohlížené a aby existovala pravidla ochrany vkladatelů. Základní pojištění vkladů je do 100 000 EUR na klienta u jedné banky. U hotovostních výběrů neplatí jedna hranice pro všechny banky — například ČSOB uvádí objednání až nad 300 000 Kč, zatímco jiné banky mohou chtít hlášení dříve.
+                🛟 <strong>Co si zapamatovat:</strong> Peníze na běžném nebo spořicím účtu nejsou totéž jako hotovost v peněžence. Jsou to pohledávky vůči bance. Základní pojištění vkladů je do 100 000 EUR na klienta u jedné banky.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-# =========================================================================
+    # =========================================================================
     # 1.3 PLATEBNÍ STYK
     # =========================================================================
     elif "1.3 Platební styk" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.3 Platební styk</h2>", unsafe_allow_html=True)
-        st.write("Platební styk znamená převod peněz mezi plátcem a příjemcem. Díky platebnímu styku můžeme zaplatit oběd kartou, poslat nájem převodem, nakoupit online, zaplatit fakturu přes QR kód nebo přijmout výplatu na účet.")
+        st.markdown(
+            "<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21."
+            " STOLETÍ</div><h2>1.3 Platební styk</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Platební styk znamená převod peněz mezi plátcem a příjemcem. Díky"
+            " platebnímu styku můžeme zaplatit oběd kartou, poslat nájem"
+            " převodem, nakoupit online, zaplatit fakturu přes QR kód nebo"
+            " přijmout výplatu na účet."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 💳 <strong>Základní myšlenka:</strong> Platební styk je infrastruktura důvěry. Umožňuje, aby se peníze bezpečně a prokazatelně přesunuly od toho, kdo platí, k tomu, kdo má peníze dostat.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.3.1
         with st.container(border=True):
@@ -1129,7 +2042,8 @@ def render():
             st.markdown("### 1.3.2 Druhy platebního styku")
             st.write("Platební styk lze rozdělit několika způsoby:")
 
-            st.markdown("""
+            st.markdown(
+                """
             | Druh | Co znamená | Příklady |
             | :--- | :--- | :--- |
             | **Hotovostní** | Platí se fyzickými penězi. | bankovky, mince, výběr z bankomatu, vklad hotovosti |
@@ -1139,33 +2053,109 @@ def render():
             | **Jednorázový** | Platba se zadává pro jeden konkrétní převod. | jednorázová úhrada faktury |
             | **Opakovaný** | Platba se provádí pravidelně nebo automaticky. | trvalý příkaz, SIPO, inkaso, předplatné |
             | **Okamžitý** | Peníze dorazí během několika sekund, pokud to banky podporují. | okamžitá platba mezi bankami |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("#### 🧭 Aktivita: Vyber správný typ platby")
-            st.write("U každé situace urči, zda jde o platbu hotovostní/bezhotovostní, tuzemskou/zahraniční a jednorázovou/opakovanou:")
+            st.write(
+                "U každé situace urči, zda jde o platbu"
+                " hotovostní/bezhotovostní, tuzemskou/zahraniční a"
+                " jednorázovou/opakovanou:"
+            )
 
-            act_1 = st.selectbox("1. Platím kávu v hotovosti:", ["Vyber...", "Hotovostní / Tuzemská / Jednorázová", "Bezhotovostní / Tuzemská / Opakovaná"], key="k2_act1")
-            act_2 = st.selectbox("2. Posílám nájem trvalým příkazem:", ["Vyber...", "Bezhotovostní / Tuzemská / Opakovaná", "Hotovostní / Zahraniční / Jednorázová"], key="k2_act2")
-            act_3 = st.selectbox("3. Platím Spotify předplatné:", ["Vyber...", "Bezhotovostní / Zahraniční / Opakovaná", "Hotovostní / Tuzemská / Jednorázová"], key="k2_act3")
-            act_4 = st.selectbox("4. Nakupuji v zahraničním e-shopu:", ["Vyber...", "Bezhotovostní / Zahraniční / Jednorázová", "Hotovostní / Tuzemská / Opakovaná"], key="k2_act4")
-            act_5 = st.selectbox("5. Posílám peníze na školní výlet přes QR kód:", ["Vyber...", "Bezhotovostní / Tuzemská / Jednorázová", "Hotovostní / Zahraniční / Opakovaná"], key="k2_act5")
-            act_6 = st.selectbox("6. Vybírám peníze z bankomatu:", ["Vyber...", "Hotovostní operace / Tuzemská / Jednorázová", "Bezhotovostní převod"], key="k2_act6")
-            act_7 = st.selectbox("7. Platím kartou na dovolené v cizině:", ["Vyber...", "Bezhotovostní / Zahraniční / Jednorázová", "Hotovostní / Tuzemská"], key="k2_act7")
+            act_1 = st.selectbox(
+                "1. Platím kávu v hotovosti:",
+                [
+                    "Vyber...",
+                    "Hotovostní / Tuzemská / Jednorázová",
+                    "Bezhotovostní / Tuzemská / Opakovaná",
+                ],
+                key="k2_act1",
+            )
+            act_2 = st.selectbox(
+                "2. Posílám nájem trvalým příkazem:",
+                [
+                    "Vyber...",
+                    "Bezhotovostní / Tuzemská / Opakovaná",
+                    "Hotovostní / Zahraniční / Jednorázová",
+                ],
+                key="k2_act2",
+            )
+            act_3 = st.selectbox(
+                "3. Platím Spotify předplatné:",
+                [
+                    "Vyber...",
+                    "Bezhotovostní / Zahraniční / Opakovaná",
+                    "Hotovostní / Tuzemská / Jednorázová",
+                ],
+                key="k2_act3",
+            )
+            act_4 = st.selectbox(
+                "4. Nakupuji v zahraničním e-shopu:",
+                [
+                    "Vyber...",
+                    "Bezhotovostní / Zahraniční / Jednorázová",
+                    "Hotovostní / Tuzemská / Opakovaná",
+                ],
+                key="k2_act4",
+            )
+            act_5 = st.selectbox(
+                "5. Posílám peníze na školní výlet přes QR kód:",
+                [
+                    "Vyber...",
+                    "Bezhotovostní / Tuzemská / Jednorázová",
+                    "Hotovostní / Zahraniční / Opakovaná",
+                ],
+                key="k2_act5",
+            )
+            act_6 = st.selectbox(
+                "6. Vybírám peníze z bankomatu:",
+                [
+                    "Vyber...",
+                    "Hotovostní operace / Tuzemská / Jednorázová",
+                    "Bezhotovostní převod",
+                ],
+                key="k2_act6",
+            )
+            act_7 = st.selectbox(
+                "7. Platím kartou na dovolené v cizině:",
+                [
+                    "Vyber...",
+                    "Bezhotovostní / Zahraniční / Jednorázová",
+                    "Hotovostní / Tuzemská",
+                ],
+                key="k2_act7",
+            )
 
-            act_bonus = st.text_area("Bonus: U každé situace navrhni nejbezpečnější platební nástroj:", key="k2_act_bonus")
-
-            if st.button("Vyhodnotit a uložit aktivitu plateb 💾", key="k2_act_btn"):
-                if act_1=="Hotovostní / Tuzemská / Jednorázová" and act_2=="Bezhotovostní / Tuzemská / Opakovaná" and act_3=="Bezhotovostní / Zahraniční / Opakovaná" and act_4=="Bezhotovostní / Zahraniční / Jednorázová" and act_5=="Bezhotovostní / Tuzemská / Jednorázová" and act_6=="Hotovostní operace / Tuzemská / Jednorázová" and act_7=="Bezhotovostní / Zahraniční / Jednorázová":
-                    st.success("🎉 Skvělá práce! Všechny typy plateb jsi určil/a zcela správně.")
-                else:
-                    st.error("Některý z typů plateb je vybrán špatně. Zkontroluj správné zařazení!")
-                
-                vysledek_data = (
-                    f"1:{act_1} | 2:{act_2} | 3:{act_3} | 4:{act_4} | 5:{act_5} | 6:{act_6} | 7:{act_7} | "
-                    f"Bonus: {act_bonus}"
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.3.1",
+                    "Bonus k aktivitě plateb: U každé situace navrhni"
+                    " nejbezpečnější platební nástroj:",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
                 )
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.2 - Typy plateb", vysledek_data)
+
+            if st.button("Vyhodnotit aktivitu plateb 💾", key="k2_act_btn"):
+                if (
+                    act_1 == "Hotovostní / Tuzemská / Jednorázová"
+                    and act_2 == "Bezhotovostní / Tuzemská / Opakovaná"
+                    and act_3 == "Bezhotovostní / Zahraniční / Opakovaná"
+                    and act_4 == "Bezhotovostní / Zahraniční / Jednorázová"
+                    and act_5 == "Bezhotovostní / Tuzemská / Jednorázová"
+                    and act_6 == "Hotovostní operace / Tuzemská / Jednorázová"
+                    and act_7 == "Bezhotovostní / Zahraniční / Jednorázová"
+                ):
+                    st.success(
+                        "🎉 Skvělá práce! Všechny typy plateb jsi určil/a zcela"
+                        " správně."
+                    )
+                else:
+                    st.error(
+                        "Některý z typů plateb je vybrán špatně. Zkontroluj"
+                        " správné zařazení!"
+                    )
 
         # 1.3.3
         with st.container(border=True):
@@ -1185,25 +2175,26 @@ def render():
             * **zahraniční převod** — platba mimo běžný tuzemský nebo SEPA režim.
             """)
 
-            st.markdown("""
-            <div class='box-purple'>
-                🧩 <strong>Interaktivní výzva:</strong> Vyber tři platby, které jsi provedl/a za poslední týden. Urči, zda šlo o hotovostní nebo bezhotovostní platbu, jednorázovou nebo opakovanou, tuzemskou nebo zahraniční.
-            </div>
-            """, unsafe_allow_html=True)
-            st.text_area("Zapiš své 3 platby:", key="k2_3_my_payments")
-            
-            if st.button("Uložit mé 3 platby 💾", key="btn_k2_3_my_payments"):
-                odp = st.session_state.get("k2_3_my_payments", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.3 - Mé poslední platby", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.3.2",
+                    "🧩 Interaktivní výzva: Vyber tři platby, které jsi"
+                    " provedl/a za poslední týden. Urči, zda šlo o hotovostní"
+                    " nebo bezhotovostní platbu, jednorázovou nebo opakovanou,"
+                    " tuzemskou nebo zahraniční.",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
         # 1.3.4
         with st.container(border=True):
             st.markdown("### 1.3.4 Kdo platební styk řídí a reguluje")
-            st.write("Platební styk není divoký prostor bez pravidel. Funguje díky spolupráci bank, platebních institucí, karetních společností, technologických poskytovatelů, obchodníků, státu a regulátorů.")
+            st.write(
+                "Platební styk není divoký prostor bez pravidel. Funguje díky"
+                " spolupráci bank, platebních institucí, karetních společností,"
+                " technologických poskytovatelů, obchodníků, státu a"
+                " regulátorů."
+            )
             st.write("V České republice má důležitou roli:")
             st.markdown("""
             * **ČNB** — provozuje a dohlíží na vybrané platební systémy a dohlíží na finanční instituce,
@@ -1214,34 +2205,59 @@ def render():
             * **právní předpisy ČR a EU** — stanovují pravidla bezpečnosti, práv klientů, odpovědnosti a ochrany spotřebitele.
             """)
 
-            st.markdown("##### CERTIS: „dálnice“ pro platby mezi českými bankami")
-            st.write("Když posíláme peníze v českých korunách, je důležité rozlišit, jestli jde platba v rámci jedné banky, nebo mezi dvěma různými bankami.")
+            st.markdown(
+                "##### CERTIS: „dálnice“ pro platby mezi českými bankami"
+            )
+            st.write(
+                "Když posíláme peníze v českých korunách, je důležité rozlišit,"
+                " jestli jde platba v rámci jedné banky, nebo mezi dvěma"
+                " různými bankami."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 🏦 <strong>Co je CERTIS:</strong> CERTIS je český systém mezibankovního platebního styku. Zjednodušeně řečeno je to systém, přes který se v České republice zúčtovávají platby v korunách mezi různými bankami. Název CERTIS znamená Czech Express Real Time Interbank Gross Settlement System. Systém spravuje a provozuje Česká národní banka.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Situace | Co se děje s platbou | Jde přes CERTIS? |
             | :--- | :--- | :--- |
             | **Platba v rámci stejné banky** | Oba účty jsou u stejné banky. Banka si platbu zúčtuje ve vlastním systému: jednomu klientovi částku odepíše, druhému připíše. | Obvykle ne. Zůstává uvnitř banky. |
             | **Platba mezi různými bankami** | Plátce má účet u jedné banky a příjemce u jiné banky. Banka plátce musí poslat mezibankovní pokyn přes systém CERTIS. | Ano. Platba se vypořádá mezi bankami přes CERTIS. |
             | **Okamžitá platba mezi různými bankami** | Pokud obě banky podporují okamžité platby, převod může proběhnout během několika sekund i mezi různými bankami. | Ano, v režimu okamžitých plateb v rámci mezibankovního systému. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.write("**Příklad: spolužák ve stejné bance vs. spolužák v jiné bance:** Představ si, že posíláš 500 Kč za společný dárek.")
+            st.write(
+                "**Příklad: spolužák ve stejné bance vs. spolužák v jiné bance:**"
+                " Představ si, že posíláš 500 Kč za společný dárek."
+            )
             st.markdown("""
             1. **Spolužák má účet u stejné banky:** Tvoje banka pouze upraví záznamy ve svém systému. Tobě 500 Kč odečte a spolužákovi 500 Kč připíše. Peníze nemusí „opustit“ banku.
             2. **Spolužák má účet u jiné banky:** Tvoje banka odešle pokyn do mezibankovního systému CERTIS. Přes něj se platba vypořádá mezi bankami a banka spolužáka částku připíše na jeho účet.
             """)
-            st.info("💡 **Jednoduše:** Když jsou oba účty ve stejné bance, banka si platbu vyřeší sama. Když jsou účty v různých bankách, musí se banky mezi sebou „domluvit“ přes mezibankovní systém. V ČR je pro korunové mezibankovní platby klíčový právě CERTIS, který spravuje ČNB.")
+            st.info(
+                "💡 **Jednoduše:** Když jsou oba účty ve stejné bance, banka si"
+                " platbu vyřeší sama. Když jsou účty v různých bankách, musí"
+                " se banky mezi sebou „domluvit“ přes mezibankovní systém. V ČR"
+                " je pro korunové mezibankovní platby klíčový právě CERTIS,"
+                " který spravuje ČNB."
+            )
 
         # 1.3.5
         with st.container(border=True):
             st.markdown("### 1.3.5 Jak probíhá platba kartou")
-            st.write("Když přiložíš kartu nebo mobil k terminálu, vše vypadá jako jedna sekunda. Ve skutečnosti se v pozadí odehraje několik kroků:")
+            st.write(
+                "Když přiložíš kartu nebo mobil k terminálu, vše vypadá jako"
+                " jedna sekunda. Ve skutečnosti se v pozadí odehraje několik"
+                " kroků:"
+            )
             st.markdown("""
             1. Terminál načte platební údaje.
             2. Obchodník pošle požadavek přes platební síť.
@@ -1250,39 +2266,128 @@ def render():
             5. Později proběhne zúčtování mezi bankami a obchodníkem.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-red'>
                 🔐 <strong>Bezpečnost:</strong> U plateb se používají limity, PIN, biometrie, potvrzení v aplikaci, 3D Secure, monitoring podezřelých transakcí a další ochranné prvky. Bezpečnost ale začíná i u uživatele: neklikat na podezřelé odkazy, nesdělovat kódy a chránit přístup do bankovnictví.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("#### 🔁 Skládačka: Cesta platby kartou")
-            st.write("Seřaď kroky platby kartou nebo mobilem ve správném pořadí:")
+            st.write(
+                "Seřaď kroky platby kartou nebo mobilem ve správném pořadí:"
+            )
 
-            s_krok1 = st.selectbox("1. krok:", ["Vyber...", "přiložení karty nebo mobilu k terminálu", "terminál načte platební údaje", "obchodník odešle požadavek přes platební síť", "banka ověří kartu, limit a bezpečnostní pravidla", "platba se schválí nebo zamítne", "později proběhne zúčtování mezi bankami a obchodníkem"], key="k2_sk1")
-            s_krok2 = st.selectbox("2. krok:", ["Vyber...", "přiložení karty nebo mobilu k terminálu", "terminál načte platební údaje", "obchodník odešle požadavek přes platební síť", "banka ověří kartu, limit a bezpečnostní pravidla", "platba se schválí nebo zamítne", "později proběhne zúčtování mezi bankami a obchodníkem"], key="k2_sk2")
-            s_krok3 = st.selectbox("3. krok:", ["Vyber...", "přiložení karty nebo mobilu k terminálu", "terminál načte platební údaje", "obchodník odešle požadavek přes platební síť", "banka ověří kartu, limit a bezpečnostní pravidla", "platba se schválí nebo zamítne", "později proběhne zúčtování mezi bankami a obchodníkem"], key="k2_sk3")
-            s_krok4 = st.selectbox("4. krok:", ["Vyber...", "přiložení karty nebo mobilu k terminálu", "terminál načte platební údaje", "obchodník odešle požadavek přes platební síť", "banka ověří kartu, limit a bezpečnostní pravidla", "platba se schválí nebo zamítne", "později proběhne zúčtování mezi bankami a obchodníkem"], key="k2_sk4")
-            s_krok5 = st.selectbox("5. krok:", ["Vyber...", "přiložení karty nebo mobilu k terminálu", "terminál načte platební údaje", "obchodník odešle požadavek přes platební síť", "banka ověří kartu, limit a bezpečnostní pravidla", "platba se schválí nebo zamítne", "později proběhne zúčtování mezi bankami a obchodníkem"], key="k2_sk5")
-            s_krok6 = st.selectbox("6. krok:", ["Vyber...", "přiložení karty nebo mobilu k terminálu", "terminál načte platební údaje", "obchodník odešle požadavek přes platební síť", "banka ověří kartu, limit a bezpečnostní pravidla", "platba se schválí nebo zamítne", "později proběhne zúčtování mezi bankami a obchodníkem"], key="k2_sk6")
+            s_krok1 = st.selectbox(
+                "1. krok:",
+                [
+                    "Vyber...",
+                    "přiložení karty nebo mobilu k terminálu",
+                    "terminál načte platební údaje",
+                    "obchodník odešle požadavek přes platební síť",
+                    "banka ověří kartu, limit a bezpečnostní pravidla",
+                    "platba se schválí nebo zamítne",
+                    "později proběhne zúčtování mezi bankami a obchodníkem",
+                ],
+                key="k2_sk1",
+            )
+            s_krok2 = st.selectbox(
+                "2. krok:",
+                [
+                    "Vyber...",
+                    "přiložení karty nebo mobilu k terminálu",
+                    "terminál načte platební údaje",
+                    "obchodník odešle požadavek přes platební síť",
+                    "banka ověří kartu, limit a bezpečnostní pravidla",
+                    "platba se schválí nebo zamítne",
+                    "později proběhne zúčtování mezi bankami a obchodníkem",
+                ],
+                key="k2_sk2",
+            )
+            s_krok3 = st.selectbox(
+                "3. krok:",
+                [
+                    "Vyber...",
+                    "přiložení karty nebo mobilu k terminálu",
+                    "terminál načte platební údaje",
+                    "obchodník odešle požadavek přes platební síť",
+                    "banka ověří kartu, limit a bezpečnostní pravidla",
+                    "platba se schválí nebo zamítne",
+                    "později proběhne zúčtování mezi bankami a obchodníkem",
+                ],
+                key="k2_sk3",
+            )
+            s_krok4 = st.selectbox(
+                "4. krok:",
+                [
+                    "Vyber...",
+                    "přiložení karty nebo mobilu k terminálu",
+                    "terminál načte platební údaje",
+                    "obchodník odešle požadavek přes platební síť",
+                    "banka ověří kartu, limit a bezpečnostní pravidla",
+                    "platba se schválí nebo zamítne",
+                    "později proběhne zúčtování mezi bankami a obchodníkem",
+                ],
+                key="k2_sk4",
+            )
+            s_krok5 = st.selectbox(
+                "5. krok:",
+                [
+                    "Vyber...",
+                    "přiložení karty nebo mobilu k terminálu",
+                    "terminál načte platební údaje",
+                    "obchodník odešle požadavek přes platební síť",
+                    "banka ověří kartu, limit a bezpečnostní pravidla",
+                    "platba se schválí nebo zamítne",
+                    "později proběhne zúčtování mezi bankami a obchodníkem",
+                ],
+                key="k2_sk5",
+            )
+            s_krok6 = st.selectbox(
+                "6. krok:",
+                [
+                    "Vyber...",
+                    "přiložení karty nebo mobilu k terminálu",
+                    "terminál načte platební údaje",
+                    "obchodník odešle požadavek přes platební síť",
+                    "banka ověří kartu, limit a bezpečnostní pravidla",
+                    "platba se schválí nebo zamítne",
+                    "později proběhne zúčtování mezi bankami a obchodníkem",
+                ],
+                key="k2_sk6",
+            )
 
-            st.write("**Otázky k zamyšlení:**")
-            q_fail = st.text_input("1. Kde může platba selhat?", key="k2_q_fail")
-            q_who = st.text_input("2. Kdo všechno se platby účastní?", key="k2_q_who")
-            q_magic = st.text_input("3. Proč platba mobilem není „kouzlo“, ale datový proces?", key="k2_q_magic")
-
-            if st.button("Vyhodnotit a uložit skládačku 💾", key="k2_sk_eval_btn"):
-                if s_krok1=="přiložení karty nebo mobilu k terminálu" and s_krok2=="terminál načte platební údaje" and s_krok3=="obchodník odešle požadavek přes platební síť" and s_krok4=="banka ověří kartu, limit a bezpečnostní pravidla" and s_krok5=="platba se schválí nebo zamítne" and s_krok6=="později proběhne zúčtování mezi bankami a obchodníkem":
-                    st.success("🎉 Skvělé! Kompletní řetězec platby kartou máš seřazený zcela přesně.")
-                else:
-                    st.error("Některý krok v pořadí nesouhlasí. Zkontroluj seznam v bodě 1.3.5!")
-                
-                skladacka_data = (
-                    f"Kroky: 1:{s_krok1}, 2:{s_krok2}, 3:{s_krok3}, 4:{s_krok4}, 5:{s_krok5}, 6:{s_krok6} | "
-                    f"Q1: {q_fail} | Q2: {q_who} | Q3: {q_magic}"
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.3.3",
+                    "Otázky k zamyšlení u platby kartou (Kde může selhat, kdo"
+                    " se účastní a proč nejde o kouzlo):",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
                 )
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.5 - Cesta platby", skladacka_data)
+
+            if st.button("Vyhodnotit skládačku 💾", key="k2_sk_eval_btn"):
+                if (
+                    s_krok1 == "přiložení karty nebo mobilu k terminálu"
+                    and s_krok2 == "terminál načte platební údaje"
+                    and s_krok3 == "obchodník odešle požadavek přes platební síť"
+                    and s_krok4
+                    == "banka ověří kartu, limit a bezpečnostní pravidla"
+                    and s_krok5 == "platba se schválí nebo zamítne"
+                    and s_krok6
+                    == "později proběhne zúčtování mezi bankami a obchodníkem"
+                ):
+                    st.success(
+                        "🎉 Skvělé! Kompletní řetězec platby kartou máš seřazený"
+                        " zcela přesně."
+                    )
+                else:
+                    st.error(
+                        "Některý krok v pořadí nesouhlasí. Zkontroluj seznam v"
+                        " bodě 1.3.5!"
+                    )
 
         # 1.3.6
         with st.container(border=True):
@@ -1298,48 +2403,102 @@ def render():
             * tlak na rychlé rozhodnutí.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             | Situace | Co dělat | Proč |
             | :--- | :--- | :--- |
             | Přijde SMS s odkazem na „blokaci účtu“ | Neotevírat odkaz, ověřit situaci přímo v aplikaci banky nebo na oficiální lince. | Podvodníci často vytvářejí falešný pocit naléhavosti. |
             | Někdo chce autorizační kód | Nikdy ho nesdělovat. | Kód může potvrdit platbu nebo přístup k účtu. |
             | Aplikace nabízí „garantované zhodnocení“ | Ověřit licenci, rizika a reálnost slibu. | Vysoký výnos bez rizika je varovný signál. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("#### 🚨 Phishing escape room: nenech se okrást jedním klikem")
-            st.write("Pro každou zprávu rozhodni, zda je bezpečná, podezřelá nebo nebezpečná. Najdi varovný signál a navrhni správnou reakci:")
+            st.markdown(
+                "#### 🚨 Phishing escape room: nenech se okrást jedním klikem"
+            )
+            st.write(
+                "Pro každou zprávu rozhodni, zda je bezpečná, podezřelá nebo"
+                " nebezpečná. Najdi varovný signál a navrhni správnou reakci:"
+            )
 
-            er1 = st.radio("1. „Vaše karta byla zablokována. Klikněte zde a ověřte účet.“", ["Bezpečná", "Podezřelá / Nebezpečná (Phishing)"], key="k2_er1")
-            er2 = st.radio("2. „Jsem z bezpečnostního oddělení banky. Nadiktujte mi kód z SMS.“", ["Bezpečná", "Podezřelá / Nebezpečná (Vishing)"], key="k2_er2")
-            er3 = st.radio("3. „Investice s garantovaným výnosem 30 % měsíčně.“", ["Bezpečná", "Podezřelá / Nebezpečná (Podvod)"], key="k2_er3")
-            er4 = st.radio("4. „Potvrďte přístup do internetového bankovnictví přes tento odkaz.“", ["Bezpečná", "Podezřelá / Nebezpečná (Phishing)"], key="k2_er4")
-            er5 = st.radio("5. E-shop nabízí uložení karty pro příští nákup.", ["Standardní funkce platební brány", "Podezřelá / Nebezpečná"], key="k2_er5")
+            er1 = st.radio(
+                "1. „Vaše karta byla zablokována. Klikněte zde a ověřte účet.“",
+                ["Bezpečná", "Podezřelá / Nebezpečná (Phishing)"],
+                key="k2_er1",
+            )
+            er2 = st.radio(
+                "2. „Jsem z bezpečnostního oddělení banky. Nadiktujte mi kód z"
+                " SMS.“",
+                ["Bezpečná", "Podezřelá / Nebezpečná (Vishing)"],
+                key="k2_er2",
+            )
+            er3 = st.radio(
+                "3. „Investice s garantovaným výnosem 30 % měsíčně.“",
+                ["Bezpečná", "Podezřelá / Nebezpečná (Podvod)"],
+                key="k2_er3",
+            )
+            er4 = st.radio(
+                "4. „Potvrďte přístup do internetového bankovnictví přes tento"
+                " odkaz.“",
+                ["Bezpečná", "Podezřelá / Nebezpečná (Phishing)"],
+                key="k2_er4",
+            )
+            er5 = st.radio(
+                "5. E-shop nabízí uložení karty pro příští nákup.",
+                ["Standardní funkce platební brány", "Podezřelá / Nebezpečná"],
+                key="k2_er5",
+            )
 
-            st.info("🛡️ **Pravidlo přežití:** Banka po telefonu ani přes zprávu nechce heslo, PIN ani autorizační kód. Když cítíš tlak na rychlost, zpomal a ověřuj oficiální cestou.")
+            st.info(
+                "🛡️ **Pravidlo přežití:** Banka po telefonu ani přes zprávu"
+                " nechce heslo, PIN ani autorizační kód. Když cítíš tlak na"
+                " rychlost, zpomal a ověřuj oficiální cestou."
+            )
 
-            if st.button("Vyhodnotit a uložit Escape Room 💾", key="k2_er_eval_btn"):
-                if er1=="Podezřelá / Nebezpečná (Phishing)" and er2=="Podezřelá / Nebezpečná (Vishing)" and er3=="Podezřelá / Nebezpečná (Podvod)" and er4=="Podezřelá / Nebezpečná (Phishing)" and er5=="Standardní funkce platební brány":
-                    st.success("🎉 Skvělé! Bezpečně jsi rozpoznal/a všechna rizika digitálního světa.")
+            if st.button("Vyhodnotit Escape Room 💾", key="k2_er_eval_btn"):
+                if (
+                    er1 == "Podezřelá / Nebezpečná (Phishing)"
+                    and er2 == "Podezřelá / Nebezpečná (Vishing)"
+                    and er3 == "Podezřelá / Nebezpečná (Podvod)"
+                    and er4 == "Podezřelá / Nebezpečná (Phishing)"
+                    and er5 == "Standardní funkce platební brány"
+                ):
+                    st.success(
+                        "🎉 Skvělé! Bezpečně jsi rozpoznal/a všechna rizika"
+                        " digitálního světa."
+                    )
                 else:
-                    st.error("Některá zpráva byla vyhodnocena špatně. Pozor na falešný tlak na čas a žádosti o kódy!")
-                
-                er_data = f"1:{er1}, 2:{er2}, 3:{er3}, 4:{er4}, 5:{er5}"
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.3.6 - Phishing Escape Room", er_data)
+                    st.error(
+                        "Některá zpráva byla vyhodnocena špatně. Pozor na"
+                        " falešný tlak na čas a žádosti o kódy!"
+                    )
 
     # =========================================================================
     # 1.4 FINTECH REVOLUCE
     # =========================================================================
     elif "1.4 Fintech" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21. STOLETÍ</div><h2>1.4 Fintech revoluce</h2>", unsafe_allow_html=True)
-        st.write("Fintech je spojení slov **finance** a **technology**. Označuje firmy a služby, které pomocí technologií mění způsob, jak platíme, spoříme, investujeme, půjčujeme si, ověřujeme identitu nebo spravujeme rozpočet.")
+        st.markdown(
+            "<div class='sub-section-header'>1. BANKOVNÍ SYSTÉM A PENÍZE V 21."
+            " STOLETÍ</div><h2>1.4 Fintech revoluce</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Fintech je spojení slov **finance** a **technology**. Označuje"
+            " firmy a služby, které pomocí technologií mění způsob, jak"
+            " platíme, spoříme, investujeme, půjčujeme si, ověřujeme identitu"
+            " nebo spravujeme rozpočet."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 🚀 <strong>Fintech změna:</strong> Finance se přesunuly z pobočky do mobilu. Uživatel očekává rychlost, jednoduché ovládání, okamžité notifikace, nízké poplatky a možnost vyřídit vše online.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.4.1
         with st.container(border=True):
@@ -1364,39 +2523,63 @@ def render():
 
         # 1.4.2
         with st.container(border=True):
-            st.markdown("### 1.4.2 Neobanky a moderní finanční aplikace")
-            st.write("Neobanky jsou bankovní nebo finanční služby stavěné hlavně pro mobilní prostředí. Často nemají klasickou síť poboček a soutěží jednoduchostí aplikace, rychlostí a cenou. Někdy jde o banku s bankovní licencí, jindy spíše o fintechovou platební aplikaci, která nabízí účet, kartu, směnu měn nebo další finanční služby.")
+            st.markdown(
+                "### 1.4.2 Neobanky a moderní finanční aplikace"
+            )
+            st.write(
+                "Neobanky jsou bankovní nebo finanční služby stavěné hlavně"
+                " pro mobilní prostředí. Často nemají klasickou síť poboček a"
+                " soutěží jednoduchostí aplikace, rychlostí a cenou. Někdy jde o"
+                " banku s bankovní licencí, jindy spíše o fintechovou platební"
+                " aplikaci, která nabízí účet, kartu, směnu měn nebo další"
+                " finanční služby."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-gray'>
                 📱 <strong>Příklady neobank a digitálních finančních služeb dostupných v ČR:</strong><br><br>
-                • <strong>Revolut</strong> — velmi známá mobilní finanční aplikace používaná pro účet, kartu, směnu měn, cestování, platby v zahraničí, investice nebo kryptoměny. Pro studenty je dobrým příkladem „banky v mobilu“, i když je důležité rozlišovat, pod jakou licencí a ochranou služba funguje.<br><br>
-                • <strong>Wise</strong> — služba zaměřená hlavně na levnější mezinárodní převody, víceměnový účet a platby v různých měnách. Hodí se jako příklad fintechu, který řeší hlavně zahraniční platby a směnu měn.<br><br>
-                • <strong>bunq</strong> — evropská digitální banka s důrazem na mobilní ovládání, více účtů, karty a práci s rozpočtem. V ČR může být dostupná, ale není tak běžná jako klasické české banky.<br><br>
-                • <strong>mBank</strong> — banka s výrazně digitálním modelem a menším důrazem na klasické pobočky. V českém prostředí ji lze použít jako příklad banky, která se dlouhodobě opírá o online a mobilní bankovnictví.<br><br>
-                • <strong>Air Bank</strong> — česká banka, která sice není čistá neobanka bez zázemí, ale často se uvádí jako příklad modernějšího, jednoduššího a digitálně orientovaného bankovnictví.
+                • <strong>Revolut</strong> — velmi známá mobilní finanční aplikace používaná pro účet, kartu, směnu měn, cestování, platby v zahraničí, investice nebo kryptoměny.<br><br>
+                • <strong>Wise</strong> — služba zaměřená hlavně na levnější mezinárodní převody, víceměnový účet a platby v různých měnách.<br><br>
+                • <strong>bunq</strong> — evropská digitální banka s důrazem na mobilní ovládání, více účtů, karty a práci s rozpočtem.<br><br>
+                • <strong>mBank</strong> — banka s výrazně digitálním modelem a menším důrazem na klasické pobočky.<br><br>
+                • <strong>Air Bank</strong> — česká banka, která se často uvádí jako příklad modernějšího, jednoduššího a digitálně orientovaného bankovnictví.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-red'>
-                ⚠️ <strong>Pozor na pojem neobanka:</strong> Ne každá aplikace, která vypadá jako banka, je stejná jako klasická banka v ČR. Liší se bankovní licence, pojištění vkladů, zákaznická podpora, poplatky, měny, ochrana klienta i to, kdo službu reguluje. Před používáním je dobré zjistit: Kdo službu provozuje? Má bankovní licenci? Kde jsou pojištěné vklady? Jaké má poplatky a limity?
+                ⚠️ <strong>Pozor na pojem neobanka:</strong> Ne každá aplikace, která vypadá jako banka, je stejná jako klasická banka v ČR. Liší se bankovní licence, pojištění vkladů, zákaznická podpora, poplatky, měny, ochrana klienta i to, kdo službu reguluje.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Klasické bankovnictví | Moderní fintech / neobanka |
             | :--- | :--- |
             | Důraz na pobočku a dlouhodobý vztah s bankou. | Důraz na mobilní aplikaci a rychlé ovládání. |
             | Služby se často řešily osobně nebo přes internetbanking. | Mnoho služeb se vyřídí v telefonu během minut. |
             | Poplatky a kurzovní marže nemusely být pro klienta přehledné. | Aplikace často ukazuje poplatky, kurzy a transakce okamžitě. |
             | Změny byly pomalejší. | Nové funkce přibývají rychleji, ale uživatel musí víc hlídat rizika. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.4.3
         with st.container(border=True):
-            st.markdown("### 1.4.3 Open banking: když si aplikace rozumí s bankou")
-            st.write("Důležitou změnou je **open banking**. Znamená, že klient může za určitých bezpečnostních podmínek povolit vybrané aplikaci přístup k informacím o účtu nebo zadání platby.")
+            st.markdown(
+                "### 1.4.3 Open banking: když si aplikace rozumí s bankou"
+            )
+            st.write(
+                "Důležitou změnou je **open banking**. Znamená, že klient může"
+                " za určitých bezpečnostních podmínek povolit vybrané aplikaci"
+                " přístup k informacím o účtu nebo zadání platby."
+            )
             st.write("Příklad:")
             st.markdown("""
             * jedna aplikace zobrazí zůstatky z více bank,
@@ -1404,12 +2587,19 @@ def render():
             * účetní systém firmy si načte bankovní pohyby,
             * platba v e-shopu se zadá přímo z bankovního účtu.
             """)
-            st.info("🔑 **Důležité:** Přístup k účtu má být vždy vědomý, omezený a odvolatelný. Uživatel by měl vědět, komu dává souhlas, k čemu a na jak dlouho.")
+            st.info(
+                "🔑 **Důležité:** Přístup k účtu má být vždy vědomý, omezený a"
+                " odvolatelný. Uživatel by měl vědět, komu dává souhlas, k čenu"
+                " a na jak dlouho."
+            )
 
         # 1.4.4
         with st.container(border=True):
             st.markdown("### 1.4.4 Rizika fintechu")
-            st.write("Fintech není automaticky dobrý nebo špatný. Je to nástroj. Může pomoct, ale také zrychlit chybná rozhodnutí.")
+            st.write(
+                "Fintech není automaticky dobrý nebo špatný. Je to nástroj."
+                " Může pomoct, ale také zrychlit chybná rozhodnutí."
+            )
             st.write("Rizika:")
             st.markdown("""
             * příliš snadné utrácení,
@@ -1420,16 +2610,23 @@ def render():
             * závislost na telefonu a notifikacích,
             * dojem, že „když je to v aplikaci, je to bezpečné“.
             """)
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-purple'>
                 🧠 <strong>Finanční gramotnost dnes:</strong> Nestačí vědět, co je úrok. Je potřeba umět poznat, kdy aplikace tlačí na rychlost, emoce nebo FOMO. Digitální pohodlí musí jít ruku v ruce s kritickým myšlením.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 1.4.5
         with st.container(border=True):
-            st.markdown("### 1.4.5 Jak poznat důvěryhodnou finanční službu")
-            st.write("Před použitím nové finanční aplikace je dobré zkontrolovat:")
+            st.markdown(
+                "### 1.4.5 Jak poznat důvěryhodnou finanční službu"
+            )
+            st.write(
+                "Před použitím nové finanční aplikace je dobré zkontrolovat:"
+            )
             st.markdown("""
             * kdo službu provozuje,
             * zda má potřebné oprávnění nebo dohled,
@@ -1442,59 +2639,71 @@ def render():
             """)
 
             st.markdown("#### 📱 Audit finanční aplikace")
-            st.write("Vyber jednu službu nebo aplikaci: Revolut, Wise, PayPal, Apple Pay, Google Pay, bankovní aplikaci, investiční aplikaci, rozpočtovou aplikaci nebo službu typu „kup teď, zaplať později“.")
 
-            au_name = st.text_input("1. Název aplikace:", key="k2_au_name")
-            au_owner = st.text_input("2. Kdo ji provozuje:", key="k2_au_owner")
-            au_feat = st.text_area("3. Co uživateli umožňuje:", key="k2_au_feat")
-            au_rev = st.text_area("4. Jak vydělává a jaké má poplatky:", key="k2_au_rev")
-            au_data = st.text_area("5. Jaká data po uživateli chce:", key="k2_au_data")
-            au_pc = st.text_area("6. Výhody a rizika:", key="k2_au_pc")
-            au_rec = st.radio("7. Doporučení spolužákovi:", ["Doporučil/a bych", "Nedoporučil/a bych"], key="k2_au_rec")
-
-            if st.button("Uložit audit aplikace 💾", key="k2_au_btn"):
-                st.success(f"Audit pro aplikaci **{au_name}** byl zaznamenán!")
-                au_komplet = (
-                    f"Název: {au_name} | Provozovatel: {au_owner} | "
-                    f"Funkce: {au_feat} | Příjmy: {au_rev} | "
-                    f"Data: {au_data} | Výhody/Rizika: {au_pc} | Doporučení: {au_rec}"
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.4.1",
+                    "Audit finanční aplikace (Vyber např. Revolut, Wise, PayPal"
+                    " a popiš: Název, Provozovatele, Funkce, Jak vydělává,"
+                    " Data, Výhody/Rizika a tvoje doporučení):",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
                 )
-                if au_name.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.4.5 - Audit aplikace", au_komplet)
-                else:
-                    st.warning("Před uložením vyplň alespoň název aplikace!")
 
             st.markdown("---")
 
             st.markdown("#### ⚖️ Debata: Fintech — pomocník, nebo past?")
             col_deb1, col_deb2 = st.columns(2)
             with col_deb1:
-                st.success("💚 **Tým A (Pomocník):**\nFintech zvyšuje finanční gramotnost, šetří čas, snižuje poplatky za převody a směnu a umožňuje snadnou kontrolu rozpočtu.")
+                st.success(
+                    "💚 **Tým A (Pomocník):**\n"
+                    "Fintech zvyšuje finanční gramotnost, šetří čas, snižuje"
+                    " poplatky za převody a směnu a umožňuje snadnou kontrolu"
+                    " rozpočtu."
+                )
             with col_deb2:
-                st.error("🔴 **Tým B (Past):**\nFintech zrychluje impulzivní utrácení, zjednodušuje neuvážené zadlužování, využívá gamifikaci k investičnímu riziku a sbírá osobní data.")
+                st.error(
+                    "🔴 **Tým B (Past):**\n"
+                    "Fintech zrychluje impulzivní utrácení, zjednodušuje"
+                    " neuvážené zadlužování, využívá gamifikaci k investičnímu"
+                    " riziku a sbírá osobní data."
+                )
 
-            deb_text = st.text_area("Vaše argumenty a příklad z běžného života:", key="k2_deb_text")
-            
-            if st.button("Uložit argumenty do debaty 💾", key="btn_k2_deb"):
-                if deb_text.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 1.4.5 - Fintech debata", deb_text)
-                else:
-                    st.warning("Před uložením napiš své argumenty!")
-# =========================================================================
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.4.2",
+                    "Napiš své argumenty do debaty Fintech (Pomocník vs."
+                    " Past) a příklad z běžného života:",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
+
+    # =========================================================================
     # 2.1 OSOBNÍ FINANCE V 21. STOLETÍ
     # =========================================================================
     elif "2.1 Osobní finance" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.1 Osobní finance v 21. století: proč je to těžší, než se zdá</h2>", unsafe_allow_html=True)
-        st.write("Osobní finance nejsou jen otázka toho, kolik člověk vydělává. Jsou to každodenní rozhodnutí: za co utratím peníze, co odložím, co si půjčím, jak poznám riziko a jak se nenechám řídit reklamou, tlakem okolí nebo algoritmem v aplikaci.")
+        st.markdown(
+            "<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY"
+            " BOHATSTVÍ“</div><h2>2.1 Osobní finance v 21. století: proč je to"
+            " těžší, než se zdá</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Osobní finance nejsou jen otázka toho, kolik člověk vydělává. Jsou"
+            " to každodenní rozhodnutí: za co utratím peníze, co odložím, co si"
+            " půjčím, jak poznám riziko a jak se nenechám řídit reklamou, tlakem"
+            " okolí nebo algoritmem v aplikaci."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-purple'>
-                🧠 <strong>Základní myšlenka:</strong> Finanční gramotnost v 21. století znamená umět zacházet nejen s penězi, ale i s digitálním prostředím, které naše finanční rozhodování ovlivňuje. Nestačí znát pojmy jako rozpočet, úrok nebo inflace. Je potřeba rozumět i tomu, proč nás aplikace, sociální sítě, slevy, předplatná a odložené platby vedou k rychlému utrácení.
+                🧠 <strong>Základní myšlenka:</strong> Finanční gramotnost v 21. století znamená umět zacházet nejen s penězi, ale i s digitálním prostředím, které naše finanční rozhodování ovlivňuje.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         st.write("Dnešní generace řeší několik nových problémů:")
         st.markdown("""
@@ -1508,16 +2717,23 @@ def render():
         """)
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-red'>
-                ⚠️ <strong>Současný problém:</strong> Mnoho lidí nemá problém jen s nedostatkem informací, ale s prostředím, které podporuje okamžité rozhodování. Telefon umožňuje nakoupit, objednat, investovat nebo půjčit si během několika sekund. Finanční chyba tak může vzniknout rychleji než dřív.
+                ⚠️ <strong>Současný problém:</strong> Mnoho lidí nemá problém jen s nedostatkem informací, ale s prostředím, které podporuje okamžité rozhodování. Telefon umožňuje nakoupit, objednat, investovat nebo půjčit si během několika sekund.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 2.1.1 Co znamená osobní finanční management
         with st.container(border=True):
             st.markdown("### 2.1.1 Co znamená osobní finanční management")
-            st.write("Osobní finanční management je schopnost plánovat a řídit vlastní peníze tak, aby člověk zvládal běžné výdaje, nečekané situace i dlouhodobé cíle.")
+            st.write(
+                "Osobní finanční management je schopnost plánovat a řídit"
+                " vlastní peníze tak, aby člověk zvládal běžné výdaje, nečekané"
+                " situace i dlouhodobé cíle."
+            )
             st.write("Patří sem hlavně:")
             st.markdown("""
             * evidence příjmů a výdajů,
@@ -1531,121 +2747,215 @@ def render():
             """)
 
             st.markdown("##### Potřeba vs. přání")
-            st.write("**Potřeba** je výdaj, bez kterého se člověk dlouhodobě neobejde nebo který je nutný pro běžné fungování — například jídlo, bydlení, doprava do školy nebo práce, léky, základní oblečení.")
-            st.write("**Přání** je výdaj, který zvyšuje pohodlí, radost nebo status, ale není nezbytný — například nové značkové oblečení, dražší telefon, streamovací služby navíc, kosmetika, herní doplňky nebo časté objednávání jídla.")
+            st.write(
+                "**Potřeba** je výdaj, bez kterého se člověk dlouhodobě neobejde"
+                " nebo který je nutný pro běžné fungování — například jídlo,"
+                " bydlení, doprava do školy nebo práce, léky, základní oblečení."
+            )
+            st.write(
+                "**Přání** je výdaj, který zvyšuje pohodlí, radost nebo"
+                " status, ale není nezbytný — například nové značkové oblečení,"
+                " dražší telefon, streamovací služby navíc, kosmetika, herní"
+                " doplňky nebo časté objednávání jídla."
+            )
 
             st.markdown("#### 🧩 Třídič: Je to potřeba, nebo přání?")
-            
-            p_q1 = st.selectbox("1. Nájemné nebo poplatek za kolej / bydlení:", ["Vyber...", "Potřeba", "Přání"], key="k2_p_q1")
-            p_q2 = st.selectbox("2. Třetí aktivní streamovací služba (Netflix/Spotify/Disney):", ["Vyber...", "Potřeba", "Přání"], key="k2_p_q2")
-            p_q3 = st.selectbox("3. Základní jídlo a potraviny v e-shopu/supermarketu:", ["Vyber...", "Potřeba", "Přání"], key="k2_p_q3")
-            p_q4 = st.selectbox("4. Každodenní objednávání hotového jídla přes rozvoz:", ["Vyber...", "Potřeba", "Přání"], key="k2_p_q4")
-            p_q5 = st.selectbox("5. Předepsané léky nebo jízdné do školy:", ["Vyber...", "Potřeba", "Přání"], key="k2_p_q5")
 
-            if st.button("Vyhodnotit a uložit třídič 💾", key="k2_potreby_btn"):
-                if p_q1 == "Potřeba" and p_q2 == "Přání" and p_q3 == "Potřeba" and p_q4 == "Přání" and p_q5 == "Potřeba":
-                    st.success("🎉 Skvěle! Přesně rozumíš hranici mezi nezbytnou potřebou a volitelným přáním.")
+            p_q1 = st.selectbox(
+                "1. Nájemné nebo poplatek za kolej / bydlení:",
+                ["Vyber...", "Potřeba", "Přání"],
+                key="k2_p_q1",
+            )
+            p_q2 = st.selectbox(
+                "2. Třetí aktivní streamovací služba (Netflix/Spotify/Disney):",
+                ["Vyber...", "Potřeba", "Přání"],
+                key="k2_p_q2",
+            )
+            p_q3 = st.selectbox(
+                "3. Základní jídlo a potraviny v e-shopu/supermarketu:",
+                ["Vyber...", "Potřeba", "Přání"],
+                key="k2_p_q3",
+            )
+            p_q4 = st.selectbox(
+                "4. Každodenní objednávání hotového jídla přes rozvoz:",
+                ["Vyber...", "Potřeba", "Přání"],
+                key="k2_p_q4",
+            )
+            p_q5 = st.selectbox(
+                "5. Předepsané léky nebo jízdné do školy:",
+                ["Vyber...", "Potřeba", "Přání"],
+                key="k2_p_q5",
+            )
+
+            if st.button("Vyhodnotit třídič 💾", key="k2_potreby_btn"):
+                if (
+                    p_q1 == "Potřeba"
+                    and p_q2 == "Přání"
+                    and p_q3 == "Potřeba"
+                    and p_q4 == "Přání"
+                    and p_q5 == "Potřeba"
+                ):
+                    st.success(
+                        "🎉 Skvěle! Přesně rozumíš hranici mezi nezbytnou"
+                        " potřebou a volitelným přáním."
+                    )
                 else:
-                    st.error("Některé položky jsou zařazeny špatně. Potřeba je nutná k přežití a fungování, přání zvyšuje komfort.")
-                
-                tridic_data = f"1:{p_q1}, 2:{p_q2}, 3:{p_q3}, 4:{p_q4}, 5:{p_q5}"
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.1.1 - Potřeba vs. Přání", tridic_data)
+                    st.error(
+                        "Některé položky jsou zařazeny špatně. Potřeba je nutná"
+                        " k přežití a fungování, přání zvyšuje komfort."
+                    )
 
     # =========================================================================
     # 2.2 ROZPOČET: MAPA PENĚZ
     # =========================================================================
     elif "2.2 Rozpočet" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.2 Rozpočet: mapa peněz</h2>", unsafe_allow_html=True)
-        st.write("Rozpočet ukazuje, odkud peníze přicházejí a kam odcházejí. Bez rozpočtu člověk často neví, jestli má problém s nízkými příjmy, vysokými výdaji, impulzivním utrácením, dluhy nebo chybějící rezervou.")
+        st.markdown(
+            "<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY"
+            " BOHATSTVÍ“</div><h2>2.2 Rozpočet: mapa peněz</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Rozpočet ukazuje, odkud peníze přicházejí a kam odcházejí. Bez"
+            " rozpočtu člověk často neví, jestli má problém s nízkými příjmy,"
+            " vysokými výdaji, impulzivním utrácením, dluhy nebo chybějící"
+            " rezervou."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 🧭 <strong>Jednoduše řečeno:</strong> Rozpočet není trest ani omezování života. Je to mapa. Pomáhá zjistit, jestli peníze směřují k tomu, co je pro člověka opravdu důležité.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 2.2.1 Příjmy
         with st.container(border=True):
             st.markdown("### 2.2.1 Příjmy")
-            st.write("Příjmy jsou peníze, které člověk získává. Mohou být pravidelné nebo nepravidelné.")
+            st.write(
+                "Příjmy jsou peníze, které člověk získává. Mohou být pravidelné"
+                " nebo nepravidelné."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Typ příjmu | Příklad | Na co si dát pozor |
             | :--- | :--- | :--- |
             | **Pravidelný příjem** | mzda, brigáda, kapesné, stipendium | Lze s ním lépe plánovat. |
             | **Nepravidelný příjem** | jednorázová odměna, prodej věcí, sezónní brigáda | Není dobré na něm stavět pravidelné výdaje. |
             | **Pasivnější příjem** | úrok, dividenda, příjem z pronájmu | Většinou vyžaduje kapitál, čas nebo riziko. |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
         # 2.2.2 Výdaje
         with st.container(border=True):
             st.markdown("### 2.2.2 Výdaje")
-            st.write("Výdaje je vhodné rozdělit podle toho, jak snadno je lze změnit.")
+            st.write(
+                "Výdaje je vhodné rozdělit podle toho, jak snadno je lze"
+                " změnit."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Typ výdaje | Příklad | Otázka ke kontrole |
             | :--- | :--- | :--- |
             | **Fixní výdaj** | nájem, paušál, předplatné, splátka | Opravdu ho potřebuji každý měsíc? |
             | **Proměnlivý výdaj** | jídlo, doprava, drogerie, zábava | Dá se upravit bez zásadního poklesu kvality života? |
             | **Jednorázový výdaj** | telefon, oprava, dovolená, školní pomůcky | Mám na něj připravené peníze dopředu? |
             | **Skrytý výdaj** | automatické předplatné, poplatky, mikrotransakce | Vím, kolik mě stojí za rok? |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Projdi si posledních 10 plateb v mobilním bankovnictví. Rozděl je na potřeby, přání a skryté nebo automatické výdaje.</div>", unsafe_allow_html=True)
-            st.text_area("Zapiš svou analýzu posledních 10 plateb:", key="k2_last_10_payments")
-            
-            if st.button("Uložit analýzu plateb 💾", key="btn_k2_last_10"):
-                odp = st.session_state.get("k2_last_10_payments", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.2.2 - 10 posledních plateb", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.5.1",
+                    "🧩 Interaktivní výzva: Projdi si posledních 10 plateb v"
+                    " mobilním bankovnictví. Rozděl je na potřeby, přání a"
+                    " skryté nebo automatické výdaje.",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
         # 2.2.3 Pravidlo 50-30-20
         with st.container(border=True):
-            st.markdown("### 2.2.3 Jednoduché pravidlo pro rozpočet (50–30–20)")
-            st.write("Jedním z možných pravidel je model **50–30–20**:")
+            st.markdown(
+                "### 2.2.3 Jednoduché pravidlo pro rozpočet (50–30–20)"
+            )
+            st.write("Jedním z možných rules je model **50–30–20**:")
             st.markdown("""
             * **50 %** na potřeby,
             * **30 %** na přání,
             * **20 %** na rezervu, spoření, investování nebo splácení dluhů.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-gray'>
                 ⚖️ <strong>Pozor na zjednodušení:</strong> Pravidlo 50–30–20 není povinnost a nemusí fungovat pro každého. Někdo má vysoké náklady na bydlení, někdo nízký příjem, někdo splácí dluh. Smyslem pravidla je ukázat princip: část peněz má pokrýt dnešek, část radost a část budoucnost.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("#### 🧮 Kalkulačka rozpočtu 50–30–20")
-            b_income = st.number_input("Zadej svůj měsíční čistý příjem (Kč):", value=20000, step=1000, key="k2_budget_calc_inc")
-            
+            b_income = st.number_input(
+                "Zadej svůj měsíční čistý příjem (Kč):",
+                value=20000,
+                step=1000,
+                key="k2_budget_calc_inc",
+            )
+
             c_needs = b_income * 0.50
             c_wants = b_income * 0.30
             c_saves = b_income * 0.20
 
             col_b1, col_b2, col_b3 = st.columns(3)
-            col_b1.metric("Potřeby (50 %)", f"{c_needs:,.0f} Kč".replace(",", " "))
-            col_b2.metric("Přání (30 %)", f"{c_wants:,.0f} Kč".replace(",", " "))
-            col_b3.metric("Rezerva / Úspory (20 %)", f"{c_saves:,.0f} Kč".replace(",", " "))
+            col_b1.metric(
+                "Potřeby (50 %)", f"{c_needs:,.0f} Kč".replace(",", " ")
+            )
+            col_b2.metric(
+                "Přání (30 %)", f"{c_wants:,.0f} Kč".replace(",", " ")
+            )
+            col_b3.metric(
+                "Rezerva / Úspory (20 %)", f"{c_saves:,.0f} Kč".replace(",", " ")
+            )
 
             if st.button("Uložit výpočet rozpočtu 💾", key="btn_k2_budget"):
-                roz_data = f"Příjem: {b_income} Kč | Potřeby: {c_needs} Kč | Přání: {c_wants} Kč | Rezerva: {c_saves} Kč"
+                roz_data = (
+                    f"Příjem: {b_income} Kč | Potřeby: {c_needs} Kč | Přání:"
+                    f" {c_wants} Kč | Rezerva: {c_saves} Kč"
+                )
                 if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.2.3 - Kalkulačka rozpočtu", roz_data)
+                    st.session_state["uloz_odpoved_fn"](
+                        "Kapitola 2",
+                        "Podkapitola 2.2.3 - Kalkulačka rozpočtu",
+                        roz_data,
+                    )
 
     # =========================================================================
     # 2.3 ALGORITMY BOHATSTVÍ
     # =========================================================================
     elif "2.3 Algoritmy" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.3 Algoritmy bohatství: malé návyky, velký rozdíl</h2>", unsafe_allow_html=True)
-        st.write("Slovo „algoritmus“ tu neznamená počítačový program. Znamená opakovatelný postup, který člověku pomáhá rozhodovat se lépe. Bohatství nevzniká jen jedním velkým rozhodnutím. Často vzniká z malých pravidelných kroků, které se opakují dlouhou dobu.")
+        st.markdown(
+            "<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY"
+            " BOHATSTVÍ“</div><h2>2.3 Algoritmy bohatství: malé návyky, velký"
+            " rozdíl</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Slovo „algoritmus“ tu neznamená počítačový program. Znamená"
+            " opakovatelný postup, který člověku pomáhá rozhodovat se lépe."
+            " Bohatství nevzniká jen jedním velkým rozhodnutím. Často vzniká z"
+            " malých pravidelných kroků, které se opakují dlouhou dobu."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 🔁 <strong>Algoritmus finanční stability:</strong><br>
                 1. Nejdřív zaplať nutné výdaje.<br>
@@ -1654,43 +2964,78 @@ def render():
                 4. Vyhýbej se drahému dluhu.<br>
                 5. Pravidelně kontroluj, kam peníze mizí.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         with st.container(border=True):
             st.markdown("### 2.3.1 Zaplať nejdřív sobě")
-            st.write("Princip „zaplať nejdřív sobě“ znamená, že člověk nečeká, jestli mu na konci měsíce něco zbyde. Část peněz si odloží hned po přijetí příjmu.")
+            st.write(
+                "Princip „zaplať nejdřív sobě“ znamená, že člověk nečeká,"
+                " jestli mu na konci měsíce něco zbyde. Část peněz si odloží"
+                " hned po přijetí příjmu."
+            )
             st.write("Příklad:")
             st.markdown("""
             * přijde výplata nebo brigáda,
             * pokud používáš pravidlo 50–30–20, odložíš 20 %, případně začneš s menší částkou (třeba 10 % nebo pevná částka),
             * teprve zbytek je určený na běžné výdaje.
             """)
-            st.write("**Proč to funguje?** Když člověk čeká, co zbyde, často nezbyde nic. Digitální platby, drobné nákupy, jídlo venku, doprava, předplatná a impulzivní objednávky peníze postupně „rozpustí“. Automatické odložení peněz snižuje závislost na vůli.")
+            st.write(
+                "**Proč to funguje?** Když člověk čeká, co zbyde, často nezbyde"
+                " nic. Digitální platby, drobné nákupy, jídlo venku, doprava,"
+                " předplatná a impulzivní objednávky peníze postupně"
+                " „rozpustí“. Automatické odložení peněz snižuje závislost na"
+                " vůli."
+            )
 
         with st.container(border=True):
-            st.markdown("### 2.3.2 Automatizace pomáhá, ale musí být pod kontrolou")
-            st.write("Automatické platby mohou být užitečné: pomáhají platit včas, odkládat rezervu nebo pravidelně spořit. Zároveň ale mohou vytvářet výdaje, kterých si člověk nevšímá.")
+            st.markdown(
+                "### 2.3.2 Automatizace pomáhá, ale musí být pod kontrolou"
+            )
+            st.write(
+                "Automatické platby mohou být užitečné: pomáhají platit včas,"
+                " odkládat rezervu nebo pravidelně spořit. Zároveň ale mohou"
+                " vytvářet výdaje, kterých si člověk nevšímá."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-purple'>
                 🤖 <strong>AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta:<br>
                 <em>„Pomoz mi najít v mém měsíčním rozpočtu tři automatické výdaje, které bych měl/a zkontrolovat, a navrhni, jak poznám, jestli mi za to stojí.“</em>
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
     # =========================================================================
     # 2.4 MATEMATIKA PENĚZ
     # =========================================================================
     elif "2.4 Matematika" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.4 Matematika peněz: čas, úrok a inflace</h2>", unsafe_allow_html=True)
-        st.write("Peníze mají časovou hodnotu. Stokoruna dnes nemá stejnou hodnotu jako stokoruna za deset let, protože ceny se mění a peníze mohou nést úrok nebo výnos.")
+        st.markdown(
+            "<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY"
+            " BOHATSTVÍ“</div><h2>2.4 Matematika peněz: čas, úrok a"
+            " inflace</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Peníze mají časovou hodnotu. Stokoruna dnes nemá stejnou hodnotu"
+            " jako stokoruna za deset let, protože ceny se mění a peníze mohou"
+            " nést úrok nebo výnos."
+        )
 
         # 2.4.1 Jednoduché úročení
         with st.container(border=True):
             st.markdown("### 2.4.1 Jednoduché úročení")
-            st.write("Jednoduché úročení znamená, že se úrok počítá stále jen z původně vložené nebo půjčené částky. Úroky se v dalších obdobích nepřičítají k základu pro další úročení.")
+            st.write(
+                "Jednoduché úročení znamená, že se úrok počítá stále jen z"
+                " původně vložené nebo půjčené částky. Úroky se v dalších"
+                " obdobích nepřičítají k základu pro další úročení."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-gray'>
                 🧮 <strong>Vzorec pro jednoduché úročení:</strong><br>
                 $$K = J \\times (1 + r \\times t)$$<br>
@@ -1699,17 +3044,32 @@ def render():
                 • <strong>r</strong> = roční úroková sazba v desetinném tvaru (např. 5 % = 0,05)<br>
                 • <strong>t</strong> = čas v letech
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.write("**Příklad jednoduchého úročení:** Vložíš 10 000 Kč na 3 roky s roční úrokovou sazbou 5 %. Úrok se počítá pořád jen z původních 10 000 Kč.")
-            st.write("Výpočet: $K = 10\\ 000 \\times (1 + 0{,}05 \\times 3) = 10\\ 000 \\times 1{,}15 = 11\\ 500\\ \\text{Kč}$. Za 3 roky získáš úrok 1 500 Kč.")
+            st.write(
+                "**Příklad jednoduchého úročení:** Vložíš 10 000 Kč na 3 roky"
+                " s roční úrokovou sazbou 5 %. Úrok se počítá pořád jen z"
+                " původních 10 000 Kč."
+            )
+            st.write(
+                "Výpočet: $K = 10\\ 000 \\times (1 + 0{,}05 \\times 3) = 10\\"
+                " 000 \\times 1{,}15 = 11\\ 500\\ \\text{Kč}$. Za 3 roky získáš"
+                " úrok 1 500 Kč."
+            )
 
         # 2.4.2 Složené úročení
         with st.container(border=True):
             st.markdown("### 2.4.2 Složené úročení")
-            st.write("Složené úročení znamená, že se úročí nejen původní částka, ale postupně i již připsané úroky nebo výnosy. Peníze tedy mohou vydělávat další peníze.")
+            st.write(
+                "Složené úročení znamená, že se úročí nejen původní částka, ale"
+                " postupně i již připsané úroky nebo výnosy. Peníze tedy mohou"
+                " vydělávat další peníze."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-gray'>
                 🧮 <strong>Vzorec pro složené úročení:</strong><br>
                 $$K = J \\times (1 + r)^n$$<br>
@@ -1718,26 +3078,50 @@ def render():
                 • <strong>r</strong> = úroková sazba za období v desetinném tvaru<br>
                 • <strong>n</strong> = počet úročených období
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.write("**Příklad složeného úročení:** Vložíš 10 000 Kč na 3 roky s roční úrokovou sazbou 5 %. Úrok se každý rok připíše k částce a další rok se úročí i tento připsaný úrok.")
-            st.write("Výpočet: $K = 10\\ 000 \\times (1 + 0{,}05)^3 = 10\\ 000 \\times 1{,}157625 = 11\\ 576{,}25\\ \\text{Kč}$. Za 3 roky získáš úrok 1 576,25 Kč.")
+            st.write(
+                "**Příklad složeného úročení:** Vložíš 10 000 Kč na 3 roky s"
+                " roční úrokovou sazbou 5 %. Úrok se každý rok připíše k"
+                " částce a další rok se úročí i tento připsaný úrok."
+            )
+            st.write(
+                "Výpočet: $K = 10\\ 000 \\times (1 + 0{,}05)^3 = 10\\ 000 \\times"
+                " 1{,}157625 = 11\\ 576{,}25\\ \\text{Kč}$. Za 3 roky získáš"
+                " úrok 1 576,25 Kč."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Typ úročení | Z čeho se počítá úrok | Výsledek při 10 000 Kč, 5 % p.a., 3 roky |
             | :--- | :--- | :--- |
             | **Jednoduché úročení** | Pořád z původní částky | **11 500,00 Kč** |
             | **Složené úročení** | Z původní částky i z připsaných úroků | **11 576,25 Kč** |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
-            st.markdown("#### 🧮 Srovnávací kalkulačka: Jednoduché vs. Složené úročení")
+            st.markdown(
+                "#### 🧮 Srovnávací kalkulačka: Jednoduché vs. Složené úročení"
+            )
             col_u1, col_u2, col_u3 = st.columns(3)
             with col_u1:
-                jistina_input = st.number_input("Vklad J (Kč):", value=10000, step=1000, key="k2_u_jistina")
+                jistina_input = st.number_input(
+                    "Vklad J (Kč):", value=10000, step=1000, key="k2_u_jistina"
+                )
             with col_u2:
-                sazba_input = st.number_input("Sazba r (% p.a.):", value=5.0, step=0.5, key="k2_u_sazba")
+                sazba_input = st.number_input(
+                    "Sazba r (% p.a.):",
+                    value=5.0,
+                    step=0.5,
+                    key="k2_u_sazba",
+                )
             with col_u3:
-                roky_input = st.number_input("Čas t (roky):", value=3, step=1, key="k2_u_roky")
+                roky_input = st.number_input(
+                    "Čas t (roky):", value=3, step=1, key="k2_u_roky"
+                )
 
             r_dec = sazba_input / 100.0
             res_jednoduse = jistina_input * (1 + r_dec * roky_input)
@@ -1745,90 +3129,184 @@ def render():
             diff_urok = res_slozene - res_jednoduse
 
             c_u_res1, c_u_res2, c_u_res3 = st.columns(3)
-            c_u_res1.metric("Jednoduché úročení", f"{res_jednoduse:,.2f} Kč".replace(",", " "))
-            c_u_res2.metric("Složené úročení", f"{res_slozene:,.2f} Kč".replace(",", " "))
-            c_u_res3.metric("Rozdíl ve prospěch složeného", f"+{diff_urok:,.2f} Kč".replace(",", " "))
+            c_u_res1.metric(
+                "Jednoduché úročení",
+                f"{res_jednoduse:,.2f} Kč".replace(",", " "),
+            )
+            c_u_res2.metric(
+                "Složené úročení", f"{res_slozene:,.2f} Kč".replace(",", " ")
+            )
+            c_u_res3.metric(
+                "Rozdíl ve prospěch složeného",
+                f"+{diff_urok:,.2f} Kč".replace(",", " "),
+            )
 
             if st.button("Uložit výpočet úročení 💾", key="btn_k2_uroceni"):
-                ur_data = f"Vklad: {jistina_input} Kč | Sazba: {sazba_input}% | Čas: {roky_input} let | Jednoduché: {res_jednoduse:.2f} Kč | Složené: {res_slozene:.2f} Kč | Rozdíl: {diff_urok:.2f} Kč"
+                ur_data = (
+                    f"Vklad: {jistina_input} Kč | Sazba: {sazba_input}% | Čas:"
+                    f" {roky_input} let | Jednoduché: {res_jednoduse:.2f} Kč |"
+                    f" Složené: {res_slozene:.2f} Kč | Rozdíl:"
+                    f" {diff_urok:.2f} Kč"
+                )
                 if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.4.2 - Úročení kalkulačka", ur_data)
+                    st.session_state["uloz_odpoved_fn"](
+                        "Kapitola 2",
+                        "Podkapitola 2.4.2 - Úročení kalkulačka",
+                        ur_data,
+                    )
 
-            with st.expander("✍️ Procvičování: Spočítej úročení (3 příklady)"):
-                st.write("**1. Jednoduché úročení:** Vložíš 8 000 Kč na 2 roky při sazbě 4 % p.a.")
-                ex1_ans = st.number_input("Zadej vypočtenou konečnou částku (Kč):", value=0, key="k2_ex1_val")
+            with st.expander(
+                "✍️ Procvičování: Spočítej úročení (3 příklady)"
+            ):
+                st.write(
+                    "**1. Jednoduché úročení:** Vložíš 8 000 Kč na 2 roky při"
+                    " sazbě 4 % p.a."
+                )
+                ex1_ans = st.number_input(
+                    "Zadej vypočtenou konečnou částku (Kč):",
+                    value=0,
+                    key="k2_ex1_val",
+                )
                 if st.button("Zkontrolovat příklad 1", key="k2_ex1_btn"):
                     if abs(ex1_ans - 8640) < 1:
-                        st.success("✅ Správně! K = 8 000 × (1 + 0,04 × 2) = 8 640 Kč. Úrok je 640 Kč.")
+                        st.success(
+                            "✅ Správně! K = 8 000 × (1 + 0,04 × 2) = 8 640 Kč."
+                            " Úrok je 640 Kč."
+                        )
                     else:
-                        st.error("Chyba. Výpočet: 8000 * (1 + 0.04 * 2) = 8 640 Kč.")
+                        st.error(
+                            "Chyba. Výpočet: 8000 * (1 + 0.04 * 2) = 8 640 Kč."
+                        )
 
-                st.write("**2. Složené úročení:** Vložíš 8 000 Kč na 2 roky při sazbě 4 % p.a. (roční připisování).")
-                ex2_ans = st.number_input("Zadej vypočtenou konečnou částku (Kč):", value=0.0, step=0.1, key="k2_ex2_val")
+                st.write(
+                    "**2. Složené úročení:** Vložíš 8 000 Kč na 2 roky při"
+                    " sazbě 4 % p.a. (roční připisování)."
+                )
+                ex2_ans = st.number_input(
+                    "Zadej vypočtenou konečnou částku (Kč):",
+                    value=0.0,
+                    step=0.1,
+                    key="k2_ex2_val",
+                )
                 if st.button("Zkontrolovat příklad 2", key="k2_ex2_btn"):
                     if abs(ex2_ans - 8652.80) < 1:
-                        st.success("✅ Správně! K = 8 000 × (1 + 0,04)² = 8 652,80 Kč. Rozdíl je 12,80 Kč.")
+                        st.success(
+                            "✅ Správně! K = 8 000 × (1 + 0,04)² = 8 652,80"
+                            " Kč. Rozdíl je 12,80 Kč."
+                        )
                     else:
-                        st.error("Chyba. Výpočet: 8000 * (1.04)^2 = 8 652,80 Kč.")
+                        st.error(
+                            "Chyba. Výpočet: 8000 * (1.04)^2 = 8 652,80 Kč."
+                        )
 
-                st.write("**3. Porovnání delšího období (5 let, 15 000 Kč, 6 % p.a.):**")
-                st.write("• Jednoduché: $15\\ 000 \\times (1 + 0{,}06 \\times 5) = 19\\ 500\\ \\text{Kč}$")
-                st.write("• Složené: $15\\ 000 \\times (1 + 0{,}06)^5 = 20\\ 073{,}38\\ \\text{Kč}$")
-                st.info("💡 Rozdíl je **573,38 Kč** ve prospěch složeného úročení. Čím delší doba, tím více se projevuje efekt úroků z úroků.")
+                st.write(
+                    "**3. Porovnání delšího období (5 let, 15 000 Kč, 6 %"
+                    " p.a.):**"
+                )
+                st.write(
+                    "• Jednoduché: $15\\ 000 \\times (1 + 0{,}06 \\times 5) ="
+                    " 19\\ 500\\ \\text{Kč}$"
+                )
+                st.write(
+                    "• Složené: $15\\ 000 \\times (1 + 0{,}06)^5 = 20\\ 073{,}38\\"
+                    " \\text{Kč}$"
+                )
+                st.info(
+                    "💡 Rozdíl je **573,38 Kč** ve prospěch složeného úročení."
+                    " Čím delší doba, tím více se projevuje efekt úroků z"
+                    " úroků."
+                )
 
         # 2.4.3 Inflace
         with st.container(border=True):
             st.markdown("### 2.4.3 Inflace")
-            st.write("Inflace znamená růst cenové hladiny. Když ceny rostou, za stejnou částku si koupíme méně než dříve.")
-            st.write("Oficiální inflace je průměr za celou ekonomiku. Každý človek ale může mít jinou **„osobní inflaci“**. Student, rodina s dětmi, senior nebo človek dojíždějící autem vnímají zdražování jinak, protože utrácejí za jiné věci.")
+            st.write(
+                "Inflace znamená růst cenové hladiny. Když ceny rostou, za"
+                " stejnou částku si koupíme méně než dříve."
+            )
+            st.write(
+                "Oficiální inflace je průměr za celou ekonomiku. Každý človek"
+                " ale může mít jinou **„osobní inflaci“**. Student, rodina s"
+                " dětmi, senior nebo človek dojíždějící autem vnímají"
+                " zdražování jinak, protože utrácejí za jiné věci."
+            )
 
-            st.markdown("<div class='box-yellow'><strong>🧩 Interaktivní výzva:</strong> Vyber pět věcí, které pravidelně kupuješ. Zjisti nebo odhadni, kolik stály dříve a kolik stojí dnes. Která položka zdražila nejvíc?</div>", unsafe_allow_html=True)
-            st.text_area("Seznam 5 věcí a odhad změny ceny:", key="k2_inflation_5_items")
-            
-            if st.button("Uložit výzvu k inflaci 💾", key="btn_k2_inflace"):
-                odp = st.session_state.get("k2_inflation_5_items", "")
-                if odp.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.4.3 - Inflace 5 věcí", odp)
-                else:
-                    st.warning("Před uložením nejprve napiš odpověď!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.6.1",
+                    "🧩 Interaktivní výzva: Vyber pět věcí, které pravidelně"
+                    " kupuješ. Zjisti nebo odhadni, kolik stály dříve a kolik"
+                    " stojí dnes. Která položka zdražila nejvíc?",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
     # =========================================================================
     # 2.5 FINANČNÍ REZERVA
     # =========================================================================
     elif "2.5 Finanční rezerva" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY BOHATSTVÍ“</div><h2>2.5 Finanční rezerva: airbag osobních financí</h2>", unsafe_allow_html=True)
-        st.write("Finanční rezerva chrání člověka před tím, aby každá nečekaná situace skončila dluhem. Může jít o rozbitý telefon, ztrátu brigády, nemoc, opravu auta, vyšší vyúčtování energií nebo stěhování.")
+        st.markdown(
+            "<div class='sub-section-header'>2. OSOBNÍ FINANCE A „ALGORITMY"
+            " BOHATSTVÍ“</div><h2>2.5 Finanční rezerva: airbag osobních"
+            " financí</h2>",
+            unsafe_allow_html=True,
+        )
+        st.write(
+            "Finanční rezerva chrání člověka před tím, aby každá nečekaná"
+            " situace skončila dluhem. Může jít o rozbitý telefon, ztrátu"
+            " brigády, nemoc, opravu auta, vyšší vyúčtování energií nebo"
+            " stěhování."
+        )
 
         with st.container(border=True):
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-blue'>
                 🛟 <strong>Jednoduše řečeno:</strong> Rezerva je finanční airbag. Doufáš, že ji nebudeš potřebovat, ale když přijde náraz, může zabránit větším škodám.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         with st.container(border=True):
             st.markdown("### 2.5.1 Jak velká má být rezerva")
-            st.write("Obecné doporučení bývá mít rezervu alespoň ve výši 3 až 6 měsíců nutných výdajů. U studenta může být začátek menší: třeba první cíl 1 000 Kč, potom 5 000 Kč, potom jeden měsíc výdajů.")
+            st.write(
+                "Obecné doporučení bývá mít rezervu alespoň ve výši 3 až 6"
+                " měsíců nutných výdajů. U studenta může být začátek menší:"
+                " třeba první cíl 1 000 Kč, potom 5 000 Kč, potom jeden měsíc"
+                " výdajů."
+            )
 
-            st.markdown("""
+            st.markdown(
+                """
             | Životní situace | První rozumný cíl | Silnější rezerva |
             | :--- | :--- | :--- |
             | **Student s podporou rodiny** | 1 000–5 000 Kč | 1 měsíc vlastních výdajů |
             | **Člověk na brigádě nebo v první práci** | 1 měsíc nutných výdajů | 3 měsíce nutných výdajů |
             | **Samostatně žijící človek** | 3 měsíce nutných výdajů | 6 měsíců nutných výdajů |
             | **Rodina nebo podnikatel** | 3–6 měsíců nutných výdajů | více podle rizika příjmů |
-            """)
+            """,
+                unsafe_allow_html=True,
+            )
 
             st.markdown("#### 🧮 Kalkulačka cílové finanční rezervy")
-            user_sit = st.selectbox("Zvol svou aktuální životní situaci:", [
-                "Student s podporou rodiny",
-                "Člověk na brigádě / v první práci",
-                "Samostatně žijící človek",
-                "Rodina nebo podnikatel"
-            ], key="k2_res_sit")
-            
-            m_exp = st.number_input("Zadej své měsíční nutné výdaje (Kč):", value=8000, step=1000, key="k2_res_m_exp")
+            user_sit = st.selectbox(
+                "Zvol svou aktuální životní situaci:",
+                [
+                    "Student s podporou rodiny",
+                    "Člověk na brigádě / v první práci",
+                    "Samostatně žijící človek",
+                    "Rodina nebo podnikatel",
+                ],
+                key="k2_res_sit",
+            )
+
+            m_exp = st.number_input(
+                "Zadej své měsíční nutné výdaje (Kč):",
+                value=8000,
+                step=1000,
+                key="k2_res_m_exp",
+            )
 
             if "Student" in user_sit:
                 r_min, r_target = 3000, m_exp * 1
@@ -1840,17 +3318,33 @@ def render():
                 r_min, r_target = m_exp * 6, m_exp * 9
 
             col_res1, col_res2 = st.columns(2)
-            col_res1.metric("Minimální základní rezerva", f"{r_min:,.0f} Kč".replace(",", " "))
-            col_res2.metric("Doporučená optimální rezerva", f"{r_target:,.0f} Kč".replace(",", " "))
+            col_res1.metric(
+                "Minimální základní rezerva",
+                f"{r_min:,.0f} Kč".replace(",", " "),
+            )
+            col_res2.metric(
+                "Doporučená optimální rezerva",
+                f"{r_target:,.0f} Kč".replace(",", " "),
+            )
 
             if st.button("Uložit výpočet finanční rezervy 💾", key="btn_k2_rezerva"):
-                rez_data = f"Situace: {user_sit} | Měsíční výdaje: {m_exp} Kč | Min. rezerva: {r_min} Kč | Opt. rezerva: {r_target} Kč"
+                rez_data = (
+                    f"Situace: {user_sit} | Měsíční výdaje: {m_exp} Kč | Min."
+                    f" rezerva: {r_min} Kč | Opt. rezerva: {r_target} Kč"
+                )
                 if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 2.5.1 - Kalkulačka rezervy", rez_data)
+                    st.session_state["uloz_odpoved_fn"](
+                        "Kapitola 2",
+                        "Podkapitola 2.5.1 - Kalkulačka rezervy",
+                        rez_data,
+                    )
 
         with st.container(border=True):
             st.markdown("### 2.5.2 Kde rezervu držet")
-            st.write("Rezerva má být bezpečná a dostupná. Není určena k riskantnímu investování. Vhodné vlastnosti:")
+            st.write(
+                "Rezerva má být bezpečná a dostupná. Není určena k riskantnímu"
+                " investování. Vhodné vlastnosti:"
+            )
             st.markdown("""
             * rychlá dostupnost,
             * nízké riziko ztráty,
@@ -1858,11 +3352,14 @@ def render():
             * možnost použít ji při nečekané situaci.
             """)
 
-            st.markdown("""
+            st.markdown(
+                """
             <div class='box-red'>
                 🚫 <strong>Častá chyba:</strong> Investovat nouzovou rezervu do rizikových aktiv. Když pak přijde problém, může být človek nucen prodat v nevýhodnou chvíli se ztrátou.
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 # =========================================================================
     # 2.6 PSYCHOLOGIE UTRÁCENÍ
     # =========================================================================
