@@ -48,11 +48,9 @@ def init_supabase() -> Client:
 supabase = init_supabase()
 
 
-# --- VYLADĚNÁ FUNKCE PRO ZOBRAZENÍ A UKLÁDÁNÍ ÚKOLŮ ---
+# --- 1. FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY ---
 def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     st.markdown(f"**{text_otazky}**")
-    
-    # Načtení uloženého textu z paměti
     staved_text = ulozene_odpovedi.get(otazka_id, "")
     
     if staved_text:
@@ -60,11 +58,7 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     else:
         st.info("💡 **Tento úkol zatím nemáš vyplněný.**")
         
-    odpoved_zaka = st.text_area(
-        "Tvoje odpověď:", 
-        value=staved_text, 
-        key=f"in_{otazka_id}"
-    )
+    odpoved_zaka = st.text_area("Tvoje odpověď:", value=staved_text, key=f"in_{otazka_id}")
     
     if st.button("Uložit odpověď 💾", key=f"btn_{otazka_id}"):
         if not odpoved_zaka.strip():
@@ -74,7 +68,6 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
         nazev_kapitoly = f"Kapitola {kapitola_id}" if not str(kapitola_id).startswith("Kapitola") else kapitola_id
         
         try:
-            # 1. Zápis do Supabase
             supabase.table("odpovedi").upsert({
                 "username": st.session_state.get("username", "demo.zak"),
                 "kapitola": nazev_kapitoly,
@@ -82,19 +75,50 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
                 "odpoved": odpoved_zaka
             }).execute()
             
-            # 2. Okamžitá synchronizace paměti aplikací
+            # Okamžitý zápis do paměti aplikace
             if "ulozene_odpovedi" not in st.session_state:
                 st.session_state["ulozene_odpovedi"] = {}
             st.session_state["ulozene_odpovedi"][otazka_id] = odpoved_zaka
             
-            st.toast("Odpověď byla úspěšně uložena!", icon="🎉")
             st.rerun()
-            
         except Exception as e:
-            st.error(f"❌ **Chyba uložení do databáze Supabase:** {e}")
+            st.error(f"Chyba při zápisu do databáze: {e}")
 
-# Registrace funkce do session_state
 st.session_state["vykresli_otazku_fn"] = vykresli_otazku
+
+
+# --- 2. UNIVERZÁLNÍ RENDEROVÁNÍ A NAČÍTÁNÍ KAPITOL (v sekci 7.4) ---
+kapitoly_map = {
+    "Kapitola 1": (kapitola1, "1"),
+    "Kapitola 2": (kapitola2, "2"),
+    "Kapitola 3": (kapitola3, "3"),
+    "Kapitola 4": (kapitola4, "4"),
+    "Kapitola 5": (kapitola5, "5"),
+    "Kapitola 6": (kapitola6, "6"),
+}
+
+if st.session_state.get("current_view") in kapitoly_map:
+    modul, kap_num = kapitoly_map[st.session_state["current_view"]]
+    
+    st.session_state["ulozene_odpovedi"] = {}
+    if st.session_state.get("username"):
+        kap_nazev = f"Kapitola {kap_num}"
+        res = (
+            supabase.table("odpovedi")
+            .select("otazka_id, odpoved")
+            .eq("username", st.session_state["username"])
+            .in_("kapitola", [kap_nazev, str(kap_num)])
+            .execute()
+        )
+        if res.data:
+            st.session_state["ulozene_odpovedi"] = {
+                row["otazka_id"]: row["odpoved"] for row in res.data
+            }
+
+    if hasattr(modul, "render"):
+        modul.render()
+    elif hasattr(modul, "show"):
+        modul.show()
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
