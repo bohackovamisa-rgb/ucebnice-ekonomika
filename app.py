@@ -62,7 +62,7 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     
     if st.button("Uložit odpověď", key=f"btn_{otazka_id}"):
         # Sjednocení názvu kapitoly pro databázi
-        nazev_kapitoly = f"Kapitola {kapitola_id}" if not kapitola_id.startswith("Kapitola") else kapitola_id
+        nazev_kapitoly = f"Kapitola {kapitola_id}" if not str(kapitola_id).startswith("Kapitola") else kapitola_id
         
         supabase.table("odpovedi").upsert({
             "username": st.session_state["username"],
@@ -71,7 +71,7 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
             "odpoved": odpoved_zaka
         }).execute()
         st.rerun()
-        st.session_state["vykresli_otazku_fn"] = vykresli_otazku
+st.session_state["vykresli_otazku_fn"] = vykresli_otazku
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
