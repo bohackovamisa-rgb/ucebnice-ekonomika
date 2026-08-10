@@ -69,6 +69,7 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
         }).execute()
         st.success("Odpověď byla úspěšně uložena!")
         st.rerun()
+        st.session_state["vykresli_otazku_fn"] = vykresli_otazku
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
