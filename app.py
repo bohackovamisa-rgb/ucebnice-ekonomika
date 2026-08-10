@@ -48,9 +48,11 @@ def init_supabase() -> Client:
 supabase = init_supabase()
 
 
-# --- NOVÁ FUNKCE PRO ZOBRAZENÍ STAVU ÚKOLŮ ---
+# --- VYLADĚNÁ FUNKCE PRO ZOBRAZENÍ A UKLÁDÁNÍ ÚKOLŮ ---
 def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     st.markdown(f"**{text_otazky}**")
+    
+    # Načtení uloženého textu z paměti
     staved_text = ulozene_odpovedi.get(otazka_id, "")
     
     if staved_text:
@@ -58,19 +60,40 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     else:
         st.info("💡 **Tento úkol zatím nemáš vyplněný.**")
         
-    odpoved_zaka = st.text_area("Tvoje odpověď:", value=staved_text, key=f"in_{otazka_id}")
+    odpoved_zaka = st.text_area(
+        "Tvoje odpověď:", 
+        value=staved_text, 
+        key=f"in_{otazka_id}"
+    )
     
-    if st.button("Uložit odpověď", key=f"btn_{otazka_id}"):
-        # Sjednocení názvu kapitoly pro databázi
+    if st.button("Uložit odpověď 💾", key=f"btn_{otazka_id}"):
+        if not odpoved_zaka.strip():
+            st.warning("Před uložením nejprve napiš odpověď!")
+            return
+            
         nazev_kapitoly = f"Kapitola {kapitola_id}" if not str(kapitola_id).startswith("Kapitola") else kapitola_id
         
-        supabase.table("odpovedi").upsert({
-            "username": st.session_state["username"],
-            "kapitola": nazev_kapitoly,
-            "otazka_id": otazka_id,
-            "odpoved": odpoved_zaka
-        }).execute()
-        st.rerun()
+        try:
+            # 1. Zápis do Supabase
+            supabase.table("odpovedi").upsert({
+                "username": st.session_state.get("username", "demo.zak"),
+                "kapitola": nazev_kapitoly,
+                "otazka_id": otazka_id,
+                "odpoved": odpoved_zaka
+            }).execute()
+            
+            # 2. Okamžitá synchronizace paměti aplikací
+            if "ulozene_odpovedi" not in st.session_state:
+                st.session_state["ulozene_odpovedi"] = {}
+            st.session_state["ulozene_odpovedi"][otazka_id] = odpoved_zaka
+            
+            st.toast("Odpověď byla úspěšně uložena!", icon="🎉")
+            st.rerun()
+            
+        except Exception as e:
+            st.error(f"❌ **Chyba uložení do databáze Supabase:** {e}")
+
+# Registrace funkce do session_state
 st.session_state["vykresli_otazku_fn"] = vykresli_otazku
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
