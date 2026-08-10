@@ -47,6 +47,28 @@ def init_supabase() -> Client:
 
 supabase = init_supabase()
 
+
+# --- NOVÁ FUNKCE PRO ZOBRAZENÍ STAVU ÚKOLŮ ---
+def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
+    st.markdown(f"**{text_otazky}**")
+    staved_text = ulozene_odpovedi.get(otazka_id, "")
+    
+    if staved_text:
+        st.success("✅ **Tento úkol už máš splněný!** (Můžeš ho níže upravit)")
+    else:
+        st.info("💡 **Tento úkol zatím nemáš vyplněný.**")
+        
+    odpoved_zaka = st.text_area("Tvoje odpověď:", value=staved_text, key=f"in_{otazka_id}")
+    
+    if st.button("Uložit odpověď", key=f"btn_{otazka_id}"):
+        supabase.table("odpovedi").upsert({
+            "username": st.session_state["username"],
+            "kapitola": kapitola_id,
+            "otazka_id": otazka_id,
+            "odpoved": odpoved_zaka
+        }).execute()
+        st.success("Odpověď byla úspěšně uložena!")
+        st.rerun()
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
