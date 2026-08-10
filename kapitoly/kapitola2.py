@@ -5660,88 +5660,219 @@ def render():
     # 4.14 PRAKTICKÉ ROZHODNOVÁNÍ: ÚVĚR A POJIŠTĚNÍ DOHROMADY
     # =========================================================================
     elif "4.14" in selected_section_2:
-        st.markdown("<div class='sub-section-header'>14. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
-        st.markdown("## 4.14 Praktické rozhodování: úvěr a pojištění dohromady")
-        
-        st.write("Úvěry a pojištění spolu neoddělitelně souvisí. Čím větší finanční závazek na sobě máš, tím více musíš řešit, co se stane při výpadku příjmu, nemoci, požáru nebo jiné životní krizi.")
+        st.markdown(
+            "<div class='sub-section-header'>14. ÚVĚRY A POJIŠTĚNÍ</div>",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            "## 4.14 Praktické rozhodování: úvěr a pojištění dohromady"
+        )
+
+        st.write(
+            "Úvěry a pojištění spolu neoddělitelně souvisí. Čím větší finanční"
+            " závazek na sobě máš, tím více musíš řešit, co se stane při výpadku"
+            " příjmu, nemoci, požáru nebo jiné životní krizi."
+        )
 
         with st.container(border=True):
             st.markdown("### 👨‍👩‍👧‍👦 Modelový příklad z praxe:")
-            st.write("- **Situace:** Rodina si vzala hypotéku na dům 4 000 000 Kč. Mají jedno malé dítě.")
-            st.write("- **Příjem:** Rodina spoléhá převážně na jeden hlavní příjem otce (45 000 Kč), matka je na rodičovské (10 000 Kč).")
-            st.write("- **Závazek:** Měsíční splátka hypotéky činí 22 000 Kč. Dům je zastaven bance.")
-            st.warning("⚠️ **Riziko:** Pokud hlavní živitel dlouhodobě onemocní nebo utrpí úraz, rodina do 2 měsíců nedokáže platit splátku a hrozí jí ztráta střechy nad hlavou!")
-            st.success("💡 **Řešení:** Vhodná kombinace: 1) Životní pojištění živitele (kryjící invaliditu a smrt), 2) Pojištění nemovitosti (zástava pro banku), 3) Finanční rezerva ve výši 6 splátek na spořicím účtu.")
+            st.write(
+                "- **Situace:** Rodina si vzala hypotéku na dům 4 000 000 Kč."
+                " Mají jedno malé dítě."
+            )
+            st.write(
+                "- **Příjem:** Rodina spoléhá převážně na jeden hlavní příjem"
+                " otce (45 000 Kč), matka je na rodičovské (10 000 Kč)."
+            )
+            st.write(
+                "- **Závazek:** Měsíční splátka hypotéky činí 22 000 Kč. Dům je"
+                " zastaven bance."
+            )
+            st.warning(
+                "⚠️ **Riziko:** Pokud hlavní živitel dlouhodobě onemocní nebo"
+                " utrpí úraz, rodina do 2 měsíců nedokáže platit splátku a"
+                " hrozí jí ztráta střechy nad hlavou!"
+            )
+            st.success(
+                "💡 **Řešení:** Vhodná kombinace: 1) Životní pojištění živitele"
+                " (kryjící invaliditu a smrt), 2) Pojištění nemovitosti"
+                " (zástava pro banku), 3) Finanční rezerva ve výši 6 splátek na"
+                " spořicím účtu."
+            )
 
         st.divider()
 
         # --- SIMULACE 1: BANKÉŘEM NA ZKOUŠKU ---
         st.markdown("### 🧪 Finanční simulace: Dostane žadatel úvěr?")
-        st.write("Vžij se do role bankovního risk manažera. Vyber si profil žadatele, posuď jeho situaci a rozhodni, zda mu půjčíš!")
+        st.write(
+            "Vžij se do role bankovního risk manažera. Vyber si profil žadatele,"
+            " posuď jeho situaci a rozhodni, zda mu půjčíš!"
+        )
 
-        profil = st.selectbox("Vyber profil žadatele o úvěr:", [
-            "Vyber žadatele...",
-            "Žadatel A: Petr (22 let) – První auto na úvěr (150 000 Kč)",
-            "Žadatelka B: Eva a Martin (30 let) – Hypotéka na byt (5 000 000 Kč)",
-            "Žadatel C: Pavel (35 let) – Spotřebitelský úvěr na dovolenou (60 000 Kč)"
-        ], key="k4_14_profil")
+        profil = st.selectbox(
+            "Vyber profil žadatele o úvěr:",
+            [
+                "Vyber žadatele...",
+                "Žadatel A: Petr (22 let) – První auto na úvěr (150 000 Kč)",
+                (
+                    "Žadatelka B: Eva a Martin (30 let) – Hypotéka na byt (5 000"
+                    " 000 Kč)"
+                ),
+                (
+                    "Žadatel C: Pavel (35 let) – Spotřebitelský úvěr na"
+                    " dovolenou (60 000 Kč)"
+                ),
+            ],
+            key="k4_14_profil",
+        )
 
         if profil.startswith("Žadatel A"):
             with st.container(border=True):
                 st.markdown("#### 📋 Profil: Petr (22 let)")
                 st.markdown("- **Požadavek:** 150 000 Kč na auto")
-                st.markdown("- **Čistý příjem:** 24 000 Kč/měsíc (pracuje 4 měsíce, po zkušební době)")
+                st.markdown(
+                    "- **Čistý příjem:** 24 000 Kč/měsíc (pracuje 4 měsíce, po"
+                    " zkušební době)"
+                )
                 st.markdown("- **Výdaje a nájem:** 14 000 Kč/měsíc")
                 st.markdown("- **Stávající dluhy:** Žádné")
                 st.markdown("- **Vlastní úspory:** 5 000 Kč")
-                
-                sim_a1 = st.radio("1. Jak vyhodnotíš bonitu a schválení?", ["Schválit v plné výši", "Zamítnout nebo nabídnout nižší částku", "Schválit 100% částku bez doložení"], key="sim_a1")
-                sim_a2 = st.radio("2. Jaké je pro Petra největší riziko?", ["Pokles ceny auta", "Ztráta práce / nemoc bez finanční rezervy", "Zvýšení úrokových sazeb u hypotéky"], key="sim_a2")
-                
+
+                sim_a1 = st.radio(
+                    "1. Jak vyhodnotíš bonitu a schválení?",
+                    [
+                        "Schválit v plné výši",
+                        "Zamítnout nebo nabídnout nižší částku",
+                        "Schválit 100% částku bez doložení",
+                    ],
+                    key="sim_a1",
+                )
+                sim_a2 = st.radio(
+                    "2. Jaké je pro Petra největší riziko?",
+                    [
+                        "Pokles ceny auta",
+                        "Ztráta práce / nemoc bez finanční rezervy",
+                        "Zvýšení úrokových sazeb u hypotéky",
+                    ],
+                    key="sim_a2",
+                )
+
                 if st.button("Vyhodnotit jako banka a uložit 💾", key="btn_sim_a"):
                     if "Zamítnout" in sim_a1 and "Ztráta práce" in sim_a2:
-                        st.success("✅ **Správně!** Petr má extrémně nízkou rezervu (jen 5 000 Kč). Měsíčně mu po výdajích zbývá 10 000 Kč, ze kterých by splátka auta vzala většinu. Banka mu buď nabídne nižší částku, nebo doporučí nejdříve naspořit rezervu.")
+                        st.success(
+                            "✅ **Správně!** Petr má extrémně nízkou rezervu"
+                            " (jen 5 000 Kč). Měsíčně mu po výdajích zbývá 10"
+                            " 000 Kč, ze kterých by splátka auta vzala معظم."
+                            " Banka mu buď nabídne nižší částku, nebo"
+                            " doporučí nejdříve naspořit rezervu."
+                        )
                     else:
-                        st.error("❌ **Chybně.** Jako bankéř bys riskoval/a. Petr nemá téměř žádné úspory a v případě nemoci by hned v prvním měsíci spadl do nesplácení.")
+                        st.error(
+                            "❌ **Chybně.** Jako bankéř bys riskoval/a. Petr"
+                            " nemá téměř žádné úspory a v případě nemoci by"
+                            " hned v prvním měsíci spadl do nesplácení."
+                        )
                     if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Bankéř (Petr)", f"1:{sim_a1} | 2:{sim_a2}")
+                        st.session_state["uloz_odpoved_fn"](
+                            "Kapitola 2",
+                            "Podkapitola 4.14 - Bankéř (Petr)",
+                            f"1:{sim_a1} | 2:{sim_a2}",
+                        )
 
         elif profil.startswith("Žadatelka B"):
             with st.container(border=True):
                 st.markdown("#### 📋 Profil: Eva a Martin (30 let)")
-                st.markdown("- **Požadavek:** Hypotéka 4 500 000 Kč na byt v hodnotě 5 000 000 Kč (LTV 90 %)")
-                st.markdown("- **Čistý příjem:** Společně 65 000 Kč/měsíc (smlouvy na neurčito)")
+                st.markdown(
+                    "- **Požadavek:** Hypotéka 4 500 000 Kč na byt v hodnotě"
+                    " 5 000 000 Kč (LTV 90 %)"
+                )
+                st.markdown(
+                    "- **Čistý příjem:** Společně 65 000 Kč/měsíc (smlouvy na"
+                    " neurčito)"
+                )
                 st.markdown("- **Výdaje:** 25 000 Kč/měsíc")
                 st.markdown("- **Vlastní úspory:** 600 000 Kč")
-                
-                sim_b1 = st.radio("1. Kolik vlastních peněz musí dát ze svého?", ["Alespoň 10–20 % (tj. min. 500 000 Kč)", "Nemusí dát nic, banka půjčí 100 %", "Musí mít naspořeno 50 %"], key="sim_b1")
-                sim_b2 = st.radio("2. Jaké pojištění by měli absolutně prioritně sjednat?", ["Pojištění displeje mobilu", "Pojištění nemovitosti + Životní pojištění pro případ invalidity/smrti", "Havarijní pojištění auta"], key="sim_b2")
-                
+
+                sim_b1 = st.radio(
+                    "1. Kolik vlastních peněz musí dát ze svého?",
+                    [
+                        "Alespoň 10–20 % (tj. min. 500 000 Kč)",
+                        "Nemusí dát nic, banka půjčí 100 %",
+                        "Musí mít naspořeno 50 %",
+                    ],
+                    key="sim_b1",
+                )
+                sim_b2 = st.radio(
+                    "2. Jaké pojištění by měli absolutně prioritně sjednat?",
+                    [
+                        "Pojištění displeje mobilu",
+                        (
+                            "Pojištění nemovitosti + Životní pojištění pro"
+                            " případ invalidity/smrti"
+                        ),
+                        "Havarijní pojištění auta",
+                    ],
+                    key="sim_b2",
+                )
+
                 if st.button("Vyhodnotit jako banka a uložit 💾", key="btn_sim_b"):
                     if "10–20 %" in sim_b1 and "Pojištění nemovitosti" in sim_b2:
-                        st.success("✅ **Výborně!** Žadatelé mají dostatečný příjem i vlastní úspory na LTV 90 %. Pojištění nemovitosti bude vyžadovat sama banka jako zástavu a životní pojištění ochrání jejich společný rozpočet.")
+                        st.success(
+                            "✅ **Výborně!** Žadatelé mají dostatečný příjem i"
+                            " vlastní úspory na LTV 90 %. Pojištění"
+                            " nemovitosti bude vyžadovat sama banka jako"
+                            " zástavu a životní pojištění ochrání jejich"
+                            " společný rozpočet."
+                        )
                     else:
-                        st.error("❌ **Chyba v posouzení.** U hypotéky je nutný vlastní základ a krytí životních rizik při takto velkém dluhu.")
+                        st.error(
+                            "❌ **Chyba v posouzení.** U hypotéky je nutný"
+                            " vlastní základ a krytí životních rizik při"
+                            " takto velkém dluhu."
+                        )
                     if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Bankéř (Eva a Martin)", f"1:{sim_b1} | 2:{sim_b2}")
+                        st.session_state["uloz_odpoved_fn"](
+                            "Kapitola 2",
+                            "Podkapitola 4.14 - Bankéř (Eva a Martin)",
+                            f"1:{sim_b1} | 2:{sim_b2}",
+                        )
 
         elif profil.startswith("Žadatel C"):
             with st.container(border=True):
                 st.markdown("#### 📋 Profil: Pavel (35 let)")
-                st.markdown("- **Požadavek:** 60 000 Kč na luxusní dovolenou v Karibiku")
+                st.markdown(
+                    "- **Požadavek:** 60 000 Kč na luxusní dovolenou v"
+                    " Karibiku"
+                )
                 st.markdown("- **Čistý příjem:** 32 000 Kč/měsíc")
-                st.markdown("- **Stávající dluhy:** Splácí už kontokorent (20 000 Kč) a kreditku (30 000 Kč)")
-                
+                st.markdown(
+                    "- **Stávající dluhy:** Splácí už kontokorent (20 000 Kč)"
+                    " a kreditku (30 000 Kč)"
+                )
+
                 if st.button("Vyhodnotit jako banka a uložit 💾", key="btn_sim_c"):
-                    st.error("🚨 **ZAMÍTNUTO!** Pavel vykazuje jasné známky předlužení (kumuluje spotřebitelské dluhy) a chce si půjčit na zážitek/spotřebu, která nemá žádnou trvalou hodnotu. Banka úvěr zamítne z důvodu ochrany spotřebitele i vysokého rizika dlužníka.")
+                    st.error(
+                        "🚨 **ZAMÍTNUTO!** Pavel vykazuje jasné známky"
+                        " předlužení (kumuluje spotřebitelské dluhy) a chce si"
+                        " půjčit na zážitek/spotřebu, která nemá žádnou trvalou"
+                        " hodnotu. Banka úvěr zamítne z důvodu ochrany"
+                        " spotřebitele i vysokého rizika dlužníka."
+                    )
                     if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Bankéř (Pavel)", "Zamítnuto (Předlužení)")
+                        st.session_state["uloz_odpoved_fn"](
+                            "Kapitola 2",
+                            "Podkapitola 4.14 - Bankéř (Pavel)",
+                            "Zamítnuto (Předlužení)",
+                        )
 
         st.divider()
 
         # --- AKTIVITA 2: SROVNÁVAČ DVE PŮJČEK ---
         st.markdown("### 🧾 Aktivita: Porovnej dvě nabídky půjčky")
-        st.write("Potřebuješ si půjčit **50 000 Kč** na nový notebook do školy/práce se splatností na **2 roky (24 měsíců)**. Prohlédni si dvě nabídky:")
+        st.write(
+            "Potřebuješ si půjčit **50 000 Kč** na nový notebook do školy/práce"
+            " se splatností na **2 roky (24 měsíců)**. Prohlédni si dvě nabídky:"
+        )
 
         col_n1, col_n2 = st.columns(2)
         with col_n1:
@@ -5765,33 +5896,74 @@ def render():
             * **Celkem zaplatíš:** ~65 280 Kč
             """)
 
-        rozhodnuti = st.radio("Kterou možnost bysis vybral/a?", [
-            "Vyber možnost...",
-            "Zvolil/a bych Nabídku A",
-            "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)",
-            "Nepůjčil/a bych si vůbec – našetřil/a bych nebo koupil/a levnější repasovaný notebook"
-        ], key="k4_14_nabidka")
+        rozhodnuti = st.radio(
+            "Kterou možnost bysis vybral/a?",
+            [
+                "Vyber možnost...",
+                "Zvolil/a bych Nabídku A",
+                "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)",
+                (
+                    "Nepůjčil/a bych si vůbec – našetřil/a bych nebo koupil/a"
+                    " levnější repasovaný notebook"
+                ),
+            ],
+            key="k4_14_nabidka",
+        )
 
         if st.button("Uložit mé rozhodnutí o půjčce 💾", key="btn_k4_14_srovnani"):
             if rozhodnuti == "Zvolil/a bych Nabídku A":
-                st.success("✅ **Dobrá volba spotřebitele:** Nabídka A má sice o něco vyšší udávaný úrok, ale díky nízkému RPSN a absenci skrytých poplatků tě celkově stojí o 11 616 Kč MÉNĚ než Nabídka B.")
-            elif rozhodnuti == "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)":
-                st.error("❌ **Skočil/a jsi na marketingový trik!** Nízký úrok 4,9 % je jen návnada. Kvůli obřím poplatkům za sjednání a vedení účtu je RPSN celých 28,5 % a přeplatíš o více než 11 tisíc korun navíc!")
+                st.success(
+                    "✅ **Dobrá volba spotřebitele:** Nabídka A má sice o něco"
+                    " vyšší udávaný úrok, ale díky nízkému RPSN a absenci"
+                    " skrytých poplatků tě celkově stojí o 11 616 Kč MÉNĚ než"
+                    " Nabídka B."
+                )
+            elif (
+                rozhodnuti
+                == "Zvolil/a bych Nabídku B (má přece nižší úrok 4,9 %!)"
+            ):
+                st.error(
+                    "❌ **Skočil/a jsi na marketingový trik!** Nízký úrok 4,9 %"
+                    " je jen návnada. Kvůli obřím poplatkům za sjednání a"
+                    " vedení účtu je RPSN celých 28,5 % a přeplatíš o více než"
+                    " 11 tisíc korun navíc!"
+                )
             elif "Nepůjčil/a bych si vůbec" in rozhodnuti:
-                st.success("🏆 **Nejlepší finanční rozhodnutí!** Na věci běžné spotřeby nebo elektroniku je vždy nejbezpečnější si našetřit z vlastních zdrojů nebo zvolit dostupnější alternativu bez zadlužování.")
-            
-            if "uloz_odpoved_fn" in st.session_state and rozhodnuti != "Vyber možnost...":
-                st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 4.14 - Srovnávač půjček", rozhodnuti)
-                # =========================================================================
+                st.success(
+                    "🏆 **Nejlepší finanční rozhodnutí!** Na věci běžné"
+                    " spotřeby nebo elektroniku je vždy nejbezpečnější si"
+                    " našetřit z vlastních zdrojů nebo zvolit dostupnější"
+                    " alternativu bez zadlužování."
+                )
+
+            if (
+                "uloz_odpoved_fn" in st.session_state
+                and rozhodnuti != "Vyber možnost..."
+            ):
+                st.session_state["uloz_odpoved_fn"](
+                    "Kapitola 2",
+                    "Podkapitola 4.14 - Srovnávač půjček",
+                    rozhodnuti,
+                )
+
+    # =========================================================================
     # 4.15 SHRNUTÍ: CO SI ODNÉST
     # =========================================================================
     elif selected_section_2.startswith("4.15"):
-        st.markdown("<div class='sub-section-header'>15. ÚVĚRY A POJIŠTĚNÍ</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>15. ÚVĚRY A POJIŠTĚNÍ</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 4.15 Shrnutí kapitoly: Co si odnést")
-        
-        st.write("Gratulujeme! Prošel/prošla jsi celou kapitolu o úvěrech, hypotékách a pojištění. Zde jsou nejdůležitější pravidla pro tvůj finanční život:")
 
-        st.markdown("""
+        st.write(
+            "Gratulujeme! Prošel/prošla jsi celou kapitolu o úvěrech,"
+            " hypotékách a pojištění. Zde jsou nejdůležitější pravidla pro tvůj"
+            " finanční život:"
+        )
+
+        st.markdown(
+            """
         <div class="box-green">
             <h3>✅ Klíčová pravidla pro život:</h3>
             <ul>
@@ -5803,74 +5975,137 @@ def render():
                 <li><b>Pojištění chrání před katastrofou:</b> Pojišťuj věci, které by zničily tvůj rozpočet (invalidita, ztráta domu, obří škoda třetí osobě). Drobnosti zvládni z vlastní rezervy.</li>
             </ul>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
         st.divider()
 
         # --- AI MENTORING BOX ---
         st.markdown("### 🤖 Vyzkoušej AI Mentora")
-        st.write("Chceš si téma ještě lépe upevnit nebo se zeptat na cokoliv, co ti nebylo jasné? Zkopíruj tento text a vlož ho do svého oblíbeného AI asistenta:")
+        st.write(
+            "Chceš si téma ještě lépe upevnit nebo se zeptat na cokoliv, co ti"
+            " nebylo jasné? Zkopíruj tento text a vlož ho do svého oblíbeného AI"
+            " asistenta:"
+        )
 
-        prompt_text = "Vysvětli mi rozdíl mezi úrokem a RPSN na jednoduchém příkladu půjčky. Potom mi ukaž, jak banka posuzuje, jestli člověk dostane spotřebitelský úvěr nebo hypotéku."
-        
+        prompt_text = (
+            "Vysvětli mi rozdíl mezi úrokem a RPSN na jednoduchém příkladu"
+            " půjčky. Potom mi ukaž, jak banka posuzuje, jestli člověk dostane"
+            " spotřebitelský úvěr nebo hypotéku."
+        )
+
         st.code(prompt_text, language="text")
-        st.caption("💡 Tip: Můžeš AI požádat, aby ti položila 3 kontrolní otázky z této kapitoly!")
+        st.caption(
+            "💡 Tip: Můžeš AI požádat, aby ti položila 3 kontrolní otázky z této"
+            " kapitoly!"
+        )
 
     # =========================================================================
     # 5.1 PROČ PODNIK ŘEŠÍ FINANCE
     # =========================================================================
     elif selected_section_2.startswith("5.1 "):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.1 Proč podnik řeší finance")
-        
+
         st.write(
-            "Finanční řízení podniku není jen práce účetní nebo „něco pro majitele firmy“. Je to způsob, jak firma zjišťuje, "
-            "jestli dokáže přežít, růst, platit své závazky, zvládat rizika a dělat rozhodnutí podle dat místo pouhých pocitů."
+            "Finanční řízení podniku není jen práce účetní nebo „něco pro"
+            " majitele firmy“. Je to způsob, jak firma zjišťuje, jestli dokáže"
+            " přežít, růst, platit své závazky, zvládat rizika a dělat"
+            " rozhodnutí podle dat místo pouhých pocitů."
         )
         st.write(
-            "Pro dnešní generaci je to důležité i proto, že podnikání už nemusí vypadat jako obří továrna nebo kancelářský komplex. "
-            "Firma může být **e-shop z pokoje, freelance tvorba grafiky, streamovací kanál, kosmetické studio, food truck, vývoj aplikace, "
-            "školní projekt nebo profil influencera.** V každém případě ale platí stejná základní otázka: *přichází do podnikání víc hodnoty, než z něj odchází?*"
+            "Pro dnešní generaci je to důležité i proto, že podnikání už nemusí"
+            " vypadat jako obří továrna nebo kancelářský komplex. Firma může"
+            " být **e-shop z pokoje, freelance tvorba grafiky, streamovací"
+            " kanál, kosmetické studio, food truck, vývoj aplikace, školní"
+            " projekt nebo profil influencera.** V každém případě ale platí"
+            " stejná základní otázka: *přichází do podnikání víc hodnoty, než"
+            " z něj odchází?*"
         )
 
-        st.markdown("""
+        st.markdown(
+            """
         <div class="box-blue">
             <b>📊 Základní myšlenka:</b> Finanční řízení pomáhá odpovědět na otázky: Kolik firma vydělává? Kolik skutečně utrácí? Má peníze na účtu? Zvládne splácet? Vyplatí se růst? Není příliš zadlužená? A pozná včas, že se blíží průšvih?
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
         st.divider()
 
         st.markdown("### ⚠️ Paradox: Skvělý produkt ≠ Úspěšná firma")
-        st.write("Firma může mít skvělý produkt, tisíce sledujících, hezký web a plný kalendář zakázek — a přesto může mít obří finanční problém. Důvod je jednoduchý: **popularita není totéž co zisk a zisk není totéž co peníze na účtu.**")
+        st.write(
+            "Firma může mít skvělý produkt, tisíce sledujících, hezký web a"
+            " plný kalendář zakázek — a přesto může mít obří finanční problém."
+            " Důvod je jednoduchý: **popularita není totéž co zisk a zisk není"
+            " totéž co peníze na účtu.**"
+        )
 
-        # Interaktivní demo: Paradox ziskovosti
         with st.container(border=True):
-            st.markdown("#### 🧪 Mini-simulátor: Proč zkrachoval úspěšný Food Truck?")
-            st.write("Představ si food truck prodávající prémiové burgery. Místní ho milují, fronta je až za roh!")
-            
-            prodejni_cena = st.slider("Prodejní cena burgeru (Kč):", 100, 300, 180, step=10, key="k5_1_cena_burgeru")
-            naklady_suroviny = 110 # Suroviny
-            ostatni_naklady_na_burger = 80 # Mzdy, nájem auta, elektřina rozpočtená na 1 ks
-            
+            st.markdown(
+                "#### 🧪 Mini-simulátor: Proč zkrachoval úspěšný Food Truck?"
+            )
+            st.write(
+                "Představ si food truck prodávající prémiové burgery. Místní ho"
+                " milují, fronta je až za roh!"
+            )
+
+            prodejni_cena = st.slider(
+                "Prodejní cena burgeru (Kč):",
+                100,
+                300,
+                180,
+                step=10,
+                key="k5_1_cena_burgeru",
+            )
+            naklady_suroviny = 110
+            ostatni_naklady_na_burger = 80
+
             celkove_naklady = naklady_suroviny + ostatni_naklady_na_burger
             zisk_na_kus = prodejni_cena - celkove_naklady
 
             col_sim1, col_sim2 = st.columns(2)
             col_sim1.metric("Celkové náklady na 1 burger", f"{celkove_naklady} Kč")
-            
-            if zisk_na_kus < 0:
-                col_sim2.metric("Zisk / Ztráta na 1 burger", f"{zisk_na_kus} Kč", delta="Kráčíš ke krachu!", delta_color="inverse")
-                st.error(f"🚨 **Katastrofa!** I když prodáš 10 000 burgerů měsíčně a všichni tě chválí, na každém burgeru proděláváš {abs(zisk_na_kus)} Kč. Čím více prodáváš, tím větší díru do rozpočtu děláš!")
-            else:
-                col_sim2.metric("Zisk / Ztráta na 1 burger", f"{zisk_na_kus} Kč", delta="Firma generuje zisk", delta_color="normal")
-                st.success(f"✅ **Super!** Na každém burgeru vyděláš {zisk_na_kus} Kč. Pokud ti zákazníci zaplatí včas, firma se udrží v zisku.")
 
-        st.markdown("""
+            if zisk_na_kus < 0:
+                col_sim2.metric(
+                    "Zisk / Ztráta na 1 burger",
+                    f"{zisk_na_kus} Kč",
+                    delta="Kráčíš ke krachu!",
+                    delta_color="inverse",
+                )
+                st.error(
+                    f"🚨 **Katastrofa!** I když prodáš 10 000 burgerů měsíčně a"
+                    " všichni tě chválí, na každém burgeru proděláváš"
+                    f" {abs(zisk_na_kus)} Kč. Čím více prodáváš, tím větší díru"
+                    " do rozpočtu děláš!"
+                )
+            else:
+                col_sim2.metric(
+                    "Zisk / Ztráta na 1 burger",
+                    f"{zisk_na_kus} Kč",
+                    delta="Firma generuje zisk",
+                    delta_color="normal",
+                )
+                st.success(
+                    f"✅ **Super!** Na každém burgeru vyděláš {zisk_na_kus} Kč."
+                    " Pokud ti zákazníci zaplatí včas, firma se udrží v zisku."
+                )
+
+        st.markdown(
+            """
         <div class="box-green">
             <b>🧠 Pointa pro studenty:</b> Finanční řízení není o tom „být posedlý penězi“. Je o odpovědnosti. Pokud firma neumí řídit finance, může ohrozit nejen majitele, ale i zaměstnance, zákazníky, dodavatele a další lidi, kteří jsou na jejím fungování závislí.
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
         st.divider()
 
@@ -5878,55 +6113,114 @@ def render():
         # 5.1.1 KOHO ZAJÍMÁ FINANČNÍ ZDRAVÍ PODNIKU
         # =========================================================================
         st.markdown("### 5.1.1 Koho zajímá finanční zdraví podniku")
-        st.write("Finanční zdraví neřeší jen majitel. Zajímá mnoho skupin v okolí firmy (tzv. *stakeholderů*), protože každá z nich nese jiné riziko a pokládá si jiné otázky.")
+        st.write(
+            "Finanční zdraví neřeší jen majitel. Zajímá mnoho skupin v okolí"
+            " firmy (tzv. *stakeholderů*), protože každá z nich nese jiné"
+            " riziko a pokládá si jiné otázky."
+        )
 
         st.markdown("#### 👥 Proklikni si optiku jednotlivých aktérů:")
 
-        # Interaktivní výběr stakeholderů
         aktéri = {
             "👑 Majitelé a společníci": {
-                "důvod": "Chtějí vědět, zda firma vydělává, roste a neztrácí hodnotu.",
-                "otázka": "„Vyplatí se v tomto podnikání pokračovat, nebo peníze raději vytáhnout?“",
-                "riziko": "Ztráta vloženého kapitálu a času."
+                "důvod": (
+                    "Chtějí vědět, zda firma vydělává, roste a neztrácí"
+                    " hodnotu."
+                ),
+                "otázka": (
+                    "„Vyplatí se v tomto podnikání pokračovat, nebo peníze"
+                    " raději vytáhnout?“"
+                ),
+                "riziko": "Ztráta vloženého kapitálu a času.",
             },
             "👔 Management": {
-                "důvod": "Potřebuje řídit ceny, náklady, investice, zásoby a lidi na denní bázi.",
-                "otázka": "„Kde přesně nám utíkají peníze a co musíme od příštího měsíce změnit?“",
-                "riziko": "Špatná rozhodnutí a ztráta konkurenceschopnosti."
+                "důvod": (
+                    "Potřebuje řídit ceny, náklady, investice, zásoby a lidi na"
+                    " denní bázi."
+                ),
+                "otázka": (
+                    "„Kde přesně nám utíkají peníze a co musíme od příštího"
+                    " měsíce změnit?“"
+                ),
+                "riziko": (
+                    "Špatná rozhodnutí a ztráta konkurenceschopnosti."
+                ),
             },
             "👷 Zaměstnanci": {
-                "důvod": "Zajímá je stabilita práce, pravidelné výplaty a budoucnost firmy.",
-                "otázka": "„Bude mít firma příští měsíc na mé mzdy, nebo si mám hledat novou práci?“",
-                "riziko": "Ztráta zaměstnání a neproplacené mzdy."
+                "důvod": (
+                    "Zajímá je stabilita práce, pravidelné výplaty a budoucnost"
+                    " firmy."
+                ),
+                "otázka": (
+                    "„Bude mít firma příští měsíc na mé mzdy, nebo si mám"
+                    " hledat novou práci?“"
+                ),
+                "riziko": "Ztráta zaměstnání a neproplacené mzdy.",
             },
             "🏦 Banka": {
-                "důvod": "Posuzuje, zda firma zvládne bezpečně splácet úvěr i s úroky.",
-                "otázka": "„Má firma dostatečně stabilní cashflow na měsíční splátky?“",
-                "riziko": "Nesplacení půjčky a vznik nespláceného dluhu."
+                "důvod": (
+                    "Posuzuje, zda firma zvládne bezpečně splácet úvěr i s"
+                    " úroky."
+                ),
+                "otázka": (
+                    "„Má firma dostatečně stabilní cashflow na měsíční"
+                    " splátky?“"
+                ),
+                "riziko": "Nesplacení půjčky a vznik nespláceného dluhu.",
             },
             "🚀 Investor": {
-                "důvod": "Hledá potenciál rychlého růstu, vysokou návratnost a míru rizika.",
-                "otázka": "„Má tato firma šanci desetinásobně vyrůst a ovládnout trh?“",
-                "riziko": "Investice do podniku, který zkrachuje."
+                "důvod": (
+                    "Hledá potenciál rychlého růstu, vysokou návratnost a míru"
+                    " rizika."
+                ),
+                "otázka": (
+                    "„Má tato firma šanci desetinásobně vyrůst a ovládnout"
+                    " trh?“"
+                ),
+                "riziko": "Investice do podniku, který zkrachuje.",
             },
             "🚚 Dodavatelé": {
-                "důvod": "Řeší, jestli firma zaplatí vystavené faktury včas a v plné výši.",
-                "otázka": "„Není riziko dodávat jim zboží na fakturu se splatností 30 dní?“",
-                "riziko": "Druhotná platební neschopnost (nedostanou zaplaceno za své zboží)."
+                "důvod": (
+                    "Řeší, jestli firma zaplatí vystavené faktury včas a v plné"
+                    " výši."
+                ),
+                "otázka": (
+                    "„Není riziko dodávat jim zboží na fakturu se splatností 30"
+                    " dní?“"
+                ),
+                "riziko": (
+                    "Druhotná platební neschopnost (nedostanou zaplaceno za"
+                    " své zboží)."
+                ),
             },
             "🛒 Zákazníci": {
-                "důvod": "U dlouhodobých služeb a záruk potřebují jistotu, že firma ze dne na den nezmizí.",
-                "otázka": "„Bude tato služba nebo garance fungovat i za rok?“",
-                "riziko": "Ztráta zaplacené zálohy nebo nefunkční záruka."
+                "důvod": (
+                    "U dlouhodobých služeb a záruk potřebují jistotu, že firma"
+                    " ze dne na den nezmizí."
+                ),
+                "otázka": (
+                    "„Bude tato služba nebo garance fungovat i za rok?“"
+                ),
+                "riziko": "Ztráta zaplacené zálohy nebo nefunkční záruka.",
             },
             "🏛️ Stát a Obec": {
-                "důvod": "Zajímá je řádné placení daní, pojistného, tvorba pracovních míst a rozvoj regionu.",
-                "otázka": "„Plní firma své zákonné povinnosti a podporuje lokální ekonomiku?“",
-                "riziko": "Daňové úniky nebo růst nezaměstnanosti v regionu."
-            }
+                "důvod": (
+                    "Zajímá je řádné placení daní, pojistného, tvorba"
+                    " pracovních míst a rozvoj regionu."
+                ),
+                "otázka": (
+                    "„Plní firma své zákonné povinnosti a podporuje lokální"
+                    " ekonomiku?“"
+                ),
+                "riziko": "Daňové úniky nebo růst nezaměstnanosti v regionu.",
+            },
         }
 
-        vybrany_akter = st.selectbox("Vyber skupinu, jejíž pohled tě zajímá:", list(aktéri.keys()), key="k5_1_akter")
+        vybrany_akter = st.selectbox(
+            "Vyber skupinu, jejíž pohled tě zajímá:",
+            list(aktéri.keys()),
+            key="k5_1_akter",
+        )
 
         if vybrany_akter:
             data = aktéri[vybrany_akter]
@@ -5938,1788 +6232,369 @@ def render():
 
         st.divider()
 
-        # --- AKTIVITA PODKAPITOLY ---
-        st.markdown("### 🧩 Aktivita: Domino efekt v tvém okolí")
-        st.write("Vyber si libovolnou firmu z okolí své školy nebo bydliště (např. lokální kavárnu, autoservis, e-shop nebo tělocvičnu) a zkus se zamyslet nad řetězovou reakcí.")
-
-        with st.container(border=True):
-            firma = st.text_input("Napiš název/typ vybrané firmy z okolí:", placeholder="Např. Kavárna U Školáka / Lokální autoservis Procházka", key="k5_1_firma")
-            nasledky = st.text_area("Co všechno by se stalo a kdo by utrpěl škodu, kdyby tato firma přestala ze dne na den platit své závazky?", 
-                                     placeholder="Např. Zaměstnanci by nedostali výplatu a nemohli zaplatit nájem. Dodavatel kávy by přišel o velkého odběratele...", key="k5_1_nasledky")
-            
-            if st.button("Uložit mé zamyšlení o domino efektu 💾", type="primary", key="btn_k5_1_domino"):
-                if firma.strip() and nasledky.strip():
-                    st.success("✅ Skvělá úvaha! Takhle funguje ekonomický ekosystém. Finanční problém jedné firmy se jako domino šíří k desítkám dalších lidí.")
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.1 - Domino efekt", f"Firma: {firma} | Následky: {nasledky}")
-                else:
-                    st.warning("Před uložením vyplň obě pole!")
+        if "vykresli_otazku_fn" in st.session_state:
+            st.session_state["vykresli_otazku_fn"](
+                "2.5.1",
+                "🧩 Aktivita: Domino efekt – Vyber si libovolnou firmu z okolí"
+                " a popiš, co by se stalo a kdo by utrpěl škodu, kdyby přestala"
+                " ze dne na den platit své závazky.",
+                "2",
+                st.session_state.get("ulozene_odpovedi", {}),
+            )
 
     # =========================================================================
     # 5.2 ZÁKLADNÍ FINANČNÍ VÝKAZY: MAPA FIRMY V ČÍSLECH
     # =========================================================================
     elif selected_section_2.startswith("5.2 "):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.2 Základní finanční výkazy: mapa firmy v číslech")
-        
+
         st.write(
-            "Aby šlo firmu bezpečně řídit, nestačí říct „daří se nám“ nebo „nějak to funguje“. Firma potřebuje přesná čísla. "
-            "Základní finanční výkazy fungují jako palubní deska v autě — ukazují, co firma vlastní, co dluží, kolik vydělala, kolik utratila a jak se pohybovaly peníze."
+            "Aby šlo firmu bezpečně řídit, nestačí říct „daří se nám“ nebo"
+            " „nějak to funguje“. Firma potřebuje přesná čísla. Základní"
+            " finanční výkazy fungují jako palubní deska v autě — ukazují, co"
+            " firma vlastní, co dluží, kolik vydělala, kolik utratila a jak se"
+            " pohybovaly peníze."
         )
-
-        st.markdown("""
-        <div class="box-blue">
-            <b>🧭 Jednoduché přirovnání:</b><br>
-            📸 <b>Rozvaha</b> je <i>fotografie</i> firmy k určitému dni (statický stav majetku a dluhů).<br>
-            🎬 <b>Výkaz zisku a ztráty</b> je <i>film</i> za určité období (jak hospodařila od 1. 1. do 31. 12.).<br>
-            💧 <b>Cashflow</b> ukazuje, kudy reálně tekly peníze v peněžence/na účtu.
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.divider()
-
-        # -------------------------------------------------------------------------
-        # 5.2.1 ROZVAHA: CO FIRMA MÁ A Z ČEHO TO FINANCUJE
-        # -------------------------------------------------------------------------
-        st.markdown("### 5.2.1 Rozvaha: co firma má a z čeho to financuje")
-        st.write(
-            "Rozvaha ukazuje majetek firmy (**Aktiva**) a současně zdroje, ze kterých je tento majetek financovaný (**Pasiva**). "
-            "V rozvaze musí vždy platit základní rovnováha:"
-        )
-
-        st.markdown("""
-        <div class="box-purple" style="text-align: center; font-size: 1.2em;">
-            <b>AKTIVA (Majetek) = PASIVA (Zdroje financování)</b><br>
-            <small><i>Majetek firmy = Vlastní kapitál + Cizí zdroje (úvěry, dluhy)</i></small>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("#### ⚖️ Interaktivní balancér rozvahy studentského e-shopu")
-        st.write("Sestav rozvahu pro e-shop. Vyzkoušej si, jak každé pořízení majetku musí mít svůj finanční zdroj!")
 
         with st.container(border=True):
+            st.markdown(
+                "### 5.2.1 Rozvaha: co firma má a z čeho to financuje"
+            )
+            st.write(
+                "Rozvaha ukazuje majetek firmy (**Aktiva**) a současně zdroje,"
+                " ze kterých je tento majetek financovaný (**Pasiva**)."
+            )
+
             col_a, col_p = st.columns(2)
-            
             with col_a:
-                st.markdown("#### 📦 AKTIVA (Co firma má)")
-                penize = st.number_input("Peníze na účtu a v pokladně (Kč):", value=25000, step=5000, key="act_penize")
-                zasoby = st.number_input("Zásoby zboží na skladě (Kč):", value=30000, step=5000, key="act_zasoby")
-                vybaveni = st.number_input("Notebook a balicí technika (Kč):", value=15000, step=5000, key="act_vyb")
-                aktiva_celkem = penize + zasoby + vybaveni
-                st.metric("Aktiva Celkem", f"{aktiva_celkem:,} Kč".replace(",", " "))
+                penize = st.number_input(
+                    "Peníze na účtu a v pokladně (Kč):",
+                    value=25000,
+                    step=5000,
+                    key="act_penize",
+                )
+                zasoby = st.number_input(
+                    "Zásoby zboží na skladě (Kč):",
+                    value=30000,
+                    step=5000,
+                    key="act_zasoby",
+                )
+                vybaneni = st.number_input(
+                    "Notebook a balicí technika (Kč):",
+                    value=15000,
+                    step=5000,
+                    key="act_vyb",
+                )
+                aktiva_celkem = penize + zasoby + vybaneni
+                st.metric(
+                    "Aktiva Celkem", f"{aktiva_celkem:,} Kč".replace(",", " ")
+                )
 
             with col_p:
-                st.markdown("#### 💳 PASIVA (Z čeho to zaplatila)")
-                vklad = st.number_input("Vlastní vklad majitele (Kč):", value=40000, step=5000, key="pas_vklad")
-                uver = st.number_input("Bankovní úvěr (Kč):", value=20000, step=5000, key="pas_uver")
-                zavazky = st.number_input("Nezaplacené faktury dodavatelům (Kč):", value=10000, step=5000, key="pas_zavazky")
+                vklad = st.number_input(
+                    "Vlastní vklad majitele (Kč):",
+                    value=40000,
+                    step=5000,
+                    key="pas_vklad",
+                )
+                uver = st.number_input(
+                    "Bankovní úvěr (Kč):",
+                    value=20000,
+                    step=5000,
+                    key="pas_uver",
+                )
+                zavazky = st.number_input(
+                    "Nezaplacené faktury dodavatelům (Kč):",
+                    value=10000,
+                    step=5000,
+                    key="pas_zavazky",
+                )
                 pasiva_celkem = vklad + uver + zavazky
-                st.metric("Pasiva Celkem", f"{pasiva_celkem:,} Kč".replace(",", " "))
-
-            # Vyhodnocení bilanční rovnováhy
-            diference = aktiva_celkem - pasiva_celkem
-            if diference == 0:
-                st.success("✅ **Rozvaha je v rovnováze! (Aktiva = Pasiva)** E-shop má majetek za 70 000 Kč. Část financoval majitel ze svého, část úvěrem a část tím, že ještě nezaplatil dodavatelům.")
-            elif diference > 0:
-                st.error(f"❌ **Rozvaha nevychází!** Máš o {diference:,} Kč více majetku (Aktiva) než zdrojů (Pasiva). Kde jsi vzal/a peníze na tento majetek?".replace(",", " "))
-            else:
-                st.error(f"❌ **Rozvaha nevychází!** Zdroje (Pasiva) přesahují majetek o {abs(diference):,} Kč. Kde jsou ty peníze?".replace(",", " "))
-
-        st.divider()
-
-        # -------------------------------------------------------------------------
-        # 5.2.2 VÝKAZ ZISKU A ZTRÁTY: VYDĚLÁVÁ FIRMA?
-        # -------------------------------------------------------------------------
-        st.markdown("### 5.2.2 Výkaz zisku a ztráty: vydělává firma?")
-        st.write(
-            "Výkaz zisku a ztráty (tzv. *Výsledovka*) ukazuje výnosy, náklady a výsledek hospodaření za dané období (např. za měsíc nebo rok)."
-        )
-
-        st.markdown("""
-        <div class="box-green">
-            <b>Základní logika výsledovky:</b><br>
-            <b>Výnosy − Náklady = Výsledek hospodaření</b><br>
-            • Výnosy > Náklady ➔ <b>ZISK</b> (Firma vydělala více, než spotřebovala)<br>
-            • Náklady > Výnosy ➔ <b>ZTRÁTA</b> (Firma spotřebovala více, než vydělala)
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("#### 📊 Výsledovka e-shopu v praxi")
-        st.write("Vyzkoušej si změnit tržby nebo náklady a sleduj, jak se mění Hrubý zisk a Zisk před zdaněním.")
+                st.metric(
+                    "Pasiva Celkem", f"{pasiva_celkem:,} Kč".replace(",", " ")
+                )
 
         with st.container(border=True):
-            col_v1, col_v2 = st.columns(2)
-            with col_v1:
-                trzby = st.slider("Tržby za prodej zboží (Výnosy):", 10000, 200000, 80000, step=5000, key="vys_trzby")
-                naklady_zbozi = st.slider("Nákupní cena prodaného zboží:", 5000, 100000, 42000, step=2000, key="vys_zbozi")
-            
-            hruby_zisk = trzby - naklady_zbozi
-
-            with col_v2:
-                reklama = st.slider("Marketing a reklama:", 0, 30000, 8000, step=1000, key="vys_rek")
-                doprava = st.slider("Doprava a balicí materiál:", 0, 20000, 6000, step=1000, key="vys_dopr")
-                software = st.slider("Software a doména e-shopu:", 0, 10000, 2000, step=500, key="vys_soft")
-                ostatni_op = st.slider("Ostatní provozní náklady:", 0, 15000, 4000, step=500, key="vys_ost")
-
-            provozni_naklady_celkem = reklama + doprava + software + ostatni_op
-            zisk_pred_zdanenim = hruby_zisk - provozni_naklady_celkem
-
-            st.divider()
-            c_m1, c_m2, c_m3 = st.columns(3)
-            c_m1.metric("Celkové Tržby", f"{trzby:,} Kč".replace(",", " "))
-            c_m2.metric("Hrubý zisk (Tržby - Zboží)", f"{hruby_zisk:,} Kč".replace(",", " "))
-            
-            if zisk_pred_zdanenim >= 0:
-                c_m3.metric("Zisk před zdaněním", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), delta="Ziskový měsíc", delta_color="normal")
-            else:
-                c_m3.metric("Výsledek hospodaření", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), delta="Ztrátový měsíc!", delta_color="inverse")
-
-        st.markdown("""
-        <div class="box-red">
-            <b>⚠️ Pozor — Důležitý chyták:</b> Výnos není vždy totéž co přijaté peníze na účtu! Firma může vystavit fakturu a ihned mít výnos (účtuje se okamžikem prodeje), ale zákazník jí zaplatí až za 60 dní. Proto samotný zisk nestačí a musíme sledovat Cashflow!
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.divider()
-
-        # -------------------------------------------------------------------------
-        # 5.2.3 CASHFLOW: PENÍZE JSOU KYSLÍK FIRMY
-        # -------------------------------------------------------------------------
-        st.markdown("### 5.2.3 Cashflow: peníze jsou kyslík firmy")
-        st.write(
-            "Cashflow znamená **reálný tok peněz**. Ukazuje, kolik peněz do firmy fyzicky přiteklo (na účet nebo do pokladny) "
-            "a kolik z ní odešlo."
-        )
-
-        st.markdown("""
-        <div class="box-gray">
-            <b>💧 Cashflow jednoduše:</b> Zisk ukazuje, jestli podnikání dává dlouhodobý ekonomický smysl. Cashflow ukazuje, jestli má firma peníze na zaplacení nájmu a mezd příští úterý!
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("#### 🚨 Příběh ze života: Jak zkrachovala papírově úspěšná firma")
-        
-        with st.container(border=True):
-            st.markdown("##### 📅 Případová studie: Vývojářská agentura 'CodeCraft'")
-            st.write(
-                "• **1. ledna:** Agentura dokončila aplikaci pro velkého klienta a vystavila fakturu na **120 000 Kč** se splatností 60 dní. Ve výsledovce má zisk 60 000 Kč!<br>"
-                "• **15. ledna:** Musí zaplatit 30 000 Kč nájem kanceláře a 40 000 Kč mzdy grafikovi.<br>"
-                "• **1. února:** Na účtu jí zbývá 5 000 Kč. Klient ještě nezaplatil (má čas do 1. března).<br>"
-                "• **15. února:** Přichází další mzdy a nájem (70 000 Kč). Bankovní účet jde na 0 Kč, dodavatelé hrozí soudem.<br>"
-                "• **Konec února:** Firma vyhlašuje insolvenci a krachuje, i když je 'papírově' v zisku!"
-            , unsafe_allow_html=True)
-            
-            st.info("💡 **Poučení:** Firma nespravovala své Cashflow. Zákazníkům nabídla příliš dlouhou splatnost (60 dní), zatímco své vlastní výdaje musela platit hned.")
+            st.markdown("### 5.2.2 Výkaz zisku a ztráty & 5.2.3 Cashflow")
+            st.write("Výkaz zisku a ztráty ukazuje výnosy a náklady za období.")
 
     # =========================================================================
     # 5.3 NÁKLADY, VÝNOSY A BOD ZVRATU
     # =========================================================================
     elif selected_section_2.startswith("5.3"):
-        import math
-        import numpy as np
-        import pandas as pd
         import matplotlib.pyplot as plt
+        import numpy as np
 
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
-        st.markdown("## 5.3 Náklady, výnosy a bod zvratu")
-        
-        st.write(
-            "Aby firma věděla, zda se jí podnikání vůbec vyplatí, musí dokonale rozumět svým nákladům. "
-            "Nestačí si říct: *„Prodávám za víc, než nakupuji.“* Firma musí započítat i nájem, software, "
-            "reklamu, dopravu, svůj čas, daně, poplatky, vybavení a riziko neprodaných zásob."
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
         )
-
-        st.markdown("### 5.3.1 Fixní a variabilní náklady")
-        st.write("Náklady dělíme do dvou hlavních skupin podle toho, jak se chovají, když firma zvyšuje výrobu nebo prodej.")
-
-        # Tabulka nákladů
-        st.markdown("""
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Typ nákladu</th>
-                    <th>Co znamená</th>
-                    <th>Příklad</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>Fixní náklady (FN)</b></td>
-                    <td>Nemění se přímo podle počtu prodaných kusů. Platí se, i když firma neprodá nic.</td>
-                    <td>Nájem, software, účetní, paušální služby, základní část mezd.</td>
-                </tr>
-                <tr>
-                    <td><b>Variabilní náklady (VN)</b></td>
-                    <td>Rostou nebo klesají přímo úměrně podle objemu výroby nebo prodeje.</td>
-                    <td>Materiál, nákupní cena zboží, obaly, provize bráně, doprava za kus.</td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="box-blue">
-            <b>🧮 Bod zvratu (Break-Even Point - BEP):</b> Ukazuje, kolik přesně musí firma prodat kusů (nebo utržit peněz), aby pokryla všechny své fixní i variabilní náklady. Teprve prodeje NAD bodem zvratu vytvářejí zisk!
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.divider()
-
-        st.markdown("### 🎢 Interaktivní kalkulačka Bodu zvratu a zisku")
-        st.write("Zadej hodnoty níže. Graf a výpočty se okamžitě přizpůsobí, abys viděl/a, kdy přesně firma začne vydělávat.")
+        st.markdown("## 5.3 Náklady, výnosy a bod zvratu")
 
         with st.container(border=True):
             col1, col2, col3 = st.columns(3)
             with col1:
-                fixni = st.number_input("Fixní náklady [Kč]", min_value=0, value=50000, step=1000, key="k5_bep_fix")
+                fixni = st.number_input(
+                    "Fixní náklady [Kč]",
+                    min_value=0,
+                    value=50000,
+                    step=1000,
+                    key="k5_bep_fix",
+                )
             with col2:
-                variabilni = st.number_input("Variabilní náklady/ks [Kč]", min_value=0, value=200, step=10, key="k5_bep_var")
+                variabilni = st.number_input(
+                    "Variabilní náklady/ks [Kč]",
+                    min_value=0,
+                    value=200,
+                    step=10,
+                    key="k5_bep_var",
+                )
             with col3:
-                cena = st.number_input("Prodejní cena/ks [Kč]", min_value=0, value=400, step=10, key="k5_bep_cena")
+                cena = st.number_input(
+                    "Prodejní cena/ks [Kč]",
+                    min_value=0,
+                    value=400,
+                    step=10,
+                    key="k5_bep_cena",
+                )
 
             marze = cena - variabilni
 
-            st.divider()
-
-            if marze <= 0:
-                st.error("⚠️ **Chyba:** Prodejní cena musí být vyšší než variabilní náklady, jinak s každým kusem prohlubuješ ztrátu!")
-            else:
-                # Matematický výpočet
+            if marze > 0:
                 bep_ks = fixni / marze
                 bep_kc = bep_ks * cena
-                
-                # Výpočet prvního kusu, který generuje zisk
                 prvni_ziskovy_kus = math.floor(bep_ks) + 1
-                
-                # Formátování čísel pro hezké zobrazení v češtině (mezery místo tisíců)
-                bep_ks_str = f"{bep_ks:,.1f}".replace(",", " ").replace(".0", "")
-                bep_kc_str = f"{bep_kc:,.0f}".replace(",", " ")
-                marze_str = f"{marze:,.0f}".replace(",", " ")
+                st.success(
+                    f"🎯 **Bod zvratu (zisk = 0):** {bep_ks:.1f} ks (Tržby:"
+                    f" {bep_kc:,.0f} Kč)"
+                )
 
-                st.success(f"🎯 **Bod zvratu (zisk = 0):** {bep_ks_str} ks (Tržby: {bep_kc_str} Kč)")
-                
-                # Vysvětlení pro studenty, odkdy generují zisk
-                st.markdown(f"""
-                **💡 Co to přesně znamená?**
-                * Při prodeji **{bep_ks_str} ks** jste přesně na nule (pokryli jste všechny náklady).
-                * 🚀 **Firma začne generovat čistý zisk až od prodeje {prvni_ziskovy_kus}. kusu!**
-                * Z každého dalšího kusu získáte čistý zisk **{marze_str} Kč** (což je vaše hrubá marže / krycí příspěvek).
-                """)
+                max_ks = int(bep_ks * 2) if bep_ks > 0 else 100
+                x = np.linspace(0, max_ks, 100)
+                naklady = fixni + (variabilni * x)
+                trzby = cena * x
+                zisk = trzby - naklady
 
-        # Generování grafu pouze pokud je byznys logicky nastaven (marže > 0)
-        if marze > 0:
-            st.markdown("#### 📈 Graf vývoje nákladů, tržeb a zisku")
-            
-            # Příprava dat pro graf
-            max_ks = int(bep_ks * 2) if bep_ks > 0 else 100
-            x = np.linspace(0, max_ks, 100)
-            naklady = fixni + (variabilni * x)
-            trzby = cena * x
-            zisk = trzby - naklady
-
-            fig, ax = plt.subplots(figsize=(10, 6))
-            
-            # Černá osa pro nulu
-            ax.axhline(y=0, color='black', linewidth=1)
-
-            # Hlavní přímky s jemnějšími barvami
-            ax.plot(x, naklady, label='Celkové náklady', color='#e74c3c', linewidth=3)
-            ax.plot(x, trzby, label='Tržby', color='#2ecc71', linewidth=3)
-            ax.plot(x, zisk, label='Vývoj zisku', color='#3498db', linewidth=2, linestyle='--')
-
-            if bep_ks > 0 and bep_ks < max_ks:
-                ax.axhline(y=bep_kc, color='gray', linestyle=':')
-                ax.axvline(x=bep_ks, color='gray', linestyle=':')
-                
-                # Tečka v bodu zvratu
-                ax.scatter(bep_ks, bep_kc, color='black', s=100, label='Bod zvratu', zorder=5)
-                # Tečka, kde zisk protíná osu nula
-                ax.scatter(bep_ks, 0, color='#3498db', s=70, zorder=5)
-
-                # Výrazná textová šipka přímo v grafu!
-                y_offset = - (cena * max_ks * 0.15)
-                ax.annotate(f'Zisk od {prvni_ziskovy_kus}. ks', 
-                            xy=(bep_ks, 0), xytext=(bep_ks + (max_ks*0.05), y_offset),
-                            arrowprops=dict(facecolor='#3498db', shrink=0.05, width=1.5, headwidth=7, edgecolor='none'),
-                            fontsize=11, color='#3498db', fontweight='bold',
-                            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="#3498db", lw=1))
-
-            # Barevné šrafování zón
-            ax.fill_between(x, naklady, trzby, where=(naklady > trzby), interpolate=True, color='#e74c3c', alpha=0.15, label='Zóna ztráty')
-            ax.fill_between(x, naklady, trzby, where=(naklady < trzby), interpolate=True, color='#2ecc71', alpha=0.15, label='Zóna zisku')
-
-            # Nastavení popisků os
-            ax.set_xlabel('Počet prodaných kusů [ks]', fontsize=12)
-            ax.set_ylabel('Částka [Kč]', fontsize=12)
-            ax.set_title('Zóna zisku a ztráty', fontsize=14, fontweight='bold')
-            
-            # Legenda odsunuta vlevo nahoru, aby nepřekážela křivkám
-            ax.legend(loc='upper left', fontsize=10)
-            ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
-
-            # Formátování čísel os na tisíce s mezerou
-            ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda val, p: format(int(val), ',').replace(',', ' ')))
-            ax.get_xaxis().set_major_formatter(plt.FuncFormatter(lambda val, p: format(int(val), ',').replace(',', ' ')))
-
-            # Zobrazení grafu
-            st.pyplot(fig)
-
-            st.write(
-                "💡 *Vysvětlivka: Plocha označená červeně představuje ztrátu, zelená zisk. "
-                "Modrá přerušovaná čára ukazuje vývoj zisku (pod nulou je podnik ve ztrátě, v bodě zvratu protíná nulu a roste do zisku).*"
-            )
+                fig, ax = plt.subplots(figsize=(8, 4))
+                ax.plot(x, naklady, label="Celkové náklady", color="#e74c3c")
+                ax.plot(x, trzby, label="Tržby", color="#2ecc71")
+                ax.scatter(bep_ks, bep_kc, color="black", zorder=5)
+                ax.grid(True)
+                st.pyplot(fig)
 
     # =========================================================================
-    # 5.4 ZDROJE FINANCOVÁNÍ PODNIKU
+    # 5.4 ZDROJE FINANCOVÁNÍ & 5.5 FINANČNÍ ANALÝZA
     # =========================================================================
     elif selected_section_2.startswith("5.4 "):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.4 Zdroje financování podniku")
-        
-        st.write("Firma potřebuje peníze na start, provoz i růst. Tyto zdroje financování se dělí hlavně na **vlastní** (tvé peníze) a **cizí** (cizí peníze, které musíš vrátit).")
 
-        st.markdown("### 🏦 Přehled zdrojů financování")
-        
-        zdroje = {
-            "Vlastní kapitál": {"co": "Peníze majitele nebo společníků vložené do firmy.", "vyhoda": "Není nutné splácet jako úvěr.", "riziko": "Majitel riskuje vlastní peníze."},
-            "Bootstrapping": {"co": "Firma roste čistě z vlastních tržeb a úspor bez cizí pomoci.", "vyhoda": "Majitel si drží 100% kontrolu.", "riziko": "Růst může být velmi pomalý a vyčerpávající."},
-            "Zisk ponechaný ve firmě": {"co": "Firma nevyplatí zisk majitelům, ale použije ho na rozvoj.", "vyhoda": "Nejlevnější financování z vlastního výkonu.", "riziko": "Majitelé si nemohou peníze hned užít."},
-            "Bankovní úvěr": {"co": "Banka nebo věřitel půjčí peníze za úrok.", "vyhoda": "Majitel neztrácí podíl ve firmě.", "riziko": "Úvěr se musí splácet i v měsících, kdy nejsou tržby."},
-            "Leasing": {"co": "Pronájem a financování auta, stroje nebo vybavení.", "vyhoda": "Firma nemusí platit obrovskou částku najednou.", "riziko": "Celkové přeplacené náklady mohou být vyšší."},
-            "Investor (Business Angel/VC)": {"co": "Investor vloží peníze výměnou za podíl ve firmě.", "vyhoda": "Přinese velký kapitál, kontakty a cenné know-how.", "riziko": "Majitel ztrácí část kontroly a budoucího zisku."},
-            "Dotace a granty": {"co": "Finanční podpora z veřejných programů (EU, stát).", "vyhoda": "Často se nemusí vracet (peníze zdarma).", "riziko": "Pekelná administrativa, přísná pravidla a nejistota."}
-        }
-
-        # Interaktivní zobrazení zdrojů pomocí expanderů
-        for nazev, data in zdroje.items():
-            with st.expander(f"**{nazev}**"):
-                st.write(f"📖 **Co to znamená:** {data['co']}")
-                st.success(f"✅ **Výhoda:** {data['vyhoda']}")
-                st.warning(f"⚠️ **Riziko / Nevýhoda:** {data['riziko']}")
-
-        st.markdown("""
-        <div class="box-red">
-            <b>⚖️ Důležité rozhodnutí:</b> Rychlý růst není vždy zdravý. Firma může získat ohromné množství objednávek, ale pokud nemá peníze na nákup zásob, platy lidí a drahou dopravu, může ji paradoxně samotný růst poslat do krachu (ukončení cashflow).
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.divider()
-
-        st.markdown("### 🎮 Mini-scénář: Jak bys financoval/a tento projekt?")
-        st.write("Máš úspěšný malý e-shop. Získal jsi nečekanou nabídku dodávat své produkty do velké sítě supermarketů. Potřebuješ ale okamžitě **1 000 000 Kč** na výrobu první obří várky. Nemáš je. Co uděláš?")
-        
-        volba_finance = st.radio("Vyber si strategii:", [
-            "Vyber možnost...",
-            "Vezmu si bankovní úvěr (Půjčka na 1 milion Kč).",
-            "Najdu investora a dám mu 30 % firmy za 1 milion Kč.",
-            "Odmítnu to. Pojedu si dál svůj malý e-shop a bootstrapping."
-        ], key="k5_4_finance")
-
-        if volba_finance == "Vezmu si bankovní úvěr (Půjčka na 1 milion Kč).":
-            st.info("🏦 **Cesta dluhu:** Zůstane ti 100 % firmy! Pokud se prodeje v supermarketu uchytí, vyděláš balík. Ale pozor – pokud supermarket zboží neprodá a vrátí ti ho, zůstane ti na krku dluh, který tě může zničit.")
-        elif volba_finance == "Najdu investora a dám mu 30 % firmy za 1 milion Kč.":
-            st.info("🤝 **Cesta partnerství:** Chytré sdílení rizika. Pokud to nevyjde, investor přijde o peníze, ale ty nebudeš v dluzích. Pokud to ale bude hit, právě jsi navždy odevzdal/a 30 % všech svých budoucích zisků někomu jinému.")
-        elif volba_finance == "Odmítnu to. Pojedu si dál svůj malý e-shop a bootstrapping.":
-            st.info("🐢 **Cesta bezpečí:** Nulové finanční riziko. Zůstaneš svým pánem a v klidu spíš. Z byznysového hlediska jsi ale možná právě zahodil/a životní šanci na raketový růst.")
-
-
-    # =========================================================================
-    # 5.5 FINANČNÍ ANALÝZA: KONTROLA FINANČNÍHO ZDRAVÍ
-    # =========================================================================
     elif selected_section_2.startswith("5.5 "):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.5 Finanční analýza: kontrola finančního zdraví")
-        
-        st.write(
-            "Finanční analýza je práce s čísly, která pomáhá posoudit zdraví podniku. Nejde jen o slepé dosazování do vzorců. "
-            "Důležité je umět výsledky interpretovat: co číslo znamená, proč vzniklo a co by měla firma udělat dál."
-        )
 
-        st.markdown("""
-        <div class="box-blue">
-            <b>🔍 K čemu je to dobré:</b> Pomáhá zjistit, zda je firma zisková, zadlužená, platebně schopná, efektivní a stabilní. Sama o sobě firmu nezachrání, ale funguje jako rentgen – včas ukáže, kde přesně to hoří.
-        </div>
-        """, unsafe_allow_html=True)
-
-        # 5.5.1 KROK ZA KROKEM
-        with st.expander("🛠️ 5.5.1 Jak se finanční analýza sestavuje krok za krokem"):
-            st.markdown("""
-            1. **Vyber firmu** – Reálný nebo fiktivní podnik.
-            2. **Získej data** – Tržby, náklady, zisk, aktiva, vlastní kapitál, závazky, peníze.
-            3. **Uprav data** – Do přehledné tabulky ve stejných jednotkách (např. v tisících Kč).
-            4. **Spočítej ukazatele** – Rentabilita, likvidita, zadluženost, aktivita.
-            5. **Porovnej v čase** – Jeden rok nestačí. Sleduj trend (zlepšuje se to?).
-            6. **Vysvětli výsledky** – Zkus odhalit příběh za čísly.
-            7. **Navrhni opatření** – Snížit náklady? Změnit ceny? Vymáhat pohledávky?
-            8. **Upozorni na limity** – Čísla bez znalosti situace na trhu mohou klamat.
-            """)
-            st.markdown("""
-            <div class="box-green">
-                <b>🧠 Nejdůležitější věta:</b> Finanční analýza není opisování vzorců. Je to příběh firmy vyprávěný čísly.
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.divider()
-
-        # 5.5.2 AŽ 5.5.6 - INTERAKTIVNÍ DASHBOARD
-        st.markdown("### 🎛️ Palubní deska finančního ředitele (Ukazatele v praxi)")
-        st.write("Vlož základní data své firmy a nech si v záložkách spočítat a analyzovat všech pět hlavních skupin ukazatelů: Rentabilitu (5.5.3), Likviditu (5.5.4), Zadluženost (5.5.5) a Aktivitu (5.5.6).")
-
-        # Vstupní data pro simulátor
-        with st.container(border=True):
-            st.markdown("#### 📥 Zadej data o firmě (v Kč)")
-            c1, c2, c3, c4 = st.columns(4)
-            trzby = c1.number_input("Celkové Tržby", value=1000000, step=100000, key="k5_5_trzby")
-            zisk = c2.number_input("Čistý zisk", value=80000, step=10000, key="k5_5_zisk")
-            aktiva = c3.number_input("Aktiva (Majetek)", value=2000000, step=100000, key="k5_5_aktiva")
-            vlastni_kapital = c4.number_input("Vlastní kapitál", value=1100000, step=100000, key="k5_5_vk")
-
-            c5, c6, c7, c8 = st.columns(4)
-            cizi_zdroje = c5.number_input("Cizí zdroje (Dluhy)", value=900000, step=100000, key="k5_5_cz")
-            obezna_aktiva = c6.number_input("Oběžná aktiva", value=500000, step=50000, key="k5_5_oa")
-            kratkodobe_zavazky = c7.number_input("Krátk. závazky (do roka)", value=300000, step=50000, key="k5_5_kz")
-            penize = c8.number_input("Peníze v hotovosti/na účtu", value=150000, step=10000, key="k5_5_penize")
-
-        # Prevence dělení nulou
-        trzby = max(trzby, 1)
-        aktiva = max(aktiva, 1)
-        vlastni_kapital = max(vlastni_kapital, 1)
-        kratkodobe_zavazky = max(kratkodobe_zavazky, 1)
-
-        # Záložky pro jednotlivé skupiny
-        tab_rent, tab_likv, tab_zadl, tab_akt = st.tabs(["📈 Rentabilita (Ziskovost)", "💧 Likvidita (Platební schopnost)", "💳 Zadluženost", "⚙️ Aktivita"])
-
-        # --- 5.5.3 RENTABILITA ---
-        with tab_rent:
-            st.markdown("#### 5.5.3 Ukazatele rentability: Vydělává podnik dost?")
-            st.write("Rentabilita ukazuje, jak dobře firma vytváří zisk.")
-            
-            ros = (zisk / trzby) * 100
-            roa = (zisk / aktiva) * 100
-            roe = (zisk / vlastni_kapital) * 100
-
-            col_r1, col_r2, col_r3 = st.columns(3)
-            
-            # --- ROS ---
-            with col_r1:
-                st.metric("ROS (Rentabilita tržeb)", f"{ros:.1f} %")
-                st.latex(r"\frac{\text{Zisk}}{\text{Tržby}} \times 100")
-                st.caption(f"Z každých 100 Kč tržeb zbývá {ros:.1f} Kč zisku.")
-                
-                if ros < 0:
-                    st.error("🚨 **Ztráta:** Z každého prodeje firma prodělává.")
-                elif ros < 5:
-                    st.warning("⚠️ **Nízká marže:** Běžné u supermarketů (žijí z objemu), ale u jiných oborů je to rizikové.")
-                elif ros <= 15:
-                    st.success("✅ **Zdravý výsledek:** Firma má dostatečnou ziskovost.")
-                else:
-                    st.info("🏆 **Skvělé:** Extrémně ziskový byznys (typické pro IT, služby nebo luxusní zboží).")
-
-            # --- ROA ---
-            with col_r2:
-                st.metric("ROA (Rentabilita aktiv)", f"{roa:.1f} %")
-                st.latex(r"\frac{\text{Zisk}}{\text{Aktiva}} \times 100")
-                st.caption("Jak efektivně majetek generuje zisk.")
-                
-                if roa < 0:
-                    st.error("🚨 **Špatné:** Majetek negeneruje žádný zisk.")
-                elif roa < 4:
-                    st.warning("⚠️ **Nízká efektivita:** Majetek leží ladem nebo je ho zbytečně moc na to, kolik vydělává.")
-                elif roa <= 10:
-                    st.success("✅ **Dobrý standard:** Firma efektivně využívá to, co vlastní.")
-                else:
-                    st.info("🏆 **Výborné:** Firma dokáže s málem majetku vydělat spoustu peněz.")
-
-            # --- ROE ---
-            with col_r3:
-                st.metric("ROE (Rent. vl. kapitálu)", f"{roe:.1f} %")
-                st.latex(r"\frac{\text{Zisk}}{\text{Vlastní kapitál}} \times 100")
-                st.caption("Jaké je zhodnocení vložených peněz majitele.")
-                
-                if roe < 0:
-                    st.error("🚨 **Kritické:** Majitel prodělává své vlastní peníze.")
-                elif roe < 5:
-                    st.warning("⚠️ **Slabé:** Majitel by udělal lépe, kdyby firmu zavřel a peníze dal na bezpečný spořicí účet v bance.")
-                elif roe <= 15:
-                    st.success("✅ **Slušné:** Zhodnocení je lepší než v bance, investor je spokojený.")
-                else:
-                    st.info("🏆 **Skvělé:** Vysoce atraktivní zhodnocení. Taková čísla lákají další investory!")
-
-            st.markdown("""
-            <div class="box-gray">
-                <b>💡 Důležitý kontext pro analytiky:</b> Co je „dobré“ a „špatné“ číslo, vždy závisí na oboru! Supermarket může mít ROS pouhá 2 % a je to skvělé (protože denně prodá tuny zboží). Softwarová firma má běžně ROS i 30 %. Proto se finanční analýza <b>vždy porovnává s konkurencí v oboru</b>.
-            </div>
-            """, unsafe_allow_html=True)
-
-        # --- 5.5.4 LIKVIDITA ---
-        with tab_likv:
-            st.markdown("#### 5.5.4 Ukazatele likvidity: Zvládne podnik platit včas?")
-            st.write("Mít majetek neznamená mít peníze. Likvidita měří schopnost platit faktury.")
-            
-            bezna_likvidita = obezna_aktiva / kratkodobe_zavazky
-            okamzita_likvidita = penize / kratkodobe_zavazky
-
-            col_l1, col_l2 = st.columns(2)
-            col_l1.metric("Běžná likvidita", f"{bezna_likvidita:.2f}")
-            col_l1.latex(r"\frac{\text{Oběžná aktiva}}{\text{Krátkodobé závazky}}")
-            if bezna_likvidita < 1:
-                col_l1.error("🚨 Pod 1,0: Firma nemá dost aktiv na zaplacení dluhů!")
-            elif bezna_likvidita > 2.5:
-                col_l1.warning("⚠️ Nad 2,5: Firma drží moc majetku ladem a neinvestuje ho.")
-            else:
-                col_l1.success("✅ Ideální hodnota (kolem 1,5 – 2,5).")
-
-            col_l2.metric("Okamžitá likvidita", f"{okamzita_likvidita:.2f}")
-            col_l2.latex(r"\frac{\text{Peníze}}{\text{Krátkodobé závazky}}")
-            col_l2.caption("Kolik dluhů umí zaplatit IHNED z účtu.")
-            
-            st.markdown("""
-            <div class="box-red">
-                <b>⚠️ Pozor:</b> Příliš nízká likvidita znamená riziko krachu. Příliš vysoká znamená, že peníze leží ladem a ztrácejí hodnotu.
-            </div>
-            """, unsafe_allow_html=True)
-
-        # --- 5.5.5 ZADLUŽENOST ---
-        with tab_zadl:
-            st.markdown("#### 5.5.5 Ukazatele zadluženosti: Kolik firma dluží?")
-            st.write("Dluh není špatný, pokud pomáhá růst. Problém je, když ho firma neutáhne.")
-            
-            celkova_zadluzenost = (cizi_zdroje / aktiva) * 100
-            mira_zadluzenosti = cizi_zdroje / vlastni_kapital
-
-            col_z1, col_z2 = st.columns(2)
-            col_z1.metric("Celková zadluženost", f"{celkova_zadluzenost:.1f} %")
-            col_z1.latex(r"\frac{\text{Cizí zdroje}}{\text{Aktiva}} \times 100")
-            if celkova_zadluzenost > 70:
-                col_z1.error("🚨 Extrémní zadlužení! Firma je v rukou věřitelů.")
-            elif celkova_zadluzenost < 30:
-                col_z1.success("✅ Nízká zadluženost (možná firma nevyužívá potenciál úvěru k růstu).")
-            else:
-                col_z1.info("Odpovídající zadlužení.")
-
-            col_z2.metric("Míra zadluženosti", f"{mira_zadluzenosti:.2f}")
-            col_z2.latex(r"\frac{\text{Cizí zdroje}}{\text{Vlastní kapitál}}")
-            col_z2.caption("Kolik cizích peněz připadá na 1 Kč vlastních.")
-
-        # --- 5.5.6 AKTIVITA ---
-        with tab_akt:
-            st.markdown("#### 5.5.6 Ukazatele aktivity: Nezasekávají se peníze?")
-            st.write("Tyto ukazatele měří rychlost oběhu. Dosaď sem hodnoty zásob a pohledávek pro výpočet dní.")
-            
-            c_a1, c_a2 = st.columns(2)
-            zasoby = c_a1.number_input("Hodnota zásob na skladě", value=200000, step=10000, key="k5_5_zas")
-            pohledavky = c_a2.number_input("Pohledávky (Zákazníci dluží nám)", value=150000, step=10000, key="k5_5_pohl")
-            
-            obrat_aktiv = trzby / aktiva
-            doba_zasob = (zasoby / trzby) * 365
-            doba_inkasa = (pohledavky / trzby) * 365
-            doba_splatnosti = (kratkodobe_zavazky / trzby) * 365
-            
-            st.divider()
-            c_m1, c_m2, c_m3 = st.columns(3)
-            
-            c_m1.metric("Obrat aktiv", f"{obrat_aktiv:.2f}x")
-            c_m1.caption("Kolikrát do roka se majetek 'otočí' v tržbách.")
-            
-            c_m2.metric("Doba inkasa (čekání na platbu)", f"{doba_inkasa:.0f} dní")
-            if doba_inkasa > doba_splatnosti:
-                c_m2.error("🚨 Čekáš na peníze déle, než máš na zaplacení vlastních dluhů!")
-            else:
-                c_m2.success("✅ Peníze inkasuješ rychleji.")
-                
-            c_m3.metric("Doba splatnosti (tvých faktur)", f"{doba_splatnosti:.0f} dní")
-            
-            st.markdown("""
-            <div class="box-purple">
-                <b>💡 Praktický význam:</b> Pokud firma čeká na peníze od zákazníků 60 dní (Doba inkasa), ale dodavatelům musí platit do 14 dní (Doba splatnosti), vyčerpá si hotovost a může zkrachovat na cashflow problém, i když je zisková!
-            </div>
-            """, unsafe_allow_html=True)
-
-
-    # =========================================================================
-    # 5.6 MODELOVÁ FINANČNÍ ANALÝZA: E-SHOP DROPZONE
-    # =========================================================================
     elif selected_section_2.startswith("5.6"):
-        import pandas as pd
-        
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.6 Modelová finanční analýza: e-shop „DropZone“")
-        
-        st.write(
-            "Představ si úspěšný studentský e-shop **DropZone**, který prodává vlastní limitovaný streetwear merch. "
-            "Na první pohled firma raketově roste. Je ale opravdu finančně zdravá? "
-            "Vyzkoušej si roli finančního ředitele: analyzuj výchozí stav a pak zkus čísla pro Rok 2 upravit tak, abys firmu zachránil před krachem na cashflow!"
-        )
 
-        st.divider()
-
-        # Pevná data pro Rok 1 (Historie)
-        data_y1 = {
-            "Tržby": 800000, "Náklady": 740000, "Zisk": 60000,
-            "Aktiva": 500000, "Vlastní kapitál": 250000, "Cizí zdroje": 250000,
-            "Oběžná aktiva": 220000, "Zásoby": 120000, "Peníze": 45000,
-            "Krátkodobé závazky": 140000, "Pohledávky": 55000
-        }
-
-        st.markdown("### 🎛️ Interaktivní simulátor: Zachraň DropZone")
-        st.write("Hodnoty pro **Rok 1 jsou pevné**. Čísla pro **Rok 2 můžeš libovolně měnit**. (Výchozí čísla ukazují nebezpečný růst na dluh).")
-
-        with st.container(border=True):
-            st.markdown("#### 📥 Zadej data pro Rok 2 (v Kč)")
-            
-            col_in1, col_in2, col_in3 = st.columns(3)
-            
-            with col_in1:
-                st.markdown("**Výsledovka**")
-                trzby_y2 = st.number_input("Tržby", value=1200000, step=50000, key="dz_trzby")
-                naklady_y2 = st.number_input("Náklady", value=1080000, step=50000, key="dz_naklady")
-                zisk_y2 = trzby_y2 - naklady_y2
-                st.metric("Automatický čistý zisk", f"{zisk_y2:,} Kč".replace(",", " "))
-                
-            with col_in2:
-                st.markdown("**Rozvaha (Majetek a zdroje)**")
-                aktiva_y2 = st.number_input("Aktiva celkem", value=700000, step=50000, key="dz_aktiva")
-                vk_y2 = st.number_input("Vlastní kapitál", value=300000, step=50000, key="dz_vk")
-                cz_y2 = st.number_input("Cizí zdroje (Dluhy)", value=400000, step=50000, key="dz_cz")
-                
-            with col_in3:
-                st.markdown("**Hotovost a provoz**")
-                ob_aktiva_y2 = st.number_input("Oběžná aktiva", value=310000, step=50000, key="dz_oa")
-                zasoby_y2 = st.number_input("Zásoby na skladě", value=170000, step=10000, key="dz_zas")
-                pohledavky_y2 = st.number_input("Pohledávky (Dluží nám)", value=105000, step=10000, key="dz_pohl")
-                penize_y2 = st.number_input("Peníze na účtu", value=35000, step=5000, key="dz_pen")
-                kz_y2 = st.number_input("Krátkodobé závazky", value=230000, step=10000, key="dz_kz")
-
-        # Dramatický graf úvodu - Zisk vs Peníze (Reaguje na změny)
-        st.markdown("### 📊 Rychlý pohled na zdraví firmy (Zisk vs. Peníze)")
-        
-        chart_data = pd.DataFrame(
-            {
-                "Čistý zisk": [data_y1["Zisk"], zisk_y2],
-                "Peníze na účtu": [data_y1["Peníze"], penize_y2]
-            },
-            index=["Rok 1", "Rok 2 (Tvá čísla)"]
-        )
-        st.bar_chart(chart_data, color=["#2ecc71", "#e74c3c"])
-        
-        st.markdown("### 🕵️‍♂️ Hloubková analýza na základě tvých čísel")
-        tab_rentabilita, tab_likvidita, tab_aktivita, tab_zaver = st.tabs([
-            "📈 Ziskovost", 
-            "💧 Likvidita", 
-            "⚙️ Aktivita & Dluh", 
-            "🚨 Finální verdikt"
-        ])
-
-        # Prevence dělení nulou pro bezpečnost
-        trzby_y2_safe = max(trzby_y2, 1)
-        aktiva_y2_safe = max(aktiva_y2, 1)
-        vk_y2_safe = max(vk_y2, 1)
-        kz_y2_safe = max(kz_y2, 1)
-
-        # Výpočty Rok 1
-        ros_1 = (data_y1["Zisk"] / data_y1["Tržby"]) * 100
-        roa_1 = (data_y1["Zisk"] / data_y1["Aktiva"]) * 100
-        roe_1 = (data_y1["Zisk"] / data_y1["Vlastní kapitál"]) * 100
-        bl_1 = data_y1["Oběžná aktiva"] / data_y1["Krátkodobé závazky"]
-        pl_1 = (data_y1["Oběžná aktiva"] - data_y1["Zásoby"]) / data_y1["Krátkodobé závazky"]
-        ol_1 = data_y1["Peníze"] / data_y1["Krátkodobé závazky"]
-        zadl_1 = (data_y1["Cizí zdroje"] / data_y1["Aktiva"]) * 100
-        obrat_1 = data_y1["Tržby"] / data_y1["Aktiva"]
-        inkaso_1 = (data_y1["Pohledávky"] / data_y1["Tržby"]) * 365
-
-        # Výpočty Rok 2
-        ros_2 = (zisk_y2 / trzby_y2_safe) * 100
-        roa_2 = (zisk_y2 / aktiva_y2_safe) * 100
-        roe_2 = (zisk_y2 / vk_y2_safe) * 100
-        bl_2 = ob_aktiva_y2 / kz_y2_safe
-        pl_2 = (ob_aktiva_y2 - zasoby_y2) / kz_y2_safe
-        ol_2 = penize_y2 / kz_y2_safe
-        zadl_2 = (cz_y2 / aktiva_y2_safe) * 100
-        obrat_2 = trzby_y2 / aktiva_y2_safe
-        inkaso_2 = (pohledavky_y2 / trzby_y2_safe) * 365
-
-        with tab_rentabilita:
-            st.markdown("#### Ukazatele rentability (Ziskovosti)")
-            c1, c2, c3 = st.columns(3)
-            
-            c1.metric("ROS (Rentabilita tržeb)", f"{ros_2:.1f} %", f"{ros_2 - ros_1:.1f} % (z {ros_1:.1f} %)")
-            c2.metric("ROA (Rentabilita aktiv)", f"{roa_2:.1f} %", f"{roa_2 - roa_1:.1f} % (z {roa_1:.1f} %)")
-            c3.metric("ROE (Rent. vl. kapitálu)", f"{roe_2:.1f} %", f"{roe_2 - roe_1:.1f} % (z {roe_1:.1f} %)")
-            
-            if ros_2 > ros_1 and roe_2 > roe_1:
-                st.success("✅ Firma se z pohledu ziskovosti zlepšuje (nebo drží skvělá čísla).")
-            else:
-                st.warning("⚠️ Rentabilita klesá. Zkontroluj, zda neplýtváš náklady.")
-
-        with tab_likvidita:
-            st.markdown("#### Ukazatele likvidity (Schopnost platit)")
-            c1, c2, c3 = st.columns(3)
-            
-            c1.metric("Běžná likvidita", f"{bl_2:.2f}", f"{bl_2 - bl_1:.2f} (z {bl_1:.2f})")
-            c2.metric("Pohotová likvidita", f"{pl_2:.2f}", f"{pl_2 - pl_1:.2f} (z {pl_1:.2f})")
-            c3.metric("Okamžitá likvidita", f"{ol_2:.2f}", f"{ol_2 - ol_1:.2f} (z {ol_1:.2f})")
-            
-            if ol_2 < 0.2:
-                st.error("🚨 Kritický nedostatek hotovosti! Zvyš peníze na účtu, nebo sniž krátkodobé závazky.")
-            elif bl_2 > bl_1:
-                st.success("✅ Platební morálka firmy se oproti prvnímu roku zlepšila.")
-            else:
-                st.info("Likvidita se drží, ale hlídej si hotovostní polštář.")
-
-        with tab_aktivita:
-            st.markdown("#### Ukazatele aktivity a zadluženosti")
-            c1, c2, c3 = st.columns(3)
-            
-            # Zadluženost a inkaso jsou inverzní (růst je špatný)
-            c1.metric("Celková zadluženost", f"{zadl_2:.1f} %", f"{zadl_2 - zadl_1:.1f} % (z {zadl_1:.1f} %)", delta_color="inverse")
-            c2.metric("Obrat aktiv", f"{obrat_2:.2f}x", f"{obrat_2 - obrat_1:.2f}x (z {obrat_1:.2f}x)")
-            c3.metric("Doba inkasa pohledávek", f"{inkaso_2:.0f} dní", f"{inkaso_2 - inkaso_1:.0f} dní (z {inkaso_1:.0f} dní)", delta_color="inverse")
-            
-            if inkaso_2 > 30:
-                st.warning("⚠️ Zákazníci ti platí moc dlouho (více než měsíc). Zkus v zadání snížit pohledávky!")
-            else:
-                st.success("✅ Zákazníci platí rychle, peníze se ti vrací plynule.")
-
-        with tab_zaver:
-            st.markdown("#### 📝 Závěrečná zpráva (Dynamicky hodnoceno)")
-            
-            if zisk_y2 > data_y1["Zisk"] and penize_y2 < data_y1["Peníze"]:
-                st.error("🚨 **Varování z výchozího scénáře:** Tohle je klasická past! Zisk se ti sice zvýšil, ale peníze na účtu mizí. Pravděpodobně ti utekly do rostoucích zásob a nezaplacených faktur (pohledávek). Zároveň tě začínají drtit narůstající krátkodobé závazky. **Zkus ve vstupech nahoře zmenšit Zásoby, vybrat Pohledávky (čímž se ti zvýší Peníze) a uvidíš, jak se firma uzdraví!**")
-            elif zisk_y2 > data_y1["Zisk"] and penize_y2 >= data_y1["Peníze"]:
-                st.success("🏆 **Výborná práce CEO!** Dokázal jsi nejen zvýšit zisk, ale i udržet zdravou hotovost. Takhle má vypadat udržitelný růst podniku.")
-            elif zisk_y2 <= 0:
-                st.error("💀 **Firma je ve ztrátě.** Než začneš řešit likviditu a zásoby, musíš spravit samotný byznys model (zvýšit tržby nebo osekat náklady).")
-            else:
-                st.info("Firma je stabilní, zkus si pohrát s hodnotami a najít ideální poměr mezi ziskem a hotovostí.")
-
-    # =========================================================================
-    # 5.7 PRÁZDNÁ ŠABLONA FINANČNÍ ANALÝZY
-    # =========================================================================
     elif selected_section_2.startswith("5.7"):
         import pandas as pd
-        
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
-        st.markdown("## 5.7 Prázdná šablona finanční analýzy (Interaktivní cvičení)")
-        st.write(
-            "Tuto šablonu můžeš využít pro svůj vlastní školní projekt, fiktivní studentskou firmu nebo rychlou analýzu reálného podniku. "
-            "Nemusíš nic složitě počítat na kalkulačce – stačí vyplnit vstupní data a aplikace se o zbytek postará sama!"
+
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
         )
+        st.markdown("## 5.7 Prázdná šablona finanční analýzy")
 
-        st.markdown("### 📝 Krok 1: Zadej data svého projektu")
-        st.info("💡 **Návod k tabulce:** Dvakrát klikni na jakékoliv číslo ve sloupcích **Rok 1** a **Rok 2**, přepiš ho na své vlastní a stiskni **Enter**. Výpočty dole se hned aktualizují.")
-
-        # Výchozí data (čistá čísla bez formátování měny, aby šla snadno přepisovat)
-        vstupy = {
-            "Položka": [
-                "Tržby", "Náklady celkem", "Zisk", "Aktiva celkem", "Vlastní kapitál", 
-                "Cizí zdroje", "Oběžná aktiva", "Zásoby", "Peníze", 
-                "Krátkodobé závazky", "Pohledávky"
-            ],
-            "Nápověda k položce": [
-                "Vše, co firma utržila", "Vše, co firma zaplatila", "Zisk (Tržby mínus Náklady)", 
-                "Celkový majetek firmy", "Peníze majitelů", "Dluhy (Úvěry, atd.)", 
-                "Krátkodobý majetek", "Zboží na skladě", "Hotovost a peníze v bance", 
-                "Faktury k zaplacení do 1 roku", "Peníze, které dluží zákazníci nám"
-            ],
-            "Rok 1": [500000, 450000, 50000, 300000, 200000, 100000, 150000, 50000, 40000, 80000, 60000],
-            "Rok 2": [750000, 650000, 100000, 450000, 300000, 150000, 250000, 80000, 70000, 120000, 100000]
-        }
-        df_vstupy = pd.DataFrame(vstupy).set_index("Položka")
-
-        # Interaktivní tabulka (zakážeme úpravu pouze sloupce s nápovědou)
-        edited_df = st.data_editor(
-            df_vstupy,
-            disabled=["Nápověda k položce"],
-            use_container_width=True
-        )
-
-        st.divider()
-        st.markdown("### 🧮 Krok 2: Automatické výsledky (Vysvědčení firmy)")
-
-        # Bezpečné dělení (aby aplikace nespadla, když student zadá nulu)
-        def safe_div(a, b):
-            return a / b if b != 0 else 0
-
-        # Funkce pro vytažení dat z tabulky
-        def get_val(rok_col, polozka):
-            try:
-                return float(edited_df.loc[polozka, rok_col])
-            except:
-                return 0.0
-
-        # Získání dat pro oba roky
-        y1 = {k: get_val("Rok 1", k) for k in df_vstupy.index}
-        y2 = {k: get_val("Rok 2", k) for k in df_vstupy.index}
-
-        tab_r, tab_l, tab_z = st.tabs(["📈 Ziskovost (Rentabilita)", "💧 Likvidita (Hotovost)", "⚙️ Zadluženost a Aktivita"])
-
-        with tab_r:
-            c1, c2, c3 = st.columns(3)
-            # Výpočty
-            ros_2 = safe_div(y2["Zisk"], y2["Tržby"]) * 100
-            roa_2 = safe_div(y2["Zisk"], y2["Aktiva celkem"]) * 100
-            roe_2 = safe_div(y2["Zisk"], y2["Vlastní kapitál"]) * 100
-            
-            ros_1 = safe_div(y1["Zisk"], y1["Tržby"]) * 100
-            roa_1 = safe_div(y1["Zisk"], y1["Aktiva celkem"]) * 100
-            roe_1 = safe_div(y1["Zisk"], y1["Vlastní kapitál"]) * 100
-
-            c1.metric("ROS (Marže z tržeb)", f"{ros_2:.1f} %", f"{ros_2 - ros_1:.1f} %")
-            c1.caption("Kolik % z tržeb zůstává jako zisk?")
-            
-            c2.metric("ROA (Využití majetku)", f"{roa_2:.1f} %", f"{roa_2 - roa_1:.1f} %")
-            c2.caption("Jak efektivně firma využívá majetek?")
-            
-            c3.metric("ROE (Zhodnocení vkladu)", f"{roe_2:.1f} %", f"{roe_2 - roe_1:.1f} %")
-            c3.caption("Jak se zhodnocují peníze vlastníků?")
-
-        with tab_l:
-            c1, c2, c3 = st.columns(3)
-            bl_2 = safe_div(y2["Oběžná aktiva"], y2["Krátkodobé závazky"])
-            pl_2 = safe_div(y2["Oběžná aktiva"] - y2["Zásoby"], y2["Krátkodobé závazky"])
-            ol_2 = safe_div(y2["Peníze"], y2["Krátkodobé závazky"])
-            
-            bl_1 = safe_div(y1["Oběžná aktiva"], y1["Krátkodobé závazky"])
-            pl_1 = safe_div(y1["Oběžná aktiva"] - y1["Zásoby"], y1["Krátkodobé závazky"])
-            ol_1 = safe_div(y1["Peníze"], y1["Krátkodobé závazky"])
-
-            c1.metric("Běžná likvidita", f"{bl_2:.2f}", f"{bl_2 - bl_1:.2f}")
-            c1.caption("Zvládne firma platit závazky z majetku?")
-            
-            c2.metric("Pohotová likvidita", f"{pl_2:.2f}", f"{pl_2 - pl_1:.2f}")
-            c2.caption("Jak je na tom, když neprodá zásoby?")
-            
-            c3.metric("Okamžitá likvidita", f"{ol_2:.2f}", f"{ol_2 - ol_1:.2f}")
-            c3.caption("Co lze zaplatit IHNED z účtu?")
-
-        with tab_z:
-            c1, c2, c3 = st.columns(3)
-            zadl_2 = safe_div(y2["Cizí zdroje"], y2["Aktiva celkem"]) * 100
-            mira_2 = safe_div(y2["Cizí zdroje"], y2["Vlastní kapitál"])
-            inkaso_2 = safe_div(y2["Pohledávky"], y2["Tržby"]) * 365
-            
-            zadl_1 = safe_div(y1["Cizí zdroje"], y1["Aktiva celkem"]) * 100
-            mira_1 = safe_div(y1["Cizí zdroje"], y1["Vlastní kapitál"])
-            inkaso_1 = safe_div(y1["Pohledávky"], y1["Tržby"]) * 365
-
-            c1.metric("Celková zadluženost", f"{zadl_2:.1f} %", f"{zadl_2 - zadl_1:.1f} %", delta_color="inverse")
-            c1.caption("Jak moc firma funguje na dluh?")
-            
-            c2.metric("Míra zadluženosti", f"{mira_2:.2f}x", f"{mira_2 - mira_1:.2f}x", delta_color="inverse")
-            c2.caption("Kolik dluhu připadá na 1 Kč vlastních peněz?")
-            
-            c3.metric("Doba inkasa pohledávek", f"{inkaso_2:.0f} dní", f"{inkaso_2 - inkaso_1:.0f} dní", delta_color="inverse")
-            c3.caption("Za kolik dní průměrně zákazníci platí?")
-
-        st.markdown("""
-        <div class="box-blue">
-            <b>✍️ Úkol pro tebe:</b> Vyplň tabulku pro fiktivní podnik. Prohlédni si výsledky nahoře a zamysli se: 
-            <i>Co se firmě daří? Kde číhá největší riziko? Jaké JEDNO konkrétní opatření bys majiteli poradil/a?</i>
-        </div>
-        """, unsafe_allow_html=True)
-
-
-    # =========================================================================
-    # 5.8 JAK NAPSAT ZÁVĚR FINANČNÍ ANALÝZY
-    # =========================================================================
     elif selected_section_2.startswith("5.8"):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.8 Jak napsat závěr finanční analýzy")
-        
-        st.write(
-            "Samotné výpočty nestačí. Dobrý závěr finanční analýzy (manažerské shrnutí) má být **krátký, konkrétní a srozumitelný** "
-            "i pro člověka, který není účetní. Pokud vysypeš na šéfa nebo investora jen procenta, nepochopí tě. Musíš vyprávět příběh čísel."
-        )
 
-        st.markdown("""
-        **Struktura dokonalého závěru:**
-        * **📈 Ziskovost:** Vyděláváme / proděláváme a proč.
-        * **💧 Likvidita:** Máme / nemáme na účtu dost peněz na včasné zaplacení faktur.
-        * **💳 Zadluženost:** Náš dluh je bezpečný / rizikový.
-        * **⚙️ Efektivita:** Využíváme majetek dobře / peníze se nám zasekávají ve skladu a u neplatičů.
-        * **🚀 Doporučení:** Co konkrétně musíme zítra ráno udělat jinak.
-        """)
-
-        with st.container(border=True):
-            st.markdown("#### 🤖 Generátor profi závěru")
-            st.write("Vyber si aktuální stav tvé fiktivní firmy (třeba z předchozí kapitoly) a podívej se, jak by tvé hodnocení zapsal profesionální finanční ředitel.")
-            
-            col_g1, col_g2 = st.columns(2)
-            with col_g1:
-                gen_zisk = st.selectbox("1. Jak je na tom firma se ziskem?", [
-                    "Tržby i zisk stabilně rostou.",
-                    "Firma je v zisku, ale marže klesá.",
-                    "Firma propadla do ztráty."
-                ], key="k5_8_zisk")
-                gen_likvidita = st.selectbox("2. Co peníze a likvidita?", [
-                    "Hotovosti je dostatek, závazky platíme včas.",
-                    "Likvidita se zhoršuje, peníze chybí.",
-                    "Hrozí okamžitá platební neschopnost!"
-                ], key="k5_8_likv")
-            with col_g2:
-                gen_dluh = st.selectbox("3. Jaká je zadluženost?", [
-                    "Zadlužení je nízké a bezpečné.",
-                    "Dluh roste, ale zatím je zvládnutelný.",
-                    "Firma je předlužena a dusí ji splátky."
-                ], key="k5_8_dluh")
-                gen_sklad = st.selectbox("4. Co zásoby a zákazníci?", [
-                    "Zákazníci platí včas, sklad se točí.",
-                    "Peníze se začínají zasekávat ve skladu.",
-                    "Zákazníci neplatí a zásoby leží ladem."
-                ], key="k5_8_sklad")
-
-            st.markdown("##### 📄 Výsledný report pro majitele:")
-            
-            # Generování dynamického textu na základě výběru
-            report_text = f"Firma aktuálně vykazuje smíšené výsledky. Z pohledu rentability {gen_zisk.lower().replace('.', '')}. "
-            report_text += f"V oblasti cashflow {gen_likvidita.lower().replace('.', '')}, přičemž z hlediska cizích zdrojů platí, že {gen_dluh.lower().replace('.', '')}. "
-            report_text += f"Když se podíváme na provozní aktivitu, vidíme, že {gen_sklad.lower().replace('.', '')}. "
-            
-            # Doporučení na základě nejhoršího problému
-            if "Hrozí okamžitá" in gen_likvidita or "předlužena" in gen_dluh:
-                doporuceni = "🚨 **Krizové doporučení:** Firma musí okamžitě zastavit zbytné výdaje, vyjednat s bankou odklad splátek a tvrdě vymáhat pohledávky. Jinak hrozí úpadek."
-            elif "zasekávat ve skladu" in gen_sklad or "zhoršuje" in gen_likvidita:
-                doporuceni = "⚠️ **Doporučení k optimalizaci:** Prioritou pro další kvartál je uvolnit zamrzlou hotovost. Navrhuji zavést slevy na staré zásoby, vyprodat sklad a zkrátit dobu splatnosti faktur pro naše odběratele."
-            elif "ztráty" in gen_zisk:
-                doporuceni = "⚠️ **Strategické doporučení:** Musíme přehodnotit byznys model. Doporučuji provést detailní analýzu nákladů (osekat fixní náklady) a případně zdražit klíčové produkty."
-            else:
-                doporuceni = "✅ **Doporučení pro růst:** Firma je ve výborné kondici. Doporučuji udržet stávající kurz, volnou hotovost reinvestovat do marketingu a zvážit bezpečné využití úvěru pro rychlejší expanzi."
-
-            st.info(f"**Shrnutí:** {report_text}\n\n{doporuceni}")
-
-            if st.button("Uložit vygenerovaný report 💾", key="btn_k5_8_report"):
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.8 - Manažerské shrnutí", report_text + " | " + doporuceni)
-
-
-# =========================================================================
-    # 5.9 CASE STUDY: INFLUENCER JAKO FIRMA
-    # =========================================================================
     elif selected_section_2.startswith("5.9"):
-        import pandas as pd
-
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.9 Case study: Influencer jako firma")
-        
-        st.write(
-            "Influencer, streamer, youtuber, tvůrce podcastu nebo správce komunitního profilu může na první pohled působit "
-            "jen jako „člověk, co se točí na internetu“. Ve skutečnosti je to ale plnohodnotné podnikání s příjmy, náklady, "
-            "smlouvami, daněmi a velkými riziky."
-        )
 
-        st.divider()
-
-        tab_sim, tab_dane, tab_rizika = st.tabs([
-            "🎮 1. Simulátor byznysu", 
-            "⚖️ 2. Hra na účetního (Daně)", 
-            "🔥 3. Zkouška ohněm (Rizika)"
-        ])
-
-        # --- TAB 1: SIMULÁTOR BYZNYSU ---
-        with tab_sim:
-            st.markdown("### 🎛️ Sestav si svůj online byznys")
-            st.write("Nastav si měsíční příjmy a výdaje svého fiktivního profilu. Sleduj, jak se ti mění zisk.")
-
-            col_p, col_n, col_v = st.columns(3)
-
-            with col_p:
-                st.markdown("#### 💰 Příjmy (Kč/měsíc)")
-                p_spoluprace = st.slider("Placené spolupráce (Sponzoři)", 0, 150000, 45000, step=5000, key="inf_p1")
-                p_reklama = st.slider("Reklama z platforem (YouTube/Twitch)", 0, 50000, 10000, step=1000, key="inf_p2")
-                p_affil = st.slider("Affiliate odkazy (Provize z prodeje)", 0, 30000, 8000, step=1000, key="inf_p3")
-                p_subs = st.slider("Předplatné (Herohero, Patreon)", 0, 100000, 12000, step=2000, key="inf_p4")
-                p_merch = st.slider("Prodej vlastního merche/kurzů", 0, 80000, 0, step=5000, key="inf_p5")
-                
-                prijmy_celkem = p_spoluprace + p_reklama + p_affil + p_subs + p_merch
-
-            with col_n:
-                st.markdown("#### 💸 Náklady (Kč/měsíc)")
-                n_technika = st.slider("Technika a software (Kamera, střih)", 0, 30000, 8000, step=1000, key="inf_n1")
-                n_produkce = st.slider("Produkce (Studio, editor videa, cesty)", 0, 50000, 14000, step=1000, key="inf_n2")
-                n_reklama = st.slider("Vlastní reklama a propagace", 0, 20000, 5000, step=1000, key="inf_n3")
-                n_sluzby = st.slider("Účetní a právní služby", 0, 10000, 3000, step=500, key="inf_n4")
-                
-                naklady_celkem = n_technika + n_produkce + n_reklama + n_sluzby
-
-            with col_v:
-                st.markdown("#### 📊 Výsledovka")
-                zisk_pred_zdanenim = prijmy_celkem - naklady_celkem
-                
-                st.metric("Celkové příjmy", f"{prijmy_celkem:,} Kč".replace(",", " "))
-                st.metric("Celkové náklady", f"- {naklady_celkem:,} Kč".replace(",", " "))
-                
-                st.divider()
-                if zisk_pred_zdanenim > 0:
-                    st.metric("Zisk (Před zdaněním!)", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), "Ziskový měsíc")
-                    st.success("Tohle vypadá jako solidní byznys. Nezapomeň ale, že z této částky ještě musíš zaplatit daně, sociální a zdravotní pojištění!")
-                else:
-                    st.metric("Zisk (Před zdaněním)", f"{zisk_pred_zdanenim:,} Kč".replace(",", " "), "- Ztráta", delta_color="inverse")
-                    st.error("Jsi ve ztrátě! Takhle to dlouho nevydrží. Musíš buď získat víc sponzorů, nebo osekat náklady.")
-
-            if st.button("Uložit nastavení byznysu 💾", key="btn_k5_9_sim"):
-                sim_data = f"Příjmy: {prijmy_celkem} Kč | Náklady: {naklady_celkem} Kč | Zisk: {zisk_pred_zdanenim} Kč"
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.9 - Simulátor byznysu", sim_data)
-                st.success("Nastavení byznysu bylo uloženo!")
-
-            # Vizualizace struktury příjmů
-            if prijmy_celkem > 0:
-                st.markdown("##### Odkud plynou tvé peníze? (Diverzifikace)")
-                chart_data = pd.DataFrame(
-                    [p_spoluprace, p_reklama, p_affil, p_subs, p_merch],
-                    index=["Spolupráce", "Reklama z videí", "Affiliate", "Předplatné", "Merch"],
-                    columns=["Kč"]
-                )
-                st.bar_chart(chart_data.T)
-
-        # --- TAB 2: HRA NA ÚČETNÍHO ---
-        with tab_dane:
-            st.markdown("### ⚖️ Daňová past: Co si mohu dát do nákladů?")
-            st.write(
-                "Ne každý osobní výdaj je automaticky nákladem podnikání. Aby šlo o daňově uznatelný náklad, "
-                "musí **souviset s dosažením, zajištěním nebo udržením příjmů**. Zkus rozhodnout, co by ti u finančního úřadu prošlo."
-            )
-
-            with st.container(border=True):
-                q1 = st.radio("1. Koupil sis nový iPhone za 35 000 Kč. Točíš na něj 90 % svých videí na TikTok.", 
-                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."], key="inf_tax1")
-                if q1 == "Ano, je to uznatelný náklad.":
-                    st.success("✅ Správně. Slouží k tvorbě tvého produktu (obsahu).")
-                elif q1 == "Ne, je to osobní spotřeba.":
-                    st.error("❌ Špatně. Pokud ho prokazatelně používáš k tvorbě obsahu, do nákladů (nebo do majetku) jít může.")
-
-                st.divider()
-
-                q2 = st.radio("2. Koupil sis herní konzoli za 15 000 Kč, abys na ní hrál o víkendu po večerech s kamarády. Nejsi herní streamer (děláš fitness).", 
-                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."], key="inf_tax2")
-                if q2 == "Ne, je to osobní spotřeba.":
-                    st.success("✅ Přesně tak! Finanční úřad by ti to vyhodil. Nesouvisí to s tvým fitness podnikáním.")
-                elif q2 == "Ano, je to uznatelný náklad.":
-                    st.error("❌ Kdepak. Fitness streamer těžko obhájí nákup herní konzole pro volný čas jako nutnost pro svůj byznys.")
-                
-                st.divider()
-
-                q3 = st.radio("3. Zaplatil jsi 5 000 Kč za kampaň na Instagramu, která láká lidi na tvůj nový e-book.", 
-                              ["Vyber odpověď...", "Ano, je to uznatelný náklad.", "Ne, je to osobní spotřeba."], key="inf_tax3")
-                if q3 == "Ano, je to uznatelný náklad.":
-                    st.success("✅ Ano! Je to klasický výdaj na reklamu a propagaci za účelem dosažení zisku.")
-                elif q3 == "Ne, je to osobní spotřeba.":
-                    st.error("❌ Špatně. Reklama propagující tvůj komerční produkt je jasný uznatelný náklad.")
-
-                if st.button("Uložit odpovědi k daním 💾", key="btn_k5_9_dane"):
-                    if "Vyber odpověď..." not in [q1, q2, q3]:
-                        dane_data = f"iPhone: {q1} | Konzole: {q2} | Reklama: {q3}"
-                        if "uloz_odpoved_fn" in st.session_state:
-                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.9 - Hra na účetního", dane_data)
-                        st.success("Odpovědi byly uloženy!")
-                    else:
-                        st.warning("Před uložením odpověz na všechny otázky!")
-
-            st.markdown("""
-            <div class="box-red">
-                <b>⚠️ Důležité:</b> Mnoho začínajících tvůrců míchá firemní a osobní peníze. Když si z firemního účtu platí osobní obědy a dovolené (které nevydávají za tvorbu obsahu), zadělávají si na obrovský problém s finančním úřadem.
-            </div>
-            """, unsafe_allow_html=True)
-
-        # --- TAB 3: ZKOUŠKA OHNĚM ---
-        with tab_rizika:
-            st.markdown("### 🔥 Finanční stabilita pod palbou")
-            st.write(
-                "Nyní otestujeme tvůj byznys (ten, co sis naklikal v první záložce). Co se stane, když přijde krize? "
-                "Je tvůj příjem stabilní, nebo visí na vlásku jediné spolupráce?"
-            )
-
-            scenar = st.selectbox("Vyber krizový scénář:", [
-                "Všechno běží podle plánu (Základní stav)",
-                "Scénář A: Změna algoritmu YouTube/Tiktoku (Ztráta dosahu)",
-                "Scénář B: Hlavní sponzor odstoupil",
-                "Scénář C: Vyhoření (Burnout) – měsíc netvoříš"
-            ], key="k5_9_scenar")
-
-            # Původní hodnoty ze simulátoru
-            krizovy_prijem = prijmy_celkem
-            krizovy_naklad = naklady_celkem
-            popis_krize = ""
-
-            if scenar == "Scénář A: Změna algoritmu YouTube/Tiktoku (Ztráta dosahu)":
-                krizovy_prijem = p_spoluprace + (p_reklama * 0.2) + (p_affil * 0.3) + p_subs + (p_merch * 0.5)
-                popis_krize = "Algoritmus tě přestal doporučovat. Zhlédnutí klesla o 80 %. Příjmy z platformových reklam a affiliate prokliků se propadly. Merch se prodává hůř, protože na něj nekouká tolik lidí. Předplatitelé a dlouhodobí sponzoři tě naštěstí zatím drží."
-            
-            elif scenar == "Scénář B: Hlavní sponzor odstoupil":
-                krizovy_prijem = (p_spoluprace * 0.1) + p_reklama + p_affil + p_subs + p_merch
-                popis_krize = "Tvůj hlavní partner změnil marketingovou strategii a neprodloužil smlouvu. Přišel jsi o 90 % příjmů ze spoluprací ze dne na den. Ostatní příjmy zůstávají."
-            
-            elif scenar == "Scénář C: Vyhoření (Burnout) – měsíc netvoříš":
-                krizovy_prijem = 0 + 0 + (p_affil * 0.5) + (p_subs * 0.8) + (p_merch * 0.3)
-                popis_krize = "Nemůžeš natáčet. Spolupráce stojí, nová reklama nenabíhá. Zůstávají ti jen pasivní příjmy (staré affiliate odkazy) a věrní předplatitelé (i když jich 20 % odešlo kvůli neaktivitě). ALE POZOR: Fixní náklady (nájem studia, software, účetní) musíš zaplatit stejně!"
-
-            novy_zisk = krizovy_prijem - krizovy_naklad
-
-            st.info(f"**Co se stalo:** {popis_krize}" if popis_krize else "Zatím je klid a peníze se sypou.")
-
-            col_k1, col_k2, col_k3 = st.columns(3)
-            col_k1.metric("Příjmy po krizi", f"{krizovy_prijem:,.0f} Kč".replace(",", " "))
-            col_k2.metric("Náklady (zůstávají)", f"- {krizovy_naklad:,.0f} Kč".replace(",", " "))
-            
-            if novy_zisk > 0:
-                col_k3.metric("Nový zisk", f"{novy_zisk:,.0f} Kč".replace(",", " "), f"{novy_zisk - zisk_pred_zdanenim:,.0f} Kč (Oproti plánu)")
-                st.success("✅ Přežil jsi! Tvůj byznys je dostatečně diverzifikovaný (stojí na více nohách), abys ustál i velký výpadek.")
-            else:
-                col_k3.metric("Nový zisk", f"{novy_zisk:,.0f} Kč".replace(",", " "), f"{novy_zisk - zisk_pred_zdanenim:,.0f} Kč", delta_color="inverse")
-                st.error("🚨 Zkrachoval jsi! Tvé příjmy nedokázaly pokrýt ani běžné náklady. Pokud nemáš finanční rezervu vytvořenou z minulých měsíců, končíš s podnikáním.")
-
-            if st.button("Uložit výsledek krizového scénáře 💾", key="btn_k5_9_krize"):
-                krize_data = f"Scénář: {scenar} | Příjem po krizi: {krizovy_prijem} Kč | Zisk/ztráta: {novy_zisk} Kč"
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.9 - Krizový scénář influencera", krize_data)
-                st.success("Výsledek krizového scénáře byl uložen!")
-
-            st.markdown("""
-            <div class="box-purple">
-                <b>🧠 Poučení z analýzy:</b> Influencer musí mít vytvořenou finanční rezervu (alespoň na 3–6 měsíců života) a nesmí být závislý jen na jedné sociální síti nebo jednom sponzorovi.
-            </div>
-            """, unsafe_allow_html=True)
-        
-# =========================================================================
-    # 5.10 DIGITÁLNÍ GENERACE A FINANČNÍ ŘÍZENÍ
-    # =========================================================================
     elif selected_section_2.startswith("5.10"):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
         st.markdown("## 5.10 Digitální generace a finanční řízení")
-        
-        st.write(
-            "Dnešní podnikání je neuvěřitelně rychlé, řízené daty a často absolutně závislé na digitálních platformách. "
-            "To přináší obrovské příležitosti k raketovému růstu, ale i zcela nová finanční rizika, která dřívější podnikatelé neznali."
-        )
 
-        st.markdown("### 🔍 Detektor skrytých rizik")
-        st.write("Vyber si moderní byznysovou situaci, která na první pohled vypadá jako splněný sen, a odhal, jaké temné finanční riziko se za ní skrývá.")
-
-        scenare = {
-            "🚀 E-shop raketově roste díky virálu na TikToku": {
-                "otazka": "Má firma dost zásob a peněz na masivní expedici?",
-                "riziko": "Růst objednávek může předběhnout cashflow (firma musí platit za dodávky, krabice a poštu dřív, než jí dorazí všechny peníze z dobírek). Úspěch ji může paradoxně přivést k bankrotu!"
-            },
-            "📸 Influencer získal obří exkluzivní spolupráci": {
-                "otazka": "Co když značka za půl roku smlouvu neprodlouží?",
-                "riziko": "Extrémní závislost na jednom zdroji příjmu. Pokud influencer přizpůsobí své fixní výdaje (hypotéka, drahé auto) tomuto příjmu, výpadek ho okamžitě zničí."
-            },
-            "🦄 Aplikace (Startup) získala miliony od investora": {
-                "otazka": "Jak dlouho vydrží peníze při současném tempu utrácení (tzv. Burn rate)?",
-                "riziko": "Rychlé spálení kapitálu za drahé kanceláře a marketing bez odpovídajícího růstu tržeb. Až peníze dojdou, investor už další nedá."
-            },
-            "☕ Hipster kavárna má neustále plno": {
-                "otazka": "Kolik peněz skutečně zůstane po zaplacení nájmu, baristů, energií a prémiové kávy?",
-                "riziko": "Vysoké tržby nemusí znamenat vysoký zisk. Nízké marže u produktů s vysokými fixními náklady znamenají, že se majitel dře, ale firma nevydělává."
-            },
-            "🏢 Firma dodává velké korporaci na fakturu": {
-                "otazka": "Kdy peníze skutečně dorazí na účet?",
-                "riziko": "Pozdní platby. Korporace mají často splatnost 60 až 90 dní. Malá firma tak úvěruje obří korporaci a sama nemá na výplaty pro své lidi."
-            }
-        }
-
-        vybrany_scenar = st.selectbox("Vyber situaci k analýze:", ["Vyber situaci..."] + list(scenare.keys()), key="k5_10_scenar")
-
-        if vybrany_scenar != "Vyber situaci...":
-            data_scenare = scenare[vybrany_scenar]
-            st.markdown(f"#### Analýza: {vybrany_scenar}")
-            st.info(f"🤔 **Finanční otázka manažera:** {data_scenare['otazka']}")
-            st.error(f"🚨 **Skryté riziko:** {data_scenare['riziko']}")
-            
-            if st.button("Uložit odhalené riziko 💾", key="btn_k5_10_riziko"):
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.10 - Detektor skrytých rizik", f"Scénář: {vybrany_scenar}")
-                st.success("Tvá analýza scénáře byla uložena.")
-
-
-# =========================================================================
-    # 5.11 PRAKTICKÁ AKTIVITA: FINANČNÍ MANAŽER NA 45 MINUT
-    # =========================================================================
     elif selected_section_2.startswith("5.11"):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
-        st.markdown("## 5.11 Praktická aktivita: Finanční manažer na 45 minut")
-        
-        st.markdown("""
-        <div class="box-purple">
-            <b>🧪 Aktivita: Audit finančního zdraví podniku</b><br>
-            Pracujte ve dvojici nebo skupině. Vaším úkolem je navrhnout modelovou firmu (nebo si vzít existující projekt) a provést její kompletní audit. Využijte tento digitální pracovní sešit.
-        </div>
-        """, unsafe_allow_html=True)
-
-        tab1, tab2, tab3, tab4 = st.tabs(["📝 Krok 1: Podnik", "🔢 Krok 2: Čísla", "🧮 Krok 3: Výpočty", "📄 Krok 4: Závěr"])
-
-        with tab1:
-            st.markdown("### Krok 1: Popište svůj podnik")
-            st.write("Vyberte si modelovou firmu (např. e-shop, kavárnu, barber shop, grafické studio, studentský merch, fitness trenéra, food truck, youtubera nebo aplikaci).")
-            
-            p_nazev = st.text_input("Název vaší firmy:", key="fm_nazev")
-            p_co = st.text_input("Co přesně prodáváte?", key="fm_co")
-            p_komu = st.text_input("Komu to prodáváte (cílová skupina)?", key="fm_komu")
-            p_prijmy = st.text_input("Jak z toho máte příjmy (jednorázový prodej, předplatné, reklama)?", key="fm_prijmy")
-            p_naklady = st.text_area("Jaké jsou vaše 3 největší náklady?", key="fm_naklady")
-
-            if st.button("Uložit popis podniku (Krok 1) 💾", key="btn_fm_krok1"):
-                krok1_data = f"Firma: {p_nazev} | Produkt: {p_co} | Cílovka: {p_komu} | Příjmy: {p_prijmy} | Náklady: {p_naklady}"
-                if p_nazev.strip():
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Krok 1 Podnik", krok1_data)
-                    st.success("Popis podniku byl uložen!")
-                else:
-                    st.warning("Vyplň alespoň název firmy!")
-
-        with tab2:
-            st.markdown("### Krok 2: Doplňte finanční čísla")
-            st.write("Dohodněte se na odhadovaných číslech pro 1 kalendářní rok. Zkuste být realističtí.")
-            
-            c1, c2 = st.columns(2)
-            with c1:
-                st.markdown("**Výsledovka**")
-                v_trzby = st.number_input("Tržby celkem [Kč]", value=500000, step=50000, key="fm_trzby")
-                v_naklady = st.number_input("Náklady celkem [Kč]", value=400000, step=50000, key="fm_naklady_val")
-                v_zisk = v_trzby - v_naklady
-                st.metric("Automatický Zisk [Kč]", f"{v_zisk:,}".replace(",", " "))
-            
-            with c2:
-                st.markdown("**Rozvaha a Cashflow**")
-                v_aktiva = st.number_input("Aktiva (Celkový majetek) [Kč]", value=300000, step=10000, key="fm_aktiva")
-                v_vk = st.number_input("Vlastní kapitál [Kč]", value=200000, step=10000, key="fm_vk")
-                v_cz = st.number_input("Cizí zdroje (Dluhy) [Kč]", value=100000, step=10000, key="fm_cz")
-                
-                st.divider()
-                v_oa = st.number_input("Oběžná aktiva celkem [Kč]", value=150000, step=10000, key="fm_oa")
-                v_penize = st.number_input("Z toho Peníze na účtu [Kč]", value=50000, step=5000, key="fm_penize")
-                v_pohl = st.number_input("Z toho Pohledávky [Kč]", value=40000, step=5000, key="fm_pohl")
-                v_kz = st.number_input("Krátkodobé závazky [Kč]", value=80000, step=5000, key="fm_kz")
-
-            if st.button("Uložit čísla podniku (Krok 2) 💾", key="btn_fm_krok2"):
-                krok2_data = f"Tržby: {v_trzby} | Náklady: {v_naklady} | Zisk: {v_zisk} | Aktiva: {v_aktiva} | VK: {v_vk} | CZ: {v_cz}"
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Krok 2 Čísla", krok2_data)
-                st.success("Finanční čísla byla uložena!")
-
-        with tab3:
-            st.markdown("### Krok 3: Automatické výpočty (Analýza)")
-            st.write("Aplikace za vás nyní spočítá klíčové ukazatele na základě zadaných čísel z Kroku 2.")
-            
-            def safe_div(a, b):
-                return a / b if b != 0 else 0
-                
-            ros = safe_div(v_zisk, v_trzby) * 100
-            roa = safe_div(v_zisk, v_aktiva) * 100
-            roe = safe_div(v_zisk, v_vk) * 100
-            bl = safe_div(v_oa, v_kz)
-            ol = safe_div(v_penize, v_kz)
-            zadl = safe_div(v_cz, v_aktiva) * 100
-            inkaso = safe_div(v_pohl, v_trzby) * 365
-            
-            col_a1, col_a2 = st.columns(2)
-            col_a1.metric("ROS (Rentabilita tržeb)", f"{ros:.1f} %")
-            col_a1.metric("ROA (Rentabilita aktiv)", f"{roa:.1f} %")
-            col_a1.metric("ROE (Rentabilita vl. kapitálu)", f"{roe:.1f} %")
-            
-            col_a2.metric("Běžná likvidita", f"{bl:.2f}")
-            col_a2.metric("Okamžitá likvidita", f"{ol:.2f}")
-            col_a2.metric("Celková zadluženost", f"{zadl:.1f} %")
-            col_a2.metric("Doba inkasa pohledávek", f"{inkaso:.0f} dní")
-
-        with tab4:
-            st.markdown("### Krok 4: Manažerský závěr")
-            st.write("Prohlédněte si spočítané ukazatele a napište slovní hodnocení vaší firmy.")
-            
-            z_silna = st.text_area("1. Co je podle čísel silná stránka firmy?", key="fm_z1")
-            z_slaba = st.text_area("2. Co je naopak slabina nebo problém?", key="fm_z2")
-            z_riziko = st.text_area("3. Jaké riziko hrozí do 3 měsíců (např. ohledně hotovosti)?", key="fm_z3")
-            z_doporuceni = st.text_area("4. Jaké jedno opatření byste doporučili vedení firmy udělat ihned?", key="fm_z4")
-            
-            if st.button("Generovat a uložit finální report 💾", type="primary", key="btn_fm_report"):
-                nazev_val = st.session_state.get("fm_nazev", "Nezadáno")
-                co_val = st.session_state.get("fm_co", "Nezadáno")
-                komu_val = st.session_state.get("fm_komu", "Nezadáno")
-                
-                report_str = f"""
-**Analýza firmy:** {nazev_val}  
-**Byznys model:** Prodáváme {co_val} pro {komu_val}.
-                
-**Klíčové metriky:** ROS = {ros:.1f} %, Zadluženost = {zadl:.1f} %, Likvidita = {bl:.2f}.
-                
-**Manažerské shrnutí:**  
-Silnou stránkou je *{z_silna if z_silna else '...'}*. Naopak bojujeme s *{z_slaba if z_slaba else '...'}*.
-V nejbližších měsících si musíme dát pozor na *{z_riziko if z_riziko else '...'}*.
-Naše doporučení pro majitele zní: **{z_doporuceni if z_doporuceni else '...'}**
-"""
-                st.success("Tento report byl úspěšně uložen do databáze!")
-                st.markdown(report_str)
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.11 - Finanční manažer (Finální report)", report_str)
-
-    # =========================================================================
-    # 5.12 SHRNUTÍ A AI MENTORING
-    # =========================================================================
-    elif selected_section_2.startswith("5.12"):
-        st.markdown("<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V PODNIKU</div>", unsafe_allow_html=True)
-        st.markdown("## 5.12 Shrnutí: co si odnést")
-        
-        st.write("Finanční řízení je mozek celé firmy. Zhodnoť si, co už ovládáš. Odškrtni si vše, co jsi z této kapitoly pochopil/a.")
-
-        # Interaktivní checklist pokroku
-        points = [
-            "Finanční řízení pomáhá firmě přežít, růst a rozhodovat podle dat.",
-            "Zisk NEZNAMENÁ automaticky peníze na účtu (Cashflow je král).",
-            "Rozvaha ukazuje, co firma má a z čeho to financuje (Zdroje).",
-            "Výkaz zisku a ztráty ukazuje, zda firma vůbec vydělává.",
-            "Finanční analýza převádí účetní čísla na srozumitelné závěry o zdraví firmy.",
-            "Nejčastější ukazatele sledují rentabilitu (zisk), likviditu (hotovost), zadluženost a aktivitu.",
-            "Finanční zdraví firmy zajímá všechny: majitele, banky, investory i zaměstnance.",
-            "Smyslem analýzy není „vyplnit vzorce“, ale pochopit, co se ve firmě děje a jak se rozhodnout dál."
-        ]
-        
-        checked_count = 0
-        for i, point in enumerate(points):
-            if st.checkbox(point, key=f"sum_5_12_{i}"):
-                checked_count += 1
-                
-        progress = int((checked_count / len(points)) * 100)
-        st.progress(checked_count / len(points))
-        st.caption(f"Tvé mistrovství ve financích: {progress} %")
-        
-        if progress == 100:
-            st.balloons()
-            st.success("Skvělá práce! Rozumíš základům finančního řízení jako pravý CFO.")
-
-        if st.button("Uložit můj pokrok 💾", key="btn_k5_12_pokrok"):
-            if "uloz_odpoved_fn" in st.session_state:
-                st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Podkapitola 5.12 - Shrnutí financí podniku", f"Splněno {checked_count}/{len(points)} bodů ({progress}%).")
-            st.success("Tvůj pokrok byl uložen.")
-
-        st.divider()
-
-        st.markdown("### 🤖 AI Mentoring: Tvůj osobní analytik")
-        st.write(
-            "Chceš si finanční analýzu procvičit na další firmě, ale nechce se ti to počítat? Zkopíruj si tento prompt "
-            "a vlož ho do ChatGPT, Clauda nebo Gemini. AI se stane tvým osobním tutorem."
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
         )
+        st.markdown("## 5.11 Praktická aktivita: Finanční manažer na 45 minut")
 
-        ai_prompt = """Pomoz mi udělat jednoduchou finanční analýzu fiktivní firmy. 
-Nejdřív se mě zeptej na tržby, náklady, zisk, aktiva, vlastní kapitál, cizí zdroje, peníze, zásoby, pohledávky a krátkodobé závazky. 
-Až ti data zadám, spočítej ROS, ROA, ROE, běžnou likviditu, okamžitou likviditu, celkovou zadluženost a dobu inkasa pohledávek. 
-Nakonec mi napiš závěr jako pro studenta střední školy a doporuč jedno opatření."""
-
-        st.code(ai_prompt, language="text")
-        
-        st.markdown("""
-        <div style="font-size: 0.9em; color: #555;">
-            <i>Tip: Stačí kliknout na ikonku kopírování vpravo nahoře v rámečku a můžeš prompt rovnou vložit do svého oblíbeného AI nástroje.</i>
-        </div>
-        """, unsafe_allow_html=True)
-
+    elif selected_section_2.startswith("5.12"):
+        st.markdown(
+            "<div class='sub-section-header'>5. FINANČNÍ ŘÍZENÍ V"
+            " PODNIKU</div>",
+            unsafe_allow_html=True,
+        )
+        st.markdown("## 5.12 Shrnutí: co si odnést")
 
     # =========================================================================
     # KAPITOLA 6: INTERAKTIVNÍ VRSTVA CELÉ KAPITOLY (PRACOVNÍ SEŠIT)
     # =========================================================================
     elif selected_section_2.startswith("6"):
-        
-        st.markdown("<div class='sub-section-header'>6. INTERAKTIVNÍ CVIČENÍ A ÚKOLY</div>", unsafe_allow_html=True)
-        st.markdown("## 6. Interaktivní pracovní sešit")
-        
-        st.write(
-            "Tato sekce neslouží jako „test na známku“. Je to tvůj digitální pracovní sešit. "
-            "Finance si tu převedeš do vlastního života, naučíš se rozhodovat, bránit se podvodům a pochopit, "
-            "jak firmy a algoritmy cílí na tvou peněženku."
+        st.markdown(
+            "<div class='sub-section-header'>6. INTERAKTIVNÍ CVIČENÍ A"
+            " ÚKOLY</div>",
+            unsafe_allow_html=True,
         )
+        st.markdown("## 6. Interaktivní pracovní sešit")
 
-        # Navigace uvnitř pracovní sekce (přidán key pro jistotu paměti)
-        workbook_section = st.radio("Vyber si aktivitu:", [
-            "🧭 Startovací diagnostika",
-            "🔐 Bezpečnostní challenge (Poznej podvod)",
-            "📱 Algoritmy utrácení",
-            "🛟 Simulátor nečekané události",
-            "🧮 Můj první byznys (Bod zvratu)",
-            "✅ Exit ticket (Co si odnáším)"
-        ], horizontal=True, key="wb_nav")
+        workbook_section = st.radio(
+            "Vyber si aktivitu:",
+            [
+                "🧭 Startovací diagnostika",
+                "🔐 Bezpečnostní challenge (Poznej podvod)",
+                "📱 Algoritmy utrácení",
+                "🛟 Simulátor nečekané události",
+                "🧮 Můj první byznys (Bod zvratu)",
+                "✅ Exit ticket (Co si odnáším)",
+            ],
+            horizontal=True,
+            key="wb_nav",
+        )
 
         st.divider()
 
-        # --- AKTIVITA 1: DIAGNOSTIKA ---
-        if workbook_section == "🧭 Startovací diagnostika":
-            st.markdown("### 🧭 Startovací diagnostika: Co už o financích vím?")
-            st.write("Vyplň před začátkem studia. Ohodnoť se na škále 0 (Nevím nic) až 10 (Umím to vysvětlit tátovi).")
-
-            with st.container(border=True):
-                st.slider("Jak dobře chápu rozdíl mezi ČNB a běžnou komerční bankou?", 0, 10, 5, key="diag_1")
-                st.slider("Dokážu poznat rizikovou finanční nabídku (podvod)?", 0, 10, 5, key="diag_2")
-                st.slider("Rozumím, proč může být firma zisková, ale přesto nemá na účtu peníze na výplaty?", 0, 10, 5, key="diag_3")
-                st.slider("Vím, co přesně znamená hrubá a čistá mzda?", 0, 10, 5, key="diag_4")
-                
-                if st.button("Uložit startovací diagnostiku 💾", key="btn_k6_diag"):
-                    diag_data = (
-                        f"ČNB vs Banka: {st.session_state.get('diag_1', 0)}/10 | "
-                        f"Podvod: {st.session_state.get('diag_2', 0)}/10 | "
-                        f"Zisk vs Peníze: {st.session_state.get('diag_3', 0)}/10 | "
-                        f"Hrubá/čistá mzda: {st.session_state.get('diag_4', 0)}/10"
-                    )
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Diagnostika", diag_data)
-                    st.success("Hodnocení tvých znalostí bylo uloženo!")
-
-            st.info("💡 **Úkol pro tebe:** Po prostudování všech kapitol se sem vrať. Pokud se tvé skóre posunulo z 5 na 9, kapitola splnila svůj účel!")
-
-        # --- AKTIVITA 2: POZNEJ PODVOD ---
-        elif workbook_section == "🔐 Bezpečnostní challenge (Poznej podvod)":
-            st.markdown("### 🔐 Bezpečnostní challenge: Poznej finanční podvod (Phishing / Scam)")
-            st.write(
-                "Představ si, že ti na mobil pípnou následující zprávy. Pracuj ve dvojici a u každé zprávy rozhodni, "
-                "zda je to bezpečná notifikace, nebo nebezpečný podvod."
-            )
-
-            zpravy = [
-                {"text": "Vaše karta byla zablokována. Klikněte na tento odkaz (bit.ly/banka-overeni) a přihlaste se pro odblokování.", "spravne": "Nebezpečné", "vysvetleni": "Banka NIKDY neposílá odkazy na přihlášení přes SMS nebo e-mail. Je to phishing, který chce ukrást tvé heslo."},
-                {"text": "Dobrý den, jsem z bezpečnostního oddělení vaší banky. Na vašem účtu je podezřelá transakce. Nadiktujte mi prosím kód, který vám právě přišel v SMS.", "spravne": "Nebezpečné", "vysvetleni": "Vishing (hlasový podvod). Banka nikdy nechce diktovat kódy po telefonu. Útočník se právě snaží zadat platbu a potřebuje tvé potvrzení."},
-                {"text": "Vaše trvalá platba za nájem (8 500 Kč) neproběhla kvůli nedostatku zůstatku.", "spravne": "Bezpečné", "vysvetleni": "Standardní notifikace. Neobsahuje žádný odkaz, nevyvolává nátlak, jen tě informuje."},
-                {"text": "Garantovaný výnos 20 % měsíčně! Investujte do nové AI kryptoměny. Akce končí za 3 hodiny!", "spravne": "Nebezpečné", "vysvetleni": "Klasický scam. Jakmile někdo slibuje obří výnos, garantuje ho a navíc vytváří časový nátlak (FOMO), jde vždy o podvod."}
-            ]
-
-            for i, zprava in enumerate(zpravy):
-                with st.chat_message("user", avatar="📱"):
-                    st.write(zprava["text"])
-                    volba = st.radio(f"Hodnocení zprávy č. {i+1}:", ["Vyber hodnocení...", "Bezpečné", "Podezřelé", "Nebezpečné"], key=f"msg_sec_{i}")
-                    
-                    if volba != "Vyber hodnocení...":
-                        if volba == zprava["spravne"] or (volba == "Podezřelé" and zprava["spravne"] == "Nebezpečné"):
-                            st.success(f"✅ Správný odhad! **Varovný signál:** {zprava['vysvetleni']}")
-                        else:
-                            st.error(f"❌ Tohle by tě stálo peníze! **Proč je to špatně:** {zprava['vysvetleni']}")
-
-            if st.button("Uložit výsledky detektiva podvodů 💾", key="btn_k6_podvod"):
-                podvod_data = (
-                    f"Zpráva 1: {st.session_state.get('msg_sec_0', '')} | "
-                    f"Zpráva 2: {st.session_state.get('msg_sec_1', '')} | "
-                    f"Zpráva 3: {st.session_state.get('msg_sec_2', '')} | "
-                    f"Zpráva 4: {st.session_state.get('msg_sec_3', '')}"
-                )
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Poznej podvod", podvod_data)
-                st.success("Výsledky z Bezpečnostní challenge byly uloženy.")
-
-        # --- AKTIVITA 3: ALGORITMY UTRÁCENÍ ---
-        elif workbook_section == "📱 Algoritmy utrácení":
+        if workbook_section == "📱 Algoritmy utrácení":
             st.markdown("### 🧠 Algoritmy utrácení: Kdo mě ovlivňuje?")
-            st.write(
-                "Vyber jeden svůj nedávný nákup (např. skin ve hře, mikinu, drahý drink), ke kterému tě navedla reklama, "
-                "sleva, influencer nebo tlak okolí."
-            )
 
-            with st.container(border=True):
-                st.text_input("1. Co jsi koupil/a?", key="alg_1")
-                
-                st.selectbox("2. Jakou emoci nebo taktiku na tebe nabídka použila?", [
-                    "FOMO (Strach, že o něco přijdu - 'Akce končí za hodinu!')",
-                    "Společenský status ('Budu vypadat dobře před ostatními')",
-                    "Pohodlí ('Klikni a koupíš hned bez přemýšlení')",
-                    "Autoritu ('Oblíbený influencer to doporučil')"
-                ], key="alg_2")
-                
-                st.radio("3. Koupil/a bys to, i kdyby to nebylo ve slevě?", ["Ano, potřeboval/a jsem to.", "Spíše ne, nechal/a jsem se strhnout."], key="alg_3")
-                
-                st.markdown("#### Přepočet na hodiny života")
-                cena = st.number_input("Kolik to stálo (Kč)?", min_value=0, value=500, step=50, key="alg_cena")
-                mzda = st.number_input("Tvá reálná (nebo vysněná) hodinová mzda z brigády (Kč/h)?", min_value=1, value=150, step=10, key="alg_mzda")
-                if mzda > 0:
-                    hodiny = cena / mzda
-                    st.info(f"💡 Tento nákup tě stál **{hodiny:.1f} hodin čistého času** (práce). Stálo ti to za to?")
-                    
-                if st.button("Uložit analýzu utrácení 💾", key="btn_k6_utraceni"):
-                    if st.session_state.get('alg_1', '').strip():
-                        alg_data = (
-                            f"Nákup: {st.session_state.get('alg_1', '')} | "
-                            f"Emoce: {st.session_state.get('alg_2', '')} | "
-                            f"Bez slevy by koupil: {st.session_state.get('alg_3', '')} | "
-                            f"Stálo to: {hodiny:.1f} hodin práce."
-                        )
-                        if "uloz_odpoved_fn" in st.session_state:
-                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Algoritmy utrácení", alg_data)
-                        st.success("Tvá analýza nákupu byla úspěšně uložena.")
-                    else:
-                        st.warning("Vyplň název toho, co jsi koupil/a!")
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.6.1",
+                    "🧠 Algoritmy utrácení: Vyber jeden svůj nedávný nákup a"
+                    " popiš, co jsi koupil/a, jaká taktika na tebe zapůsobila a"
+                    " zda bys to koupil/a i bez slevy.",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
-        # --- AKTIVITA 4: SIMULÁTOR REZERVY ---
-        elif workbook_section == "🛟 Simulátor nečekané události":
-            st.markdown("### 🛟 Rezerva: Simulátor nečekané události")
-            st.write("Finanční rezerva funguje jako airbag v autě. Otestuj tvůj (fiktivní) rozpočet.")
-
-            prijem = 18000
-            vylohy = 13500
-            rezerva = 4000
-            volne_mesicne = prijem - vylohy
-
-            col1, col2, col3 = st.columns(3)
-            col1.metric("Měsíční příjem", f"{prijem} Kč")
-            col2.metric("Nutné výdaje", f"{vylohy} Kč")
-            col3.metric("Pohotovostní rezerva", f"{rezerva} Kč")
-
-            st.write(f"Každý měsíc ti po zaplacení nutných věcí zbude **{volne_mesicne} Kč**. Našetřeno máš **{rezerva} Kč**.")
-
-            udalost = st.selectbox("Co se právě stalo?", [
-                "Zvol krizový scénář...",
-                "Spadl ti mobil a rozbilo se sklo (Oprava: 3 500 Kč)",
-                "Kvůli zkouškám/nemoci jsi přišel o 2 týdny brigády (Ztráta: 4 000 Kč)",
-                "Přišel nedoplatek za energie a internet na bytě (Výdaj: 2 800 Kč)"
-            ], key="sim_udalost_k6")
-
-            if udalost != "Zvol krizový scénář...":
-                if "mobil" in udalost:
-                    naklad = 3500
-                elif "nemoci" in udalost:
-                    naklad = 4000
-                else:
-                    naklad = 2800
-
-                zbytek = rezerva - naklad
-                
-                st.divider()
-                st.markdown("#### Následky")
-                
-                if zbytek >= 0:
-                    st.success(f"✅ Tvůj airbag zafungoval! Zaplatil jsi {naklad} Kč z rezervy. Zbylo ti na ní {zbytek} Kč.")
-                    obnova = naklad / volne_mesicne
-                    import math
-                    st.info(f"⏱️ Při tvém tempu spoření ({volne_mesicne} Kč měsíčně) potrvá **{math.ceil(obnova)} měsíce**, než rezervu znovu doplníš.")
-                else:
-                    st.error(f"🚨 Tvůj airbag praskl! Tvá rezerva nestačila. Na zaplacení ti **chybí {abs(zbytek)} Kč**.")
-                    st.warning("⚠️ Jak to vyřešíš? Budeš si muset půjčit nevýhodně, nebo požádat rodiče?")
-                    
-                if st.button("Uložit výsledek nárazu 💾", key="btn_k6_naraz"):
-                    naraz_data = f"Událost: {udalost} | Zbylá rezerva / deficit: {zbytek} Kč"
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Nečekaná událost", naraz_data)
-                    st.success("Uloženo!")
-
-        # --- AKTIVITA 5: BOD ZVRATU (OPRAVENO) ---
-        elif workbook_section == "🧮 Můj první byznys (Bod zvratu)":
-            st.markdown("### 🧮 Podnikové finance: Bod zvratu na vlastním nápadu")
-            st.write(
-                "Vymysli jednoduchý produkt: školní merch, tisk samolepek, doučování... "
-                "Spočítej si, kolik jich musíš prodat, abys pokryl náklady."
-            )
-
-            with st.container(border=True):
-                produkt = st.text_input("Co budeš prodávat?", "Školní plátěná taška (Merch)", key="bz_produkt_k6")
-                
-                c1, c2 = st.columns(2)
-                # Oprava: min_value nastavena na 1, aby šly zadávat i velmi levné produkty (např. samolepky za 10 Kč)
-                s_cena = c1.number_input("Prodejní cena za 1 ks [Kč]", min_value=1, value=300, step=10, key="bz_cena_k6")
-                s_vn = c2.number_input("Variabilní náklad na 1 ks (Nákup materiálu) [Kč]", min_value=1, value=150, step=10, key="bz_vn_k6")
-                s_fn = st.number_input("Fixní náklady celkem (E-shop, reklama, design) [Kč]", min_value=0, value=3000, step=500, key="bz_fn_k6")
-
-                if s_cena <= s_vn:
-                    st.error("Chyba! Prodejní cena musí být vyšší než variabilní náklad na kus, jinak proděláváš už při výrobě.")
-                else:
-                    marze = s_cena - s_vn
-                    bep = s_fn / marze
-                    
-                    import math
-                    bep_kusy = math.ceil(bep)
-                    
-                    st.success(f"🎯 **Tvá marže je {marze} Kč z každého kusu.**")
-                    st.info(f"🚀 **Bod zvratu:** Musíš prodat **{bep_kusy} kusů** ({produkt}), abys pokryl/a fixní náklady. Od kusu číslo {bep_kusy + 1} začínáš generovat čistý zisk!")
-                    
-                    if st.button("Uložit byznys plán 💾", key="btn_k6_bz"):
-                        bz_data = f"Produkt: {produkt} | Cena/ks: {s_cena} Kč | Var. n.: {s_vn} Kč | Fix. n.: {s_fn} Kč | Bod zvratu: {bep_kusy} kusů"
-                        if "uloz_odpoved_fn" in st.session_state:
-                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Byznys bod zvratu", bz_data)
-
-        # --- AKTIVITA 6: EXIT TICKET (ZABALENO DO FORMULÁŘE) ---
         elif workbook_section == "✅ Exit ticket (Co si odnáším)":
             st.markdown("### ✅ Exit ticket: Závěrečná reflexe")
-            st.write("Představ si, že bys měl/a předstoupit před třídu a shrnout, co sis z financí odnesl/a. Vyplň tyto body:")
 
-            # Zabalíme to do st.form – tím se zabrání nechtěnému načítání stránky
-            with st.form("exit_ticket_form"):
-                t1 = st.text_area("1. Jedna věc, kterou jsem pochopil/a nově:", key="et_t1")
-                t2 = st.text_area("2. Jedno finanční rozhodnutí, u kterého příště zpomalím:", key="et_t2")
-                t3 = st.text_area("3. Jedna otázka, kterou bych položil/a finančnímu poradci nebo podnikateli:", key="et_t3")
-
-                # Tlačítko pro odeslání formuláře
-                submitted = st.form_submit_button("Uložit moji reflexi 💾")
-
-                if submitted:
-                    if t1.strip() != "" and t2.strip() != "" and t3.strip() != "":
-                        st.balloons()
-                        st.success("Tvá reflexe je úspěšně uložená. Gratulujeme k úspěšnému absolvování bloku o financích!")
-                        exit_data = f"1: {t1} | 2: {t2} | 3: {t3}"
-                        if "uloz_odpoved_fn" in st.session_state:
-                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Pracovní sešit - Exit ticket", exit_data)
-                    else:
-                        st.warning("Zkus prosím vyplnit všechna tři pole, ať je tvá reflexe kompletní.")
-
+            if "vykresli_otazku_fn" in st.session_state:
+                st.session_state["vykresli_otazku_fn"](
+                    "2.6.2",
+                    "✅ Exit ticket: Napiš 1. věc, kterou jsi pochopil/a"
+                    " nově, 2. rozhodnutí, u kterého příště zpomalíš, a 3."
+                    " otázku pro poradce/podnikatele.",
+                    "2",
+                    st.session_state.get("ulozene_odpovedi", {}),
+                )
 
     # =========================================================================
     # KAPITOLA 7: AKTIVITA - OPTIMALIZACE VÝDAJŮ
     # =========================================================================
     elif selected_section_2.startswith("7"):
-        st.markdown("<div class='sub-section-header'>7. PRAKTICKÁ AKTIVITA</div>", unsafe_allow_html=True)
-        st.markdown("## 7. Aktivita: Optimalizace rozpočtu")
-        
-        st.write(
-            "Finanční zdraví nezačíná tím, že přestaneš utrácet za všechno, co tě baví. "
-            "Jde o to najít místa, kde peníze unikají zbytečně. Zkusíme si to na tvém (nebo fiktivním) rozpočtu."
+        st.markdown(
+            "<div class='sub-section-header'>7. PRAKTICKÁ AKTIVITA</div>",
+            unsafe_allow_html=True,
         )
-
-        st.markdown("""
-        <div class="box-purple">
-            <b>✍️ Mini úkol:</b> Sepiš tři pravidelné výdaje, které by šly snížit bez výrazného poklesu kvality života. U každého navrhni konkrétní změnu a podívej se, co to udělá s tvým rozpočtem za celý rok.
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("## 7. Aktivita: Optimalizace rozpočtu")
 
         with st.form("form_uspory"):
             c1, c2, c3, c4 = st.columns([3, 2, 3, 2])
-            c1.markdown("**Název výdaje** (např. Předplatné, Káva)")
-            c2.markdown("**Původní cena měsíčně**")
-            c3.markdown("**Jak to změním?** (např. Zruším, udělám doma)")
-            c4.markdown("**Nová cena měsíčně**")
+            c1.markdown("**Název výdaje**")
+            c2.markdown("**Původní cena**")
+            c3.markdown("**Jak to změním?**")
+            c4.markdown("**Nová cena**")
 
-            # Položka 1
-            v1_nazev = c1.text_input("Výdaj 1", key="v1_n", label_visibility="collapsed")
-            v1_stara = c2.number_input("Cena 1", min_value=0, value=300, step=50, key="v1_s", label_visibility="collapsed")
-            v1_zmena = c3.text_input("Změna 1", key="v1_z", label_visibility="collapsed")
-            v1_nova = c4.number_input("Nová cena 1", min_value=0, value=0, step=50, key="v1_no", label_visibility="collapsed")
+            v1_nazev = c1.text_input(
+                "Výdaj 1", key="v1_n", label_visibility="collapsed"
+            )
+            v1_stara = c2.number_input(
+                "Cena 1",
+                min_value=0,
+                value=300,
+                step=50,
+                key="v1_s",
+                label_visibility="collapsed",
+            )
+            v1_zmena = c3.text_input(
+                "Změna 1", key="v1_z", label_visibility="collapsed"
+            )
+            v1_nova = c4.number_input(
+                "Nová cena 1",
+                min_value=0,
+                value=0,
+                step=50,
+                key="v1_no",
+                label_visibility="collapsed",
+            )
 
-            # Položka 2
-            v2_nazev = c1.text_input("Výdaj 2", key="v2_n", label_visibility="collapsed")
-            v2_stara = c2.number_input("Cena 2", min_value=0, value=800, step=50, key="v2_s", label_visibility="collapsed")
-            v2_zmena = c3.text_input("Změna 2", key="v2_z", label_visibility="collapsed")
-            v2_nova = c4.number_input("Nová cena 2", min_value=0, value=400, step=50, key="v2_no", label_visibility="collapsed")
-
-            # Položka 3
-            v3_nazev = c1.text_input("Výdaj 3", key="v3_n", label_visibility="collapsed")
-            v3_stara = c2.number_input("Cena 3", min_value=0, value=1200, step=50, key="v3_s", label_visibility="collapsed")
-            v3_zmena = c3.text_input("Změna 3", key="v3_z", label_visibility="collapsed")
-            v3_nova = c4.number_input("Nová cena 3", min_value=0, value=800, step=50, key="v3_no", label_visibility="collapsed")
-
-            submitted = st.form_submit_button("Spočítat a uložit moji roční úsporu 💾")
+            submitted = st.form_submit_button(
+                "Spočítat a uložit moji roční úsporu 💾"
+            )
 
             if submitted:
-                uspora_mesic = (v1_stara - v1_nova) + (v2_stara - v2_nova) + (v3_stara - v3_nova)
+                uspora_mesic = v1_stara - v1_nova
                 uspora_rok = uspora_mesic * 12
-
-                st.divider()
-                if uspora_rok > 0:
-                    st.success("Tohle je síla drobných změn! 🎉 Data byla uložena.")
-                    col_a, col_b = st.columns(2)
-                    col_a.metric("Měsíční úspora", f"{uspora_mesic:,} Kč".replace(",", " "))
-                    col_b.metric("Ušetřeno za 1 rok", f"{uspora_rok:,} Kč".replace(",", " "))
-                    st.info(f"💡 Za ušetřených **{uspora_rok:,} Kč** už by se dalo pořídit něco mnohem hodnotnějšího (investice, cestování, vzdělání), než byly původní výdaje.")
-                    
-                    uspora_data = (
-                        f"Položka 1: {v1_nazev} ({v1_stara} -> {v1_nova} Kč) | "
-                        f"Položka 2: {v2_nazev} ({v2_stara} -> {v2_nova} Kč) | "
-                        f"Položka 3: {v3_nazev} ({v3_stara} -> {v3_nova} Kč) | "
-                        f"Celková úspora za rok: {uspora_rok} Kč"
+                st.success(f"Ušetřeno za rok: {uspora_rok:,} Kč")
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"](
+                        "Kapitola 2",
+                        "Aktivita 7 - Optimalizace rozpočtu",
+                        f"Úspora rok: {uspora_rok} Kč",
                     )
-                    if "uloz_odpoved_fn" in st.session_state:
-                        st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Aktivita 7 - Optimalizace rozpočtu", uspora_data)
-                else:
-                    st.warning("Zatím to nevypadá na žádnou úsporu. Zkus navrhnout radikálnější změnu v kolonce 'Nová cena'.")
 
     # =========================================================================
     # KAPITOLA 8: SLOVNÍK CIZÍCH POJMŮ
     # =========================================================================
     elif selected_section_2.startswith("8"):
-        import pandas as pd
         import random
-        
-        st.markdown("<div class='sub-section-header'>8. ZÁVĚREČNÝ PŘEHLED</div>", unsafe_allow_html=True)
-        st.markdown("## 8. Slovník cizích pojmů")
-        
-        st.write(
-            "Finanční svět má svůj vlastní jazyk. Tady najdeš rychlý překlad do lidštiny. "
-            "Pojmy si můžeš vyhledat v tabulce, nebo si níže vyzkoušet generátor kartiček."
+        import pandas as pd
+
+        st.markdown(
+            "<div class='sub-section-header'>8. ZÁVĚREČNÝ PŘEHLED</div>",
+            unsafe_allow_html=True,
         )
+        st.markdown("## 8. Slovník cizích pojmů")
 
         slovnik_data = [
-            {"Pojem": "Aktiva", "Vysvětlení": "Majetek firmy nebo člověka; například peníze, zásoby, budovy, stroje, pohledávky nebo investice."},
-            {"Pojem": "Akcie", "Vysvětlení": "Cenný papír představující podíl na akciové společnosti. Vlastník akcie se stává akcionářem."},
-            {"Pojem": "Akcionář", "Vysvětlení": "Vlastník akcie, tedy člověk nebo instituce, která vlastní podíl ve firmě."},
-            {"Pojem": "Bankovní licence", "Vysvětlení": "Povolení, které musí mít instituce, aby mohla působit jako banka."},
-            {"Pojem": "Blockchain", "Vysvětlení": "Sdílený digitální záznam transakcí, který je rozdělen do bloků a zabezpečen pravidly sítě."},
-            {"Pojem": "Bonita", "Vysvětlení": "Schopnost klienta splácet úvěr. Banka ji posuzuje podle příjmů, výdajů, dluhů a platební historie."},
-            {"Pojem": "Broker", "Vysvětlení": "Zprostředkovatel, přes kterého může investor nakupovat a prodávat investiční nástroje."},
-            {"Pojem": "Burza", "Vysvětlení": "Organizovaný trh, kde se podle pravidel obchoduje například s akciemi, dluhopisy nebo fondy."},
-            {"Pojem": "Cashflow", "Vysvětlení": "Tok peněz. Ukazuje, kolik peněz skutečně přišlo a odešlo."},
-            {"Pojem": "Cenný papír", "Vysvětlení": "Listina nebo digitální záznam, se kterým jsou spojena určitá práva (podíl ve firmě, splacení dluhu)."},
-            {"Pojem": "ČNB", "Vysvětlení": "Česká národní banka. Centrální banka ČR, která pečuje o měnovou a finanční stabilitu."},
-            {"Pojem": "Deficit", "Vysvětlení": "Schodek. Situace, kdy výdaje převyšují příjmy."},
-            {"Pojem": "Diverzifikace", "Vysvětlení": "Rozložení peněz do více investic, aby člověk nebyl závislý jen na jednom aktivu (Nedávej všechna vejce do jednoho košíku)."},
-            {"Pojem": "Dluhopis", "Vysvětlení": "Cenný papír, kterým si emitent půjčuje peníze od investorů a slibuje jejich splacení + úrok."},
-            {"Pojem": "Emitent", "Vysvětlení": "Ten, kdo vydává cenný papír, například stát, obec, banka nebo firma."},
-            {"Pojem": "Fintech", "Vysvětlení": "Spojení financí a technologií. Moderní finanční služby a aplikace."},
-            {"Pojem": "Fixní náklady", "Vysvětlení": "Náklady, které se nemění přímo podle počtu prodaných kusů, například nájem nebo licence na software."},
-            {"Pojem": "Inflace", "Vysvětlení": "Růst cenové hladiny. Za stejnou částku si člověk koupí méně než dříve."},
-            {"Pojem": "Investice", "Vysvětlení": "Vložení peněz do aktiva s očekáváním budoucího výnosu, ale s určitým rizikem."},
-            {"Pojem": "Jistina", "Vysvětlení": "Původně půjčená nebo vložená částka, ze které se počítá úrok."},
-            {"Pojem": "Kryptoměna", "Vysvětlení": "Digitální aktivum fungující v počítačové síti, často bez jedné centrální banky."},
-            {"Pojem": "Likvidita", "Vysvětlení": "Schopnost rychle proměnit aktivum na peníze nebo schopnost firmy včas platit své závazky."},
-            {"Pojem": "LTV", "Vysvětlení": "Poměr výše úvěru k hodnotě nemovitosti (Loan to Value). Používá se hlavně u hypoték."},
-            {"Pojem": "Neobanka", "Vysvětlení": "Moderní banka nebo finanční služba zaměřená hlavně na mobilní prostředí (např. Revolut)."},
-            {"Pojem": "Pasiva", "Vysvětlení": "Zdroje financování majetku firmy, například vlastní kapitál, úvěry nebo závazky."},
-            {"Pojem": "Pohledávka", "Vysvětlení": "Částka, kterou má někdo dostat zaplacenou. (Firma čeká, až jí zákazník zaplatí)."},
-            {"Pojem": "Repo sazba", "Vysvětlení": "Důležitá úroková sazba ČNB, která ovlivňuje cenu (úroky) peněz v celé ekonomice."},
-            {"Pojem": "Rentabilita", "Vysvětlení": "Ziskovost. Ukazuje, jak dobře firma vytváří zisk vzhledem k tržbám, majetku nebo kapitálu."},
-            {"Pojem": "Rezerva", "Vysvětlení": "Peníze odložené stranou pro nečekané situace (finanční airbag)."},
-            {"Pojem": "Riziko", "Vysvětlení": "Možnost, že výsledek bude jiný, než člověk očekával — například ztráta peněz."},
-            {"Pojem": "RPSN", "Vysvětlení": "Roční procentní sazba nákladů. Ukazuje CELKOVÉ roční náklady úvěru (úrok + všechny poplatky)."},
-            {"Pojem": "Složené úročení", "Vysvětlení": "Úročení, při kterém se úročí nejen původní částka, ale i dříve připsané úroky (úroky z úroků)."},
-            {"Pojem": "Spekulace", "Vysvětlení": "Sázka na krátkodobý pohyb ceny s vysokým rizikem (vs. dlouhodobé investování)."},
-            {"Pojem": "Token", "Vysvětlení": "Digitální jednotka v kryptoměnovém nebo blockchainovém prostředí."},
-            {"Pojem": "Úrok", "Vysvětlení": "Cena za půjčení peněz (když platíš bance) nebo odměna za jejich uložení (když banka platí tobě)."},
-            {"Pojem": "Variabilní náklady", "Vysvětlení": "Náklady, které rostou nebo klesají přímo podle objemu výroby/prodeje (např. nákup surovin)."},
-            {"Pojem": "Volatilita", "Vysvětlení": "Kolísání ceny aktiva. Vysoká volatilita = cena lítá prudce nahoru a dolů."},
-            {"Pojem": "Závazek", "Vysvětlení": "Částka nebo povinnost, kterou musí člověk nebo firma zaplatit někomu jinému (Dluh)."}
+            {
+                "Pojem": "Aktiva",
+                "Vysvětlení": "Majetek firmy nebo člověka.",
+            },
+            {
+                "Pojem": "RPSN",
+                "Vysvětlení": "Roční procentní sazba nákladů úvěru.",
+            },
         ]
-        
         df_slovnik = pd.DataFrame(slovnik_data)
-
-        tab_db, tab_flash = st.tabs(["📚 Databáze pojmů", "🧠 Trénink (Flashcards)"])
-
-        with tab_db:
-            st.markdown("### Prohledávatelný slovník")
-            st.dataframe(
-                df_slovnik, 
-                use_container_width=True, 
-                hide_index=True,
-                column_config={
-                    "Pojem": st.column_config.TextColumn("Pojem", width="medium"),
-                    "Vysvětlení": st.column_config.TextColumn("Jednoduché vysvětlení", width="large")
-                }
-            )
-
-        with tab_flash:
-            st.markdown("### Otestuj se: Dokážeš to vysvětlit ze života?")
-            st.write("Skutečné porozumění poznáš tak, že dokážeš odborný pojem vysvětlit na příkladu z běžného života. Vylosuj si pojem a zkus to!")
-            
-            # Inicializace session state pro uchování vylosovaného pojmu
-            if 'random_term' not in st.session_state:
-                st.session_state['random_term'] = random.choice(slovnik_data)
-
-            if st.button("🎲 Vylosovat nový pojem", key="btn_losuj"):
-                st.session_state['random_term'] = random.choice(slovnik_data)
-                
-            vybrany_pojem = st.session_state['random_term']
-
-            with st.container(border=True):
-                st.markdown(f"#### Tvé slovo je: **{vybrany_pojem['Pojem']}**")
-                
-                with st.form("flashcard_form", clear_on_submit=False):
-                    priklad = st.text_input("Napiš sem svůj vlastní příklad ze života (např. 'Je to jako když...'):", key="fc_priklad")
-                    ukazat_odpoved = st.form_submit_button("Zkontrolovat správnou definici a uložit 💾")
-                    
-                    if ukazat_odpoved:
-                        st.divider()
-                        st.info(f"**Učebnicová definice:** {vybrany_pojem['Vysvětlení']}")
-                        if len(priklad) > 5:
-                            st.success("Skvěle! Pokud se tvůj příklad shoduje s logikou výše, právě jsi tento pojem dokonale pochopil/a.")
-                        else:
-                            st.warning("Zkus příště napsat reálný příklad, víc si to tak zapamatuješ!")
-                            
-                        if "uloz_odpoved_fn" in st.session_state:
-                            st.session_state["uloz_odpoved_fn"]("Kapitola 2", "Slovník - Flashcards", f"Pojem: {vybrany_pojem['Pojem']} | Vlastní příklad: {priklad}")
+        st.dataframe(df_slovnik, use_container_width=True, hide_index=True)
