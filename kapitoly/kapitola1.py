@@ -242,7 +242,6 @@ def render():
                 unsafe_allow_html=True,
             )
 
-            # NOVÉ VOLÁNÍ FUNKCE MÍSTO TEXT AREA
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.1.1",
@@ -265,7 +264,7 @@ def render():
             st.markdown(
                 """
             <div class='box-blue'>
-            <strong>📌 Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk.
+            <strong>📌 Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jním a usiluje o zisk.
             </div>
             """,
                 unsafe_allow_html=True,
@@ -306,7 +305,6 @@ def render():
                 unsafe_allow_html=True,
             )
 
-            # NOVÉ VOLÁNÍ FUNKCE MÍSTO TEXT AREA
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.2.1",
@@ -382,7 +380,7 @@ def render():
         with st.container(border=True):
             st.write(
                 "OSVČ znamená osoba samostatně výdělečně činná. Jde o podnikání"
-                " fyzické osoby — tedy člověka, který podniká vlastním jménem a"
+                " fyzické osoby — tedy člověka, který podniká vlastním jním a"
                 " nese za své podnikání odpovědnost."
             )
 
@@ -427,7 +425,7 @@ def render():
             st.markdown("""
             * oddělit osobní a podnikatelské peníze,
             * evidovat příjmy a výdaje,
-            * záolohovat doklady,
+            * zálohovat doklady,
             * chránit osobní údaje zákazníků,
             * nepoužívat cizí fotografie, hudbu a texty bez práv,
             * komunikovat transparentně cenu, dodání a podmínky,
@@ -462,12 +460,10 @@ def render():
                 5,
             )
             st.write(
-                f"Při {reserve_pct} % si odložíte: {28000 *"
-                f" (reserve_pct/100):.0f} Kč."
+                f"Při {reserve_pct} % si odložíte: {28000 * (reserve_pct / 100):.0f} Kč."
             )
             st.write("Vysvětli, proč není bezpečné utratit celých 28 000 Kč.")
 
-            # NOVÉ VOLÁNÍ FUNKCE
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.3.1",
@@ -499,7 +495,6 @@ def render():
         with st.container(border=True):
             st.markdown("### 3.3 Podmínky pro podnikání jako OSVČ")
 
-            # NOVÉ VOLÁNÍ FUNKCE
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.3.2",
@@ -520,7 +515,6 @@ def render():
         with st.container(border=True):
             st.markdown("### 3.4 Druhy živností")
 
-            # NOVÉ VOLÁNÍ FUNKCE
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.3.3",
@@ -542,7 +536,6 @@ def render():
         with st.container(border=True):
             st.markdown("### 3.5 Jak si zařídit živnost")
 
-            # NOVÉ VOLÁNÍ FUNKCE
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.3.4",
@@ -788,7 +781,6 @@ def render():
                     f" hodinu účtovat alespoň **{hourly_rate:,.0f} Kč**."
                 )
 
-                # NOVÉ VOLÁNÍ FUNKCE
                 if "vykresli_otazku_fn" in st.session_state:
                     st.session_state["vykresli_otazku_fn"](
                         "1.3.5",
@@ -1098,7 +1090,6 @@ def render():
                 unsafe_allow_html=True,
             )
 
-            # NOVÉ VOLÁNÍ FUNKCE
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.4.1",
@@ -1135,7 +1126,6 @@ def render():
                 " odpovědnosti společníků."
             )
 
-            # NOVÉ VOLÁNÍ FUNKCE
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.4.2",
