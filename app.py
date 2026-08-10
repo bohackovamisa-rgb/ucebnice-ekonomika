@@ -699,38 +699,36 @@ elif st.session_state["current_view"] == "Uvod":
         unsafe_allow_html=True,
     )
 
-# --- 7.4 RENDEROVÁNÍ JEDNOTLIVÝCH KAPITOL ---
-elif st.session_state["current_view"] == "Kapitola 1":
-    if hasattr(kapitola1, "render"): kapitola1.render()
-    elif hasattr(kapitola1, "show"): kapitola1.show()
+# --- 7.4 RENDEROVÁNÍ JEDNOTLIVÝCH KAPITOL (UNIVERZÁLNÍ) ---
+kapitoly_map = {
+    "Kapitola 1": (kapitola1, "1"),
+    "Kapitola 2": (kapitola2, "2"),
+    "Kapitola 3": (kapitola3, "3"),
+    "Kapitola 4": (kapitola4, "4"),
+    "Kapitola 5": (kapitola5, "5"),
+    "Kapitola 6": (kapitola6, "6"),
+}
 
-elif st.session_state["current_view"] == "Kapitola 2":
-    if hasattr(kapitola2, "render"): kapitola2.render()
-    elif hasattr(kapitola2, "show"): kapitola2.show()
+if st.session_state["current_view"] in kapitoly_map:
+    modul, kap_num = kapitoly_map[st.session_state["current_view"]]
 
-elif st.session_state["current_view"] == "Kapitola 3":
-    if hasattr(kapitola3, "render"): kapitola3.render()
-    elif hasattr(kapitola3, "show"): kapitola3.show()
-
-elif st.session_state["current_view"] == "Kapitola 4":
-    if hasattr(kapitola4, "render"): kapitola4.render()
-    elif hasattr(kapitola4, "show"): kapitola4.show()
-
-elif st.session_state["current_view"] == "Kapitola 5":
-    if hasattr(kapitola5, "render"): kapitola5.render()
-    elif hasattr(kapitola5, "show"): kapitola5.show()
-
-elif st.session_state["current_view"] == "Kapitola 6":
-    if hasattr(kapitola6, "render"): kapitola6.render()
-    elif hasattr(kapitola6, "show"): kapitola6.show()
-elif st.session_state["current_view"] == "Kapitola 1":
-    # Načtení uložených odpovědí pro Kapitolu 1
+    # 1. Načtení uložených odpovědí pro aktuální kapitolu
     st.session_state["ulozene_odpovedi"] = {}
     if st.session_state.get("username"):
-        res = supabase.table("odpovedi").select("otazka_id, odpoved").eq("username", st.session_state["username"]).eq("kapitola", "1").execute()
+        res = (
+            supabase.table("odpovedi")
+            .select("otazka_id, odpoved")
+            .eq("username", st.session_state["username"])
+            .eq("kapitola", kap_num)
+            .execute()
+        )
         if res.data:
-            st.session_state["ulozene_odpovedi"] = {row["otazka_id"]: row["odpoved"] for row in res.data}
+            st.session_state["ulozene_odpovedi"] = {
+                row["otazka_id"]: row["odpoved"] for row in res.data
+            }
 
-    # Spuštění kapitoly
-    if hasattr(kapitola1, "render"): kapitola1.render()
-    elif hasattr(kapitola1, "show"): kapitola1.show()
+    # 2. Vykreslení kapitoly
+    if hasattr(modul, "render"):
+        modul.render()
+    elif hasattr(modul, "show"):
+        modul.show()
