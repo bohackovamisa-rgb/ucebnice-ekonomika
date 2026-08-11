@@ -4,6 +4,9 @@ import pandas as pd
 import streamlit as st
 from supabase import create_client, Client
 from kapitoly import kapitola1, kapitola2, kapitola3, kapitola4, kapitola5, kapitola6
+import gspread
+import json
+import yfinance as yf
 
 # =========================================================================
 # 1. KONFIGURACE STRÁNKY & INICIALIZACE STAVU
@@ -29,7 +32,7 @@ if "current_view" not in st.session_state:
     st.session_state["current_view"] = "Uvod"
 
 # =========================================================================
-# 2. POMOCNÉ FUNKCE A DATABÁZE SUPABASE
+# 2. POMOCNÉ FUNKCE A DATABÁZE SUPABASE & GOOGLE SHEETS
 # =========================================================================
 def ocisti_username(text: str) -> str:
     """Odstraní diakritiku a převede text na malá písmena pro bezpečný dotaz do DB."""
@@ -46,6 +49,14 @@ def init_supabase() -> Client:
     return create_client(url, key)
 
 supabase = init_supabase()
+
+@st.cache_resource(ttl=60) # Připojení na Google Sheets se obnoví max jednou za minutu
+def init_gspread():
+    raw_creds = st.secrets["google_credentials"]
+    tajemstvi = json.loads(raw_creds) if isinstance(raw_creds, str) else dict(raw_creds)
+    if "private_key" in tajemstvi:
+        tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
+    return gspread.service_account_from_dict(tajemstvi)
 
 
 # --- 1. FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
@@ -137,7 +148,7 @@ def zakovsky_panel():
     tab_ukoly, tab_investice = st.tabs(["📝 Moje úkoly z učebnice", "📈 Můj investiční profil"])
 
     # -------------------------------------------------------------------------
-    # ZÁLOŽKA 1: ÚKOLY A ODPOVĚDI (Původní logika s Progress Barem)
+    # ZÁLOŽKA 1: ÚKOLY A ODPOVĚDI
     # -------------------------------------------------------------------------
     with tab_ukoly:
         st.write("Zde vidíš všechny své uložené odpovědi napříč celou učebnicí. Můžeš sledovat svůj pokrok a odpovědi upravovat.")
@@ -225,21 +236,14 @@ def zakovsky_panel():
         
         st.divider()
 
-        import gspread
-        import json
-        import yfinance as yf
-
         with st.spinner("Aktualizuji data z burzy... ⏳"):
             try:
-                raw_creds = st.secrets["google_credentials"]
-                tajemstvi = json.loads(raw_creds) if isinstance(raw_creds, str) else dict(raw_creds)
-                if "private_key" in tajemstvi:
-                    tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
-
-                client = gspread.service_account_from_dict(tajemstvi)
+                # 1. NAPOJENÍ NA GOOGLE SHEETS
+                client = init_gspread()
                 soubor = client.open("Skolni_Investice_DB")
                 sheet_uziv = soubor.sheet1
                 
+                # 2. VYNUCENÍ ČERSTVÝCH DAT (Odstranění paměťového zpoždění)
                 data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
                 df_inv = pd.DataFrame(data_inv)
 
@@ -304,6 +308,7 @@ def zakovsky_panel():
                     st.markdown("#### 📜 Historie tvých obchodů")
                     try:
                         sheet_trans = soubor.worksheet("Transakce")
+                        # Opět vynucení načtení pro historii transakcí
                         data_trans = sheet_trans.get_all_records() 
                         
                         if data_trans:
@@ -322,6 +327,7 @@ def zakovsky_panel():
 
             except Exception as e:
                 st.error(f"Chyba při stahování dat z burzy: {e}")
+                
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
@@ -550,10 +556,6 @@ with st.sidebar:
         st.session_state.clear()
         st.rerun()
 
-# =========================================================================
-# 7. SMĚROVÁNÍ OBSAHU (ROUTING)
-# =========================================================================
-# Zde pokračuje původní kód...
 
 # =========================================================================
 # 7. SMĚROVÁNÍ OBSAHU (ROUTING)
@@ -734,7 +736,24 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
 
     with tab_investice:
         st.markdown("### 🏆 Živý žebříček investic a historie obchodů")
-        st.info("Zde probíhá propojování na investiční simulátor.")
+        
+        # Zde jsme přidali blok pro načtení aktuálních dat pro učitele
+        try:
+            client = init_gspread()
+            soubor = client.open("Skolni_Investice_DB")
+            
+            # Vynucení čistých dat z obou listů
+            vsechna_data_zaci = soubor.sheet1.get_all_records(value_render_option="UNFORMATTED_VALUE")
+            vsechny_transakce = soubor.worksheet("Transakce").get_all_records(value_render_option="UNFORMATTED_VALUE")
+            
+            df_zaci = pd.DataFrame(vsechna_data_zaci)
+            df_transakce = pd.DataFrame(vsechny_transakce)
+            
+            st.success("Aktuální burzovní data úspěšně načtena! Zde můžete případně doprogramovat vizualizace pro učitele.")
+            # st.dataframe(df_zaci)
+            
+        except Exception as e:
+            st.error(f"Chyba při načítání dat pro učitele: {e}")
 
 # 3. Učitelské materiály
 elif st.session_state["current_view"] == "Ucitel_Materialy":
