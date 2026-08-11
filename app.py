@@ -407,9 +407,12 @@ with st.sidebar:
         st.session_state["current_view"] = "Moje_Odpovedi"
         st.rerun()
 
-    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
+st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
     
-    if st.session_state.get("username") == "demo.nakladatel":
+    # 🔐 CHYTRÝ ZÁMEK: Kdokoliv má ve jméně "nakladatel", uvidí jen 2 kapitoly
+    username_aktualni = st.session_state.get("username", "").lower()
+    
+    if "nakladatel" in username_aktualni:
         chapters = {
             "Kapitola 1": "1. Podnikavost a startupy",
             "Kapitola 2": "2. Finance a osobní management",
