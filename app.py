@@ -440,7 +440,7 @@ with st.sidebar:
         st.rerun()
     for key, title in chapters.items():
         is_active = st.session_state["current_view"] == key
-        if st.button(title, key=f"nav_{key}", use_container_width=True, type="primary" if is_active else "secondary"):
+    if st.button(title, key=f"nav_{key}", use_container_width=True, type="primary" if is_active else "secondary"):
             st.session_state["current_view"] = key
             st.rerun()
 
