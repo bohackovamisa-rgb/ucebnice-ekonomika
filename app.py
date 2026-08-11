@@ -124,90 +124,210 @@ st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
 
 # =========================================================================
-# 📝 ŽÁKOVSKÝ PANEL (PŘEHLED VŠECH ODPOVĚDÍ S PROGRESSEM)
+# 📝 ŽÁKOVSKÝ PANEL (PŘEHLED ÚKOLŮ + INVESTIČNÍ SIMULÁTOR)
 # =========================================================================
 def zakovsky_panel():
-    st.title("📝 Moje odpovědi a přehled úkolů")
-    st.write("Zde vidíš všechny své uložené odpovědi napříč celou učebnicí. Můžeš sledovat svůj pokrok a odpovědi upravovat.")
-
+    st.title("👨‍🎓 Můj žákovský panel")
+    
     username = st.session_state.get("username")
     if not username:
         st.warning("Nejprve se prosím přihlaste.")
         return
 
-    try:
-        res = supabase.table("odpovedi").select("*").eq("username", username).execute()
-        odpovedi_data = res.data if res.data else []
-    except Exception as e:
-        st.error(f"❌ **Chyba při načítání ze Supabase:** {e}")
-        return
+    # Vytvoření dvou záložek pro lepší orientaci žáka
+    tab_ukoly, tab_investice = st.tabs(["📝 Moje úkoly z učebnice", "📈 Můj investiční profil"])
 
-    if not odpovedi_data:
-        st.info("💡 **Zatím nemáš uložené žádné odpovědi.** Otevři kapitolu, vyplň úkol a klikni na *Uložit odpověď*.")
-        return
-
-    CELKEM_UKOLU = {
-        "Kapitola 1": 15,
-        "Kapitola 2": 11,
-        "Kapitola 3": 12,
-        "Kapitola 4": 15,
-        "Kapitola 5": 14,
-        "Kapitola 6": 21
-    }
-
-    kapitoly_dict = {}
-    for row in odpovedi_data:
-        kap = row.get("kapitola", "Ostatní")
-        if kap not in kapitoly_dict:
-            kapitoly_dict[kap] = []
-        kapitoly_dict[kap].append(row)
-
-    col_m1, col_m2 = st.columns(2)
-    col_m1.metric("Vyplněných úkolů celkem", f"{len(odpovedi_data)} ks")
-    col_m2.metric("Rozpracovaných kapitol", len(kapitoly_dict))
-    st.divider()
-
-    for kap_nazev in sorted(kapitoly_dict.keys()):
-        slozene_odpovedi = kapitoly_dict[kap_nazev]
+    # -------------------------------------------------------------------------
+    # ZÁLOŽKA 1: ÚKOLY A ODPOVĚDI (Původní logika s Progress Barem)
+    # -------------------------------------------------------------------------
+    with tab_ukoly:
+        st.write("Zde vidíš všechny své uložené odpovědi napříč celou učebnicí. Můžeš sledovat svůj pokrok a odpovědi upravovat.")
         
-        hotovo = len(slozene_odpovedi)
-        celkem = CELKEM_UKOLU.get(kap_nazev, hotovo) 
-        
-        procento_cislo = min((hotovo / celkem), 1.0) if celkem > 0 else 1.0
-        procento_zobrazeni = int(procento_cislo * 100)
-        
-        with st.expander(f"📚 {kap_nazev} ({hotovo}/{celkem} úkolů) — {procento_zobrazeni} %", expanded=False):
-            
-            st.progress(procento_cislo, text=f"Stav: {hotovo} z {celkem} hotovo ({procento_zobrazeni} %)")
-            st.markdown("<br>", unsafe_allow_html=True)
-            
-            slozene_odpovedi = sorted(slozene_odpovedi, key=lambda x: str(x.get("otazka_id")))
-            for row in slozene_odpovedi:
-                otazka_id = row.get("otazka_id", "Neuvedeno")
-                stare_text = row.get("odpoved", "")
+        try:
+            res = supabase.table("odpovedi").select("*").eq("username", username).execute()
+            odpovedi_data = res.data if res.data else []
+        except Exception as e:
+            st.error(f"❌ **Chyba při načítání ze Supabase:** {e}")
+            odpovedi_data = []
 
-                st.markdown(f"**Úkol:** `{otazka_id}`")
-                nova_odpoved = st.text_area("Tvá odpověď:", value=stare_text, key=f"panel_in_{kap_nazev}_{otazka_id}")
+        if not odpovedi_data:
+            st.info("💡 **Zatím nemáš uložené žádné odpovědi.** Otevři kapitolu, vyplň úkol a klikni na *Uložit odpověď*.")
+        else:
+            CELKEM_UKOLU = {
+                "Kapitola 1": 15, "Kapitola 2": 11, "Kapitola 3": 12,
+                "Kapitola 4": 15, "Kapitola 5": 14, "Kapitola 6": 21
+            }
 
-                if st.button("Uložit změnu 💾", key=f"panel_btn_{kap_nazev}_{otazka_id}"):
-                    if nova_odpoved.strip():
-                        try:
-                            supabase.table("odpovedi").upsert({
-                                "username": username,
-                                "kapitola": kap_nazev,
-                                "otazka_id": otazka_id,
-                                "odpoved": nova_odpoved
-                            }).execute()
+            kapitoly_dict = {}
+            for row in odpovedi_data:
+                kap = row.get("kapitola", "Ostatní")
+                if kap not in kapitoly_dict:
+                    kapitoly_dict[kap] = []
+                kapitoly_dict[kap].append(row)
+
+            col_m1, col_m2 = st.columns(2)
+            col_m1.metric("Vyplněných úkolů celkem", f"{len(odpovedi_data)} ks")
+            col_m2.metric("Rozpracovaných kapitol", len(kapitoly_dict))
+            st.divider()
+
+            for kap_nazev in sorted(kapitoly_dict.keys()):
+                slozene_odpovedi = kapitoly_dict[kap_nazev]
+                
+                hotovo = len(slozene_odpovedi)
+                celkem = CELKEM_UKOLU.get(kap_nazev, hotovo) 
+                
+                procento_cislo = min((hotovo / celkem), 1.0) if celkem > 0 else 1.0
+                procento_zobrazeni = int(procento_cislo * 100)
+                
+                with st.expander(f"📚 {kap_nazev} ({hotovo}/{celkem} úkolů) — {procento_zobrazeni} %", expanded=False):
+                    
+                    st.progress(procento_cislo, text=f"Stav: {hotovo} z {celkem} hotovo ({procento_zobrazeni} %)")
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    slozene_odpovedi = sorted(slozene_odpovedi, key=lambda x: str(x.get("otazka_id")))
+                    for row in slozene_odpovedi:
+                        otazka_id = row.get("otazka_id", "Neuvedeno")
+                        stare_text = row.get("odpoved", "")
+
+                        st.markdown(f"**Úkol:** `{otazka_id}`")
+                        nova_odpoved = st.text_area("Tvá odpověď:", value=stare_text, key=f"panel_in_{kap_nazev}_{otazka_id}")
+
+                        if st.button("Uložit změnu 💾", key=f"panel_btn_{kap_nazev}_{otazka_id}"):
+                            if nova_odpoved.strip():
+                                try:
+                                    supabase.table("odpovedi").upsert({
+                                        "username": username,
+                                        "kapitola": kap_nazev,
+                                        "otazka_id": otazka_id,
+                                        "odpoved": nova_odpoved
+                                    }).execute()
+                                    
+                                    if "ulozene_odpovedi" not in st.session_state:
+                                        st.session_state["ulozene_odpovedi"] = {}
+                                    st.session_state["ulozene_odpovedi"][otazka_id] = nova_odpoved
+                                    
+                                    st.toast("Odpověď byla upravena!", icon="✅")
+                                    st.rerun()
+                                except Exception as ex:
+                                    st.error(f"Chyba při ukládání: {ex}")
+                        st.markdown("---")
+
+    # -------------------------------------------------------------------------
+    # ZÁLOŽKA 2: OSOBNÍ INVESTIČNÍ PROFIL ŽÁKA
+    # -------------------------------------------------------------------------
+    with tab_investice:
+        st.markdown("### 📈 Tvé investiční portfolio")
+        st.write("Zde živě vidíš, jak si vedeš na burze. Pokud chceš nakupovat nebo prodávat další akcie a kryptoměny, přejdi přímo do obchodní aplikace.")
+        
+        # TLAČÍTKO ODKAZUJÍCÍ DO APLIKACE (Nezapomeň změnit URL!)
+        st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", "https://ZDE_DOPLN_ODKAZ_NA_TVUJ_SIMULATOR.cz", type="primary")
+        
+        st.divider()
+
+        import gspread
+        import json
+        import yfinance as yf
+
+        with st.spinner("Aktualizuji data z burzy... ⏳"):
+            try:
+                # 1. Připojení k DB
+                raw_creds = st.secrets["google_credentials"]
+                tajemstvi = json.loads(raw_creds) if isinstance(raw_creds, str) else dict(raw_creds)
+                if "private_key" in tajemstvi:
+                    tajemstvi["private_key"] = tajemstvi["private_key"].replace("\\n", "\n").replace("\r", "").strip()
+
+                client = gspread.service_account_from_dict(tajemstvi)
+                soubor = client.open("Skolni_Investice_DB")
+                sheet_uziv = soubor.sheet1
+                
+                data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                df_inv = pd.DataFrame(data_inv)
+
+                # 2. Filtrace na přihlášeného žáka
+                muj_nick = username.strip().lower()
+                df_zaka = df_inv[df_inv["Nick"].astype(str).str.strip().str.lower() == muj_nick]
+
+                if not df_zaka.empty:
+                    row = df_zaka.iloc[0]
+                    zustatek = float(row.get("Zustatek", 0.0))
+                    
+                    AKTIVA_MAP = {
+                        "AAPL": ("Apple (AAPL)", "USD"), "TSLA": ("Tesla (TSLA)", "USD"), "MSFT": ("Microsoft (MSFT)", "USD"),
+                        "GOOGL": ("Google (GOOGL)", "USD"), "AMZN": ("Amazon (AMZN)", "USD"), "NVDA": ("Nvidia (NVDA)", "USD"),
+                        "META": ("Meta (META)", "USD"), "CEZ": ("ČEZ", "CZK"), "BTC": ("Bitcoin", "USD"), "ETH": ("Ethereum", "USD")
+                    }
+
+                    # Zjištění kurzu
+                    try:
+                        kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
+                    except:
+                        kurz_usd = 23.5
+
+                    hodnota_aktiv = 0.0
+                    drzena_aktiva = {}
+
+                    # Načtení cen
+                    for db_col, (nazev, mena) in AKTIVA_MAP.items():
+                        ks = float(row.get(db_col, 0.0))
+                        if ks > 0:
+                            try:
+                                ticker_symbol = "CEZ.PR" if db_col == "CEZ" else ("BTC-USD" if db_col == "BTC" else ("ETH-USD" if db_col == "ETH" else db_col))
+                                cena = yf.Ticker(ticker_symbol).history(period="1d")['Close'].iloc[-1]
+                                cena_czk = cena * kurz_usd if mena == "USD" else cena
+                            except:
+                                cena_czk = 0.0
                             
-                            if "ulozene_odpovedi" not in st.session_state:
-                                st.session_state["ulozene_odpovedi"] = {}
-                            st.session_state["ulozene_odpovedi"][otazka_id] = nova_odpoved
+                            hodnota_aktiv += (ks * cena_czk)
+                            drzena_aktiva[nazev] = ks
+
+                    celkovy_majetek = zustatek + hodnota_aktiv
+                    zisk_ztrata = celkovy_majetek - 20000.0  # Předpokládáme startovní kapitál 20 000 Kč
+
+                    # 3. Vykreslení výsledků pro žáka
+                    col_met1, col_met2 = st.columns(2)
+                    col_met1.metric("Celkový majetek", f"{celkovy_majetek:,.2f} Kč")
+                    
+                    # Barva zisku a ztráty
+                    if zisk_ztrata > 0:
+                        col_met2.metric("Čistý zisk / ztráta", f"+{zisk_ztrata:,.2f} Kč")
+                    else:
+                        col_met2.metric("Čistý zisk / ztráta", f"{zisk_ztrata:,.2f} Kč")
+
+                    col_inf1, col_inf2 = st.columns(2)
+                    with col_inf1:
+                        st.info(f"💵 **Volná hotovost k nákupu:**\n\n`{zustatek:,.2f} Kč`")
+                        st.info(f"📈 **Hodnota nakoupených aktiv:**\n\n`{hodnota_aktiv:,.2f} Kč`")
+                        
+                    with col_inf2:
+                        st.write("**Tvé aktuální portfolio:**")
+                        if drzena_aktiva:
+                            for aktivum, kusy in drzena_aktiva.items():
+                                st.write(f"⚡ {aktivum}: `{kusy} ks`")
+                        else:
+                            st.write("Zatím nedržíš žádné akcie ani krypto.")
+
+                    # 4. Historie transakcí žáka
+                    st.divider()
+                    st.markdown("#### 📜 Historie tvých obchodů")
+                    try:
+                        sheet_trans = soubor.worksheet("Transakce")
+                        data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                        if data_trans:
+                            df_trans = pd.DataFrame(data_trans)
+                            df_trans_zak = df_trans[df_trans["Nick"].astype(str).str.strip().str.lower() == muj_nick]
                             
-                            st.toast("Odpověď byla upravena!", icon="✅")
-                            st.rerun()
-                        except Exception as ex:
-                            st.error(f"Chyba při ukládání: {ex}")
-                st.markdown("---")
+                            if not df_trans_zak.empty:
+                                sloupce_k_zobrazeni = [c for c in df_trans_zak.columns if c not in ["Nick", "Jmeno"]]
+                                st.dataframe(df_trans_zak[sloupce_k_zobrazeni], use_container_width=True, hide_index=True)
+                            else:
+                                st.write("Zatím jsi neprovedl/a žádný obchod.")
+                    except Exception:
+                        st.warning("Nepodařilo se načíst historii tvých transakcí.")
+                else:
+                    st.info("Tvůj účet zatím v simulátoru nemá žádná data (nebo se uživatelské jméno neshoduje s databází).")
+
+            except Exception as e:
+                st.error(f"Chyba při stahování dat z burzy: {e}")
 
 
 # =========================================================================
