@@ -734,114 +734,131 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-    with tab_investice:
+with tab_investice:
         st.markdown("### 🏆 Živý žebříček investic a historie obchodů")
         
         with st.spinner("Stahuji aktuální ceny z burzy a data ze simulátoru... ⏳"):
             try:
-                client = init_gspread()
-                soubor = client.open("Skolni_Investice_DB")
+                # 1. ZJISTĚNÍ TŘÍD A ŽÁKŮ TOHOTO UČITELE
+                t_res = supabase.table("tridy").select("nazev_tridy").eq("ucitel_username", st.session_state["username"]).execute()
+                moje_tridy_seznam = [x["nazev_tridy"] for x in t_res.data] if t_res.data else []
                 
-                # Načtení dat ze Sheets
-                vsechna_data_zaci = soubor.sheet1.get_all_records(value_render_option="UNFORMATTED_VALUE")
-                vsechny_transakce = soubor.worksheet("Transakce").get_all_records(value_render_option="UNFORMATTED_VALUE")
+                moje_usernames = []
+                if moje_tridy_seznam:
+                    zaci_res = supabase.table("uzivatele").select("username").in_("trida", moje_tridy_seznam).execute()
+                    if zaci_res.data:
+                        moje_usernames = [z["username"].strip().lower() for z in zaci_res.data]
                 
-                df_zaci = pd.DataFrame(vsechna_data_zaci)
-                df_transakce = pd.DataFrame(vsechny_transakce)
-                
-                if not df_zaci.empty:
-                    # 1. NAČTENÍ ŽIVÝCH CEN (aby mohl učitel vidět reálný žebříček majetku)
-                    AKTIVA_MAP = {
-                        "AAPL": ("Apple (AAPL)", "USD"), "TSLA": ("Tesla (TSLA)", "USD"), "MSFT": ("Microsoft (MSFT)", "USD"),
-                        "GOOGL": ("Google (GOOGL)", "USD"), "AMZN": ("Amazon (AMZN)", "USD"), "NVDA": ("Nvidia (NVDA)", "USD"),
-                        "META": ("Meta (META)", "USD"), "CEZ": ("ČEZ", "CZK"), "BTC": ("Bitcoin", "USD"), "ETH": ("Ethereum", "USD")
-                    }
-
-                    try:
-                        kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
-                    except Exception:
-                        kurz_usd = 23.5
-
-                    zive_ceny = {}
-                    for db_col, (nazev, mena) in AKTIVA_MAP.items():
-                        try:
-                            ticker_symbol = "CEZ.PR" if db_col == "CEZ" else ("BTC-USD" if db_col == "BTC" else ("ETH-USD" if db_col == "ETH" else db_col))
-                            cena = yf.Ticker(ticker_symbol).history(period="1d")['Close'].iloc[-1]
-                            zive_ceny[db_col] = cena * kurz_usd if mena == "USD" else cena
-                        except Exception:
-                            zive_ceny[db_col] = 0.0
-                    
-                    # 2. VÝPOČET MAJETKU PRO KAŽDÉHO ŽÁKA
-                    zaci_list = []
-                    for index, row in df_zaci.iterrows():
-                        zustatek = float(row.get("Zustatek", 0.0))
-                        hodnota_aktiv = 0.0
-                        drzena_aktiva = {}
-
-                        for db_col, (nazev, mena) in AKTIVA_MAP.items():
-                            ks = float(row.get(db_col, 0.0))
-                            if ks > 0:
-                                hodnota_aktiv += ks * zive_ceny.get(db_col, 0.0)
-                                drzena_aktiva[nazev] = ks
-
-                        celkovy_majetek = zustatek + hodnota_aktiv
-                        
-                        zaci_list.append({
-                            "Nick": str(row.get("Nick", "")),
-                            "Jmeno": str(row.get("Jmeno", row.get("Nick", ""))),
-                            "Zustatek": zustatek,
-                            "HodnotaAktiv": hodnota_aktiv,
-                            "CelkovyMajetek": celkovy_majetek,
-                            "Zisk": celkovy_majetek - 20000.0,
-                            "Portfolio": drzena_aktiva
-                        })
-
-                    # Seřadit od nejbohatšího (žebříček)
-                    zaci_list = sorted(zaci_list, key=lambda x: x["CelkovyMajetek"], reverse=True)
-
-                    # 3. VYKRESLENÍ ŽEBŘÍČKU POMOCÍ ROZBALOVACÍCH LIŠT
-                    st.markdown("#### 🥇 Žebříček studentů")
-                    st.write("Kliknutím na žáka rozbalíte detail jeho portfolia a historii nákupů/prodejů.")
-                    
-                    for i, zak in enumerate(zaci_list):
-                        poradi = i + 1
-                        medaile = "🥇" if poradi == 1 else "🥈" if poradi == 2 else "🥉" if poradi == 3 else f"{poradi}."
-                        zisk_str = f"+{zak['Zisk']:,.2f} Kč" if zak['Zisk'] > 0 else f"{zak['Zisk']:,.2f} Kč"
-                        
-                        nadpis_expanderu = f"{medaile} {zak['Jmeno']} (Nick: {zak['Nick']}) — Majetek: {zak['CelkovyMajetek']:,.2f} Kč | Zisk: {zisk_str}"
-                        
-                        with st.expander(nadpis_expanderu):
-                            c1, c2 = st.columns(2)
-                            with c1:
-                                st.write("**Detail účtu:**")
-                                st.info(f"💵 Volná hotovost k nákupu: `{zak['Zustatek']:,.2f} Kč`\n\n📈 Hodnota nakoupených akcií: `{zak['HodnotaAktiv']:,.2f} Kč`")
-                            with c2:
-                                st.write("**Aktuální portfolio žáka:**")
-                                if zak["Portfolio"]:
-                                    for aktivum, kusy in zak["Portfolio"].items():
-                                        st.write(f"⚡ {aktivum}: `{kusy} ks`")
-                                else:
-                                    st.write("Tento žák zatím nedrží žádné akcie ani kryptoměny.")
-                            
-                            st.write("**📜 Historie obchodů:**")
-                            if not df_transakce.empty:
-                                # Filtrujeme transakce jen pro tohoto žáka
-                                df_trans_zak = df_transakce[df_transakce["Nick"].astype(str).str.strip().str.lower() == zak["Nick"].strip().lower()]
-                                if not df_trans_zak.empty:
-                                    # Odstraníme zbytečné sloupce a otočíme tak, aby nejnovější byly nahoře
-                                    sloupce_k_zobrazeni = [c for c in df_trans_zak.columns if c not in ["Nick", "Jmeno"]]
-                                    st.dataframe(df_trans_zak[sloupce_k_zobrazeni].iloc[::-1], use_container_width=True, hide_index=True)
-                                else:
-                                    st.write("Tento žák zatím neprovedl žádný obchod.")
-                            else:
-                                st.write("Tabulka historie obchodů je zcela prázdná.")
-                                
+                if not moje_usernames:
+                    st.info("Zatím nemáte ve svých třídách žádné žáky.")
                 else:
-                    st.info("V databázi simulátoru zatím nejsou zaregistrovaní žádní žáci.")
+                    client = init_gspread()
+                    soubor = client.open("Skolni_Investice_DB")
+                    
+                    # Načtení dat ze Sheets
+                    vsechna_data_zaci = soubor.sheet1.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                    vsechny_transakce = soubor.worksheet("Transakce").get_all_records(value_render_option="UNFORMATTED_VALUE")
+                    
+                    df_zaci = pd.DataFrame(vsechna_data_zaci)
+                    df_transakce = pd.DataFrame(vsechny_transakce)
+                    
+                    # Filtrujeme jen žáky tohoto učitele
+                    if not df_zaci.empty:
+                        df_zaci["Nick_lower"] = df_zaci["Nick"].astype(str).str.strip().str.lower()
+                        df_zaci = df_zaci[df_zaci["Nick_lower"].isin(moje_usernames)]
+                    
+                    if not df_zaci.empty:
+                        # NAČTENÍ ŽIVÝCH CEN (aby mohl učitel vidět reálný žebříček majetku)
+                        AKTIVA_MAP = {
+                            "AAPL": ("Apple (AAPL)", "USD"), "TSLA": ("Tesla (TSLA)", "USD"), "MSFT": ("Microsoft (MSFT)", "USD"),
+                            "GOOGL": ("Google (GOOGL)", "USD"), "AMZN": ("Amazon (AMZN)", "USD"), "NVDA": ("Nvidia (NVDA)", "USD"),
+                            "META": ("Meta (META)", "USD"), "CEZ": ("ČEZ", "CZK"), "BTC": ("Bitcoin", "USD"), "ETH": ("Ethereum", "USD")
+                        }
+
+                        try:
+                            kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
+                        except Exception:
+                            kurz_usd = 23.5
+
+                        zive_ceny = {}
+                        for db_col, (nazev, mena) in AKTIVA_MAP.items():
+                            try:
+                                ticker_symbol = "CEZ.PR" if db_col == "CEZ" else ("BTC-USD" if db_col == "BTC" else ("ETH-USD" if db_col == "ETH" else db_col))
+                                cena = yf.Ticker(ticker_symbol).history(period="1d")['Close'].iloc[-1]
+                                zive_ceny[db_col] = cena * kurz_usd if mena == "USD" else cena
+                            except Exception:
+                                zive_ceny[db_col] = 0.0
+                        
+                        # VÝPOČET MAJETKU PRO KAŽDÉHO ŽÁKA
+                        zaci_list = []
+                        for index, row in df_zaci.iterrows():
+                            zustatek = float(row.get("Zustatek", 0.0))
+                            hodnota_aktiv = 0.0
+                            drzena_aktiva = {}
+
+                            for db_col, (nazev, mena) in AKTIVA_MAP.items():
+                                ks = float(row.get(db_col, 0.0))
+                                if ks > 0:
+                                    hodnota_aktiv += ks * zive_ceny.get(db_col, 0.0)
+                                    drzena_aktiva[nazev] = ks
+
+                            celkovy_majetek = zustatek + hodnota_aktiv
+                            
+                            zaci_list.append({
+                                "Nick": str(row.get("Nick", "")),
+                                "Jmeno": str(row.get("Jmeno", row.get("Nick", ""))),
+                                "Zustatek": zustatek,
+                                "HodnotaAktiv": hodnota_aktiv,
+                                "CelkovyMajetek": celkovy_majetek,
+                                "Zisk": celkovy_majetek - 20000.0,
+                                "Portfolio": drzena_aktiva
+                            })
+
+                        # Seřadit od nejbohatšího (žebříček)
+                        zaci_list = sorted(zaci_list, key=lambda x: x["CelkovyMajetek"], reverse=True)
+
+                        # VYKRESLENÍ ŽEBŘÍČKU POMOCÍ ROZBALOVACÍCH LIŠT
+                        st.markdown("#### 🥇 Žebříček mých studentů")
+                        st.write("Kliknutím na žáka rozbalíte detail jeho portfolia a historii nákupů/prodejů.")
+                        
+                        for i, zak in enumerate(zaci_list):
+                            poradi = i + 1
+                            medaile = "🥇" if poradi == 1 else "🥈" if poradi == 2 else "🥉" if poradi == 3 else f"{poradi}."
+                            zisk_str = f"+{zak['Zisk']:,.2f} Kč" if zak['Zisk'] > 0 else f"{zak['Zisk']:,.2f} Kč"
+                            
+                            nadpis_expanderu = f"{medaile} {zak['Jmeno']} (Nick: {zak['Nick']}) — Majetek: {zak['CelkovyMajetek']:,.2f} Kč | Zisk: {zisk_str}"
+                            
+                            with st.expander(nadpis_expanderu):
+                                c1, c2 = st.columns(2)
+                                with c1:
+                                    st.write("**Detail účtu:**")
+                                    st.info(f"💵 Volná hotovost k nákupu: `{zak['Zustatek']:,.2f} Kč`\n\n📈 Hodnota nakoupených akcií: `{zak['HodnotaAktiv']:,.2f} Kč`")
+                                with c2:
+                                    st.write("**Aktuální portfolio žáka:**")
+                                    if zak["Portfolio"]:
+                                        for aktivum, kusy in zak["Portfolio"].items():
+                                            st.write(f"⚡ {aktivum}: `{kusy} ks`")
+                                    else:
+                                        st.write("Tento žák zatím nedrží žádné akcie ani kryptoměny.")
+                                
+                                st.write("**📜 Historie obchodů:**")
+                                if not df_transakce.empty:
+                                    # Filtrujeme transakce jen pro tohoto žáka
+                                    df_trans_zak = df_transakce[df_transakce["Nick"].astype(str).str.strip().str.lower() == zak["Nick"].strip().lower()]
+                                    if not df_trans_zak.empty:
+                                        # Odstraníme zbytečné sloupce a otočíme tak, aby nejnovější byly nahoře
+                                        sloupce_k_zobrazeni = [c for c in df_trans_zak.columns if c not in ["Nick", "Jmeno"]]
+                                        st.dataframe(df_trans_zak[sloupce_k_zobrazeni].iloc[::-1], use_container_width=True, hide_index=True)
+                                    else:
+                                        st.write("Tento žák zatím neprovedl žádný obchod.")
+                                else:
+                                    st.write("Tabulka historie obchodů je zcela prázdná.")
+                                    
+                    else:
+                        st.info("Vaši žáci zatím nemají založené účty v simulátoru.")
 
             except Exception as e:
                 st.error(f"Chyba při načítání dat pro učitele: {e}")
-
 # 3. Učitelské materiály
 elif st.session_state["current_view"] == "Ucitel_Materialy":
     st.title("📂 Materiály k výuce a testy")
