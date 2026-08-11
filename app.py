@@ -134,7 +134,6 @@ def zakovsky_panel():
         st.warning("Nejprve se prosím přihlaste.")
         return
 
-    # Vytvoření dvou záložek pro lepší orientaci žáka
     tab_ukoly, tab_investice = st.tabs(["📝 Moje úkoly z učebnice", "📈 Můj investiční profil"])
 
     # -------------------------------------------------------------------------
@@ -219,8 +218,8 @@ def zakovsky_panel():
         st.markdown("### 📈 Tvé investiční portfolio")
         st.write("Zde živě vidíš, jak si vedeš na burze. Pokud chceš nakupovat nebo prodávat další akcie a kryptoměny, přejdi přímo do obchodní aplikace.")
         
-        # TLAČÍTKO ODKAZUJÍCÍ DO APLIKACE (Nezapomeň změnit URL!)
-        st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", "https://ucebnice-ekonomika-lnpps6sbwb9myglcbwcv5t.streamlit.app/%C5%A0koln%C3%AD_investi%C4%8Dn%C3%AD_simul%C3%A1tor")
+        # NASTAVTE SI ZDE SPRÁVNOU URL ADRESU APLIKACE!
+        st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", "https://ZDE_DOPLN_ODKAZ_NA_TVUJ_SIMULATOR.cz", type="primary")
         
         st.divider()
 
@@ -287,7 +286,6 @@ def zakovsky_panel():
                     col_met1, col_met2 = st.columns(2)
                     col_met1.metric("Celkový majetek", f"{celkovy_majetek:,.2f} Kč")
                     
-                    # Barva zisku a ztráty
                     if zisk_ztrata > 0:
                         col_met2.metric("Čistý zisk / ztráta", f"+{zisk_ztrata:,.2f} Kč")
                     else:
@@ -312,7 +310,7 @@ def zakovsky_panel():
                     try:
                         sheet_trans = soubor.worksheet("Transakce")
                         
-                        # ZMĚNA: Tady načítáme čistě, aby se datum (Cas) ukázalo krásně textově
+                        # Tady byla ta chyba pramenící z původního data_trans! Upraveno:
                         data_trans = sheet_trans.get_all_records() 
                         
                         if data_trans:
@@ -326,7 +324,12 @@ def zakovsky_panel():
                                 st.write("Zatím jsi neprovedl/a žádný obchod.")
                     except Exception:
                         st.warning("Nepodařilo se načíst historii tvých transakcí.")
+                else:
+                    st.info("Tvůj účet zatím v simulátoru nemá žádná data (nebo se uživatelské jméno neshoduje s databází).")
 
+            # TOHLE JSTE PRAVDĚPODOBNĚ OMYLEM SMAZAL/A:
+            except Exception as e:
+                st.error(f"Chyba při stahování dat z burzy: {e}")
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
 # =========================================================================
