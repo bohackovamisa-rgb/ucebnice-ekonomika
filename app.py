@@ -211,16 +211,17 @@ def zakovsky_panel():
                                     st.error(f"Chyba při ukládání: {ex}")
                         st.markdown("---")
 
-    # -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
     # ZÁLOŽKA 2: OSOBNÍ INVESTIČNÍ PROFIL ŽÁKA
     # -------------------------------------------------------------------------
     with tab_investice:
         st.markdown("### 📈 Tvé investiční portfolio")
         st.write("Zde živě vidíš, jak si vedeš na burze. Pokud chceš nakupovat nebo prodávat další akcie a kryptoměny, přejdi přímo do obchodní aplikace.")
         
-        # NASTAVTE SI ZDE SPRÁVNOU URL ADRESU APLIKACE!
-        st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", "https://ucebnice-ekonomika-lnpps6sbwb9myglcbwcv5t.streamlit.app/%C5%A0koln%C3%AD_investi%C4%8Dn%C3%AD_simul%C3%A1tor")
-        
+        # ZMĚNA: Tlačítko nyní dynamicky posílá jméno žáka v odkazu
+        muj_nick = username.strip().lower()
+        url_sim = f"https://TVUJ_SIMULATOR.streamlit.app/?user={muj_nick}"
+        st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", url_sim, type="primary")
         st.divider()
 
         import gspread
