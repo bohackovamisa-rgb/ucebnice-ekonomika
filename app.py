@@ -220,7 +220,7 @@ def zakovsky_panel():
         st.write("Zde živě vidíš, jak si vedeš na burze. Pokud chceš nakupovat nebo prodávat další akcie a kryptoměny, přejdi přímo do obchodní aplikace.")
         
         # TLAČÍTKO ODKAZUJÍCÍ DO APLIKACE (Nezapomeň změnit URL!)
-        st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", "https://ZDE_DOPLN_ODKAZ_NA_TVUJ_SIMULATOR.cz", type="primary")
+        st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", "https://ucebnice-ekonomika-lnpps6sbwb9myglcbwcv5t.streamlit.app/%C5%A0koln%C3%AD_investi%C4%8Dn%C3%AD_simul%C3%A1tor")
         
         st.divider()
 
