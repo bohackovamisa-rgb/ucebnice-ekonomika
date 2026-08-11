@@ -408,11 +408,12 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
     
-    # 🔐 CHYTRÝ ZÁMEK: Kdokoliv má ve jméně "nakladatel", uvidí jen 2 kapitoly
+    # 🔐 CHYTRÝ ZÁMEK: Odemčeno jen pro plné uživatele. "demo" a "nakladatel" vidí jen 2 kapitoly.
     username_aktualni = st.session_state.get("username", "").lower()
     
-    if "nakladatel" in username_aktualni:
+    if "nakladatel" in username_aktualni or "demo" in username_aktualni:
         chapters = {
             "Kapitola 1": "1. Podnikavost a startupy",
             "Kapitola 2": "2. Finance a osobní management",
@@ -427,6 +428,16 @@ with st.sidebar:
             "Kapitola 6": "6. Management a marketing",
         }
 
+    for key, title in chapters.items():
+        is_active = st.session_state["current_view"] == key
+        if st.button(title, key=f"nav_{key}", use_container_width=True, type="primary" if is_active else "secondary"):
+            st.session_state["current_view"] = key
+            st.rerun()
+
+    st.divider()
+    if st.button("Odhlásit se 🚪", use_container_width=True):
+        st.session_state.clear()
+        st.rerun()
     for key, title in chapters.items():
         is_active = st.session_state["current_view"] == key
         if st.button(title, key=f"nav_{key}", use_container_width=True, type="primary" if is_active else "secondary"):
