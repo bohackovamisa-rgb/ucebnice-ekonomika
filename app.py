@@ -311,7 +311,10 @@ def zakovsky_panel():
                     st.markdown("#### 📜 Historie tvých obchodů")
                     try:
                         sheet_trans = soubor.worksheet("Transakce")
-                        data_trans = sheet_trans.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                        
+                        # ZMĚNA: Tady načítáme čistě, aby se datum (Cas) ukázalo krásně textově
+                        data_trans = sheet_trans.get_all_records() 
+                        
                         if data_trans:
                             df_trans = pd.DataFrame(data_trans)
                             df_trans_zak = df_trans[df_trans["Nick"].astype(str).str.strip().str.lower() == muj_nick]
@@ -323,12 +326,6 @@ def zakovsky_panel():
                                 st.write("Zatím jsi neprovedl/a žádný obchod.")
                     except Exception:
                         st.warning("Nepodařilo se načíst historii tvých transakcí.")
-                else:
-                    st.info("Tvůj účet zatím v simulátoru nemá žádná data (nebo se uživatelské jméno neshoduje s databází).")
-
-            except Exception as e:
-                st.error(f"Chyba při stahování dat z burzy: {e}")
-
 
 # =========================================================================
 # 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
