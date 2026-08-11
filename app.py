@@ -734,7 +734,7 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
         except Exception as e:
             st.error(f"Chyba při načítání výsledků: {e}")
 
-with tab_investice:
+    with tab_investice:
         st.markdown("### 🏆 Živý žebříček investic a historie obchodů")
         
         with st.spinner("Stahuji aktuální ceny z burzy a data ze simulátoru... ⏳"):
@@ -859,6 +859,7 @@ with tab_investice:
 
             except Exception as e:
                 st.error(f"Chyba při načítání dat pro učitele: {e}")
+
 # 3. Učitelské materiály
 elif st.session_state["current_view"] == "Ucitel_Materialy":
     st.title("📂 Materiály k výuce a testy")
