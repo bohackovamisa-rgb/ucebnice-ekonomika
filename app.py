@@ -407,7 +407,7 @@ with st.sidebar:
         st.session_state["current_view"] = "Moje_Odpovedi"
         st.rerun()
 
-st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
     
     # 🔐 CHYTRÝ ZÁMEK: Kdokoliv má ve jméně "nakladatel", uvidí jen 2 kapitoly
     username_aktualni = st.session_state.get("username", "").lower()
