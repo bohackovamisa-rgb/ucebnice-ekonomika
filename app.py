@@ -408,7 +408,6 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
-    st.markdown("<div class='sidebar-section-title'>KAPITOLY KURZU</div>", unsafe_allow_html=True)
     
     # 🔐 CHYTRÝ ZÁMEK: Odemčeno jen pro plné uživatele. "demo" a "nakladatel" vidí jen 2 kapitoly.
     username_aktualni = st.session_state.get("username", "").lower()
@@ -438,17 +437,11 @@ with st.sidebar:
     if st.button("Odhlásit se 🚪", use_container_width=True):
         st.session_state.clear()
         st.rerun()
-    for key, title in chapters.items():
-        is_active = st.session_state["current_view"] == key
-    if st.button(title, key=f"nav_{key}", use_container_width=True, type="primary" if is_active else "secondary"):
-            st.session_state["current_view"] = key
-            st.rerun()
 
-    st.divider()
-    if st.button("Odhlásit se 🚪", use_container_width=True):
-        st.session_state.clear()
-        st.rerun()
-
+# =========================================================================
+# 7. SMĚROVÁNÍ OBSAHU (ROUTING)
+# =========================================================================
+# Zde pokračuje původní kód...
 
 # =========================================================================
 # 7. SMĚROVÁNÍ OBSAHU (ROUTING)
