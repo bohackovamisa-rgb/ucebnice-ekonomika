@@ -620,11 +620,73 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
 # 3. Učitelské materiály
 elif st.session_state["current_view"] == "Ucitel_Materialy":
     st.title("📂 Materiály k výuce a testy")
-    st.info("Metodické balíčky a testy pro učitele.")
+    st.markdown("""
+    <div class="box-gray">
+        Tato sekce je viditelná <b>pouze pro přihlášené učitele</b>. 
+        Najdete zde metodické podklady, prezentace, pracovní listy a testy ke všem kapitolám.
+    </div>
+    """, unsafe_allow_html=True)
+
+    tab_metodika, tab_testy = st.tabs(["📄 Metodické balíčky ke kapitolám", "📝 Písemné práce a testy"])
+
+    # --- ZÁLOŽKA 1: METODIKY ---
+    with tab_metodika:
+        vybrana_kap = st.selectbox(
+            "Vyberte kapitolu učebnice:",
+            [
+                "Kapitola 1: Podnikavost a startupy",
+                "Kapitola 2: Finance a osobní management",
+                "Kapitola 3: Výroba, náklady a efektivita",
+                "Kapitola 4: Zaměstnanci a trh práce",
+                "Kapitola 5: Stát, daně a ekonomika",
+                "Kapitola 6: Management a marketing"
+            ]
+        )
+        
+        st.divider()
+
+        # Zobrazení materiálů pro Kapitolu 1
+        if vybrana_kap == "Kapitola 1: Podnikavost a startupy":
+            st.markdown("### 📘 Materiály ke Kapitole 1")
+            
+            with st.container(border=True):
+                st.markdown("#### 📦 Výukový modul: Influencer jako firma")
+                st.markdown("""
+                **Popis materiálu:**  
+                Komplexní výukový balíček zaměřený na téma podnikání v digitální době a světě influencerů. Obsahuje metodickou příručku pro vyučujícího, prezentaci pro výklad v hodině, pracovní listy pro žáky a praktické případové studie. Žáci na reálných příkladech pochopí principy OSVČ, zdanění příjmů a obchodní modely na sociálních sítích.
+                
+                **Obsah balíčku:**  
+                * 📄 Metodická příručka a průvodní list (PDF / DOCX)
+                * 📊 Prezentace k výkladu (PPTX)
+                * 📝 Pracovní listy a případové studie pro žáky
+                * 📈 Praktická kalkulační tabulka (XLSX)
+                """)
+                
+                try:
+                    with open("Influencer - podnikání.zip", "rb") as file:
+                        st.download_button(
+                            label="📥 Stáhnout balíček: Influencer jako firma (ZIP)",
+                            data=file,
+                            file_name="Influencer_podnikani.zip",
+                            mime="application/zip",
+                            type="primary"
+                        )
+                except FileNotFoundError:
+                    st.warning("Soubor 'Influencer - podnikání.zip' nebyl na GitHubu nalezen.")
+
+        else:
+            st.info(f"Pro **{vybrana_kap}** zatím nebyly nahrány žádné metodické balíčky.")
+
+    # --- ZÁLOŽKA 2: TESTY ---
+    with tab_testy:
+        st.markdown("### 📝 Návrhy písemných prací a testů")
+        st.info("Testy ke stažení se připravují.")
+
 
 # 4. Úvodní stránka
 elif st.session_state["current_view"] == "Uvod":
     st.title("Ekonomika, která dává smysl")
+
     st.markdown(
         """
     <div class="box-gray">
@@ -632,8 +694,35 @@ elif st.session_state["current_view"] == "Uvod":
     </div>
     <div class="box-green">
         🎯 <b>Cíl učebnice</b><br>
-        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku.
+        Naučíš se propojit nápad, zákazníka, peníze, práci, stát, daně, marketing, rizika a odpovědnost do jednoho funkčního celku. Získáš dovednosti pro praktické rozhodování v reálném životě.
     </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    st.divider()
+
+    st.markdown("### 📖 Jak s učebnicí pracovat")
+    st.markdown("""
+    1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
+    2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
+    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
+    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které ti pomohou s vysvětlením, kontrolou nebo rozvojem tvého projektu.
+    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
+    6. **Závěrečný projekt.** Na úplném konci propojíš všechno dohromady a vytvoříš návrh vlastního odpovědného projektu.
+    """)
+
+    st.divider()
+
+    st.markdown("### 🧩 Legenda učebnice")
+    st.markdown(
+        """
+    <div class="box-blue">📘 <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
+    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-purple">🤖 <b>Fialová:</b> AI mentoring a práce s asistencí</div>
+    <div class="box-green">✅ <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
+    <div class="box-red">⚠️ <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
+    <div class="box-gray">📄 <b>Šedá:</b> Zdroje, ověřování, učitelské poznámky</div>
     """,
         unsafe_allow_html=True,
     )
@@ -654,7 +743,9 @@ else:
 
         st.session_state["ulozene_odpovedi"] = {}
         if st.session_state.get("username"):
-            kap_nazev = f"Kapitola {kap_num}"
+            # Připravíme si obě možné varianty zápisu kapitoly
+            kap_nazev = f"Kapitola {kap_num}" if not str(kap_num).startswith("Kapitola") else kap_num
+            
             res = (
                 supabase.table("odpovedi")
                 .select("otazka_id, odpoved")
