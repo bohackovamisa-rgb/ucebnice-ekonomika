@@ -218,7 +218,7 @@ def zakovsky_panel():
         st.markdown("### 📈 Tvé investiční portfolio")
         st.write("Zde živě vidíš, jak si vedeš na burze. Pokud chceš nakupovat nebo prodávat další akcie a kryptoměny, přejdi přímo do obchodní aplikace.")
         
-        # Přímý odkaz na simulátor předávající přihlašovací jméno
+        # Dynamický odkaz předávající uživatele do simulátoru
         muj_nick = username.strip().lower()
         url_sim = f"https://skolni-investice-jcu32nvp35ymaymjb9g2k5.streamlit.app/?user={muj_nick}&nick={muj_nick}"
         st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", url_sim, type="primary")
