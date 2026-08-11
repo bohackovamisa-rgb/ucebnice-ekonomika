@@ -211,17 +211,18 @@ def zakovsky_panel():
                                     st.error(f"Chyba při ukládání: {ex}")
                         st.markdown("---")
 
-# -------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # ZÁLOŽKA 2: OSOBNÍ INVESTIČNÍ PROFIL ŽÁKA
     # -------------------------------------------------------------------------
     with tab_investice:
         st.markdown("### 📈 Tvé investiční portfolio")
         st.write("Zde živě vidíš, jak si vedeš na burze. Pokud chceš nakupovat nebo prodávat další akcie a kryptoměny, přejdi přímo do obchodní aplikace.")
         
-        # ZMĚNA: Tlačítko nyní dynamicky posílá jméno žáka v odkazu
+        # Přímý odkaz na simulátor předávající přihlašovací jméno
         muj_nick = username.strip().lower()
-        url_sim = f"https://ucebnice-ekonomika-lnpps6sbwb9myglcbwcv5t.streamlit.app/%C5%A0koln%C3%AD_investi%C4%8Dn%C3%AD_simul%C3%A1tor"
+        url_sim = f"https://skolni-investice-jcu32nvp35ymaymjb9g2k5.streamlit.app/?user={muj_nick}&nick={muj_nick}"
         st.link_button("🚀 Přejít do investičního simulátoru (Koupit / Prodat)", url_sim, type="primary")
+        
         st.divider()
 
         import gspread
@@ -230,7 +231,6 @@ def zakovsky_panel():
 
         with st.spinner("Aktualizuji data z burzy... ⏳"):
             try:
-                # 1. Připojení k DB
                 raw_creds = st.secrets["google_credentials"]
                 tajemstvi = json.loads(raw_creds) if isinstance(raw_creds, str) else dict(raw_creds)
                 if "private_key" in tajemstvi:
@@ -243,8 +243,6 @@ def zakovsky_panel():
                 data_inv = sheet_uziv.get_all_records(value_render_option="UNFORMATTED_VALUE")
                 df_inv = pd.DataFrame(data_inv)
 
-                # 2. Filtrace na přihlášeného žáka
-                muj_nick = username.strip().lower()
                 df_zaka = df_inv[df_inv["Nick"].astype(str).str.strip().str.lower() == muj_nick]
 
                 if not df_zaka.empty:
@@ -257,16 +255,14 @@ def zakovsky_panel():
                         "META": ("Meta (META)", "USD"), "CEZ": ("ČEZ", "CZK"), "BTC": ("Bitcoin", "USD"), "ETH": ("Ethereum", "USD")
                     }
 
-                    # Zjištění kurzu
                     try:
                         kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
-                    except:
+                    except Exception:
                         kurz_usd = 23.5
 
                     hodnota_aktiv = 0.0
                     drzena_aktiva = {}
 
-                    # Načtení cen
                     for db_col, (nazev, mena) in AKTIVA_MAP.items():
                         ks = float(row.get(db_col, 0.0))
                         if ks > 0:
@@ -274,16 +270,15 @@ def zakovsky_panel():
                                 ticker_symbol = "CEZ.PR" if db_col == "CEZ" else ("BTC-USD" if db_col == "BTC" else ("ETH-USD" if db_col == "ETH" else db_col))
                                 cena = yf.Ticker(ticker_symbol).history(period="1d")['Close'].iloc[-1]
                                 cena_czk = cena * kurz_usd if mena == "USD" else cena
-                            except:
+                            except Exception:
                                 cena_czk = 0.0
                             
                             hodnota_aktiv += (ks * cena_czk)
                             drzena_aktiva[nazev] = ks
 
                     celkovy_majetek = zustatek + hodnota_aktiv
-                    zisk_ztrata = celkovy_majetek - 20000.0  # Předpokládáme startovní kapitál 20 000 Kč
+                    zisk_ztrata = celkovy_majetek - 20000.0
 
-                    # 3. Vykreslení výsledků pro žáka
                     col_met1, col_met2 = st.columns(2)
                     col_met1.metric("Celkový majetek", f"{celkovy_majetek:,.2f} Kč")
                     
@@ -305,13 +300,10 @@ def zakovsky_panel():
                         else:
                             st.write("Zatím nedržíš žádné akcie ani krypto.")
 
-                    # 4. Historie transakcí žáka
                     st.divider()
                     st.markdown("#### 📜 Historie tvých obchodů")
                     try:
                         sheet_trans = soubor.worksheet("Transakce")
-                        
-                        # Tady byla ta chyba pramenící z původního data_trans! Upraveno:
                         data_trans = sheet_trans.get_all_records() 
                         
                         if data_trans:
@@ -328,7 +320,6 @@ def zakovsky_panel():
                 else:
                     st.info("Tvůj účet zatím v simulátoru nemá žádná data (nebo se uživatelské jméno neshoduje s databází).")
 
-            # TOHLE JSTE PRAVDĚPODOBNĚ OMYLEM SMAZAL/A:
             except Exception as e:
                 st.error(f"Chyba při stahování dat z burzy: {e}")
 # =========================================================================
