@@ -51,7 +51,7 @@ p, li, td, th, label, span, .stMarkdown {
     font-size: 0.92rem !important;
 }
 
-/* Tlačítka (Černá zaoblená tlačítka jako v učebnici) */
+/* Tlačítka */
 button[data-testid="baseButton-primary"], button[kind="primary"], div.stButton > button, a[data-testid="stPageLink-NavLink"], a[data-testid="stLinkButton"] {
     font-family: 'Montserrat', sans-serif !important;
     border-radius: 9999px !important;
@@ -76,7 +76,7 @@ div.stButton > button *, a[data-testid="stPageLink-NavLink"] *, a[data-testid="s
     color: #FFFFFF !important;
 }
 
-/* Karta metrik (Zůstatky / Majetek) */
+/* Karta metrik */
 div[data-testid="stMetric"] {
     background-color: #FFFFFF !important;
     border: 1px solid #EAE7DC !important;
@@ -217,6 +217,114 @@ if st.session_state.get("is_logged_in", False) and not st.session_state.get("pri
         st.warning(f"Chyba při automatickém načítání účtu: {e}")
 
 # ==========================================
+# --- POMOCNÁ FUNKCE PRO OBCHODOVÁNÍ na BURZE ---
+# ==========================================
+def vykresli_obchodovani_burzu(moje_data):
+    st.metric(label="💵 Volný kapitál k dispozici", value=f"{st.session_state['zustatek']:.2f} Kč")
+    st.write("")
+    
+    vybrane_aktivum = st.selectbox("Vyber aktivum k obchodování:", list(AKTIVA.keys()), key="sel_aktivum_trade")
+    ticker_symbol, mena, sloupec_db = AKTIVA[vybrane_aktivum]
+    
+    with st.spinner(f"Načítám živý kurz pro {vybrane_aktivum}..."):
+        try:
+            if mena == "USD":
+                kurz_usd_czk = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
+            else:
+                kurz_usd_czk = 1.0
+            
+            historie = yf.Ticker(ticker_symbol).history(period="1mo")['Close']
+            historie_czk = historie * kurz_usd_czk
+            aktualni_cena = round(float(historie_czk.iloc[-1]), 2)
+            
+            st.markdown(f"### **{vybrane_aktivum}** — `< {aktualni_cena:.2f} Kč / ks >`", unsafe_allow_html=True)
+            st.line_chart(historie_czk)
+            
+            je_krypto = vybrane_aktivum in ["Bitcoin", "Ethereum"]
+            if je_krypto:
+                st.caption("💡 Kryptoměny lze nakupovat i po malých částech (např. 0.005 ks).")
+                krok_formulare = 0.001
+                format_cisla = "%.4f"
+            else:
+                krok_formulare = 1.0
+                format_cisla = "%.2f"
+            
+            stav_aktiva_ted = bezpecny_float(moje_data.get(sloupec_db, 0)) if moje_data else 0.0
+
+            col_nakup, col_prodej = st.columns(2)
+            
+            with col_nakup:
+                st.write("#### 🛒 Nákup")
+                pocet_koupit = st.number_input("Počet ks", min_value=0.0, step=krok_formulare, format=format_cisla, value=0.0, key="nakup_in")
+                cena_koupit = round(pocet_koupit * aktualni_cena, 2)
+                st.write(f"Celkem: `{cena_koupit:.2f} Kč`")
+                
+                if st.button("KOUPIT ➔", use_container_width=True, key="btn_koupit_act"):
+                    if pocet_koupit > 0:
+                        if st.session_state["zustatek"] >= cena_koupit:
+                            with st.spinner("Zpracovávám příkaz..."):
+                                novy_zustatek = round(st.session_state["zustatek"] - cena_koupit, 2)
+                                novy_stav_aktiva = round(stav_aktiva_ted + pocet_koupit, 4)
+                                
+                                nicky_sloupec = [str(n).strip() for n in db_uzivatele.col_values(2)]
+                                cislo_radku = nicky_sloupec.index(st.session_state["nick"]) + 1
+                                hlavicky = db_uzivatele.row_values(1)
+                                cislo_sloupce_aktiva = hlavicky.index(sloupec_db) + 1
+                                cislo_sloupce_zustatek = hlavicky.index("Zustatek") + 1
+                                
+                                db_uzivatele.update_cell(cislo_radku, cislo_sloupce_zustatek, novy_zustatek) 
+                                db_uzivatele.update_cell(cislo_radku, cislo_sloupce_aktiva, novy_stav_aktiva)
+                                
+                                if db_transakce:
+                                    try:
+                                        cas_ted = datetime.now().strftime("%d.%m.%Y %H:%M")
+                                        db_transakce.append_row([cas_ted, st.session_state["nick"], "NÁKUP", vybrane_aktivum, pocet_koupit, cena_koupit])
+                                    except Exception:
+                                        pass
+                                
+                                st.session_state["zustatek"] = novy_zustatek
+                                st.success("✅ Nákup proveden!")
+                                st.rerun()
+                        else:
+                            st.error("❌ Nedostatek prostředků.")
+            
+            with col_prodej:
+                st.write("#### 💰 Prodej")
+                st.write(f"Vlastníš: `{hezke_kusy(stav_aktiva_ted)} ks`")
+                pocet_prodat = st.number_input("Počet ks k prodeji", min_value=0.0, max_value=float(stav_aktiva_ted) if stav_aktiva_ted > 0 else 0.0, step=krok_formulare, format=format_cisla, value=0.0, key="prodej_in")
+                cena_prodat = round(pocet_prodat * aktualni_cena, 2)
+                st.write(f"Získáš: `{cena_prodat:.2f} Kč`")
+                
+                if st.button("PRODAT ➔", use_container_width=True, key="btn_prodat_act"):
+                    if pocet_prodat > 0 and pocet_prodat <= stav_aktiva_ted:
+                        with st.spinner("Zpracovávám příkaz..."):
+                            novy_zustatek = round(st.session_state["zustatek"] + cena_prodat, 2)
+                            novy_stav_aktiva = round(stav_aktiva_ted - pocet_prodat, 4)
+                            
+                            nicky_sloupec = [str(n).strip() for n in db_uzivatele.col_values(2)]
+                            cislo_radku = nicky_sloupec.index(st.session_state["nick"]) + 1
+                            hlavicky = db_uzivatele.row_values(1)
+                            cislo_sloupce_aktiva = hlavicky.index(sloupec_db) + 1
+                            cislo_sloupce_zustatek = hlavicky.index("Zustatek") + 1
+                            
+                            db_uzivatele.update_cell(cislo_radku, cislo_sloupce_zustatek, novy_zustatek)
+                            db_uzivatele.update_cell(cislo_radku, cislo_sloupce_aktiva, novy_stav_aktiva)
+                            
+                            if db_transakce:
+                                try:
+                                    cas_ted = datetime.now().strftime("%d.%m.%Y %H:%M")
+                                    db_transakce.append_row([cas_ted, st.session_state["nick"], "PRODEJ", vybrane_aktivum, pocet_prodat, cena_prodat])
+                                except Exception:
+                                    pass
+                            
+                            st.session_state["zustatek"] = novy_zustatek
+                            st.success("✅ Prodej proveden!")
+                            st.rerun()
+
+        except Exception as e:
+            st.warning(f"Chyba při stahování dat: {e}")
+
+# ==========================================
 # --- A: OBRAZOVKA PRO NEPŘIHLÁŠENÉ ---
 # ==========================================
 if not st.session_state["prihlasen"]:
@@ -292,13 +400,13 @@ if not st.session_state["prihlasen"]:
                         st.success("🎉 Účet úspěšně vytvořen! Nyní se přihlaš.")
 
 # ==========================================
-# --- B: OBRAZOVKA PRO UČITELE ---
+# --- B: OBRAZOVKA PRO UČITELE / DEMO ---
 # ==========================================
 elif st.session_state["role"] == "UCITEL":
     sloupec1, sloupec2 = st.columns([3, 1])
     with sloupec1:
-        st.markdown("<h2 style='color: #0F172A;'>👩‍🏫 Učitelský Panel</h2>", unsafe_allow_html=True)
-        st.write(f"Učitel: **{st.session_state['jmeno']}** | Nick: `{st.session_state['nick']}`")
+        st.markdown("<h2 style='color: #0F172A;'>👩‍🏫 Učitelský Panel & Simulátor</h2>", unsafe_allow_html=True)
+        st.write(f"Učitel / Demo: **{st.session_state['jmeno']}** | Nick: `{st.session_state['nick']}`")
     with sloupec2:
         st.write("")
         if st.button("🚪 ODHLÁSIT", use_container_width=True):
@@ -308,162 +416,174 @@ elif st.session_state["role"] == "UCITEL":
     st.divider()
     
     vsechna_data = db_uzivatele.get_all_records(value_render_option="UNFORMATTED_VALUE")
-    vsechny_dostupne_tridy = sorted(list(set([str(r.get("Trida", "")).strip().upper() for r in vsechna_data if r.get("Trida") and str(r.get("Role","")).upper() != "UCITEL"])))
+    moje_data = next((r for r in vsechna_data if str(r.get("Nick", "")).strip().lower() == st.session_state["nick"].lower()), None)
 
-    trida_raw = str(st.session_state.get("trida") or "")
-    moje_ulozene_tridy = [t.strip() for t in trida_raw.split(",") if t.strip()]
+    # HLAVNÍ PŘEPÍNAČ MEZI PŘEHLEDEM TŘÍDY A VLASTNÍM SIMULÁTOREM
+    hlavni_tab1, hlavni_tab2 = st.tabs(["👩‍🏫 Přehled tříd a výsledky", "📈 Moje obchodování na burze"])
     
-    with st.expander("⚙️ Spravovat moje výukové třídy"):
-        st.write("Vyberte třídy, které učíte:")
-        vybrane_tridy_ucitele = st.multiselect("Moje třídy:", vsechny_dostupne_tridy, default=[t for t in moje_ulozene_tridy if t in vsechny_dostupne_tridy])
-        if st.button("Uložit výukové třídy"):
-            nove_tridy_str = ", ".join(vybrane_tridy_ucitele)
-            nicky_sloupec = db_uzivatele.col_values(2)
-            cislo_radku = nicky_sloupec.index(st.session_state["nick"]) + 1
-            hlavicky = db_uzivatele.row_values(1)
-            cislo_sloupce_trida = hlavicky.index("Trida") + 1
+    with hlavni_tab1:
+        trida_raw = str(st.session_state.get("trida") or "")
+        moje_ulozene_tridy = [t.strip().upper() for t in trida_raw.split(",") if t.strip()]
+        
+        is_demo = st.session_state["nick"].lower() in ["demo.nakladatel", "nakladatel"]
+        
+        if not is_demo:
+            with st.expander("⚙️ Spravovat moje výukové třídy"):
+                st.info("Zadejte názvy tříd přesně tak, jak je žáci zadávají při registraci.")
+                nove_tridy_input = st.text_input("Moje třídy (oddělujte čárkou, např. 1A, 4.B):", value=", ".join(moje_ulozene_tridy))
+                if st.button("Uložit výukové třídy"):
+                    nove_tridy_str = nove_tridy_input.strip().upper()
+                    nicky_sloupec = [str(n).strip() for n in db_uzivatele.col_values(2)]
+                    cislo_radku = nicky_sloupec.index(st.session_state["nick"]) + 1
+                    hlavicky = db_uzivatele.row_values(1)
+                    cislo_sloupce_trida = hlavicky.index("Trida") + 1
+                    
+                    db_uzivatele.update_cell(cislo_radku, cislo_sloupce_trida, nove_tridy_str)
+                    st.session_state["trida"] = nove_tridy_str
+                    st.success("✅ Třídy uloženy!")
+                    st.rerun()
+
+        # Ukázková třída pro nakladatele
+        tridy_k_zobrazeni = ["Ukázková třída"] if is_demo else moje_ulozene_tridy
+        
+        if not tridy_k_zobrazeni:
+            st.warning("Zatím nemáte přiřazené žádné třídy. Můžete si je přidat v nastavení výše.")
+        else:
+            vybrana_trida = st.selectbox("🎯 Vybraná třída:", tridy_k_zobrazeni)
             
-            db_uzivatele.update_cell(cislo_radku, cislo_sloupce_trida, nove_tridy_str)
-            st.session_state["trida"] = nove_tridy_str
-            st.success("✅ Třídy uloženy!")
-            st.rerun()
+            tab_zebricek_ucitel, tab_detail_zaka, tab_sprava_ucitel = st.tabs(["🏆 Výsledky třídy", "🔍 Detail & Historie žáka", "🔑 Správa PINů"])
+            
+            with tab_zebricek_ucitel:
+                with st.spinner(f"Načítám aktuální data trhu pro {vybrana_trida}..."):
+                    try:
+                        kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
+                        ceny_aktiv = {}
+                        for nazev, (ticker, mena, _) in AKTIVA.items():
+                            c = yf.Ticker(ticker).history(period="1d")['Close'].iloc[-1]
+                            if mena == "USD":
+                                c *= kurz_usd
+                            ceny_aktiv[nazev] = c
+                        
+                        zebricek_data = []
+                        zaci_tridy = [r for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == vybrana_trida.upper() and str(r.get("Role", "")).upper() != "UCITEL"]
+                        
+                        for radek in zaci_tridy:
+                            jmeno_zaka = str(radek.get("Jmeno", ""))
+                            nick_zaka = str(radek.get("Nick", ""))
+                            if not jmeno_zaka and not nick_zaka:
+                                continue
+                            
+                            zustatek_zaka = bezpecny_float(radek.get("Zustatek", 0))
+                            majetek_zaka = zustatek_zaka
+                            
+                            for nazev, (_, _, db_sloupec) in AKTIVA.items():
+                                ks = bezpecny_float(radek.get(db_sloupec, 0))
+                                if ks > 0 and nazev in ceny_aktiv:
+                                    majetek_zaka += (ks * ceny_aktiv[nazev])
+                            
+                            zisk_zaka = majetek_zaka - 20000.0
+                            zebricek_data.append({
+                                "Žák": f"{jmeno_zaka} ({nick_zaka})",
+                                "Celkový majetek": round(majetek_zaka, 2),
+                                "Zisk / Ztráta": round(zisk_zaka, 2),
+                                "Hotovost": round(zustatek_zaka, 2)
+                            })
+                        
+                        if zebricek_data:
+                            df_zebricek = pd.DataFrame(zebricek_data)
+                            df_zebricek = df_zebricek.sort_values(by="Celkový majetek", ascending=False).reset_index(drop=True)
+                            df_zebricek.index += 1
+                            
+                            df_styled = df_zebricek.style.map(barva_zisku_ztraty, subset=["Zisk / Ztráta"]).format({
+                                "Celkový majetek": "{:.2f} Kč",
+                                "Zisk / Ztráta": "{:+.2f} Kč",
+                                "Hotovost": "{:.2f} Kč"
+                            })
+                            st.dataframe(df_styled, use_container_width=True)
+                        else:
+                            st.info(f"Ve třídě {vybrana_trida} zatím nejsou zaregistrovaní žáci.")
+                    except Exception as e:
+                        st.error(f"Chyba při načítání dat: {e}")
 
-    tridy_k_zobrazeni = moje_ulozene_tridy if moje_ulozene_tridy else vsechny_dostupne_tridy
-    
-    if not tridy_k_zobrazeni:
-        st.info("Zatím nejsou k dispozici žádné třídy se žáky.")
-    else:
-        vybrana_trida = st.selectbox("🎯 Vybraná třída:", tridy_k_zobrazeni)
-        
-        tab_zebricek_ucitel, tab_detail_zaka, tab_sprava_ucitel = st.tabs(["🏆 Výsledky třídy", "🔍 Detail & Historie žáka", "🔑 Správa PINů"])
-        
-        with tab_zebricek_ucitel:
-            with st.spinner(f"Načítám aktuální data trhu pro {vybrana_trida}..."):
-                try:
-                    kurz_usd = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
-                    ceny_aktiv = {}
-                    for nazev, (ticker, mena, _) in AKTIVA.items():
-                        c = yf.Ticker(ticker).history(period="1d")['Close'].iloc[-1]
-                        if mena == "USD":
-                            c *= kurz_usd
-                        ceny_aktiv[nazev] = c
+            with tab_detail_zaka:
+                zaci_v_tride_seznam = [r for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == vybrana_trida.upper() and str(r.get("Role", "")).upper() != "UCITEL"]
+                
+                if zaci_v_tride_seznam:
+                    zaci_moznosti = [f"{str(r.get('Jmeno', ''))} ({str(r.get('Nick', ''))})" for r in zaci_v_tride_seznam]
+                    vybrany_zak_opt = st.selectbox("Vyber žáka k náhledu:", zaci_moznosti, key="detail_zak_select")
                     
-                    zebricek_data = []
-                    zaci_tridy = [r for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == vybrana_trida and str(r.get("Role", "")).upper() != "UCITEL"]
+                    vybrany_nick = vybrany_zak_opt.split("(")[-1].replace(")", "").strip()
+                    data_zaka = next((r for r in zaci_v_tride_seznam if str(r.get("Nick", "")).strip().lower() == vybrany_nick.lower()), None)
                     
-                    for radek in zaci_tridy:
-                        jmeno_zaka = str(radek.get("Jmeno", ""))
-                        nick_zaka = str(radek.get("Nick", ""))
-                        if not jmeno_zaka and not nick_zaka:
-                            continue
+                    if data_zaka:
+                        st.write(f"### 💼 Portfolio žáka: **{data_zaka.get('Jmeno', '')}**")
+                        zustatek = bezpecny_float(data_zaka.get("Zustatek", 0))
+                        st.write(f"💵 **Volná hotovost:** `{zustatek:.2f} Kč`")
                         
-                        zustatek_zaka = bezpecny_float(radek.get("Zustatek", 0))
-                        majetek_zaka = zustatek_zaka
-                        
+                        st.write("**Držená aktiva:**")
+                        vlastni_aktiva = False
                         for nazev, (_, _, db_sloupec) in AKTIVA.items():
-                            ks = bezpecny_float(radek.get(db_sloupec, 0))
-                            if ks > 0 and nazev in ceny_aktiv:
-                                majetek_zaka += (ks * ceny_aktiv[nazev])
+                            ks = bezpecny_float(data_zaka.get(db_sloupec, 0))
+                            if ks > 0:
+                                vlastni_aktiva = True
+                                st.write(f"⚡ **{nazev}**: `{hezke_kusy(ks)} ks`")
                         
-                        zisk_zaka = majetek_zaka - 20000.0
-                        zebricek_data.append({
-                            "Žák": f"{jmeno_zaka} ({nick_zaka})",
-                            "Celkový majetek": round(majetek_zaka, 2),
-                            "Zisk / Ztráta": round(zisk_zaka, 2),
-                            "Hotovost": round(zustatek_zaka, 2)
-                        })
-                    
-                    if zebricek_data:
-                        df_zebricek = pd.DataFrame(zebricek_data)
-                        df_zebricek = df_zebricek.sort_values(by="Celkový majetek", ascending=False).reset_index(drop=True)
-                        df_zebricek.index += 1
+                        if not vlastni_aktiva:
+                            st.caption("Žák momentálně nedrží žádná aktiva.")
                         
-                        df_styled = df_zebricek.style.map(barva_zisku_ztraty, subset=["Zisk / Ztráta"]).format({
-                            "Celkový majetek": "{:.2f} Kč",
-                            "Zisk / Ztráta": "{:+.2f} Kč",
-                            "Hotovost": "{:.2f} Kč"
-                        })
-                        st.dataframe(df_styled, use_container_width=True)
-                    else:
-                        st.info(f"Ve třídě {vybrana_trida} zatím nejsou zaregistrovaní žáci.")
-                except Exception as e:
-                    st.error(f"Chyba při načítání dat: {e}")
+                        st.divider()
+                        st.write(f"### 📜 Historie obchodů (`{vybrany_nick}`)")
+                        if db_transakce:
+                            try:
+                                vsechny_transakce = db_transakce.get_all_records(value_render_option="UNFORMATTED_VALUE")
+                                transakce_zaka = []
+                                jmeno_zaka_full = str(data_zaka.get('Jmeno', '')).strip().lower()
+                                
+                                for t in vsechny_transakce:
+                                    user_in_t = str(t.get("Nick", t.get("Jmeno", ""))).strip().lower()
+                                    if user_in_t in [vybrany_nick.lower(), jmeno_zaka_full]:
+                                        transakce_zaka.append({
+                                            "Čas": str(t.get("Cas", "")),
+                                            "Typ": str(t.get("Typ", "")),
+                                            "Aktivum": str(t.get("Aktivum", "")),
+                                            "Kusů": hezke_kusy(bezpecny_float(t.get("Kusu", 0))),
+                                            "Celková cena": f"{bezpecny_float(t.get('Cena_CZK', 0)):.2f} Kč"
+                                        })
+                                
+                                if transakce_zaka:
+                                    df_t_clean = pd.DataFrame(transakce_zaka)
+                                    st.dataframe(df_t_clean, use_container_width=True)
+                                else:
+                                    st.info("Žák zatím neprovedl žádné obchody.")
+                            except Exception as e:
+                                st.warning(f"Nelze načíst historii: {e}")
+                else:
+                    st.info(f"Ve třídě {vybrana_trida} zatím nejsou žádní žáci.")
 
-        with tab_detail_zaka:
-            zaci_v_tride_seznam = [r for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == vybrana_trida and str(r.get("Role", "")).upper() != "UCITEL"]
-            
-            if zaci_v_tride_seznam:
-                zaci_moznosti = [f"{str(r.get('Jmeno', ''))} ({str(r.get('Nick', ''))})" for r in zaci_v_tride_seznam]
-                vybrany_zak_opt = st.selectbox("Vyber žáka k náhledu:", zaci_moznosti, key="detail_zak_select")
+            with tab_sprava_ucitel:
+                st.write("### 🔑 Obnovení PINu žáka")
+                zaci_v_tride = [f"{str(r.get('Jmeno', ''))} ({str(r.get('Nick', ''))})" for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == vybrana_trida.upper() and str(r.get("Role", "")).upper() != "UCITEL"]
                 
-                vybrany_nick = vybrany_zak_opt.split("(")[-1].replace(")", "").strip()
-                data_zaka = next((r for r in zaci_v_tride_seznam if str(r.get("Nick", "")).strip().lower() == vybrany_nick.lower()), None)
-                
-                if data_zaka:
-                    st.write(f"### 💼 Portfolio žáka: **{data_zaka.get('Jmeno', '')}**")
-                    zustatek = bezpecny_float(data_zaka.get("Zustatek", 0))
-                    st.write(f"💵 **Volná hotovost:** `{zustatek:.2f} Kč`")
+                if zaci_v_tride:
+                    vybrany_zak_str = st.selectbox("Vyber žáka:", zaci_v_tride)
+                    novy_pin = st.text_input("Nový 4místný PIN:", value="1234", max_chars=4)
                     
-                    st.write("**Držená aktiva:**")
-                    vlastni_aktiva = False
-                    for nazev, (_, _, db_sloupec) in AKTIVA.items():
-                        ks = bezpecny_float(data_zaka.get(db_sloupec, 0))
-                        if ks > 0:
-                            vlastni_aktiva = True
-                            st.write(f"⚡ **{nazev}**: `{hezke_kusy(ks)} ks`")
-                    
-                    if not vlastni_aktiva:
-                        st.caption("Žák momentálně nedrží žádná aktiva.")
-                    
-                    st.divider()
-                    st.write(f"### 📜 Historie obchodů (`{vybrany_nick}`)")
-                    if db_transakce:
-                        try:
-                            vsechny_transakce = db_transakce.get_all_records(value_render_option="UNFORMATTED_VALUE")
-                            transakce_zaka = []
-                            jmeno_zaka_full = str(data_zaka.get('Jmeno', '')).strip().lower()
+                    if st.button("Uložit nový PIN"):
+                        if novy_pin.isdigit() and len(novy_pin) == 4:
+                            vybrany_nick = vybrany_zak_str.split("(")[-1].replace(")", "").strip()
+                            nicky_sloupec = [str(n).strip() for n in db_uzivatele.col_values(2)]
+                            cislo_radku = nicky_sloupec.index(vybrany_nick) + 1
+                            hlavicky = db_uzivatele.row_values(1)
+                            cislo_sloupce_pin = hlavicky.index("PIN") + 1
                             
-                            for t in vsechny_transakce:
-                                user_in_t = str(t.get("Nick", t.get("Jmeno", ""))).strip().lower()
-                                if user_in_t in [vybrany_nick.lower(), jmeno_zaka_full]:
-                                    transakce_zaka.append({
-                                        "Čas": str(t.get("Cas", "")),
-                                        "Typ": str(t.get("Typ", "")),
-                                        "Aktivum": str(t.get("Aktivum", "")),
-                                        "Kusů": hezke_kusy(bezpecny_float(t.get("Kusu", 0))),
-                                        "Celková cena": f"{bezpecny_float(t.get('Cena_CZK', 0)):.2f} Kč"
-                                    })
-                            
-                            if transakce_zaka:
-                                df_t_clean = pd.DataFrame(transakce_zaka)
-                                st.dataframe(df_t_clean, use_container_width=True)
-                            else:
-                                st.info("Žák zatím neprovedl žádné obchody.")
-                        except Exception as e:
-                            st.warning(f"Nelze načíst historii: {e}")
-            else:
-                st.info(f"Ve třídě {vybrana_trida} zatím nejsou žádní žáci.")
+                            db_uzivatele.update_cell(cislo_radku, cislo_sloupce_pin, str(novy_pin))
+                            st.success(f"✅ PIN změněn pro {vybrany_zak_str}!")
+                        else:
+                            st.error("❌ PIN musí mít 4 číslice.")
 
-        with tab_sprava_ucitel:
-            st.write("### 🔑 Obnovení PINu žáka")
-            zaci_v_tride = [f"{str(r.get('Jmeno', ''))} ({str(r.get('Nick', ''))})" for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == vybrana_trida and str(r.get("Role", "")).upper() != "UCITEL"]
-            
-            if zaci_v_tride:
-                vybrany_zak_str = st.selectbox("Vyber žáka:", zaci_v_tride)
-                novy_pin = st.text_input("Nový 4místný PIN:", value="1234", max_chars=4)
-                
-                if st.button("Uložit nový PIN"):
-                    if novy_pin.isdigit() and len(novy_pin) == 4:
-                        vybrany_nick = vybrany_zak_str.split("(")[-1].replace(")", "").strip()
-                        nicky_sloupec = [str(n).strip() for n in db_uzivatele.col_values(2)]
-                        cislo_radku = nicky_sloupec.index(vybrany_nick) + 1
-                        hlavicky = db_uzivatele.row_values(1)
-                        cislo_sloupce_pin = hlavicky.index("PIN") + 1
-                        
-                        db_uzivatele.update_cell(cislo_radku, cislo_sloupce_pin, str(novy_pin))
-                        st.success(f"✅ PIN změněn pro {vybrany_zak_str}!")
-                    else:
-                        st.error("❌ PIN musí mít 4 číslice.")
+    with hlavni_tab2:
+        st.write("### 📈 Vyzkoušejte si obchodování jako žák")
+        vykresli_obchodovani_burzu(moje_data)
 
 # ==========================================
 # --- C: OBRAZOVKA PRO ŽÁKY ---
@@ -487,109 +607,7 @@ else:
     
     # ---------------- ZÁLOŽKA 1: BURZA ----------------
     with tab_burza:
-        st.metric(label="💵 Volný kapitál k dispozici", value=f"{st.session_state['zustatek']:.2f} Kč")
-        st.write("")
-        
-        vybrane_aktivum = st.selectbox("Vyber aktivum k obchodování:", list(AKTIVA.keys()))
-        ticker_symbol, mena, sloupec_db = AKTIVA[vybrane_aktivum]
-        
-        with st.spinner(f"Načítám živý kurz pro {vybrane_aktivum}..."):
-            try:
-                if mena == "USD":
-                    kurz_usd_czk = yf.Ticker("CZK=X").history(period="1d")['Close'].iloc[-1]
-                else:
-                    kurz_usd_czk = 1.0
-                
-                historie = yf.Ticker(ticker_symbol).history(period="1mo")['Close']
-                historie_czk = historie * kurz_usd_czk
-                aktualni_cena = round(float(historie_czk.iloc[-1]), 2)
-                
-                st.markdown(f"### **{vybrane_aktivum}** — `< {aktualni_cena:.2f} Kč / ks >`", unsafe_allow_html=True)
-                st.line_chart(historie_czk)
-                
-                je_krypto = vybrane_aktivum in ["Bitcoin", "Ethereum"]
-                if je_krypto:
-                    st.caption("💡 Kryptoměny lze nakupovat i po malých částech (např. 0.005 ks).")
-                    krok_formulare = 0.001
-                    format_cisla = "%.4f"
-                else:
-                    krok_formulare = 1.0
-                    format_cisla = "%.2f"
-                
-                stav_aktiva_ted = bezpecny_float(moje_data.get(sloupec_db, 0)) if moje_data else 0.0
-
-                col_nakup, col_prodej = st.columns(2)
-                
-                with col_nakup:
-                    st.write("#### 🛒 Nákup")
-                    pocet_koupit = st.number_input("Počet ks", min_value=0.0, step=krok_formulare, format=format_cisla, value=0.0, key="nakup")
-                    cena_koupit = round(pocet_koupit * aktualni_cena, 2)
-                    st.write(f"Celkem: `{cena_koupit:.2f} Kč`")
-                    
-                    if st.button("KOUPIT ➔", use_container_width=True):
-                        if pocet_koupit > 0:
-                            if st.session_state["zustatek"] >= cena_koupit:
-                                with st.spinner("Zpracovávám příkaz..."):
-                                    novy_zustatek = round(st.session_state["zustatek"] - cena_koupit, 2)
-                                    novy_stav_aktiva = round(stav_aktiva_ted + pocet_koupit, 4)
-                                    
-                                    nicky_sloupec = [str(n).strip() for n in db_uzivatele.col_values(2)]
-                                    cislo_radku = nicky_sloupec.index(st.session_state["nick"]) + 1
-                                    hlavicky = db_uzivatele.row_values(1)
-                                    cislo_sloupce_aktiva = hlavicky.index(sloupec_db) + 1
-                                    cislo_sloupce_zustatek = hlavicky.index("Zustatek") + 1
-                                    
-                                    db_uzivatele.update_cell(cislo_radku, cislo_sloupce_zustatek, novy_zustatek) 
-                                    db_uzivatele.update_cell(cislo_radku, cislo_sloupce_aktiva, novy_stav_aktiva)
-                                    
-                                    if db_transakce:
-                                        try:
-                                            cas_ted = datetime.now().strftime("%d.%m.%Y %H:%M")
-                                            db_transakce.append_row([cas_ted, st.session_state["nick"], "NÁKUP", vybrane_aktivum, pocet_koupit, cena_koupit])
-                                        except Exception:
-                                            pass
-                                    
-                                    st.session_state["zustatek"] = novy_zustatek
-                                    st.success("✅ Nákup proveden!")
-                                    st.rerun()
-                            else:
-                                st.error("❌ Nedostatek prostředků.")
-                
-                with col_prodej:
-                    st.write("#### 💰 Prodej")
-                    st.write(f"Vlastníš: `{hezke_kusy(stav_aktiva_ted)} ks`")
-                    pocet_prodat = st.number_input("Počet ks k prodeji", min_value=0.0, max_value=float(stav_aktiva_ted) if stav_aktiva_ted > 0 else 0.0, step=krok_formulare, format=format_cisla, value=0.0, key="prodej")
-                    cena_prodat = round(pocet_prodat * aktualni_cena, 2)
-                    st.write(f"Získáš: `{cena_prodat:.2f} Kč`")
-                    
-                    if st.button("PRODAT ➔", use_container_width=True):
-                        if pocet_prodat > 0 and pocet_prodat <= stav_aktiva_ted:
-                            with st.spinner("Zpracovávám příkaz..."):
-                                novy_zustatek = round(st.session_state["zustatek"] + cena_prodat, 2)
-                                novy_stav_aktiva = round(stav_aktiva_ted - pocet_prodat, 4)
-                                
-                                nicky_sloupec = [str(n).strip() for n in db_uzivatele.col_values(2)]
-                                cislo_radku = nicky_sloupec.index(st.session_state["nick"]) + 1
-                                hlavicky = db_uzivatele.row_values(1)
-                                cislo_sloupce_aktiva = hlavicky.index(sloupec_db) + 1
-                                cislo_sloupce_zustatek = hlavicky.index("Zustatek") + 1
-                                
-                                db_uzivatele.update_cell(cislo_radku, cislo_sloupce_zustatek, novy_zustatek)
-                                db_uzivatele.update_cell(cislo_radku, cislo_sloupce_aktiva, novy_stav_aktiva)
-                                
-                                if db_transakce:
-                                    try:
-                                        cas_ted = datetime.now().strftime("%d.%m.%Y %H:%M")
-                                        db_transakce.append_row([cas_ted, st.session_state["nick"], "PRODEJ", vybrane_aktivum, pocet_prodat, cena_prodat])
-                                    except Exception:
-                                        pass
-                                
-                                st.session_state["zustatek"] = novy_zustatek
-                                st.success("✅ Prodej proveden!")
-                                st.rerun()
-
-            except Exception as e:
-                st.warning(f"Chyba při stahování dat: {e}")
+        vykresli_obchodovani_burzu(moje_data)
 
     # ---------------- ZÁLOŽKA 2: PORTFOLIO ----------------
     with tab_portfolio:
@@ -699,7 +717,7 @@ else:
                     ceny_aktiv[nazev] = c
                 
                 zebricek_data = []
-                zaci_tridy = [r for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == moje_trida and str(r.get("Role", "")).upper() != "UCITEL"]
+                zaci_tridy = [r for r in vsechna_data if str(r.get("Trida", "")).strip().upper() == moje_trida.upper() and str(r.get("Role", "")).upper() != "UCITEL"]
                 
                 for radek in zaci_tridy:
                     jmeno_zaka = str(radek.get("Jmeno", ""))
