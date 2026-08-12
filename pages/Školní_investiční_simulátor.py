@@ -314,9 +314,12 @@ elif st.session_state["role"] == "UCITEL":
 
     st.divider()
     
-    vsechna_data = db_uzivatele.get_all_records(value_render_option="UNFORMATTED_VALUE")
-    vsechny_dostupne_tridy = sorted(list(set([str(r.get("Trida", "")).strip().upper() for r in vsechna_data if r.get("Trida") and str(r.get("Role","")).upper() != "UCITEL"])))
-    moje_ulozene_tridy = [t.strip() for t in st.session_state["trida"].split(",") if t.strip()]
+  vsechna_data = db_uzivatele.get_all_records(value_render_option="UNFORMATTED_VALUE")
+vsechny_dostupne_tridy = sorted(list(set([str(r.get("Trida", "")).strip().upper() for r in vsechna_data if r.get("Trida") and str(r.get("Role","")).upper() != "UCITEL"])))
+
+# Bezpečné ošetření pro případ, že hodnota trida chybí (je None)
+trida_raw = str(st.session_state.get("trida") or "")
+moje_ulozene_tridy = [t.strip() for t in trida_raw.split(",") if t.strip()]
     
     with st.expander("⚙️ Spravovat moje výukové třídy"):
         st.write("Vyberte třídy, které učíte:")
