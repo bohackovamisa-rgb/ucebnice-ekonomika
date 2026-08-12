@@ -6,114 +6,107 @@ import plotly.express as px
 import streamlit as st
 import yfinance as yf
 
-# --- 1. VYLEPŠENÝ HIGH-TECH CSS STYLING ---
-HIGH_TECH_CSS = """
+# --- 1. SVĚTLÝ DESIGN UČEBNICE (MONTSERRAT + KRÉMOVÉ POZADÍ) ---
+LIGHT_UCEBNICE_CSS = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
-    
-    .stApp {
-        background-color: #0d1117;
-        color: #ffffff !important;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
-    [data-testid="stSidebar"] * {
-        color: #f0f6fc !important;
-    }
-    [data-testid="stSidebar"] {
-        background-color: #161b22 !important;
-    }
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+[data-testid="stSidebarNav"] {display: none !important;}
 
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    [data-testid="stSidebarNav"] {visibility: hidden;}
+/* Základní světlý motiv */
+html, body, [class*="css"], .stApp { 
+    font-family: 'Montserrat', -apple-system, sans-serif !important; 
+    background-color: #FAF8F5 !important; 
+    color: #1C1917 !important; 
+}
 
-    h1, h2, h3, h4 {
-        color: #ffffff !important;
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        font-weight: 700 !important;
-    }
+.main .block-container { 
+    max-width: 920px !important; 
+    padding-top: 2rem !important; 
+    padding-bottom: 5rem !important; 
+}
 
-    label, p, span, .stMarkdown {
-        color: #f0f6fc !important;
-        font-size: 1rem;
-    }
+/* Nadpisy a texty */
+h1, h2, h3, h4 { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #0F172A !important; 
+    font-weight: 800 !important; 
+}
+p, li, td, th, label, span, .stMarkdown { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #334155 !important; 
+    font-size: 0.95rem !important; 
+}
 
-    .stTextInput input {
-        background-color: #161b22 !important;
-        color: #ffffff !important;
-        border: 1px solid #484f58 !important;
-        border-radius: 8px !important;
-        padding: 10px 14px !important;
-        font-size: 1rem !important;
-    }
-    .stTextInput input:focus {
-        border-color: #58a6ff !important;
-        box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.3) !important;
-    }
+/* Vstupní políčka */
+.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div {
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 12px !important;
+    border: 1px solid #E2DEC6 !important;
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    font-size: 0.92rem !important;
+}
 
-    div.stButton > button {
-        background: linear-gradient(135deg, #1f6feb 0%, #0d57d5 100%) !important;
-        color: #ffffff !important;
-        border: 1px solid #58a6ff !important;
-        border-radius: 8px !important;
-        font-weight: 700 !important;
-        font-size: 1.05rem !important;
-        padding: 10px 20px !important;
-        transition: all 0.2s ease-in-out !important;
-        box-shadow: 0 4px 12px rgba(31, 111, 235, 0.3) !important;
-    }
-    div.stButton > button:hover {
-        background: linear-gradient(135deg, #388bfd 0%, #1f6feb 100%) !important;
-        box-shadow: 0 0 18px rgba(56, 139, 253, 0.6) !important;
-        transform: translateY(-2px);
-    }
+/* Tlačítka (Černá zaoblená tlačítka jako v učebnici) */
+button[data-testid="baseButton-primary"], button[kind="primary"], div.stButton > button, a[data-testid="stPageLink-NavLink"], a[data-testid="stLinkButton"] {
+    font-family: 'Montserrat', sans-serif !important;
+    border-radius: 9999px !important;
+    border: 1px solid #111111 !important;
+    background-color: #111111 !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+    padding: 0.6rem 1.4rem !important;
+    box-shadow: 0 4px 10px rgba(17, 17, 17, 0.15) !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+}
 
-    .stTabs [data-baseweb="tab-list"] {
-        background-color: #161b22;
-        padding: 6px;
-        border-radius: 10px;
-        border: 1px solid #30363d;
-        gap: 6px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        color: #c9d1d9 !important;
-        border-radius: 6px !important;
-        padding: 10px 20px !important;
-        font-weight: 600 !important;
-        border: none !important;
-        background-color: transparent !important;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #21262d !important;
-        color: #58a6ff !important;
-        border: 1px solid #58a6ff !important;
-    }
+button:hover, div.stButton > button:hover, a[data-testid="stPageLink-NavLink"]:hover, a[data-testid="stLinkButton"]:hover {
+    background-color: #334155 !important;
+    border-color: #334155 !important;
+    transform: translateY(-1px);
+}
 
-    div[data-testid="stMetric"] {
-        background: #161b22;
-        border: 1px solid #30363d;
-        padding: 18px;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
-    div[data-testid="stMetricLabel"] {
-        color: #8b949e !important;
-    }
-    div[data-testid="stMetricValue"] {
-        font-family: 'JetBrains Mono', monospace;
-        color: #58a6ff !important;
-        font-size: 1.8rem !important;
-    }
+div.stButton > button *, a[data-testid="stPageLink-NavLink"] *, a[data-testid="stLinkButton"] * {
+    color: #FFFFFF !important;
+}
 
-    .stDataFrame {
-        border: 1px solid #30363d;
-        border-radius: 10px;
-    }
+/* Karta metrik (Zůstatky / Majetek) */
+div[data-testid="stMetric"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #EAE7DC !important;
+    border-radius: 16px !important;
+    padding: 18px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03) !important;
+}
+div[data-testid="stMetricLabel"] { color: #78716C !important; font-weight: 600 !important; }
+div[data-testid="stMetricValue"] { color: #0F172A !important; font-weight: 800 !important; font-family: 'Montserrat', sans-serif !important; }
+
+/* Záložky (Tabs) */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: #F2EFE9 !important;
+    border-radius: 12px !important;
+    padding: 6px !important;
+    border: 1px solid #EAE7DC !important;
+}
+.stTabs [data-baseweb="tab"] { color: #44403C !important; font-weight: 600 !important; border: none !important; }
+.stTabs [aria-selected="true"] {
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* Tabulky */
+.stDataFrame { border: 1px solid #EAE7DC !important; border-radius: 12px !important; overflow: hidden !important; }
 </style>
 """
-st.markdown(HIGH_TECH_CSS, unsafe_allow_html=True)
+st.markdown(LIGHT_UCEBNICE_CSS, unsafe_allow_html=True)
 
 # Tlačítko návratu do hlavní učebnice
 st.page_link("app.py", label="🏠 Zpět do Učebnice ekonomiky")
@@ -134,9 +127,9 @@ def barva_zisku_ztraty(val):
     try:
         val = float(val)
         if val > 0:
-            return 'background-color: #0d311e; color: #3fb950; font-weight: bold;'
+            return 'background-color: #E6F4EA; color: #137333; font-weight: bold;'
         elif val < 0:
-            return 'background-color: #3c1618; color: #f85149; font-weight: bold;'
+            return 'background-color: #FCE8E6; color: #C5221F; font-weight: bold;'
     except (ValueError, TypeError):
         pass
     return ''
@@ -227,8 +220,8 @@ if st.session_state.get("is_logged_in", False) and not st.session_state.get("pri
 # --- A: OBRAZOVKA PRO NEPŘIHLÁŠENÉ ---
 # ==========================================
 if not st.session_state["prihlasen"]:
-    st.markdown("<h1 style='text-align: center; color: #58a6ff; margin-bottom: 5px;'>📈 Školní Investiční Simulátor</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #c9d1d9; font-size: 1.05rem; margin-bottom: 30px;'>Vyzkoušej si obchodování na reálné burze bez rizika ztráty peněz</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #0F172A; margin-bottom: 5px;'>📈 Školní Investiční Simulátor</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #44403C; font-size: 1.05rem; margin-bottom: 30px;'>Vyzkoušej si obchodování na reálné burze bez rizika ztráty peněz</p>", unsafe_allow_html=True)
 
     col_left, col_main, col_right = st.columns([1, 2, 1])
 
@@ -304,7 +297,7 @@ if not st.session_state["prihlasen"]:
 elif st.session_state["role"] == "UCITEL":
     sloupec1, sloupec2 = st.columns([3, 1])
     with sloupec1:
-        st.markdown("<h2 style='color: #58a6ff;'>👩‍🏫 Učitelský Panel</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #0F172A;'>👩‍🏫 Učitelský Panel</h2>", unsafe_allow_html=True)
         st.write(f"Učitel: **{st.session_state['jmeno']}** | Nick: `{st.session_state['nick']}`")
     with sloupec2:
         st.write("")
@@ -317,7 +310,6 @@ elif st.session_state["role"] == "UCITEL":
     vsechna_data = db_uzivatele.get_all_records(value_render_option="UNFORMATTED_VALUE")
     vsechny_dostupne_tridy = sorted(list(set([str(r.get("Trida", "")).strip().upper() for r in vsechna_data if r.get("Trida") and str(r.get("Role","")).upper() != "UCITEL"])))
 
-    # Bezpečné ošetření pro případ, že hodnota trida chybí (je None)
     trida_raw = str(st.session_state.get("trida") or "")
     moje_ulozene_tridy = [t.strip() for t in trida_raw.split(",") if t.strip()]
     
@@ -479,7 +471,7 @@ elif st.session_state["role"] == "UCITEL":
 else:
     sloupec1, sloupec2 = st.columns([3, 1])
     with sloupec1:
-        st.markdown(f"<h2 style='color: #58a6ff;'>Vítej, {st.session_state['jmeno']}! ⚡</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='color: #0F172A;'>Vítej, {st.session_state['jmeno']}! ⚡</h2>", unsafe_allow_html=True)
         st.write(f"Nick: `{st.session_state['nick']}` | Třída: **{st.session_state['trida']}**")
     with sloupec2:
         st.write("")
@@ -651,13 +643,14 @@ else:
                     st.write("### 📊 Struktura majetku")
                     df_graf = pd.DataFrame(graf_data)
                     
-                    fig = px.pie(df_graf, values="Hodnota (Kč)", names="Položka", hole=0.5, template="plotly_dark")
+                    fig = px.pie(df_graf, values="Hodnota (Kč)", names="Položka", hole=0.5)
                     
                     fig.update_layout(
                         paper_bgcolor="rgba(0,0,0,0)",
                         plot_bgcolor="rgba(0,0,0,0)",
-                        font=dict(color="#ffffff", size=14),
-                        legend=dict(font=dict(color="#ffffff"))
+                        font=dict(color="#0F172A", family="Montserrat", size=14),
+                        legend=dict(font=dict(color="#0F172A")),
+                        colorway=["#111111", "#8AA2B6", "#8DAE93", "#D8C397", "#B4A2B8"]
                     )
                     fig.update_traces(textposition='outside', textinfo='percent+label')
                     
