@@ -118,7 +118,7 @@ def render():
             | **Soustavnost** | Činnost se opakuje nebo je plánovaná dlouhodobě. | Každý měsíc prodávám vlastní digitální plánovače. | Dělám to jednou, nebo z toho chci pravidelný příjem? |
             | **Samostatnost** | Sám/sama rozhoduji o ceně, zákaznících, způsobu práce a organizaci. | Nabízím správu sociálních sítí lokálním podnikům. | Kdo určuje, jak, kdy a pro koho pracuji? |
             | **Vlastní jméno** | Vystupuji vůči zákazníkům a úřadům jako podnikatel nebo firma. | Mám značku, profil, faktury, obchodní podmínky nebo IČO. | Kdo nese odpovědnost před zákazníkem? |
-            | **Vlastní odpovědnost**| Nesu riziko ztráty, reklamací, dluhů a špatných rozhodnutí. | Nakoupím materiál na merch, ale nikdo si ho nekoupí. | Co se stane, když plán nevyjde? |
+            | **Vlastní odpovědnost**| Nesu riziko ztráty, reklamací, dluhů a špatných rozhodnutí. | Nakoupím materiál na merch, ale nikdo si ho koupí. | Co se stane, když plán nevyjde? |
             """,
                 unsafe_allow_html=True,
             )
@@ -264,7 +264,7 @@ def render():
             st.markdown(
                 """
             <div class='box-blue'>
-            <strong>📌 Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jním a usiluje o zisk.
+            <strong>📌 Základní definice:</strong> Podnikání není jednorázová aktivita. Je to dlouhodobá, samostatná a odpovědná činnost, při které podnikatel vystupuje vlastním jménem a usiluje o zisk.
             </div>
             """,
                 unsafe_allow_html=True,
@@ -332,8 +332,8 @@ def render():
             | **Podnikání** | Soustavná samostatná činnost vykonávaná na vlastní odpovědnost za účelem dosažení zisku. | Je základním pojmem celé kapitoly a určuje, kdy vznikají právní a finanční povinnosti. |
             | **Fyzická osoba** | Člověk — jednotlivec. V podnikání může vystupovat například jako OSVČ. | Máš poznat rozdíl mezi člověkem podnikatelem a firmou jako právnickou osobou. |
             | **Právnická osoba** | Organizovaný subjekt, který má právní osobnost. Typicky jde například o s.r.o., a.s., družstvo, spolek nebo nadaci. | Vysvětluje, proč firma může jednat, vlastnit majetek a nést odpovědnost samostatně. |
-            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jním a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
-            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určité, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
+            | **OSVČ** | Osoba samostatně výdělečně činná — fyzická osoba, která podniká vlastním jménem a na vlastní odpovědnost. | Je častou formou začátku malého podnikání, freelancingu nebo služeb. |
+            | **Živnost** | Podnikatelská činnost provozovaná podle živnostenského zákona, pokud splňuje zákonné podmínky. | Pomáhá určit, jestli podnikatel potřebuje živnostenské oprávnění a jaký typ živnosti řeší. |
             | **Živnostenské oprávnění** | Právo provozovat živnost. U ohlašovacích živností vzniká zpravidla ohlášením, u koncesovaných živností až udělením koncese. | Bez něj nelze legálně provozovat činnost, která živnostenské oprávnění vyžaduje. |
             | **Volná živnost** | Živnost, u které není potřeba speciální vzdělání ani praxe; stačí splnit všeobecné podmínky. | Patří sem mnoho běžných začátků podnikání, například marketingové služby nebo e-shop. |
             | **Řemeslná živnost** | Živnost, která vyžaduje odbornou způsobilost, například výuční list nebo praxi. | Ukazuje, že některé činnosti nelze začít dělat bez kvalifikace. |
@@ -380,7 +380,7 @@ def render():
         with st.container(border=True):
             st.write(
                 "OSVČ znamená osoba samostatně výdělečně činná. Jde o podnikání"
-                " fyzické osoby — tedy člověka, který podniká vlastním jním a"
+                " fyzické osoby — tedy člověka, který podniká vlastním jménem a"
                 " nese za své podnikání odpovědnost."
             )
 
@@ -506,7 +506,7 @@ def render():
 
             st.write("**Co musí splnit začínající OSVČ?**")
             st.markdown("""
-            * dosažení věku 18 let,
+            * dosažení věku 18 let (případně dříve při soudním přiznání plné svéprávnosti – emancipaci od 16 let),
             * svéprávnost,
             * bezúhonnost,
             * případně odbornou způsobilost podle druhu živnosti.
@@ -1110,7 +1110,7 @@ def render():
             st.markdown(
                 """
             <div class='box-purple'>
-                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Porovnej pro můj projekt OSVČ, s.r.o. a a.s. podle rizika, administrativy a růstu.“
+                <strong>🤖 AI mentoring:</strong> Zkopíruj tento prompt do AI asistenta: „Porovnej pro můj projekt OSVČ, s.r.o. a a.s. podle rizika, administrativy a růrowth.“
             </div>
             """,
                 unsafe_allow_html=True,
@@ -1221,7 +1221,7 @@ def render():
 
             with st.expander("Společnost s ručením omezeným (s.r.o.)"):
                 st.write(
-                    "Společnost s ručením omezeným je jednou z najčastějších"
+                    "Společnost s ručením omezeným je jednou z nejčastějších"
                     " forem podnikání v ČR. Je oblíbená proto, že umožňuje"
                     " poměrně dostupné založení firmy a zároveň lépe odděluje"
                     " podnikání od osobního života zakladatele. S.r.o. je vhodná"
@@ -1588,7 +1588,7 @@ def render():
             * Neziskové organizace mohou vykonávat hospodářskou činnost, ale jejich hlavní smysl je jiný než rozdělování zisku vlastníkům.
             * V Evropské unii existují formy, které mají usnadnit přeshraniční podnikání a spolupráci.
             """)
-# --- 5. Startup: nápad, který hledá funkční byznys ---
+    # --- 5. Startup: nápad, který hledá funkční byznys ---
     elif "5. Startup" in selected_section:
         st.markdown("<div class='sub-section-header'>PODKAPITOLA 5</div><h2>5. Startup: nápad, který hledá funkční byznys</h2>", unsafe_allow_html=True)
         
@@ -1689,7 +1689,7 @@ def render():
             st.markdown("#### 🚀 Aktivita: Startup za 30 minut")
             st.write("Ve skupině vyberte jeden problém ze školy nebo běžného života.")
             st.markdown("""
-            1. Popište problém jednou věrou.
+            1. Popište problém jednou větou.
             2. Určete konkrétního zákazníka.
             3. Navrhněte nejjednodušší řešení.
             4. Sepište jednu hypotézu.
@@ -1720,7 +1720,7 @@ def render():
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "1.5.2",
-                    "🧩 Interaktivní výzva: Vyber jeden krok z následujícího postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.",
+                    "🧩 Interaktivní výzva: Vyber jeden krok z následujého postupu a napiš, co bys v něm konkrétně udělal/a u vlastního nápadu.",
                     "1",
                     st.session_state.get("ulozene_odpovedi", {})
                 )
@@ -1730,7 +1730,7 @@ def render():
             * **Zákazník:** tým určí, komu chce pomoci.
             * **Návrh řešení:** vznikne první jednoduchá verze produktu nebo služby.
             * **Ověření:** tým mluví se zákazníky, sbírá zpětnou vazbu a testuje zájem.
-            * **Úprava nápadu:** pokud test nevyjde, startup změní řešení, zákazníka, cenu, kanál nebo rozsah.
+            * **Úprava nápadu:** pokud test nevyjde, startup změní řešení, zákazníka, cena, kanál nebo rozsah.
             * **Růst:** když se ukáže, že zákazníci mají zájem, startup hledá způsob, jak růst opakovatelně a finančně udržitelně.
             """)
             st.markdown("**Příklad vzniku startupu:** Studenti zjistí, že jejich spolužáci často nestíhají plánovat učení. Nevytvoří hned velkou aplikaci, ale nejdřív sdílenou Notion šablonu nebo jednoduchou tabulku. Tu vyzkouší ve třídě, sledují, kdo ji skutečně používá, co studentům chybí a zda by za rozšířenou verzi zaplatili. Pokud ji lidé používají a doporučují dál, tým může řešit cenu, marketing a další rozvoj.")
@@ -1767,7 +1767,7 @@ def render():
             st.markdown("""
             | Nápad | Špatný první krok | Lean Startup MVP | Co ověřujeme |
             | :--- | :--- | :--- | :--- |
-            | **Aplikace na plánování učení** | Programovat kompletní aplikaci s účty a notifikacemi. | Notion šablona nebo Google tabulka pro 20 studentů. | Zda studenti plánovač reálně používají. |
+            | **Aplikace na plánování učení** | Programovat kompletní aplikace s účty a notifikacemi. | Notion šablona nebo Google tabulka pro 20 studentů. | Zda studenti plánovač reálně používají. |
             | **E-shop se studentským merchem** | Nakoupit sklad a spustit celý e-shop. | Předobjednávka tří návrhů přes formulář. | Zda lidé zaplatí za konkrétní motiv a cenu. |
             | **ReStart Batoh** | Sbírat desítky batohů bez ověření zájmu. | Testovací série 5–10 kusů s jasným popisem stavu. | Zda lidé koupí použitý upravený batoh. |
             | **Doučovací služba** | Budovat platformu pro všechny předměty. | Ručně propojit 5 dvojic studentů a měřit spokojenost. | Zda je problém dost silný a zda funguje párování. |
@@ -2025,7 +2025,7 @@ def render():
             if cena > var_naklad:
                 marze = cena - var_naklad
                 bod_zvratu = fix_naklad / marze
-                st.success(f"**Marže na kus:** {marze} Kč. **Bod zvratu:** Musíš prodat alespoň **{math.ceil(bod_zvratu)} kusů**, abys pokryl fixní náklady. Teprve další prodeje tvoří zisk.")
+                st.success(f"**Marže na kus (odborně příspěvek na úhradu):** {marze} Kč. **Bod zvratu:** Musíš prodat alespoň **{math.ceil(bod_zvratu)} kusů**, abys pokryl fixní náklady. (Rozdíl mezi cenou a variabilním nákladem, tzv. marže nebo odborně příspěvek na úhradu, slouží k postupnému pokrytí fixních nákladů a tvorbě zisku.)")
                 
                 if st.button("Uložit výpočet bodu zvratu 💾", key="btn_zamer_bod_zvratu"):
                     vysledek = f"Cena: {cena} Kč | Var. náklad: {var_naklad} Kč | Fix. náklad: {fix_naklad} Kč | Marže: {marze} Kč | Bod zvratu: {math.ceil(bod_zvratu)} kusů"
@@ -2364,7 +2364,7 @@ def render():
             | :--- | :--- | :--- | :--- |
             | **Nízký zájem zákazníků** | Střední až vysoká | Vysoký | Ověřit problém rozhovory a předobjednávkou. |
             | **Vyšší náklady než plán** | Střední | Vysoký | Přidat rezervu, spočítat bod zvratu, porovnat dodavatele. |
-            | **Právníchyba** | Střední | Vysoký | Ověřit živnost, smlouvy, obchodní podmínky a ochranu spotřebitele. |
+            | **Právní chyba** | Střední | Vysoký | Ověřit živnost, smlouvy, obchodní podmínky a ochranu spotřebitele. |
             | **Závislost na 1 platformě**| Vysoká | Střední až vysoký | Budovat vlastní databázi kontaktů, web, e-mail a více kanálů. |
             | **Konflikt v týmu** | Střední | Střední až vysoký | Dohodnout role, podíly, rozhodování a pravidla předem. |
             | **Poškození reputace** | Střední | Vysoký | Pravdivá komunikace, rychlé řešení reklamací, etický kodex. |
@@ -2546,7 +2546,7 @@ def render():
 
     # --- Ukončení podnikání ---
     elif "Ukončení podnikání" in selected_section:
-        st.markdown("<div class='sub-section-header'>PODKAPITOLA</div><h2>Ukončení podnikání</h2>", unsafe_allow_html=True)
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 12</div><h2>12. Ukončení podnikání</h2>", unsafe_allow_html=True)
         
         with st.container(border=True):
             st.write("Podnikání může skončit dobrovolně (např. splněním cíle, odchodem do důchodu), rozhodnutím soudu nebo v důsledku finančních problémů (insolvence).")
@@ -2587,7 +2587,7 @@ def render():
 
     # --- Logická mapa podnikání ---
     elif "Logická mapa" in selected_section:
-        st.markdown("<div class='sub-section-header'>PŘEHLED TÉMATU</div><h2>Logická mapa podnikání</h2>", unsafe_allow_html=True)
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 13</div><h2>13. Logická mapa podnikání</h2>", unsafe_allow_html=True)
         
         with st.container(border=True):
             st.markdown("""
@@ -2677,8 +2677,8 @@ def render():
                 """)
 
     # --- 13. Reflexe a sebehodnocení ---
-    elif "13. Reflexe a sebehodnocení" in selected_section or "Reflexe" in selected_section:
-        st.markdown("<div class='sub-section-header'>KAPITOLA 13</div><h2>13. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
+    elif "14. Reflexe a sebehodnocení" in selected_section or "Reflexe" in selected_section:
+        st.markdown("<div class='sub-section-header'>PODKAPITOLA 14</div><h2>14. Reflexe a sebehodnocení</h2>", unsafe_allow_html=True)
         
         with st.container(border=True):
             st.markdown("""
@@ -2878,7 +2878,7 @@ def render():
             st.markdown("### 📊 15.4 Lean Canvas, Finance a Ekonomika sdílení")
             
             st.markdown("""
-            | Častáchyba v záměru | Jak vypadá | Jak ji opravit |
+            | Častá chyba v záměru | Jak vypadá | Jak ji opravit |
             | :--- | :--- | :--- |
             | **Příliš obecný zákazník** | „Naši zákazníci jsou všichni mladí lidé.“ | Popiš konkrétní skupinu, situaci a potřebu. |
             | **Neověřený problém** | „Myslíme si, že to lidé chtějí.“ | Udělej rozhovory, dotazník nebo předobjednávku. |
