@@ -6,28 +6,60 @@ import streamlit as st
 
 
 def render_dluhovy_simulator():
-    st.markdown("#### 🏛️ Simulátor státního dluhu a rozpočtu ČR")
+    st.markdown("#### ⏳ Živý pult státního dluhu ČR")
     st.write(
-        "Mnoho lidí zaměňuje **schodek** a **státní dluh**. "
-        "Představ si schodek jako to, kolik si stát půjčí za jeden konkrétní rok, "
-        "zatímco státní dluh je celková hora peněz, kterou stát dluží ze všech minulých let dohromady."
+        "Státní dluh nečeká na konec roku, roste doslova každou vteřinou. "
+        "Při odhadovaném ročním schodku zhruba 240 miliard Kč naskakuje dluh tempem "
+        "**cca 7 610 Kč za jedinou sekundu**."
     )
 
-    # Základní parametry (orientační hodnoty, které lze aktualizovat)
+    # HTML/JS widget pro reálně tikající pult dluhu
+    ticker_html = """
+    <div style="background-color: #fef2f2; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ef4444;">
+        <h3 style="color: #b91c1c; margin-bottom: 5px; font-family: sans-serif;">Aktuální odhad státního dluhu</h3>
+        <div id="live-debt" style="font-size: 2.8rem; font-weight: bold; color: #ef4444; font-family: monospace;">Načítám...</div>
+    </div>
+    <script>
+        // Odhadovaný základní dluh pro rok 2026 (cca 3.5 bilionu Kč)
+        let baseDebt = 3500000000000; 
+        // Růst za vteřinu cca 7610 Kč (240 mld / 31 536 000 sekund)
+        let debtPerSecond = 7610; 
+        
+        let startDate = new Date('2026-01-01T00:00:00Z').getTime();
+        
+        setInterval(function() {
+            let now = new Date().getTime();
+            let secondsPassed = (now - startDate) / 1000;
+            let currentDebt = baseDebt + (secondsPassed * debtPerSecond);
+            
+            // Formátování s mezerami pro lepší čitelnost
+            let formattedDebt = Math.floor(currentDebt).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, " ") + " Kč";
+            document.getElementById('live-debt').innerHTML = formattedDebt;
+        }, 100); // Aktualizace každých 100ms pro efekt plynulého růstu
+    </script>
+    """
+    st.components.v1.html(ticker_html, height=150)
+
+    st.markdown("#### 🏛️ Simulátor: Rozpočet a osobní zátěž")
+    st.write(
+        "Zde si můžeš upravit celkový státní dluh a plánovaný roční schodek, "
+        "abys viděl/a, kolik peněz dluží stát „tvým jménem“."
+    )
+
     POPULACE_CR = 10_900_000
     EKONOMICKY_AKTIVNI = 5_400_000  # Lidé, kteří reálně platí daně ze mzdy
 
     col1, col2 = st.columns(2)
     with col1:
         statni_dluh_mld = st.number_input(
-            "Celkový státní dluh ČR (v miliardách Kč):",
-            value=3350,
+            "Celkový státní dluh ČR (v mld. Kč):",
+            value=3500,
             step=50,
             help="Celkový kumulovaný dluh státu."
         )
     with col2:
         schodek_roku_mld = st.number_input(
-            "Plánovaný roční schodek rozpočtu (v miliardách Kč):",
+            "Plánovaný roční schodek (v mld. Kč):",
             value=240,
             step=10,
             help="O kolik více stát tento rok utratí, než vybere."
@@ -55,7 +87,7 @@ def render_dluhovy_simulator():
 
     st.divider()
     st.markdown("##### ⏱️ Interaktivní simulace: Jak rychle dluh poroste?")
-    roky = st.slider("Simuluj vývoj dluhu za kolik let:", min_value=1, max_value=10, value=3)
+    roky = st.slider("Simuluj vývoj dluhu za kolik let:", min_value=1, max_value=10, value=3, key="sim_roky")
     budouci_dluh = statni_dluh_mld + (schodek_roku_mld * roky)
     budouci_dluh_obcan = (budouci_dluh * 1_000_000_000) / POPULACE_CR
 
@@ -65,7 +97,6 @@ def render_dluhovy_simulator():
         f"(tedy **{budouci_dluh_obcan:,.0f} Kč** na jednoho občana)."
     )
 
-    # Otázka do Učitelského panelu
     st.markdown(
         "<div class='box-yellow'><strong>🤔 Otázka k zamyšlení:</strong> "
         "Může stát fungovat s dluhem donekonečna? Proč si stát půjčuje a komu tyto peníze vlastně dluží (kdo jsou věřitelé)?</div>",
@@ -116,14 +147,6 @@ def render():
             * **Posoudit** dopady levného zboží (fast fashion, e-commerce) na lidi i životní prostředí.
             * **Porozumět** pojmům jako Green Deal, ESG a odpovědnost firem.
             """)
-            st.markdown(
-                """
-            <div style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
-                <i>📘 <b>Vazba na RVP:</b> Kapitola rozvíjí ekonomické, občanské a digitální kompetence v oblastech funkce státu v ekonomice, hospodářská politika, daňová soustava, státní rozpočet, veřejné finance, globalizace, EU a udržitelný rozvoj.</i>
-            </div>
-            """,
-                unsafe_allow_html=True,
-            )
 
         with c_nav2:
             st.markdown("""
@@ -768,7 +791,7 @@ def render():
             )
 
         st.divider()
-        st.markdown("#### 2.2 Funkce daní a zásady zdaňování")
+        st.markdown("#### 2.2 Funkce daní")
 
         with st.expander("Rozklikni pro zobrazení 4 funkcí daní"):
             st.markdown("""
@@ -778,7 +801,20 @@ def render():
             * 🚭 **Regulační:** Odrazuje od škodlivého chování (např. spotřební daň na alkohol a cigarety).
             """)
 
-        st.markdown("##### ⚖️ Progresivní vs. Rovná daň")
+        st.divider()
+        st.markdown("#### 2.3 Zásady zdaňování: jak poznat „dobrou“ daň")
+        st.write("Dobrá daň by měla být nejen výnosná, ale také srozumitelná, spravedlivá a co nejméně škodit ekonomické aktivitě.")
+        st.markdown(
+            "| Zásada | Co znamená | Otázka pro studenta |\n"
+            "| :--- | :--- | :--- |\n"
+            "| **Spravedlnost** | Daňové zatížení má odpovídat schopnosti platit a být vnímáno jako férové. | Mají lidé s vyššími příjmy platit nejen více korun, ale i vyšší procento? |\n"
+            "| **Efektivnost** | Daň by neměla zbytečně brzdit práci, podnikání, investice a tvorbu hodnoty. | Kdy už vysoká daň lidi odrazuje od práce nebo firmy od investic? |\n"
+            "| **Jednoduchost** | Daň má být pochopitelná a administrativně zvládnutelná. | Je systém tak složitý, že mu běžný člověk nerozumí bez poradce? |\n"
+            "| **Právní jistota** | Pravidla mají být předvídatelná a ověřitelná. | Vím předem, co mám zaplatit a kde si to ověřit? |"
+        )
+
+        st.divider()
+        st.markdown("#### 2.4 Progresivní vs. rovná daň")
         st.write(
             "Měl by člověk s příjmem 200 000 Kč měsíčně platit vyšší procento než"
             " člověk s 30 000 Kč?"
@@ -794,9 +830,15 @@ def render():
             unsafe_allow_html=True,
         )
 
+        with st.expander("🤔 Mýtus vs. realita progresivní daně"):
+            st.markdown(
+                "**Mýtus:** „Když přejdu do vyššího daňového pásma, vydělám ve výsledku méně peněz.“\n\n"
+                "**Realita:** U běžné progresivní daně se vyšší sazbou obvykle daní až *část příjmu nad určitou hranicí*, ne celý příjem. "
+                "Člověk tedy po zvýšení hrubého příjmu zpravidla nemá méně peněz než předtím — jen z dodatečné části příjmu odvede vyšší podíl."
+            )
+
         st.divider()
         st.markdown("#### 2.5 Přímé daně: Kdo je platí a z čeho?")
-        st.write("**Přímé daně** platí konkrétní člověk nebo firma ze svého příjmu, zisku nebo majetku. Daň je tedy přímo spojena s poplatníkem.")
 
         col_pr1, col_pr2, col_pr3 = st.columns(3)
         with col_pr1:
@@ -819,7 +861,6 @@ def render():
         st.markdown(
             "#### 2.6 Nepřímé daně: Neviditelné daně v každém nákupu"
         )
-        st.write("**Nepřímé daně** jsou zahrnuté v ceně zboží nebo služby. Spotřebitel je fakticky zaplatí v ceně, ale státu je odvádí prodejce nebo jiný povinný subjekt.")
 
         tab_dph, tab_spotrebni, tab_eko = st.tabs([
             "🛒 DPH (Účtenka)",
@@ -923,7 +964,7 @@ def render():
 
         with tab_eko:
             st.markdown("##### Ekologické daně (Zdanění uhlíkové stopy)")
-            st.write("Daně související s dopady na životní prostředí a energiemi. Mají zohlednit negativní dopady a motivovat k šetrnějšímu chování.")
+            st.write("Mají zohlednit negativní dopady a motivovat k šetrnějšímu chování k životnímu prostředí.")
             cena_benzinu = st.slider(
                 "Cena 1 litru benzínu (Kč):",
                 25.0,
@@ -937,17 +978,7 @@ def render():
         st.markdown(
             "#### 2.6.1 Schéma: Jak se daně dělí a kam putují"
         )
-        st.markdown(
-            "| Daň | Kam typicky putuje | Co se z ní financuje |\n"
-            "| :--- | :--- | :--- |\n"
-            "| **Daň z příjmů fyzických osob** | Sdílená daň — státní rozpočet, obce a kraje. | Důchody, sociální systém, školství, místní a regionální služby. |\n"
-            "| **Daň z příjmů právnických osob** | Sdílená daň — stát, obce a kraje. | Veřejné služby, infrastruktura, školy, doprava. |\n"
-            "| **DPH** | Významná sdílená daň — velká část jde státu, zbytek obcím a krajům. | Široký balík výdajů: školství, zdravotnictví, obrana, doprava i státní správa. |\n"
-            "| **Daň z nemovitých věcí** | Připadá obci/městu, kde se nemovitost nachází. | Chodníky, osvětlení, zeleň, odpad, školy, kultura. |\n"
-            "| **Spotřební daně** | Státní rozpočet. | Obecné výdaje státu a částečně regulace škodlivých dopadů. |\n"
-            "| **Ekologické daně** | Veřejné rozpočty. | Motivace k šetrnějšímu chování vůči klimatu. |\n"
-            "| **Clo** | Ochrana společného trhu a příjmy rozpočtu EU. | Financování evropských politik. |"
-        )
+        st.write("Daně se dělí na **přímé** a **nepřímé**.")
 
         with st.form("diskuse_regiony"):
             st.write(
@@ -980,103 +1011,20 @@ def render():
 
         st.divider()
         st.markdown("#### 2.7 Státní rozpočet & 2.10 Státní dluh")
-        st.write("Státní rozpočet je **plán příjmů a výdajů státu na určité období**, obvykle na jeden rok. Ukazuje, odkud stát očekává peníze a za co je plánuje utratit.")
         
-        st.markdown(
-            "| Příjmy státního rozpočtu | Výdaje státního rozpočtu |\n"
-            "| :--- | :--- |\n"
-            "| daně, pojistné a další povinné platby | důchody, sociální dávky, školství, obrana, bezpečnost |\n"
-            "| poplatky, příjmy z majetku, evropské prostředky | platy zaměstnanců veřejného sektoru, provoz úřadů, investice |\n"
-            "| případně půjčené peníze při deficitu | obsluha státního dluhu, infrastruktura, krizová pomoc |"
-        )
-
-        st.markdown("##### Výdaje rozpočtu: mandatorní a nemandatorní")
-        st.write("Ne všechny výdaje státu se dají jednoduše „škrtnout“. Některé jsou dané zákony a stát je musí platit.")
-        st.markdown(
-            "| Typ výdaje | Co znamená | Příklad |\n"
-            "| :--- | :--- | :--- |\n"
-            "| **Mandatorní výdaje** | Povinné výdaje dané zákonem nebo smluvními závazky. | Důchody, sociální dávky, obsluha dluhu. |\n"
-            "| **Nemandatorní výdaje** | Výdaje, o kterých se rozhoduje pružněji v rámci rozpočtu. | Některé investice, dotace, programy, provozní výdaje. |"
-        )
-
-        st.markdown("##### Vyrovnaný, přebytkový a schodkový rozpočet")
-        st.markdown(
-            "| Typ rozpočtu | Co znamená | Jednoduchý příklad |\n"
-            "| :--- | :--- | :--- |\n"
-            "| **Vyrovnaný rozpočet** | Příjmy se rovnají výdajům. | Stát vybere 100 a utratí 100. |\n"
-            "| **Přebytkový rozpočet** | Příjmy jsou vyšší než výdaje. | Stát vybere 100 a utratí 95. |\n"
-            "| **Schodkový rozpočet / deficit** | Výdaje jsou vyšší než příjmy. | Stát vybere 100 a utratí 120. Rozdíl si musí půjčit. |"
-        )
-
+        # ZDE VLOŽEN PŘIPRAVENÝ SIMULÁTOR
         render_dluhovy_simulator()
-
-        st.markdown("##### Státní dluhopisy")
-        st.write("Jedním z nástrojů financování státního dluhu jsou státní dluhopisy. Když stát vydá dluhopis, půjčuje si peníze od investorů (banky, fondy, občané) a slíbí, že je v budoucnu vrátí i s úrokem.")
-
-        col_dluh1, col_dluh2, col_dluh3 = st.columns(3)
-        with col_dluh1:
-            investice = st.number_input(
-                "Kolik státu půjčíš (Kč):",
-                min_value=1000,
-                value=100000,
-                step=5000,
-                key="k5_2_10_inv",
-            )
-        with col_dluh2:
-            urok_dluhopisu = st.slider(
-                "Roční úrok od státu (%):",
-                1.0,
-                10.0,
-                4.0,
-                step=0.5,
-                key="k5_2_10_urok",
-            )
-        with col_dluh3:
-            inflace = st.slider(
-                "Průměrná roční inflace (%):",
-                0.0,
-                15.0,
-                5.0,
-                step=0.5,
-                key="k5_2_10_inf",
-            )
-
-        roky_bond = 5
-        konecna_castka = investice * ((1 + (urok_dluhopisu / 100)) ** roky_bond)
-        cisty_zisk_nominalni = konecna_castka - investice
-        realna_hodnota = konecna_castka / ((1 + (inflace / 100)) ** roky_bond)
-        rozdil_kupni_sily = realna_hodnota - investice
-
-        col_res1, col_res2 = st.columns(2)
-        col_res1.metric("Peníze na účtu za 5 let (Nominální)", f"{int(konecna_castka)} Kč")
-        col_res2.metric(
-            "Skutečná hodnota peněz po zohlednění inflace", f"{int(realna_hodnota)} Kč"
-        )
-
-        if st.button("Uložit simulaci dluhopisu 💾", key="btn_k5_2_10"):
-            dluh_sim_data = (
-                f"Investice: {investice} | Úrok: {urok_dluhopisu}% | Inflace:"
-                f" {inflace}% | Reálný zisk: {int(rozdil_kupni_sily)} Kč"
-            )
-            if "uloz_odpoved_fn" in st.session_state:
-                st.session_state["uloz_odpoved_fn"](
-                    "Kapitola 5",
-                    "Podkapitola 2.10 - Simulátor dluhopisu a inflace",
-                    dluh_sim_data,
-                )
-            st.success("Simulace byla uložena!")
-
+        
         st.divider()
         st.markdown("#### 2.11 Daňové úniky, optimalizace a stínová ekonomika")
-        st.write("Ne každé snížení daní je nelegální. Je potřeba rozlišovat legální optimalizaci a nelegální chování.")
-
+        st.write("Není každé ušetření daně nezákonné, ale je nutné znát hranici:")
         st.markdown(
             "| Situace | Co znamená | Příklad | Hodnocení |\n"
             "| :--- | :--- | :--- | :--- |\n"
-            "| **Legální daňová optimalizace** | Využití zákonných možností ke snížení daňové povinnosti. | Uplatnění slevy na poplatníka, daňově uznatelných výdajů. | Legální, pokud odpovídá pravidlům. |\n"
+            "| **Legální daňová optimalizace** | Využití zákonných možností ke snížení daňové povinnosti. | Uplatnění slevy na poplatníka, daňově uznatelných výdajů. | Legální, pokud odpovídá pravidlům a realitě. |\n"
             "| **Nelegální daňový únik** | Porušení zákona s cílem nezaplatit daň. | Nefakturování příjmů, fiktivní náklady, zatajené tržby. | Nelegální a rizikové. |\n"
-            "| **Šedá ekonomika** | Činnost, která může být legální sama o sobě, ale není správně evidovaná nebo zdaněná. | Práce „na ruku“ bez dokladu, drobné služby bez evidence. | Poškozuje rozpočty a může poškodit i pracovníka. |\n"
-            "| **Černá ekonomika** | Nelegální činnost mimo zákonný systém. | Obchod s nelegálním zbožím, padělky. | Nelegální a společensky škodlivá. |"
+            "| **Šedá ekonomika** | Činnost, která může být legální sama o sobě, ale není správně evidovaná nebo zdaněná. | Práce „na ruku“ bez dokladu. | Poškozuje rozpočty a může poškodit i pracovníka. |\n"
+            "| **Černá ekonomika** | Nelegální činnost mimo zákonný systém. | Obchod s nelegálním zbožím. | Nelegální a společensky škodlivá. |"
         )
 
     # =========================================================================
@@ -1085,29 +1033,9 @@ def render():
     elif selected_section_5.startswith("3."):
         st.markdown("### 3. Moje daně v praxi")
         st.markdown(
-            "<div class='box-blue'>"
-            "💻 <b>Praktický přesah:</b> Daňový portál, datová schránka, elektronická identita a Portál občana ukazují, že ekonomika není jen teorie. Moderní občan potřebuje rozumět tomu, kde hledat informace, jak ověřovat povinnosti a proč je digitální komunikace se státem součástí finanční gramotnosti."
-            "</div>",
-            unsafe_allow_html=True,
-        )
-
-        st.markdown("#### Praktické scénáře pro studenty")
-        with st.expander("Proč hrubá mzda není to samé, co mi přijde na účet? (První brigáda a „Růžový papír“)"):
-            st.write("U DPP nebo DPČ není důležité jen „kolik je hodinová mzda“. Záleží na typu dohody, výši příjmu, odvodech, dani, podepsaném **Prohlášení poplatníka k dani** (růžový papír) a slevách na dani. Díky růžovému papíru může zaměstnanec uplatnit základní slevu na poplatníka. Lze ho ale uplatňovat v daném měsíci vždy pouze u jednoho zaměstnavatele.")
-
-        with st.expander("Jak se daní TikTok, Twitch, OnlyFans, Patreon nebo barter na Instagramu?"):
-            st.write("Pokud někdo dlouhodobě a soustavně vydělává tvorbou obsahu, spolupracemi, reklamou, předplatným, dary od fanoušků nebo prodejem digitálních produktů, nejde jen o „peníze z internetu“. Může jít o zdanitelný příjem a někdy i o podnikání. I barter (produkt výměnou za reklamu) může mít ekonomickou hodnotu a daňové dopady.")
-
-        with st.expander("Vinted, Bazoš, eBay: Kdy je to ještě prodej vlastních věcí?"):
-            st.write("Když prodáš vlastní staré oblečení nebo učebnice, obvykle jde o osvobozený příjem. Ale pokud systematicky nakupuješ věci za účelem jejich dalšího prodeje se ziskem, už se to může považovat za podnikání a podléhat zdanění.")
-
-        with st.expander("Kryptoměny, akcie a ETF: Co si ověřit před prodejem?"):
-            st.write("U akcií a ETF se často řeší tzv. **časový test** (po určité době držení je prodej osvobozen od daně) a limit ročních příjmů z prodeje. U kryptoměn se zdanění liší od běžných cenných papírů a časový test v ČR na kryptoměny tradičně neplatil (pravidla se mohou měnit, je třeba sledovat platnou legislativu). Revolut a další apky usnadní nákup, ale daně musíš řešit ty.")
-
-        st.markdown(
             "#### 3.2 Trenažér: „Tohle přece danit nemusím!“"
         )
-        st.write("Vyber jednu situaci — brigáda, doučování, prodej výrobků, Vinted, YouTube/TikTok, pronájem přes Airbnb, investice nebo kryptoměny. Napiš, jaké otázky by sis musel/a ověřit, než prohlásíš: „Tohle danit nemusím.“")
+        st.write("V reálném životě se s daněmi setkáš na spoustě míst. Co všechno se tě může týkat?")
 
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
@@ -1124,26 +1052,10 @@ def render():
     # =========================================================================
     elif selected_section_5.startswith("4."):
         st.markdown("### 4. Globální souvislosti a svět bez hranic")
-        
-        st.markdown(
-            "<div class='box-yellow'>"
-            "🌐 <b>Moderní hook:</b> Tričko z Temu, mobil navržený v USA, čip z Tchaj-wanu, kompletace ve Vietnamu, doprava přes Suez a prodej v Česku. Globalizace znamená, že věci, které denně používáš, nevznikají „v jedné zemi“, ale v síti firem, států, dopravních cest, dat a pravidel."
-            "</div>",
-            unsafe_allow_html=True,
-        )
 
         st.markdown(
             "#### 4.1 Globalizace a mezinárodní obchod"
         )
-        st.write("**Globalizace** znamená rostoucí propojení ekonomik, firem, lidí, technologií, dat a kapitálu napříč státy. Státy mezi sebou obchodují proto, že není efektivní vyrábět všechno doma.")
-        st.markdown(
-            "| Pojem | Co znamená | Příklad |\n"
-            "| :--- | :--- | :--- |\n"
-            "| **Mezinárodní dělba práce** | Země a firmy se specializují na různé části výroby. | Design v USA, čipy na Tchaj-wanu, montáž v Asii. |\n"
-            "| **Absolutní výhoda** | Schopnost vyrábět produkt levněji/rychleji než ostatní. | Země s vhodným klimatem pěstuje levněji tropické plodiny. |\n"
-            "| **Komparativní výhoda** | Vyplatí se specializovat na to, v čem je nejnižší obětovaná příležitost. | Právnička, která píše rychleji než sekretářka, přesto deleguje psaní a raději fakturuje právní služby. |"
-        )
-
         kviz_advokatka = st.radio(
             "Jsi nejlepší advokátka (3 000 Kč/h) a píšeš na klávesnici 2x"
             " rychleji než asistentka (300 Kč/h). Co uděláš?",
@@ -1173,14 +1085,6 @@ def render():
 
         st.divider()
         st.markdown("#### 4.2 Volný obchod, protekcionismus a cla")
-        st.write("Státy se musí rozhodovat, jestli budou obchod otevírat (volný obchod), nebo chránit domácí trh (protekcionismus).")
-        st.markdown(
-            "| Přístup | Co znamená | Výhody | Rizika |\n"
-            "| :--- | :--- | :--- | :--- |\n"
-            "| **Volný obchod** | Omezuje překážky obchodu. | Levnější zboží, větší výběr, tlak na konkurenci. | Závislost na zahraničí, tlak na domácí firmy. |\n"
-            "| **Protekcionismus** | Chrání domácí výrobce. | Ochrana pracovních míst a strategických odvětví. | Dražší zboží pro zákazníky, odveta jiných států. |"
-        )
-
         clo_eu = st.slider(
             "Výše cla na dovoz čínských aut (% z ceny):",
             0,
@@ -1206,13 +1110,7 @@ def render():
             st.success("Výpočet cla byl uložen!")
 
         st.divider()
-        st.markdown("#### 4.3 Globální dodavatelské řetězce a zranitelnost ekonomiky")
-        st.write("Moderní ekonomika funguje v síti dodavatelů. Firmy často používají systém **Just-in-Time**, kdy se neskladuje mnoho zásob a díly přicházejí přesně tehdy, kdy jsou potřeba. Výhoda: nižší náklady. Riziko: když se zasekne doprava (Suezský průplav) nebo výroba čipů, zastaví se celý řetězec.")
-
-        st.divider()
         st.markdown("#### 4.4 EU a jednotný trh (Euro)")
-        st.write("Česko je součástí EU a jejího jednotného vnitřního trhu. To znamená aplikaci tzv. **Čtyř svobod EU**: Volný pohyb zboží, osob, služeb a kapitálu.")
-        st.write("**Brussels Effect:** Když EU nastaví silná pravidla (např. GDPR, USB-C), globální firmy je často přijmou i mimo Evropu, protože se jim nevyplatí vyrábět dvě verze produktu.")
 
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
@@ -1223,36 +1121,11 @@ def render():
                 st.session_state.get("ulozene_odpovedi", {}),
             )
 
-        st.divider()
-        st.markdown("#### 4.5 Klimatická krize a mezinárodní instituce")
-        st.markdown(
-            "| Instituce / Pojem | Co znamená |\n"
-            "| :--- | :--- |\n"
-            "| **WTO** | Světová obchodní organizace, řeší pravidla mezinárodního obchodu. |\n"
-            "| **MMF** | Mezinárodní měnový fond, pomáhá státům s finanční nestabilitou. |\n"
-            "| **OSN** | Organizace spojených národů, řeší mimo jiné globální cíle udržitelného rozvoje. |\n"
-            "| **CBAM (Uhlíkové clo)** | Poplatek na hranicích EU uvalený na 'špinavé' výrobky ze zemí mimo EU. |"
-        )
-
-        st.divider()
-        st.markdown("#### 4.6 Budoucnost práce a financí v globálním světě")
-        st.write("**Digitální nomádství** a práce remote bourají hranice. Pracovník z Česka soutěží na globálním trhu. To ale znamená, že stejně musí řešit daňovou rezidenci, zdravotní a sociální pojištění a zákony země, kde tráví většinu času.")
-
     # =========================================================================
     # SEKCE 5: ESG A UDRŽITELNOST
     # =========================================================================
     elif selected_section_5.startswith("5."):
         st.markdown("### 5. ESG a udržitelná ekonomika")
-
-        st.markdown(
-            "<div class='box-green'>"
-            "🌱 <b>Moderní hook:</b> Firma dnes nestačí hodnotit jen podle toho, kolik vydělá. Investoři, banky i zákazníci se ptají: Jak firma zachází s lidmi? Jakou má uhlíkovou stopu? Není její „zelená“ reklama jen greenwashing?"
-            "</div>",
-            unsafe_allow_html=True,
-        )
-
-        st.markdown("#### 5.1 Udržitelný rozvoj")
-        st.write("Udržitelný rozvoj má tři propojené roviny: **Ekonomickou** (finanční zdraví firmy), **Environmentální** (dopad na přírodu) a **Sociální** (dopad na lidi).")
 
         volba_tenisky = st.selectbox(
             "Zvol byznys strategii výroby tenisek:",
@@ -1284,20 +1157,7 @@ def render():
             st.success("Strategie byla uložena!")
 
         st.divider()
-        st.markdown("#### 5.2 Co znamená ESG")
-        st.markdown(
-            "| Oblast ESG | Co sleduje | Konkrétní příklady |\n"
-            "| :--- | :--- | :--- |\n"
-            "| **E — Environmental** | Dopady firmy na životní prostředí. | Emise CO₂, spotřeba energie, voda, odpady, recyklace. |\n"
-            "| **S — Social** | Dopady firmy na lidi. | Pracovní podmínky, bezpečnost práce, mzdy, diverzita. |\n"
-            "| **G — Governance** | Způsob řízení firmy. | Transparentnost, boj proti korupci, etický kodex. |"
-        )
-        st.write("ESG není jen morálka. Banky s horším ESG profilem mohou firmě nabídnout horší úroky na úvěr (řízení rizik).")
-
-        st.divider()
         st.markdown("#### 5.3 Greenwashing detector")
-        st.write("**Greenwashing** znamená, že firma působí ekologicky hlavně v reklamě, ale její skutečné dopady se nemění. Používá vágní slova (eco, green) bez důkazů nebo zdůrazní jeden drobný detail a mlčí o zbytku škodlivé výroby.")
-
         with st.form("greenwashing_quiz"):
             q_gw1 = st.radio(
                 "Firma chrlí 50 000 plastových triček denně, ale udělala 10"
@@ -1314,14 +1174,6 @@ def render():
                         "Podkapitola 5.3 - Greenwashing test",
                         q_gw1,
                     )
-
-        st.divider()
-        st.markdown("#### 5.4 Cirkulární ekonomika")
-        st.write("Přechod od lineárního modelu (vyrobit → použít → vyhodit) k modelu oběhovému (navrhnout pro dlouhé použití → oprava → recyklace).")
-
-        st.divider()
-        st.markdown("#### 5.5 ESG v dodavatelských řetězcích")
-        st.write("Firma nenese odpovědnost jen za svou kancelář, ale i za dodavatele: kde vznikly suroviny, za jakých podmínek se kompletovaly komponenty a kolik emisí stála doprava.")
 
         st.divider()
         st.markdown("##### 🕵️ Audit značky z pohledu ESG")
@@ -1358,10 +1210,6 @@ def render():
 
         with tab_studie1:
             st.markdown("#### Případová studie 1: Levné tričko za 99 Kč")
-            st.write(
-                "**Situace:** Student si koupí tričko z fast fashion e-shopu za 99 Kč. Na první pohled je to výhodný nákup. "
-                "Tričko ale vzniklo v globálním dodavatelském řetězci: bavlna, barvení látky, šití, balení, doprava, sklad, reklama, platforma a doručení až ke dveřím."
-            )
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "5.6.1",
@@ -1393,10 +1241,6 @@ def render():
 
         with tab_studie2:
             st.markdown("#### Případová studie 2: Student vydělává online")
-            st.write(
-                "**Situace:** Student natáčí videa na TikTok, občas dostane barter od značky, prodává digitální šablony a jednou za čas mu přijde příjem z affiliate odkazu. "
-                "Říká si: „Je to jen bokovka, daně řešit nemusím.“"
-            )
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "5.6.5",
@@ -1422,9 +1266,6 @@ def render():
         with tab_studie3:
             st.markdown(
                 "#### Případová studie 3: Obec rozhoduje o rozpočtu 10 mil. Kč"
-            )
-            st.write(
-                "**Situace:** Menší obec má rozhodnout, jak využije 10 milionů Kč. Část obyvatel chce opravit silnici, část podpořit školu, část sociální pomoc a část podnikatele."
             )
             m_infra = st.slider(
                 "🛤️ Silnice a chodníky (mil. Kč):",
@@ -1477,7 +1318,6 @@ def render():
 
         with tab_ukol:
             st.markdown("#### ✍️ Mini úkol: Cesta běžného produktu")
-            st.write("Vyber si běžný produkt z asijského e-shopu nebo z obchodu a odhadni jeho cestu globálním řetězcem.")
             moj_produkt = st.text_input(
                 "Zvolený produkt:", value="Moje tenisky", key="uk_prod"
             )
