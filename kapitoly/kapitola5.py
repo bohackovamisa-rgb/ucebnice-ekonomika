@@ -6,118 +6,86 @@ import streamlit as st
 
 
 def render_dluhovy_simulator():
-    st.markdown("#### ⏳ Živé počítadlo státního dluhu ČR")
+    st.markdown("#### 🏛️ Simulátor vývoje státního dluhu a rozpočtu")
     
     st.markdown(
         """
         <div class='box-purple'>
-            <strong>🔎 Detektivní úkol: Najdi aktuální státní dluh!</strong><br>
-            Než naplno spustíš tento simulátor, otevři si web <b>Ministerstva financí (mfcr.cz)</b> nebo <b>Českého statistického úřadu (czso.cz)</b>. Najdi dva údaje:<br>
+            <strong>🔎 Detektivní úkol: Najdi aktuální data!</strong><br>
+            Než spustíš simulátor, otevři si web <b>Ministerstva financí (mfcr.cz)</b> nebo <b>Českého statistického úřadu (czso.cz)</b>. Najdi dva údaje:<br>
             1. Jaký je aktuální celkový státní dluh ČR?<br>
             2. Jaký je plánovaný schodek státního rozpočtu pro letošní rok?<br><br>
-            Zadej tato čísla do políček níže. Teprve poté počítadlo ukáže skutečnou rychlost, jakou se stát v tomto roce zadlužuje.
+            Zadej tato čísla do políček níže. Teprve pak uvidíš reálný stav státní pokladny.
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    st.write(
-        "⚠️ **Důležité upozornění:** V realitě státní dluh neroste takto plynule každou vteřinou. "
-        "Roste **skokově** – například když Ministerstvo financí jednou za čas uspořádá aukci, vydá státní dluhopisy a půjčí si desítky miliard najednou. "
-        "Tento simulátor ale matematicky rozpočítává celkový roční schodek na vteřiny, abys měl/a představu, jaké obrovské tempo to v průměru je."
-    )
-
-    # Základní parametry (Výchozí hodnoty nastaveny orientačně, žák je má přepsat)
     POPULACE_CR = 10_900_000
     EKONOMICKY_AKTIVNI = 5_400_000  # Lidé, kteří reálně platí daně ze mzdy
 
     col1, col2 = st.columns(2)
     with col1:
         statni_dluh_mld = st.number_input(
-            "Celkový státní dluh ČR (v mld. Kč):",
-            value=3828, # Výchozí data
+            "Aktuální státní dluh ČR (v mld. Kč):",
+            value=3350,  # Záměrně starší údaj, ať ho žáci přepíšou
             step=50,
-            help="Celkový kumulovaný dluh státu."
+            help="Vyhledej aktuální údaj a přepiš ho."
         )
     with col2:
-        schodek_roku_mld = st.number_input(
-            "Plánovaný roční schodek (v mld. Kč):",
-            value=240, 
+        aktualni_schodek_mld = st.number_input(
+            "Letošní schodek rozpočtu (v mld. Kč):",
+            value=250,   # Záměrně orientační údaj, ať ho žáci přepíšou
             step=10,
-            help="O kolik více stát tento rok utratí, než vybere."
+            help="Vyhledej plánovaný schodek na letošní rok."
         )
 
-    # Výpočty pro ŽIVÉ POČÍTADLO
-    celkovy_dluh_kc = statni_dluh_mld * 1_000_000_000
-    # Přepočet schodku na vteřiny (365 dní * 24 h * 60 min * 60 s = 31 536 000 vteřin)
-    narust_za_vterinu = (schodek_roku_mld * 1_000_000_000) / 31_536_000
+    st.markdown("##### 🔮 Co přinese budoucnost? Vyber scénář vlády:")
+    st.write("Schodek se každý rok mění podle toho, jaká vláda vyhraje volby a jaká je situace ve světě. Vyber si scénář:")
+    
+    scenar = st.selectbox(
+        "Jak bude hospodařit další vláda?",
+        [
+            "⚖️ Stávající tempo (Schodek zůstane stejný jako letos)",
+            "✂️ Rozpočtová odpovědnost / Úspory (Schodek klesne o polovinu)",
+            "💸 Expanzivní politika / Krize (Schodek stoupne o polovinu)",
+            "✏️ Vlastní zadání (Zadám přesný schodek ručně)"
+        ]
+    )
 
-    # Dynamický HTML/JS widget - hodnoty se mění podle zadání studenta!
-    ticker_html = f"""
-    <div style="background-color: #fef2f2; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ef4444;">
-        <h3 style="color: #b91c1c; margin-bottom: 5px; font-family: sans-serif;">Aktuální počítadlo státního dluhu</h3>
-        <div id="live-debt" style="font-size: 2.8rem; font-weight: bold; color: #ef4444; font-family: monospace;">Načítám...</div>
-        <div style="color: #b91c1c; font-size: 1rem; margin-top: 10px;">
-            Při tomto schodku dluh roste průměrnou rychlostí <b>{narust_za_vterinu:,.0f} Kč za vteřinu</b>.
-        </div>
-    </div>
-    <script>
-        // Hodnoty přímo z Pythonu / Streamlit sliderů
-        let baseDebt = {celkovy_dluh_kc}; 
-        let debtPerSecond = {narust_za_vterinu}; 
-        
-        // Začneme počítat od chvíle, kdy se tato část stránky načte
-        let startDate = new Date().getTime();
-        
-        setInterval(function() {{
-            let now = new Date().getTime();
-            let secondsPassed = (now - startDate) / 1000;
-            let currentDebt = baseDebt + (secondsPassed * debtPerSecond);
-            
-            // Formátování s mezerami pro lepší čitelnost
-            let formattedDebt = Math.floor(currentDebt).toString().replace(/\\B(?=(\\d{{3}})+(?!\\d))/g, " ") + " Kč";
-            document.getElementById('live-debt').innerHTML = formattedDebt;
-        }}, 100); // Aktualizace každých 100ms pro plynulý efekt
-    </script>
-    """
-    # Vykreslení HTML komponenty
-    st.components.v1.html(ticker_html, height=180)
+    if "Stávající" in scenar:
+        rocni_schodek = aktualni_schodek_mld
+    elif "Úspory" in scenar:
+        rocni_schodek = aktualni_schodek_mld / 2
+    elif "Expanzivní" in scenar:
+        rocni_schodek = aktualni_schodek_mld * 1.5
+    else:
+        rocni_schodek = st.number_input("Zadej vlastní roční schodek na další roky (v mld. Kč):", value=int(aktualni_schodek_mld), step=10)
 
-    # Zbytek statických výpočtů na osobu
-    dluh_na_obcana = celkovy_dluh_kc / POPULACE_CR
-    dluh_na_pracujiciho = celkovy_dluh_kc / EKONOMICKY_AKTIVNI
+    roky = st.slider("Simuluj vývoj za kolik let:", min_value=1, max_value=10, value=4)
 
-    st.markdown("##### 💳 Kolik to znamená pro tebe?")
-    m1, m2, m3 = st.columns(3)
-    with m1:
-        st.metric("Celkový státní dluh", f"{statni_dluh_mld:,} mld. Kč".replace(",", " "))
-    with m2:
-        st.metric("Dluh na každého občana", f"{dluh_na_obcana:,.0f} Kč".replace(",", " "))
-    with m3:
-        st.metric("Dluh na 1 pracujícího", f"{dluh_na_pracujiciho:,.0f} Kč".replace(",", " "))
+    # Gramaticky správné skloňování češtiny
+    if roky == 1:
+        text_roky = "1 rok"
+    elif 2 <= roky <= 4:
+        text_roky = f"{roky} roky"
+    else:
+        text_roky = f"{roky} let"
+
+    budouci_dluh_mld = statni_dluh_mld + (rocni_schodek * roky)
+    budouci_dluh_obcan = (budouci_dluh_mld * 1_000_000_000) / POPULACE_CR
+    budouci_dluh_poplatnik = (budouci_dluh_mld * 1_000_000_000) / EKONOMICKY_AKTIVNI
+
+    st.markdown(f"##### 📊 Výsledek za {text_roky} při schodku {rocni_schodek:,.0f} mld. Kč ročně:")
+    
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Celkový budoucí dluh", f"{budouci_dluh_mld:,.0f} mld. Kč".replace(",", " "))
+    c2.metric("Dluh na 1 občana", f"{budouci_dluh_obcan:,.0f} Kč".replace(",", " "))
+    c3.metric("Dluh na pracujícího", f"{budouci_dluh_poplatnik:,.0f} Kč".replace(",", " "))
 
     st.info(
-        f"💡 **Co to znamená:** Kdybychom dnes chtěli státní dluh splatit ze dne na den, "
-        f"musel by každý člověk v ČR (včetně novorozenců a seniorů) poslat státu **{dluh_na_obcana:,.0f} Kč**. "
-        f"Pokud by to platili pouze ekonomicky aktivní pracující lidé, vyšlo by to na **{dluh_na_pracujiciho:,.0f} Kč** na jednoho."
-    )
-
-    st.divider()
-    st.markdown("##### ⏱️ Interaktivní simulace: Jak rychle dluh poroste?")
-    roky = st.slider("Simuluj vývoj dluhu za kolik let:", min_value=1, max_value=10, value=3, key="sim_roky")
-    budouci_dluh = statni_dluh_mld + (schodek_roku_mld * roky)
-    budouci_dluh_obcan = (budouci_dluh * 1_000_000_000) / POPULACE_CR
-
-    st.write(
-        f"Pokud bude stát hospodařit se schodkem **{schodek_roku_mld} mld. Kč** ročně, "
-        f"bude za **{roky} let** celkový státní dluh činit **{budouci_dluh:,} mld. Kč** "
-        f"(tedy **{budouci_dluh_obcan:,.0f} Kč** na jednoho občana)."
-    )
-
-    st.markdown(
-        "<div class='box-yellow'><strong>🤔 Otázka k zamyšlení:</strong> "
-        "Může stát fungovat s dluhem donekonečna? Proč si stát půjčuje a komu tyto peníze vlastně dluží (kdo jsou věřitelé)? Kdo kupuje státní dluhopisy (banky, fondy, pojišťovny, občané)?</div>",
-        unsafe_allow_html=True
+        f"💡 **Shrnutí:** Pokud bude stát hospodařit v tomto zvoleném režimu, naroste dluh za **{text_roky}** o **{rocni_schodek * roky:,.0f} mld. Kč**. "
+        f"Na každého ekonomicky aktivního občana (toho, kdo reálně platí daně ze mzdy) tak v budoucnu připadne dluhová zátěž **{budouci_dluh_poplatnik:,.0f} Kč**."
     )
 
 
@@ -572,7 +540,7 @@ def render():
         """)
 
         with st.form("diskuse_regiony"):
-            st.write("Diskusní otázka: Je spravedlivější, aby víc peněz z daní zůstávalo obcím, kde se vyberou, nebo aby se více přerozdělovalo mezi bohatší a chudší regiony?")
+            st.write("Diskusní otázka: Je spravedlivější, aby víc peněz z daní zůstávalo obcím, kde se vyberou, nebo aby se více přerozdělovaly mezi bohatší a chudší regiony?")
             nazor_region = st.radio("Zvol si svůj postoj:", [
                 "Ať peníze zůstanou tam, kde vznikly. Úspěšná města by neměla doplácet na ta pasivní.",
                 "Stát musí být solidární. Peníze z bohatých center se musí rozdělovat i do chudších regionů.",
@@ -615,32 +583,19 @@ def render():
         | **Schodkový rozpočet / deficit** | Výdaje jsou vyšší než příjmy. | Stát vybere 100 a utratí 120. Rozdíl si musí půjčit. |
         """)
 
-        st.divider()
-        st.markdown("#### 2.10 Státní dluh a státní dluhopisy")
-        st.write("Státní dluh vzniká, když stát dlouhodobě financuje schodky rozpočtu půjčkami. Jedním z nástrojů financování jsou **státní dluhopisy**. Když stát vydá dluhopis, půjčuje si peníze od investorů a slíbí, že je v budoucnu vrátí a zaplatí úrok.")
-
-        st.markdown("""
-        | Otázka | Krátká odpověď |
-        | :--- | :--- |
-        | Kdo kupuje státní dluhopisy? | Banky, fondy, pojišťovny, zahraniční investoři, firmy i občané podle typu emise. |
-        | Proč je stát vydává? | Aby financoval schodek rozpočtu nebo refinancoval starší dluh. |
-        | Je státní dluhopis bez rizika? | Obvykle se považuje za relativně bezpečný, ale záleží na státu, měně, inflaci, úroku a době splatnosti. |
-        | Jak se dluh týká Gen Z? | Budoucí generace mohou nést náklady vyššího dluhu přes daně, nižší prostor pro investice nebo vyšší výdaje na úroky. |
-        """)
-
+        # ZDE VLOŽEN AKTUALIZOVANÝ SIMULÁTOR
         render_dluhovy_simulator()
 
         st.divider()
         st.markdown("#### 2.11 Daňové úniky, optimalizace a stínová ekonomika")
-        st.write("Ne každé snížení daní je nelegální. Je potřeba rozlišovat legální optimalizaci a nelegální daňový únik.")
-
+        st.write("Není každé ušetření daně nezákonné, ale je nutné znát hranici:")
         st.markdown("""
         | Situace | Co znamená | Příklad | Hodnocení |
         | :--- | :--- | :--- | :--- |
         | **Legální daňová optimalizace** | Využití zákonných možností ke snížení daňové povinnosti. | Uplatnění slevy na poplatníka, daňově uznatelných výdajů. | Legální, pokud odpovídá pravidlům a realitě. |
         | **Nelegální daňový únik** | Porušení zákona s cílem nezaplatit daň. | Nefakturování příjmů, fiktivní náklady, zatajené tržby. | Nelegální a rizikové. |
-        | **Šedá ekonomika** | Činnost, která může být legální sama o sobě, ale není správně evidovaná nebo zdaněná. | Práce „na ruku“ bez dokladu, drobné služby bez evidence. | Poškozuje rozpočty a může poškodit i pracovníka. |
-        | **Černá ekonomika** | Nelegální činnost mimo zákonný systém. | Obchod s nelegálním zbožím, padělky, nelegální služby. | Nelegální a společensky škodlivá. |
+        | **Šedá ekonomika** | Činnost, která může být legální sama o sobě, ale není správně evidovaná nebo zdaněná. | Práce „na ruku“ bez dokladu. | Poškozuje rozpočty a může poškodit i pracovníka. |
+        | **Černá ekonomika** | Nelegální činnost mimo zákonný systém. | Obchod s nelegálním zbožím. | Nelegální a společensky škodlivá. |
         """)
 
         with st.expander("Práce „na ruku“: proč je sleva bez účtenky problém?"):
@@ -683,10 +638,23 @@ def render():
             unsafe_allow_html=True,
         )
 
+        st.markdown("#### Praktické scénáře pro studenty")
+        with st.expander("Proč hrubá mzda není to samé, co mi přijde na účet? (První brigáda a „Růžový papír“)"):
+            st.write("U DPP nebo DPČ není důležité jen „kolik je hodinová mzda“. Záleží na typu dohody, výši příjmu, odvodech, dani, podepsaném **Prohlášení poplatníka k dani** (růžový papír) a slevách na dani. Díky růžovému papíru může zaměstnanec uplatnit základní slevu na poplatníka. Lze ho ale uplatňovat v daném měsíci vždy pouze u jednoho zaměstnavatele.")
+
+        with st.expander("Jak se daní TikTok, Twitch, OnlyFans, Patreon nebo barter na Instagramu?"):
+            st.write("Pokud někdo dlouhodobě a soustavně vydělává tvorbou obsahu, spolupracemi, reklamou, předplatným, dary od fanoušků nebo prodejem digitálních produktů, nejde jen o „peníze z internetu“. Může jít o zdanitelný příjem a někdy i o podnikání. I barter (produkt výměnou za reklamu) může mít ekonomickou hodnotu a daňové dopady.")
+
+        with st.expander("Vinted, Bazoš, eBay: Kdy je to ještě prodej vlastních věcí?"):
+            st.write("Když prodáš vlastní staré oblečení nebo učebnice, obvykle jde o osvobozený příjem. Ale pokud systematicky nakupuješ věci za účelem jejich dalšího prodeje se ziskem, už se to může považovat za podnikání a podléhat zdanění.")
+
+        with st.expander("Kryptoměny, akcie a ETF: Co si ověřit před prodejem?"):
+            st.write("U akcií a ETF se často řeší tzv. **časový test** (po určité době držení je prodej osvobozen od daně) a limit ročních příjmů z prodeje. U kryptoměn se zdanění liší od běžných cenných papírů a časový test v ČR na kryptoměny tradičně neplatil (pravidla se mohou měnit, je třeba sledovat platnou legislativu). Revolut a další apky usnadní nákup, ale daně musíš řešit ty.")
+
         st.markdown(
-            "<div class='box-yellow'><strong>🧩 Mini úkol:</strong> Vyber jednu situaci — brigáda, doučování, prodej výrobků, Vinted, YouTube/TikTok, pronájem přes Airbnb, investice nebo kryptoměny. Napiš, jaké otázky by sis musel/a ověřit, než prohlásíš: „Tohle danit nemusím.“</div>",
-            unsafe_allow_html=True
+            "#### 3.2 Trenažér: „Tohle přece danit nemusím!“"
         )
+        st.write("Vyber jednu situaci — brigáda, doučování, prodej výrobků, Vinted, YouTube/TikTok, pronájem přes Airbnb, investice nebo kryptoměny. Napiš, jaké otázky by sis musel/a ověřit, než prohlásíš: „Tohle danit nemusím.“")
 
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
@@ -879,7 +847,7 @@ def render():
 
         st.markdown(
             "<div class='box-green'>"
-            "🌱 <b>Moderní hook:</b> Firma dnes nestačí hodnotit jen podle toho, kolik vydělá. Investoři, banky, zákazníci i zaměstnanci se stále častěji ptají: Jak firma zachází s lidmi? Jakou má uhlíkovou stopu? Nezneužívá dodavatele? Není její „zelená“ reklama jen greenwashing?"
+            "🌱 <b>Moderní hook:</b> Firma dnes nestačí hodnotit jen podle toho, kolik vydělá. Investoři, banky, zákazníci i zaměstnanci se ptají: Jak firma zachází s lidmi? Jakou má uhlíkovou stopu? Nezneužívá dodavatele? Není její „zelená“ reklama jen greenwashing?"
             "</div>",
             unsafe_allow_html=True,
         )
