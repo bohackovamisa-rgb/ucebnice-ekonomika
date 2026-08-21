@@ -576,7 +576,7 @@ def render():
         """)
 
         with st.form("diskuse_regiony"):
-            st.write("Diskusní otázka: Je spravedlivější, aby víc peněz z daní zůstávalo obcím, kde se vyberou, nebo aby se více přerozdělovaly mezi bohatší a chudší regiony?")
+            st.write("Diskusní otázka: Je spravedlivější, aby víc peněz z daní zůstávalo obcím, kde se vyberou, nebo aby se více přerozdělovalo mezi bohatší a chudší regiony?")
             nazor_region = st.radio("Zvol si svůj postoj:", [
                 "Ať peníze zůstanou tam, kde vznikly. Úspěšná města by neměla doplácet na ta pasivní.",
                 "Stát musí být solidární. Peníze z bohatých center se musí rozdělovat i do chudších regionů.",
@@ -619,6 +619,7 @@ def render():
         | **Schodkový rozpočet / deficit** | Výdaje jsou vyšší než příjmy. | Stát vybere 100 a utratí 120. Rozdíl si musí půjčit. |
         """)
 
+        # ZDE VLOŽEN AKTUALIZOVANÝ SIMULÁTOR
         render_dluhovy_simulator()
 
         st.divider()
@@ -636,7 +637,8 @@ def render():
 
         st.divider()
         st.markdown("#### 2.11 Daňové úniky, optimalizace a stínová ekonomika")
-        st.write("Není každé ušetření daně nezákonné, ale je nutné znát hranici:")
+        st.write("Ne každé snížení daní je nelegální. Je potřeba rozlišovat legální optimalizaci a nelegální daňový únik.")
+
         st.markdown("""
         | Situace | Co znamená | Příklad | Hodnocení |
         | :--- | :--- | :--- | :--- |
@@ -653,7 +655,7 @@ def render():
             st.write("Nadnárodní firmy mohou využívat rozdíly mezi daňovými systémy zemí, přesouvat zisky, licence nebo sídla do států s výhodnějším zdaněním. Proto se řeší **daňové ráje**, digitální daň, pravidla EU/OECD a myšlenka globální minimální daně pro velké korporace. Pointa: Problém není jen v tom, zda firma formálně dodrží zákon, ale také v tom, kde skutečně vzniká hodnota a kde se odvádějí daně.")
 
         st.divider()
-        st.markdown("#### 2.12 Praktické prvky do Notion: mzda, účtenka a daňové dilema")
+        st.markdown("#### 2.12 Praktická aplikace: mzda, účtenka a daňové dilema")
         
         st.markdown(
             "<div class='box-green'><strong>🔗 Užitečné zdroje k ověřování daní:</strong><br>"
@@ -686,10 +688,23 @@ def render():
             unsafe_allow_html=True,
         )
 
+        st.markdown("#### Praktické scénáře pro studenty")
+        with st.expander("Proč hrubá mzda není to samé, co mi přijde na účet? (První brigáda a „Růžový papír“)"):
+            st.write("U DPP nebo DPČ není důležité jen „kolik je hodinová mzda“. Záleží na typu dohody, výši příjmu, odvodech, dani, podepsaném **Prohlášení poplatníka k dani** (růžový papír) a slevách na dani. Díky růžovému papíru může zaměstnanec uplatnit základní slevu na poplatníka. Lze ho ale uplatňovat v daném měsíci vždy pouze u jednoho zaměstnavatele.")
+
+        with st.expander("Jak se daní TikTok, Twitch, OnlyFans, Patreon nebo barter na Instagramu?"):
+            st.write("Pokud někdo dlouhodobě a soustavně vydělává tvorbou obsahu, spolupracemi, reklamou, předplatným, dary od fanoušků nebo prodejem digitálních produktů, nejde jen o „peníze z internetu“. Může jít o zdanitelný příjem a někdy i o podnikání. I barter (produkt výměnou za reklamu) může mít ekonomickou hodnotu a daňové dopady.")
+
+        with st.expander("Vinted, Bazoš, eBay: Kdy je to ještě prodej vlastních věcí?"):
+            st.write("Když prodáš vlastní staré oblečení nebo učebnice, obvykle jde o osvobozený příjem. Ale pokud systematicky nakupuješ věci za účelem jejich dalšího prodeje se ziskem, už se to může považovat za podnikání a podléhat zdanění.")
+
+        with st.expander("Kryptoměny, akcie a ETF: Co si ověřit před prodejem?"):
+            st.write("U akcií a ETF se často řeší tzv. **časový test** (po určité době držení je prodej osvobozen od daně) a limit ročních příjmů z prodeje. U kryptoměn se zdanění liší od běžných cenných papírů a časový test v ČR na kryptoměny tradičně neplatil (pravidla se mohou měnit, je třeba sledovat platnou legislativu). Revolut a další apky usnadní nákup, ale daně musíš řešit ty.")
+
         st.markdown(
-            "<div class='box-yellow'><strong>🧩 Mini úkol:</strong> Vyber jednu situaci — brigáda, doučování, prodej výrobků, Vinted, YouTube/TikTok, pronájem přes Airbnb, investice nebo kryptoměny. Napiš, jaké otázky by sis musel/a ověřit, než prohlásíš: „Tohle danit nemusím.“</div>",
-            unsafe_allow_html=True
+            "#### 3.2 Trenažér: „Tohle přece danit nemusím!“"
         )
+        st.write("Vyber jednu situaci — brigáda, doučování, prodej výrobků, Vinted, YouTube/TikTok, pronájem přes Airbnb, investice nebo kryptoměny. Napiš, jaké otázky by sis musel/a ověřit, než prohlásíš: „Tohle danit nemusím.“")
 
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
@@ -882,7 +897,7 @@ def render():
 
         st.markdown(
             "<div class='box-green'>"
-            "🌱 <b>Moderní hook:</b> Firma dnes nestačí hodnotit jen podle toho, kolik vydělá. Investoři, banky, zákazníci i zaměstnanci se ptají: Jak firma zachází s lidmi? Jakou má uhlíkovou stopu? Nezneužívá dodavatele? Není její „zelená“ reklama jen greenwashing?"
+            "🌱 <b>Moderní hook:</b> Firma dnes nestačí hodnotit jen podle toho, kolik vydělá. Investoři, banky, zákazníci i zaměstnanci se stále častěji ptají: Jak firma zachází s lidmi? Jakou má uhlíkovou stopu? Nezneužívá dodavatele? Není její „zelená“ reklama jen greenwashing?"
             "</div>",
             unsafe_allow_html=True,
         )
@@ -970,7 +985,7 @@ def render():
 
         st.divider()
         st.markdown("#### 5.5 ESG v dodavatelských řetězcích")
-        st.write("Firma nenese odpovědnost jen za to, co se děje v její kanceláři. Velká část dopadů vzniká u dodavatelů: při těžbě surovin, výrobě komponent, dopravě nebo kompletaci.")
+        st.write("Firma nenese odpovědnost jen za svou kancelář, ale i za dodavatele: kde vznikly suroviny, za jakých podmínek se kompletovaly komponenty a kolik emisí stála doprava.")
 
         st.markdown("""
         | Otázka pro firmu | Proč je důležitá |
