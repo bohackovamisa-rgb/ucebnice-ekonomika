@@ -1662,16 +1662,17 @@ def render():
         st.markdown("### 3.2 Nominální a reálná mzda")
         st.write(
             "Pokud vám šéf přidá 5 % ke mzdě, jste na tom lépe? **Ne vždy!** "
-            "Záleží totiž na tom, jak rychle v zemi rostou ceny zboží a služeb (tzv. inflace)."
+            "Záleží totiž na tom, jak rychle v zemi rostou ceny zboží a služeb."
         )
 
         st.markdown("""
         * 💸 **Nominální mzda:** Částka vyjádřená v korunách na výplatní pásce.
-        * 🛒 **Reálná mzda:** Říká, **co si za tuto částku skutečně koupíte** (vyjadřuje vaši kupní sílu).
+        * 🛒 **Reálná mzda:** Říká, **co si za tuto částku skutečně koupíte** (vyjadřuje vaši kupní sílu). Je ovlivněna inflací.
+        * 📈 **Index spotřebitelských cen (ISC):** Měří, jak se v čase mění celkové náklady na běžný nákupní koš (potraviny, bydlení, doprava). Z růstu tohoto indexu se následně vypočítává samotná **míra inflace**.
         """)
 
         st.info(
-            "💡 **Příklad:** Pokud mzda vzroste o 5 %, ale ceny v obchodech vzrostou o 10 %, člověk má sice vyšší nominální mzdu, ale nižší reálnou kupní sílu (zchudnul o 5 %)."
+            "💡 **Příklad:** Pokud mzda vzroste o 5 %, ale ceny v obchodech (inflace) vzrostou o 10 %, člověk má sice vyšší nominální mzdu, ale nižší reálnou kupní sílu (zchudnul o 5 %)."
         )
 
         st.markdown(
@@ -1687,11 +1688,11 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-purple'>🔎 <b>Detektivní úkol:</b> Běž na stránky Českého statistického úřadu (czso.cz) a najdi aktuální <b>míru inflace (Index spotřebitelských cen)</b>. Zadej ji níže!</div>",
+            "<div class='box-purple'>🔎 <b>Detektivní úkol:</b> Běž na stránky Českého statistického úřadu (czso.cz) a najdi aktuální <b>míru inflace</b> (která se počítá právě z Indexu spotřebitelských cen). Zadej zjištěné procento níže!</div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Zadej svou výplatu a změň inflaci, ať vidíš, jestli si toho koupíš víc nebo míň:"
+            "Zadej svou výplatu a změň inflaci, ať vidíš, jestli si toho letos koupíš víc nebo míň:"
         )
 
         col_inf1, col_inf2 = st.columns(2)
@@ -1702,7 +1703,7 @@ def render():
                 "Šéf ti přidal ke mzdě (%):", 0, 20, 5, key="k4_3_2_zvyseni"
             )
             inflace = st.number_input(
-                "Inflace / Index spotřebitelských cen v ČR (%):",
+                "Míra inflace / Změna indexu spotř. cen (%):",
                 value=8.0,
                 step=0.1,
                 key="k4_3_2_inflace",
@@ -1934,8 +1935,9 @@ def render():
             hm = st.number_input("Zadej hrubou mzdu (Kč):", min_value=18900, max_value=200000, value=35000, step=1000)
             podepsano = st.checkbox("Mám podepsané 'Růžové prohlášení' (Sleva na poplatníka 2 570 Kč)", value=True)
             deti = st.selectbox("Počet vyživovaných dětí v domácnosti:", [0, 1, 2, 3])
-            st.checkbox("Jsem student (Sleva zrušena – ponecháno pro ukázku)", value=False, disabled=True, help="Sleva na studenta byla v ČR zrušena konsolidačním balíčkem.")
-            ztp = st.checkbox("Mám nárok na slevu pro ZTP/P (1 345 Kč)", value=False)
+            inv12 = st.checkbox("Invalidita I. a II. stupně (Sleva 210 Kč/měs)")
+            inv3 = st.checkbox("Invalidita III. stupně (Sleva 420 Kč/měs)")
+            ztp = st.checkbox("Mám průkaz ZTP/P (Sleva 1 345 Kč/měs)")
 
         with col_k2:
             soc_kalk = math.floor(hm * 0.071)
@@ -1943,31 +1945,43 @@ def render():
             dan_zaklad = math.floor(hm * 0.15)
             
             sleva_p = 2570 if podepsano else 0
+            sleva_inv = 0
+            if inv12: sleva_inv += 210
+            if inv3: sleva_inv += 420
+            sleva_z = 1345 if ztp else 0
+            
             sleva_d = 0
             if deti == 1: sleva_d = 1267
             elif deti == 2: sleva_d = 1267 + 1860
             elif deti >= 3: sleva_d = 1267 + 1860 + 2320
             
-            sleva_z = 1345 if ztp else 0
-
-            celkova_sleva = sleva_p + sleva_d + sleva_z
-            dan_po_slevach = dan_zaklad - celkova_sleva
+            celkova_sleva_osobni = sleva_p + sleva_inv + sleva_z
+            
+            dan_po_osobnich_slevach = dan_zaklad - celkova_sleva_osobni
+            if dan_po_osobnich_slevach < 0:
+                dan_po_osobnich_slevach = 0
+                
+            dan_po_detech = dan_po_osobnich_slevach - sleva_d
             
             bonus = 0
-            if dan_po_slevach < 0 and deti > 0 and (sleva_p + sleva_z <= dan_zaklad):
-                # Zjednodušená logika bonusu
-                bonus = abs(dan_po_slevach)
-                dan_po_slevach = 0
-            elif dan_po_slevach < 0:
-                dan_po_slevach = 0
+            if dan_po_detech < 0:
+                bonus = abs(dan_po_detech)
+                realna_dan = 0
+            else:
+                realna_dan = dan_po_detech
 
-            cista_kalk = hm - soc_kalk - zdr_kalk - dan_po_slevach + bonus
+            cista_kalk = hm - soc_kalk - zdr_kalk - realna_dan + bonus
 
             st.write(f"**Hrubá mzda:** {hm:,} Kč".replace(",", " "))
             st.write(f"➖ Soc. pojištění (7,1 %): {soc_kalk:,} Kč".replace(",", " "))
             st.write(f"➖ Zdr. pojištění (4,5 %): {zdr_kalk:,} Kč".replace(",", " "))
             st.write(f"➖ Daň před slevou (15 %): {dan_zaklad:,} Kč".replace(",", " "))
-            st.write(f"➕ Slevy na dani celkem: {celkova_sleva:,} Kč".replace(",", " "))
+            
+            if celkova_sleva_osobni > 0:
+                st.write(f"➕ Osobní slevy na dani: {celkova_sleva_osobni:,} Kč".replace(",", " "))
+            if sleva_d > 0:
+                st.write(f"➕ Slevy na děti: {sleva_d:,} Kč".replace(",", " "))
+                
             if bonus > 0:
                 st.write(f"🎁 **Daňový bonus (stát ti doplácí):** {bonus:,} Kč".replace(",", " "))
             
@@ -2172,6 +2186,43 @@ def render():
         """,
             unsafe_allow_html=True,
         )
+
+        st.divider()
+        st.markdown("#### 📅 Kalkulačka: Roční zúčtování (Tvoje jarní vratka daně)")
+        st.write("Zatímco slevu na poplatníka řešíš každý měsíc z výplaty, odčitatelné položky (krev, hypotéka, penzijko) a slevu na manžela/ku řešíš až 1x ročně. Spočítej si, kolik ti stát na jaře pošle zpět na účet!")
+        
+        rok_hruba = st.number_input("Tvoje odhadovaná roční hrubá mzda (Kč):", min_value=100000, max_value=2000000, value=420000, step=10000)
+        
+        col_r1, col_r2 = st.columns(2)
+        with col_r1:
+            st.markdown("##### 📉 Odčitatelné položky")
+            st.caption("Snižují daňový základ. Stát ti z nich vrátí **15 %**.")
+            dar_krev = st.number_input("Dary na charitu a odběry krve (Kč/rok):", value=0, step=1000)
+            hypoteka = st.number_input("Zaplacené úroky z hypotéky (Kč/rok, max 150k):", max_value=150000, value=0, step=5000)
+            penzijko = st.number_input("Penzijko, ŽP a DIP (vklady nad limit, max 48k):", max_value=48000, value=0, step=1000)
+            
+        with col_r2:
+            st.markdown("##### 💎 Roční slevy na dani")
+            st.caption("Snižují přímo daň. Stát ti vrátí **100 %** jejich hodnoty.")
+            manzelka = st.checkbox("Sleva na manžela/manželku (bez příjmů, péče o dítě do 3 let) - Vratka 24 840 Kč")
+            
+        # Výpočet zaplacené daně (odhad, za předpokladu, že uplatňuje jen zákl. slevu)
+        odhad_zaplacene_dane = max(0, (rok_hruba * 0.15) - 30840)
+        
+        odpocty_celkem = dar_krev + hypoteka + penzijko
+        vratka_odpocty = odpocty_celkem * 0.15
+        vratka_celkem = vratka_odpocty + (24840 if manzelka else 0)
+        
+        vratka_realna = min(vratka_celkem, odhad_zaplacene_dane)
+        
+        st.info(f"Během roku jsi na daních státu odvedl/a odhadem: **{int(odhad_zaplacene_dane):,} Kč** (to je tvůj strop pro vratku).".replace(",", " "))
+        
+        if vratka_realna > 0:
+            st.success(f"🎉 **Stát ti na jaře vrátí: {int(vratka_realna):,} Kč!**".replace(",", " "))
+            if vratka_celkem > odhad_zaplacene_dane:
+                st.warning("Poznámka: Tvá teoretická vratka by byla vyšší, ale stát ti může vrátit maximálně tolik, kolik jsi mu během roku na daních skutečně zaplatil/a.")
+        else:
+            st.error("Letos ti stát nevrátí nic navíc. (Nezadal/a jsi položky, nebo tvá odvedená daň během roku už byla nulová).")
 
     elif (
         selected_section_4
@@ -2400,7 +2451,7 @@ def render():
             st.error(
                 "🚨 **KRITICKÉ RIZIKO VYHOŘENÍ!** Tvůj systém hlásí přetížení."
                 " Chybí ti 'ochranné faktory'. Musíš si okamžitě nastavit"
-                " hranice, naučit se říkat ne a find si čas na digitální detox"
+                " hranice, naučit se říkat ne a najít si čas na digitální detox"
                 " a spánek."
             )
         elif skore_vyhoreni >= 2:
