@@ -14,9 +14,9 @@ def render():
     st.markdown(
         "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
         "Management a marketing nejsou jen poučky z učebnice. Jsou to dovednosti, "
-        "které studenti potkávají každý den: při práci v týmu, plánování školní akce, "
+        "které potkáváš každý den: při práci v týmu, plánování školní akce, "
         "sledování influencerů, nákupech v e-shopech, budování profilu na sociálních sítích "
-        "i při rozhodování, proč věří jedné značce víc než druhé.</p>",
+        "i při rozhodování, proč věříš jedné značce víc než druhé.</p>",
         unsafe_allow_html=True,
     )
 
@@ -49,14 +49,6 @@ def render():
             "- posoudit etiku reklamy, influencer marketingu, greenwashingu a AI reklamy,\n"
             "- navrhnout jednoduchý projekt od řízení týmu až po etickou marketingovou kampaň."
         )
-        st.markdown(
-            """
-            <div style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
-                <i>📘 <b>Vazba na RVP:</b> Kapitola rozvíjí ekonomické, podnikavé, občanské a digitální kompetence v oblastech managementu, plánování, organizování, vedení lidí, kontroly, rozhodování, marketingu, analýzy trhu, marketingového mixu, značky, spotřebitelského chování, ochrany spotřebitele, etiky reklamy a odpovědné komunikace v digitálním prostředí.</i>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
 
     st.divider()
     
@@ -75,10 +67,10 @@ def render():
     # =========================================================================
     # 💡 PRAKTICKÁ LINKA: PROJEKT NAPŘÍČ KAPITOLOU
     # =========================================================================
-    st.markdown("### 💡 Projekt napříč kapitolou: Vytvoř si vlastní projekt")
+    st.header("💡 Projekt napříč kapitolou: Vytvoř si vlastní projekt")
     st.write(
-        "**Hlavní praktická linka kapitoly:** Studenti si vyberou jeden mikro-projekt a budou ho postupně rozvíjet ve všech třech blocích. "
-        "Na konci kapitoly budou mít jednoduchý návrh projektu, jeho řízení, marketingový mix, značku a etickou kampaň."
+        "**Hlavní praktická linka kapitoly:** Vyber si jeden mikro-projekt a budeš ho postupně rozvíjet ve všech třech blocích. "
+        "Na konci kapitoly budeš mít jednoduchý návrh projektu, jeho řízení, marketingový mix, značku a etickou kampaň."
     )
 
     # Interaktivní výběr a konfigurátor projektu
@@ -115,13 +107,13 @@ def render():
 
         c_p1, c_p2, c_p3 = st.columns(3)
         c_p1.info(
-            "**Blok 1: Management**\n\n**Co student doplní:** Cíl, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán."
+            "**Blok 1: Management**\n\n**Co doplníš:** Cíl, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\n\n**Co student doplní:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh."
+            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh."
         )
         c_p3.success(
-            "**Blok 3: Brand & Etika**\n\n**Co student doplní:** Název, hodnoty, personal brand a etická pravidla.\n\n**Výstup:** Etická kampaň."
+            "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty, personal brand a etická pravidla.\n\n**Výstup:** Etická kampaň."
         )
 
         st.markdown(
@@ -142,8 +134,18 @@ def render():
     st.divider()
 
     # =========================================================================
-    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL (NAVIGACE KAPITOLOU 6)
+    # 📌 VÝRAZNÝ NAVIGAČNÍ PANEL
     # =========================================================================
+    st.markdown(
+        """
+        <div style='background-color: #e0e7ff; padding: 20px; border-radius: 10px; border-left: 6px solid #4338ca; margin-bottom: 20px;'>
+            <h3 style='margin-top: 0; color: #3730a3; margin-bottom: 5px;'>🧭 Navigace kapitolou</h3>
+            <p style='margin-bottom: 0px; color: #312e81;'>Vyber si v roletce podkapitolu, kterou chceš právě studovat:</p>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+    
     section_options_6 = [
         "1. Management (Úvod, 1.1 Podstata a role)",
         "1.2 Základní manažerské funkce: proces řízení",
@@ -161,7 +163,6 @@ def render():
         "4. Závěrečný výstup kapitoly a případové studie"
     ]
 
-    st.markdown("📌 **Přechod na podkapitolu:**")
     selected_section_6 = st.selectbox(
         "Vyber podkapitolu:",
         section_options_6,
@@ -378,6 +379,7 @@ def render():
             "| **Stimulace** | Vnější podnět nebo odměna, která podporuje určité chování. | Odměna, bonus, pochvala, certifikát, volno, soutěž. |"
         )
 
+        # MASLOWOVA PYRAMIDA POTŘEB (GRAF & TEORIE)
         st.markdown("#### 1.2.3.1 Maslowova pyramida potřeb")
         st.write(
             "Abraham Harold Maslow byl americký psycholog 20. století, který patří mezi představitele humanistické psychologie. "
@@ -442,11 +444,12 @@ def render():
             "<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 2: SMART cíl a motivace týmu</b></div>",
             unsafe_allow_html=True,
         )
+
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"]("6.1.4", "1. Napiš přesný S.M.A.R.T. cíl pro svůj projekt (Co, kolik, do kdy):", "6", st.session_state.get("ulozene_odpovedi", {}))
             st.session_state["vykresli_otazku_fn"]("6.1.5", "2. Jak budeš svůj tým motivovat (kromě peněz) na úrovni Uznání a Seberealizace?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
-        st.subheader("1.2.4 Kontrola")
+        st.markdown("#### 1.2.4 Kontrola: Není to slídění, ale navigace")
         st.write("Kontrola neznamená jen „nachytat někoho při chybě“. Jejím smyslem je zjistit, zda se realita shoduje s plánem, a pokud ne, přijmout nápravná opatření.")
         
         st.markdown(
@@ -870,7 +873,7 @@ def render():
             "| Vrstva produktu | Co znamená | Příklad: auto | Příklad: školní merch |\n"
             "| :--- | :--- | :--- | :--- |\n"
             "| **Jádro produktu** | Základní užitek, kvůli kterému zákazník produkt pořizuje. | Potřeba přepravit se z místa na místo. | Oblečení, sounáležitost se školou, identita. |\n"
-            "| **Reálný produkt** | Konkrétní podoba produktu: značka, design, quality, obal, funkce. | Konkrétní značka auta, výkon, barva, výbava, bezpečnost. | Mikina, materiál, střih, logo, barva, kvalita potisku. |\n"
+            "| **Reálný produkt** | Konkrétní podoba produktu: značka, design, kvalita, obal, funkce. | Konkrétní značka auta, výkon, barva, výbava, bezpečnost. | Mikina, materiál, střih, logo, barva, kvalita potisku. |\n"
             "| **Rozšířený produkt** | Doplňkové služby a výhody kolem produktu. | Záruka, servis, financování, dovoz, asistence. | Možnost výměny velikosti, předobjednávka, balení, doručení do školy. |"
         )
 
@@ -1322,7 +1325,7 @@ def render():
                 )
 
         st.divider()
-        st.markdown("#### 🎓 Závěrečná reflexe celou kapitolou")
+        st.subheader("🎓 Závěrečná reflexe celou kapitolou")
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
                 "6.4.4",
