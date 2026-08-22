@@ -5,28 +5,28 @@ import streamlit as st
 
 
 # =========================================================================
-# 🔤 GARANTOVANÁ HIERARCHIE NADPISŮ PŘES PŘÍMÉ HTML ŠABLONY
+# 🔤 GARANTOVANÁ HIERARCHIE NADPISŮ PŘES PŘÍMÝ HTML STYL
 # =========================================================================
 def nadpis_1(text):
     """1. úroveň nadpisu - Největší (Hlavní bloky kapitoly)"""
     st.markdown(
-        f"<h2 style='font-size: 28px !important; font-weight: 800 !important; color: #0f172a !important; margin-top: 30px !important; margin-bottom: 12px !important; border-bottom: 2px solid #cbd5e1 !important; padding-bottom: 6px !important; line-height: 1.25 !important;'>{text}</h2>",
+        f"<div style='font-size: 28px !important; font-weight: 800 !important; color: #0f172a !important; margin-top: 30px !important; margin-bottom: 12px !important; border-bottom: 2px solid #cbd5e1 !important; padding-bottom: 6px !important; line-height: 1.25 !important;'>{text}</div>",
         unsafe_allow_html=True,
     )
 
 
 def nadpis_2(text):
-    """2. úroveň nadpisu - Střední (Podkapitoly 1.1, 2.4, 3.4...)"""
+    """2. úroveň nadpisu - Střední (Podkapitoly 1.1, 2.4, 3.1, 3.4...) - výrazný modrý nadpis"""
     st.markdown(
-        f"<h3 style='font-size: 21px !important; font-weight: 700 !important; color: #1e40af !important; margin-top: 24px !important; margin-bottom: 10px !important; line-height: 1.3 !important;'>{text}</h3>",
+        f"<div style='font-size: 23px !important; font-weight: 700 !important; color: #1e40af !important; margin-top: 26px !important; margin-bottom: 10px !important; line-height: 1.3 !important;'>{text}</div>",
         unsafe_allow_html=True,
     )
 
 
 def nadpis_3(text):
-    """3. úroveň nadpisu - Menší (Dílčí témata 1.1.1, 2.4.1, 3.4.1...)"""
+    """3. úroveň nadpisu - Menší (Dílčí témata 1.1.1, 2.4.1, 3.1.1...) - kompaktní tmavý podnadpis"""
     st.markdown(
-        f"<h4 style='font-size: 16px !important; font-weight: 600 !important; color: #334155 !important; margin-top: 16px !important; margin-bottom: 6px !important; line-height: 1.3 !important;'>{text}</h4>",
+        f"<div style='font-size: 15px !important; font-weight: 600 !important; color: #334155 !important; margin-top: 14px !important; margin-bottom: 6px !important; line-height: 1.3 !important;'>{text}</div>",
         unsafe_allow_html=True,
     )
 
@@ -321,7 +321,7 @@ def render_aida_simulator():
                 st.session_state["k6_reklama_text_ulozena"] = reklama_text
 
                 st.markdown(
-                    "<h5 style='font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-top: 15px;'>💡 Rozbor a doporučená řešení od AI:</h5>",
+                    "<div style='font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 15px;'>💡 Rozbor a doporučená řešení od AI:</div>",
                     unsafe_allow_html=True,
                 )
                 st.info(vysledek_text)
@@ -453,7 +453,7 @@ def render_marketing_rozpocet():
 
         st.divider()
         st.markdown(
-            "<h5 style='font-size: 1.25rem; font-weight: 700; color: #1e293b;'>📈 Výsledky tvé kampaně v praxi</h5>",
+            "<div style='font-size: 17px; font-weight: 700; color: #1e293b; margin-top: 10px; margin-bottom: 8px;'>📈 Výsledky tvé kampaně v praxi</div>",
             unsafe_allow_html=True,
         )
 
@@ -480,7 +480,7 @@ def render_marketing_rozpocet():
             )
 
         st.markdown(
-            "<h5 style='font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-top: 15px;'>🧭 Diagnostika a doporučení pro zlepšení</h5>",
+            "<div style='font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 15px; margin-bottom: 8px;'>🧭 Diagnostika a doporučení pro zlepšení</div>",
             unsafe_allow_html=True,
         )
 
@@ -655,7 +655,7 @@ def render():
             "**Blok 1: Management**\n\n**Co doplníš:** Cíl projektu, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán projektu."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a marketingový mix 4P.\n\n**Výstup:** Marketingový návrh."
+            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh."
         )
         c_p3.success(
             "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty značky, personal/brand profil, kampaň a etická pravidla komunikace.\n\n**Výstup:** Etická marketingová kampaň."
@@ -816,7 +816,7 @@ def render():
 
         st.markdown(
             "| Úroveň managementu | Co řeší | Příklad | Typická otázka |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Vrcholový management / Top management** | Dlouhodobý směr, strategii, zásadní rozhodnutí, odpovědnost za celou organizaci. | CEO, generální ředitel, ředitel školy, představenstvo. | Kam má organizace směřovat za 3–5 let? |\n"
             "| **Střední management / Middle management** | Převádí strategii do plánů oddělení, koordinuje týmy a kontroluje výsledky. | Vedoucí marketingu, vedoucí výroby, manažer závodu, zástupce ředitele. | Jak splníme cíle v našem oddělení? |\n"
             "| **Liniový management / First-line management** | Řídí každodenní práci lidí v provozu nebo konkrétním týmu. | Mistr ve výrobě, vedoucí směny, team leader, vedoucí brigádníků. | Kdo dnes co udělá a jak poznáme, že je práce hotová? |"
