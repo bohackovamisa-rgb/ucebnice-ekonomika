@@ -286,13 +286,12 @@ if not st.session_state.get("is_logged_in"):
             pass
 
 # =========================================================================
-# 4. GLOBÁLNÍ DESIGN A ACCESSIBILITY
+# 4. GLOBÁLNÍ DESIGN, ACCESSIBILITY & PLOVOUCÍ AI WIDGET
 # =========================================================================
 font_family = "'OpenDyslexic', sans-serif" if st.session_state.get("dyslexic_mode") else "'Montserrat', -apple-system, sans-serif"
 letter_spacing = "0.08em" if st.session_state.get("dyslexic_mode") else "-0.01em"
 line_height = "1.9" if st.session_state.get("dyslexic_mode") else "1.7"
 
-# Zde je dynamická část ovlivňující dyslektický font
 dynamic_css = f"""
 html, body, [class*="css"], .stApp {{ 
     font-family: {font_family} !important; 
@@ -307,7 +306,6 @@ h1, h2, h3, h4, h5, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown 
 }}
 """
 
-# Zde je čistá statická část se všemi grafickými styly z minula (bez Python formátování f"")
 static_css = """
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 @import url('https://fonts.cdnfonts.com/css/opendyslexic');
@@ -360,9 +358,31 @@ section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-
 .box-green { background-color: #F3F6F3 !important; border-left: 3px solid #8DAE93 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2A4231 !important; font-size: 0.93rem; }
 .box-red { background-color: #FAF3F3 !important; border-left: 3px solid #C98A8A !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C2E2E !important; font-size: 0.93rem; }
 .box-gray { background-color: #F2EFE9 !important; border-left: 3px solid #A8A29E !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #44403C !important; font-size: 0.93rem; }
+
+/* 🌟 SKUTEČNĚ PLOVOUCÍ AI TUTOR V PRAVÉM DOLNÍM ROHU 🌟 */
+div[data-testid="stPopover"] {
+    position: fixed !important;
+    bottom: 25px !important;
+    right: 25px !important;
+    z-index: 999999 !important;
+}
+div[data-testid="stPopover"] > button {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+    color: #ffffff !important;
+    border-radius: 50px !important;
+    padding: 0.75rem 1.4rem !important;
+    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4) !important;
+    border: 2px solid #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+div[data-testid="stPopover"] > button:hover {
+    transform: scale(1.06) translateY(-2px) !important;
+    box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6) !important;
+}
 """
 
-# Vložíme do aplikace statickou i dynamickou část CSS
 st.markdown(f"<style>{static_css} {dynamic_css}</style>", unsafe_allow_html=True)
 
 
@@ -561,18 +581,6 @@ with st.sidebar:
             st.rerun()
 
     st.divider()
-
-    # 🤖 PLOVOUCÍ AI TUTOR (EKO-PARŤÁK) S KONTEXTEM
-    with st.expander("🤖 Eko-Parťák (AI Tutor)", expanded=False):
-        curr_view_name = st.session_state.get("current_view", "Obecná ekonomika")
-        st.caption(f"📍 Kontext: **{curr_view_name}**")
-        ai_q = st.text_input("Zeptej se na cokoliv k tématu:", placeholder="např. Co je to oportunitní náklad?", key="sidebar_ai_q")
-        if st.button("Vysvětlit 💡", key="btn_sidebar_ai"):
-            if ai_q:
-                with st.spinner("Přemýšlím..."):
-                    ans = ai_tutor_chat(ai_q, curr_view_name)
-                    st.info(ans)
-
     if st.button("Odhlásit se 🚪", use_container_width=True):
         st.session_state.clear()
         st.query_params.clear()
@@ -584,7 +592,6 @@ with st.sidebar:
 # =========================================================================
 
 def zakovsky_panel():
-    """Vykresluje obsah sekce 'Můj profil & Úkoly' pro studenta."""
     st.title("👨‍🎓 Můj žákovský profil")
 
     username = st.session_state.get("username")
@@ -791,7 +798,7 @@ if st.session_state["current_view"] == "Uvod":
     1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
     2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
     3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity. Každý úkol ti přináší **+100 XP bodů**!
-    4. **Používej AI mentoring.** Fialové bloky obsahují prompty a v bočním panelu máš kdykoliv po ruce **Eko-Parťáka**.
+    4. **Používej AI mentoring.** Fialové bloky obsahují prompty a v pravém dolním rohu máš kdykoliv po ruce **plovoucího Eko-Parťáka**.
     5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, a otestuj si znalosti v případových studiích.
     6. **Sbírej herní odznaky.** Postupuj v levelech z *Nováčka* až na *CEO & Investora*!
     """)
@@ -1074,7 +1081,7 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                                 st.write("**📜 Historie obchodů:**")
                                 if not df_transakce.empty:
                                     df_trans_zak = df_transakce[df_transakce["Nick"].astype(str).str.strip().str.lower() == zak["Nick"].strip().lower()]
-                                    if not df_trans_zak.empty:
+                                    if not df_transakce.empty:
                                         sloupce_k_zobrazeni = [c for c in df_trans_zak.columns if c not in ["Nick", "Jmeno"]]
                                         st.dataframe(df_trans_zak[sloupce_k_zobrazeni].iloc[::-1], use_container_width=True, hide_index=True)
                     else:
@@ -1181,3 +1188,17 @@ else:
             modul.render()
         elif hasattr(modul, "show"):
             modul.show()
+
+# =========================================================================
+# 8. 🤖 SKUTEČNĚ PLOVOUCÍ AI TUTOR (EKO-PARŤÁK) V PRAVÉM DOLNÍM ROHU
+# =========================================================================
+curr_view_name = st.session_state.get("current_view", "Obecná ekonomika")
+with st.popover("🤖 Eko-Parťák", help="Plovoucí AI tutor pro okamžitou pomoc s učivem"):
+    st.markdown("#### 🤖 Eko-Parťák (AI Tutor)")
+    st.caption(f"📍 Jsem s tebou v modulu: **{curr_view_name}**")
+    ai_q = st.text_input("Zeptej se na cokoliv k tématu:", placeholder="např. Co je to oportunitní náklad?", key="floating_ai_q")
+    if st.button("Vysvětlit 💡", key="btn_floating_ai", use_container_width=True):
+        if ai_q:
+            with st.spinner("Přemýšlím..."):
+                ans = ai_tutor_chat(ai_q, curr_view_name)
+                st.info(ans)
