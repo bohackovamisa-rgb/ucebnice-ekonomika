@@ -36,6 +36,16 @@ if "user_class" not in st.session_state:
 if "current_view" not in st.session_state:
     st.session_state["current_view"] = "Uvod"
 
+# Výchozí metriky pro známkování učitele
+if "hranice_1" not in st.session_state:
+    st.session_state["hranice_1"] = 90
+if "hranice_2" not in st.session_state:
+    st.session_state["hranice_2"] = 75
+if "hranice_3" not in st.session_state:
+    st.session_state["hranice_3"] = 60
+if "hranice_4" not in st.session_state:
+    st.session_state["hranice_4"] = 45
+
 
 # =========================================================================
 # 2. POMOCNÉ FUNKCE A DATABÁZE SUPABASE & GOOGLE SHEETS
@@ -1043,6 +1053,28 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                     st.markdown(
                         f"#### 📊 Celkový pokrok třídy **{vybrana_t}**"
                     )
+                    
+                    with st.expander("⚙️ Nastavení průběžné klasifikace (Metrika známkování)", expanded=False):
+                        st.write("Nastavte procentuální hranice pro výpočet orientační průběžné známky na základě splněných úkolů z učebnice.")
+                        col_z1, col_z2, col_z3, col_z4 = st.columns(4)
+                        hranice_1 = col_z1.number_input("Jednička (1) od %:", value=st.session_state.get("hranice_1", 90), step=1)
+                        hranice_2 = col_z2.number_input("Dvojka (2) od %:", value=st.session_state.get("hranice_2", 75), step=1)
+                        hranice_3 = col_z3.number_input("Trojka (3) od %:", value=st.session_state.get("hranice_3", 60), step=1)
+                        hranice_4 = col_z4.number_input("Čtyřka (4) od %:", value=st.session_state.get("hranice_4", 45), step=1)
+                        
+                        if st.button("Uložit metriku známkování"):
+                            st.session_state["hranice_1"] = hranice_1
+                            st.session_state["hranice_2"] = hranice_2
+                            st.session_state["hranice_3"] = hranice_3
+                            st.session_state["hranice_4"] = hranice_4
+                            st.success("Metrika uložena!")
+                            st.rerun()
+
+                    h1 = st.session_state.get("hranice_1", 90)
+                    h2 = st.session_state.get("hranice_2", 75)
+                    h3 = st.session_state.get("hranice_3", 60)
+                    h4 = st.session_state.get("hranice_4", 45)
+
                     usernames_tridy = list(zaci_dict.values())
                     vsechny_odp_res = (
                         supabase.table("odpovedi")
@@ -1081,10 +1113,21 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                                 if celkem_vsech_ukolu > 0
                                 else 0
                             )
-                            zak_stats["✅ Celkem hotovo"] = (
-                                f"{celkem_hotovo_zaka} úkolů"
-                            )
+                            
+                            if pct_celkem >= h1:
+                                znamka = "1"
+                            elif pct_celkem >= h2:
+                                znamka = "2"
+                            elif pct_celkem >= h3:
+                                znamka = "3"
+                            elif pct_celkem >= h4:
+                                znamka = "4"
+                            else:
+                                znamka = "5"
+
+                            zak_stats["✅ Celkem hotovo"] = f"{celkem_hotovo_zaka} úkolů"
                             zak_stats["📈 Úspěšnost"] = f"{pct_celkem} %"
+                            zak_stats["🎓 Průběžná známka"] = znamka
                             pokrok_data.append(zak_stats)
 
                         df_pokrok = pd.DataFrame(pokrok_data)
@@ -1440,7 +1483,7 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                         )
 
             except Exception as e:
-                st.error(f"Chyba při načítání dat pro učitele: {e}")
+                st.error(f"Chyba při stahování dat z burzy: {e}")
 
 # 3. Učitelské materiály
 elif st.session_state["current_view"] == "Ucitel_Materialy":
