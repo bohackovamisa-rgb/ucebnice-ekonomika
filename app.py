@@ -1310,7 +1310,7 @@ def zakovsky_panel():
 
 
 
-    with tab_gamifikace:
+        with tab_gamifikace:
 
         st.markdown(f"### 🎖️ Tvůj aktuální status: **Level {lvl} — {titul}**")
 
