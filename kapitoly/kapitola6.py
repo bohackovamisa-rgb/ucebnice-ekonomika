@@ -120,7 +120,6 @@ def zhodnot_reklamu_ai(produkt_nazev, text_reklamy):
     except Exception:
         pass
         
-    # --- OFFLINE ZÁCHRANA DYNAMICKY PODLE ZADANÉHO PRODUKTU ---
     text_low = text_reklamy.lower()
     score_a = 8 if ("?" in text_low or "!" in text_low) else 4
     score_i = 7 if len(text_reklamy) > 35 else 3
@@ -487,18 +486,10 @@ def render():
     st.divider()
 
     # =========================================================================
-    # 📌 VÝRAZNÝ NAVIGAČNÍ PANEL
+    # 📌 STANDARTNÍ NAVIGAČNÍ PANEL (STEJNÝ JAKO V OSTATNÍCH KAPITOLÁCH)
     # =========================================================================
-    st.markdown(
-        """
-        <div style='background-color: #f0fdf4; padding: 20px; border-radius: 10px; border-left: 6px solid #16a34a; margin-bottom: 20px;'>
-            <h3 style='margin-top: 0; color: #166534; margin-bottom: 5px;'>🧭 Navigace kapitolou</h3>
-            <p style='margin-bottom: 0px; color: #14532d;'>Vyber si v roletce podkapitolu, kterou chceš právě studovat:</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
+    st.markdown("### 🧭 Navigace kapitolou")
+    
     section_options_6 = [
         "1.1 Management: Podstata a role",
         "1.2 Základní manažerské funkce",
@@ -515,14 +506,13 @@ def render():
         "3.2 Nákupní chování a psychologie spotřebitele",
         "3.3 Etika, právo a ochrana spotřebitele",
         "3.4 Moderní formy a trendy v digitálním marketingu",
-        "4. Závěrečný výstup a případové studie",
+        "4. Závěrečný výstup a případové studie"
     ]
 
     selected_section_6 = st.selectbox(
         "Vyber podkapitolu:",
         section_options_6,
         index=0,
-        label_visibility="collapsed",
         key="k6_section_select",
     )
 
@@ -651,22 +641,15 @@ def render():
         )
         if "Top" in uroven_sim:
             st.error(
-                "🏛️ **Rozhodnutí Top managementu:** 'Schvalujeme konání festivalu"
-                " na 20. června. Cílem je vybrat 100 000 Kč na útulek a získat"
-                " pro školu skvělé jméno. Schvalujeme celkový rozpočet 50 000"
-                " Kč.'"
+                "🏛️ **Rozhodnutí Top managementu:** 'Schvalujeme konání festivalu na 20. června. Cílem je vybrat 100 000 Kč na útulek a získat pro školu skvělé jméno. Schvalujeme celkový rozpočet 50 000 Kč.'"
             )
         elif "Middle" in uroven_sim:
             st.warning(
-                "📊 **Rozhodnutí Middle managementu:** 'Sestavili jsme"
-                " harmonogram vystoupení 5 kapel. Vedoucí PR zajistí plakáty na"
-                " Instagramu, vedoucí občerstvení domluvil sponzora na nápoje.'"
+                "📊 **Rozhodnutí Middle managementu:** 'Sestavili jsme harmonogram vystoupení 5 kapel. Vedoucí PR zajistí plakáty na Instagramu, vedoucí občerstvení domluvil sponzora na nápoje.'"
             )
         else:
             st.success(
-                "🛠️ **Rozhodnutí First-line managementu:** 'Ahoj týme! Jirka bude"
-                " od 14:00 trhat lístky u brány, Terka bude prodávat párečky v"
-                " rohlíku. Zkontrolujte si, že máte dost drobných na vrácení!'"
+                "🛠️ **Rozhodnutí First-line managementu:** 'Ahoj týme! Jirka bude od 14:00 trhat lístky u brány, Terka bude prodávat párečky v rohlíku. Zkontrolujte si, že máte dost drobných na vrácení!'"
             )
 
         st.markdown(
@@ -704,10 +687,7 @@ def render():
 
         st.markdown("### 1.2 Základní manažerské funkce: proces řízení")
         st.write(
-            "Manažerská práce se často popisuje jako soubor čtyř navazujících"
-            " funkcí: plánování, organizování, vedení lidí a kontrola. Nejde o"
-            " jednorázové kroky, ale o cyklus. Manažer plánuje, rozdělí práci,"
-            " vede tým, kontroluje výsledek a podle zjištění plán upravuje."
+            "Manažerská práce se často popisuje jako soubor čtyř navazujících funkcí: plánování, organizování, vedení lidí a kontrola. Nejde o jednorázové kroky, ale o cyklus. Manažer plánuje, rozdělí práci, vede tým, kontroluje výsledek a podle zjištění plán upravuje."
         )
 
         st.markdown(
@@ -735,10 +715,7 @@ def render():
 
         st.markdown("#### 1.2.1 Plánování")
         st.write(
-            "Plánování znamená určit, čeho chce organizace dosáhnout, proč je to"
-            " důležité a jakými kroky se k cíli dostane. Bez plánování tým"
-            " často jen „hasí požáry“ a reaguje na problémy, místo aby měl"
-            " jasný směr."
+            "Plánování znamená určit, čeho chce organizace dosáhnout, proč je to důležité a jakými kroky se k cíli dostane. Bez plánování tým často jen „hasí požáry“ a reaguje na problémy, místo aby měl jasný směr."
         )
         st.write("Podle časového hlediska rozlišujeme:")
 
@@ -755,8 +732,7 @@ def render():
             unsafe_allow_html=True,
         )
         st.write(
-            "Vágně zadaný cíl (*'Chceme prodávat hodně mikin'*) vedoucího i"
-            " tým zmate. Správný cíl musí být **S.M.A.R.T.**:"
+            "Vágně zadaný cíl (*'Chceme prodávat hodně mikin'*) vedoucího i tým zmate. Správný cíl musí být **S.M.A.R.T.**:"
         )
         st.markdown(
             "* **S – Specific:** konkrétní,\n"
@@ -790,9 +766,7 @@ def render():
             )
 
             smart_text = (
-                f"Do {s_termin.strftime('%d. %m. %Y')} prodáme alespoň {s_ks}"
-                " kusů mikin studentům 2.–4. ročníku s minimální marží"
-                f" {s_marze} Kč na kus."
+                f"Do {s_termin.strftime('%d. %m. %Y')} prodáme alespoň {s_ks} kusů mikin studentům 2.–4. ročníku s minimální marží {s_marze} Kč na kus."
             )
             st.success(
                 f"🟢 **Tvůj vygenerovaný SMART cíl:** *„{smart_text}“*"
@@ -800,9 +774,7 @@ def render():
 
         st.markdown("#### 1.2.2 Organizování")
         st.write(
-            "Organizování znamená vytvořit strukturu, ve které lidé vědí, co"
-            " mají dělat, kdo o čem rozhoduje, kdo komu předává informace a kdo"
-            " za co odpovídá."
+            "Organizování znamená vytvořit strukturu, ve které lidé vědí, co mají dělat, kdo o čem rozhoduje, kdo komu předává informace a kdo za co odpovídá."
         )
         st.markdown(
             "Manažer při organizování řeší hlavně:\n"
@@ -826,10 +798,7 @@ def render():
 
         st.markdown("#### 1.2.3 Vedení lidí")
         st.write(
-            "Vedení lidí znamená ovlivňovat tým tak, aby lidé rozuměli cíli,"
-            " chtěli na něm pracovat a měli podmínky k dobrému výkonu. Dobrý"
-            " manažer neřeší jen úkoly, ale také motivaci, komunikaci,"
-            " atmosféru a konflikty."
+            "Vedení lidí znamená ovlivňovat tým tak, aby lidé rozuměli cíli, chtěli na něm pracovat a měli podmínky k dobrému výkonu. Dobrý manažer neřeší jen úkoly, ale také motivaci, komunikaci, atmosféru a konflikty."
         )
 
         st.markdown(
@@ -841,16 +810,10 @@ def render():
 
         st.markdown("#### 1.2.3.1 Maslowova pyramida potřeb")
         st.write(
-            "Abraham Harold Maslow byl americký psycholog 20. století, který"
-            " patří mezi představitele humanistické psychologie. Zabýval se"
-            " tím, co lidi motivuje, jaké mají potřeby a proč člověk neusiluje"
-            " jen o peníze nebo přežití, ale také o vztahy, uznání, smysl a"
-            " osobní rozvoj."
+            "Abraham Harold Maslow byl americký psycholog 20. století, který patří mezi představitele humanistické psychologie. Zabýval se tím, co lidi motivuje, jaké mají potřeby a proč člověk neusiluje jen o peníze nebo přežití, ale také o vztahy, uznání, smysl a osobní rozvoj."
         )
         st.write(
-            "**Maslowova pyramida potřeb:** Maslow popsal lidské potřeby jako"
-            " hierarchii. Člověk obvykle nejdřív řeší základní potřeby a"
-            " teprve potom se může plně soustředit na vyšší potřeby."
+            "**Maslowova pyramida potřeb:** Maslow popsal lidské potřeby jako hierarchii. Člověk obvykle nejdřív řeší základní potřeby a teprve potom se může plně soustředit na vyšší potřeby."
         )
         st.markdown(
             "1. **Fyziologické potřeby** — jídlo, pití, spánek, odpočinek.\n"
@@ -894,18 +857,10 @@ def render():
         st.plotly_chart(fig_maslow, use_container_width=True)
 
         st.write(
-            "**V managementu:** Maslowova pyramida pomáhá pochopit, že lidé"
-            " nepracují jen kvůli výplatě. Pokud se zaměstnanec bojí o místo, je"
-            " přetížený nebo se v týmu necítí bezpečně, těžko bude kreativní a"
-            " motivovaný. Dobrý manažer proto řeší nejen výkon, ale i bezpečí,"
-            " vztahy, uznání a prostor pro rozvoj."
+            "**V managementu:** Maslowova pyramida pomáhá pochopit, že lidé nepracují jen kvůli výplatě. Pokud se zaměstnanec bojí o místo, je přetížený nebo se v týmu necítí bezpečně, těžko bude kreativní a motivovaný. Dobrý manažer proto řeší nejen výkon, ale i bezpečí, vztahy, uznání a prostor pro rozvoj."
         )
         st.write(
-            "**Komunikace v týmu:** Manažer musí umět vysvětlit zadání,"
-            " poslouchat zpětnou vazbu, řešit nedorozumění a pojmenovat problém"
-            " dřív, než přeroste v konflikt. V digitálních týmech je důležité"
-            " domluvit, co patří do chatu, co do úkolovníku a co už vyžaduje"
-            " schůzku."
+            "**Komunikace v týmu:** Manažer musí umět vysvětlit zadání, poslouchat zpětnou vazbu, řešit nedorozumění a pojmenovat problém dřív, než přeroste v konflikt. V digitálních týmech je důležité domluvit, co patří do chatu, co do úkolovníku a co už vyžaduje schůzku."
         )
 
         wybrana_uroven = st.selectbox(
@@ -922,28 +877,23 @@ def render():
 
         if "1." in wybrana_uroven:
             st.error(
-                "🍎 **1. Fyziologické potřeby:** Důstojný plat, pitný režim,"
-                " přestávka na oběd a bezpečné prostředí."
+                "🍎 **1. Fyziologické potřeby:** Důstojný plat, pitný režim, přestávka na oběd a bezpečné prostředí."
             )
         elif "2." in wybrana_uroven:
             st.warning(
-                "🛡️ **2. Potřeba bezpečí:** Stabilní smlouva, bezpečné"
-                " pracoviště bez šikany, jasná pravidla."
+                "🛡️ **2. Potřeba bezpečí:** Stabilní smlouva, bezpečné pracoviště bez šikany, jasná pravidla."
             )
         elif "3." in wybrana_uroven:
             st.success(
-                "🤝 **3. Sociální potřeby:** Přijetí do týmu, dobrá atmosféra,"
-                " neformální teambuildingy."
+                "🤝 **3. Sociální potřeby:** Přijetí do týmu, dobrá atmosféra, neformální teambuildingy."
             )
         elif "4." in wybrana_uroven:
             st.info(
-                "🏆 **4. Uznání a respekt:** Pochvala před týmem za dobře"
-                " odvedenou práci, povýšení, ocenění."
+                "🏆 **4. Uznání a respekt:** Pochvala před týmem za dobře odvedenou práci, povýšení, ocenění."
             )
         else:
             st.success(
-                "🚀 **5. Seberealizace:** Svoboda v tvoření, smysluplná práce,"
-                " možnost učit se nové věci."
+                "🚀 **5. Seberealizace:** Svoboda v tvoření, smysluplná práce, možnost učit se nové věci."
             )
 
         st.markdown(
@@ -967,9 +917,7 @@ def render():
 
         st.markdown("#### 1.2.4 Kontrola: Není to slídění, ale navigace")
         st.write(
-            "Kontrola neznamená jen „nachytat někoho při chybě“. Jejím smyslem"
-            " je zjistit, zda se realita shoduje s plánem, a pokud ne, přijmout"
-            " nápravná opatření."
+            "Kontrola neznamená jen „nachytat někoho při chybě“. Jejím smyslem je zjistit, zda se realita shoduje s plánem, a pokud ne, přijmout nápravná opatření."
         )
 
         st.markdown(
@@ -992,36 +940,26 @@ def render():
         col_kont1, col_kont2 = st.columns([1, 1])
         with col_kont1:
             st.markdown(
-                "<div style=\"background-color: #f8fafc; padding: 15px;"
-                " border-left: 5px solid #3b82f6; border-radius: 4px;\"><h5"
-                ' style="margin-top:0; color: #1e40af;">🔍 4 fáze kontrolního'
-                " procesu</h5>1. <b>Stanovení standardů</b> - určíme, jak má"
-                " vypadat dobrý výsledek.<br>2. <b>Zjištění skutečnosti</b> -"
-                " změříme, co se opravdu stalo.<br>3. <b>Srovnání plánu a"
-                " reality</b> - porovnáme plán a realitu.<br>4. <b>Nápravné"
-                " opatření</b> - rozhodneme, co upravit.</div>",
+                "<div style=\"background-color: #f8fafc; padding: 15px; border-left: 5px solid #3b82f6; border-radius: 4px;\"><h5 style=\"margin-top:0; color: #1e40af;\">🔍 4 fáze kontrolního procesu</h5>1. <b>Stanovení standardů</b> - určíme, jak má vypadat dobrý výsledek.<br>2. <b>Zjištění skutečnosti</b> - změříme, co se opravdu stalo.<br>3. <b>Srovnání plánu a reality</b> - porovnáme plán a realitu.<br>4. <b>Nápravné opatření</b> - rozhodneme, co upravit.</div>",
                 unsafe_allow_html=True,
             )
 
         with col_kont2:
-            st.markdown("##### ⏱️ Typy kontroly podle času")
+            st.markdown("#### ⏱️ Typy kontroly podle času")
             tab_k1, tab_k2, tab_k3 = st.tabs(
                 ["🔮 Předběžná", "⚙️ Průběžná", "🏁 Následná"]
             )
             with tab_k1:
                 st.info(
-                    "**Předběžná (PŘED):** Kontrola rozpočtu, schválení vzorků"
-                    " před tiskem."
+                    "**Předběžná (PŘED):** Kontrola rozpočtu, schválení vzorků před tiskem."
                 )
             with tab_k2:
                 st.warning(
-                    "**Průběžná (BĚHEM):** Sledování denních prodejů v e-shopu,"
-                    " Trello nástěnka."
+                    "**Průběžná (BĚHEM):** Sledování denních prodejů v e-shopu, Trello nástěnka."
                 )
             with tab_k3:
                 st.success(
-                    "**Následná (PO):** Vyhodnocení zisku a zpětná vazba po"
-                    " akci."
+                    "**Následná (PO):** Vyhodnocení zisku a zpětná vazba po akci."
                 )
 
     # =========================================================================
@@ -1032,10 +970,7 @@ def render():
 
         st.markdown("### 1.3 Osobnost manažera a role")
         st.write(
-            "Manažer potřebuje kombinaci odbornosti, práce s lidmi a schopnosti"
-            " vidět celek. Jinak bude působit v malé kavárně, jinak ve škole,"
-            " jinak ve výrobní firmě a jinak ve startupu. Základní dovednosti"
-            " se ale opakují."
+            "Manažer potřebuje kombinaci odbornosti, práce s lidmi a schopnosti vidět celek. Jinak bude působit v malé kavárně, jinak ve škole, jinak ve výrobní firmě a jinak ve startupu. Základní dovednosti se ale opakují."
         )
 
         st.markdown(
@@ -1047,10 +982,7 @@ def render():
         )
 
         st.write(
-            "**Moderní pohled:** Dobrý manažer nemusí být největší expert na"
-            " všechno. Musí ale rozumět práci týmu natolik, aby dokázal dobře"
-            " rozhodovat, klást správné otázky a nepřekážet lidem, kteří jsou v"
-            " konkrétní odbornosti silnější."
+            "**Moderní pohled:** Dobrý manažer nemusí být největší expert na všechno. Musí ale rozumět práci týmu natolik, aby dokázal dobře rozhodovat, klást správné otázky a nepřekážet lidem, kteří jsou v konkrétní odbornosti silnější."
         )
 
         fig_skills = go.Figure()
@@ -1091,9 +1023,7 @@ def render():
 
         st.markdown("#### 1.3.1 Role manažera podle Mintzberga")
         st.write(
-            "Henry Mintzberg popsal manažerskou práci jako soubor rolí. Manažer"
-            " během dne často přepíná mezi reprezentací firmy, vedením lidí,"
-            " sběrem informací, komunikací a rozhodováním."
+            "Henry Mintzberg popsal manažerskou práci jako soubor rolí. Manažer během dne často přepíná mezi reprezentací firmy, vedením lidí, sběrem informací, komunikací a rozhodováním."
         )
 
         st.markdown(
@@ -1131,10 +1061,7 @@ def render():
 
         st.markdown("### 1.4 Styly řízení a řešení konfliktů")
         st.write(
-            "Styl řízení ukazuje, jak manažer pracuje s mocí, odpovědností a"
-            " zapojením týmu. Neexistuje jeden styl, který by byl nejlepší"
-            " vždy. Záleží na situaci, zkušenosti týmu, času, riziku a typu"
-            " úkolu."
+            "Styl řízení ukazuje, jak manažer pracuje s mocí, odpovědností a zapojením týmu. Neexistuje jeden styl, který by byl nejlepší vždy. Záleží na situaci, zkušenosti týmu, času, riziku a typu úkolu."
         )
 
         st.markdown(
@@ -1147,16 +1074,11 @@ def render():
 
         st.write("**Boss vs. leader: v čem je rozdíl?**")
         st.write(
-            "„Boss“ často stojí na příkazech, kontrole a formální autoritě."
-            " „Leader“ umí vysvětlit smysl práce, získat důvěru, rozvíjet lidi"
-            " a nést odpovědnost. V praxi dobrý manažer někdy musí rozhodnout"
-            " tvrdě a rychle, ale dlouhodobě nemůže tým řídit jen strachem."
+            "„Boss“ často stojí na příkazech, kontrole a formální autoritě. „Leader“ umí vysvětlit smysl práce, získat důvěru, rozvíjet lidi a nést odpovědnost. V praxi dobrý manažer někdy musí rozhodnout tvrdě a rychle, ale dlouhodobě nemůže tým řídit jen strachem."
         )
 
         st.write(
-            "**Debata:** Je lepší autoritativní Elon Musk, nebo demokratická"
-            " firemní kultura typu Google / Spotify? V jaké situaci může být"
-            " každý styl užitečný a kdy začne škodit?"
+            "**Debata:** Je lepší autoritativní Elon Musk, nebo demokratická firemní kultura typu Google / Spotify? V jaké situaci může být každý styl užitečný a kdy začne škodit?"
         )
 
         with st.form("debata_musk_form"):
@@ -1200,10 +1122,7 @@ def render():
         st.divider()
         st.markdown("#### 1.4.1 Řešení konfliktů a Soft-skills")
         st.write(
-            "Manažer tráví většinu času řešením problémů s lidmi, ne"
-            " papírováním. Komunikace, empatie a schopnost zvládat krizové"
-            " situace (soft-skills) jsou často důležitější než technické"
-            " znalosti."
+            "Manažer tráví většinu času řešením problémů s lidmi, ne papírováním. Komunikace, empatie a schopnost zvládat krizové situace (soft-skills) jsou často důležitější než technické znalosti."
         )
 
         render_ai_treenazer()
@@ -1216,15 +1135,10 @@ def render():
 
         st.markdown("### 1.5 Organizační struktury firem")
         st.write(
-            "Organizační struktura je způsob, jakým je firma nebo instituce"
-            " vnitřně uspořádána. Ukazuje, kdo komu odpovídá, jak jsou"
-            " rozdělené útvary, kudy tečou informace a kdo má pravomoc"
-            " rozhodovat."
+            "Organizační struktura je způsob, jakým je firma nebo instituce vnitřně uspořádána. Ukazuje, kdo komu odpovídá, jak jsou rozdělené útvary, kudy tečou informace a kdo má pravomoc rozhodovat."
         )
         st.write(
-            "**Jednoduše:** Organizační struktura je mapa firmy. Pomáhá lidem"
-            " pochopit, kde jsou jejich role, kdo rozhoduje, s kým spolupracují"
-            " a na koho se obrátit."
+            "**Jednoduše:** Organizační struktura je mapa firmy. Pomáhá lidem pochopit, kde jsou jejich role, kdo rozhoduje, s kým spolupracují a na koho se obrátit."
         )
 
         st.markdown("#### 1.5.1 Formální a neformální struktura")
@@ -1235,37 +1149,29 @@ def render():
             "| **Neformální struktura** | Přirozené vztahy, vliv a neoficiální autority mezi lidmi. | Člověk, za kterým všichni chodí pro radu, i když není vedoucí. |"
         )
         st.write(
-            "**Reality check:** Neformální autorita může týmu hodně pomoct, když"
-            " podporuje spolupráci. Může ale i škodit, pokud šíří odpor,"
-            " pomluvy nebo sabotuje změny."
+            "**Reality check:** Neformální autorita může týmu hodně pomoct, když podporuje spolupráci. Může ale i škodit, pokud šíří odpor, pomluvy nebo sabotuje změny."
         )
 
         st.markdown("#### 1.5.2 Základní typy organizačních struktur")
         st.markdown(
             "| Typ struktury | Jak funguje | Výhoda | Riziko |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Liniová** | Jasná hierarchie: jeden podřízený má jednoho přímého nadřízeného. | Přehlednost, jasné pravomoci a odpovědnost. | Může být nepružná a závislá na rozhodnutí shora. |\n"
             "| **Štábní / liniově-štábní** | Linioví vedoucí rozhodují, ale pomáhají jim odborné poradní útvary. | Manažer má odbornou podporu například v právu, HR nebo financích. | Štáb radí, ale nemusí nést přímou odpovědnost za realizaci. |\n"
             "| **Funkcionální** | Firma je členěná podle odborných funkcí: marketing, finance, výroba, HR, IT. | Specializace a odbornost jednotlivých oddělení. | Oddělení mohou pracovat v „silech“ a málo spolu komunikovat. |\n"
             "| **Maticová** | Kombinuje funkční řízení a projektové týmy. Člověk může mít dva nadřízené. | Vhodná pro projekty, inovace a spolupráci napříč firmou. | Dvojí podřízenost může vést ke konfliktům priorit. |"
         )
         st.write(
-            "**Maticová struktura na školním projektu:** Student může patřit"
-            " do „marketingového týmu“, ale zároveň pracovat na konkrétní akci"
-            " jako člen projektového týmu festivalu. Funkční vedoucí řeší"
-            " kvalitu marketingu, projektový vedoucí řeší termíny festivalu."
-            " Výhoda je spolupráce napříč obory, riziko je zmatek v tom, kdo má"
-            " poslední slovo."
+            "**Maticová struktura na školním projektu:** Student může patřit do „marketingového týmu“, ale zároveň pracovat na konkrétní akci jako člen projektového týmu festivalu. Funkční vedoucí řeší kvalitu marketingu, projektový vedoucí řeší termíny festivalu. Výhoda je spolupráce napříč obory, riziko je zmatek v tom, kdo má poslední slovo."
         )
 
         st.markdown("#### 1.5.3 Rozpětí řízení")
         st.write(
-            "Rozpětí řízení znamená, kolik podřízených přímo připadá na jednoho"
-            " vedoucího."
+            "Rozpětí řízení znamená, kolik podřízených přímo připadá na jednoho vedoucího."
         )
         st.markdown(
             "| Typ rozpětí | Jak vypadá | Výhody | Rizika |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Úzké rozpětí řízení** | Vedoucí má málo přímých podřízených, organizace má více úrovní. | Více kontroly, bližší vedení, vhodné pro složité nebo rizikové úkoly. | Více hierarchie, pomalejší komunikace, vyšší náklady. |\n"
             "| **Široké rozpětí řízení** | Vedoucí má hodně přímých podřízených, organizace má méně úrovní. | Rychlejší komunikace, větší samostatnost, plošší struktura. | Manažer nemusí stíhat podporu a kontrolu všech lidí. |"
         )
@@ -1280,18 +1186,15 @@ def render():
         )
         if pocet_podrizenych <= 6:
             st.info(
-                f"📏 Úzké rozpětí řízení ({pocet_podrizenych} lidí). Vysoká"
-                " kontrola, vyšší náklady."
+                f"📏 Úzké rozpětí řízení ({pocet_podrizenych} lidí). Vysoká kontrola, vyšší náklady."
             )
         elif 7 <= pocet_podrizenych <= 12:
             st.success(
-                f"⚖️ Vyvážené rozpětí řízení ({pocet_podrizenych} lidí). Ideální"
-                " rovnováha."
+                f"⚖️ Vyvážené rozpětí řízení ({pocet_podrizenych} lidí). Ideální rovnováha."
             )
         else:
             st.warning(
-                f"📐 Široké rozpětí řízení ({pocet_podrizenych} lidí). Plochá"
-                " struktura, riziko chaosu."
+                f"📐 Široké rozpětí řízení ({pocet_podrizenych} lidí). Plochá struktura, riziko chaosu."
             )
 
         st.markdown(
@@ -1314,10 +1217,7 @@ def render():
 
         st.markdown("### 1.6 Rozhodování a analytické metody")
         st.write(
-            "Manažer se neustále rozhoduje: koho přijmout do týmu, jak rozdělit"
-            " rozpočet, co udělat při zpoždění, jak reagovat na konkurenci nebo"
-            " jak řešit konflikt. Dobré rozhodování není jen pocit. Opírá se o"
-            " informace, varianty a vyhodnocení důsledků."
+            "Manažer se neustále rozhoduje: koho přijmout do týmu, jak rozdělit rozpočet, co udělat při zpoždění, jak reagovat na konkurenci nebo jak řešit konflikt. Dobré rozhodování není jen pocit. Opírá se o informace, varianty a vyhodnocení důsledků."
         )
 
         st.markdown("""
@@ -1331,30 +1231,23 @@ def render():
 
         st.markdown("#### 1.6.1 SWOT analýza")
         st.write(
-            "SWOT analýza je jednoduchý nástroj, který pomáhá posoudit situaci"
-            " firmy, projektu, produktu nebo člověka. Rozlišuje vnitřní a"
-            " vnější prostředí."
+            "SWOT analýza je jednoduchý nástroj, který pomáhá posoudit situaci firmy, projektu, produktu nebo člověka. Rozlišuje vnitřní a vnější prostředí."
         )
         st.markdown(
             "| Část SWOT | Prostředí | Co znamená | Otázka |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **S — Strengths / Silné stránky** | Vnitřní prostředí | V čem jsme dobří a o co se můžeme opřít. | Co nám jde lépe než ostatním? |\n"
             "| **W — Weaknesses / Slabé stránky** | Vnitřní prostředí | Co nás brzdí nebo oslabuje. | Kde máme mezery? |\n"
             "| **O — Opportunities / Příležitosti** | Vnější prostředí | Co se děje kolem nás a můžeme toho využít. | Jaký trend nebo změna nám může pomoct? |\n"
             "| **T — Threats / Hrozby** | Vnější prostředí | Co nás může ohrozit. | Co se může pokazit nebo kdo nás může předběhnout? |"
         )
         st.write(
-            "**Pozor na častou chybu:** Silné a slabé stránky jsou uvnitř"
-            " organizace nebo člověka. Příležitosti a hrozby přicházejí"
-            " zvenčí. „Máme málo peněz“ je slabá stránka. „Zdraží nájem“ je"
-            " hrozba."
+            "**Pozor na častou chybu:** Silné a slabé stránky jsou uvnitř organizace nebo člověka. Příležitosti a hrozby přicházejí zvenčí. „Máme málo peněz“ je slabá stránka. „Zdraží nájem“ je hrozba."
         )
 
         st.markdown("#### 1.6.2 Základy řízení rizik")
         st.write(
-            "Řízení rizik znamená přemýšlet dopředu o tom, co se může pokazit,"
-            " jak moc je to pravděpodobné, jak velký dopad by to mělo a co s"
-            " tím uděláme."
+            "Řízení rizik znamená přemýšlet dopředu o tom, co se může pokazit, jak moc je to pravděpodobné, jak velký dopad by to mělo a co s tím uděláme."
         )
         st.markdown(
             "| Krok | Otázka | Příklad pro školní akci |\n"
@@ -1365,9 +1258,7 @@ def render():
             "| **Záložní plán / Plan B** | Co uděláme, když riziko nastane? | Náhradní mikrofon, náhradní moderátor, přesun programu dovnitř při dešti. |"
         )
         st.write(
-            "**Pointa řízení rizik:** Dobrý manažer není člověk, kterému se"
-            " nikdy nic nepokazí. Je to člověk, který počítá s tím, že se něco"
-            " pokazit může, a má připravený plán B."
+            "**Pointa řízení rizik:** Dobrý manažer není člověk, kterému se nikdy nic nepokazí. Je to člověk, který počítá s tím, že se něco pokazit může, a má připravený plán B."
         )
 
         st.markdown(
@@ -1393,11 +1284,7 @@ def render():
 
         st.markdown("### 1.7 Moderní přesah: Agilní řízení, remote work")
         st.write(
-            "Současné řízení lidí se posouvá od prostého zadávání úkolů k práci"
-            " s autonomií, důvěrou, smyslem práce, psychologickým bezpečím a"
-            " průběžnou zpětnou vazbou. Moderní manažer není jen kontrolor"
-            " výkonu, ale spíš koordinátor, kouč a tvůrce podmínek, ve kterých"
-            " tým dokáže dlouhodobě fungovat."
+            "Současné řízení lidí se posouvá od prostého zadávání úkolů k práci s autonomií, důvěrou, smyslem práce, psychologickým bezpečím a průběžnou zpětnou vazbou. Moderní manažer není jen kontrolor výkonu, ale spíš koordinátor, kouč a tvůrce podmínek, ve kterých tým dokáže dlouhodobě fungovat."
         )
 
         st.markdown(
@@ -1414,16 +1301,10 @@ def render():
             "| **Wellbeing a prevence vyhoření** | Manažer sleduje nejen výkon, ale i dlouhodobou udržitelnost práce. | Realistické termíny, rozdělení zátěže, pauzy, hranice mezi prací a volnem. |"
         )
         st.write(
-            "**Digitální nástroje:** Trello, Asana, Notion, Slack, Teams nebo"
-            " Google Workspace nepředstavují management samy o sobě. Jsou to"
-            " jen nástroje. Důležité je, zda tým rozumí cíli, ví, kdo za co"
-            " odpovídá, a má jasně nastavenou komunikaci."
+            "**Digitální nástroje:** Trello, Asana, Notion, Slack, Teams nebo Google Workspace nepředstavují management samy o sobě. Jsou to jen nástroje. Důležité je, zda tým rozumí cíli, ví, kdo za co odpovídá, a má jasně nastavenou komunikaci."
         )
         st.write(
-            "**Riziko moderní práce:** Flexibilita může být výhoda, ale také"
-            " past. Když je online člověk pořád, odpovídá večer, nemá jasné"
-            " priority a práce se nikdy „nevypne“, roste riziko stresu a"
-            " vyhoření."
+            "**Riziko moderní práce:** Flexibilita může být výhoda, ale také past. Když je online člověk pořád, odpovídá večer, nemá jasné priority a práce se nikdy „nevypne“, roste riziko stresu a vyhoření."
         )
 
     # =========================================================================
@@ -1434,47 +1315,33 @@ def render():
 
         st.markdown(
             "<div class='box-blue'>"
-            "🎯 <b>Moderní hook:</b> <i>„Proč si koupíš boty za 4 000 Kč, když"
-            " skoro stejný fejk stojí 500 Kč?“</i><br>Marketing není jen"
-            " reklama. Je to způsob, jak pochopit potřeby lidí, vytvořit"
-            " hodnotu, odlišit se od konkurence a dostat správnou nabídku ke"
-            " správnému člověku."
+            "🎯 <b>Moderní hook:</b> <i>„Proč si koupíš boty za 4 000 Kč, když skoro stejný fejk stojí 500 Kč?“</i><br>"
+            "Marketing není jen reklama. Je to způsob, jak pochopit potřeby lidí, vytvořit hodnotu, odlišit se od konkurence a dostat správnou nabídku ke správnému člověku."
             "</div>",
             unsafe_allow_html=True,
         )
 
         st.markdown(
             "<div class='box-green'>"
-            "🎯 <b>Cíl 2. bloku:</b> Pochopíš, jak firmy zkoumají trh,"
-            " rozdělují zákazníky do segmentů, volí cílovou skupinu, nastavují"
-            " positioning a skládají marketingový mix 4P."
+            "🎯 <b>Cíl 2. bloku:</b> Pochopíš, jak firmy zkoumají trh, rozdělují zákazníky do segmentů, volí cílovou skupinu, nastavují positioning a skládají marketingový mix 4P."
             "</div>",
             unsafe_allow_html=True,
         )
 
         st.markdown("### 2.1 Podstata a vývoj marketingu")
         st.write(
-            "Marketing je proces, při kterém firma zjišťuje potřeby zákazníků,"
-            " vytváří pro ně hodnotu a uspokojuje jejich potřeby tak, aby"
-            " zároveň dosahovala svých cílů, typicky zisku. Nejde tedy jen o"
-            " reklamu nebo prodej. Reklama je pouze jedna část marketingové"
-            " komunikace a prodej je okamžik, kdy zákazník skutečně nakoupí."
+            "Marketing je proces, při kterém firma zjišťuje potřeby zákazníků, vytváří pro ně hodnotu a uspokojuje jejich potřeby tak, aby zároveň dosahovala svých cílů, typicky zisku. Nejde tedy jen o reklamu nebo prodej. Reklama je pouze jedna část marketingové komunikace a prodej je okamžik, kdy zákazník skutečně nakoupí."
         )
 
         st.markdown(
             "<div class='box-yellow'>"
-            "🧠 <b>Jednoduše:</b> Prodej se ptá: „Jak prodáme to, co už máme?“"
-            " Marketing se ptá: „Co lidé opravdu potřebují, komu to nabídneme,"
-            " za jakou cenu, kde a jak o tom budou vědět?“"
+            "🧠 <b>Jednoduše:</b> Prodej se ptá: „Jak prodáme to, co už máme?“ Marketing se ptá: „Co lidé opravdu potřebují, komu to nabídneme, za jakou cenu, kde a jak o tom budou vědět?“"
             "</div>",
             unsafe_allow_html=True,
         )
 
         st.write(
-            "Marketing pomáhá firmě pochopit trh, zákazníka, konkurenci i"
-            " vlastní nabídku. Dobře nastavený marketing nezačíná plakátem ani"
-            " TikTok videem, ale otázkou: komu pomáháme, jakou hodnotu"
-            " vytváříme a proč by si měl zákazník vybrat právě nás?"
+            "Marketing pomáhá firmě pochopit trh, zákazníka, konkurenci i vlastní nabídku. Dobře nastavený marketing nezačíná plakátem ani TikTok videem, ale otázkou: komu pomáháme, jakou hodnotu vytváříme a proč by si měl zákazník vybrat právě nás?"
         )
 
         st.markdown(
@@ -1490,9 +1357,7 @@ def render():
 
         st.markdown("#### 2.1.1 Vývoj podnikatelských koncepcí")
         st.write(
-            "Firmy se v historii nedívaly na zákazníka vždy stejně."
-            " Podnikatelské koncepce ukazují, na co se firma při řízení trhu"
-            " hlavně soustředí."
+            "Firmy se v historii nedívaly na zákazníka vždy stejně. Podnikatelské koncepce ukazují, na co se firma při řízení trhu hlavně soustředí."
         )
         st.markdown(
             "| Koncepce | Hlavní myšlenka | Příklad | Riziko |\n"
@@ -1504,9 +1369,7 @@ def render():
             "| **Sociální / etická koncepce** | Firma bere ohled nejen na zisk a zákazníka, ale i na společnost, životní prostředí a dlouhodobý užitek. | Udržitelná móda, férové dodavatelské řetězce, omezení greenwashingu. | Pokud firma jen předstírá odpovědnost, vzniká greenwashing. |"
         )
         st.write(
-            "**Moderní přesah:** Dnešní marketing už často neprodává jen"
-            " produkt, ale také životní styl, hodnoty a identitu. Proto je"
-            " důležité rozlišovat mezi férovou komunikací a manipulací."
+            "**Moderní přesah:** Dnešní marketing už často neprodává jen produkt, ale také životní styl, hodnoty a identitu. Proto je důležité rozlišovat mezi férovou komunikací a manipulací."
         )
 
         st.markdown(
@@ -1529,15 +1392,10 @@ def render():
 
         st.markdown("### 2.2 Marketingový výzkum a analýza trhu")
         st.write(
-            "Marketingový výzkum znamená systematický sběr, třídění a"
-            " vyhodnocování informací o trhu, zákaznících, konkurenci a"
-            " prostředí firmy. Jeho cílem je snížit riziko při rozhodování."
+            "Marketingový výzkum znamená systematický sběr, třídění a vyhodnocování informací o trhu, zákaznících, konkurenci a prostředí firmy. Jeho cílem je snížit riziko při rozhodování."
         )
         st.write(
-            "**Proč firmy dělají výzkum:** Bez dat firma často jen hádá."
-            " Výzkum pomáhá zjistit, kdo je zákazník, co řeší, kolik je ochoten"
-            " zaplatit, kde nakupuje, jak vnímá značku a proč dává přednost"
-            " konkurenci."
+            "**Proč firmy dělají výzkum:** Bez dat firma často jen hádá. Výzkum pomáhá zjistit, kdo je zákazník, co řeší, kolik je ochoten zaplatit, kde nakupuje, jak vnímá značku a proč dává přednost konkurenci."
         )
         st.write(
             "Marketingový výzkum může odpovídat například na otázky:"
@@ -1559,10 +1417,7 @@ def render():
             "| **Sekundární data** | Již existující data, která byla původně sesbírána pro jiný účel. | Jsou rychle dostupná a často levnější. | Nemusí přesně odpovídat aktuálnímu problému. |"
         )
         st.write(
-            "**Příklady sekundárních dat:** Statistiky Českého statistického"
-            " úřadu, veřejné databáze, výroční zprávy, prodejní výkazy, data z"
-            " e-shopu, informace ze sociálních sítí, recenze zákazníků nebo"
-            " analýzy konkurence."
+            "**Příklady sekundárních dat:** Statistiky Českého statistického úřadu, veřejné databáze, výroční zprávy, prodejní výkazy, data z e-shopu, informace ze sociálních sítí, recenze zákazníků nebo analýzy konkurence."
         )
 
         st.markdown("#### 2.2.2 Metody výzkumu")
@@ -1575,11 +1430,7 @@ def render():
             "| **Experiment** | Testuje, jak změna jedné věci ovlivní chování zákazníků. | A/B test: jedna skupina vidí zelené tlačítko „Koupit“, druhá černé. Firma porovná konverze. |"
         )
         st.write(
-            "**Sociální sítě jako výzkum trhu:** TikTok, Instagram nebo"
-            " YouTube neustále ukazují, na co lidé reagují. Počet zhlédnutí,"
-            " komentáře, sdílení, uložení a míra prokliku jsou signály, které"
-            " firmám pomáhají pochopit publikum. Pozor ale: vysoký dosah"
-            " nemusí vždy znamenat důvěru ani dlouhodobý prodej."
+            "**Sociální sítě jako výzkum trhu:** TikTok, Instagram nebo YouTube neustále ukazují, na co lidé reagují. Počet zhlédnutí, komentáře, sdílení, uložení a míra prokliku jsou signály, které firmám pomáhají pochopit publikum. Pozor ale: vysoký dosah nemusí vždy znamenat důvěru ani dlouhodobý prodej."
         )
 
         st.markdown(
@@ -1602,23 +1453,15 @@ def render():
 
         st.markdown("### 2.3 STP proces: Segmentace, Cílení a Positioning")
         st.write(
-            "STP proces pomáhá firmě vybrat správné zákazníky a odlišit se od"
-            " konkurence. Místo snahy oslovit „všechny“ firma rozdělí trh na"
-            " skupiny, vybere nejvhodnější segment a nastaví jasnou pozici"
-            " značky."
+            "STP proces pomáhá firmě vybrat správné zákazníky a odlišit se od konkurence. Místo snahy oslovit „všechny“ firma rozdělí trh na skupiny, vybere nejvhodnější segment a nastaví jasnou pozici značky."
         )
         st.markdown(
-            "**STP jednoduše:**\n* **S – Segmentation:** rozdělíme trh na"
-            " skupiny.\n* **T – Targeting:** vybereme, komu se budeme"
-            " věnovat.\n* **P – Positioning:** určíme, jak chceme být v hlavě"
-            " zákazníka zapamatovaní."
+            "**STP jednoduše:**\n* **S – Segmentation:** rozdělíme trh na skupiny.\n* **T – Targeting:** vybereme, komu se budeme věnovat.\n* **P – Positioning:** určíme, jak chceme být v hlavě zákazníka zapamatovaní."
         )
 
         st.markdown("#### 2.3.1 Segmentace trhu")
         st.write(
-            "Segmentace trhu je rozdělení trhu na menší, relativně podobné"
-            " skupiny zákazníků. Lidé v jednom segmentu mají podobné potřeby,"
-            " chování nebo očekávání."
+            "Segmentace trhu je rozdělení trhu na menší, relativně podobné skupiny zákazníků. Lidé v jednom segmentu mají podobné potřeby, chování nebo očekávání."
         )
         st.markdown(
             "| Kritérium segmentace | Co sleduje | Příklad |\n"
@@ -1631,9 +1474,7 @@ def render():
 
         st.markdown("#### 2.3.2 Cílení: targeting")
         st.write(
-            "Cílení znamená výběr segmentu nebo segmentů, na které firma zaměří"
-            " své úsilí. Firma nemůže dělat všechno pro všechny, protože má"
-            " omezené peníze, čas, tým i pozornost zákazníků."
+            "Cílení znamená výběr segmentu nebo segmentů, na které firma zaměří své úsilí. Firma nemůže dělat všechno pro všechny, protože má omezené peníze, čas, tým i pozornost zákazníků."
         )
         st.markdown(
             "| Typ cílení | Jak funguje | Příklad |\n"
@@ -1645,14 +1486,10 @@ def render():
 
         st.markdown("#### 2.3.3 Positioning a USP")
         st.write(
-            "Positioning znamená vytvoření jedinečného obrazu značky v mysli"
-            " zákazníka vůči konkurenci. Nejde jen o to, co firma říká o sobě,"
-            " ale hlavně o to, jak si ji zákazník pamatuje."
+            "Positioning znamená vytvoření jedinečného obrazu značky v mysli zákazníka vůči konkurenci. Nejde jen o to, co firma říká o sobě, ale hlavně o to, jak si ji zákazník pamatuje."
         )
         st.write(
-            "USP – Unique Selling Proposition znamená unikátní prodejní"
-            " argument. Je to jasná odpověď na otázku: Proč si má zákazník"
-            " vybrat právě nás, a ne konkurenci?"
+            "USP – Unique Selling Proposition znamená unikátní prodejní argument. Je to jasná odpověď na otázku: Proč si má zákazník vybrat právě nás, a ne konkurenci?"
         )
         st.markdown(
             "| Značka / produkt | Možný positioning | Možné USP |\n"
@@ -1662,9 +1499,7 @@ def render():
             "| **Aplikace na učení** | Rychlá příprava na testy bez zahlcení. | Krátké kartičky, gamifikace a opakování podle chyb. |"
         )
         st.warning(
-            "**Častá chyba:** „Jsme kvalitní a levní“ není silný positioning."
-            " Stejně to tvrdí skoro všichni. Silnější je konkrétní,"
-            " zapamatovatelný a ověřitelný rozdíl."
+            "**Častá chyba:** „Jsme kvalitní a levní“ není silný positioning. Stejně to tvrdí skoro všichni. Silnější je konkrétní, zapamatovatelný a ověřitelný rozdíl."
         )
 
         st.markdown(
@@ -1687,9 +1522,7 @@ def render():
 
         st.markdown("### 2.4 Marketingový mix: Klasické 4P")
         st.write(
-            "Marketingový mix je soubor nástrojů, které firma kombinuje, aby"
-            " uspěla na trhu. Klasický model se označuje jako 4P: Product,"
-            " Price, Place, Promotion."
+            "Marketingový mix je soubor nástrojů, které firma kombinuje, aby uspěla na trhu. Klasický model se označuje jako 4P: Product, Price, Place, Promotion."
         )
 
         st.markdown(
@@ -1701,17 +1534,12 @@ def render():
             "| **Promotion** | Propagace / komunikace | Jak se o nabídce zákazník dozví a proč jí má věřit? |"
         )
         st.info(
-            "**Pointa 4P:** Jednotlivé prvky musí dávat smysl dohromady."
-            " Luxusní produkt s prémiovou cenou, levným obalem a chaotickou"
-            " komunikací působí nedůvěryhodně. Levný produkt s drahou kampaní"
-            " zase nemusí ekonomicky vycházet."
+            "**Pointa 4P:** Jednotlivé prvky musí dávat smysl dohromady. Luxusní produkt s prémiovou cenou, levným obalem a chaotickou komunikací působí nedůvěryhodně. Levný produkt s drahou kampaní zase nemusí ekonomicky vycházet."
         )
 
         st.markdown("#### 2.4.1 Product / Produkt")
         st.write(
-            "Produkt je všechno, co firma nabízí zákazníkovi k uspokojení"
-            " potřeby nebo přání. Může jít o fyzickou věc, službu, aplikaci,"
-            " zážitek, událost, kurz nebo kombinaci více prvků."
+            "Produkt je všechno, co firma nabízí zákazníkovi k uspokojení potřeby nebo přání. Může jít o fyzickou věc, službu, aplikaci, zážitek, událost, kurz nebo kombinaci více prvků."
         )
 
         st.write("**Vrstvy produktu**")
@@ -1725,8 +1553,7 @@ def render():
 
         st.write("**Životní cyklus produktu**")
         st.write(
-            "Produkt obvykle prochází několika fázemi. V každé fázi se mění"
-            " tržby, zisk, konkurence i marketingová strategie."
+            "Produkt obvykle prochází několika fázemi. V každé fázi se mění tržby, zisk, konkurence i marketingová strategie."
         )
         st.markdown(
             "| Fáze | Co se děje | Typická marketingová výzva |\n"
@@ -1738,9 +1565,7 @@ def render():
         )
 
         st.write(
-            "**Značka a obal:** Značka pomáhá produkt odlišit, vytváří důvěru a"
-            " zjednodušuje rozhodování zákazníka. Obal není jen „krabička“. Má"
-            " několik funkcí:"
+            "**Značka a obal:** Značka pomáhá produkt odlišit, vytváří důvěru a zjednodušuje rozhodování zákazníka. Obal není jen „krabička“. Má několik funkcí:"
         )
         st.markdown(
             "- **ochrannou** — chrání produkt při přepravě a skladování,\n"
@@ -1748,19 +1573,12 @@ def render():
             "- **propagační** — přitahuje pozornost a komunikuje značku."
         )
         st.write(
-            "**Příklad:** U energetického nápoje obal neřeší jen ochranu"
-            " plechovky. Barvy, název, typografie a styl komunikují energii,"
-            " výkon, gaming, sport nebo status."
+            "**Příklad:** U energetického nápoje obal neřeší jen ochranu plechovky. Barvy, název, typografie a styl komunikují energii, výkon, gaming, sport nebo status."
         )
 
         st.markdown("#### 2.4.2 Price / Cena")
         st.write(
-            "Cena je jediný prvek marketingového mixu, který přímo generuje"
-            " příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady."
-            " Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky."
-            " Cena není jen číslo: Nízká cena může přilákat zákazníky, ale také"
-            " vyvolat dojem nízké kvality. Vysoká cena může působit prémiově,"
-            " ale musí být podpořená kvalitou, značkou nebo jedinečností."
+            "Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky. Cena není jen číslo: Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností."
         )
         st.write("**Metody stanovení ceny**")
         st.markdown(
@@ -1781,16 +1599,12 @@ def render():
             "| **Skonto** | Sleva za rychlou platbu nebo splnění určité platební podmínky. | Firma poskytne odběrateli 2 % slevu, pokud zaplatí fakturu do 10 dnů. |"
         )
         st.warning(
-            "**Pozor:** Sleva může krátkodobě zvýšit prodej, ale při častém"
-            " používání učí zákazníky čekat na akci a oslabuje vnímanou hodnotu"
-            " značky."
+            "**Pozor:** Sleva může krátkodobě zvýšit prodej, ale při častém používání učí zákazníky čekat na akci a oslabuje vnímanou hodnotu značky."
         )
 
         st.markdown("#### 2.4.3 Place / Distribuce")
         st.write(
-            "Distribuce řeší, jak se produkt dostane od výrobce ke konečnému"
-            " zákazníkovi. Nestačí mít dobrý produkt — zákazník ho musí umět"
-            " pohodlně najít, koupit a získat včas."
+            "Distribuce řeší, jak se produkt dostane od výrobce ke konečnému zákazníkovi. Nestačí mít dobrý produkt — zákazník ho musí umět pohodlně najít, koupit a získat včas."
         )
 
         st.markdown("**Distribuční cesty**")
@@ -1809,20 +1623,12 @@ def render():
             "| **Maloobchod** | Prodává konečnému spotřebiteli. | Supermarket, drogerie, knihkupectví, e-shop s oblečením. |"
         )
         st.write(
-            "**Logistika a e-commerce:** Logistika zahrnuje plánování a řízení"
-            " toku zboží, informací a objednávek (skladování, doprava, balení,"
-            " objednávky, reklamace). E-commerce znamená prodej online."
-            " Omni-channel v praxi: Zákazník si produkt najde na Instagramu,"
-            " porovná ho na e-shopu, vyzvedne v kamenné prodejně a reklamaci"
-            " řeší přes zákaznickou podporu online. Pro zákazníka by to měl být"
-            " jeden plynulý zážitek."
+            "**Logistika a e-commerce:** Logistika zahrnuje plánování a řízení toku zboží, informací a objednávek (skladování, doprava, balení, objednávky, reklamace). E-commerce znamená prodej online. Omni-channel v praxi: Zákazník si produkt najde na Instagramu, porovná ho na e-shopu, vyzvedne v kamenné prodejně a reklamaci řeší přes zákaznickou podporu online. Pro zákazníka by to měl být jeden plynulý zážitek."
         )
 
         st.markdown("#### 2.4.4 Promotion / Propagace a komunikační mix")
         st.write(
-            "Propagace neznamená jen reklamu. Jde o celou komunikaci firmy se"
-            " zákazníky, veřejností, médii a partnery. Cílem je informovat,"
-            " přesvědčit, připomenout značku a budovat vztah."
+            "Propagace neznamená jen reklamu. Jde o celou komunikaci firmy se zákazníky, veřejností, médii a partnery. Cílem je informovat, přesvědčit, připomenout značku a budovat vztah."
         )
         st.markdown(
             "| Prvek komunikačního mixu | Co znamená | Příklad |\n"
@@ -1834,16 +1640,10 @@ def render():
             "| **Přímý marketing (Direct marketing)** | Přímé oslovení konkrétně vybraných zákazníků. | E-mailing, SMS nabídka, telemarketing, adresná zásilka, personalizovaná nabídka v aplikaci. |"
         )
         st.write(
-            "**Influencer marketing a UGC:** V moderní propagaci hrají velkou"
-            " roli influenceři a obsah vytvářený uživateli (UGC). UGC jsou"
-            " recenze, videa, fotky nebo doporučení od běžných lidí. Často"
-            " působí důvěryhodněji než klasická reklama, ale placené spolupráce"
-            " musí být jasně označené."
+            "**Influencer marketing a UGC:** V moderní propagaci hrají velkou roli influenceři a obsah vytvářený uživateli (UGC). UGC jsou recenze, videa, fotky nebo doporučení od běžných lidí. Často působí důvěryhodněji než klasická reklama, ale placené spolupráce musí být jasně označené."
         )
         st.write(
-            "**Virál není strategie sám o sobě:** Virální příspěvek může přinést"
-            " velký dosah, ale pokud neodpovídá značce, cílové skupině a"
-            " produktu, nemusí vést k prodeji ani dlouhodobé důvěře."
+            "**Virál není strategie sám o sobě:** Virální příspěvek může přinést velký dosah, ale pokud neodpovídá značce, cílové skupině a produktu, nemusí vést k prodeji ani dlouhodobé důvěře."
         )
 
         st.markdown(
@@ -1941,28 +1741,18 @@ def render():
         st.divider()
         st.markdown("### 3.1 Značka a budování brandu")
         st.write(
-            "Značka neboli brand není jen logo nebo název produktu. Je to"
-            " soubor představ, emocí, zkušeností a asociací, které si lidé s"
-            " produktem nebo firmou spojují. Fyzický produkt může být technicky"
-            " podobný jako konkurenční výrobek, ale značka rozhoduje o tom, jak"
-            " mu zákazník věří, jakou hodnotu mu přisuzuje a zda se k němu"
-            " opakovaně vrací."
+            "Značka neboli brand není jen logo nebo název produktu. Je to soubor představ, emocí, zkušeností a asociací, které si lidé s produktem nebo firmou spojují. Fyzický produkt může být technicky podobný jako konkurenční výrobek, ale značka rozhoduje o tom, jak mu zákazník věří, jakou hodnotu mu přisuzuje a zda se k němu opakovaně vrací."
         )
         st.write(
-            "**Jednoduše:** Produkt je to, co firma vyrábí nebo nabízí. Značka"
-            " je to, co si o tom lidé myslí, cítí a pamatují."
+            "**Jednoduše:** Produkt je to, co firma vyrábí nebo nabízí. Značka je to, co si o tom lidé myslí, cítí a pamatují."
         )
         st.write(
-            "Příklad: Bílé tričko může stát 150 Kč bez značky, ale několik"
-            " tisíc korun, pokud je spojeno se známým logem, komunitou,"
-            " statusem nebo životním stylem. Materiál může být podobný, ale"
-            " vnímaná hodnota je jiná."
+            "Příklad: Bílé tričko může stát 150 Kč bez značky, ale několik tisíc korun, pokud je spojeno se známým logem, komunitou, statusem nebo životním stylem. Materiál může být podobný, ale vnímaná hodnota je jiná."
         )
 
         st.markdown("#### 3.1.1 Anatomie a prvky značky")
         st.write(
-            "Značka se skládá z více prvků. Čím jsou jednotnější a"
-            " zapamatovatelnější, tím snáze si ji lidé vybaví."
+            "Značka se skládá z více prvků. Čím jsou jednotnější a zapamatovatelnější, tím snáze si ji lidé vybaví."
         )
         st.markdown(
             "| Prvek značky | Co znamená | Příklad |\n"
@@ -1974,20 +1764,15 @@ def render():
             "| **Hodnoty značky** | Principy, které značka zastává a podle kterých se rozhoduje. | Udržitelnost, férovost, kreativita, jednoduchost, dostupnost. |"
         )
         st.warning(
-            "**Pozor:** Silná značka nevzniká jen tím, že má hezké logo. Pokud"
-            " se komunikace značky neshoduje s realitou produktu, zákazník"
-            " ztratí důvěru."
+            "**Pozor:** Silná značka nevzniká jen tím, že má hezké logo. Pokud se komunikace značky neshoduje s realitou produktu, zákazník ztratí důvěru."
         )
 
         st.markdown("#### 3.1.2 Brand equity a brand loyalty")
         st.write(
-            "Brand equity znamená hodnotu značky. Může být peněžní i"
-            " nepeněžní. Silná značka umožňuje prodávat dráž, snáze zavádět nové"
-            " produkty, získávat doporučení a lépe přežít krize."
+            "Brand equity znamená hodnotu značky. Může být peněžní i nepeněžní. Silná značka umožňuje prodávat dráž, snáze zavádět nové produkty, získávat doporučení a lépe přežít krize."
         )
         st.write(
-            "Brand loyalty znamená věrnost značce. Zákazník se ke značce vrací,"
-            " doporučuje ji dalším a často ji neporovnává jen podle ceny."
+            "Brand loyalty znamená věrnost značce. Zákazník se ke značce vrací, doporučuje ji dalším a často ji neporovnává jen podle ceny."
         )
         st.markdown(
             "| Pojem | Co znamená | Jak se projevuje |\n"
@@ -1999,22 +1784,13 @@ def render():
 
         st.markdown("#### 3.1.3 Strategie značky: rebranding a extenze značky")
         st.write(
-            "Rebranding je změna image značky. Může zahrnovat nové logo, barvy,"
-            " slogan, tón komunikace nebo celkovou strategii. Firma k němu"
-            " sahá, když chce působit moderněji, oslovit novou cílovou skupinu"
-            " nebo se odlišit od minulosti."
+            "Rebranding je změna image značky. Může zahrnovat nové logo, barvy, slogan, tón komunikace nebo celkovou strategii. Firma k němu sahá, když chce působit moderněji, oslovit novou cílovou skupinu nebo se odlišit od minulosti."
         )
         st.write(
-            "Extenze značky znamená rozšíření známé značky do nové kategorie"
-            " produktů. Výhodou je, že novinka může těžit z důvěry existující"
-            " značky. Rizikem je, že pokud se rozšíření nepovede, může poškodit"
-            " i původní značku."
+            "Extenze značky znamená rozšíření známé značky do nové kategorie produktů. Výhodou je, že novinka může těžit z důvěry existující značky. Rizikem je, že pokud se rozšíření nepovede, může poškodit i původní značku."
         )
         st.write(
-            "**Příklad:** Značka známá pro sportovní oblečení začne prodávat"
-            " parfémy nebo chytré hodinky. Pokud to odpovídá jejím hodnotám a"
-            " zákazníci tomu věří, může to fungovat. Pokud to působí náhodně,"
-            " značka se rozmělní."
+            "**Příklad:** Značka známá pro sportovní oblečení začne prodávat parfémy nebo chytré hodinky. Pokud to odpovídá jejím hodnotám a zákazníci tomu věří, může to fungovat. Pokud to působí náhodně, značka se rozmělní."
         )
 
         st.markdown(
@@ -2037,11 +1813,7 @@ def render():
 
         st.markdown("### 3.2 Nákupní chování a psychologie spotřebitele")
         st.write(
-            "Nákupní chování zkoumá, jak se lidé rozhodují při nákupu, co je"
-            " ovlivňuje a proč si vyberou jeden produkt místo druhého. Zákazník"
-            " se často nerozhoduje jen racionálně. Do nákupu vstupují emoce,"
-            " sociální tlak, zkušenosti, značka, cena, pohodlí i momentální"
-            " nálada."
+            "Nákupní chování zkoumá, jak se lidé rozhodují při nákupu, co je ovlivňuje a proč si vyberou jeden produkt místo druhého. Zákazník se často nerozhoduje jen racionálně. Do nákupu vstupují emoce, sociální tlak, zkušenosti, značka, cena, pohodlí i momentální nálada."
         )
 
         st.markdown("#### 3.2.1 Proces nákupního rozhodování")
@@ -2055,19 +1827,12 @@ def render():
             "| **5. Poprodejní chování** | Po nákupu hodnotí spokojenost. Může přijít nadšení, reklamace nebo pochybnosti. | Říká si, jestli neměl koupit jiný model — tomu se říká kognitivní disonance. |"
         )
         st.write(
-            "**Kognitivní disonance** znamená nepříjemný pocit pochybnosti po"
-            " rozhodnutí. Zákazník si například po drahém nákupu říká: „Nebylo"
-            " to zbytečně moc? Neměl/a jsem vybrat jinou značku?“ Firmy ji"
-            " snižují kvalitní podporou, jasnou komunikací, zárukou, recenzemi"
-            " a potvrzením, že zákazník zvolil dobře."
+            "**Kognitivní disonance** znamená nepříjemný pocit pochybnosti po rozhodnutí. Zákazník si například po drahém nákupu říká: „Nebylo to zbytečně moc? Neměl/a jsem vybrat jinou značku?“ Firmy ji snižují kvalitní podporou, jasnou komunikací, zárukou, recenzemi a potvrzením, že zákazník zvolil dobře."
         )
 
         st.markdown("#### 3.2.2 Faktory ovlivňující nákupní chování")
         st.write(
-            "Faktory ovlivňující nákupní chování ukazují, že zákazník se"
-            " nerozhoduje izolovaně. Jeho nákupní rozhodnutí ovlivňuje osobní"
-            " situace, psychika, okolí, kultura, hodnoty i skupiny, ke kterým"
-            " patří nebo ke kterým chce patřit."
+            "Faktory ovlivňující nákupní chování ukazují, že zákazník se nerozhoduje izolovaně. Jeho nákupní rozhodnutí ovlivňuje osobní situace, psychika, okolí, kultura, hodnoty i skupiny, ke kterým patří nebo ke kterým chce patřit."
         )
         st.markdown(
             "| Faktor | Co zahrnuje | Příklad |\n"
@@ -2078,16 +1843,12 @@ def render():
             "| **Kulturní faktory** | Kultura, hodnoty společnosti, tradice, normy a společenský status. | Jiné produkty se prodávají jako symbol statusu, jiné jako praktická volba. |"
         )
         st.write(
-            "**Referenční skupina:** Skupina lidí, podle které se člověk"
-            " porovnává nebo které se chce podobat. Může jít o spolužáky,"
-            " sportovní tým, influencera, herní komunitu nebo profesní vzor."
+            "**Referenční skupina:** Skupina lidí, podle které se člověk porovnává nebo které se chce podobat. Může jít o spolužáky, sportovní tým, influencera, herní komunitu nebo profesní vzor."
         )
 
         st.markdown("#### 3.2.3 Racionální vs. emoční nákupy")
         st.write(
-            "Racionální nákup je založený hlavně na porovnání ceny, kvality,"
-            " užitku a parametrů. Emoční nákup je ovlivněný pocitem, touhou,"
-            " statusem, identitou, strachem, FOMO nebo impulzem."
+            "Racionální nákup je založený hlavně na porovnání ceny, kvality, užitku a parametrů. Emoční nákup je ovlivněný pocitem, touhou, statusem, identitou, strachem, FOMO nebo impulzem."
         )
         st.markdown(
             "| Typ nákupu | Jak vypadá | Příklad |\n"
@@ -2099,17 +1860,10 @@ def render():
 
         st.markdown("#### 3.2.4 Neuromarketing")
         st.write(
-            "Neuromarketing zkoumá, jak na zákazníka působí podněty jako barvy,"
-            " hudba, vůně, uspořádání prodejny, obal, slova, obrázky nebo"
-            " rozložení webu. Vychází z poznatků psychologie a neurověd, ale v"
-            " praxi se často používá jednoduše jako práce se smysly a"
-            " pozorností."
+            "Neuromarketing zkoumá, jak na zákazníka působí podněty jako barvy, hudba, vůně, uspořádání prodejny, obal, slova, obrázky nebo rozložení webu. Vychází z poznatků psychologie a neurověd, ale v praxi se často používá jednoduše jako práce se smysly a pozorností."
         )
         st.write(
-            "**Příklady neuromarketingu:** Příjemná vůně v obchodě, hudba"
-            " zpomalující tempo nakupování, červená barva u slev, velké fotky"
-            " jídla v aplikaci, tlačítko „Koupit“ na výrazném místě nebo obal,"
-            " který působí prémiově."
+            "**Příklady neuromarketingu:** Příjemná vůně v obchodě, hudba zpomalující tempo nakupování, červená barva u slev, velké fotky jídla v aplikaci, tlačítko „Koupit“ na výrazném místě nebo obal, který působí prémiově."
         )
 
         st.markdown(
@@ -2144,19 +1898,12 @@ def render():
 
         st.markdown("### 3.3 Etika, právo a ochrana spotřebitele")
         st.write(
-            "Marketing má velký vliv na rozhodování lidí. Proto musí řešit"
-            " nejen účinnost kampaní, ale také férovost, pravdivost, bezpečnost"
-            " a ochrana spotřebitele. Cílem etického marketingu není jen"
-            " „prodat za každou cenu“, ale komunikovat tak, aby zákazník nebyl"
-            " klamán ani manipulován."
+            "Marketing má velký vliv na rozhodování lidí. Proto musí řešit nejen účinnost kampaní, ale také férovost, pravdivost, bezpečnost a ochrana spotřebitele. Cílem etického marketingu není jen „prodat za každou cenu“, ale komunikovat tak, aby zákazník nebyl klamán ani manipulován."
         )
 
         st.markdown("#### 3.3.1 Právní rámec reklamy v ČR a EU")
         st.write(
-            "Reklama v ČR a EU podléhá právním pravidlům. Patří sem zejména"
-            " regulace reklamy, pravidla nekalé soutěže, ochrana spotřebitele,"
-            " povinnost pravdivých informací a pravidla pro označování"
-            " komerčních sdělení."
+            "Reklama v ČR a EU podléhá právním pravidlům. Patří sem zejména regulace reklamy, pravidla nekalé soutěže, ochrana spotřebitele, povinnost pravdivých informací a pravidla pro označování komerčních sdělení."
         )
         st.markdown(
             "| Oblast | Co řeší | Příklad |\n"
@@ -2168,16 +1915,12 @@ def render():
             "| **Skrytá reklama** | Komerční sdělení nesmí být maskované jako nezávislý názor. | Influencer propaguje produkt bez označení spolupráce. |"
         )
         st.write(
-            "**Označování spolupráce:** Placená spolupráce, barter nebo jiná"
-            " výhoda musí být jasně označena. Nestačí, aby to bylo schované v"
-            " hashtazích nebo nejasně naznačené."
+            "**Označování spolupráce:** Placená spolupráce, barter nebo jiná výhoda musí být jasně označena. Nestačí, aby to bylo schované v hashtazích nebo nejasně naznačené."
         )
 
         st.markdown("#### 3.3.2 Ochrana spotřebitele")
         st.write(
-            "Spotřebitel má právo na pravdivé, srozumitelné a úplné informace."
-            " Firma nesmí zamlčovat podstatné údaje, používat klamavé praktiky"
-            " nebo vytvářet falešný tlak na nákup."
+            "Spotřebitel má právo na pravdivé, srozumitelné a úplné informace. Firma nesmí zamlčovat podstatné údaje, používat klamavé praktiky nebo vytvářet falešný tlak na nákup."
         )
         st.markdown(
             "| Právo spotřebitele | Co znamená | Příklad |\n"
@@ -2187,10 +1930,7 @@ def render():
             "| **Odstoupení od smlouvy online** | Při nákupu na dálku má spotřebitel typicky právo odstoupit od smlouvy ve lhůtě stanovené zákonem. | Zákazník vrátí zboží koupené přes e-shop, pokud splní zákonné podmínky. |"
         )
         st.write(
-            "**Kontrolní orgány pomáhají dohlížet na férové jednání:** Česká"
-            " obchodní inspekce (ČOI) kontroluje dodržování pravidel ochrany"
-            " spotřebitele. Rada pro reklamu řeší etickou samoregulaci reklamy"
-            " a posuzuje stížnosti na nevhodnou nebo neetickou reklamu."
+            "**Kontrolní orgány pomáhají dohlížet na férové jednání:** Česká obchodní inspekce (ČOI) kontroluje dodržování pravidel ochrany spotřebitele. Rada pro reklamu řeší etickou samoregulaci reklamy a posuzuje stížnosti na nevhodnou nebo neetickou reklamu."
         )
 
         st.markdown("#### 3.3.3 Neetické a manipulativní praktiky")
@@ -2204,10 +1944,7 @@ def render():
             "| **Cílení na zranitelné skupiny** | Reklama využívá nižší zkušenosti, strachu nebo zranitelnosti určité skupiny. | Manipulativní reklama na děti, seniory, zadlužené osoby nebo nemocné lidi. |"
         )
         st.write(
-            "**Rizikové produkty:** Zvláštní opatrnost vyžaduje reklama na"
-            " alkohol, hazard, energetické nápoje, kryptoměny, půjčky, doplňky"
-            " stravy nebo produkty spojené se zdravím. U těchto oblastí může"
-            " špatná reklama způsobit skutečnou škodu."
+            "**Rizikové produkty:** Zvláštní opatrnost vyžaduje reklama na alkohol, hazard, energetické nápoje, kryptoměny, půjčky, doplňky stravy nebo produkty spojené se zdravím. U těchto oblastí může špatná reklama způsobit skutečnou škodu."
         )
 
         st.markdown(
@@ -2230,11 +1967,7 @@ def render():
 
         st.markdown("### 3.4 Moderní formy a trendy v digitálním marketingu")
         st.write(
-            "Moderní marketing se stále víc odehrává online. Firmy pracují s"
-            " daty, algoritmy, obsahem, influencery, automatizací a"
-            " personalizací. Výhodou digitálního marketingu je přesnější cílení"
-            " a měření. Rizikem je ztráta soukromí, zahlcení reklamou a"
-            " manipulace."
+            "Moderní marketing se stále víc odehrává online. Firmy pracují s daty, algoritmy, obsahem, influencery, automatizací a personalizací. Výhodou digitálního marketingu je přesnější cílení a měření. Rizikem je ztráta soukromí, zahlcení reklamou a manipulace."
         )
 
         st.markdown("#### 3.4.1 Digitální / online marketing")
@@ -2249,9 +1982,7 @@ def render():
 
         st.markdown("#### 3.4.2 Social media marketing a content marketing")
         st.write(
-            "Social Media Marketing (SMM) je marketing na sociálních sítích."
-            " Content marketing znamená tvorbu užitečného, zábavného nebo"
-            " vzdělávacího obsahu, který přitahuje publikum a buduje důvěru."
+            "Social Media Marketing (SMM) je marketing na sociálních sítích. Content marketing znamená tvorbu užitečného, zábavného nebo vzdělávacího obsahu, který přitahuje publikum a buduje důvěru."
         )
         st.markdown(
             "| Pojem | Co znamená | Příklad |\n"
@@ -2262,17 +1993,12 @@ def render():
             "| **Content marketing** | Budování vztahu pomocí obsahu, ne jen přímým prodejem. | Kavárna sdílí tipy na učení, zákulisí přípravy kávy a příběhy studentů. |"
         )
         st.write(
-            "**Platformy nejsou stejné:** TikTok se hodí pro krátká dynamická"
-            " videa, Instagram pro vizuální identitu a komunitu, YouTube pro"
-            " delší obsah, LinkedIn pro profesní komunikaci a newsletter pro"
-            " přímý vztah bez závislosti na algoritmu."
+            "**Platformy nejsou stejné:** TikTok se hodí pro krátká dynamická videa, Instagram pro vizuální identitu a komunitu, YouTube pro delší obsah, LinkedIn pro profesní komunikaci a newsletter pro přímý vztah bez závislosti na algoritmu."
         )
 
         st.markdown("#### 3.4.3 Influencer marketing a UGC")
         st.write(
-            "Influencer marketing využívá důvěru a dosah tvůrců obsahu."
-            " Influencer může značce pomoci oslovit konkrétní komunitu, ale"
-            " spolupráce musí působit důvěryhodně a být jasně označená."
+            "Influencer marketing využívá důvěru a dosah tvůrců obsahu. Influencer může značce pomoci oslovit konkrétní komunitu, ale spolupráce musí působit důvěryhodně a být jasně označená."
         )
         st.markdown(
             "| Typ influencera | Jak vypadá | Výhody | Rizika |\n"
@@ -2281,40 +2007,26 @@ def render():
             "| **Makro influencer** | Velké publikum a vysoký dosah. | Rychlé zviditelnění značky. | Vyšší cena, nižší osobní důvěra, riziko nesouladu s hodnotami značky. |"
         )
         st.write(
-            "UGC – User Generated Content znamená obsah vytvořený uživateli:"
-            " recenze, fotky, videa, unboxing, komentáře nebo doporučení."
-            " Funguje jako social proof, tedy sociální důkaz. Lidé často věří"
-            " více zkušenosti jiných zákazníků než oficiální reklamě."
+            "UGC – User Generated Content znamená obsah vytvořený uživateli: recenze, fotky, videa, unboxing, komentáře nebo doporučení. Funguje jako social proof, tedy sociální důkaz. Lidé často věří více zkušenosti jiných zákazníků než oficiální reklamě."
         )
 
         st.markdown("#### 3.4.4 Guerilla marketing a virální marketing")
         st.write(
-            "Guerilla marketing je netradiční, často nízkonákladová forma"
-            " propagace, která se snaží překvapit, pobavit nebo vyvolat silnou"
-            " reakci. Může probíhat na ulici, ve škole, na akci nebo online."
+            "Guerilla marketing je netradiční, často nízkonákladová forma propagace, která se snaží překvapit, pobavit nebo vyvolat silnou reakci. Může probíhat na ulici, ve škole, na akci nebo online."
         )
         st.write(
-            "Virální marketing se snaží vytvořit obsah, který lidé sami šíří"
-            " dál. Virál může vzniknout díky humoru, překvapení, emoci,"
-            " kontroverzi nebo vysoké užitečnosti."
+            "Virální marketing se snaží vytvořit obsah, který lidé sami šíří dál. Virál může vzniknout díky humoru, překvapení, emoci, kontroverzi nebo vysoké užitečnosti."
         )
         st.write(
-            "**Příklad:** Malá značka nemá rozpočet na televizní reklamu, a tak"
-            " vytvoří vtipnou instalaci ve městě, kterou lidé fotí a sdílí."
-            " Pokud je akce propojená se značkou a cílovou skupinou, může mít"
-            " velký dopad."
+            "**Příklad:** Malá značka nemá rozpočet na televizní reklamu, a tak vytvoří vtipnou instalaci ve městě, kterou lidé fotí a sdílí. Pokud je akce propojená se značkou a cílovou skupinou, může mít velký dopad."
         )
         st.warning(
-            "⚠️ **Pozor:** Šokující kampaň může přinést pozornost, ale také"
-            " odpor. Virální dosah není automaticky úspěch, pokud poškozuje"
-            " důvěru nebo nevede k pochopení značky."
+            "⚠️ **Pozor:** Šokující kampaň může přinést pozornost, ale také odpor. Virální dosah není automaticky úspěch, pokud poškozuje důvěru nebo nevede k pochopení značky."
         )
 
         st.markdown("#### 3.4.5 Nové technologie v marketingu")
         st.write(
-            "Nové technologie umožňují marketing více personalizovat,"
-            " automatizovat a měřit. Zároveň však vyvolávají otázky soukromí,"
-            " férovosti a transparentnosti."
+            "Nové technologie umožňují marketing více personalizovat, automatizovat a měřit. Zároveň však vyvolávají otázky soukromí, férovosti a transparentnosti."
         )
         st.markdown(
             "| Technologie | Co umožňuje | Příklad |\n"
@@ -2326,10 +2038,7 @@ def render():
             "| **AI a deepfake reklama** | Tvorba realistického obrazu, hlasu nebo videa pomocí AI. | Virtuální influencer nebo video s člověkem, který ve skutečnosti danou reklamu nenatočil. |"
         )
         st.write(
-            "**Etická otázka AI:** Pokud značka používá umělou inteligenci,"
-            " měla by dbát na pravdivost, transparentnost, ochranu osobních"
-            " údajů a férové označování obsahu. Deepfake reklama bez souhlasu"
-            " může být zásadně neetická i právně problematická."
+            "**Etická otázka AI:** Pokud značka používá umělou inteligenci, měla by dbát na pravdivost, transparentnost, ochranu osobních údajů a férové označování obsahu. Deepfake reklama bez souhlasu může být zásadně neetická i právně problematická."
         )
 
         st.markdown(
@@ -2377,10 +2086,7 @@ def render():
         st.markdown(
             "<div class='box-blue'>"
             "🚀 <b>Finální výstup kapitoly: Od nápadu k reálné kampani</b><br>"
-            "V předchozích blocích jsi krok za krokem budoval/a svůj vlastní"
-            " projekt. Nyní je čas dát všechny dílky skládačky dohromady do"
-            " jednoho uceleného Projektového pasu a prověřit své znalosti na"
-            " reálné případové studii z praxe!"
+            "V předchozích blocích jsi krok za krokem budoval/a svůj vlastní projekt. Nyní je čas dát všechny dílky skládačky dohromady do jednoho uceleného Projektového pasu a prověřit své znalosti na reálné případové studii z praxe!"
             "</div>",
             unsafe_allow_html=True,
         )
@@ -2392,8 +2098,7 @@ def render():
 
         st.markdown("#### Finální úkol: Mini projekt od řízení po kampaň")
         st.write(
-            "Na konci kapitoly odevzdáš krátkou prezentaci nebo dokument, který"
-            " obsahuje:"
+            "Na konci kapitoly odevzdáš krátkou prezentaci nebo dokument, který obsahuje:"
         )
         st.markdown(
             "1. název projektu,\n"
@@ -2457,11 +2162,7 @@ def render():
         st.markdown(
             "<div class='box-green'>"
             "✅ <b>Co si zapamatovat:</b><br>"
-            "Management pomáhá proměnit nápad v organizovanou akci. Marketing"
-            " pomáhá pochopit zákazníka a doručit mu hodnotu. Brand vytváří"
-            " důvěru a identitu. Etika připomíná, že pozornost a prodej nejsou"
-            " jediným cílem — důležité je také férové jednání, pravdivá"
-            " komunikace a odpovědnost vůči zákazníkům i společnosti."
+            "Management pomáhá proměnit nápad v organizovanou akci. Marketing pomáhá pochopit zákazníka a doručit mu hodnotu. Brand vytváří důvěru a identitu. Etika připomíná, že pozornost a prodej nejsou jediným cílem — důležité je také férové jednání, pravdivá komunikace a odpovědnost vůči zákazníkům i společnosti."
             "</div>",
             unsafe_allow_html=True,
         )
@@ -2472,11 +2173,7 @@ def render():
         st.markdown("#### 👕 Případová studie 1: Školní merch, který nikdo nekupuje")
         with st.container(border=True):
             st.markdown(
-                "**Situace:** Studentský tým chce spustit školní merch. Navrhne"
-                " mikiny s velkým logem školy, nastaví cenu 850 Kč a objedná"
-                " 100 kusů dopředu. Po měsíci se prodalo jen 18 mikin. Studenti"
-                " říkají, že jsou mikiny drahé, design je moc „školní“ a nikdo"
-                " se jich předem neptal, co by skutečně nosili.\n\n"
+                "**Situace:** Studentský tým chce spustit školní merch. Navrhne mikiny s velkým logem školy, nastaví cenu 850 Kč a objedná 100 kusů dopředu. Po měsíci se prodalo jen 18 mikin. Studenti říkají, že jsou mikiny drahé, design je moc „školní“ a nikdo se jich předem neptal, co by skutečně nosili.\n\n"
                 "**Co se v případu objevuje:**\n"
                 "* špatně provedený nebo úplně chybějící marketingový výzkum,\n"
                 "* nejasná cílová skupina,\n"
@@ -2500,11 +2197,7 @@ def render():
         st.markdown("#### ☕ Případová studie 2: Kavárna u školy a boj o pozornost")
         with st.container(border=True):
             st.markdown(
-                "**Situace:** U školy vznikne malá kavárna. Majitel chce oslovit"
-                " studenty, ale konkurence v okolí je silná. Kavárna má dobré"
-                " nápoje, ale nízkou návštěvnost. Po analýze zjistí, že"
-                " studenti chtějí místo, kde se dá učit, nabít telefon, sedět s"
-                " kamarády a koupit si cenově dostupné menší nápoje.\n\n"
+                "**Situace:** U školy vznikne malá kavárna. Majitel chce oslovit studenty, ale konkurence v okolí je silná. Kavárna má dobré nápoje, ale nízkou návštěvnost. Po analýze zjistí, že studenti chtějí místo, kde se dá učit, nabít telefon, sedět s kamarády a koupit si cenově dostupné menší nápoje.\n\n"
                 "**Co se v případu objevuje:**\n"
                 "* práce s potřebami, přáními a poptávkou,\n"
                 "* segmentace studentů podle chování a životního stylu,\n"
@@ -2533,13 +2226,7 @@ def render():
         )
         with st.container(border=True):
             st.markdown(
-                "**Situace:** Známý influencer natočí video o doplňku stravy,"
-                " který má údajně „rychle zlepšit soustředění a energii“. Video"
-                " působí jako osobní doporučení, ale není jasně označeno jako"
-                " placená spolupráce. V komentářích se objevují studenti, kteří"
-                " píší, že si produkt koupí před maturitou. Na webu produktu"
-                " běží odpočítávání s textem „sleva končí za 10 minut“ a hláška"
-                " „zbývají poslední 3 kusy“.\n\n"
+                "**Situace:** Známý influencer natočí video o doplňku stravy, který má údajně „rychle zlepšit soustředění a energii“. Video působí jako osobní doporučení, ale není jasně označeno jako placená spolupráce. V komentářích se objevují studenti, kteří píší, že si produkt koupí před maturitou. Na webu produktu běží odpočítávání s textem „sleva končí za 10 minut“ a hláška „zbývají poslední 3 kusy“.\n\n"
                 "**Co se v případu objevuje:**\n"
                 "* skrytá nebo nedostatečně označená reklama,\n"
                 "* riziko klamavých zdravotních tvrzení,\n"
@@ -2547,9 +2234,7 @@ def render():
                 "* dark patterns na webu,\n"
                 "* práce s emocemi, autoritou influencera a sociálním důkazem,\n"
                 "* otázka odpovědnosti značky i tvůrce obsahu.\n\n"
-                "**Etický problém:** Kampaň může být účinná, ale není férová,"
-                " pokud zamlčuje placenou spolupráci, vyvolává falešný tlak"
-                " nebo slibuje účinky, které nejsou doložené."
+                "**Etický problém:** Kampaň může být účinná, ale není férová, pokud zamlčuje placenou spolupráci, vyvolává falešný tlak nebo slibuje účinky, které nejsou doložené."
             )
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
