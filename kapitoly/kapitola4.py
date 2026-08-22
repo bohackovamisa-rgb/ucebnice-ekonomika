@@ -195,7 +195,7 @@ def render():
         "5.4 Co dělat, když... (Krizový trenažér)",
         "6.1 Praktická dílna (Aktivity 1–5)",
         "7.1 Případové studie z praxe",
-        "7.2 Slovníček, rychlé opakování a prověrka",
+        "7.2 Slovníček pojmů a prověrka",
     ]
 
     st.markdown("### 📌 Přechod na podkapitolu:")
@@ -1668,19 +1668,20 @@ def render():
         st.markdown("""
         * 💸 **Nominální mzda:** Částka vyjádřená v korunách na výplatní pásce.
         * 🛒 **Reálná mzda:** Říká, **co si za tuto částku skutečně koupíte** (vyjadřuje vaši kupní sílu). Je ovlivněna zdražováním.
-        * 📈 **Míra inflace (změna indexu spotřebitelských cen):** Statistici mají fiktivní nákupní koš běžného občana a měří jeho cenu (index). Míra inflace pak ukazuje v procentech, o kolik tento koš zdražil. 
+        * 📈 **Index spotřebitelských cen (ISC / CPI):** Představ si ho jako obří nákupní koš plný zboží a služeb. Statistici sledují, jak se mění jeho cena.
+        * 🎈 **Míra inflace (%):** Vyjadřuje procentuální změnu tohoto indexu. Právě toto procento potřebujeme znát, abychom zjistili, o kolik se nám život prodražil.
         """)
 
         st.info(
-            "💡 **Příklad:** Pokud ti mzda vzroste o 5 %, ale míra inflace je 10 %, máš sice na účtu víc korun, ale reálně sis pohoršil (tvá reálná mzda klesla o 5 %)."
+            "💡 **Příklad:** Pokud ti mzda vzroste o 5 %, ale ceny v obchodech (míra inflace) vzrostou o 10 %, máš sice na účtu víc korun, ale reálně sis pohoršil (zchudnul jsi o 5 %)."
         )
 
         st.markdown(
             """
         <div class='box-green'>
             🧮 <b>Jednoduchý princip:</b><br>
-            • Když inflace roste <b>rychleji</b> než mzda, <b>reálná mzda klesá</b>.<br>
-            • Když mzda roste <b>rychleji</b> než inflace, <b>reálná mzda roste</b>.
+            • Když ceny (inflace) rostou rychleji než mzda, <b>reálná mzda klesá</b>.<br>
+            • Když mzda roste rychleji než ceny, <b>reálná mzda roste</b>.
         </div>
         """,
             unsafe_allow_html=True,
@@ -1688,7 +1689,7 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-purple'>🔎 <b>Detektivní úkol:</b> Běž na stránky Českého statistického úřadu (czso.cz) do sekce Inflace. Najdi aktuální <b>míru inflace (vyjádřenou jako přírůstek indexu spotřebitelských cen)</b> a zadej toto procento níže.</div>",
+            "<div class='box-purple'>🔎 <b>Detektivní úkol:</b> Běž na stránky Českého statistického úřadu (czso.cz) a najdi <b>aktuální míru inflace</b> (která se počítá právě z Indexu spotřebitelských cen). Zajímají nás procenta! Zadej zjištěné procento níže.</div>",
             unsafe_allow_html=True,
         )
         st.write(
@@ -1703,10 +1704,11 @@ def render():
                 "Šéf ti přidal ke mzdě (%):", 0, 20, 5, key="k4_3_2_zvyseni"
             )
             inflace = st.number_input(
-                "Aktuální míra inflace v % (změna indexu):",
+                "Aktuální míra inflace (změna Indexu v %):",
                 value=8.0,
                 step=0.1,
                 key="k4_3_2_inflace",
+                help="Zadej procentuální míru inflace z webu ČSÚ."
             )
 
         with col_inf2:
