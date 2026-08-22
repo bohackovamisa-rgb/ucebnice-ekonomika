@@ -1241,6 +1241,7 @@ def render():
             " výrobky, zboží, krátkodobé pohledávky, peníze v hotovosti a na"
             " bankovním účtu."
         )
+        st.info("🔄 **Oběžný majetek „obíhá“ firmou:** Peníze se použijí na nákup materiálu, materiál se změní ve výrobek, výrobek se prodá a zpět do firmy se vrátí peníze.")
 
         st.markdown("#### Plánování materiálu")
         st.write(
@@ -1251,6 +1252,34 @@ def render():
         st.markdown("""
         * ❌ **Příliš nízká zásoba:** výroba se může zastavit, protože chybí materiál.
         * ❌ **Příliš vysoká zásoba:** firma má peníze zbytečně vázané ve skladu.
+        """)
+        st.write("**Při plánování materiálu se sleduje:**")
+        st.markdown("""
+        - plánovaný objem výroby,
+        - spotřeba materiálu na jeden výrobek,
+        - dodací lhůta dodavatele,
+        - minimální zásoba,
+        - pojistná zásoba,
+        - skladovací náklady,
+        - riziko znehodnocení nebo zastarání materiálu.
+        """)
+
+        st.markdown("#### Stanovení optimální zásoby a druhy zásob")
+        st.write("**Optimální zásoba** je taková zásoba, která umožňuje plynulou výrobu, ale zároveň zbytečně neváže peníze a nezvyšuje skladovací náklady. **Cíl:** Najít rovnováhu mezi bezpečností výroby a náklady na skladování.")
+
+        st.markdown("""
+        | Druh zásoby | Význam |
+        | :--- | :--- |
+        | **Běžná zásoba** | Slouží k pravidelné spotřebě mezi dvěma dodávkami. |
+        | **Pojistná zásoba** | Chrání firmu před zpožděním dodávky nebo nečekanou spotřebou. |
+        | **Minimální zásoba** | Nejnižší stav zásoby, pod který by firma neměla klesnout. |
+        | **Maximální zásoba** | Nejvyšší stav zásoby, který ještě dává ekonomický smysl. |
+        """)
+        
+        st.markdown("Vzorce pro výpočet:")
+        st.markdown("""
+        * **Průměrná zásoba** = (počáteční zásoba + konečná zásoba) / 2
+        * **Signální zásoba** = denní spotřeba × dodací lhůta + pojistná zásoba (určuje okamžik, kdy je vhodné materiál znovu objednat)
         """)
 
         st.divider()
@@ -1311,20 +1340,63 @@ def render():
                 )
             st.success("Výpočet zásob byl uložen!")
 
+        st.divider()
+        st.markdown("#### Pořízení materiálu")
+        st.write("Pořízení materiálu zahrnuje všechny kroky od zjištění potřeby až po převzetí materiálu na sklad. Typický postup:")
+        st.markdown("""
+        1. **Zjištění potřeby materiálu** — Firma určí, co a v jakém množství potřebuje.
+        2. **Výběr dodavatele** — Posuzuje se cena, kvalita, spolehlivost, dodací lhůta a platební podmínky.
+        3. **Objednávka** — Firma vystaví objednávku nebo uzavře smlouvu.
+        4. **Dodání materiálu** — Materiál dorazí do firmy.
+        5. **Přejímka materiálu** — Kontroluje se množství, kvalita a shoda s objednávkou.
+        6. **Uskladnění** — Materiál se uloží na sklad a zaeviduje.
+        7. **Výdej do spotřeby** — Materiál se vydává do výroby podle potřeby.
+        """)
+
+        st.markdown("#### Evidence a skladování materiálu")
+        st.write("Materiál se musí evidovat, aby firma věděla, kolik ho má, kde se nachází a jakou má hodnotu. Evidence může obsahovat: název materiálu, skladové číslo (kód), množství, cenu za jednotku, datum příjmu, dodavatele, místo uložení, výdeje do spotřeby a aktuální zůstatek na skladě.")
+        st.write("**Mezi běžné skladové doklady patří:**")
+        st.markdown("""
+        - **Příjemka** — doklad o přijetí materiálu na sklad,
+        - **Výdejka** — doklad o vydání materiálu ze skladu,
+        - **Skladní karta** — přehled příjmů, výdejů a zůstatků materiálu.
+        """)
+        st.success("💡 Dobré skladování snižuje ztráty, záměny, poškození i zbytečné nákupy materiálu, který už firma ve skladu má.")
+
     elif selected_section_3 == "4.2 Oceňování a moderní řízení zásob":
         st.markdown("### 4.2 Oceňování a moderní řízení zásob")
+        st.markdown("#### Metody vyskladňování zásob")
+        st.write("Při výdeji materiálu ze skladu musí firma určit, v jaké hodnotě se materiál ze skladu odepíše. To je důležité hlavně tehdy, když firma nakupuje stejný materiál opakovaně, ale za různé ceny. Vyskladňování znamená výdej materiálu nebo zboží ze skladu do spotřeby, výroby nebo prodeje.")
+        st.write("**Zvolená metoda ovlivňuje hodnotu spotřebovaného materiálu, výši nákladů, hodnotu zásob na skladě a tím i vykázaný zisk.**")
+
+        st.markdown("""
+        | Metoda | Význam | Jak funguje | Kde se používá dnes |
+        | :--- | :--- | :--- | :--- |
+        | **FIFO** | First In, First Out (první do skladu, první ze skladu) | Ze skladu se účetně vydává nejdříve to, co bylo nakoupeno jako první. (Např. nakoupím 100 ks po 20 Kč, pak 100 ks po 25 Kč. Při výdeji 80 ks počítám cenu 20 Kč/ks.) | Potravinářství, farmacie, kosmetika, gastronomie, supermarkety (hlídání expirace). |
+        | **LIFO** | Last In, First Out (poslední do skladu, první ze skladu) | Ze skladu se účetně vydává nejdříve to, co bylo nakoupeno jako poslední. | V českém účetnictví se běžně nepoužívá, fyzicky odpovídá hromadě sypkého materiálu. |
+        | **Vážený průměr** | Průměrná cena zásob | Materiál se oceňuje průměrnou cenou z více nákupů (celková hodnota / celkové množství). Používá se, když firma nechce sledovat přesnou cenu každé dávky. | Výrobní firmy, velkoobchody, sklady hutního materiálu, textilu, obalů nebo pohonných hmot. |
+        """)
+
+        st.divider()
+        st.markdown("#### Moderní řízení zásob")
         st.write(
-            "Rozdíl: FIFO, LIFO a vážený průměr řeší hlavně **ocenění zásob při"
-            " výdeji**. Moderní metody (Kanban, JIT) řeší spíš to, **kolik"
-            " zásob držet, kdy objednávat a jak zabránit plýtvání**."
+            "Rozdíl: FIFO, LIFO a vážený průměr řeší hlavně **ocenění zásob při výdeji**. "
+            "Kromě nich firmy používají také modernější postupy, které pomáhají řídit zásoby efektivněji, rychleji a s menším rizikem chyb. Moderní metody (Kanban, JIT) řeší spíš to, **kolik zásob držet, kdy objednávat, co hlídat nejvíc a jak zabránit plýtvání a výpadkům**."
         )
 
-        st.markdown("#### Vizuální systém KANBAN 🚥")
+        st.markdown("##### ABC analýza zásob")
+        st.write("Pomáhá firmě rozdělit zásoby podle důležitosti. Ne všechny položky ve skladu mají stejnou hodnotu nebo stejný význam pro provoz. Používají ji výrobní podniky, e-shopy, nemocnice i supermarkety.")
+        st.markdown("""
+        * 🥇 **Skupina A (cca 10 % položek, ale 70 % hodnoty):** Nejdůležitější, drahé nebo klíčové položky (např. kávovar). Pečlivé sledování, častá kontrola, minimální zásoby.
+        * 🥈 **Skupina B (cca 20 % položek, 20 % hodnoty):** Středně důležité (např. kvalitní káva). Pravidelná kontrola, běžné plánování.
+        * 🥉 **Skupina C (cca 70 % položek, ale jen 10 % hodnoty):** Méně důležité, levné drobnosti (kelímky, šroubky, gumičky). Jednodušší evidence, větší tolerance zásoby.
+        """)
+
+        st.markdown("##### Vizuální systém KANBAN 🚥")
         st.write(
-            "Kanban pochází z japonštiny (znamená „cedulka“ nebo „vizuální"
-            " signál“). Proslavila ho automobilka Toyota. Jde o systém, kdy si"
-            " další krok výroby „táhne“ materiál až ve chvíli, kdy ho"
-            " potřebuje."
+            "Kanban pochází z japonštiny (znamená „cedulka“ nebo „vizuální signál“). Proslavil ho Taiichi Ohno v automobilce Toyota jako způsob řízení výroby. "
+            "Jde o systém, kdy si další krok výroby „táhne“ materiál až ve chvíli, kdy ho potřebuje. Pomáhá: rychle vidět, co chybí, omezit rozpracovanou výrobu, zabránit hromadění zásob a odhalit úzká místa. "
+            "Dnes se používá nejen ve výrobě, ale také v IT, projektovém řízení (Trello, Jira, Notion)."
         )
 
         col_k1, col_k2, col_k3 = st.columns(3)
@@ -1344,21 +1416,40 @@ def render():
                 " vyprázdním, sklad mi vrátí plnou Bedýnku 1."
             )
 
-        st.divider()
-        st.markdown("#### ABC analýza zásob")
-        st.markdown("""
-        * 🥇 **Skupina A (cca 10 % položek, ale 70 % hodnoty):** Nejdražší položky. Hlídají se denně, zásoby jsou minimální.
-        * 🥈 **Skupina B (cca 20 % položek, 20 % hodnoty):** Středně důležité.
-        * 🥉 **Skupina C (cca 70 % položek, ale jen 10 % hodnoty):** Levné drobnosti (šroubky, gumičky).
-        """)
+        st.markdown("##### Just-in-Time (JIT) dnes")
+        st.write("Metoda JIT usiluje o to, aby materiál dorazil do výroby přesně tehdy, kdy je potřeba, což snižuje náklady na skladování. Proslavila ho Toyota. "
+                 "V současnosti se ale používá opatrněji. Po zkušenostech s výpadky dodavatelských řetězců si firmy často nechávají i určitou bezpečnostní zásobu. "
+                 "Současný přístup hledá rovnováhu mezi nízkými náklady a bezpečností dodávek.")
+
+        st.markdown("##### Digitální skladové systémy")
+        st.write("Moderní sklady využívají technologie, které umožňují sledovat zásoby v reálném čase (čárové a QR kódy, RFID čipy, skladový software, propojení e-shopu se skladem). "
+                 "Systém například vidí, že na skladě zbývá posledních 12 kusů, a automaticky připraví objednávku. Běžné v e-commerce, logistice a farmacii.")
+
+        st.markdown("##### Predikce poptávky a automatické objednávky")
+        st.write("Firmy stále častěji využívají data (minulý prodej, sezónnost, počasí, trendy) k odhadu budoucí poptávky. To pomáhá rozhodnout: kolik a kdy objednat, co mít skladem, kde hrozí vyprodání nebo neprodané zásoby. Moderním trendem je využití algoritmů a AI pro automatické navrhování objednávek.")
 
     elif selected_section_3 == "4.3 Výpočty k oběžnému majetku":
-        st.markdown("### 4.3 Rychlost a doba obratu zásob")
+        st.markdown("### 4.3 Výpočty k oběžnému majetku a zásobám")
+
+        st.markdown("#### 1. Stanovení spotřeby materiálu")
+        st.markdown("<div class='box-gray'><b>Spotřeba materiálu = norma spotřeby na kus × počet výrobků</b></div>", unsafe_allow_html=True)
+        st.write("*Příklad: Firma vyrábí 500 kusů výrobku. Na jeden kus potřebuje 0,4 kg materiálu. Spotřeba = 0,4 × 500 = 200 kg.*")
+
+        st.markdown("#### 2. Stanovení nákupu materiálu")
+        st.markdown("<div class='box-gray'><b>Plánovaný nákup = plánovaná spotřeba + konečná zásoba − počáteční zásoba</b></div>", unsafe_allow_html=True)
+        st.write("*Příklad: Firma plánuje spotřebovat 200 kg materiálu. Na začátku má 30 kg a na konci chce mít 50 kg. Plánovaný nákup = 200 + 50 − 30 = 220 kg.*")
+
+        st.divider()
+        st.markdown("#### 3. Rychlost a doba obratu zásob")
         st.write(
-            "Každá zásoba, která leží na skladě, jsou **„utopené“ peníze**,"
-            " za které firma mohla koupit něco jiného nebo je úročit v bance."
-            " Proto manažery zajímá, jak rychle se zásoby točí."
+            "Každá zásoba, která leží na skladě, jsou **„utopené“ peníze**, za které firma mohla koupit něco jiného nebo je úročit v bance. "
+            "Proto manažery zajímá, jak rychle se zásoby točí."
         )
+        st.markdown("""
+        * **Rychlost obratu zásob** = spotřeba za období / průměrná zásoba (říká, kolikrát se zásoba za určité období „otočí“).
+        * **Doba obratu zásob** = počet dní období / rychlost obratu zásob (říká, kolik dní je zásoba průměrně vázaná ve firmě).
+        """)
+        st.info("📉 **Interpretace:** Vyšší rychlost obratu většinou znamená, že firma zásoby využívá efektivněji. Příliš nízké zásoby ale mohou ohrozit plynulost výroby.")
 
         c_obr1, c_obr2 = st.columns([1, 1.2])
         with c_obr1:
