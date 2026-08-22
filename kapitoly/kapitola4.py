@@ -1658,7 +1658,7 @@ def render():
                 "Skutečná cena vaší práce pro firmu (hrubá mzda + dalších 33,8 % povinných odvodů státu)."
             )
 
-    elif selected_section_4 == "3.2 Nominální a reálná mzda":
+elif selected_section_4 == "3.2 Nominální a reálná mzda":
         st.markdown("### 3.2 Nominální a reálná mzda")
         st.write(
             "Pokud vám šéf přidá 5 % ke mzdě, jste na tom lépe? **Ne vždy!** "
@@ -1667,12 +1667,13 @@ def render():
 
         st.markdown("""
         * 💸 **Nominální mzda:** Částka vyjádřená v korunách na výplatní pásce.
-        * 🛒 **Reálná mzda:** Říká, **co si za tuto částku skutečně koupíte** (vyjadřuje vaši kupní sílu). Je ovlivněna inflací.
-        * 📈 **Index spotřebitelských cen (ISC):** Měří, jak se v čase mění celkové náklady na běžný nákupní koš (potraviny, bydlení, doprava). Z růstu tohoto indexu se následně vypočítává samotná **míra inflace**.
+        * 🛒 **Reálná mzda:** Říká, **co si za tuto částku skutečně koupíte** (vyjadřuje vaši kupní sílu). Je ovlivněna zdražováním.
+        * 📈 **Index spotřebitelských cen (ISC / CPI):** Představ si ho jako obří nákupní koš plný zboží a služeb. Statistici sledují, jak se mění jeho cena.
+        * 🎈 **Míra inflace (%):** Vyjadřuje procentuální změnu tohoto indexu. Právě toto procento potřebujeme znát, abychom zjistili, o kolik se nám život prodražil.
         """)
 
         st.info(
-            "💡 **Příklad:** Pokud mzda vzroste o 5 %, ale ceny v obchodech (inflace) vzrostou o 10 %, člověk má sice vyšší nominální mzdu, ale nižší reálnou kupní sílu (zchudnul o 5 %)."
+            "💡 **Příklad:** Pokud ti mzda vzroste o 5 %, ale ceny v obchodech (míra inflace) vzrostou o 10 %, máš sice na účtu víc korun, ale reálně sis pohoršil (zchudnul jsi o 5 %)."
         )
 
         st.markdown(
@@ -1688,7 +1689,7 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-purple'>🔎 <b>Detektivní úkol:</b> Běž na stránky Českého statistického úřadu (czso.cz) a najdi aktuální <b>míru inflace</b> (která se počítá právě z Indexu spotřebitelských cen). Zadej zjištěné procento níže!</div>",
+            "<div class='box-purple'>🔎 <b>Detektivní úkol:</b> Běž na stránky Českého statistického úřadu (czso.cz) a najdi <b>aktuální míru inflace</b> (která se počítá právě z Indexu spotřebitelských cen). Zajímají nás procenta! Zadej zjištěné procento níže.</div>",
             unsafe_allow_html=True,
         )
         st.write(
@@ -1703,10 +1704,11 @@ def render():
                 "Šéf ti přidal ke mzdě (%):", 0, 20, 5, key="k4_3_2_zvyseni"
             )
             inflace = st.number_input(
-                "Míra inflace / Změna indexu spotř. cen (%):",
+                "Aktuální míra inflace (změna Indexu v %):",
                 value=8.0,
                 step=0.1,
                 key="k4_3_2_inflace",
+                help="Zadej procentuální míru inflace z webu ČSÚ."
             )
 
         with col_inf2:
