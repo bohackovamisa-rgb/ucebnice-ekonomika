@@ -1372,8 +1372,23 @@ def render():
 
         st.divider()
         st.markdown(
-            "### 2.12 Praktická aplikace: mzda, účtenka a daňové dilema"
+            "### 2.12 Praktické prvky: mzda, účtenka a daňové dilema"
         )
+        st.write(
+            "Vyzkoušej si orientaci v reálných nástrojích a modelových"
+            " situacích:"
+        )
+
+        with st.expander("💻 Interaktivní kalkulačka čisté mzdy", expanded=True):
+            st.write(
+                "Otevři online kalkulačku čisté mzdy a zadej modelovou brigádu,"
+                " například 150 Kč/hod a různý počet hodin za měsíc. Porovnej"
+                " hrubou a čistou částku a vysvětli, co ovlivnilo výsledek."
+            )
+            st.caption(
+                "💡 *Tip: Použij aktuální kalkulačku od důvěryhodného zdroje a"
+                " vždy sleduj rok výpočtu, protože pravidla se mění.*"
+            )
 
         st.markdown(
             "<div class='box-green'><strong>🔗 Užitečné zdroje k ověřování"
@@ -1391,15 +1406,40 @@ def render():
         st.markdown(
             "<div class='box-yellow'><strong>🧾 Praktická ukázka ve třídě:"
             " OSVČ a daň z příjmů fyzických osob</strong><br>Otevřete"
-            " Elektronické formuláře EPO na portálu MOJE daně. Bez přihlášení"
-            " vyberte formulář pro daň z příjmů fyzických osob a spusťte"
-            " vyplnění pomocí průvodce. Ukážte si, jak se zadávají příjmy,"
-            " výdaje, slevy na dani a jak formulář průběžně kontroluje chyby."
-            " Ve třídě používejte jen fiktivní údaje!</div>",
+            " Elektronické formuláře EPO na portálu MOJE daně (<a"
+            " href='https://adisspr.mfcr.cz/pmd/epo/formulare'"
+            " target='_blank'>adisspr.mfcr.cz/pmd/epo/formulare</a>). Bez"
+            " přihlášení vyberte formulář pro daň z příjmů fyzických osob a"
+            " spusťte vyplnění pomocí průvodce.<br><br><b>Modelový"
+            " scénář:</b> Student/ka má jednoduchou OSVČ — například"
+            " doučování, tvorbu grafiky, focení nebo správu sociálních sítí."
+            " Společně si ukažte, jak se zadávají příjmy, výdaje, slevy na dani"
+            " a jak formulář průběžně kontroluje chyby.<br><br>⚠️"
+            " <i>Důležité: Ve třídě používejte jen fiktivní údaje, ne skutečná"
+            " rodná čísla, adresy ani reálné osobní daňové informace.</i></div>",
             unsafe_allow_html=True,
         )
 
-        st.write("**Mini aktivita: Daňový detektiv**")
+        col_opt, col_unik = st.columns(2)
+        with col_opt:
+            st.success(
+                "✅ **Legální optimalizace:**\n\n"
+                "* Uplatním slevu na poplatníka podle zákona.\n"
+                "* Uplatním skutečné nebo paušální výdaje, pokud splňuji"
+                " pravidla.\n"
+                "* Vedu evidenci a uchovávám doklady.\n"
+                "* Ověřím si pravidla předem."
+            )
+        with col_unik:
+            st.error(
+                "❌ **Nelegální daňový únik:**\n\n"
+                "* Zatajím část příjmů.\n"
+                "* Vymyslím fiktivní náklady.\n"
+                "* Nevystavím fakturu nebo účtenku, i když bych měl/a.\n"
+                "* Spoléhám na to, že „se na to nepřijde“."
+            )
+
+        st.markdown("#### 🕵️ Mini aktivita: Daňový detektiv")
         st.write(
             "Vyber jednu situaci a rozhodni, co by si člověk měl ověřit:\n1."
             " Student má první DPP na festivalu.\n2. Student prodává staré"
@@ -1410,6 +1450,16 @@ def render():
         st.write(
             "**Výstup:** Napiš tři otázky, které je potřeba ověřit, a jeden"
             " možný důsledek špatného rozhodnutí."
+        )
+
+        st.markdown(
+            """
+        <div class='box-green'>
+            ✅ <b>Co si zapamatovat z 2. bloku:</b><br>
+            Daně nejsou jen „kolik mi stát vezme“. Jsou to pravidla financování veřejných služeb, solidarity, chování firem i spotřebitelů. Dobrý občan nemusí být daňový poradce, ale měl by umět poznat základní typ daně, ověřit si povinnost a chápat, proč práce bez dokladu nebo neřešené online příjmy nejsou bez rizika.
+        </div>
+        """,
+            unsafe_allow_html=True,
         )
 
     # =========================================================================
@@ -1461,8 +1511,8 @@ def render():
             st.write(
                 "Když prodáš vlastní staré oblečení nebo učebnice, obvykle jde"
                 " o osvobozený příjem. Ale pokud systematicky nakupuješ věci za"
-                " účelem jejich dalšího prodeje se ziskem, už se to může"
-                " považovat za podnikání a podléhat zdanění."
+                " účelemRoblox prodeje se ziskem, už se to může považovat za"
+                " podnikání a podléhat zdanění."
             )
 
         with st.expander("Kryptoměny, akcie a ETF: Co si ověřit před prodejem?"):
@@ -1511,14 +1561,57 @@ def render():
         )
 
         st.markdown(
+            "<div class='box-green'>"
+            "🎯 <b>Cíl 3. bloku:</b> Pochopíš, proč státy obchodují, jak"
+            " fungují globální dodavatelské řetězce, proč je Česko závislé na"
+            " EU i světové ekonomice, jak obchod souvisí s klimatem,"
+            " institucemi, technologiemi, prací a financemi."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
+        with st.expander(
+            "📚 Co se v tomto bloku naučíš & Vazba na RVP pro SŠ", expanded=False
+        ):
+            st.markdown("""
+            **Co se v bloku naučíš:**
+            * vysvětlit globalizaci, mezinárodní dělbu práce a specializaci,
+            * rozlišit absolutní a komparativní výhodu,
+            * popsat volný obchod, protekcionismus a obchodní bariéry,
+            * vysvětlit, proč jsou globální řetězce efektivní, ale zranitelné,
+            * uvést příklady závislosti na čipech, energiích, potravinách a dopravních trasách,
+            * popsat význam EU, jednotného trhu, čtyř svobod a společné obchodní politiky,
+            * diskutovat korunu vs. euro,
+            * vysvětlit Green Deal, uhlíkové clo, ESG, WTO, MMF, Světovou banku a OSN,
+            * propojit globalizaci s digitálním nomádstvím, kryptoměnami a budoucností práce.
+
+            **Vazba na RVP pro SŠ:**  
+            Tento blok pokrývá mezinárodní obchod, globalizaci, mezinárodní dělbu práce, evropskou integraci, EU, jednotný trh, globalizační rizika, udržitelný rozvoj, mezinárodní organizace, digitální ekonomiku, trh práce a odpovědné občanské rozhodování.
+            """)
+
+        st.divider()
+        st.markdown(
             "### 4.1 Globalizace a mezinárodní obchod: jak se svět propojil"
         )
         st.write(
             "**Globalizace** znamená rostoucí propojení ekonomik, firem, lidí,"
-            " technologií, dat a kapitálu napříč státy. Zboží, služby, peníze"
-            " i informace se pohybují rychleji než dřív. Státy mezi sebou"
-            " obchodují proto, že není efektivní vyrábět všechno doma. Každá"
-            " země má jiné zdroje, technologie, pracovní sílu a kapitál."
+            " technologií, dat, dopravy a kapitálu napříč státy. Zboží, služby,"
+            " peníze i informace se pohybují rychleji než dřív a ekonomika"
+            " jedné země je stále více závislá na tom, co se děje jinde."
+        )
+        st.write(
+            "Státy mezi sebou obchodují proto, že není efektivní vyrábět"
+            " všechno doma. Každá země má jiné zdroje, technologie, pracovní"
+            " sílu, kapitál, klima, vzdělání, infrastrukturu a historickou"
+            " specializaci."
+        )
+
+        st.markdown(
+            "<div class='box-blue'><strong>🤝 Jednoduše:</strong> Mezinárodní"
+            " obchod je něco jako týmová práce mezi zeměmi. Každý se"
+            " specializuje na to, v čem je relativně dobrý, a výměnou získává"
+            " věci, které by doma vyráběl dráž, pomaleji nebo vůbec.</div>",
+            unsafe_allow_html=True,
         )
 
         st.markdown("""
@@ -1537,9 +1630,12 @@ def render():
                 "Nízká cena může vzniknout kombinací levné práce, obrovského"
                 " objemu výroby, automatizace, slabší regulace, dotované"
                 " dopravy, tvrdého tlaku na dodavatele, levných materiálů a"
-                " digitálního marketingu. **Ale:** Nízká cena na účtence nemusí"
-                " zahrnovat všechny náklady — například emise z dopravy, odpad,"
-                " vodu, pracovní podmínky nebo dopady na lokální prodejce."
+                " digitálního marketingu."
+            )
+            st.write(
+                "**Ale:** Nízká cena na účtence nemusí zahrnovat všechny"
+                " náklady — například emise z dopravy, odpad, vodu, pracovní"
+                " podmínky nebo dopady na lokální prodejce."
             )
 
         kviz_advokatka = st.radio(
