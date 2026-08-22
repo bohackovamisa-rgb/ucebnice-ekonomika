@@ -87,6 +87,7 @@ def render():
         "6.3 Projektová dílna: Launch vlastního merche",
         "7.1 Případové studie z praxe",
         "7.2 Závěrečný checklist a prověrka kapitoly",
+        "7.3 Slovník pojmů kapitoly",
     ]
 
     st.markdown(
@@ -1535,9 +1536,35 @@ def render():
     elif selected_section_3 == "4.4 Dlouhodobý majetek a investice":
         st.markdown("### 4.4 Dlouhodobý majetek a plánování investic")
         st.write(
-            "Dlouhodobý majetek je majetek, který firma používá delší dobu"
-            " (déle než rok)."
+            "Dlouhodobý majetek je majetek, který firma používá delší dobu, obvykle déle než jeden rok. "
+            "Nespotřebuje se najednou, ale postupně se opotřebovává."
         )
+
+        st.markdown("#### Dělení dlouhodobého majetku")
+        st.markdown("""
+        | Druh dlouhodobého majetku | Charakteristika | Příklad |
+        | :--- | :--- | :--- |
+        | **Dlouhodobý hmotný majetek** | Má fyzickou podobu | Budova, stroj, automobil, výrobní linka |
+        | **Dlouhodobý nehmotný majetek** | Nemá fyzickou podobu | Software, licence, ochranná známka |
+        | **Dlouhodobý finanční majetek** | Finanční investice držené delší dobu | Podíly v jiných firmách, dlouhodobé cenné papíry |
+        """)
+
+        st.markdown("#### Plánování investic")
+        st.write(
+            "Pořízení dlouhodobého majetku je investice. Firma by proto měla předem zvažovat, zda se jí nákup vyplatí. "
+            "Při plánování investic se řeší: proč firma majetek potřebuje, kolik bude stát pořízení, jaké budou provozní náklady, "
+            "jak dlouho bude sloužit, jak zvýší výkon/úspory, jak bude investice financována, jaká jsou rizika a za jak dlouho se investice vrátí."
+        )
+        st.info("💡 Investice není dobrá jen proto, že je moderní. Dobrá investice musí dávat ekonomický, provozní nebo strategický smysl.")
+
+        st.markdown("#### Pořízení dlouhodobého majetku")
+        st.write("Dlouhodobý majetek může firma pořídit: nákupem, vlastní výrobou, finančním leasingem, darem, vkladem vlastníka nebo převodem z jiného majetku.")
+        st.markdown("<div class='box-gray'><b>Pořizovací cena = cena majetku + vedlejší pořizovací náklady</b></div>", unsafe_allow_html=True)
+        st.write("Vedlejší pořizovací náklady mohou být například doprava, montáž, instalace, clo, projektová dokumentace nebo zkušební provoz.")
+
+        st.divider()
+        st.markdown("#### Doba návratnosti investice")
+        st.markdown("<div class='box-gray'><b>Doba návratnosti investice = pořizovací cena investice / roční přínos investice</b></div>", unsafe_allow_html=True)
 
         c_i1, c_i2 = st.columns([1, 1])
         with c_i1:
@@ -1561,6 +1588,8 @@ def render():
                     "Pokud stroj fyzicky vydrží déle než vypočítaná doba"
                     " návratnosti, investice má smysl."
                 )
+        
+        st.caption("🎯 *Pro rozhodování nestačí jen výpočet. Firma musí posoudit také riziko, životnost majetku, servis, kapacitu, kvalitu a to, zda investice odpovídá její strategii.*")
 
         if st.button(
             "Uložit výpočet návratnosti investice 💾",
@@ -1580,12 +1609,28 @@ def render():
                 st.success("Návratnost investice byla uložena!")
 
     elif selected_section_3 == "4.5 Odpisy a evidence majetku":
-        st.markdown("### 4.5 Odpisy (Účetní vs. Daňové) a grafické srovnání")
+        st.markdown("### 4.5 Opotřebení, odpisy a evidence majetku")
         st.write(
-            "Dlouhodobý majetek si firma nedá do nákladů celý najednou v roce"
-            " nákupu. Náklady se rozloží do více let – tomu se říká **Odpis**."
+            "Dlouhodobý majetek se používáním opotřebovává. Opotřebení může být **fyzické** (majetek se opotřebuje používáním nebo časem) "
+            "nebo **morální** (majetek zastará technicky, i když ještě fyzicky funguje)."
         )
+        st.write(
+            "Dlouhodobý majetek si firma nedá do nákladů celý najednou v roce nákupu. Náklady se rozloží do více let – tomu se říká **Odpis**. "
+            "Odpisy vyjadřují postupné přenášení hodnoty dlouhodobého majetku do nákladů."
+        )
+        st.warning("🧾 **Důležité:** Odpis není výdaj v daném okamžiku. Výdaj vzniká při pořízení majetku, ale náklad se do účetnictví dostává postupně pomocí odpisů.")
 
+        st.markdown("#### Výpočet odpisů")
+        st.write("Zjednodušeně lze použít rovnoměrný účetní odpis:")
+        st.markdown("""
+        * **Roční odpis** = pořizovací cena / doba používání v letech
+        * **Měsíční odpis** = roční odpis / 12
+        * **Oprávky** = souhrn dosud provedených odpisů.
+        * **Zůstatková cena** = pořizovací cena − oprávky (ukazuje, jaká část hodnoty majetku ještě není odepsaná).
+        """)
+
+        st.divider()
+        st.markdown("#### Kalkulačka odpisů (Účetní vs. Daňové) a grafické srovnání")
         c_kalk1, c_kalk2 = st.columns([1, 1.2])
         with c_kalk1:
             odp_cena = st.number_input(
@@ -1709,6 +1754,13 @@ def render():
                 )
             st.success("Kalkulace odpisů byla uložena!")
 
+        st.divider()
+        st.markdown("#### Vyřazení dlouhodobého majetku a jeho evidence")
+        st.write("Dlouhodobý majetek se z evidence vyřazuje tehdy, když už ho firma nepoužívá nebo ho přestane vlastnit. Důvody vyřazení mohou být: prodej, likvidace, darování, škoda nebo zničení, krádež, převod do osobního užívání podnikatele.")
+        st.write("Při vyřazení se obvykle řeší: datum vyřazení, způsob, zůstatková cena, případný výnos z prodeje a doklad o vyřazení.")
+        st.write("**Evidence majetku:** Dlouhodobý majetek se eviduje na kartách majetku nebo v majetkové evidenci (obsahuje inventární číslo, cenu, způsob pořízení, odpisový plán, oprávky).")
+        st.info("🗂️ Evidence majetku pomáhá firmě vědět, co vlastní, kde se majetek nachází, kdo za něj odpovídá a jaká je jeho aktuální účetní hodnota.")
+
     # =========================================================================
     # SEKCE 5: KALKULACE, CENY A CENOVÉ STRATEGIE
     # =========================================================================
@@ -1754,7 +1806,61 @@ def render():
         st.markdown(
             "### 5.2 Náklady v digitálním světě a Asset-Light model"
         )
+        st.write(
+            "U fyzického produktu má každý další kus obvykle další náklady (tričko potřebuje látku, potisk, obal a dopravu). "
+            "U digitálního produktu je situace jiná. **Digitální produkt může mít vysoké počáteční fixní náklady, ale velmi nízké (až nulové) mezní náklady na další kopii.**"
+        )
+        st.write("Příklady digitálních produktů: mobilní aplikace, počítačová hra, online kurz, e-kniha, streamovací služba, SaaS nástroj.")
+        
+        st.info("🎮 **Aha moment:** Vývoj mobilní hry může stát miliony korun. Jakmile je ale hra hotová, stažení další kopie už firmu téměř nic nestojí. Fixní náklady jsou obrovské, ale variabilní náklady na jednu další kopii se blíží nule.")
+        
+        st.write("Tento rozdíl pomáhá vysvětlit, proč digitální firmy často usilují o velký počet uživatelů. Čím více uživatelů službu využívá, tím více se vysoké fixní náklady rozpočítají. Průměrné náklady na uživatele = celkové náklady / počet uživatelů.")
 
+        st.markdown("#### Podnikání bez vlastního skladu a strojů (Asset-Light business)")
+        st.write("Některé moderní firmy se snaží vlastnit co nejméně majetku. Místo skladu, strojů a velkých zásob využívají dodavatele, platformy a outsourcing. Tomuto přístupu se říká asset-light business — podnikání s nízkou potřebou vlastního majetku.")
+        st.markdown("""
+        * **Dropshipping** — e-shop prodá zboží, ale skladování a odeslání řeší dodavatel.
+        * **Print-on-demand** — tričko, mikina nebo plakát se vyrobí až po objednávce zákazníka.
+        * **Cloudové služby** — firma si nepronajímá vlastní servery, ale platí za cloud.
+        * **Sdílené kanceláře (Coworking)** — firma nemusí vlastnit ani dlouhodobě pronajímat celé prostory.
+        """)
+        st.success("📦 **Propojení s oběžným majetkem:** Print-on-demand snižuje riziko neprodaných zásob. Firma nemusí předem nakoupit stovky mikin, které by mohly zůstat ležet ve skladu.")
+        
+        c_al1, c_al2 = st.columns(2)
+        with c_al1:
+            st.markdown("**Výhody asset-light modelu:**")
+            st.markdown("""
+            * nižší kapitál na začátku,
+            * menší riziko neprodaných zásob,
+            * větší pružnost,
+            * rychlejší testování nápadů.
+            """)
+        with c_al2:
+            st.markdown("**Nevýhody:**")
+            st.markdown("""
+            * menší kontrola nad kvalitou,
+            * závislost na dodavateli,
+            * nižší marže,
+            * riziko problémů s doručením nebo reklamacemi.
+            """)
+
+        st.divider()
+        st.markdown("#### ⚖️ Rozhodnutí: Sklad, Print-on-Demand, nebo Dropshipping?")
+        
+        with st.form("form_assetlight"):
+            al_produkt = st.text_input("Produkt, který chceš prodávat:", value="Originální hrnečky s vtipným potiskem")
+            al_volba = st.selectbox("Tvá volba modelu:", ["Vyber...", "Nakoupím 1000 ks na sklad", "Print-on-Demand (tisk až po objednávce)", "Dropshipping (posílá dodavatel z Číny)"])
+            al_vyhoda = st.text_input("V čem je pro tebe největší výhoda?")
+            al_riziko = st.text_input("Jaké je největší riziko tohoto modelu?")
+            
+            if st.form_submit_button("Uložit rozhodnutí 💾"):
+                al_data = f"Produkt: {al_produkt} | Volba: {al_volba} | Výhoda: {al_vyhoda} | Riziko: {al_riziko}"
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 5.2 - Rozhodnutí Asset-Light", al_data)
+                st.success("Rozhodnutí bylo uloženo!")
+
+        st.divider()
+        st.markdown("#### 🧮 Porovnání: Fyzický vs. Digitální produkt")
         cd1, cd2 = st.columns(2)
         with cd1:
             f_fix = st.number_input(
@@ -1820,7 +1926,36 @@ def render():
     # =========================================================================
     elif selected_section_3 == "6.1 Štíhlá výroba, Poka-Yoke a 5S":
         st.markdown("### 6.1 Štíhlá výroba (Lean), Poka-Yoke a 5S")
+        st.warning("⚙️ **Praktický přesah:** Efektivita neznamená pracovat rychleji za každou cenu. Znamená odstraňovat plýtvání a zlepšovat procesy.")
+        
+        st.markdown("#### Štíhlá výroba (Lean)")
+        st.write("Štíhlá výroba, často označovaná jako Lean, se zaměřuje na odstraňování plýtvání. Cílem není nutit lidi pracovat chaoticky rychleji, ale nastavit proces tak, aby zbytečně nevznikaly chyby, čekání, zásoby, přesuny nebo opravy.")
+        st.write("**Mezi typické druhy plýtvání (tzv. MUDA) patří:**")
+        st.markdown("""
+        * čekání,
+        * zbytečná doprava a přesuny,
+        * nadbytečné zásoby,
+        * zbytečné pohyby,
+        * chyby a opravy,
+        * nadvýroba,
+        * nevyužitý potenciál lidí.
+        """)
 
+        st.markdown("#### Poka-Yoke: navrhnout proces tak, aby chyba nevznikla")
+        st.write("Poka-Yoke je princip, který pomáhá předcházet chybám z nepozornosti. Místo toho, aby firma jen kontrolovala chyby až na konci, navrhne proces tak, aby se chyba nemohla snadno stát.")
+        st.write("**Příklady ze života:**")
+        st.markdown("""
+        * SIM karta má seříznutý roh, aby nešla vložit špatně,
+        * USB-C konektor je oboustranný,
+        * webový formulář vás nepustí dál, pokud chybí povinný údaj,
+        * automatická kontrola upozorní na chybně zadaný e-mail.
+        """)
+
+        st.markdown("#### 5S a Kanban")
+        st.write("**5S je metoda pro přehledné a bezpečné pracoviště.** Pomáhá, aby lidé rychle našli, co potřebují, a aby nevznikal zbytečný chaos. Zjednodušeně jde o: vytřídit nepotřebné věci, uspořádat potřebné věci, udržovat čistotu, nastavit pravidla a pravidla dlouhodobě dodržovat.")
+        st.write("**Kanban je vizuální řízení práce.** Úkoly se přesouvají mezi sloupci například: *čeká -> rozpracováno -> hotovo*. Studentské propojení: Kanban může být tabule v Trellu, Notionu nebo na papíře. Pomáhá vidět, kdo na čem pracuje a kde se práce zasekla.")
+
+        st.divider()
         st.markdown("#### 🗑️ Detektiv Plýtvání (Najdi 7 druhů MUDA)")
         st.write("Spoj reálnou situaci ve firmě se správným typem plýtvání (MUDA):")
         
@@ -1867,7 +2002,37 @@ def render():
         st.markdown(
             "### 6.2 Průmysl 4.0, Cirkulární ekonomika a Dashboardy"
         )
+        
+        st.markdown("#### Průmysl 4.0, AI a automatizace")
+        st.write("Moderní výroba už nejsou jen lidé u pásu. Do výroby vstupují roboti, senzory, umělá inteligence, datová analytika a automatizované sklady.")
+        st.write("**Automatizace mění strukturu nákladů:**")
+        st.markdown("""
+        * rostou fixní náklady na technologie,
+        * klesají variabilní náklady na jeden kus,
+        * zvyšuje se potřeba odborné údržby a datové kontroly,
+        * firma může vyrábět rychleji, přesněji a stabilněji.
+        """)
+        st.info("🤖 **Diskusní otázka:** Vyplatí se firmě koupit robotické rameno za 2 000 000 Kč, pokud díky němu ušetří 500 000 Kč ročně? Jaká je doba návratnosti a jaká rizika by měla firma zvážit? (Odpověď: Návratnost je 4 roky. Firma musí zvážit údržbu robota, riziko výpadku a to, co budou dělat uvolnění zaměstnanci).")
 
+        st.markdown("#### Cirkulární ekonomika a udržitelná výroba")
+        st.write("Udržitelnost není jen dobrý pocit nebo marketing. Pro firmu může znamenat nižší spotřebu materiálu, méně odpadu, nižší náklady a lepší vztah se zákazníky.")
+        st.write("V **lineárním modelu** platí: vytěžit → vyrobit → prodat → použít → vyhodit")
+        st.write("**Cirkulární ekonomika** se snaží, aby materiály zůstávaly v oběhu co nejdéle: navrhnout → vyrobit → používat → opravit → znovu využít → recyklovat")
+        st.markdown("""
+        * **upcycling** — starý nebo odpadní materiál se promění v produkt s vyšší hodnotou,
+        * **Cradle to Cradle** — „od kolébky ke kolébce“, tedy návrh produktu tak, aby se jeho materiály mohly znovu využít,
+        * **design pro opravitelnost** — výrobek je navržen tak, aby ho šlo snadno opravit,
+        * **ESG** — sledování dopadů firmy na životní prostředí, společnost a způsob řízení.
+        """)
+        st.success("🌱 **Ekonomická pointa:** Odpad může být náklad, ale také nová surovina. Firma, která umí lépe pracovat s materiálem, může snížit náklady a zároveň působit odpovědněji.")
+
+        st.markdown("#### KPI a dashboardy")
+        st.write("Cíl: Umět vybrat několik důležitých ukazatelů (KPI), které opravdu pomáhají rozhodovat.")
+        st.write("**Dashboard** je přehled důležitých ukazatelů na jednom místě. Firma díky němu rychle vidí, co se daří, co se zhoršuje a kde je potřeba zasáhnout. "
+                 "Studenti se s dashboardy setkávají i mimo firmu: statistiky sledovanosti na TikToku, přehled poslechů na Spotify, herní statistiky, útraty v bankovní aplikaci.")
+        st.write("📱 **Propojení se sociálními sítěmi:** Počet zhlédnutí, míra prokliku, počet sledujících nebo engagement rate jsou vlastně KPI. Ukazují, jak dobře funguje obsah. Dobře zvolený dashboard nemá obsahovat všechno. Má obsahovat jen ta čísla, podle kterých se dá rozhodovat.")
+
+        st.divider()
         c_kpi1, c_kpi2 = st.columns([1, 1.2])
         with c_kpi1:
             kpi_navstevnost = st.number_input(
@@ -1927,7 +2092,29 @@ def render():
         st.markdown(
             "### 6.3 Projektová dílna: Launch vlastního merche / e-shopu"
         )
+        st.write("✍️ **Projektový úkol:** Představte si, že jako tvůrce obsahu, streamer, školní tým nebo studentská značka chcete pustit na trh vlastní edici mikin, triček, plakátů nebo školních zápisníků.")
+        st.info("🎯 **Cíl projektu:** Propojit tradiční ekonomické výpočty s reálným rozhodováním: vyrábět na sklad, nebo přes print-on-demand? Nastavit nízkou cenu, nebo budovat značku? Sledovat jen tržby, nebo i marži a zásoby?")
 
+        st.markdown("#### Tvé Zadání")
+        st.markdown("""
+        * **1. Určete způsob výroby:** Budete nakupovat zásoby na sklad, nebo využijete print-on-demand? Jaké výhody a rizika má každá možnost?
+        * **2. Spočítejte náklady:** Určete přímé náklady (materiál, potisk, obal, doprava) a nepřímé náklady (grafický návrh, propagace, e-shop, reklama).
+        * **3. Stanovte cenu:** Navrhněte prodejní cenu a vysvětlete, proč by ji zákazník byl ochoten zaplatit.
+        * **4. Spočítejte bod zvratu:** Kolik kusů musíte prodat, aby se zaplatily fixní náklady?
+        * **5. Zvolte cenovou strategii:** Použijete běžnou cenu, limitovanou edici, balíček, slevu, předprodej nebo prémiovou cenu?
+        * **6. Navrhněte KPI:** Jak poznáte, že je projekt úspěšný? Sledujte například počet objednávek, marži, návratnost reklamy, počet vratek nebo rychlost vyprodání.
+        """)
+
+        st.markdown("#### Doporučené výpočty v projektu")
+        st.markdown("""
+        * **Zisk** = výnosy − náklady
+        * **Příspěvek na úhradu na kus** = cena za kus − variabilní náklady na kus
+        * **Bod zvratu v kusech** = fixní náklady / příspěvek na úhradu na kus
+        * **Zisková marže** = zisk / tržby × 100
+        """)
+
+        st.divider()
+        st.markdown("#### 🧪 Projektová kalkulačka merche / e-shopu")
         p_nazev = st.text_input(
             "Název produktu / projektu:",
             value="Školní edice mikin s kapucí",
@@ -1960,14 +2147,15 @@ def render():
 
         p_prispevek = p_cena - p_var
         if p_prispevek > 0:
+            st.metric("Příspěvek na úhradu na kus", f"{p_prispevek} Kč")
             p_bz = math.ceil(p_fix / p_prispevek)
-            st.metric("Bod zvratu (musíš prodat)", f"{p_bz} kusů")
+            st.metric("Bod zvratu (musíš prodat k pokrytí fixních nákladů)", f"{p_bz} kusů")
+            st.metric("Zisk při očekávaném prodeji", f"{(p_odhad * p_prispevek) - p_fix} Kč")
 
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
                 "3.6.3",
-                "Shrnutí strategického rozhodnutí pro prezentaci před"
-                " třídou/vedením:",
+                "Shrnutí strategického rozhodnutí (je projekt ziskový/rizikový, moje rozhodnutí pro launch):",
                 "3",
                 st.session_state.get("ulozene_odpovedi", {}),
             )
@@ -1978,40 +2166,97 @@ def render():
     elif selected_section_3 == "7.1 Případové studie z praxe":
         st.markdown("### 7.1 Případové studie z praxe")
 
-        with st.form("form_studie_kavarna"):
-            st.markdown("##### ☕ 1. Kavárna u školy: Kdy se začne vyplácet?")
-            s1_prispevek = st.number_input(
-                "Příspěvek na úhradu na 1 nápoj (Kč):",
-                value=0,
-                step=1,
-                key="cs_k_prisp",
-            )
-            s1_bz = st.number_input(
-                "Bod zvratu (kolik nápojů musíte prodat k zaplacení stánku 12"
-                " 000 Kč?):",
-                value=0,
-                step=1,
-                key="cs_k_bz",
-            )
-            s1_dostacujici = st.radio(
-                "Je plánovaný prodej 500 nápojů dostatečný?",
-                ["Vyber...", "Ano", "Ne"],
-                horizontal=True,
-                key="cs_k_dost",
-            )
+        tab_case1, tab_case2, tab_case3 = st.tabs(["☕ 1. Kavárna", "👕 2. Mikiny", "🛠️ 3. Zmetkovitost"])
 
-            if st.form_submit_button("Zkontrolovat a uložit výpočty kavárny 💾"):
-                cs_kavarna_data = (
-                    f"Příspěvek: {s1_prispevek} | BZ: {s1_bz} | Stačí 500ks:"
-                    f" {s1_dostacujici}"
+        with tab_case1:
+            with st.form("form_studie_kavarna"):
+                st.markdown("##### ☕ 1. Kavárna u školy: Kdy se začne vyplácet?")
+                st.write("Situace: Studentský tým chce otevřít malý stánek s kávou a limonádou. Tým má tyto odhady:")
+                st.write("- Fixní náklady na vybavení a povolení: **12 000 Kč**")
+                st.write("- Variabilní náklady na jeden nápoj: **18 Kč**")
+                st.write("- Prodejní cena jednoho nápoje: **45 Kč**")
+                st.write("- Očekávaný prodej: **500 nápojů za měsíc**")
+
+                s1_prispevek = st.number_input(
+                    "Tvůj výpočet: Příspěvek na úhradu na 1 nápoj (Kč):",
+                    value=0,
+                    step=1,
+                    key="cs_k_prisp",
                 )
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"](
-                        "Kapitola 3",
-                        "Podkapitola 7.1 - Případová studie Kavárna",
-                        cs_kavarna_data,
+                s1_bz = st.number_input(
+                    "Tvůj výpočet: Bod zvratu (kolik nápojů k zaplacení 12 000 Kč?):",
+                    value=0,
+                    step=1,
+                    key="cs_k_bz",
+                )
+                s1_dostacujici = st.radio(
+                    "Je plánovaný prodej 500 nápojů dostatečný?",
+                    ["Vyber...", "Ano", "Ne"],
+                    horizontal=True,
+                    key="cs_k_dost",
+                )
+
+                if st.form_submit_button("Zkontrolovat a uložit výpočty kavárny 💾"):
+                    if s1_prispevek == 27 and s1_bz == 445 and s1_dostacujici == "Ano":
+                        st.success("✅ Vše správně! Příspěvek je 27 Kč. Bod zvratu je 12 000 / 27 ≈ 445 nápojů. Plán 500 nápojů je nad bodem zvratu, ale rezerva není velká.")
+                    else:
+                        st.error("Něco nesedí. Příspěvek = Cena (45) - Variabilní náklady (18). Bod zvratu = Fixní náklady (12000) / Příspěvek.")
+
+                    cs_kavarna_data = (
+                        f"Příspěvek: {s1_prispevek} | BZ: {s1_bz} | Stačí 500ks: {s1_dostacujici}"
                     )
-                st.success("Uloženo!")
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"](
+                            "Kapitola 3",
+                            "Podkapitola 7.1 - Případová studie Kavárna",
+                            cs_kavarna_data,
+                        )
+
+        with tab_case2:
+            with st.form("form_studie_mikiny"):
+                st.markdown("##### 👕 2. Mikiny pro školní tým: sklad, nebo print-on-demand?")
+                st.write("Situace: Školní tým chce prodávat mikiny s vlastním potiskem. Zvažuje dvě varianty výroby.")
+                st.write("**Varianta A: výroba na sklad**")
+                st.write("- fixní náklady na grafiku a e-shop: 8 000 Kč, nákup a potisk 1 ks: 420 Kč, prodejní cena: 750 Kč, riziko: neprodané kusy.")
+                st.write("**Varianta B: print-on-demand**")
+                st.write("- fixní náklady na grafiku a e-shop: 8 000 Kč, výroba 1 ks až po objednávce: 560 Kč, prodejní cena: 750 Kč, výhoda: žádné neprodané kusy.")
+
+                s2_pa = st.number_input("Příspěvek na úhradu Varianta A (Kč):", value=0, key="cs_m_pa")
+                s2_pb = st.number_input("Příspěvek na úhradu Varianta B (Kč):", value=0, key="cs_m_pb")
+                s2_vmarze = st.radio("Která varianta má vyšší marži (příspěvek)?", ["Vyber...", "Varianta A", "Varianta B"], key="cs_m_mar")
+                s2_vriziko = st.radio("Která varianta má nižší riziko neprodaných zásob?", ["Vyber...", "Varianta A", "Varianta B"], key="cs_m_riz")
+
+                if st.form_submit_button("Zkontrolovat a uložit výpočty mikin 💾"):
+                    if s2_pa == 330 and s2_pb == 190 and s2_vmarze == "Varianta A" and s2_vriziko == "Varianta B":
+                        st.success("✅ Výborně! Varianta A má vyšší zisk na kus (330 Kč vs 190 Kč), ale s rizikem zásob. Print-on-demand je bezpečnější pro začátek.")
+                    else:
+                        st.error("Někde je chyba. Příspěvek u A = 750 - 420. Příspěvek u B = 750 - 560. Print-on-demand (B) má nižší riziko, protože neplatíš za sklad.")
+
+                    cs_mikiny_data = f"PA: {s2_pa} | PB: {s2_pb} | Marže: {s2_vmarze} | Riziko: {s2_vriziko}"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 7.1 - Případová studie Mikiny", cs_mikiny_data)
+
+        with tab_case3:
+            with st.form("form_studie_zmetky"):
+                st.markdown("##### 🛠️ 3. Výrobní dílna: problém se zmetkovitostí")
+                st.write("Situace: Malá výrobní dílna vyrábí dřevěné stojany. V posledním měsíci výrazně vzrostl počet vadných kusů.")
+                st.write("- měsíční výroba: 1 000 kusů, náklady na 1 vadný kus: 160 Kč")
+                st.write("- zmetkovitost dříve: 3 %, zmetkovitost nyní: 11 %")
+
+                s3_vdrive = st.number_input("Vadné kusy dříve (ks):", value=0, key="cs_z_vdr")
+                s3_vnyni = st.number_input("Vadné kusy nyní (ks):", value=0, key="cs_z_vny")
+                s3_rozdil = st.number_input("Rozdíl v počtu kusů:", value=0, key="cs_z_roz")
+                s3_naklady = st.number_input("Zvýšení nákladů na zmetky v Kč (rozdíl * 160):", value=0, key="cs_z_nak")
+
+                if st.form_submit_button("Zkontrolovat a uložit výpočty dílny 💾"):
+                    if s3_vdrive == 30 and s3_vnyni == 110 and s3_rozdil == 80 and s3_naklady == 12800:
+                        st.success("✅ Správně! Dílna přichází zbytečně o 12 800 Kč měsíčně kvůli chybám. Měli by zavést principy prevence a Poka-Yoke.")
+                    else:
+                        st.error("Chyba ve výpočtu. 3% z 1000 = 30. 11% z 1000 = 110. Rozdíl je 80 kusů. 80 * 160 Kč = 12 800 Kč.")
+                    
+                    cs_zmetky_data = f"Dříve: {s3_vdrive} | Nyní: {s3_vnyni} | Rozdíl: {s3_rozdil} | Náklady: {s3_naklady}"
+                    if "uloz_odpoved_fn" in st.session_state:
+                        st.session_state["uloz_odpoved_fn"]("Kapitola 3", "Podkapitola 7.1 - Případová studie Zmetkovitost", cs_zmetky_data)
 
     elif selected_section_3 == "7.2 Závěrečný checklist a prověrka kapitoly":
         st.markdown("### 7.2 Závěrečný checklist a prověrka kapitoly")
@@ -2023,21 +2268,111 @@ def render():
             "Umím spočítat účetní i ekonomický zisk.", key="k3_7_2_ch2"
         )
         ch3 = st.checkbox(
-            "Umím vysvětlit rozdríl mezi fixními a variabilními náklady.",
+            "Umím vysvětlit rozdíl mezi fixními a variabilními náklady.",
             key="k3_7_2_ch3",
         )
         ch4 = st.checkbox(
             "Umím spočítat bod zvratu v kusech.", key="k3_7_2_ch4"
         )
+        ch5 = st.checkbox(
+            "Umím navrhnout KPI pro jednoduchý projekt.", key="k3_7_2_ch5"
+        )
+        ch6 = st.checkbox(
+            "Umím rozhodnout mezi výrobou na sklad a print-on-demand.", key="k3_7_2_ch6"
+        )
+        ch7 = st.checkbox(
+            "Umím najít plýtvání v procesu a navrhnout zlepšení.", key="k3_7_2_ch7"
+        )
 
-        splneno_pocet = sum([ch1, ch2, ch3, ch4])
-        st.progress(splneno_pocet / 4)
+        splneno_pocet = sum([ch1, ch2, ch3, ch4, ch5, ch6, ch7])
+        st.progress(splneno_pocet / 7)
 
         if st.button("Uložit výsledek checklistu 💾", key="btn_k3_7_2_chk"):
             if "uloz_odpoved_fn" in st.session_state:
                 st.session_state["uloz_odpoved_fn"](
                     "Kapitola 3",
                     "Podkapitola 7.2 - Checklist Kapitoly 3",
-                    f"Splněno {splneno_pocet}/4 bodů.",
+                    f"Splněno {splneno_pocet}/7 bodů.",
                 )
             st.success("Výsledek checklistu byl uložen!")
+
+    elif selected_section_3 == "7.3 Slovník pojmů kapitoly":
+        st.markdown("### 📚 7.3 Slovník pojmů kapitoly")
+        st.markdown(
+            "<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 1.5rem;'>"
+            "Souhrnný tematický přehled všech klíčových pojmů z 3. kapitoly. "
+            "Slouží jako rychlý tahák před testem, přípravou projektu nebo účetním výpočtem.</p>",
+            unsafe_allow_html=True,
+        )
+
+        tab_slov1, tab_slov2, tab_slov3, tab_slov4 = st.tabs([
+            "🏭 Výroba a Majetek", 
+            "📦 Zásoby a Logistika", 
+            "💰 Náklady a Zisk", 
+            "⚡ Efektivita a Lean"
+        ])
+        
+        with tab_slov1:
+            st.markdown("""
+            * **Dlouhodobý majetek:** Majetek (hmotný, nehmotný, finanční), který firma využívá déle než jeden rok a postupně se opotřebovává.
+            * **Doba návratnosti investice:** Doba, za kterou se firmě z čistých přínosů zaplatí počáteční pořizovací cena investice (Pořizovací cena / roční přínos).
+            * **Hromadná výroba:** Typ výroby, kde se produkují velká množství stejného výrobku (nápoje, pečivo, šroubky).
+            * **Kusová výroba:** Typ výroby, kde se vyrábí originály či jednotlivé kusy podle zakázky (nábytek na míru, prototypy).
+            * **Oběžný majetek:** Majetek, který se ve firmě rychle spotřebovává a obíhá (materiál -> výrobek -> zboží -> peníze z prodeje).
+            * **Odpisy a Oprávky:** *Odpis* vyjadřuje opotřebení dlouhodobého majetku a rozkládá jeho cenu do nákladů za určité období. *Oprávky* jsou součtem všech dosavadních odpisů.
+            * **Pořizovací cena:** Celková částka za majetek, která zahrnuje nejen jeho samotnou cenu, ale i tzv. vedlejší pořizovací náklady (montáž, clo, doprava).
+            * **Sériová výroba:** Typ výroby, kde se vyrábí větší či menší série identických produktů (limitovaná edice bot, elektronika).
+            * **Výrobní faktory:** Vstupy potřebné k výrobě (Lidská práce, Dlouhodobý majetek, Oběžný majetek, Informace a know-how).
+            * **Zůstatková cena:** Pořizovací cena majetku zmenšená o dosavadní oprávky (ukazuje, kolik hodnoty ještě nebylo odepsáno).
+            """)
+
+        with tab_slov2:
+            st.markdown("""
+            * **ABC analýza:** Metoda řízení zásob, která dělí skladové položky do 3 skupin podle jejich hodnoty a důležitosti (A = nejdražší/klíčové, C = levné drobnosti).
+            * **Druhy zásob:**
+              * *Běžná:* k plynulé spotřebě mezi dvěma dodávkami.
+              * *Pojistná:* kryje zpoždění nebo nečekanou poptávku.
+              * *Signální:* úroveň zásoby, při které firma musí okamžitě objednat další materiál.
+            * **FIFO (First In, First Out):** Metoda vyskladňování, u které se předpokládá, že jako první opouští sklad ten materiál, který do něj přišel jako první (nutné u potravin s expirací).
+            * **Just-in-Time (JIT):** Logistická metoda, kdy materiál přijíždí do firmy přesně v okamžiku, kdy je potřeba pro výrobu (odstraňuje plýtvání sklady, zvyšuje ale riziko výpadku).
+            * **LIFO (Last In, First Out):** Metoda vyskladňování, kde jako první opouští sklad materiál nakoupený nejpozději (v ČR se standardně v účetnictví nepoužívá).
+            * **Print-on-demand (PoD):** Obchodní model, kdy se produkt (např. tričko) vyrobí až ve chvíli, kdy si ho zákazník reálně objedná a zaplatí.
+            * **Rychlost obratu zásob:** Ukazatel, který říká, kolikrát do roka se zásoby ve firmě „otočí“ (spotřebují a obnoví).
+            * **Vážený průměr:** Metoda vyskladňování, která zprůměruje ceny zásob z různých dodávek a na výdeji počítá s touto jednou průměrnou částkou.
+            """)
+
+        with tab_slov3:
+            st.markdown("""
+            * **Bod zvratu (Break-even point):** Objem prodeje (v kusech), při kterém se výnosy přesně rovnají nákladům (firma negeneruje ani zisk, ani ztrátu).
+            * **Ekonomický zisk:** Účetní zisk zmenšený o alternativní (implicitní) náklady (např. ušlý úrok z banky nebo ušlou mzdu, kterou by si podnikatel vydělal jako zaměstnanec).
+            * **Fixní náklady:** Náklady, které firma musí platit bez ohledu na to, kolik toho vyrobí (nájem, odpisy, platy vedení).
+            * **Kalkulační vzorec:** Postup pro stanovení ceny produktu (Přímý materiál + Přímé mzdy + Výrobní režie + Správní/Odbytová režie + Zisková přirážka = Prodejní cena).
+            * **Náklad vs. Výdaj:**
+              * *Náklad:* Účetní spotřeba hodnoty (např. spotřeba materiálu ve výrobě).
+              * *Výdaj:* Fyzický úbytek peněz na bankovním účtu (např. zaplacení faktury).
+            * **Přímé a Nepřímé (Režijní) náklady:**
+              * *Přímé:* Lze je jasně spočítat na 1 konkrétní výrobek (látka na tričko).
+              * *Nepřímé:* Jsou společné pro celou firmu a musí se na výrobky rozpočítávat pomocí klíče (nájem továrny).
+            * **Příspěvek na úhradu (Krycí příspěvek):** Prodejní cena za kus mínus variabilní náklady na kus. Z této částky firma musí zaplatit fixní náklady a to, co zbyde, tvoří čistý zisk.
+            * **Účetní zisk:** Rozdíl mezi účetními výnosy a účetními (explicitními) náklady za určité období.
+            * **Variabilní náklady:** Náklady, které rostou nebo klesají v závislosti na tom, kolik kusů firma vyrobí (např. přímý materiál).
+            * **Výnos vs. Příjem:**
+              * *Výnos:* Zisk hodnoty/nároku v účetnictví (např. vystavení faktury zákazníkovi).
+              * *Příjem:* Fyzické připsání peněz na účet.
+            """)
+
+        with tab_slov4:
+            st.markdown("""
+            * **5S:** Nástroj štíhlé výroby pro organizaci pracoviště (vytřídit, uspořádat, čistit, standardizovat, dodržovat), který pomáhá eliminovat chaos a hledání nástrojů.
+            * **Asset-Light business:** Obchodní model firmy, která vlastní minimum fyzického majetku a strojů a většinu procesů outsourcuje (Cloud, Dropshipping, Coworking).
+            * **Cirkulární ekonomika:** Hospodářský koncept, kde se materiály a produkty drží v oběhu co nejdéle (navrhnout -> používat -> opravit -> recyklovat -> znovu použít).
+            * **Dashboard:** Vizuální přehled klíčových ukazatelů firmy na jedné obrazovce sloužící pro rychlé a správné manažerské rozhodování.
+            * **ESG:** Souhrn faktorů (Environment, Social, Governance) hodnotící dopad firmy na životní prostředí, společnost a férové řízení.
+            * **Kanban:** Vizuální nástroj (často formou kartiček nebo tabule), který v reálném čase ukazuje tok práce a signalizuje, kdy je potřeba doplnit zásobu či zahájit další krok výroby.
+            * **KPI (Klíčové ukazatele výkonnosti):** Konkrétní čísla, procenta či metriky (např. zisková marže, zmetkovitost), kterými firma měří úspěšnost plnění svých cílů.
+            * **Mezní náklady v digitálním světě:** U digitálních produktů (např. aplikace) jsou náklady na vytvoření další kopie téměř nulové.
+            * **MUDA (Plýtvání):** Vše, co v procesu nepřidává hodnotu z pohledu zákazníka (čekání, zbytečné pohyby, nadvýroba, zmetky).
+            * **Poka-Yoke:** Opatření nebo design výrobku, které zabraňuje lidské chybě z nepozornosti (např. oboustranný USB-C kabel, oříznutý roh SIM karty).
+            * **Štíhlá výroba (Lean):** Manažerský přístup k výrobě, který se zaměřuje na maximalizaci hodnoty pro zákazníka za současné minimalizace plýtvání (MUDA).
+            * **Total Quality Management (TQM):** Komplexní systém řízení, do kterého je v otázce kvality a prevence chyb zapojena celá firma (od uklízečky po ředitele), ne jen výstupní kontrola.
+            """)
