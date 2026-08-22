@@ -184,10 +184,11 @@ def render_ai_treenazer():
 
 def render_aida_simulator(nazev_projektu):
     st.markdown("#### ✍️ Krok 1: Tvůrčí dílna reklamy a sloganů (AIDA)")
-    st.write(
-        f"Navrhni reklamu pro svůj projekt **{nazev_projektu}**. Můžeš popsat svůj nápad a předběžný slogan. "
-        "Umělá inteligence tvůj text zhodnotí, **navrhne ti lepší slogany i hotový vzorový příspěvek** a spočítá index úspěšnosti pro simulátor rozpočtu."
-    )
+st.write(
+    f"Zkus vytvořit prodejní příspěvek pro svůj projekt/produkt: **{nazev_projektu}** "
+    f"(který sis zvolil/a v úvodu kapitoly). Umělá inteligence zhodnotí, jak kvalitně tvůj text plní pravidla AIDA, "
+    f"a tato kvalita přímo určí úspěch kampaně v simulátoru níže!"
+)
     
     col_a1, col_a2 = st.columns([1, 1])
     with col_a1:
