@@ -2998,7 +2998,7 @@ def render():
                             c2_odp[:30],
                         )
 
-elif (
+    elif (
         selected_section_4 == "7.2 Slovníček, rychlé opakování a prověrka"
         or "7.2" in selected_section_4
     ):
