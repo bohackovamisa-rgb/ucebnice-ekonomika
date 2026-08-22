@@ -563,7 +563,6 @@ def render():
         st.write(
             "Zadej data pro dvě různá období (např. rok před krizí vs. krizový"
             " rok) a sleduj, jak se ekonomika zdeformuje."
-
         )
 
         col_obdobi1, col_obdobi2 = st.columns(2)
@@ -1118,57 +1117,77 @@ def render():
         st.markdown("### 2.6 Nepřímé daně: neviditelné daně v každém nákupu")
         st.write(
             "Nepřímé daně jsou zahrnuté v ceně zboží nebo služby. Spotřebitel"
-            " je fakticky zaplatí v ceně, ale státu je odvádí prodejce."
+            " je fakticky zaplatí v ceně, ale státu je odvádí prodejce nebo"
+            " jiný povinný subjekt."
         )
 
         st.markdown("""
         | Nepřímá daň | Co znamená | Příklad | Proč existuje |
         | :--- | :--- | :--- | :--- |
-        | **DPH — daň z přidané hodnoty** | Daň zahrnutá v ceně většiny zboží a služeb. | Mobil, oblečení, lístek na akci. | Je významným příjmem státního rozpočtu. |
-        | **Spotřební daně** | Daně u vybraných výrobků s dopadem na zdraví či spotřebu. | Tabák, alkohol, pohonné hmoty. | Přinášejí příjmy a omezují škodlivou spotřebu. |
-        | **Ekologické daně** | Daně související s dopady na životní prostředí. | Vybraná paliva, energie. | Motivují k šetrnějšímu chování. |
+        | **DPH — daň z přidané hodnoty** | Daň zahrnutá v ceně většiny zboží a služeb. | Mobil, oblečení, kadeřnictví, lístek na akci, software. | Je významným příjmem státního rozpočtu. |
+        | **Spotřební daně** | Daně u vybraných výrobků, často s dopadem na zdraví, dopravu nebo spotřebu. | Tabák, alkohol, pohonné hmoty. | Přinášejí příjmy a mohou omezovat škodlivou spotřebu. |
+        | **Ekologické daně** | Daně související s dopady na životní prostředí a energiemi. | Vybraná paliva, energie nebo environmentálně zatěžující činnosti podle pravidel. | Mají zohlednit negativní dopady a motivovat k šetrnějšímu chování. |
         """)
 
         with st.expander("Anatomie ceny mobilu nebo lístku na koncert"):
             st.write(
-                "Když si koupíš produkt za konečnou cenu, část ceny tvoří DPH."
-                " U plátce DPH je cena pro zákazníka obvykle včetně DPH,"
-                " zatímco podnikatel sleduje cenu bez DPH a daň, kterou musí"
-                " odvést nebo si může nárokovat. **Úkol:** Najdi účtenku a zkus"
-                " určit: celková cena, základ daně, sazba DPH, částka DPH."
+                "Když si koupíš produkt za konečnou cenu, část ceny může"
+                " tvořit DPH. U plátce DPH je cena pro zákazníka obvykle včetně"
+                " DPH, zatímco podnikatel sleduje cenu bez DPH a daň, kterou"
+                " musí odvést nebo si může nárokovat podle pravidel."
+            )
+            st.markdown(
+                "**Úkol:** Najdi účtenku nebo fakturu a zkus určit: celková"
+                " cena, základ daně, sazba DPH, částka DPH."
             )
 
         st.warning(
             "🚬 **Daně z hříchu — sin taxes:** Alkohol, cigarety nebo pohonné"
             " hmoty jsou dražší také kvůli spotřebním daním. Stát tím získává"
-            " příjmy a odrazuje od spotřeby, která má zdravotní či"
-            " environmentální dopady."
+            " příjmy a zároveň může odrazovat od spotřeby, která má zdravotní,"
+            " sociální nebo environmentální dopady. Podobně se ve světě"
+            " diskutují daně z vapes, energetických nápojů nebo sladkých"
+            " limonád."
         )
         st.success(
-            "🌱 **Ekologická logika daní:** Pokud činnost vytváří náklady pro"
-            " okolí (emise, znečištění), stát se může snažit část těchto"
-            " nákladů promítnout do ceny."
+            "🌱 **Ekologická logika daní:** Pokud určitá činnost vytváří"
+            " náklady pro okolí — emise, znečištění, hluk nebo uhlíkovou stopu"
+            " — stát se může snažit část těchto nákladů promítnout do ceny."
+            " Cílem je, aby levné na účtence neznamenalo drahé pro životní"
+            " prostředí."
         )
 
         st.divider()
         st.markdown("#### 2.6.1 Schéma: jak se daně dělí a kam putují")
         st.write(
             "Daně se v učivu nejčastěji dělí na **přímé** a **nepřímé**."
-            " Přesné podíly rozdělování se mohou měnit, proto je důležité"
-            " pracovat s principem."
+            " Přímé daně se vážou ke konkrétní osobě, firmě nebo majetku."
+            " Nepřímé daně jsou schované v ceně zboží a služeb — typicky DPH"
+            " nebo spotřební daň. Peníze se potom podle zákonných pravidel"
+            " rozdělují mezi stát, kraje a obce. Přesné podíly se mohou měnit,"
+            " proto je důležité pracovat s principem, ne se učit nazpaměť"
+            " jedno číslo."
         )
 
         st.markdown("""
         | Daň | Kam typicky putuje | Co se z ní financuje |
         | :--- | :--- | :--- |
-        | **Daň z příjmů fyzických osob** | Sdílená daň — státní rozpočet, obce a kraje. | Důchody, sociální systém, školství, místní a regionální služby. |
-        | **Daň z příjmů právnických osob** | Sdílená daň — stát, obce a kraje. | Veřejné služby, infrastruktura, školy, doprava. |
-        | **DPH** | Významná sdílená daň. | Široký balík veřejných výdajů: důchody, školství, zdravotnictví, správa státu. |
-        | **Daň z nemovitých věcí** | Připadá obci/městu, kde se nemovitost nachází. | Chodníky, osvětlení, zeleň, odpad, školy, kultura. |
-        | **Spotřební daně** | Směřují především do státního rozpočtu. | Obecné výdaje státu a částečně regulace škodlivých dopadů. |
-        | **Ekologické daně** | Veřejné rozpočty. | Motivace k šetrnějšímu chování vůči klimatu. |
-        | **Clo** | Ochrana společného trhu a příjmy rozpočtu EU. | Financování evropských politik. |
+        | **Daň z příjmů fyzických osob** | Patří mezi sdílené daně — rozděluje se mezi státní rozpočet, obce a kraje podle pravidel rozpočtového určení daní. | Stát z ní financuje například důchody, sociální systém, školství, obranu, bezpečnost a chod veřejné správy. Obce a kraje z podílu financují místní a regionální služby. |
+        | **Daň z příjmů právnických osob** | Také se rozděluje mezi stát, obce a kraje; zvláštní pravidla mohou platit u daně placené obcemi nebo kraji. | Veřejné služby, infrastruktura, školy, doprava, regionální rozvoj a další výdaje veřejného sektoru. |
+        | **DPH** | Významná sdílená daň — velká část směřuje do státního rozpočtu, část podle zákonných pravidel obcím a krajům. | Protože DPH platíme téměř při každém nákupu, financuje široký balík veřejných výdajů: důchody, školství, zdravotní systém přes veřejné zdroje, obranu, dopravu i správu státu. |
+        | **Daň z nemovitých věcí** | Typicky připadá obci nebo městu, kde se nemovitost nachází. | Obec z ní může financovat místní věci: chodníky, veřejné osvětlení, zeleň, odpad, místní komunikace, mateřské a základní školy, sportoviště nebo kulturní akce. |
+        | **Spotřební daně** | Směřují především do státního rozpočtu. | Financují obecné výdaje státu. Zároveň mají regulační smysl: alkohol, tabák nebo pohonné hmoty jsou zdaněné i proto, že jejich spotřeba vytváří zdravotní, sociální nebo environmentální náklady. |
+        | **Ekologické daně** | Směřují do veřejných rozpočtů podle platných pravidel. | Mají nejen přinášet příjem, ale hlavně promítat ekologické dopady do ceny a motivovat k šetrnějšímu chování. |
+        | **Clo** | V prostředí EU souvisí s ochranou společného trhu a příjmy rozpočtu EU; část administrace probíhá přes stát. | Pomáhá chránit společný trh EU a je součástí financování evropských politik. |
         """)
+
+        st.info(
+            "🏠 **Příklad pro studenty:** Když rodina zaplatí daň z pozemku nebo"
+            " domu, peníze typicky pomáhají rozpočtu obce. Obec z nich neplatí"
+            " „jednu konkrétní lampu před domem“, ale přispívá jimi do společné"
+            " místní peněženky — na chodníky, osvětlení, údržbu zeleně, odpad,"
+            " školku, školu nebo místní komunikace."
+        )
 
         with st.form("diskuse_regiony"):
             st.write(
@@ -1204,22 +1223,52 @@ def render():
         st.markdown("### 2.7 Státní rozpočet: velká státní peněženka")
         st.write(
             "Státní rozpočet je **plán příjmů a výdajů státu na určité"
-            " období**, obvykle na jeden rok."
+            " období**, obvykle na jeden rok. Ukazuje, odkud stát očekává"
+            " peníze a za co je plánuje utratit."
         )
 
         st.markdown("""
-        | Příjmy státního rozpočtu | Výdaje státního rozpočtu |
-        | :--- | :--- |
-        | daně, pojistné a další povinné platby | důchody, sociální dávky, školství, obrana, bezpečnost |
-        | poplatky, příjmy z majetku, evropské prostředky | platy zaměstnanců veřejného sektoru, provoz úřadů, investice |
-        | případně půjčené peníze při deficitu | obsluha státního dluhu, infrastruktura, krizová pomoc |
+        **Příjmy státního rozpočtu:**
+        * daně, pojistné a další povinné platby,
+        * poplatky, příjmy z majetku, evropské prostředky,
+        * případně půjčené peníze při deficitu.
+
+        **Výdaje státního rozpočtu:**
+        * důchody, sociální dávky, školství, obrana, bezpečnost,
+        * platy zaměstnanců veřejného sektoru, provoz úřadů, investice,
+        * obsluha státního dluhu, infrastruktura, krizová pomoc.
         """)
 
+        st.info(
+            "💸 **Kam jdou tvoje daně:** Velká část veřejných výdajů směřuje na"
+            " sociální systém, důchody, zdravotnictví, školství, bezpečnost,"
+            " obranu, dopravu, veřejnou správu a obsluhu státního dluhu. Přesné"
+            " podíly se mění podle roku a schváleného rozpočtu."
+        )
+
+        st.markdown(
+            "<div class='box-green'><strong>🔗 Klikací zdroje pro aktuální"
+            " státní rozpočet:</strong><br>- <a"
+            " href='https://monitor.statnipokladna.gov.cz/'"
+            " target='_blank'>Monitor státní pokladny</a><br>- <a"
+            " href='https://www.mfcr.cz/cs/rozpoctova-politika/statni-rozpocet'"
+            " target='_blank'>Ministerstvo financí ČR — Státní"
+            " rozpočet</a><br>- <a"
+            " href='https://www.sporicidluhopisycr.cz/' target='_blank'>Státní"
+            " dluhopisy ČR</a></div>",
+            unsafe_allow_html=True,
+        )
+
         st.markdown("### 2.8 Výdaje rozpočtu: mandatorní a nemandatorní")
+        st.write(
+            "Ne všechny výdaje státu se dají jednoduše „škrtnout“. Některé jsou"
+            " dané zákony a stát je musí platit."
+        )
+
         st.markdown("""
         | Typ výdaje | Co znamená | Příklad | Proč je důležitý |
         | :--- | :--- | :--- | :--- |
-        | **Mandatorní výdaje** | Povinné výdaje dané zákonem nebo smluvními závazky. | Důchody, některé sociální dávky, obsluha dluhu. | Stát je nemůže snadno snížit bez změny zákonů. |
+        | **Mandatorní výdaje** | Povinné výdaje dané zákonem nebo smluvními závazky. | Důchody, některé sociální dávky, platby podle zákonných pravidel, obsluha dluhu. | Stát je nemůže snadno snížit bez změny zákonů nebo pravidel. |
         | **Nemandatorní výdaje** | Výdaje, o kterých se rozhoduje pružněji v rámci rozpočtu. | Některé investice, dotace, programy, provozní výdaje. | Politici o nich více vyjednávají při tvorbě rozpočtu. |
         """)
 
@@ -1244,6 +1293,13 @@ def render():
         | **Schodkový rozpočet / deficit** | Výdaje jsou vyšší než příjmy. | Stát vybere 100 a utratí 120. Rozdíl si musí půjčit. |
         """)
 
+        st.warning(
+            "⚠️ **Život na dluh:** Deficit nemusí být vždy automaticky špatný —"
+            " například během krize může stát podporovat ekonomiku. Problém"
+            " vzniká, pokud se deficity opakují dlouhodobě a dluh roste"
+            " rychleji než schopnost ekonomiky ho unést."
+        )
+
         # SIMULÁTOR STÁTNÍHO DLUHU
         render_dluhovy_simulator()
 
@@ -1252,17 +1308,25 @@ def render():
         st.write(
             "Státní dluh vzniká, když stát dlouhodobě financuje schodky"
             " rozpočtu půjčkami. Jedním z nástrojů financování jsou **státní"
-            " dluhopisy**. Když stát vydá dluhopis, půjčuje si peníze od"
-            " investorů a slíbí, že je v budoucnu vrátí a zaplatí úrok."
+            " dluhopisy**."
+        )
+
+        st.markdown(
+            "<div class='box-blue'><strong>📜 Státní dluhopis jednoduše:</strong>"
+            " Když stát vydá dluhopis, půjčuje si peníze od investorů."
+            " Investor — například banka, fond, firma nebo občan — státu"
+            " půjčí peníze a stát slíbí, že je v budoucnu vrátí a zaplatí úrok"
+            " podle podmínek dluhopisu.</div>",
+            unsafe_allow_html=True,
         )
 
         st.markdown("""
         | Otázka | Krátká odpověď |
         | :--- | :--- |
-        | Kdo kupuje státní dluhopisy? | Banky, fondy, pojišťovny, zahraniční investoři, firmy i občané podle typu emise. |
-        | Proč je stát vydává? | Aby financoval schodek rozpočtu nebo refinancoval starší dluh. |
-        | Je státní dluhopis bez rizika? | Obvykle se považuje za relativně bezpečný, ale záleží na státu, měně, inflaci, úroku a době splatnosti. |
-        | Jak se dluh týká Gen Z? | Budoucí generace mohou nést náklady vyššího dluhu přes daně, nižší prostor pro investice nebo vyšší výdaje na úroky. |
+        | **Kdo kupuje státní dluhopisy?** | Banky, fondy, pojišťovny, zahraniční investoři, firmy i občané podle typu emise. |
+        | **Proč je stát vydává?** | Aby financoval schodek rozpočtu nebo refinancoval starší dluh. |
+        | **Je státní dluhopis bez rizika?** | Obvykle se považuje za relativně bezpečný, ale není to kouzelný výnos bez jakéhokoli rizika. Záleží na státu, měně, inflaci, úroku a době splatnosti. |
+        | **Jak se dluh týká Gen Z?** | Budoucí generace mohou nést náklady vyššího dluhu přes daně, nižší prostor pro investice nebo vyšší výdaje na úroky. |
         """)
 
         st.divider()
@@ -1271,16 +1335,16 @@ def render():
         )
         st.write(
             "Ne každé snížení daní je nelegální. Je potřeba rozlišovat legální"
-            " optimalizaci a nelegální daňový únik."
+            " optimalizaci, nelegální daňový únik a stínovou ekonomiku."
         )
 
         st.markdown("""
         | Situace | Co znamená | Příklad | Hodnocení |
         | :--- | :--- | :--- | :--- |
-        | **Legální daňová optimalizace** | Využití zákonných možností ke snížení daňové povinnosti. | Uplatnění slevy na poplatníka, daňově uznatelných výdajů. | Legální, pokud odpovídá pravidlům a realitě. |
-        | **Nelegální daňový únik** | Porušení zákona s cílem nezaplatit daň. | Nefakturování příjmů, fiktivní náklady, zatajené tržby. | Nelegální a rizikové. |
-        | **Šedá ekonomika** | Činnost, která může být legální sama o sobě, ale není správně evidovaná nebo zdaněná. | Práce „na ruku“ bez dokladu. | Poškozuje rozpočty a může poškodit i pracovníka. |
-        | **Černá ekonomika** | Nelegální činnost mimo zákonný systém. | Obchod s nelegálním zbožím. | Nelegální a společensky škodlivá. |
+        | **Legální daňová optimalizace** | Využití zákonných možností ke snížení daňové povinnosti. | Uplatnění slevy na poplatníka, daňově uznatelných výdajů, paušálních výdajů nebo zákonných odpočtů. | Legální, pokud odpovídá pravidlům a realitě. |
+        | **Nelegální daňový únik** | Porušení zákona s cílem nezaplatit daň. | Nefakturování příjmů, fiktivní náklady, zatajené tržby, falešné doklady. | Nelegální a rizikové. |
+        | **Šedá ekonomika** | Činnost, která může být legální sama o sobě, ale není správně evidovaná nebo zdaněná. | Práce „na ruku“ bez dokladu, drobné služby bez evidence příjmů. | Poškozuje rozpočty a může poškodit i pracovníka. |
+        | **Černá ekonomika** | Nelegální činnost mimo zákonný systém. | Obchod s nelegálním zbožím, padělky, nelegální služby. | Nelegální a společensky škodlivá. |
         """)
 
         with st.expander("Práce „na ruku“: proč je sleva bez účtenky problém?"):
@@ -1298,9 +1362,12 @@ def render():
                 " zemí, přesouvat zisky, licence nebo sídla do států s"
                 " výhodnějším zdaněním. Proto se řeší **daňové ráje**,"
                 " digitální daň, pravidla EU/OECD a myšlenka globální minimální"
-                " daně pro velké korporace. Pointa: Problém není jen v tom, zda"
-                " firma formálně dodrží zákon, ale také v tom, kde skutečně"
-                " vzniká hodnota a kde se odvádějí daně."
+                " daně pro velké korporace."
+            )
+            st.info(
+                "📌 **Pointa:** Problém není jen v tom, zda firma formálně"
+                " dodrží zákon, ale také v tom, kde skutečně vzniká hodnota a"
+                " kde se odvádějí daně."
             )
 
         st.divider()
