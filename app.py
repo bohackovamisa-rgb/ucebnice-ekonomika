@@ -501,7 +501,7 @@ def zakovsky_panel():
 
 
 # =========================================================================
-# 3. ORIGINÁLNÍ STYLOVÁNÍ A DESIGN UČEBNICE
+# 3. GLOBÁLNÍ DESIGN A HIERARCHIE NADPISŮ PRO VŠECHNY KAPITOLY
 # =========================================================================
 st.markdown(
     """
@@ -535,10 +535,70 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02) !important; 
 }
 
-h1 { font-family: 'Montserrat', sans-serif !important; color: #0F172A !important; font-weight: 800 !important; font-size: 2.2rem !important; letter-spacing: -0.03em !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
-h2 { font-family: 'Montserrat', sans-serif !important; color: #1E293B !important; font-weight: 700 !important; font-size: 1.35rem !important; letter-spacing: -0.02em !important; margin-top: 1.5rem !important; margin-bottom: 0.85rem !important; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.5rem; }
-h3 { font-family: 'Montserrat', sans-serif !important; color: #334155 !important; font-weight: 600 !important; font-size: 1.1rem !important; margin-top: 1.25rem !important; }
-p, li, td, th { font-family: 'Montserrat', sans-serif !important; color: #334155 !important; font-size: 0.95rem !important; line-height: 1.7 !important; font-weight: 400 !important; }
+/* =========================================================================
+   🔤 JEDNOTNÉ ČERNÉ NADPISY PRO VŠECHNY KAPITOLY
+   ========================================================================= */
+h1, .stMarkdown h1 { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #0F172A !important; 
+    font-weight: 800 !important; 
+    font-size: 2.2rem !important; 
+    letter-spacing: -0.03em !important; 
+    line-height: 1.25 !important; 
+    margin-bottom: 0.75rem !important; 
+}
+
+/* Úroveň 1: Hlavní bloky (## v markdownu) */
+h2, .stMarkdown h2 { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #0F172A !important; 
+    font-weight: 800 !important; 
+    font-size: 1.75rem !important; 
+    letter-spacing: -0.02em !important; 
+    margin-top: 2rem !important; 
+    margin-bottom: 0.75rem !important; 
+    border-bottom: 1px solid #E2E8F0 !important; 
+    padding-bottom: 0.4rem !important; 
+}
+
+/* Úroveň 2: Podkapitoly typu 1.1, 2.4, 3.1 (### v markdownu) */
+h3, .stMarkdown h3 { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #0F172A !important; 
+    font-weight: 700 !important; 
+    font-size: 1.4rem !important; 
+    margin-top: 1.5rem !important; 
+    margin-bottom: 0.5rem !important; 
+}
+
+/* Úroveň 3: Podtémata typu 1.1.1, 3.1.1 (#### v markdownu) */
+h4, .stMarkdown h4 { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #1E293B !important; 
+    font-weight: 600 !important; 
+    font-size: 1.15rem !important; 
+    margin-top: 1.2rem !important; 
+    margin-bottom: 0.4rem !important; 
+}
+
+/* Úroveň 4: Drobné nadpisy (##### v markdownu) */
+h5, .stMarkdown h5 { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #334155 !important; 
+    font-weight: 600 !important; 
+    font-size: 1.0rem !important; 
+    margin-top: 0.8rem !important; 
+    margin-bottom: 0.3rem !important; 
+}
+
+/* Běžný text odstavců, odrážek a tabulek */
+p, li, td, th, .stMarkdown p { 
+    font-family: 'Montserrat', sans-serif !important; 
+    color: #334155 !important; 
+    font-size: 0.95rem !important; 
+    line-height: 1.7 !important; 
+    font-weight: 400 !important; 
+}
 
 button[data-testid="baseButton-primary"], button[kind="primary"] { font-family: 'Montserrat', sans-serif !important; border-radius: 9999px !important; border: 1px solid #111111 !important; background-color: #111111 !important; color: #FFFFFF !important; font-weight: 600 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; box-shadow: 0 4px 10px rgba(17, 17, 17, 0.15) !important; transition: all 0.2s ease !important; }
 button[data-testid="baseButton-primary"]:hover, button[kind="primary"]:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(17, 17, 17, 0.25) !important; }
