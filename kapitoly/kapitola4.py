@@ -1,5 +1,103 @@
 import math
+import requests
 import streamlit as st
+
+# =========================================================================
+# 🔤 AI FUNKCE PRO TRENAŽÉRY
+# =========================================================================
+def ziskej_odpoved_pohovor_ai(pozice, zprava_zaka, historie):
+    """Volá OpenAI API pro trenažér pohovoru s fallbackem na offline režim."""
+    try:
+        api_key = st.secrets.get("OPENAI_API_KEY", "")
+        if api_key:
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}"
+            }
+            system_prompt = (
+                f"Jsi přísný, ale férový HR manažer. Já se ucházím o pozici '{pozice}'. "
+                "Ptej se mě postupně na otázky jako u reálného pracovního pohovoru. "
+                "Vždy polož jen JEDNU otázku a čekej na mou odpověď. "
+                "Po 5. mé odpovědi pohovor ukonči a dej mi detailní zpětnou vazbu: "
+                "co bylo přesvědčivé, v čem jsem chyboval/a a jak bych mohl/a odpovědi zlepšit."
+            )
+            messages = [{"role": "system", "content": system_prompt}]
+            for msg in historie:
+                messages.append({"role": msg["role"], "content": msg["content"]})
+            messages.append({"role": "user", "content": zprava_zaka})
+            
+            payload = {
+                "model": "gpt-4o-mini",
+                "messages": messages,
+                "temperature": 0.7,
+                "max_tokens": 600
+            }
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                return data["choices"][0]["message"]["content"]
+    except Exception:
+        pass 
+        
+    # Offline záchrana
+    delka_historie = len(historie)
+    if delka_historie <= 2:
+        return f"Zajímavé. Proč si myslíte, že se na pozici {pozice} hodíte více než ostatní kandidáti?"
+    elif delka_historie <= 4:
+        return "Rozumím. Jak byste řešil/a situaci, kdy máte konflikt s nadřízeným ohledně zadaného úkolu?"
+    elif delka_historie <= 6:
+        return "Kde se vidíte za 3 roky a co jste ochotný/á udělat pro to, abyste se tam dostal/a?"
+    else:
+        return (
+            "Děkuji za vaše odpovědi. Čas vyhrazený pro náš pohovor vypršel.\n\n"
+            "🤖 **AI Mentor (Offline režim):** Vedl/a sis dobře. Pamatuj, že na pohovoru je důležité uvádět **konkrétní příklady** z praxe nebo ze školy, vyhýbat se obecným klišé a jasně ukázat motivaci k učení."
+        )
+
+def ziskej_odpoved_vyjednavani_ai(zprava_zaka, historie):
+    """Volá OpenAI API pro trenažér vyjednávání platu s fallbackem."""
+    try:
+        api_key = st.secrets.get("OPENAI_API_KEY", "")
+        if api_key:
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}"
+            }
+            system_prompt = (
+                "Hrajeme hru na vyjednávání o mzdě. Jsi tvrdý, ale racionální manažer firmy. "
+                "Já jsem zaměstnanec (Junior specialista), který u tebe pracuje 1 rok a jdu si říct o zvýšení hrubé mzdy o 15 %. "
+                "Nejprve můj požadavek odmítej a hledej důvody, proč mi přidat nemůžeš. Nenuť mě vyhrát hned. "
+                "Čekej na mé argumenty. Pokud mé argumenty budou logické a zaměřené na přínos pro firmu, můžeš mi navrhnout kompromis (např. 8 % nebo nefinanční benefity). "
+                "Po 6. mé odpovědi hru ukonči a dej mi jako AI Mentor detailní feedback, jak jsem si ve vyjednávání vedl/a."
+            )
+            messages = [{"role": "system", "content": system_prompt}]
+            for msg in historie:
+                messages.append({"role": msg["role"], "content": msg["content"]})
+            messages.append({"role": "user", "content": zprava_zaka})
+            
+            payload = {
+                "model": "gpt-4o-mini",
+                "messages": messages,
+                "temperature": 0.7,
+                "max_tokens": 600
+            }
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                return data["choices"][0]["message"]["content"]
+    except Exception:
+        pass 
+        
+    # Offline záchrana
+    delka_historie = len(historie)
+    if delka_historie <= 2:
+        return "Rozumím tvému požadavku. Nicméně letos se firmě moc nedaří plnit prodejní cíle a rozpočet na přidávání je zmrazený. Proč bych měl udělat výjimku právě u tebe?"
+    elif delka_historie <= 4:
+        return "To jsou sice hezké argumenty, ale 15 % je strašně moc. Tolik peněz v rozpočtu na tvou pozici zkrátka nemám. Můžeme se bavit o nějakém jiném řešení?"
+    else:
+        return (
+            "Fajn, dohodneme se tedy na kompromisu. Zkusíme to takto a uvidíme za půl roku.\n\n"
+            "🤖 **AI Mentor (Offline režim):** Konec hry! Ve vyjednávání je důležité argumentovat **hodnotou** (co jsem firmě vydělal/ušetřil/zlepšil), mít připravený **plán B** (nefinanční benefity, více volna) a nebrat si prvotní odmítnutí osobně."
+        )
 
 
 def render():
@@ -91,9 +189,10 @@ def render():
         "4.1 Firemní kultura a wellbeing",
         "4.2 Právo na odpojení a podnikavost v zaměstnání",
         "4.3 Upskilling a reskilling",
-        "5.1 Jak dát a dostat výpověď profesionálně",
-        "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace",
-        "5.3 Co dělat, když... (Krizový trenažér)",
+        "5.1 Jak dát výpověď profesionálně",
+        "5.2 Když dostanu výpověď",
+        "5.3 Úřad práce, podpora a rekvalifikace",
+        "5.4 Co dělat, když... (Krizový trenažér)",
         "6.1 Praktická dílna (Aktivity 1–5)",
         "7.1 Případové studie z praxe",
         "7.2 Slovníček, rychlé opakování a prověrka",
@@ -733,42 +832,43 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-purple'>🤖 <b>Interaktivní trenažér: Pohovor nanečisto s AI</b></div>",
+            "<div class='box-purple'>🤖 <b>AI Trenažér: Pohovor nanečisto</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Chceš si vyzkoušet pohovor na jakoukoliv brigádu nebo pozici"
-            " nanečisto? Zkopíruj si tento speciální prompt a vlož ho do ChatGPT"
-            " nebo Claude:"
+            "Vyzkoušej si pracovní pohovor přímo tady. Zadej pozici a AI tě prověří jako skutečný HR manažer."
         )
+        
+        pozice_ai = st.text_input("Zadej pozici, na kterou se hlásíš (např. Junior účetní, Prodavač, Grafik):", value="Asistent/ka prodeje", key="ai_pohovor_poz")
+        
+        if "pohovor_chat_k4" not in st.session_state:
+            st.session_state["pohovor_chat_k4"] = [{"role": "assistant", "content": f"Dobrý den, vítám vás na pohovoru. Pro začátek mi prosím řekněte, proč vás zaujala právě pozice '{pozice_ai}'?"}]
 
-        pozice_input = st.text_input(
-            "Zadej pozici, na kterou se chceš připravit (např. Prodavač, Junior"
-            " vývojář, Asistent/ka):",
-            value="Prodavač v e-shopu",
-            key="k4_2_2_pozice",
-        )
+        for msg in st.session_state["pohovor_chat_k4"]:
+            with st.chat_message(msg["role"]):
+                st.write(msg["content"])
 
-        prompt_text = (
-            "Chovej se jako přísný, ale férový HR manažer. Ucházím se o pozici"
-            f" {pozice_input}. Ptej se mě postupně na otázky jako u pracovního"
-            " pohovoru. Po pěti otázkách mi dej zpětnou vazbu: co bylo přesvědčivé,"
-            " co bylo slabé a jak bych mohl/a odpovědi zlepšit."
-        )
+        if prompt_pohovor := st.chat_input("Tvoje odpověď personalistovi..."):
+            with st.chat_message("user"):
+                st.write(prompt_pohovor)
+            
+            historie = st.session_state["pohovor_chat_k4"].copy()
+            st.session_state["pohovor_chat_k4"].append({"role": "user", "content": prompt_pohovor})
+            
+            with st.chat_message("assistant"):
+                with st.spinner("HR manažer přemýšlí..."):
+                    odpoved_ai = ziskej_odpoved_pohovor_ai(pozice_ai, prompt_pohovor, historie)
+                    st.write(odpoved_ai)
+            
+            st.session_state["pohovor_chat_k4"].append({"role": "assistant", "content": odpoved_ai})
+            
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 4", "AI Pohovor nanečisto", prompt_pohovor + "\n\nHR: " + odpoved_ai)
 
-        st.markdown(
-            f"""
-        <div style="background-color: #f8f9fa; padding: 15px; border-left: 5px solid #8b5cf6; border-radius: 5px; font-family: monospace; font-size: 1.1em; color: #333; white-space: pre-wrap; word-wrap: break-word; line-height: 1.5;">
-        {prompt_text}
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
+        if st.button("🔄 Začít pohovor znovu", key="reset_pohovor"):
+            st.session_state["pohovor_chat_k4"] = [{"role": "assistant", "content": f"Dobrý den, vítám vás na pohovoru. Pro začátek mi prosím řekněte, proč vás zaujala právě pozice '{pozice_ai}'?"}]
+            st.rerun()
 
-        st.caption(
-            "💡 Tip: Označ text výše, zkopíruj (Ctrl+C / Cmd+C) a vlož ho"
-            " rovnou do svého oblíbeného AI chatu."
-        )
 
     elif selected_section_4 == "2.3 Životopis, motivační dopis a portfolio":
         st.markdown("### 2.3 Životopis, motivační dopis a portfolio")
@@ -1042,7 +1142,7 @@ def render():
             - výpovědní dobu a odkaz na vnitřní předpisy zaměstnavatele.
             """)
 
-        st.markdown("#### 📄 Modelová ukázka pracovní smlouvy (zjednodušený výukový vzor)")
+        st.markdown("#### 📄 Modelová ukázka pracovní smlouvy (zjednodušený vzor)")
         st.markdown(
             """
         <div style="background-color: #ffffff; padding: 25px; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1e293b; margin-bottom: 20px;">
@@ -1587,7 +1687,7 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>📉 <b>Simulátor: Skutečně jsi zbohatl? (Kupní síla)</b></div>",
+            "<div class='box-purple'>🔎 <b>Detektivní úkol:</b> Běž na stránky Českého statistického úřadu (czso.cz) a najdi aktuální <b>míru inflace (Index spotřebitelských cen)</b>. Zadej ji níže!</div>",
             unsafe_allow_html=True,
         )
         st.write(
@@ -1601,11 +1701,10 @@ def render():
             zvyseni_mzdy = st.slider(
                 "Šéf ti přidal ke mzdě (%):", 0, 20, 5, key="k4_3_2_zvyseni"
             )
-            inflace = st.slider(
-                "Inflace (zdražení v obchodech %):",
-                0,
-                20,
-                8,
+            inflace = st.number_input(
+                "Inflace / Index spotřebitelských cen v ČR (%):",
+                value=8.0,
+                step=0.1,
                 key="k4_3_2_inflace",
             )
 
@@ -1619,7 +1718,7 @@ def render():
             if rust_realne_mzdy < 0:
                 st.error(
                     f"🚨 **Chudneš!** Tvá reálná mzda klesla o"
-                    f" {-rust_realne_mzdy} %. Sice máš v peněžence víc korun,"
+                    f" {-rust_realne_mzdy:.1f} %. Sice máš v peněžence víc korun,"
                     " ale věci v obchodě zdražily mnohem víc."
                 )
             elif rust_realne_mzdy == 0:
@@ -1630,7 +1729,7 @@ def render():
             else:
                 st.success(
                     f"📈 **Bohatneš!** Tvá reálná mzda vzrostla o"
-                    f" {rust_realne_mzdy} %. Mzda překonala zdražování a ty si"
+                    f" {rust_realne_mzdy:.1f} %. Mzda překonala zdražování a ty si"
                     " můžeš dovolit koupit více věcí."
                 )
 
@@ -1806,25 +1905,54 @@ def render():
             unsafe_allow_html=True,
         )
 
-        st.markdown("#### 🧾 Modelový výpočet čisté mzdy krok za krokem:")
-        st.markdown(
-            """
-        | Krok | Položka | Výpočet | Částka |
-        | :--- | :--- | :--- | :--- |
-        | 1. | **Hrubý příjem (základ pro daně a odvody)** | Základ (32 000 Kč) + Příplatky (1 200 Kč) | **33 200 Kč** |
-        | 2. | **Sociální pojištění zaměstnance (7,1 %)** | 33 200 × 7,1 % | **−2 357 Kč** |
-        | 3. | **Zdravotní pojištění zaměstnance (4,5 %)**| 33 200 × 4,5 % | **−1 494 Kč** |
-        | 4. | **Daň před slevami (15 %)** | 33 200 × 15 % | 4 980 Kč |
-        | 5. | **Sleva na poplatníka** | Měsíční daňová sleva (prohlášení k dani) | **+2 570 Kč** |
-        | 6. | **Reálná daň po slevě** | 4 980 − 2 570 | **−2 410 Kč** |
-        | 7. | **ČISTÁ MZDA K VÝPLATĚ** | 33 200 − 2 357 − 1 494 − 2 410 | **26 939 Kč** |
-        """,
-            unsafe_allow_html=True,
-        )
+        st.divider()
+        st.markdown("#### 🧮 Interaktivní kalkulačka čisté mzdy (2026)")
+        st.write("Vyzkoušej si, jak slevy a odvody ovlivňují výsledek:")
 
-        st.caption(
-            "📌 *Poznámka: Výpočet je zjednodušený pro výukové účely (zaokrouhlování na celé koruny).*"
-        )
+        col_k1, col_k2 = st.columns(2)
+        with col_k1:
+            hm = st.number_input("Zadej hrubou mzdu (Kč):", min_value=18900, max_value=200000, value=35000, step=1000)
+            podepsano = st.checkbox("Mám podepsané 'Růžové prohlášení' (Sleva na poplatníka 2 570 Kč)", value=True)
+            deti = st.selectbox("Počet vyživovaných dětí v domácnosti:", [0, 1, 2, 3])
+            st.checkbox("Jsem student (Sleva zrušena – ponecháno pro ukázku)", value=False, disabled=True, help="Sleva na studenta byla v ČR zrušena konsolidačním balíčkem.")
+            ztp = st.checkbox("Mám nárok na slevu pro ZTP/P (1 345 Kč)", value=False)
+
+        with col_k2:
+            soc_kalk = math.floor(hm * 0.071)
+            zdr_kalk = math.floor(hm * 0.045)
+            dan_zaklad = math.floor(hm * 0.15)
+            
+            sleva_p = 2570 if podepsano else 0
+            sleva_d = 0
+            if deti == 1: sleva_d = 1267
+            elif deti == 2: sleva_d = 1267 + 1860
+            elif deti >= 3: sleva_d = 1267 + 1860 + 2320
+            
+            sleva_z = 1345 if ztp else 0
+
+            celkova_sleva = sleva_p + sleva_d + sleva_z
+            dan_po_slevach = dan_zaklad - celkova_sleva
+            
+            bonus = 0
+            if dan_po_slevach < 0 and deti > 0 and (sleva_p + sleva_z <= dan_zaklad):
+                # Zjednodušená logika bonusu
+                bonus = abs(dan_po_slevach)
+                dan_po_slevach = 0
+            elif dan_po_slevach < 0:
+                dan_po_slevach = 0
+
+            cista_kalk = hm - soc_kalk - zdr_kalk - dan_po_slevach + bonus
+
+            st.write(f"**Hrubá mzda:** {hm:,} Kč".replace(",", " "))
+            st.write(f"➖ Soc. pojištění (7,1 %): {soc_kalk:,} Kč".replace(",", " "))
+            st.write(f"➖ Zdr. pojištění (4,5 %): {zdr_kalk:,} Kč".replace(",", " "))
+            st.write(f"➖ Daň před slevou (15 %): {dan_zaklad:,} Kč".replace(",", " "))
+            st.write(f"➕ Slevy na dani celkem: {celkova_sleva:,} Kč".replace(",", " "))
+            if bonus > 0:
+                st.write(f"🎁 **Daňový bonus (stát ti doplácí):** {bonus:,} Kč".replace(",", " "))
+            
+            st.markdown(f"<h4 style='color: #10b981; margin-top: 10px;'>Čistá mzda k výplatě: {cista_kalk:,} Kč</h4>".replace(",", " "), unsafe_allow_html=True)
+
 
     elif (
         selected_section_4
@@ -2025,107 +2153,6 @@ def render():
             unsafe_allow_html=True,
         )
 
-        st.divider()
-        st.markdown(
-            "<div class='box-yellow'>🧩 <b>Simulátor: Kouzlo daňového bonusu a slev</b></div>",
-            unsafe_allow_html=True,
-        )
-        st.write(
-            "Nastav hrubou mzdu a přidej životní situaci. Sleduj, co to udělá s daní. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?"
-        )
-
-        col_slev1, col_slev2 = st.columns(2)
-        with col_slev1:
-            hruba_slevy = st.slider(
-                "Hrubá mzda:",
-                20000,
-                60000,
-                30000,
-                step=1000,
-                key="k4_3_6_hruba",
-            )
-            deti = st.selectbox(
-                "Počet vyživovaných dětí (pro rok 2026):",
-                [0, 1, 2, 3],
-                key="k4_3_6_deti",
-            )
-
-            dan_zaklad = int(hruba_slevy * 0.15)
-            sleva_poplatnik = 2570
-
-            sleva_deti = 0
-            if deti == 1:
-                sleva_deti = 1267
-            elif deti == 2:
-                sleva_deti = 1267 + 1860
-            elif deti >= 3:
-                sleva_deti = 1267 + 1860 + 2320
-
-            dan_po_poplatnikovi = max(0, dan_zaklad - sleva_poplatnik)
-            dan_po_detech = dan_po_poplatnikovi - sleva_deti
-
-            bonus = 0
-            if dan_po_detech < 0:
-                bonus = abs(dan_po_detech)
-                realna_dan = 0
-            else:
-                realna_dan = dan_po_detech
-
-            soc = int(hruba_slevy * 0.071)
-            zdr = int(hruba_slevy * 0.045)
-
-            cista_mzda_konecna = hruba_slevy - soc - zdr - realna_dan + bonus
-
-        with col_slev2:
-            st.write(
-                f"1. Vypočtená daň z hrubé (15 %): **{dan_zaklad} Kč**"
-            )
-            st.write(
-                f"2. Mínus základní sleva na tebe: **- {sleva_poplatnik} Kč**"
-            )
-            st.write(f"3. Mínus slevy na děti: **- {sleva_deti} Kč**")
-            st.divider()
-
-            if bonus > 0:
-                st.success(
-                    f"🚀 **Vznikl ti Daňový Bonus: {bonus} Kč!**\nStát tě"
-                    " nenechá platit žádnou daň, a ještě ti tuto částku přihodí"
-                    " k výplatě navíc!"
-                )
-                st.metric(
-                    "Tvoje finální čistá mzda:",
-                    f"{cista_mzda_konecna:,} Kč".replace(",", " "),
-                )
-            else:
-                st.info(
-                    "Konečná daň z příjmů, kterou reálně zaplatíš:"
-                    f" {realna_dan} Kč"
-                )
-                st.metric(
-                    "Tvoje finální čistá mzda:",
-                    f"{cista_mzda_konecna:,} Kč".replace(",", " "),
-                )
-
-            if cista_mzda_konecna > hruba_slevy:
-                st.balloons()
-                st.markdown(
-                    "**WOW! Tvá čistá mzda je vyšší než hrubá!** To je možné"
-                    " právě díky státnímu daňovému bonusu za děti."
-                )
-
-        if st.button("Uložit výpočet daňových slev 💾", key="btn_k4_3_6"):
-            slevy_data = (
-                f"Hrubá: {hruba_slevy} Kč | Dětí: {deti} | Bonus: {bonus} Kč |"
-                f" Čistá mzda: {cista_mzda_konecna} Kč"
-            )
-            if "uloz_odpoved_fn" in st.session_state:
-                st.session_state["uloz_odpoved_fn"](
-                    "Kapitola 4",
-                    "Podkapitola 3.6 - Daňový bonus a slevy",
-                    slevy_data,
-                )
-            st.success("Výpočet byl uložen!")
-
     elif (
         selected_section_4
         == "3.7 Kam jdou odvody (sociální a zdravotní pojištění)"
@@ -2195,129 +2222,69 @@ def render():
         """)
 
         st.divider()
-        st.markdown(
-            "<div class='box-yellow'>⚖️ <b>Rozhodovací simulátor: Která"
-            " nabídka je skutečně lepší?</b></div>",
-            unsafe_allow_html=True,
-        )
-        st.write(
-            "Dostal jsi dvě pracovní nabídky. Papírově vypadá jedna lépe. Ale"
-            " co když započítáš náklady na dopravu a tvůj volný čas? (Počítáme,"
-            " že tvůj volný čas má pro tebe hodnotu 150 Kč / hodina)."
-        )
+        st.markdown("#### 🎁 Sestav si ideální balíček benefitů (Benefitový rozpočet)")
+        st.write("Představ si, že máš u zaměstnavatele k platu navíc rozpočet **100 kreditů**. Nakup si benefity, které jsou pro tebe nejdůležitější. Pozor, nemůžeš mít všechno!")
 
-        col_nab1, col_nab2 = st.columns(2)
-        with col_nab1:
-            st.markdown("##### 🏢 Nabídka A: Korporát v centru")
-            mzda_a = 40000
-            dojizdeni_minuty_a = st.slider(
-                "Čas strávený dojížděním denně tam i zpět (v minutách):",
-                0,
-                180,
-                90,
-                key="doj_a",
-            )
-            naklady_doprava_a = st.slider(
-                "Měsíční náklady na dojíždění (palivo/jízdenky v Kč):",
-                0,
-                5000,
-                3000,
-                key="nak_a",
-            )
+        b1 = st.checkbox("🌴 5. týden dovolené (30 kreditů)", key="ben1")
+        b2 = st.checkbox("🏠 Možnost 100% Home Office (40 kreditů)", key="ben2")
+        b3 = st.checkbox("🚗 Služební auto i pro soukromé účely (50 kreditů)", key="ben3")
+        b4 = st.checkbox("💪 Plně hrazená Multisportka (15 kreditů)", key="ben4")
+        b5 = st.checkbox("🐖 Příspěvek na penzijko 2000 Kč/měs (20 kreditů)", key="ben5")
+        b6 = st.checkbox("🍔 Stravenkový paušál / Kafetérie (15 kreditů)", key="ben6")
+        b7 = st.checkbox("🇬🇧 Firemní jazykové a odborné kurzy (10 kreditů)", key="ben7")
 
-            ztraceny_cas_a = (dojizdeni_minuty_a / 60) * 21 * 150
-            realna_hodnota_a = mzda_a - naklady_doprava_a - ztraceny_cas_a
+        utraceno = 0
+        if b1: utraceno += 30
+        if b2: utraceno += 40
+        if b3: utraceno += 50
+        if b4: utraceno += 15
+        if b5: utraceno += 20
+        if b6: utraceno += 15
+        if b7: utraceno += 10
 
-            st.write(f"Hrubá mzda: **{mzda_a} Kč**")
-            st.info(
-                f"Peníze vyhozené za dopravu: -{naklady_doprava_a} Kč\n\nHodnota"
-                f" ztraceného času v MHD/autě: -{int(ztraceny_cas_a)} Kč"
-            )
-            st.metric(
-                "Skutečná hodnota nabídky A:",
-                f"{int(realna_hodnota_a)} Kč",
-            )
-
-        with col_nab2:
-            st.markdown("##### 🏠 Nabídka B: Startup na Home Office")
-            mzda_b = 35000
-            st.write(
-                "Firma ti dovolí pracovat 100% z domova. Nikam nedojíždíš."
-            )
-
-            realna_hodnota_b = mzda_b
-
-            st.write(f"Hrubá mzda: **{mzda_b} Kč**")
-            st.success(
-                "Peníze vyhozené za dopravu: 0 Kč\n\nHodnota ztraceného času v"
-                " MHD/autě: 0 Kč"
-            )
-            st.metric(
-                "Skutečná hodnota nabídky B:",
-                f"{int(realna_hodnota_b)} Kč",
-            )
-
-        if realna_hodnota_b > realna_hodnota_a:
-            st.markdown(
-                "🚨 **Výsledek:** Přestože je Nabídka B na papíře o 5 000 Kč"
-                " chudší, **ve skutečnosti je pro tebe výhodnější!** Ušetříš"
-                " peníze za benzín a hlavně získáš zpět desítky hodin svého"
-                " života měsíčně."
-            )
+        st.progress(min(utraceno/100, 1.0))
+        
+        if utraceno > 100:
+            st.error(f"🚨 **Překročil/a jsi budget!** Utratil/a jsi {utraceno} ze 100 kreditů. Musíš nějaký benefit škrtnout.")
+        elif utraceno == 100:
+            st.success("✅ **Perfektní!** Vyčerpal/a jsi svůj budget na maximum. Získáváš balíček přesně na míru svým potřebám.")
         else:
-            st.markdown(
-                "⚖️ **Výsledek:** I přes započítání nákladů na dojíždění se"
-                " Nabídka A stále finančně vyplatí. Záleží ale i na tom, zda ti"
-                " stres z dojíždění za ty peníze stojí."
-            )
-
-        if st.button("Uložit porovnání nabídek práce 💾", key="btn_k4_3_8"):
-            nabidky_data = (
-                f"Hodnota A: {int(realna_hodnota_a)} Kč | Hodnota B:"
-                f" {int(realna_hodnota_b)} Kč"
-            )
-            if "uloz_odpoved_fn" in st.session_state:
-                st.session_state["uloz_odpoved_fn"](
-                    "Kapitola 4",
-                    "Podkapitola 3.8 - Rozhodovací simulátor nabídek",
-                    nabidky_data,
-                )
-            st.success("Porovnání bylo uloženo!")
+            st.info(f"Zbývá ti **{100 - utraceno} kreditů**. Můžeš si vybrat další benefity.")
 
         st.divider()
-        st.markdown("#### 🗣️ Vyjednávání o mzdě")
+        st.markdown("#### 🗣️ AI Trenažér: Vyjednávání o mzdě nanečisto")
         st.write(
-            "Vyjednávání není hádka na tržnici. Je to **profesionální obchodní"
-            " rozhovor o hodnotě tvé práce**. Většina firem počítá s tím, že o"
-            " prvním návrhu mzdy se bude diskutovat."
+            "Vyjednávání není hádka na tržnici. Je to **profesionální obchodní rozhovor o hodnotě tvé práce**. "
+            "Většina firem počítá s tím, že o prvním návrhu mzdy se bude diskutovat. Vyzkoušej si to nanečisto s AI šéfem. Tvým cílem je zvýšení platu o 15 %."
         )
 
-        prompt_plat = (
-            "Hrajeme hru na vyjednávání o mzdě. Ty jsi tvrdý, ale racionální HR"
-            " manažer firmy. Já jsem zaměstnanec, který pracuje na pozici"
-            " Junior Marketing Specialista už rok a jde si za tebou říct o"
-            " zvýšení hrubé mzdy o 15 %. Začni konverzaci tím, že se zeptáš,"
-            " co potřebuji. Já vznesu požadavek. Ty nejprve odmítni a hledej"
-            " důvody, proč mi přidat nemůžeš. Nenuť mě vyhrát hned. Čekej na mé"
-            " argumenty. Pokud mé argumenty budou logické, podložené čísly nebo"
-            " mi navrhneš kompromis v podobě nefinančních benefitů, můžeme se"
-            " dohodnout. Po 6 výměnách zpráv hru ukonči a dej mi jako AI"
-            " feedback, jak jsem si ve vyjednávání vedl."
-        )
+        if "vyjednavani_chat_k4" not in st.session_state:
+            st.session_state["vyjednavani_chat_k4"] = [{"role": "assistant", "content": "Ahoj, chtěl/a jsi se mnou mluvit ohledně tvého platu. O co přesně jde?"}]
 
-        st.markdown(
-            f"""
-        <div style="background-color: #f8f9fa; padding: 15px; border-left: 5px solid #8b5cf6; border-radius: 5px; font-family: monospace; font-size: 1.1em; color: #333; white-space: pre-wrap; word-wrap: break-word; line-height: 1.5;">
-        {prompt_plat}
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
+        for msg in st.session_state["vyjednavani_chat_k4"]:
+            with st.chat_message(msg["role"]):
+                st.write(msg["content"])
 
-        st.caption(
-            "💡 Tip: Zkopíruj text z fialového boxu výše a zkus AI přesvědčit,"
-            " že si peníze navíc zasloužíš!"
-        )
+        if prompt_plat := st.chat_input("Tvůj argument pro zvýšení platu..."):
+            with st.chat_message("user"):
+                st.write(prompt_plat)
+            
+            historie = st.session_state["vyjednavani_chat_k4"].copy()
+            st.session_state["vyjednavani_chat_k4"].append({"role": "user", "content": prompt_plat})
+            
+            with st.chat_message("assistant"):
+                with st.spinner("Šéf přemýšlí nad odpovědí..."):
+                    odpoved_ai = ziskej_odpoved_vyjednavani_ai(prompt_plat, historie)
+                    st.write(odpoved_ai)
+            
+            st.session_state["vyjednavani_chat_k4"].append({"role": "assistant", "content": odpoved_ai})
+            
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 4", "AI Vyjednávání o platu", prompt_plat + "\n\nHR: " + odpoved_ai)
+
+        if st.button("🔄 Začít vyjednávání znovu", key="reset_vyjedn"):
+            st.session_state["vyjednavani_chat_k4"] = [{"role": "assistant", "content": "Ahoj, chtěl/a jsi se mnou mluvit ohledně tvého platu. O co přesně jde?"}]
+            st.rerun()
 
     # =========================================================================
     # SEKCE 4: ŽIVOT V PRÁCI: KULTURA, WELLBEING A KARIÉRNÍ RŮST
@@ -2640,14 +2607,49 @@ def render():
                 )
             st.success("Výpočet byl uložen!")
 
-    elif (
-        selected_section_4
-        == "5.2 Úřad práce, podpora v nezaměstnanosti a rekvalifikace"
-    ):
-        st.markdown(
-            "### 5.2 Kdy mám nárok na podporu a jak pomáhá Úřad práce"
+    elif selected_section_4 == "5.2 Když dostanu výpověď":
+        st.markdown("### 5.2 Když dostanu výpověď")
+        st.write(
+            "Výpověď neznamená konec kariéry. Je to krizová situace, kterou je potřeba řešit prakticky. "
+            "Zachovejte klid a ujistěte se, že všechny kroky probíhají podle pravidel."
         )
 
+        st.markdown("#### ✅ Co ověřit při výpovědi:")
+        st.markdown("""
+        * **Zda je výpověď písemná:** Ústní výpověď neplatí. Musí být vždy písemně doručena.
+        * **Jaký je důvod výpovědi:** Zaměstnavatel vám může dát výpověď jen ze zákonem daných důvodů (např. rušení pobočky, vaše pochybení).
+        * **Zda běží výpovědní doba:** Výpovědní doba je standardně 2 měsíce (až na výjimky jako zkušební doba nebo okamžité zrušení).
+        * **Zda náleží odstupné:** Pokud dostanete výpověď z organizačních důvodů (firma se ruší nebo snižuje stavy), máte nárok na odstupné (zpravidla 1–3 měsíční platy podle délky zaměstnání).
+        * **Kdy přesně končí pracovní poměr:** Od toho se odvíjí další kroky.
+        * **Jaké dokumenty má zaměstnavatel vydat:** Typicky jde o tzv. Zápočtový list (Potvrzení o zaměstnání) a Evidenční list důchodového pojištění.
+        * **Kdy se registrovat na Úřadu práce:** Aby za vás plynule platil zdravotní pojištění stát.
+        * **Zda je možné požádat o podporu nebo rekvalifikaci:** Jaké kroky nabízí stát k získání nové práce.
+        """)
+
+    elif selected_section_4 == "5.3 Úřad práce, podpora a rekvalifikace":
+        st.markdown("### 5.3 Úřad práce, podpora v nezaměstnanosti a rekvalifikace")
+        st.write(
+            "Úřad práce pomáhá lidem, kteří hledají zaměstnání. Může řešit evidenci uchazečů, podporu v nezaměstnanosti, "
+            "rekvalifikace nebo zprostředkování práce. Nejde jen o místo „pro nezaměstnané“. Úřad práce je instituce, "
+            "která má člověku pomoct zorientovat se ve chvíli, kdy práce skončila, hrozí ztráta příjmu nebo je potřeba změnit obor."
+        )
+
+        st.markdown("#### 📊 Výše podpory v nezaměstnanosti od roku 2026")
+        st.write(
+            "Od roku 2026 se podpora v nezaměstnanosti počítá z předchozího průměrného měsíčního čistého výdělku zaměstnance "
+            "nebo z vyměřovacího základu u OSVČ. V prvním období je podpora vyšší, aby měl člověk větší prostor hledat vhodnou práci, ne jen rychle přijmout první nabídku."
+        )
+
+        st.markdown("""
+        | Věk uchazeče při podání žádosti | Celková podpůrčí doba | Rozložení měsíců | Výše podpory od roku 2026 |
+        | :--- | :--- | :--- | :--- |
+        | **Do 52 let** | 5 měsíců | 2 měsíce + 2 měsíce + 1 měsíc | **80 % → 50 % → 40 %** z čistého výdělku |
+        | **Od 52 do 57 let** | 8 měsíců | 3 měsíce + 3 měsíce + 2 měsíce | **80 % → 50 % → 40 %** z čistého výdělku |
+        """)
+        st.caption("*Nad 57 let je doba obvykle delší (11 měsíců). Pro aktuální a maximální výměry podpor vždy sledujte webové stránky MPSV.*")
+
+        st.divider()
+        st.markdown("#### ⚖️ Kdy mám nárok na podporu?")
         with st.form("podminky_up"):
             podm_1 = st.checkbox(
                 "Během posledních 2 let jsem odpracoval/a alespoň 12 měsíců,"
@@ -2673,12 +2675,12 @@ def render():
                 if "uloz_odpoved_fn" in st.session_state:
                     st.session_state["uloz_odpoved_fn"](
                         "Kapitola 4",
-                        "Podkapitola 5.2 - Nárok na podporu",
+                        "Podkapitola 5.3 - Nárok na podporu",
                         narok_data,
                     )
 
-    elif selected_section_4 == "5.3 Co dělat, když... (Krizový trenažér)":
-        st.markdown("### 5.3 Co dělat, když... (Krizový trenažér)")
+    elif selected_section_4 == "5.4 Co dělat, když... (Krizový trenažér)":
+        st.markdown("### 5.4 Co dělat, když... (Krizový trenažér)")
 
         with st.form("krize_form"):
             st.write(
@@ -2709,14 +2711,14 @@ def render():
 
             if st.form_submit_button("Odeslat a uložit tvou reakci 💾"):
                 if k_odp.startswith("B"):
-                    st.success("✅ **Zlatá medaile za profesionalitu!**")
+                    st.success("✅ **Zlatá medaile za profesionalitu!** Nikdy nepodepisujte právní dokument pod tlakem a v emocích.")
                 else:
-                    st.error("❌ **Chybná reakce.**")
+                    st.error("❌ **Chybná reakce.** Pod nátlakem se chybuje.")
 
                 if "uloz_odpoved_fn" in st.session_state:
                     st.session_state["uloz_odpoved_fn"](
                         "Kapitola 4",
-                        "Podkapitola 5.3 - Krizový trenažér",
+                        "Podkapitola 5.4 - Krizový trenažér",
                         k_odp[:30],
                     )
 
@@ -2769,6 +2771,7 @@ def render():
                 " formulace, které znějí profesionálně, ale přirozeně."
             )
             st.code(prompt, language="text")
+            st.write("*Poznámka: Můžeš využít i interaktivní AI trenažér v podkapitole 2.2.*")
 
         with tab4:
             st.markdown("#### Aktivita 4: Výplatní páska s chybami")
@@ -2785,7 +2788,7 @@ def render():
         with tab5:
             st.markdown("#### Aktivita 5: Role-play vyjednávání o mzdě")
             with st.form("form_akt5"):
-                st.write("**Hodnocení:**")
+                st.write("**Hodnocení (Zkus si i AI Trenažér v 3.8):**")
                 h1 = st.checkbox("Věcnost", key="a5_h1")
                 h2 = st.checkbox("Práce s důkazy", key="a5_h2")
                 h3 = st.checkbox("Respekt", key="a5_h3")
@@ -2871,13 +2874,10 @@ def render():
                 key="k4_7_2_q1",
             )
             q2 = st.radio(
-                "2. Kdy má člověk nárok na podporu v nezaměstnanosti?",
+                "2. Jaká je běžná zkušební doba u běžného zaměstnance?",
                 [
-                    "A) Kdykoliv, když ztratí jakoukoliv práci.",
-                    (
-                        "B) Pokud má za poslední 2 roky odpracováno alespoň 12"
-                        " měsíců a neporušil hrubě kázeň."
-                    ),
+                    "A) Maximálně 1 měsíc.",
+                    "B) Maximálně 4 měsíce.",
                 ],
                 key="k4_7_2_q2",
             )
