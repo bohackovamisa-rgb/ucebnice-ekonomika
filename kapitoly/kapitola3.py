@@ -28,6 +28,40 @@ def render():
             unsafe_allow_html=True,
         )
 
+    # 📌 PŘEHLED A NAVIGACE KAPITOLOU
+    with st.expander(
+        "🧭 O čem kapitola je, kde ji využijete a co si z ní odnesete (Rozbalit)", expanded=False
+    ):
+        c_nav1, c_nav2 = st.columns(2)
+        with c_nav1:
+            st.markdown("""
+            **🎯 Co si z kapitoly odnesete:**
+            * 💰 **Náklady, výnosy a zisk:** Rozlišíte základní ekonomické pojmy a pochopíte, proč nejsou zaměnitelné.
+            * 🏷️ **Cena jako rozhodnutí:** Pochopíte, proč cena nevzniká jen součtem nákladů, ale i podle hodnoty v očích zákazníka.
+            * 🚀 **Štíhlé procesy:** Popíšete princip štíhlé výroby a rozpoznáte základní typy plýtvání.
+            * 📊 **KPI a měření výkonu:** Navrhnete jednoduché ukazatele, které skutečně pomáhají při rozhodování.
+            """)
+            st.markdown(
+                """
+            <div style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
+                <i>💼 <b>Kde to využijete:</b> Při odhadu ceny produktu, při školním projektu, v podnikatelském záměru i při hodnocení efektivity práce.</i>
+            </div>
+            """,
+                unsafe_allow_html=True,
+            )
+
+        with c_nav2:
+            st.markdown("""
+            **🧭 Doporučené pořadí studia:**
+            1. 🏭 **Výrobní proces a organizace výroby** — Nejdřív si ujasníš, co je výroba, jaké má vstupy, typy, kapacitu a jak souvisí s logistikou.
+            2. ✅ **Řízení jakosti** — Potom se zaměříš na kvalitu, prevenci chyb, normy, TQM a následky nekvality.
+            3. 📉 **Náklady, výnosy a zisk** — Následně projdeš náklady, výdaje, výnosy, příjmy, kalkulace, zisk, ztrátu a bod zvratu.
+            4. 📦 **Majetek firmy a zásoby** — Potom navážeš oběžným a dlouhodobým majetkem, evidencí zásob, metodami vyskladňování a moderním řízením skladu.
+            5. 🧮 **Kalkulace, ceny a bod zvratu** — Dále propojíš náklady s cenou, cenovou strategií a rozhodováním o objemu výroby.
+            6. ⚡ **Efektivita, štíhlá výroba a technologie** — Nakonec projdeš Lean, Kanban, automatizaci, KPI, dashboardy a udržitelnou výrobu.
+            7. 🛠️ **Praktická dílna a případové studie** — Na závěr použiješ poznatky v mini projektu a třech modelových situacích.
+            """)
+
     # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_3 = [
         "1.1 Výrobní proces a faktory",
@@ -89,9 +123,9 @@ def render():
             " zákazníka."
         )
         st.info(
-            "📦 **Vstupy** (materiál, práce, stroje, energie, informace,"
-            " know-how) → ⚙️ **Technologie a práce** → 🎁 **Výstupy** (hotové"
-            " výrobky, služby, polotovary)."
+            "📦 **Vstupy** (materiál, práce lidí, stroje, energie, informace, kapitál nebo know-how) "
+            "→ ⚙️ **Technologie a práce** "
+            "→ 🎁 **Výstupy** (hotové výrobky, služby, polotovary nebo jiné výsledky činnosti firmy)."
         )
 
         st.divider()
@@ -141,17 +175,17 @@ def render():
 
         with st.form("kviz_vyroba"):
             q1 = st.selectbox(
-                "Nábytek vyrobený přesně podle rozměrů zákazníka:",
+                "1. Nábytek vyrobený přesně podle rozměrů zákazníka:",
                 ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"],
                 key="k3_1_2_q1",
             )
             q2 = st.selectbox(
-                "300 stejných školních mikin:",
+                "2. 300 stejných školních mikin:",
                 ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"],
                 key="k3_1_2_q2",
             )
             q3 = st.selectbox(
-                "Tisíce rohlíků každý den:",
+                "3. Tisíce rohlíků každý den:",
                 ["Vyber možnost...", "Kusová", "Sériová", "Hromadná"],
                 key="k3_1_2_q3",
             )
@@ -192,7 +226,7 @@ def render():
             "Firma se obvykle nesnaží kapacitu využívat za každou cenu na 100"
             " %. Příliš vysoké vytížení může vést k přetížení pracovníků,"
             " poruchám, zmetkům nebo zpoždění zakázek. Cílem je optimální"
-            " využití, které ponechává rezervu na údržbu."
+            " využití kapacity."
         )
 
         st.divider()
@@ -213,7 +247,7 @@ def render():
         )
 
         zakazky = st.slider(
-            "Počet slíbených zakázek na dnešek (kusů):",
+            "Skutečná výroba (Počet slíbených zakázek na dnešek):",
             min_value=0,
             max_value=60,
             value=40,
@@ -270,7 +304,7 @@ def render():
 
         st.markdown("#### Metoda Just-in-Time (JIT)")
         st.write(
-            "Znamená, že materiál přichází do výroby co nejpozději — ideálně"
+            "Metoda Just-in-Time znamená, že materiál přichází do výroby co nejpozději — ideálně"
             " právě ve chvíli, kdy je potřeba. Cílem je minimalizovat skladové"
             " zásoby."
         )
@@ -391,7 +425,7 @@ def render():
                 key="k3_2_1_k2",
             )
             k3 = st.radio(
-                "Poka-Yoke (nástroj/pomůcka znemožňující chybu):",
+                "Poka-Yoke (pomůcka znemožňující chybu):",
                 ["Kontrola kvality", "Prevence (Řízení jakosti)"],
                 horizontal=True,
                 key="k3_2_1_k3",
@@ -505,7 +539,7 @@ def render():
                 key="k3_2_2_chybovost",
             )
             naklad_ks = st.number_input(
-                "Náklad na výrobu 1 kusu (Kč):",
+                "Náklad na 1 vadný kus (Kč):",
                 min_value=1,
                 value=500,
                 step=50,
