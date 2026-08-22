@@ -63,6 +63,7 @@ CELKEM_UKOLU = {
 # 2. POMOCNÉ FUNKCE A DATABÁZE SUPABASE & GOOGLE SHEETS
 # =========================================================================
 def ocisti_username(text: str) -> str:
+    """Odstraní diakritiku a převede text na malá písmena pro bezpečný dotaz do DB."""
     if not text:
         return ""
     text = unicodedata.normalize("NFD", text)
@@ -96,6 +97,7 @@ def init_gspread():
 
 
 def get_user_level(total_answers: int):
+    """Vypočítá herní level a XP body studenta."""
     xp = total_answers * 100
     if xp < 400:
         return 1, "Nováček 🥉", xp, 400
@@ -110,6 +112,7 @@ def get_user_level(total_answers: int):
 
 
 def ai_tutor_chat(otazka_zaka: str, aktualni_kapitola: str):
+    """Zavolá OpenAI API pro plovoucího Eko-Parťáka s kontextem aktuální kapitoly."""
     try:
         api_key = st.secrets.get("OPENAI_API_KEY", "")
         if api_key:
@@ -141,6 +144,7 @@ def ai_tutor_chat(otazka_zaka: str, aktualni_kapitola: str):
 
 
 def ai_analyza_tridy(nazev_tridy: str, data_odpovedi: list, celkem_ukolu_map: dict):
+    """Generuje didaktickou AI diagnostiku pro učitele na základě anonymizovaných dat třídy."""
     try:
         api_key = st.secrets.get("OPENAI_API_KEY", "")
         if api_key:
@@ -181,6 +185,38 @@ def ai_analyza_tridy(nazev_tridy: str, data_odpovedi: list, celkem_ukolu_map: di
         return f"Analýzu se nepodařilo vygenerovat: {e}"
     return "Analýza není momentálně dostupná. Zkontrolujte připojení k internetu a API klíč."
 
+# --- 🔄 AUTO-LOGIN PO OBNOVENÍ STRÁNKY (F5) PŘES URL QUERY PARAMS ---
+if not st.session_state.get("is_logged_in"):
+    saved_user = st.query_params.get("user")
+    if saved_user:
+        ciste_jmeno = ocisti_username(saved_user)
+        try:
+            res_auto = (
+                supabase.table("uzivatele")
+                .select("*")
+                .eq("username", ciste_jmeno)
+                .execute()
+            )
+            if res_auto.data:
+                user_auto = res_auto.data[0]
+                st.session_state["is_logged_in"] = True
+                st.session_state["username"] = user_auto.get("username")
+                st.session_state["user_role"] = user_auto.get("role", "student")
+                st.session_state["user_name"] = (
+                    user_auto.get("jmeno")
+                    or user_auto.get("username")
+                    or "Uživatel"
+                )
+                st.session_state["user_class"] = user_auto.get("trida", "")
+
+                saved_view = st.query_params.get("view")
+                if saved_view:
+                    st.session_state["current_view"] = saved_view
+        except Exception:
+            pass
+
+
+# --- FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
 def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     st.markdown(f"**{text_otazky}**")
     staved_text = ulozene_odpovedi.get(otazka_id, "")
@@ -223,10 +259,15 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
         except Exception as e:
             st.error(f"Chyba při zápisu do databáze: {e}")
 
+
+st.session_state["vykresli_otazku_fn"] = vykresli_otazku
+
+
 def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     username = st.session_state.get("username")
     if not username:
         return
+
     try:
         existing = (
             supabase.table("odpovedi")
@@ -236,6 +277,7 @@ def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
             .eq("otazka_id", otazka_id)
             .execute()
         )
+
         if existing.data:
             supabase.table("odpovedi").update({"odpoved": odpoved_text}).eq(
                 "username", username
@@ -253,37 +295,9 @@ def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     except Exception as e:
         st.error(f"Chyba při ukládání odpovědi: {e}")
 
-st.session_state["vykresli_otazku_fn"] = vykresli_otazku
+
 st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
-# =========================================================================
-# 3. AUTO LOGIN
-# =========================================================================
-if not st.session_state.get("is_logged_in"):
-    saved_user = st.query_params.get("user")
-    if saved_user:
-        ciste_jmeno = ocisti_username(saved_user)
-        try:
-            res_auto = (
-                supabase.table("uzivatele")
-                .select("*")
-                .eq("username", ciste_jmeno)
-                .execute()
-            )
-            if res_auto.data:
-                user_auto = res_auto.data[0]
-                st.session_state["is_logged_in"] = True
-                st.session_state["username"] = user_auto.get("username")
-                st.session_state["user_role"] = user_auto.get("role", "student")
-                st.session_state["user_name"] = (
-                    user_auto.get("jmeno") or user_auto.get("username") or "Uživatel"
-                )
-                st.session_state["user_class"] = user_auto.get("trida", "")
-                saved_view = st.query_params.get("view")
-                if saved_view:
-                    st.session_state["current_view"] = saved_view
-        except Exception:
-            pass
 
 # =========================================================================
 # 4. GLOBÁLNÍ DESIGN, ACCESSIBILITY & PLOVOUCÍ AI WIDGET
@@ -369,17 +383,28 @@ div[data-testid="stPopover"] {
 div[data-testid="stPopover"] > button {
     background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
     color: #ffffff !important;
-    border-radius: 50px !important;
-    padding: 0.75rem 1.4rem !important;
-    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4) !important;
+    border-radius: 16px !important;
+    width: 65px !important;
+    height: 65px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4) !important;
     border: 2px solid #ffffff !important;
-    font-weight: 700 !important;
-    font-size: 0.95rem !important;
+    font-size: 1.8rem !important;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 div[data-testid="stPopover"] > button:hover {
-    transform: scale(1.06) translateY(-2px) !important;
+    transform: scale(1.1) translateY(-4px) !important;
     box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6) !important;
+}
+div[data-testid="stPopoverBody"] {
+    width: 320px !important;
+    padding: 1.5rem !important;
+    border-radius: 16px !important;
+    border: 1px solid #EAE7DC !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
 }
 """
 
@@ -1081,7 +1106,7 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                                 st.write("**📜 Historie obchodů:**")
                                 if not df_transakce.empty:
                                     df_trans_zak = df_transakce[df_transakce["Nick"].astype(str).str.strip().str.lower() == zak["Nick"].strip().lower()]
-                                    if not df_transakce.empty:
+                                    if not df_trans_zak.empty:
                                         sloupce_k_zobrazeni = [c for c in df_trans_zak.columns if c not in ["Nick", "Jmeno"]]
                                         st.dataframe(df_trans_zak[sloupce_k_zobrazeni].iloc[::-1], use_container_width=True, hide_index=True)
                     else:
@@ -1190,13 +1215,13 @@ else:
             modul.show()
 
 # =========================================================================
-# 8. 🤖 SKUTEČNĚ PLOVOUCÍ AI TUTOR (EKO-PARŤÁK) V PRAVÉM DOLNÍM ROHU
+# 8. 💬 SKUTEČNĚ PLOVOUCÍ AI TUTOR (EKO-PARŤÁK) V PRAVÉM DOLNÍM ROHU
 # =========================================================================
 curr_view_name = st.session_state.get("current_view", "Obecná ekonomika")
-with st.popover("🤖 Eko-Parťák", help="Plovoucí AI tutor pro okamžitou pomoc s učivem"):
-    st.markdown("#### 🤖 Eko-Parťák (AI Tutor)")
-    st.caption(f"📍 Jsem s tebou v modulu: **{curr_view_name}**")
-    ai_q = st.text_input("Zeptej se na cokoliv k tématu:", placeholder="např. Co je to oportunitní náklad?", key="floating_ai_q")
+with st.popover("💬", help="Zeptat se Eko-Parťáka"):
+    st.markdown("#### 💬 Eko-Parťák")
+    st.caption(f"📍 Kontext: **{curr_view_name}**")
+    ai_q = st.text_input("Něco není jasné? Zeptej se:", placeholder="např. Co je to bod zvratu?", key="floating_ai_q")
     if st.button("Vysvětlit 💡", key="btn_floating_ai", use_container_width=True):
         if ai_q:
             with st.spinner("Přemýšlím..."):
