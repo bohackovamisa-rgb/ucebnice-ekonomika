@@ -4,33 +4,6 @@ import plotly.graph_objects as go
 import streamlit as st
 
 
-# =========================================================================
-# 🔤 GARANTOVANÁ HIERARCHIE NADPISŮ PŘES PŘÍMÝ HTML STYL
-# =========================================================================
-def nadpis_1(text):
-    """1. úroveň nadpisu - Největší (Hlavní bloky kapitoly)"""
-    st.markdown(
-        f"<h2 style='font-size: 2.2rem !important; font-weight: 800 !important; color: #0f172a !important; margin-top: 2rem !important; margin-bottom: 1rem !important; border-bottom: 2px solid #cbd5e1 !important; padding-bottom: 0.5rem !important; line-height: 1.2 !important;'>{text}</h2>",
-        unsafe_allow_html=True,
-    )
-
-
-def nadpis_2(text):
-    """2. úroveň nadpisu - Střední (Podkapitoly 1.1, 2.4, 3.1, 3.4...)"""
-    st.markdown(
-        f"<h3 style='font-size: 1.7rem !important; font-weight: 700 !important; color: #1e40af !important; margin-top: 1.8rem !important; margin-bottom: 0.8rem !important; line-height: 1.3 !important;'>{text}</h3>",
-        unsafe_allow_html=True,
-    )
-
-
-def nadpis_3(text):
-    """3. úroveň nadpisu - Menší (Dílčí témata 1.1.1, 2.4.1, 3.1.1...)"""
-    st.markdown(
-        f"<h4 style='font-size: 1.35rem !important; font-weight: 600 !important; color: #334155 !important; margin-top: 1.5rem !important; margin-bottom: 0.5rem !important; line-height: 1.3 !important;'>{text}</h4>",
-        unsafe_allow_html=True,
-    )
-
-
 def ziskej_odpoved_od_ai(zprava_zaka):
     """
     Neprůstřelná funkce pro volání AI. Pokud selže API, přepne na offline hodnocení.
@@ -40,7 +13,7 @@ def ziskej_odpoved_od_ai(zprava_zaka):
         if api_key:
             headers = {
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}",
+                "Authorization": f"Bearer {api_key}"
             }
             system_prompt = (
                 "Jsi Karel, arogantní ale nesmírně talentovaný grafik. Šéf ti právě píše ohledně tvého "
@@ -48,32 +21,27 @@ def ziskej_odpoved_od_ai(zprava_zaka):
                 "Hned pod to přidej oddělovač '---' a napiš hodnocení jako AI Mentor. "
                 "Ohodnoť jeho zprávu (0-10) v kategoriích: Empatie, Jasnost, Autorita a dej mu krátkou radu."
             )
-
+            
             payload = {
                 "model": "gpt-4o-mini",
                 "messages": [
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": zprava_zaka},
+                    {"role": "user", "content": zprava_zaka}
                 ],
                 "temperature": 0.7,
-                "max_tokens": 500,
+                "max_tokens": 500
             }
-
-            response = requests.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers=headers,
-                json=payload,
-                timeout=10,
-            )
+            
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 return data["choices"][0]["message"]["content"]
     except Exception:
-        pass
-
+        pass 
+        
     delka = len(zprava_zaka.split())
     text_lower = zprava_zaka.lower()
-
+    
     if delka < 5:
         return (
             "👨‍🎨 **Karel:** „To jako vážně? Takhle stručně to se mnou řešíš? Nemám čas na hádanky, jdu pracovat.“\n\n"
@@ -81,22 +49,14 @@ def ziskej_odpoved_od_ai(zprava_zaka):
             "🤖 **AI Mentor (Offline režim):** Tvá zpráva byla příliš krátká. "
             "**Jasnost (2/10), Empatie (1/10), Autorita (3/10).** Jako manažer musíš problém vysvětlit a jasně komunikovat svá očekávání."
         )
-    elif (
-        "vyhazov" in text_lower
-        or "končíš" in text_lower
-        or "výpověď" in text_lower
-    ):
+    elif "vyhazov" in text_lower or "končíš" in text_lower or "výpověď" in text_lower:
         return (
             "👨‍🎨 **Karel:** „Fajn! Mám tři další nabídky, kde mě aspoň docení. Zítra už nepřijdu.“\n\n"
             "---\n\n"
             "🤖 **AI Mentor (Offline režim):** Reagoval jsi velmi radikálně. "
             "**Jasnost (9/10), Empatie (0/10), Autorita (9/10).** Vyhodit toxického zaměstnance je někdy nutné, ale v této situaci firma právě přišla o klíčového klienta. Zkus to příště více diplomaticky."
         )
-    elif (
-        "prosím" in text_lower
-        or "omlouvám" in text_lower
-        or "mrzí mě" in text_lower
-    ):
+    elif "prosím" in text_lower or "omlouvám" in text_lower or "mrzí mě" in text_lower:
         return (
             "👨‍🎨 **Karel:** „No dobře, vím, že jsem to přehnal. Omlouvám se.“\n\n"
             "---\n\n"
@@ -121,7 +81,7 @@ def zhodnot_reklamu_ai(produkt_nazev, text_reklamy):
         if api_key:
             headers = {
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}",
+                "Authorization": f"Bearer {api_key}"
             }
             system_prompt = (
                 f"Jsi špičkový marketingový expert a copywriter. Uživatel vytváří propagaci pro produkt/projekt: '{produkt_nazev}'.\n"
@@ -136,83 +96,40 @@ def zhodnot_reklamu_ai(produkt_nazev, text_reklamy):
                 "model": "gpt-4o-mini",
                 "messages": [
                     {"role": "system", "content": system_prompt},
-                    {
-                        "role": "user",
-                        "content": f"Produkt: {produkt_nazev}\nText reklamy: {text_reklamy}",
-                    },
+                    {"role": "user", "content": f"Produkt: {produkt_nazev}\nText reklamy: {text_reklamy}"}
                 ],
                 "temperature": 0.7,
-                "max_tokens": 700,
+                "max_tokens": 700
             }
-            response = requests.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers=headers,
-                json=payload,
-                timeout=10,
-            )
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 content = data["choices"][0]["message"]["content"]
-
+                
                 celkove_skore = 6.0
                 try:
                     if "SKORE:" in content:
                         skore_line = content.split("\n")[0]
-                        celkove_skore = float(
-                            skore_line.replace("SKORE:", "").strip()
-                        )
+                        celkove_skore = float(skore_line.replace("SKORE:", "").strip())
                         content = "\n".join(content.split("\n")[1:]).strip()
                 except Exception:
                     pass
-
+                
                 multiplikator = max(0.5, min(2.5, celkove_skore / 4.0))
                 return content, multiplikator
     except Exception:
         pass
-
+        
+    # --- OFFLINE ZÁCHRANA DYNAMICKY PODLE ZADANÉHO PRODUKTU ---
     text_low = text_reklamy.lower()
     score_a = 8 if ("?" in text_low or "!" in text_low) else 4
     score_i = 7 if len(text_reklamy) > 35 else 3
-    score_d = (
-        8
-        if any(
-            w in text_low
-            for w in [
-                "super",
-                "nejlepší",
-                "sleva",
-                "moderní",
-                "kvalit",
-                "smysl",
-                "interaktivní",
-                "efektiv",
-                "stylov",
-            ]
-        )
-        else 4
-    )
-    score_action = (
-        10
-        if any(
-            w in text_low
-            for w in [
-                "klik",
-                "kup",
-                "link",
-                "odkaz",
-                "vyzkoušej",
-                "objev",
-                "zjisti",
-                "spusť",
-                "přijď",
-            ]
-        )
-        else 2
-    )
-
+    score_d = 8 if any(w in text_low for w in ["super", "nejlepší", "sleva", "moderní", "kvalit", "smysl", "interaktivní", "efektiv", "stylov"]) else 4
+    score_action = 10 if any(w in text_low for w in ["klik", "kup", "link", "odkaz", "vyzkoušej", "objev", "zjisti", "spusť", "přijď"]) else 2
+    
     celkove_skore = (score_a + score_i + score_d + score_action) / 4.0
     multiplikator = max(0.5, min(2.5, celkove_skore / 4.0))
-
+    
     text_vysledek = (
         f"🤖 **AI Marketingový kouč (Offline rozbor pro: {produkt_nazev}):**\n\n"
         f"**Hodnocení AIDA ({celkove_skore:.1f}/10):**\n"
@@ -231,19 +148,16 @@ def zhodnot_reklamu_ai(produkt_nazev, text_reklamy):
 
 
 def render_ai_treenazer():
-    nadpis_3("🎭 AI Manažerský trenažér: Toxický talent")
-
-    st.markdown(
-        """
+    st.markdown("#### 🎭 AI Manažerský trenažér: Toxický talent")
+    
+    st.markdown("""
     <div class='box-red'>
         <strong>🚨 Situace:</strong> Tvůj hlavní grafik Karel je brilantní, ale včera na poradě veřejně zesměšnil juniorního kolegu. Zbytek týmu je naštvaný. Karla potřebuješ kvůli velké zakázce, ale nesmíš ztratit respekt týmu.
     </div>
     <div class='box-blue'>
         <strong>🎯 Tvůj úkol:</strong> Napiš Karlovi zprávu (jako šéf). Musíš mu dát jasnou zpětnou vazbu, zachovat si autoritu, ale nevyprovokovat ho k výpovědi. AI analyzuje tvůj styl a odpoví za Karla.
     </div>
-    """,
-        unsafe_allow_html=True,
-    )
+    """, unsafe_allow_html=True)
 
     if "manazer_chat" not in st.session_state:
         st.session_state["manazer_chat"] = []
@@ -252,121 +166,89 @@ def render_ai_treenazer():
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    if prompt := st.chat_input(
-        "Napiš zprávu Karlovi... (např. 'Karle, potřebuji s tebou probrat včerejšek...')"
-    ):
+    if prompt := st.chat_input("Napiš zprávu Karlovi... (např. 'Karle, potřebuji s tebou probrat včerejšek...')"):
         with st.chat_message("user"):
             st.write(prompt)
-        st.session_state["manazer_chat"].append(
-            {"role": "user", "content": prompt}
-        )
+        st.session_state["manazer_chat"].append({"role": "user", "content": prompt})
 
         with st.chat_message("assistant"):
             with st.spinner("Karel čte tvou zprávu a AI hodnotí tvůj styl..."):
                 odpoved_ai = ziskej_odpoved_od_ai(prompt)
                 st.write(odpoved_ai)
-
-        st.session_state["manazer_chat"].append(
-            {"role": "assistant", "content": odpoved_ai}
-        )
-
+                
+        st.session_state["manazer_chat"].append({"role": "assistant", "content": odpoved_ai})
+        
         if "uloz_odpoved_fn" in st.session_state:
-            st.session_state["uloz_odpoved_fn"](
-                "Kapitola 6",
-                "AI Roleplay Trenažér",
-                prompt + "\n\nVýsledek:\n" + odpoved_ai,
-            )
+            st.session_state["uloz_odpoved_fn"]("Kapitola 6", "AI Roleplay Trenažér", prompt + "\n\nVýsledek:\n" + odpoved_ai)
 
 
 def render_aida_simulator():
-    nadpis_3("✍️ Krok 1: Tvůrčí dílna reklamy a sloganů (AIDA)")
+    st.markdown("#### ✍️ Krok 1: Tvůrčí dílna reklamy a sloganů (AIDA)")
     st.write(
         "Zadej název svého produktu či nápadu a napiš k němu reklamní text nebo slogan. "
         "Umělá inteligence zhodnotí tvůj copywriting, **navrhne ti 3 lepší slogany i hotový vzorový příspěvek** a spočítá index úspěšnosti pro simulátor rozpočtu."
     )
-
+    
     vychozi_nazev = st.session_state.get("k6_aktivni_projekt", "")
-
+    
     col_a1, col_a2 = st.columns([1, 1])
     with col_a1:
         produkt_nazev = st.text_input(
             "Co prodáváš / Název tvého produktu či projektu:",
             value=vychozi_nazev,
             placeholder="Zadej název produktu, služby nebo akce...",
-            key="aida_custom_produkt",
+            key="aida_custom_produkt"
         )
     with col_a2:
         reklama_text = st.text_area(
             "Tvůj reklamní text / slogan / příspěvek:",
             placeholder="Napiš sem svůj reklamní text, slogan nebo příspěvek...",
-            key="aida_custom_text",
+            key="aida_custom_text"
         )
-
-    if st.button(
-        "Odeslat k AI analýze a vygenerovat návrhy",
-        type="primary",
-        key="btn_aida",
-    ):
+    
+    if st.button("Odeslat k AI analýze a vygenerovat návrhy", type="primary", key="btn_aida"):
         if len(reklama_text.strip()) < 5 or len(produkt_nazev.strip()) < 2:
             st.warning("Vyplň prosím název produktu i text reklamy!")
         else:
-            with st.spinner(
-                f"Marketingový AI expert analyzuje reklamu pro '{produkt_nazev}'..."
-            ):
-                vysledek_text, mult = zhodnot_reklamu_ai(
-                    produkt_nazev, reklama_text
-                )
+            with st.spinner(f"Marketingový AI expert analyzuje reklamu pro '{produkt_nazev}'..."):
+                vysledek_text, mult = zhodnot_reklamu_ai(produkt_nazev, reklama_text)
                 st.session_state["k6_aida_multiplikator"] = mult
                 st.session_state["k6_testovany_produkt"] = produkt_nazev
                 st.session_state["k6_reklama_text_ulozena"] = reklama_text
-
-                st.markdown(
-                    "<h4 style='font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-top: 15px;'>💡 Rozbor a doporučená řešení od AI:</h4>",
-                    unsafe_allow_html=True,
-                )
+                
+                st.markdown("##### 💡 Rozbor a doporučená řešení od AI:")
                 st.info(vysledek_text)
-
+                
                 if mult >= 1.5:
-                    st.success(
-                        f"🚀 **Skvělý copywriting pro {produkt_nazev}!** Index prodejů v simulátoru rozpočtu: **{mult:.1f}×**."
-                    )
+                    st.success(f"🚀 **Skvělý copywriting pro {produkt_nazev}!** Index prodejů v simulátoru rozpočtu: **{mult:.1f}×**.")
                 elif mult >= 1.0:
-                    st.warning(
-                        f"⚖️ **Průměrný dosah pro {produkt_nazev}.** Index prodejů: **{mult:.1f}×**. Můžeš použít vygenerované slogany výše pro vyšší zisk."
-                    )
+                    st.warning(f"⚖️ **Průměrný dosah pro {produkt_nazev}.** Index prodejů: **{mult:.1f}×**. Můžeš použít vygenerované slogany výše pro vyšší zisk.")
                 else:
-                    st.error(
-                        f"⚠️ **Slabý prodejní tah.** Index prodejů: **{mult:.1f}×**. Doporučujeme text upravit podle vzoru výše."
-                    )
-
+                    st.error(f"⚠️ **Slabý prodejní tah.** Index prodejů: **{mult:.1f}×**. Doporučujeme text upravit podle vzoru výše.")
+                
                 if "uloz_odpoved_fn" in st.session_state:
                     st.session_state["uloz_odpoved_fn"](
-                        "Kapitola 6",
-                        f"AIDA Reklama ({produkt_nazev})",
-                        f"Text: {reklama_text}\nIndex: {mult:.2f}",
+                        "Kapitola 6", 
+                        f"AIDA Reklama ({produkt_nazev})", 
+                        f"Text: {reklama_text}\nIndex: {mult:.2f}"
                     )
 
 
 def render_marketing_rozpocet():
-    produkt_nazev = st.session_state.get(
-        "k6_testovany_produkt",
-        st.session_state.get("k6_aktivni_projekt", "Můj produkt"),
-    )
+    produkt_nazev = st.session_state.get("k6_testovany_produkt", st.session_state.get("k6_aktivni_projekt", "Můj produkt"))
     mult = st.session_state.get("k6_aida_multiplikator", 1.0)
-
-    nadpis_3("💸 Krok 2: Simulátor rozpočtu – Spustíš kampaň?")
-
+    
+    st.markdown("#### 💸 Krok 2: Simulátor rozpočtu – Spustíš kampaň?")
+    
     if "k6_testovany_produkt" in st.session_state:
         st.markdown(
             f"<div style='background-color: #f8fafc; padding: 10px; border-radius: 6px; border-left: 4px solid #8b5cf6; margin-bottom: 15px;'>"
             f"🎯 <b>Propojeno s tvou reklamou:</b> Testuje se kampaň pro produkt <b>{produkt_nazev}</b> s indexem účinnosti textu <b>{mult:.2f}×</b>."
             f"</div>",
-            unsafe_allow_html=True,
+            unsafe_allow_html=True
         )
     else:
-        st.caption(
-            "💡 *Tip: Pokud výše nejprve otestuješ text reklamy v AI dílně, simulátor do výpočtu započítá tvůj reálný produkt i copywriting.*"
-        )
+        st.caption("💡 *Tip: Pokud výše nejprve otestuješ text reklamy v AI dílně, simulátor do výpočtu započítá tvůj reálný produkt i copywriting.*")
 
     st.write(
         f"Máš celkový rozpočet **10 000 Kč** na propagaci produktu **{produkt_nazev}**. "
@@ -374,116 +256,62 @@ def render_marketing_rozpocet():
     )
 
     budget = 10000
-
+    
     col_s1, col_s2, col_s3 = st.columns(3)
     with col_s1:
-        tiktok_spend = st.slider(
-            "📱 TikTok (3 Kč/klik)",
-            min_value=0,
-            max_value=budget,
-            value=3000,
-            step=500,
-            key="sb_tt",
-        )
+        tiktok_spend = st.slider("📱 TikTok (3 Kč/klik)", min_value=0, max_value=budget, value=3000, step=500, key="sb_tt")
     with col_s2:
-        google_spend = st.slider(
-            "🔍 Google Ads (15 Kč/klik)",
-            min_value=0,
-            max_value=budget,
-            value=3000,
-            step=500,
-            key="sb_gg",
-        )
+        google_spend = st.slider("🔍 Google Ads (15 Kč/klik)", min_value=0, max_value=budget, value=3000, step=500, key="sb_gg")
     with col_s3:
-        influencer_spend = st.slider(
-            "📸 Mikro-influencer",
-            min_value=0,
-            max_value=budget,
-            value=4000,
-            step=500,
-            key="sb_inf",
-        )
+        influencer_spend = st.slider("📸 Mikro-influencer", min_value=0, max_value=budget, value=4000, step=500, key="sb_inf")
 
     celkem_spend = tiktok_spend + google_spend + influencer_spend
     rozdil = budget - celkem_spend
 
     if rozdil > 0:
-        st.info(
-            f"💰 Zbývá ti nerozděleno: **{rozdil:,} Kč** z {budget:,} Kč.".replace(
-                ",", " "
-            )
-        )
+        st.info(f"💰 Zbývá ti nerozděleno: **{rozdil:,} Kč** z {budget:,} Kč.".replace(",", " "))
     elif rozdil == 0:
-        st.success(
-            f"✅ Rozpočet je přesně vyčerpán (**{celkem_spend:,} Kč**).".replace(
-                ",", " "
-            )
-        )
+        st.success(f"✅ Rozpočet je přesně vyčerpán (**{celkem_spend:,} Kč**).".replace(",", " "))
     else:
-        st.error(
-            f"🚨 **Překročen rozpočet o {abs(rozdil):,} Kč!** Celkem zadáno {celkem_spend:,} Kč z povolených {budget:,} Kč. Uprav posuvníky.".replace(
-                ",", " "
-            )
-        )
+        st.error(f"🚨 **Překročen rozpočet o {abs(rozdil):,} Kč!** Celkem zadáno {celkem_spend:,} Kč z povolených {budget:,} Kč. Uprav posuvníky.".replace(",", " "))
 
     if st.button("🚀 Spustit kampaň na trhu", type="primary", key="btn_rozpocet"):
         if rozdil < 0:
-            st.error(
-                "Kampaň nelze spustit, protože rozpočet překračuje limit 10 000 Kč. Uprav prosím částky."
-            )
+            st.error("Kampaň nelze spustit, protože rozpočet překračuje limit 10 000 Kč. Uprav prosím částky.")
             return
 
         kliky_tiktok = tiktok_spend / 3
         prodeje_tiktok = math.floor(kliky_tiktok * 0.005 * mult)
-
+        
         kliky_google = google_spend / 15
         prodeje_google = math.floor(kliky_google * 0.04 * mult)
-
+        
         if influencer_spend < 2000:
             prodeje_influencer = math.floor((influencer_spend / 500) * mult)
         else:
-            prodeje_influencer = math.floor(
-                ((influencer_spend / 300) * 1.5) * mult
-            )
-
+            prodeje_influencer = math.floor(((influencer_spend / 300) * 1.5) * mult)
+            
         celkem_prodeju = prodeje_tiktok + prodeje_google + prodeje_influencer
         celkovy_zisk_z_produktu = celkem_prodeju * 250
         utraceno_celkem = celkem_spend
         cisty_zisk = celkovy_zisk_z_produktu - utraceno_celkem
 
         st.divider()
-        st.markdown(
-            "<h4 style='font-size: 1.35rem; font-weight: 700; color: #1e293b;'>📈 Výsledky tvé kampaně v praxi</h4>",
-            unsafe_allow_html=True,
-        )
-
+        st.markdown("##### 📈 Výsledky tvé kampaně v praxi")
+        
         c1, c2, c3 = st.columns(3)
         c1.metric("Prodané kusy", f"{celkem_prodeju} ks")
-        c2.metric(
-            "Hrubý zisk z marže",
-            f"{celkovy_zisk_z_produktu:,} Kč".replace(",", " "),
-        )
-
+        c2.metric("Hrubý zisk z marže", f"{celkovy_zisk_z_produktu:,} Kč".replace(",", " "))
+        
         if cisty_zisk >= 0:
-            c3.metric(
-                "Čistý výsledek (ROI)", f"+ {cisty_zisk:,} Kč".replace(",", " ")
-            )
-            st.success(
-                f"🎉 **Skvělá práce! Kampaň pro {produkt_nazev} je v zisku.** Díky dobrému rozdělení a kvalitnímu textu jsi vydělal/a víc, než stála inzerce."
-            )
+            c3.metric("Čistý výsledek (ROI)", f"+ {cisty_zisk:,} Kč".replace(",", " "))
+            st.success(f"🎉 **Skvělá práce! Kampaň pro {produkt_nazev} je v zisku.** Díky dobrému rozdělení a kvalitnímu textu jsi vydělal/a víc, než stála inzerce.")
         else:
-            c3.metric(
-                "Čistý výsledek (ROI)", f"{cisty_zisk:,} Kč".replace(",", " ")
-            )
-            st.error(
-                f"📉 **Kampaň skončila ve ztrátě {cisty_zisk:,} Kč.** Náklady na reklamu byly vyšší než marže z prodeje."
-            )
-
-        st.markdown(
-            "<h4 style='font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-top: 15px; margin-bottom: 8px;'>🧭 Diagnostika a doporučení pro zlepšení</h4>",
-            unsafe_allow_html=True,
-        )
-
+            c3.metric("Čistý výsledek (ROI)", f"{cisty_zisk:,} Kč".replace(",", " "))
+            st.error(f"📉 **Kampaň skončila ve ztrátě {cisty_zisk:,} Kč.** Náklady na reklamu byly vyšší než marže z prodeje.")
+            
+        st.markdown("##### 🧭 Diagnostika a doporučení pro zlepšení")
+        
         doporuceni = []
         if mult < 1.0:
             doporuceni.append(
@@ -491,27 +319,21 @@ def render_marketing_rozpocet():
                 "Použij jeden ze sloganů vygenerovaných AI v Kroku 1 a přidej jasnou výzvu k akci."
             )
         elif mult >= 1.5:
-            doporuceni.append(
-                "✅ **Silný copywriting:** Tvůj text má skvělý prodejní náboj a výrazně pomohl tržbám."
-            )
-
-        cpa_tt = (
-            (tiktok_spend / prodeje_tiktok)
-            if prodeje_tiktok > 0
-            else tiktok_spend
-        )
+            doporuceni.append("✅ **Silný copywriting:** Tvůj text má skvělý prodejní náboj a výrazně pomohl tržbám.")
+            
+        cpa_tt = (tiktok_spend / prodeje_tiktok) if prodeje_tiktok > 0 else tiktok_spend
         if tiktok_spend > 3500 and cpa_tt > 250:
             doporuceni.append(
                 f"⚠️ **Příliš velký rozpočet na TikToku ({tiktok_spend:,} Kč):** TikTok má levné kliky, ale nízkou nákupní konverzi. "
                 f"Získání 1 zákazníka tě tu stálo {int(cpa_tt)} Kč (tvoje marže je 250 Kč). Přesuň část peněz do Googlu."
             )
-
+            
         if google_spend < 2500:
             doporuceni.append(
                 "💡 **Podinvestovaný Google Ads:** Lidé ve vyhledávači aktivně hledají to, co nabízíš (konverze 4 %). "
                 "Zainvestuj do Googlu více (např. 4 000 – 5 000 Kč)."
             )
-
+            
         if 0 < influencer_spend < 2000:
             doporuceni.append(
                 "⚠️ **Malý rozpočet na influencera:** Částka pod 2 000 Kč nepřinesla dostatečný bonusový dosah. "
@@ -520,40 +342,74 @@ def render_marketing_rozpocet():
 
         for d in doporuceni:
             st.markdown(d)
-
+            
         with st.expander("🔍 Podrobná čísla a efektivita kanálů"):
-            st.write(
-                f"- **TikTok:** Utraceno {tiktok_spend:,} Kč ➔ {int(kliky_tiktok)} návštěv ➔ **{prodeje_tiktok} ks** (Cena za prodej: {int(cpa_tt)} Kč)"
-            )
-            cpa_gg = (
-                (google_spend / prodeje_google)
-                if prodeje_google > 0
-                else google_spend
-            )
-            st.write(
-                f"- **Google Ads:** Utraceno {google_spend:,} Kč ➔ {int(kliky_google)} návštěv ➔ **{prodeje_google} ks** (Cena za prodej: {int(cpa_gg)} Kč)"
-            )
-            st.write(
-                f"- **Mikro-influencer:** Utraceno {influencer_spend:,} Kč ➔ **{prodeje_influencer} ks**"
-            )
+            st.write(f"- **TikTok:** Utraceno {tiktok_spend:,} Kč ➔ {int(kliky_tiktok)} návštěv ➔ **{prodeje_tiktok} ks** (Cena za prodej: {int(cpa_tt)} Kč)")
+            cpa_gg = (google_spend / prodeje_google) if prodeje_google > 0 else google_spend
+            st.write(f"- **Google Ads:** Utraceno {google_spend:,} Kč ➔ {int(kliky_google)} návštěv ➔ **{prodeje_google} ks** (Cena za prodej: {int(cpa_gg)} Kč)")
+            st.write(f"- **Mikro-influencer:** Utraceno {influencer_spend:,} Kč ➔ **{prodeje_influencer} ks**")
             st.write(f"- **AIDA multiplikátor textu:** **{mult:.2f}×**")
-
+            
         if "uloz_odpoved_fn" in st.session_state:
-            st.session_state["uloz_odpoved_fn"](
-                "Kapitola 6",
-                f"Marketing Rozpočet ({produkt_nazev})",
-                f"Zisk: {cisty_zisk} Kč | Prodeje: {celkem_prodeju} ks | Index: {mult:.2f}",
-            )
+            st.session_state["uloz_odpoved_fn"]("Kapitola 6", f"Marketing Rozpočet ({produkt_nazev})", f"Zisk: {cisty_zisk} Kč | Prodeje: {celkem_prodeju} ks | Index: {mult:.2f}")
 
 
 def render():
+    # =========================================================================
+    # 📌 GARANTOVANÁ HIERARCHIE NADPISŮ PŘES GLOBÁLNÍ CSS
+    # =========================================================================
+    st.markdown(
+        """
+        <style>
+            /* 1. úroveň: Hlavní bloky (##) */
+            .stMarkdown h2 {
+                font-size: 2.2rem !important;
+                font-weight: 800 !important;
+                color: #0f172a !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+                border-bottom: 2px solid #cbd5e1 !important;
+                padding-bottom: 0.5rem !important;
+                line-height: 1.2 !important;
+            }
+            /* 2. úroveň: Podkapitoly typu 1.1, 2.4, 3.1 (###) */
+            .stMarkdown h3 {
+                font-size: 1.6rem !important;
+                font-weight: 700 !important;
+                color: #1e40af !important;
+                margin-top: 1.8rem !important;
+                margin-bottom: 0.8rem !important;
+                line-height: 1.3 !important;
+            }
+            /* 3. úroveň: Dílčí témata typu 1.1.1, 2.4.1 (####) */
+            .stMarkdown h4 {
+                font-size: 1.25rem !important;
+                font-weight: 600 !important;
+                color: #334155 !important;
+                margin-top: 1.5rem !important;
+                margin-bottom: 0.5rem !important;
+                line-height: 1.3 !important;
+            }
+            /* 4. úroveň: Drobné nadpisy v trenažérech (#####) */
+            .stMarkdown h5 {
+                font-size: 1.1rem !important;
+                font-weight: 700 !important;
+                color: #1e293b !important;
+                margin-top: 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     # =========================================================================
     # 📌 HLAVIČKA KAPITOLY
     # =========================================================================
     st.markdown(
         "<span class='hero-badge'>Kapitola 6</span>", unsafe_allow_html=True
     )
-    nadpis_1("6. Management a marketing")
+    st.markdown("## 6. Management a marketing")
     st.markdown(
         "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
         "Management a marketing: jak řídit projekt, získat pozornost a budovat značku<br><br>"
@@ -611,7 +467,7 @@ def render():
     # =========================================================================
     # 💡 PRAKTICKÁ LINKA: PROJEKT NAPŘÍČ KAPITOLOU
     # =========================================================================
-    nadpis_1("💡 Projekt napříč kapitolou: Vytvoř si vlastní projekt")
+    st.markdown("## 💡 Projekt napříč kapitolou: Vytvoř si vlastní projekt")
     st.write(
         "**Hlavní praktická linka kapitoly:** Vyber si jeden mikro-projekt a budeš ho postupně rozvíjet ve všech třech blocích. "
         "Na konci kapitoly budeš mít jednoduchý návrh projektu, jeho řízení, marketingový mix, značku a etickou kampaň."
@@ -726,7 +582,7 @@ def render():
     # BLOK 0: 1.1 Management: Podstata a role
     # =========================================================================
     if idx == 0:
-        nadpis_1("1. Management – Jak z chaosu udělat fungující firmu")
+        st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
 
         st.markdown(
             "<div class='box-blue'>"
@@ -743,7 +599,7 @@ def render():
             unsafe_allow_html=True,
         )
 
-        nadpis_2("1.1 Podstata a význam managementu")
+        st.markdown("### 1.1 Podstata a význam managementu")
         st.write(
             "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
         )
@@ -756,10 +612,10 @@ def render():
         )
 
         st.write(
-            "Management se objevuje všude, kde lidé spolupracují: ve firmě, školy, neziskovce, sportovním týmu, startupu, nemocnici, restauraci i při organizaci studentského plesu. Čím složitější je projekt, tím důležitější je řízení času, lidí, peněz, informací a rizik."
+            "Management se objevuje všude, kde lidé spolupracují: ve firmě, škole, neziskovce, sportovním týmu, startupu, nemocnici, restauraci i při organizaci studentského plesu. Čím složitější je projekt, tím důležitější je řízení času, lidí, peněz, informací a rizik."
         )
 
-        nadpis_3("👥 Kdo je kdo v ekonomickém světě? (Rozlišení rolí)")
+        st.markdown("#### 👥 Kdo je kdo v ekonomickém světě? (Rozlišení rolí)")
         st.markdown(
             "| Role | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -809,7 +665,7 @@ def render():
                         sara_role[:30],
                     )
 
-        nadpis_3("1.1.1 Úrovně managementu: pyramida řízení")
+        st.markdown("#### 1.1.1 Úrovně managementu: pyramida řízení")
         st.write(
             "Ve větších organizacích existují různé úrovně řízení. Každá řeší jiný typ rozhodnutí."
         )
@@ -903,9 +759,9 @@ def render():
     # BLOK 1: 1.2 Základní manažerské funkce
     # =========================================================================
     elif idx == 1:
-        nadpis_1("1. Management – Jak z chaosu udělat fungující firmu")
+        st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
 
-        nadpis_2("1.2 Základní manažerské funkce: proces řízení")
+        st.markdown("### 1.2 Základní manažerské funkce: proces řízení")
         st.write(
             "Manažerská práce se často popisuje jako soubor čtyř navazujících"
             " funkcí: plánování, organizování, vedení lidí a kontrola. Nejde o"
@@ -941,7 +797,7 @@ def render():
             "🔍 **4. Kontrola**\nMěření výsledků.\n*(Splnili jsme to?)*"
         )
 
-        nadpis_3("1.2.1 Plánování")
+        st.markdown("#### 1.2.1 Plánování")
         st.write(
             "Plánování znamená určit, čeho chce organizace dosáhnout, proč je to"
             " důležité a jakými kroky se k cíli dostane. Bez plánování tým"
@@ -1012,7 +868,7 @@ def render():
                 f"🟢 **Tvůj vygenerovaný SMART cíl:** *„{smart_text}“*"
             )
 
-        nadpis_3("1.2.2 Organizování")
+        st.markdown("#### 1.2.2 Organizování")
         st.write(
             "Organizování znamená vytvořit strukturu, ve které lidé vědí, co"
             " mají dělat, kdo o čem rozhoduje, kdo komu předává informace a kdo"
@@ -1041,7 +897,7 @@ def render():
             unsafe_allow_html=True,
         )
 
-        nadpis_3("1.2.3 Vedení lidí")
+        st.markdown("#### 1.2.3 Vedení lidí")
         st.write(
             "Vedení lidí znamená ovlivňovat tým tak, aby lidé rozuměli cíli,"
             " chtěli na něm pracovat a měli podmínky k dobrému výkonu. Dobrý"
@@ -1060,7 +916,7 @@ def render():
             " soutěž. |"
         )
 
-        nadpis_3("1.2.3.1 Maslowova pyramida potřeb")
+        st.markdown("#### 1.2.3.1 Maslowova pyramida potřeb")
         st.write(
             "Abraham Harold Maslow byl americký psycholog 20. století, který"
             " patří mezi představitele humanistické psychologie. Zabýval se"
@@ -1194,7 +1050,7 @@ def render():
                 st.session_state.get("ulozene_odpovedi", {}),
             )
 
-        nadpis_3("1.2.4 Kontrola: Není to slídění, ale navigace")
+        st.markdown("#### 1.2.4 Kontrola: Není to slídění, ale navigace")
         st.write(
             "Kontrola neznamená jen „nachytat někoho při chybě“. Jejím smyslem"
             " je zjistit, zda se realita shoduje s plánem, a pokud ne, přijmout"
@@ -1237,7 +1093,7 @@ def render():
             )
 
         with col_kont2:
-            nadpis_3("⏱️ Typy kontroly podle času")
+            st.markdown("##### ⏱️ Typy kontroly podle času")
             tab_k1, tab_k2, tab_k3 = st.tabs(
                 ["🔮 Předběžná", "⚙️ Průběžná", "🏁 Následná"]
             )
@@ -1261,9 +1117,9 @@ def render():
     # BLOK 3: 1.3 Osobnost manažera a 1.4 Styly řízení
     # =========================================================================
     elif idx == 2:
-        nadpis_1("1. Management – Jak z chaosu udělat fungující firmu")
+        st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
 
-        nadpis_2("1.3 Osobnost manažera a role")
+        st.markdown("### 1.3 Osobnost manažera a role")
         st.write(
             "Manažer potřebuje kombinaci odbornosti, práce s lidmi a schopnosti"
             " vidět celek. Jinak bude působit v malé kavárně, jinak ve škole,"
@@ -1328,7 +1184,7 @@ def render():
         )
         st.plotly_chart(fig_skills, use_container_width=True)
 
-        nadpis_3("1.3.1 Role manažera podle Mintzberga")
+        st.markdown("#### 1.3.1 Role manažera podle Mintzberga")
         st.write(
             "Henry Mintzberg popsal manažerskou práci jako soubor rolí. Manažer"
             " během dne často přepíná mezi reprezentací firmy, vedením lidí,"
@@ -1376,9 +1232,9 @@ def render():
             )
 
     elif idx == 3:
-        nadpis_1("1. Management – Jak z chaosu udělat fungující firmu")
+        st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
 
-        nadpis_2("1.4 Styly řízení a řešení konfliktů")
+        st.markdown("### 1.4 Styly řízení a řešení konfliktů")
         st.write(
             "Styl řízení ukazuje, jak manažer pracuje s mocí, odpovědností a"
             " zapojením týmu. Neexistuje jeden styl, který by byl nejlepší"
@@ -1470,7 +1326,7 @@ def render():
             )
 
         st.divider()
-        nadpis_3("1.4.1 Řešení konfliktů a Soft-skills")
+        st.markdown("#### 1.4.1 Řešení konfliktů a Soft-skills")
         st.write(
             "Manažer tráví většinu času řešením problémů s lidmi, ne"
             " papírováním. Komunikace, empatie a schopnost zvládat krizové"
@@ -1484,9 +1340,9 @@ def render():
     # BLOK 4: 1.5 Organizační struktury firem
     # =========================================================================
     elif idx == 4:
-        nadpis_1("1. Management – Jak z chaosu udělat fungující firmu")
+        st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
 
-        nadpis_2("1.5 Organizační struktury firem")
+        st.markdown("### 1.5 Organizační struktury firem")
         st.write(
             "Organizační struktura je způsob, jakým je firma nebo instituce"
             " vnitřně uspořádána. Ukazuje, kdo komu odpovídá, jak jsou"
@@ -1499,7 +1355,7 @@ def render():
             " a na koho se obrátit."
         )
 
-        nadpis_3("1.5.1 Formální a neformální struktura")
+        st.markdown("#### 1.5.1 Formální a neformální struktura")
         st.markdown(
             "| Typ struktury | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1516,7 +1372,7 @@ def render():
             " pomluvy nebo sabotuje změny."
         )
 
-        nadpis_3("1.5.2 Základní typy organizačních struktur")
+        st.markdown("#### 1.5.2 Základní typy organizačních struktur")
         st.markdown(
             "| Typ struktury | Jak funguje | Výhoda | Riziko |\n"
             "| :--- | :--- | :--- | :--- |\n"
@@ -1546,7 +1402,7 @@ def render():
             " poslední slovo."
         )
 
-        nadpis_3("1.5.3 Rozpětí řízení")
+        st.markdown("#### 1.5.3 Rozpětí řízení")
         st.write(
             "Rozpětí řízení znamená, kolik podřízených přímo připadá na jednoho"
             " vedoucího."
@@ -1606,9 +1462,9 @@ def render():
     # BLOK 5: 1.6 Rozhodování a 1.7 Moderní přesah
     # =========================================================================
     elif idx == 5:
-        nadpis_1("1. Management – Jak z chaosu udělat fungující firmu")
+        st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
 
-        nadpis_2("1.6 Rozhodování a analytické metody")
+        st.markdown("### 1.6 Rozhodování a analytické metody")
         st.write(
             "Manažer se neustále rozhoduje: koho přijmout do týmu, jak rozdělit"
             " rozpočet, co udělat při zpoždění, jak reagovat na konkurenci nebo"
@@ -1625,7 +1481,7 @@ def render():
         5. **Realizace a kontrola** — provedeme rozhodnutí a sledujeme výsledek.
         """)
 
-        nadpis_3("1.6.1 SWOT analýza")
+        st.markdown("#### 1.6.1 SWOT analýza")
         st.write(
             "SWOT analýza je jednoduchý nástroj, který pomáhá posoudit situaci"
             " firmy, projektu, produktu nebo člověka. Rozlišuje vnitřní a"
@@ -1652,7 +1508,7 @@ def render():
             " hrozba."
         )
 
-        nadpis_3("1.6.2 Základy řízení rizik")
+        st.markdown("#### 1.6.2 Základy řízení rizik")
         st.write(
             "Řízení rizik znamená přemýšlet dopředu o tom, co se může pokazit,"
             " jak moc je to pravděpodobné, jak velký dopad by to mělo a co s"
@@ -1703,9 +1559,9 @@ def render():
             )
 
     elif idx == 6:
-        nadpis_1("1. Management – Jak z chaosu udělat fungující firmu")
+        st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
 
-        nadpis_2("1.7 Moderní přesah: Agilní řízení, remote work")
+        st.markdown("### 1.7 Moderní přesah: Agilní řízení, remote work")
         st.write(
             "Současné řízení lidí se posouvá od prostého zadávání úkolů k práci"
             " s autonomií, důvěrou, smyslem práce, psychologickým bezpečím a"
@@ -1765,7 +1621,7 @@ def render():
     # BLOK 6: 2. Marketing (Úvod a 2.1 Podstata)
     # =========================================================================
     elif idx == 7:
-        nadpis_1("2. Marketing – Hra o pozornost a marketingový mix")
+        st.markdown("## 2. Marketing – Hra o pozornost a marketingový mix")
 
         st.markdown(
             "<div class='box-blue'>"
@@ -1787,7 +1643,7 @@ def render():
             unsafe_allow_html=True,
         )
 
-        nadpis_2("2.1 Podstata a vývoj marketingu")
+        st.markdown("### 2.1 Podstata a vývoj marketingu")
         st.write(
             "Marketing je proces, při kterém firma zjišťuje potřeby zákazníků,"
             " vytváří pro ně hodnotu a uspokojuje jejich potřeby tak, aby"
@@ -1833,7 +1689,7 @@ def render():
             " spotřebuje. | Student batoh nosí do školy. |"
         )
 
-        nadpis_3("2.1.1 Vývoj podnikatelských koncepcí")
+        st.markdown("#### 2.1.1 Vývoj podnikatelských koncepcí")
         st.write(
             "Firmy se v historii nedívaly na zákazníka vždy stejně."
             " Podnikatelské koncepce ukazují, na co se firma při řízení trhu"
@@ -1890,9 +1746,9 @@ def render():
     # BLOK 7: 2.2 Marketingový výzkum
     # =========================================================================
     elif idx == 8:
-        nadpis_1("2. Marketing – Hra o pozornost a marketingový mix")
+        st.markdown("## 2. Marketing – Hra o pozornost a marketingový mix")
 
-        nadpis_2("2.2 Marketingový výzkum a analýza trhu")
+        st.markdown("### 2.2 Marketingový výzkum a analýza trhu")
         st.write(
             "Marketingový výzkum znamená systematický sběr, třídění a"
             " vyhodnocování informací o trhu, zákaznících, konkurenci a"
@@ -1916,7 +1772,7 @@ def render():
             "- Jak nás zákazníci vnímají oproti konkurenci?"
         )
 
-        nadpis_3("2.2.1 Zdroje dat")
+        st.markdown("#### 2.2.1 Zdroje dat")
         st.markdown(
             "| Typ dat | Co znamená | Výhody | Nevýhody |\n"
             "| :--- | :--- | :--- | :--- |\n"
@@ -1934,7 +1790,7 @@ def render():
             " analýzy konkurence."
         )
 
-        nadpis_3("2.2.2 Metody výzkumu")
+        st.markdown("#### 2.2.2 Metody výzkumu")
         st.markdown(
             "| Metoda | Co zjišťuje | Příklad |\n"
             "| :--- | :--- | :--- | \n"
@@ -1978,9 +1834,9 @@ def render():
     # BLOK 8: 2.3 STP proces
     # =========================================================================
     elif idx == 9:
-        nadpis_1("2. Marketing – Hra o pozornost a marketingový mix")
+        st.markdown("## 2. Marketing – Hra o pozornost a marketingový mix")
 
-        nadpis_2("2.3 STP proces: Segmentace, Cílení a Positioning")
+        st.markdown("### 2.3 STP proces: Segmentace, Cílení a Positioning")
         st.write(
             "STP proces pomáhá firmě vybrat správné zákazníky a odlišit se od"
             " konkurence. Místo snahy oslovit „všechny“ firma rozdělí trh na"
@@ -1994,7 +1850,7 @@ def render():
             " zákazníka zapamatovaní."
         )
 
-        nadpis_3("2.3.1 Segmentace trhu")
+        st.markdown("#### 2.3.1 Segmentace trhu")
         st.write(
             "Segmentace trhu je rozdělení trhu na menší, relativně podobné"
             " skupiny zákazníků. Lidé v jednom segmentu mají podobné potřeby,"
@@ -2017,7 +1873,7 @@ def render():
             " zákazníky, věrné zákazníky a ty, kteří často opouštějí košík. |"
         )
 
-        nadpis_3("2.3.2 Cílení: targeting")
+        st.markdown("#### 2.3.2 Cílení: targeting")
         st.write(
             "Cílení znamená výběr segmentu nebo segmentů, na které firma zaměří"
             " své úsilí. Firma nemůže dělat všechno pro všechny, protože má"
@@ -2037,7 +1893,7 @@ def render():
             " sportovce s intolerancí laktózy. |"
         )
 
-        nadpis_3("2.3.3 Positioning a USP")
+        st.markdown("#### 2.3.3 Positioning a USP")
         st.write(
             "Positioning znamená vytvoření jedinečného obrazu značky v mysli"
             " zákazníka vůči konkurenci. Nejde jen o to, co firma říká o sobě,"
@@ -2084,9 +1940,9 @@ def render():
     # BLOK 9: 2.4 Marketingový mix 4P
     # =========================================================================
     elif idx == 10:
-        nadpis_1("2. Marketing – Hra o pozornost a marketingový mix")
+        st.markdown("## 2. Marketing – Hra o pozornost a marketingový mix")
 
-        nadpis_2("2.4 Marketingový mix: Klasické 4P")
+        st.markdown("### 2.4 Marketingový mix: Klasické 4P")
         st.write(
             "Marketingový mix je soubor nástrojů, které firma kombinuje, aby"
             " uspěla na trhu. Klasický model se označuje jako 4P: Product,"
@@ -2112,7 +1968,7 @@ def render():
             " zase nemusí ekonomicky vycházet."
         )
 
-        nadpis_3("2.4.1 Product / Produkt")
+        st.markdown("#### 2.4.1 Product / Produkt")
         st.write(
             "Produkt je všechno, co firma nabízí zákazníkovi k uspokojení"
             " potřeby nebo přání. Může jít o fyzickou věc, službu, aplikaci,"
@@ -2176,7 +2032,7 @@ def render():
             " výkon, gaming, sport nebo status."
         )
 
-        nadpis_3("2.4.2 Price / Cena")
+        st.markdown("#### 2.4.2 Price / Cena")
         st.write(
             "Cena je jediný prvek marketingového mixu, který přímo generuje"
             " příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady."
@@ -2222,7 +2078,7 @@ def render():
             " značky."
         )
 
-        nadpis_3("2.4.3 Place / Distribuce")
+        st.markdown("#### 2.4.3 Place / Distribuce")
         st.write(
             "Distribuce řeší, jak se produkt dostane od výrobce ke konečnému"
             " zákazníkovi. Nestačí mít dobrý produkt — zákazník ho musí umět"
@@ -2261,7 +2117,7 @@ def render():
             " jeden plynulý zážitek."
         )
 
-        nadpis_3("2.4.4 Promotion / Propagace a komunikační mix")
+        st.markdown("#### 2.4.4 Promotion / Propagace a komunikační mix")
         st.write(
             "Propagace neznamená jen reklamu. Jde o celou komunikaci firmy se"
             " zákazníky, veřejností, médii a partnery. Cílem je informovat,"
@@ -2365,7 +2221,7 @@ def render():
     # BLOK 10: 3. Brand (Úvod a 3.1)
     # =========================================================================
     elif idx == 11:
-        nadpis_1("3. Brand, nákupní psychologie a etika")
+        st.markdown("## 3. Brand, nákupní psychologie a etika")
 
         st.markdown(
             "<div class='box-blue'>"
@@ -2411,7 +2267,7 @@ def render():
             )
 
         st.divider()
-        nadpis_2("3.1 Značka a budování brandu")
+        st.markdown("### 3.1 Značka a budování brandu")
         st.write(
             "Značka neboli brand není jen logo nebo název produktu. Je to"
             " soubor představ, emocí, zkušeností a asociací, které si lidé s"
@@ -2431,7 +2287,7 @@ def render():
             " vnímaná hodnota je jiná."
         )
 
-        nadpis_3("3.1.1 Anatomie a prvky značky")
+        st.markdown("#### 3.1.1 Anatomie a prvky značky")
         st.write(
             "Značka se skládá z více prvků. Čím jsou jednotnější a"
             " zapamatovatelnější, tím snáze si ji lidé vybaví."
@@ -2461,7 +2317,7 @@ def render():
             " ztratí důvěru."
         )
 
-        nadpis_3("3.1.2 Brand equity a brand loyalty")
+        st.markdown("#### 3.1.2 Brand equity a brand loyalty")
         st.write(
             "Brand equity znamená hodnotu značky. Může být peněžní i"
             " nepeněžní. Silná značka umožňuje prodávat dráž, snáze zavádět nové"
@@ -2484,7 +2340,7 @@ def render():
             " herní komunity, zákazníci lokální kavárny. |"
         )
 
-        nadpis_3("3.1.3 Strategie značky: rebranding a extenze značky")
+        st.markdown("#### 3.1.3 Strategie značky: rebranding a extenze značky")
         st.write(
             "Rebranding je změna image značky. Může zahrnovat nové logo, barvy,"
             " slogan, tón komunikace nebo celkovou strategii. Firma k němu"
@@ -2522,9 +2378,9 @@ def render():
     # BLOK 11: 3.2 Nákupní chování a psychologie
     # =========================================================================
     elif idx == 12:
-        nadpis_1("3. Brand, nákupní psychologie a etika")
+        st.markdown("## 3. Brand, nákupní psychologie a etika")
 
-        nadpis_2("3.2 Nákupní chování a psychologie spotřebitele")
+        st.markdown("### 3.2 Nákupní chování a psychologie spotřebitele")
         st.write(
             "Nákupní chování zkoumá, jak se lidé rozhodují při nákupu, co je"
             " ovlivňuje a proč si vyberou jeden produkt místo druhého. Zákazník"
@@ -2533,7 +2389,7 @@ def render():
             " nálada."
         )
 
-        nadpis_3("3.2.1 Proces nákupního rozhodování")
+        st.markdown("#### 3.2.1 Proces nákupního rozhodování")
         st.markdown(
             "| Fáze | Co se děje | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -2559,7 +2415,7 @@ def render():
             " a potvrzením, že zákazník zvolil dobře."
         )
 
-        nadpis_3("3.2.2 Faktory ovlivňující nákupní chování")
+        st.markdown("#### 3.2.2 Faktory ovlivňující nákupní chování")
         st.write(
             "Faktory ovlivňující nákupní chování ukazují, že zákazník se"
             " nerozhoduje izolovaně. Jeho nákupní rozhodnutí ovlivňuje osobní"
@@ -2588,7 +2444,7 @@ def render():
             " sportovní tým, influencera, herní komunitu nebo profesní vzor."
         )
 
-        nadpis_3("3.2.3 Racionální vs. emoční nákupy")
+        st.markdown("#### 3.2.3 Racionální vs. emoční nákupy")
         st.write(
             "Racionální nákup je založený hlavně na porovnání ceny, kvality,"
             " užitku a parametrů. Emoční nákup je ovlivněný pocitem, touhou,"
@@ -2608,7 +2464,7 @@ def render():
             " e-shopu. |"
         )
 
-        nadpis_3("3.2.4 Neuromarketing")
+        st.markdown("#### 3.2.4 Neuromarketing")
         st.write(
             "Neuromarketing zkoumá, jak na zákazníka působí podněty jako barvy,"
             " hudba, vůně, uspořádání prodejny, obal, slova, obrázky nebo"
@@ -2655,9 +2511,9 @@ def render():
     # BLOK 12: 3.3 Etika, právo a ochrana
     # =========================================================================
     elif idx == 13:
-        nadpis_1("3. Brand, nákupní psychologie a etika")
+        st.markdown("## 3. Brand, nákupní psychologie a etika")
 
-        nadpis_2("3.3 Etika, právo a ochrana spotřebitele")
+        st.markdown("### 3.3 Etika, právo a ochrana spotřebitele")
         st.write(
             "Marketing má velký vliv na rozhodování lidí. Proto musí řešit"
             " nejen účinnost kampaní, ale také férovost, pravdivost, bezpečnost"
@@ -2666,7 +2522,7 @@ def render():
             " klamán ani manipulován."
         )
 
-        nadpis_3("3.3.1 Právní rámec reklamy v ČR a EU")
+        st.markdown("#### 3.3.1 Právní rámec reklamy v ČR a EU")
         st.write(
             "Reklama v ČR a EU podléhá právním pravidlům. Patří sem zejména"
             " regulace reklamy, pravidla nekalé soutěže, ochrana spotřebitele,"
@@ -2698,7 +2554,7 @@ def render():
             " hashtazích nebo nejasně naznačené."
         )
 
-        nadpis_3("3.3.2 Ochrana spotřebitele")
+        st.markdown("#### 3.3.2 Ochrana spotřebitele")
         st.write(
             "Spotřebitel má právo na pravdivé, srozumitelné a úplné informace."
             " Firma nesmí zamlčovat podstatné údaje, používat klamavé praktiky"
@@ -2726,7 +2582,7 @@ def render():
             " a posuzuje stížnosti na nevhodnou nebo neetickou reklamu."
         )
 
-        nadpis_3("3.3.3 Neetické a manipulativní praktiky")
+        st.markdown("#### 3.3.3 Neetické a manipulativní praktiky")
         st.markdown(
             "| Praktika | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -2774,9 +2630,9 @@ def render():
     # BLOK 13: 3.4 Moderní formy marketingu
     # =========================================================================
     elif idx == 14:
-        nadpis_1("3. Brand, nákupní psychologie a etika")
+        st.markdown("## 3. Brand, nákupní psychologie a etika")
 
-        nadpis_2("3.4 Moderní formy a trendy v digitálním marketingu")
+        st.markdown("### 3.4 Moderní formy a trendy v digitálním marketingu")
         st.write(
             "Moderní marketing se stále víc odehrává online. Firmy pracují s"
             " daty, algoritmy, obsahem, influencery, automatizací a"
@@ -2785,7 +2641,7 @@ def render():
             " manipulace."
         )
 
-        nadpis_3("3.4.1 Digitální / online marketing")
+        st.markdown("#### 3.4.1 Digitální / online marketing")
         st.markdown(
             "| Nástroj | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -2804,7 +2660,7 @@ def render():
             " a později dostane e-mail s doporučením nebo slevou. |"
         )
 
-        nadpis_3("3.4.2 Social media marketing a content marketing")
+        st.markdown("#### 3.4.2 Social media marketing a content marketing")
         st.write(
             "Social Media Marketing (SMM) je marketing na sociálních sítích."
             " Content marketing znamená tvorbu užitečného, zábavného nebo"
@@ -2833,7 +2689,7 @@ def render():
             " přímý vztah bez závislosti na algoritmu."
         )
 
-        nadpis_3("3.4.3 Influencer marketing a UGC")
+        st.markdown("#### 3.4.3 Influencer marketing a UGC")
         st.write(
             "Influencer marketing využívá důvěru a dosah tvůrců obsahu."
             " Influencer může značce pomoci oslovit konkrétní komunitu, ale"
@@ -2856,7 +2712,7 @@ def render():
             " více zkušenosti jiných zákazníků než oficiální reklamě."
         )
 
-        nadpis_3("3.4.4 Guerilla marketing a virální marketing")
+        st.markdown("#### 3.4.4 Guerilla marketing a virální marketing")
         st.write(
             "Guerilla marketing je netradiční, často nízkonákladová forma"
             " propagace, která se snaží překvapit, pobavit nebo vyvolat silnou"
@@ -2879,7 +2735,7 @@ def render():
             " důvěru nebo nevede k pochopení značky."
         )
 
-        nadpis_3("3.4.5 Nové technologie v marketingu")
+        st.markdown("#### 3.4.5 Nové technologie v marketingu")
         st.write(
             "Nové technologie umožňují marketing více personalizovat,"
             " automatizovat a měřit. Zároveň však vyvolávají otázky soukromí,"
@@ -2955,7 +2811,7 @@ def render():
     # BLOK 14: 4. Závěrečný výstup
     # =========================================================================
     elif idx == 15:
-        nadpis_1("4. Závěrečný výstup kapitoly a případové studie")
+        st.markdown("## 4. Závěrečný výstup kapitoly a případové studie")
 
         st.markdown(
             "<div class='box-blue'>"
@@ -2970,10 +2826,10 @@ def render():
 
         st.divider()
 
-        nadpis_2("4.1 Finální projektový výstup")
+        st.markdown("### 4.1 Finální projektový výstup")
         st.write("Sestavení kompletního přehledu tvého projektu:")
 
-        nadpis_3("Finální úkol: Mini projekt od řízení po kampaň")
+        st.markdown("#### Finální úkol: Mini projekt od řízení po kampaň")
         st.write(
             "Na konci kapitoly odevzdáš krátkou prezentaci nebo dokument, který"
             " obsahuje:"
@@ -3063,10 +2919,10 @@ def render():
             unsafe_allow_html=True,
         )
 
-        nadpis_2("4.2 Případové studie na závěr kapitoly")
+        st.markdown("### 4.2 Případové studie na závěr kapitoly")
         st.write("Vyzkoušej si roli konzultanta na reálných chybách z praxe:")
 
-        nadpis_3("👕 Případová studie 1: Školní merch, který nikdo nekupuje")
+        st.markdown("#### 👕 Případová studie 1: Školní merch, který nikdo nekupuje")
         with st.container(border=True):
             st.markdown(
                 "**Situace:** Studentský tým chce spustit školní merch. Navrhne"
@@ -3098,7 +2954,7 @@ def render():
                 )
 
         st.divider()
-        nadpis_3("☕ Případová studie 2: Kavárna u školy a boj o pozornost")
+        st.markdown("#### ☕ Případová studie 2: Kavárna u školy a boj o pozornost")
         with st.container(border=True):
             st.markdown(
                 "**Situace:** U školy vznikne malá kavárna. Majitel chce oslovit"
@@ -3138,8 +2994,8 @@ def render():
                 )
 
         st.divider()
-        nadpis_3(
-            "📱 Případová studie 3: Influencer propaguje „zázračný“ produkt"
+        st.markdown(
+            "#### 📱 Případová studie 3: Influencer propaguje „zázračný“ produkt"
         )
         with st.container(border=True):
             st.markdown(
@@ -3176,7 +3032,7 @@ def render():
                 )
 
         st.divider()
-        nadpis_2("🎓 Závěrečná reflexe celou kapitolou")
+        st.markdown("### 🎓 Závěrečná reflexe celou kapitolou")
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
                 "6.4.4",
