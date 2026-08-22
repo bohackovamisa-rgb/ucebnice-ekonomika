@@ -17,7 +17,7 @@ def render_dluhovy_simulator():
             2. Jaký je plánovaný schodek státního rozpočtu pro letošní rok?<br><br>
             Zadej tato čísla do políček níže. Teprve pak uvidíš reálný stav státní pokladny.
         </div>
-        """,
+        """, 
         unsafe_allow_html=True
     )
 
@@ -130,9 +130,10 @@ def render():
     st.markdown(
         "<span class='hero-badge'>Kapitola 5</span>", unsafe_allow_html=True
     )
-    st.title("5. Stát, daně a globální souvislosti")
+    st.markdown("## 5. Stát, daně a globální souvislosti")
     st.markdown(
-        "<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>"
+        "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
+        "Stát jako hospodář: daně, veřejné služby a propojený svět<br><br>"
         "Stát není jen úřad, formulář nebo položka na výplatní pásce. Je to"
         " systém, který vybírá daně, financuje veřejné služby, nastavuje"
         " pravidla trhu a reaguje na problémy, které jednotlivci ani firmy sami"
@@ -173,7 +174,7 @@ def render():
             st.markdown(
                 """
             <div style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
-                <i>📘 <b>Vazba na RVP:</b> Kapitola rozvíjí ekonomické, občanské a digitální kompetence v oblastech funkce státu v ekonomice, hospodářská politika, daňová soustava, státní rozpočet, veřejné finance, globalizace, mezinárodní obchod, Evropská unie, udržitelný rozvoj a odpovědné rozhodování.</i>
+                <i>📘 <b>Vazba na RVP:</b> Kapitola rozvíjí ekonomické, občanské a digitální kompetence v oblastech funkce státu v ekonomice, hospodářská politika, daňová soustava, státní rozpočet, veřejné finance, globalizace, mezinárodní obchod, Evropská unie, udržitelný rozvoj a odpovědné rozhodování jednotlivce i firmy.</i>
             </div>
             """,
                 unsafe_allow_html=True,
@@ -181,7 +182,7 @@ def render():
 
         with c_nav2:
             st.markdown("""
-            **🧭 Logická cesta kapitolou:**
+            **🧭 Doporučené pořadí studia:**
             1. 🏛️ **Stát jako hospodář** — nejdřív si ujasníš, proč stát v ekonomice vůbec existuje, co jsou veřejné statky, tržní selhání a proč pravidla trhu nejsou jen zbytečná byrokracie.
             2. 📊 **Daně a státní rozpočet** — potom přejdeš k tomu, odkud stát bere peníze, za co je utrácí, proč vzniká deficit a proč daně nejsou jen „trest za výdělek“.
             3. 💸 **Moje daně v praxi** — následně propojíš teorii s běžným životem: brigáda, Vinted, YouTube, TikTok, OnlyFans, Uber, Airbnb, investice, kryptoměny, DPH na nákupu a digitální komunikace se státem.
@@ -189,7 +190,7 @@ def render():
             5. 🌱 **ESG a udržitelná ekonomika** — nakonec propojíš ekonomiku s odpovědností: uhlíková stopa, Green Deal, sociální dopady, greenwashing a otázka, jak firmy vytvářejí hodnotu nejen finančně, ale i společensky.
             """)
 
-    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
+    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL (STEJNÝ FORMÁT JAKO V OSTATNÍCH KAPITOLÁCH)
     section_options_5 = [
         "1. Stát jako „hospodář“ — proč ho vůbec máme?",
         "2. Daně, státní rozpočet a ekonomická realita",
@@ -199,14 +200,13 @@ def render():
         "6. Aktivity a případové studie na závěr",
     ]
 
-    st.markdown(
-        "📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True
-    )
+    st.markdown("### 📌 Přechod na podkapitolu:")
     selected_section_5 = st.selectbox(
         "Přechod na podkapitolu:",
         section_options_5,
         index=0,
         label_visibility="collapsed",
+        key="k5_section_select",
     )
     st.divider()
 
@@ -214,7 +214,7 @@ def render():
     # SEKCE 1: STÁT JAKO HOSPODÁŘ
     # =========================================================================
     if selected_section_5.startswith("1."):
-        st.markdown("### 1. Stát jako „hospodář“ — proč ho vůbec máme?")
+        st.markdown("## 1. Stát jako „hospodář“ — proč ho vůbec máme?")
 
         st.markdown(
             """
@@ -225,6 +225,29 @@ def render():
         """,
             unsafe_allow_html=True,
         )
+
+        st.markdown(
+            """
+        <div class='box-green'>
+            🎯 <b>Cíl 1. bloku:</b> Pochopíš, proč trh sám nevyřeší všechno, jaké funkce má stát v ekonomice, podle čeho se hodnotí úspěšnost hospodářské politiky a jaké nástroje stát používá, když chce ekonomiku stabilizovat.
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+        with st.expander("📚 Co se v tomto bloku naučíš & Vazba na RVP pro SŠ", expanded=False):
+            st.markdown("""
+            **Co se v bloku naučíš:**
+            * vysvětlit tržní selhání,
+            * rozlišit veřejné statky, externality a monopoly,
+            * popsat základní funkce státu v ekonomice,
+            * vysvětlit magický čtyřúhelník hospodářské politiky,
+            * rozlišit fiskální, monetární a sociální politiku,
+            * propojit teorii s běžným životem: Vinted, online nákupy, hypotéky, inflace, fast fashion, zdravotnictví, důchody a Big Tech.
+
+            **Vazba na RVP pro SŠ:**  
+            Tento blok pokrývá funkce státu v tržní ekonomice, úlohu státu při zajištění veřejných statků, řešení tržních selhání, hospodářskou politiku, makroekonomické ukazatele, inflaci, nezaměstnanost, hospodářský růst, sociální politiku, právní prostředí podnikání a občanskou orientaci v ekonomických otázkách.
+            """)
 
         st.divider()
         with st.expander(
@@ -248,12 +271,15 @@ def render():
             """)
 
         st.divider()
-        st.markdown("#### 1.1 Proč stát zasahuje do trhu: Tržní selhání")
+        st.markdown("### 1.1 Proč stát zasahuje do trhu: tržní selhání")
         st.write(
             "Trh je silný nástroj. Umí propojit nabídku a poptávku, motivovat firmy ke zlepšování, "
             "tlačit na cenu a umožnit lidem svobodně se rozhodovat. Jenže trh není kouzelný algoritmus, "
-            "který automaticky vyřeší všechno spravedlivě, bezpečně a dlouhodobě udržitelně. "
-            "**Tržní selhání** znamená situaci, kdy samotný trh nevede k výsledku, který je pro společnost efektivní nebo přijatelný."
+            "který automaticky vyřeší všechno spravedlivě, bezpečně a dlouhodobě udržitelně."
+        )
+        st.write(
+            "**Tržní selhání** znamená situaci, kdy samotný trh nevede k výsledku, který je pro společnost efektivní nebo přijatelný. "
+            "Stát proto nastavuje pravidla, financuje některé služby, omezuje škodlivé dopady a chrání hospodářskou soutěž."
         )
 
         st.markdown(
@@ -262,36 +288,37 @@ def render():
         )
 
         tab_selhani1, tab_selhani2, tab_selhani3 = st.tabs([
-            "🛣️ Veřejné statky",
-            "🏭 Externality",
-            "👑 Monopol",
+            "🛣️ Veřejné statky (Kickstarter)",
+            "🏭 Externality (Levné tričko)",
+            "👑 Monopol (Mobilní operátor)",
         ])
 
         with tab_selhani1:
-            st.markdown("##### Veřejné statky (Proč si silnice a armádu neplatíme přes Kickstarter?)")
+            st.markdown("#### Proč si silnice, lampy a armádu neplatíme přes Kickstarter? (RVP pojem: veřejné statky)")
             st.write("Veřejné statky jsou statky nebo služby, u kterých obvykle platí dvě vlastnosti:")
             st.markdown("""
             * **Nevylučitelnost ze spotřeby:** je obtížné nebo nemožné vyloučit člověka z užívání, i když přímo nezaplatil. Nemůžete zakázat někomu, aby se v noci díval na světlo z pouliční lampy.
             * **Nerivalita ve spotřebě:** spotřeba jednoho člověka výrazně nesnižuje možnost spotřeby druhého.
-            * **Příklady:** veřejné osvětlení, obrana státu, základní bezpečnost, některé silnice, protipovodňová ochrana.
-            * **Problém černého pasažéra:** Kdyby se policie nebo dálnice platily čistě dobrovolně formou sbírky, spousta lidí by je využívala zdarma a systém by zkrachoval. Proto tyto věci platíme povinně z daní.
+            * **Příklady:** Veřejné osvětlení, obrana státu, základní bezpečnost, některé silnice, protipovodňová ochrana, čistší veřejný prostor.
+            * **Problém černého pasažéra:** Kdyby se veřejné statky platily jen dobrovolně, mnoho lidí by je využívalo, ale nepřispělo by. Proto je často financuje stát z daní.
             """)
 
         with tab_selhani2:
-            st.markdown("##### Externality (Proč levné tričko nemusí být opravdu levné?)")
+            st.markdown("#### Proč levné tričko nemusí být opravdu levné? (RVP pojem: externality)")
             st.write("**Externalita** je vedlejší efekt výroby nebo spotřeby, který dopadá na někoho, kdo se přímo neúčastní tržní transakce.")
             st.markdown("""
-            * 🔴 **Negativní externalita:** Firma něco vyrábí levně, ale část nákladů nese okolí. Moderní příklad: Fast fashion. Tričko může mít nízkou cenu na účtence, ale znečištěná řeka, toxický odpad z barvení látky nebo emise z kamionů dopadají na celou planetu.
-            * 🟢 **Pozitivní externalita:** Vzdělání prospívá nejen jednotlivci, ale celé společnosti. Vzdělanější člověk vymyslí lék nebo novou technologii, ze které těží komunita. Proto stát podporuje školství a očkování.
+            * 🔴 **Negativní externalita:** Firma něco vyrábí levně, ale část nákladů nese okolí — například znečištěná řeka, emise, hluk, přetížená doprava nebo špatné pracovní podmínky v dodavatelském řetězci.
+            * 👗 **Moderní příklad:** Fast fashion může mít nízkou cenu na účtence, ale část nákladů se projeví jinde: v odpadu, spotřebě vody, emisích z dopravy nebo pracovních podmínkách.
+            * 🟢 **Pozitivní externalita:** Vzdělání prospívá nejen jednotlivci, ale celé společnosti. Vzdělanější člověk může mít vyšší příjem, platit vyšší daně, lépe se rozhodovat, inovovat a přispívat komunitě. Proto stát podporuje školství.
             """)
 
         with tab_selhani3:
-            st.markdown("##### Monopol a nedokonalá konkurence (Co kdyby byl v ČR jen jeden operátor?)")
+            st.markdown("#### Co by se stalo, kdyby byl v Česku jen jeden mobilní operátor? (RVP pojem: monopol a nedokonalá konkurence)")
             st.write("**Monopol** vzniká tehdy, když jeden podnik ovládá trh natolik, že může výrazně ovlivňovat cenu, podmínky nebo dostupnost služby. Problémem není velikost firmy sama o sobě, ale **zneužití tržní síly**.")
             st.markdown("""
             * **Rizika monopolu:** vyšší ceny, horší kvalita, menší tlak na inovace, slabší postavení zákazníka.
-            * **Moderní příklady:** debaty o Big Tech firmách, uzavřených ekosystémech.
-            * **Role státu a EU:** chránit hospodářskou soutěž, antimonopolní úřady (např. nařízení sjednotit nabíječky na USB-C, právo na jiný prohlížeč).
+            * **Moderní příklady:** Debaty o Big Tech firmách, uzavřených ekosystémech, povinném USB-C, přístupu k aplikacím, pravidlech platforem nebo férové soutěži v digitálním prostředí.
+            * **Role státu a EU:** Chránit hospodářskou soutěž, bránit zneužívání dominantního postavení a chránit spotřebitele.
             """)
 
         st.markdown(
@@ -300,31 +327,31 @@ def render():
         )
 
         st.divider()
-        st.markdown("#### 1.2 Co přesně stát v ekonomice dělá: 4 funkce státu")
-        st.write("Ekonomická role státu se dá shrnout do několika funkcí. Stát vytváří rámec a zasahuje tam, kde samotný trh nestačí.")
+        st.markdown("### 1.2 Co přesně stát v ekonomice dělá: funkce státu")
+        st.write("Ekonomická role státu se dá shrnout do několika funkcí. Neznamená to, že stát má řídit každou cenu a každé podnikání. Znamená to, že vytváří rámec, ve kterém může trh fungovat, a zasahuje tam, kde samotný trh nestačí.")
 
         st.markdown("""
         | Funkce státu | RVP vysvětlení | Moderní příklad |
         | :--- | :--- | :--- |
-        | **Právní a institucionální rámec** | Stát zajišťuje pravidla hry: ochranu vlastnictví, smlouvy, vymahatelnost práva, ochranu spotřebitele. | Když si objednáš zboží online a přijde padělek nebo nic, existují pravidla reklamace a soudy. |
-        | **Alokační funkce** | Stát směřuje zdroje tam, kde je trh sám neposkytuje v dostatečné míře (k veřejným statkům). | Školy, nemocnice, silnice, hasiči, veřejné osvětlení nebo protipovodňová opatření. |
-        | **Redistribuční funkce** | Stát zmírňuje sociální nerovnosti pomocí daní, dávek, důchodů nebo veřejných služeb. | Debata, zda mají lidé s vyššími příjmy platit vyšší daně, aby stát mohl financovat obědy ve školách. |
-        | **Stabilizační funkce** | Stát se snaží tlumit výkyvy ekonomiky, inflaci, nezaměstnanost a hluboké krize. | Podpora během pandemie (Kurzarbeit), pomoc při energetické krizi, snaha brzdit inflaci. |
+        | **Právní a institucionální rámec** | Stát zajišťuje pravidla hry: ochranu vlastnictví, smlouvy, vymahatelnost práva, ochranu spotřebitele a základní instituce. | Když si objednáš zboží online a přijde padělek nebo nic, existují pravidla reklamace, ochrana spotřebitele, ČOI, soudy a možnost bránit se. |
+        | **Alokační funkce** | Stát směřuje zdroje tam, kde je trh sám neposkytuje v dostatečné míře, hlavně k veřejným statkům a službám. | Školy, nemocnice, silnice, hasiči, veřejné osvětlení nebo protipovodňová opatření. |
+        | **Redistribuční funkce** | Stát zmírňuje sociální nerovnosti pomocí daní, dávek, důchodů, podpory v nezaměstnanosti nebo veřejných služeb. | Debata, zda mají lidé s vyššími příjmy platit vyšší daně, aby stát mohl financovat obědy ve školách, dostupnější bydlení nebo sociální pomoc. |
+        | **Stabilizační funkce** | Stát se snaží tlumit výkyvy ekonomiky, inflaci, nezaměstnanost a hluboké krize. | Podpora během pandemie (Kurzarbeit), pomoc domácnostem při energetické krizi, snaha brzdit inflaci nebo podporovat zaměstnanost. |
         """)
 
         st.info("🧭 **Pravidla hry:** Bez vymahatelných pravidel by trh nefungoval dobře. Když nevíš, zda smlouva platí, zda můžeš reklamovat zboží, zda někdo chrání tvoje vlastnictví a zda firma může lhát v reklamě, ekonomika se mění v chaos.")
-        st.warning("⚖️ **Redistribuce není jen „brát a dávat“:** Smyslem je řešit situace, kdy by příliš velké nerovnosti ohrožovaly soudržnost společnosti, přístup ke vzdělání nebo zdraví. Zároveň to otevírá debatu o motivaci pracovat.")
+        st.warning("⚖️ **Redistribuce není jen „brát a dávat“:** Smyslem je řešit situace, kdy by příliš velké nerovnosti ohrožovaly soudržnost společnosti, přístup ke vzdělání, zdraví nebo základní důstojnost. Zároveň ale každá redistribuce otevírá debatu o motivaci pracovat, spravedlnosti a odpovědnosti.")
 
         with st.expander("Debatní otázka: Mají miliardáři platit vyšší daně?"):
             st.markdown("""
             **Má stát zvyšovat daně lidem s vysokými příjmy, pokud tím financuje služby pro lidi s nízkými příjmy?**
             * **Argumenty pro:** vyšší solidarita, menší nerovnosti, dostupnější vzdělání a zdravotní péče, stabilnější společnost.
-            * **Argumenty proti:** riziko odchodu kapitálu, menší motivace investovat, složitější daňový systém.
+            * **Argumenty proti:** riziko odchodu kapitálu, menší motivace investovat, složitější daňový systém, otázka hranice „spravedlivého“ zdanění.
             * **Výstup:** Napiš své stanovisko ve 4 větách: názor, ekonomický argument, sociální argument, možné riziko.
             """)
 
         st.divider()
-        st.markdown("#### 1.3 Ukazatele výkonu ekonomiky a magický čtyřúhelník")
+        st.markdown("### 1.3 Ukazatele výkonu ekonomiky a magický čtyřúhelník")
         st.write("Aby stát, vláda, ČNB, firmy i občané věděli, v jaké kondici ekonomika je, sledují se **makroekonomické ukazatele**. Nejde o čísla „pro ekonomy do tabulek“. Změna se projeví v cenách potravin, dostupnosti brigád, mzdách a hypotékách.")
 
         st.markdown("""
@@ -404,7 +431,7 @@ def render():
         st.plotly_chart(fig, use_container_width=True)
 
         st.divider()
-        st.markdown("#### 1.4 Nástroje státu: hospodářská politika")
+        st.markdown("### 1.4 Nástroje státu: hospodářská politika")
         st.write("Hospodářská politika je soubor rozhodnutí a nástrojů, kterými stát a veřejné instituce ovlivňují ekonomiku. Nejde jen o vládu. Důležitou roli má také centrální banka, samosprávy, zákony, regulace a systém sociální ochrany.")
 
         st.markdown("""
@@ -426,7 +453,7 @@ def render():
             st.write("**Srovnání pro pochopení:** V některých zemích může vážnější zdravotní problém znamenat vysoké účty a riziko zadlužení. V ČR člověk u běžné péče často ukáže kartičku pojišťovny, protože zdravotnictví je financováno převážně přes veřejné zdravotní pojištění. Není to „zdarma“ — platí se průběžně z odvodů a veřejných peněz.")
 
         st.divider()
-        st.markdown("#### 1.5 Kvíz: poznáš funkci státu?")
+        st.markdown("### 1.5 Kvíz: poznáš funkci státu?")
         st.write("U každé situace urči, o jakou funkci nebo nástroj státu jde:")
 
         with st.form("fce_statu_quiz_v3"):
@@ -443,7 +470,7 @@ def render():
                     st.error("❌ Některá z odpovědí je chybná. \n\n*Správné řešení: 1. Redistribuční. 2. Alokační. 3. Monetární. 4. Právní. 5. Pozitivní externalita.*")
 
         st.divider()
-        st.markdown("#### 1.6 Mini aktivita: Stát jako správce společného účtu")
+        st.markdown("### 1.6 Mini aktivita: Stát jako správce společného účtu")
         st.write("Představ si, že tvá třída má společný rozpočet **100 000 Kč** na zlepšení života ve škole.")
 
         if "vykresli_otazku_fn" in st.session_state:
@@ -456,7 +483,7 @@ def render():
     # SEKCE 2: DANĚ A STÁTNÍ ROZPOČET
     # =========================================================================
     elif selected_section_5.startswith("2."):
-        st.markdown("### 2. Daně, státní rozpočet a ekonomická realita")
+        st.markdown("## 2. Daně, státní rozpočet a ekonomická realita")
 
         st.markdown(
             "<div class='box-green'>"
@@ -466,7 +493,7 @@ def render():
         )
 
         st.divider()
-        st.markdown("#### 2.1 Základy daňového systému: co je daň a proč existuje")
+        st.markdown("### 2.1 Základy daňového systému: co je daň a proč existuje")
         st.write("Daň je povinná, zákonem stanovená platba do veřejného rozpočtu, za kterou člověk nebo firma obvykle nedostává přímou konkrétní protislužbu. Neplatíš daň z příjmu proto, aby ti stát druhý den opravil přesně tvoji ulici. Platíš ji do společného systému.")
 
         st.markdown("""
@@ -481,7 +508,7 @@ def render():
             st.write("**Daň z příjmu** platíš podle toho, že máš zdanitelný příjem. Peníze jdou do veřejných rozpočtů. **Poplatek za psa** nebo komunální odpad má užší vazbu na konkrétní místní správu a náklad obce. Daň je obecnější příspěvek.")
 
         st.divider()
-        st.markdown("#### 2.2 Funkce daní: proč stát daně vybírá")
+        st.markdown("### 2.2 Funkce daní: proč stát daně vybírá")
         st.markdown("""
         | Funkce daní | Co znamená | Příklad |
         | :--- | :--- | :--- |
@@ -492,7 +519,7 @@ def render():
         """)
 
         st.divider()
-        st.markdown("#### 2.3 Zásady zdaňování: jak poznat „dobrou“ daň")
+        st.markdown("### 2.3 Zásady zdaňování: jak poznat „dobrou“ daň")
         st.markdown("""
         | Zásada | Co znamená | Otázka pro studenta |
         | :--- | :--- | :--- |
@@ -503,7 +530,7 @@ def render():
         """)
 
         st.divider()
-        st.markdown("#### 2.4 Progresivní vs. rovná daň")
+        st.markdown("### 2.4 Progresivní vs. rovná daň")
         st.markdown("""
         | Typ zdanění | Princip | Výhoda | Riziko |
         | :--- | :--- | :--- | :--- |
@@ -515,7 +542,7 @@ def render():
             st.write("**Mýtus:** „Když přejdu do vyššího daňového pásma, vydělám ve výsledku méně peněz.“\n\n**Realita:** U běžné progresivní daně se vyšší sazbou obvykle daní až *část příjmu nad určitou hranicí*, ne celý příjem. Člověk tedy po zvýšení hrubého příjmu zpravidla nemá méně peněz než předtím — jen z dodatečné části příjmu odvede vyšší podíl.")
 
         st.divider()
-        st.markdown("#### 2.5 Přímé daně: peníze, které se vážou ke konkrétní osobě nebo firmě")
+        st.markdown("### 2.5 Přímé daně: peníze, které se vážou ke konkrétní osobě nebo firmě")
         st.write("Přímé daně platí konkrétní člověk nebo firma ze svého příjmu, zisku nebo majetku. Daň je tedy přímo spojena s poplatníkem.")
 
         st.markdown("""
@@ -542,7 +569,7 @@ def render():
             st.write("U investic je důležité rozlišit typ aktiva, dobu držení, výši příjmů. U akcií a ETF se často řeší **časový test** a limity pro osvobození příjmů. U kryptoměn se zdanění liší a časový test nemusí fungovat stejně. Aplikace jako Revolut usnadní nákup, ale nezbaví člověka povinnosti zjistit, jak se řeší daně.")
 
         st.divider()
-        st.markdown("#### 2.6 Nepřímé daně: neviditelné daně v každém nákupu")
+        st.markdown("### 2.6 Nepřímé daně: neviditelné daně v každém nákupu")
         st.write("Nepřímé daně jsou zahrnuté v ceně zboží nebo služby. Spotřebitel je fakticky zaplatí v ceně, ale státu je odvádí prodejce.")
 
         st.markdown("""
@@ -588,7 +615,7 @@ def render():
                     st.session_state["uloz_odpoved_fn"]("Kapitola 5", "Podkapitola 2.6.1 - Přerozdělování regionům", nazor_region)
 
         st.divider()
-        st.markdown("#### 2.7 Státní rozpočet: velká státní peněženka")
+        st.markdown("### 2.7 Státní rozpočet: velká státní peněženka")
         st.write("Státní rozpočet je **plán příjmů a výdajů státu na určité období**, obvykle na jeden rok.")
         
         st.markdown("""
@@ -599,7 +626,7 @@ def render():
         | případně půjčené peníze při deficitu | obsluha státního dluhu, infrastruktura, krizová pomoc |
         """)
 
-        st.markdown("#### 2.8 Výdaje rozpočtu: mandatorní a nemandatorní")
+        st.markdown("### 2.8 Výdaje rozpočtu: mandatorní a nemandatorní")
         st.markdown("""
         | Typ výdaje | Co znamená | Příklad | Proč je důležitý |
         | :--- | :--- | :--- | :--- |
@@ -610,7 +637,7 @@ def render():
         with st.expander("Rozpočtový reality check: kdyby stát byl domácnost?"):
             st.write("Domácnost má povinné platby: nájem, energie, splátky, jídlo. Stát má podobně výdaje, které jsou velmi těžko okamžitě změnitelné. Rozdíl je v tom, že stát není běžná domácnost: může vybírat daně, vydávat dluhopisy a rozhodovat o veřejných službách. Přesto platí, že dlouhodobé deficity vytvářejí tlak na budoucí rozpočty.")
 
-        st.markdown("#### 2.9 Vyrovnaný, přebytkový a schodkový rozpočet")
+        st.markdown("### 2.9 Vyrovnaný, přebytkový a schodkový rozpočet")
         st.markdown("""
         | Typ rozpočtu | Co znamená | Jednoduchý příklad |
         | :--- | :--- | :--- |
@@ -619,11 +646,11 @@ def render():
         | **Schodkový rozpočet / deficit** | Výdaje jsou vyšší než příjmy. | Stát vybere 100 a utratí 120. Rozdíl si musí půjčit. |
         """)
 
-        # ZDE VLOŽEN AKTUALIZOVANÝ SIMULÁTOR
+        # SIMULÁTOR STÁTNÍHO DLUHU
         render_dluhovy_simulator()
 
         st.divider()
-        st.markdown("#### 2.10 Státní dluh a státní dluhopisy")
+        st.markdown("### 2.10 Státní dluh a státní dluhopisy")
         st.write("Státní dluh vzniká, když stát dlouhodobě financuje schodky rozpočtu půjčkami. Jedním z nástrojů financování jsou **státní dluhopisy**. Když stát vydá dluhopis, půjčuje si peníze od investorů a slíbí, že je v budoucnu vrátí a zaplatí úrok.")
 
         st.markdown("""
@@ -636,7 +663,7 @@ def render():
         """)
 
         st.divider()
-        st.markdown("#### 2.11 Daňové úniky, optimalizace a stínová ekonomika")
+        st.markdown("### 2.11 Daňové úniky, optimalizace a stínová ekonomika")
         st.write("Ne každé snížení daní je nelegální. Je potřeba rozlišovat legální optimalizaci a nelegální daňový únik.")
 
         st.markdown("""
@@ -655,7 +682,7 @@ def render():
             st.write("Nadnárodní firmy mohou využívat rozdíly mezi daňovými systémy zemí, přesouvat zisky, licence nebo sídla do států s výhodnějším zdaněním. Proto se řeší **daňové ráje**, digitální daň, pravidla EU/OECD a myšlenka globální minimální daně pro velké korporace. Pointa: Problém není jen v tom, zda firma formálně dodrží zákon, ale také v tom, kde skutečně vzniká hodnota a kde se odvádějí daně.")
 
         st.divider()
-        st.markdown("#### 2.12 Praktická aplikace: mzda, účtenka a daňové dilema")
+        st.markdown("### 2.12 Praktická aplikace: mzda, účtenka a daňové dilema")
         
         st.markdown(
             "<div class='box-green'><strong>🔗 Užitečné zdroje k ověřování daní:</strong><br>"
@@ -680,7 +707,7 @@ def render():
     # SEKCE 3: MOJE DANĚ V PRAXI
     # =========================================================================
     elif selected_section_5.startswith("3."):
-        st.markdown("### 3. Moje daně v praxi")
+        st.markdown("## 3. Moje daně v praxi")
         st.markdown(
             "<div class='box-blue'>"
             "💻 <b>Praktický přesah:</b> Daňový portál, datová schránka, elektronická identita a Portál občana ukazují, že ekonomika není jen teorie. Moderní občan potřebuje rozumět tomu, kde hledat informace, jak ověřovat povinnosti a proč je digitální komunikace se státem součástí finanční gramotnosti."
@@ -688,7 +715,7 @@ def render():
             unsafe_allow_html=True,
         )
 
-        st.markdown("#### Praktické scénáře pro studenty")
+        st.markdown("### 3.1 Praktické scénáře pro studenty")
         with st.expander("Proč hrubá mzda není to samé, co mi přijde na účet? (První brigáda a „Růžový papír“)"):
             st.write("U DPP nebo DPČ není důležité jen „kolik je hodinová mzda“. Záleží na typu dohody, výši příjmu, odvodech, dani, podepsaném **Prohlášení poplatníka k dani** (růžový papír) a slevách na dani. Díky růžovému papíru může zaměstnanec uplatnit základní slevu na poplatníka. Lze ho ale uplatňovat v daném měsíci vždy pouze u jednoho zaměstnavatele.")
 
@@ -701,9 +728,7 @@ def render():
         with st.expander("Kryptoměny, akcie a ETF: Co si ověřit před prodejem?"):
             st.write("U akcií a ETF se často řeší tzv. **časový test** (po určité době držení je prodej osvobozen od daně) a limit ročních příjmů z prodeje. U kryptoměn se zdanění liší od běžných cenných papírů a časový test v ČR na kryptoměny tradičně neplatil (pravidla se mohou měnit, je třeba sledovat platnou legislativu). Revolut a další apky usnadní nákup, ale daně musíš řešit ty.")
 
-        st.markdown(
-            "#### 3.2 Trenažér: „Tohle přece danit nemusím!“"
-        )
+        st.markdown("### 3.2 Trenažér: „Tohle přece danit nemusím!“")
         st.write("Vyber jednu situaci — brigáda, doučování, prodej výrobků, Vinted, YouTube/TikTok, pronájem přes Airbnb, investice nebo kryptoměny. Napiš, jaké otázky by sis musel/a ověřit, než prohlásíš: „Tohle danit nemusím.“")
 
         if "vykresli_otazku_fn" in st.session_state:
@@ -718,7 +743,7 @@ def render():
     # SEKCE 4: GLOBÁLNÍ SOUVISLOSTI
     # =========================================================================
     elif selected_section_5.startswith("4."):
-        st.markdown("### 4. Globální souvislosti a svět bez hranic")
+        st.markdown("## 4. Globální souvislosti a svět bez hranic")
 
         st.markdown(
             "<div class='box-yellow'>"
@@ -727,7 +752,7 @@ def render():
             unsafe_allow_html=True,
         )
 
-        st.markdown("#### 4.1 Globalizace a mezinárodní obchod: jak se svět propojil")
+        st.markdown("### 4.1 Globalizace a mezinárodní obchod: jak se svět propojil")
         st.write("**Globalizace** znamená rostoucí propojení ekonomik, firem, lidí, technologií, dat a kapitálu napříč státy. Zboží, služby, peníze i informace se pohybují rychleji než dřív. Státy mezi sebou obchodují proto, že není efektivní vyrábět všechno doma. Každá země má jiné zdroje, technologie, pracovní sílu a kapitál.")
         
         st.markdown("""
@@ -758,7 +783,7 @@ def render():
                 st.session_state["uloz_odpoved_fn"]("Kapitola 5", "Podkapitola 4.1 - Komparativní výhoda", kviz_advokatka[:30])
 
         st.divider()
-        st.markdown("#### 4.2 Volný obchod, protekcionismus a obchodní bariéry")
+        st.markdown("### 4.2 Volný obchod, protekcionismus a obchodní bariéry")
         st.markdown("""
         | Přístup | Co znamená | Výhody | Rizika |
         | :--- | :--- | :--- | :--- |
@@ -785,7 +810,7 @@ def render():
                 st.session_state["uloz_odpoved_fn"]("Kapitola 5", "Podkapitola 4.2 - Clo na elektromobily", f"Clo: {clo_eu}% | Čína: {cena_cina} Kč")
 
         st.divider()
-        st.markdown("#### 4.3 Globální dodavatelské řetězce a zranitelnost ekonomiky")
+        st.markdown("### 4.3 Globální dodavatelské řetězce a zranitelnost ekonomiky")
         st.write("Moderní ekonomika funguje v síti dodavatelů. Jeden výrobek může projít přes desítky zemí. Firmy často používají systém **Just-in-Time**, kdy se neskladuje mnoho zásob a díly přicházejí přesně tehdy, kdy jsou potřeba. Výhoda: nižší náklady, rychlejší výroba. Riziko: když se zasekne doprava, čip nebo energie, zastaví se celý řetězec.")
 
         st.markdown("""
@@ -801,7 +826,7 @@ def render():
             st.write("Suezský průplav a další úzká místa světové dopravy jsou jako „dopravní tepny“ globalizace. Když se zablokují, lodě musí plout oklikou, doprava trvá déle, pojištění a palivo zdraží a část nákladů se promítne do cen zboží.")
 
         st.divider()
-        st.markdown("#### 4.4 Evropská unie a jednotný vnitřní trh: náš domácí prostor")
+        st.markdown("### 4.4 Evropská unie a jednotný vnitřní trh: náš domácí prostor")
         st.write("Česká republika není ekonomický ostrov. Je součástí **Evropské unie** a jejího **jednotného vnitřního trhu**, který patří mezi největší obchodní prostory na světě.")
         
         st.markdown("""
@@ -831,14 +856,13 @@ def render():
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
                 "5.4.1",
-                "Napiš své stanovisko k Euru v ČR (Euro bych v ČR přijal/a /"
-                " nepřijal/a, protože...):",
+                "Napiš své stanovisko k Euru v ČR (Euro bych v ČR přijal/a / nepřijal/a, protože...):",
                 "5",
                 st.session_state.get("ulozene_odpovedi", {}),
             )
 
         st.divider()
-        st.markdown("#### 4.5 Klimatická krize, udržitelný rozvoj a mezinárodní instituce")
+        st.markdown("### 4.5 Klimatická krize, udržitelný rozvoj a mezinárodní instituce")
         st.write("Hospodářský růst naráží na limity planety. Ekonomika řeší otázku, jak vyrábět, dopravovat a spotřebovávat tak, aby růst neznamenal ničení zdrojů, klimatu a zdraví lidí. **Trvale udržitelný rozvoj:** Rozvoj, který uspokojuje potřeby současné generace, aniž by ohrozil možnost budoucích generací uspokojovat jejich vlastní potřeby.")
 
         st.markdown("""
@@ -857,7 +881,7 @@ def render():
             st.write("Greenwashing znamená, že firma používá ekologickou rétoriku hlavně marketingově, ale skutečné dopady jejího podnikání se zásadně nemění. Kontrolní otázky: Má firma konkrétní data? Je jasné, co měří? Jsou cíle ověřitelné? Nezakrývá jeden „zelený“ produkt celkově problematický byznys?")
 
         st.divider()
-        st.markdown("#### 4.6 Budoucnost práce a financí v globálním světě")
+        st.markdown("### 4.6 Budoucnost práce a financí v globálním světě")
         st.write("Globalizace už není jen o kontejnerech a továrnách. Týká se také práce, dat, online služeb, kapitálu a digitálních měn.")
 
         st.markdown("""
@@ -872,7 +896,7 @@ def render():
         st.info("🏝️ **Digitální nomád není mimo systém:** To, že někdo pracuje z Bali, Portugalska nebo Španělska pro klienta z USA, neznamená, že „nemusí řešit stát“. Musí řešit daňovou rezidenci, zdravotní pojištění, sociální pojištění, víza, pracovní povolení a pravidla země, kde skutečně žije i odkud má příjmy.")
 
         st.divider()
-        st.markdown("#### 4.7 Případová studie: anatomie jednoho produktu")
+        st.markdown("### 4.7 Případová studie: anatomie jednoho produktu")
         st.markdown("""
         **Interaktivní případ: cesta chytrého telefonu**
         * **Nápad a design:** USA / Evropa / Korea
@@ -893,7 +917,7 @@ def render():
     # SEKCE 5: ESG A UDRŽITELNOST
     # =========================================================================
     elif selected_section_5.startswith("5."):
-        st.markdown("### 5. ESG a udržitelná ekonomika")
+        st.markdown("## 5. ESG a udržitelná ekonomika")
 
         st.markdown(
             "<div class='box-green'>"
@@ -902,7 +926,7 @@ def render():
             unsafe_allow_html=True,
         )
 
-        st.markdown("#### 5.1 Udržitelný rozvoj: ekonomika, která nespotřebuje budoucnost")
+        st.markdown("### 5.1 Udržitelný rozvoj: ekonomika, která nespotřebuje budoucnost")
         st.write("Udržitelný rozvoj znamená takový způsob výroby, spotřeby a života, který uspokojuje potřeby současné generace, aniž by ohrozil možnosti budoucích generací. Nejde jen o ochranu přírody. Udržitelnost má tři propojené roviny:")
 
         st.markdown("""
@@ -929,7 +953,7 @@ def render():
             st.success("Strategie byla uložena!")
 
         st.divider()
-        st.markdown("#### 5.2 Co znamená ESG")
+        st.markdown("### 5.2 Co znamená ESG")
         st.write("**ESG** je zkratka pro **Environmental, Social, Governance**. Používá se při hodnocení firem, investic a rizik. Nejde jen o morálku nebo reklamu — ESG může ovlivnit, zda firma získá úvěr, investici, veřejnou zakázku, dobré zaměstnance nebo důvěru zákazníků.")
 
         st.markdown("""
@@ -944,7 +968,7 @@ def render():
             st.write("Banka nechce půjčit peníze firmě, která může za pár let narazit na pokuty, drahé energie, reputační skandál nebo ztrátu zákazníků. ESG proto funguje i jako řízení rizik. Firma se špatným ESG profilem může mít dražší financování nebo horší přístup k investorům.")
 
         st.divider()
-        st.markdown("#### 5.3 Greenwashing: když zelená reklama zakrývá realitu")
+        st.markdown("### 5.3 Greenwashing: když zelená reklama zakrývá realitu")
         st.write("**Greenwashing** znamená, že firma působí ekologicky nebo odpovědně hlavně v reklamě, ale její skutečné dopady se zásadně nemění. Často používá vágní slova jako „eco“, „green“, „natural“, „planet friendly“ bez jasných dat.")
 
         st.markdown("""
@@ -972,7 +996,7 @@ def render():
                     st.session_state["uloz_odpoved_fn"]("Kapitola 5", "Podkapitola 5.3 - Greenwashing test", q_gw1)
 
         st.divider()
-        st.markdown("#### 5.4 Cirkulární ekonomika: od „vyrobit–použít–vyhodit“ k oběhu")
+        st.markdown("### 5.4 Cirkulární ekonomika: od „vyrobit–použít–vyhodit“ k oběhu")
         st.write("Tradiční lineární model ekonomiky funguje jako **vyrobit → použít → vyhodit**. Cirkulární ekonomika se snaží, aby materiály a výrobky zůstávaly v oběhu co nejdéle.")
 
         st.markdown("""
@@ -984,7 +1008,7 @@ def render():
         st.info("♻️ **Příklady cirkulární ekonomiky:** opravitelné telefony, vratné obaly, second-hand, repasovaná elektronika, knihovny věcí, sdílená auta, recyklace materiálů, prodloužená záruka, právo na opravu.")
 
         st.divider()
-        st.markdown("#### 5.5 ESG v dodavatelských řetězcích")
+        st.markdown("### 5.5 ESG v dodavatelských řetězcích")
         st.write("Firma nenese odpovědnost jen za svou kancelář, ale i za dodavatele: kde vznikly suroviny, za jakých podmínek se kompletovaly komponenty a kolik emisí stála doprava.")
 
         st.markdown("""
@@ -997,7 +1021,7 @@ def render():
         """)
 
         st.divider()
-        st.markdown("#### 5.6 Odpovědný spotřebitel: hlasuješ peněženkou, ale ne všechno je na tobě")
+        st.markdown("### 5.6 Odpovědný spotřebitel: hlasuješ peněženkou, ale ne všechno je na tobě")
         st.write("Spotřebitel může ovlivnit trh tím, co kupuje, jak často nakupuje a jaké značky podporuje. Zároveň ale není fér svalit veškerou odpovědnost jen na jednotlivce. Pravidla nastavují i státy, EU, firmy, investoři a mezinárodní dohody.")
 
         with st.expander("Měl by být výrobek dražší, když lépe zahrnuje ekologické a sociální dopady?"):
@@ -1028,7 +1052,7 @@ def render():
     # SEKCE 6: AKTIVITY A PŘÍPADOVÉ STUDIE
     # =========================================================================
     elif selected_section_5.startswith("6."):
-        st.markdown("### 6. Aktivity a případové studie na závěr")
+        st.markdown("## 6. Aktivity a případové studie na závěr")
         st.write("Vyberte jednu studii do dvojice nebo skupiny. Nejprve popište ekonomický problém, potom určete roli státu, daní, trhu, globalizace a odpovědnosti firem. Nakonec navrhněte řešení a obhajte ho před třídou.")
 
         tab_studie1, tab_studie2, tab_studie3, tab_ukol = st.tabs([
