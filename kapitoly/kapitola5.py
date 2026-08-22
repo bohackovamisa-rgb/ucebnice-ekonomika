@@ -218,6 +218,7 @@ def render():
             3. 💸 **Moje daně v praxi** — následně propojíš teorii s běžným životem: brigáda, Vinted, YouTube, TikTok, OnlyFans, Uber, Airbnb, investice, kryptoměny, DPH na nákupu a digitální komunikace se státem.
             4. 🌍 **Globální dodavatelské řetězce** — potom se podíváš na cestu výrobků: tričko z fast fashion, mobil s čipy z Asie, nákup z Temu nebo Shein a rizika závislosti na dopravě, energiích a geopolitice.
             5. 🌱 **ESG a udržitelná ekonomika** — nakonec propojíš ekonomiku s odpovědností: uhlíková stopa, Green Deal, sociální dopady, greenwashing a otázka, jak firmy vytvářejí hodnotu nejen finančně, ale i společensky.
+            6. 📚 **Slovník pojmů kapitoly** — souhrnný abecední a tematický přehled všech klíčových ekonomických pojmů.
             """)
 
     # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
@@ -228,6 +229,7 @@ def render():
         "4. Globální souvislosti a svět bez hranic",
         "5. ESG a udržitelná ekonomika",
         "6. Aktivity a případové studie na závěr",
+        "7. Slovník pojmů kapitoly",
     ]
 
     st.markdown("### 📌 Přechod na podkapitolu:")
@@ -279,27 +281,6 @@ def render():
 
             **Vazba na RVP pro SŠ:**  
             Tento blok pokrývá funkce státu v tržní ekonomice, úlohu státu při zajištění veřejných statků, řešení tržních selhání, hospodářskou politiku, makroekonomické ukazatele, inflaci, nezaměstnanost, hospodářský růst, sociální politiku, právní prostředí podnikání a občanskou orientaci v ekonomických otázkách.
-            """)
-
-        st.divider()
-        with st.expander(
-            "📖 Slovníček cizích pojmů v kapitole (Rychlý tahák)",
-            expanded=False,
-        ):
-            st.markdown("""
-            Pokud narazíš na slovo, kterému nerozumíš, tady najdeš jeho lidské vysvětlení:
-            
-            * **Externalita:** Vedlejší dopad výroby nebo spotřeby na někoho, kdo se obchodu vůbec neúčastnil (např. *negativní:* smog z továrny, *pozitivní:* vzdělaný člověk, který vymyslí nový lék).
-            * **Monopol:** Situace na trhu, kdy existuje pouze jediný prodejce/dodavatel bez konkurence, a může si tak diktovat vysoké ceny.
-            * **Fiskální politika:** Hospodářská politika státu, kterou řídí vláda pomocí státního rozpočtu (výběr daní a utrácení státních peněz).
-            * **Monetární (měnová) politika:** Politika centrální banky (ČNB), která řídí množství peněz v oběhu a nastavuje úrokové sazby k tlumění inflace.
-            * **Protekcionismus:** Ochranářská politika státu, který zavedením cel či kvót chrání své domácí firmy před levnou cizí konkurencí.
-            * **Reshoring / Friendshoring:** Přesouvání výroby z Asie zpět do domovské země nebo do spřátelených a bezpečných států pro snížení rizika výpadků.
-            * **Just-in-Time:** Výrobní systém, kdy se díly nevyrábí na sklad, ale dorazí do továrny přesně v minutu, kdy se montují do výrobku.
-            * **Brussels Effect (Bruselský efekt):** Jev, kdy přísné regulace schválené v EU (např. USB-C nabíječky, GDPR) fakticky přijmou globální firmy pro celý svět.
-            * **CBAM (Uhlíkové clo):** Poplatek na hranicích EU uvalený na 'špinavé' výrobky z Asie, který vyrovnává ceny vůči ekologicky zatíženým evropským firmám.
-            * **ESG (Environmental, Social, Governance):** Tři pilíře (ekologie, společnost, řízení), podle kterých banky a investoři hodnotí udržitelnou odpovědnost firem.
-            * **Greenwashing:** 'Lakováni na zeleno' – reklamní trik, kdy se firma tváří ekologicky jen na plakátu, ale její hlavní byznys zůstává neudržitelný.
             """)
 
         st.divider()
@@ -1511,8 +1492,8 @@ def render():
             st.write(
                 "Když prodáš vlastní staré oblečení nebo učebnice, obvykle jde"
                 " o osvobozený příjem. Ale pokud systematicky nakupuješ věci za"
-                " účelemRoblox prodeje se ziskem, už se to může považovat za"
-                " podnikání a podléhat zdanění."
+                " účelem jejich dalšího prodeje se ziskem, už se to může"
+                " považovat za podnikání a podléhat zdanění."
             )
 
         with st.expander("Kryptoměny, akcie a ETF: Co si ověřit před prodejem?"):
@@ -2357,3 +2338,111 @@ def render():
 
         st.divider()
         st.success("🎉 Gratulujeme k dokončení Kapitoly 5!")
+
+    # =========================================================================
+    # SEKCE 7: SLOVNÍK POJMŮ KAPITOLY
+    # =========================================================================
+    elif selected_section_5.startswith("7."):
+        st.markdown("## 7. Slovník pojmů kapitoly")
+        st.markdown(
+            "<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 1.5rem;'>"
+            "Souhrnný abecední a tematický přehled všech klíčových pojmů z 5. kapitoly (Stát, daně a globální souvislosti). "
+            "Slouží jako rychlý tahák před testem, opakováním nebo vyplňováním závěrečného projektu.</p>",
+            unsafe_allow_html=True,
+        )
+
+        tab_slov1, tab_slov2, tab_slov3, tab_slov4 = st.tabs([
+            "🏛️ 1. Stát, trh & hospodářská politika",
+            "🧾 2. Daně & veřejné rozpočty",
+            "🌍 3. Globalizace & mezinárodní obchod",
+            "🌱 4. ESG, klima & udržitelnost"
+        ])
+
+        with tab_slov1:
+            st.markdown("### 🏛️ Stát, trh a hospodářská politika")
+            st.markdown("""
+            * **Alokační funkce státu:** Činnost státu, při které směřuje veřejné peníze do oblastí, které trh sám nezajistí v dostatečné míře (školství, silnice, hasiči, věda).
+            * **Černý pasažér (Free rider):** Člověk, který využívá veřejný statek nebo službu, aniž by na ni přispěl, protože z jejího užívání nelze nikoho vyloučit.
+            * **Externalita:** Vedlejší dopad výroby nebo spotřeby na třetí osobu, která se obchodu neúčastnila.
+              * *Negativní externalita:* Znečištění řeky, emise, hluk, skládky odpadu.
+              * *Pozitivní externalita:* Vzdělaný člověk, který vynalezne lék či technologii prospěšnou všem.
+            * **Fiskální (rozpočtová) politika:** Nástroj vlády a Ministerstva financí, kterým ovlivňuje ekonomiku prostřednictvím příjmů (daně) a výdajů státního rozpočtu.
+            * **HDP (Hrubý domácí produkt):** Celková peněžní hodnota všech finálních statků a služeb vytvořených na území státu za určité období (obvykle 1 rok).
+            * **Inflace:** Trvalý růst všeobecné cenové hladiny v čase, který vede ke snížení kupní síly peněz (za stejnou částku si koupíme méně).
+            * **Magický čtyřúhelník:** Grafický model znázorňující 4 základní cíle hospodářské politiky (růst HDP, nízká nezaměstnanost, stabilita cen a vnější rovnováha), které nelze splnit všechny najednou na 100 %.
+            * **Monetární (měnová) politika:** Nástroj centrální banky (ČNB), která řízením množství peněz v oběhu a nastavováním úrokových sazeb udržuje cenovou stabilitu.
+            * **Monopol:** Tržní situace, kdy v odvětví existuje jediný dodavatel bez konkurence, což mu dává možnost diktovat vysoké ceny a snižovat kvalitu.
+            * **Redistribuční funkce státu:** Zmírňování sociálních nerovností ve společnosti přerozdělováním vybraných daní (důchody, sociální dávky, podpora v nezaměstnanosti).
+            * **Stabilizační funkce státu:** Snaha státu a centrální banky tlumit výkyvy ekonomického cyklu, krotit vysokou inflaci a bránit masové nezaměstnanosti.
+            * **Tržní selhání:** Stav, kdy samotný volný trh nedokáže zajistit společensky optimální a efektivní rozdělení zdrojů (veřejné statky, monopoly, externality).
+            * **Veřejný statek:** Statek vyznačující se nevylučitelností (nelze nikoho vyloučit ze spotřeby) a nerivalitou (spotřeba jednoho nesnižuje dostupnost pro ostatní) — např. pouliční osvětlení, obrana státu.
+            """)
+
+        with tab_slov2:
+            st.markdown("### 🧾 Daně, poplatky a veřejné finance")
+            st.markdown("""
+            * **Barter:** Směna zboží nebo služby za jiné zboží/službu bez použití peněz (např. influencer dostane oblečení výměnou za reklamu; má daňovou hodnotu).
+            * **Clo:** Povinná platba vybíraná státem nebo celní unií při přechodu zboží přes celní hranici (např. dovoz ze zemí mimo EU).
+            * **Časový test:** Zákonem stanovená doba držení cenných papírů či nemovitostí, po jejímž uplynutí je zisk z jejich prodeje osvobozen od daně z příjmů.
+            * **Daň:** Povinná, zákonem stanovená a nenávratná platba do veřejného rozpočtu bez nároku na přímou konkrétní protislužbu.
+            * **Daňová optimalizace (legální):** Využití zákonných možností, slev a odpočtů k minimalizaci daňové povinnosti v souladu s předpisy.
+            * **Daňový únik (nelegální):** Úmyslné porušení zákona za účelem neplacení daní (např. zatajování tržeb, fiktivní faktury).
+            * **Daň z nemovitých věcí:** Přímá majetková daň, kterou platí vlastník pozemku, bytu či domu obci, v níž se nemovitost nachází.
+            * **Daň z přidané hodnoty (DPH):** Všeobecná nepřímá daň zahrnutá v ceně téměř veškerého zboží a služeb, kterou odvádí prodejce do státního rozpočtu.
+            * **DPFO (Daň z příjmů fyzických osob):** Přímá daň ze zdanitelných příjmů občanů (mzda, podnikání, autorské honoráře, pronájem).
+            * **DPPO (Daň z příjmů právnických osob):** Přímá daň placená firmami a korporacemi (např. s.r.o., a.s.) z jejich dosaženého zisku.
+            * **Ekologické daně:** Nepřímé daně uvalené na energie a paliva, které zohledňují ekologickou zátěž a motivují k úsporám.
+            * **Mandatorní výdaje:** Zákonem dané povinné výdaje státního rozpočtu, které vláda musí vyplatit (důchody, sociální dávky, splátky státního dluhu).
+            * **Nemandatorní výdaje:** Výdaje rozpočtu, o kterých vláda rozhoduje pružně podle priorit (investice do silnic, opravy škol, dotační programy).
+            * **Poplatek:** Účelová platba za konkrétní úkon úřadu nebo službu (správní poplatek za pas, poplatek za psa, dálniční známka).
+            * **Progresivní daň:** Systém, kde lidé s vyššími příjmy odvádějí vyšší procentní sazbu daně než lidé s nižšími příjmy.
+            * **Prohlášení poplatníka („růžový papír“):** Formulář u zaměstnavatele, který umožňuje uplatňovat měsíční slevu na poplatníka a snížit daň z brigády či mzdy.
+            * **Rovná daň:** Systém, kde všichni poplatníci odvádějí stejné procento ze základu daně bez ohledu na výši příjmu.
+            * **Schodek (deficit) státního rozpočtu:** Situace, kdy výdaje státu v daném roce převyšují jeho příjmy a stát si musí půjčit.
+            * **Spotřební daň (Sin tax):** Nepřímá daň uvalená na vybrané výrobky (alkohol, tabák, benzín), která zdražuje škodlivou spotřebu a plní státní kasu.
+            * **Státní dluhopis:** Cenný papír vydaný státem, kterým si půjčuje peníze od investorů a občanů s příslibem vyplacení úroku.
+            * **Státní rozpočet:** Základní finanční plán příjmů a výdajů státu na jeden kalendářní rok schvalovaný parlamentem.
+            * **Šedá ekonomika:** Ekonomické činnosti, které jsou samy o sobě legální, ale nejsou hlášeny a daněny (např. práce „na ruku“ bez účtenky).
+            * **Černá ekonomika:** Zcela nelegální činnosti porušující trestní zákony (obchod s drogami, padělky, pašování).
+            """)
+
+        with tab_slov3:
+            st.markdown("### 🌍 Globalizace a mezinárodní obchod")
+            st.markdown("""
+            * **Absolutní výhoda:** Schopnost země nebo výrobce vyprodukovat dané zboží s nižšími náklady (nebo vyšší produktivitou) než ostatní.
+            * **Bruselský efekt (Brussels Effect):** Schopnost Evropské unie prosadit své přísné standardy (USB-C, ochrana dat GDPR, bezpečnost hraček) globálně, protože mezinárodní firmy raději sjednotí výrobu pro celý svět.
+            * **Čtyři svobody EU:** Základní pilíře jednotného vnitřního trhu Evropské unie: volný pohyb **zboží, osob, služeb a kapitálu**.
+            * **Digitální nomádství:** Způsob práce, kdy člověk pracuje na dálku přes internet (remote work) a zároveň dlouhodobě cestuje a žije v cizích zemích.
+            * **Embargo:** Úplný zákaz obchodu, dovozu nebo vývozu určitého zboží či vůči konkrétnímu státu z politických nebo bezpečnostních důvodů.
+            * **Globalizace:** Celosvětové propojování ekonomik, trhů, kultur, technologií, informací a lidí přesahující hranice jednotlivých států.
+            * **Just-in-Time:** Výrobní a logistická strategie, při které se díly dodávají do továrny těsně před montáží bez nutnosti držet velké sklady zásob.
+            * **Komparativní výhoda:** Schopnost země nebo jednotlivce vyrábět statek s relativně nejnižší obětovanou příležitostí (specializace na to, v čem jsme nejefektivnější).
+            * **Kvóta (dovozní):** Množstevní limit stanovený státem, který určuje maximální objem konkrétního zboží, jež se smí za určité období dovézt.
+            * **Mezinárodní dělba práce:** Rozdělení výrobních kroků a specializace firem a států v celosvětovém měřítku (např. vývoj v USA, výroba čipů v Asii, prodej v Evropě).
+            * **MMF (Mezinárodní měnový fond):** Mezinárodní finanční instituce, která zajišťuje finanční stabilitu, dohlíží na měnové kurzy a poskytuje půjčky zemím v platební krizi.
+            * **Protekcionismus:** Ochranářská hospodářská politika státu, který pomocí cel, kvót a předpisů znevýhodňuje zahraniční dovoz, aby chránil domácí výrobce.
+            * **Reshoring / Friendshoring:** Strategie přesunu výroby zpět do domovské země (reshoring) nebo do spřátelených a geopoliticky bezpečných států (friendshoring).
+            * **Volný obchod (Free trade):** Mezinárodní obchod bez umělých překážek, celních bariér, dovozních kvót a diskriminačních regulací.
+            * **WTO (Světová obchodní organizace):** Globální mezinárodní organizace, která stanovuje pravidla světového obchodu a řeší obchodní spory mezi státy.
+            """)
+
+        with tab_slov4:
+            st.markdown("### 🌱 Udržitelnost, ESG a klima")
+            st.markdown("""
+            * **CBAM (Uhlíkové clo / Carbon Border Adjustment Mechanism):** Poplatek na hranicích EU uvalený na dovoz emisně náročných výrobků (ocel, cement, hliník) ze zemí s mírnějšími ekologickými pravidly.
+            * **Cirkulární (oběhová) ekonomika:** Hospodářský model usilující o to, aby materiály a výrobky zůstávaly v oběhu co nejdéle prostřednictvím oprav, repasování, sdílení a recyklace.
+            * **ESG (Environmental, Social, Governance):** Rámec a kritéria, podle kterých investoři a banky hodnotí odpovědnost a udržitelnost firem:
+              * **E (Environmental):** Emise CO₂, spotřeba vody, energie, nakládání s odpady.
+              * **S (Social):** Pracovní podmínky, bezpečnost práce, rovné odměňování, vztahy s komunitou.
+              * **G (Governance):** Etika řízení, transparentnost účetnictví, potírání korupce.
+            * **Fast fashion:** Obchodní model módního průmyslu založený na masové, levné a rychlé výrobě kolekcí, který vytváří vysokou ekologickou a sociální zátěž.
+            * **Green Deal (Zelená dohoda pro Evropu):** Strategie EU s cílem dosáhnout do roku 2050 klimatické neutrality a transformovat ekonomiku na udržitelnou a nízkoemisní.
+            * **Greenwashing:** Klamavá marketingová praktika, kdy se firma v reklamě prezentuje jako ekologická a udržitelná, ačkoliv její skutečné dopady jsou škodlivé.
+            * **Lineární ekonomika:** Tradiční neudržitelný model spotřeby založený na principu *„vytěžit → vyrobit → spotřebovat → vyhodit“*.
+            * **SDGs (Cíle udržitelného rozvoje OSN):** Soubor 17 globálních cílů přijatých OSN pro vymýcení chudoby, ochranu planety a zajištění prosperity pro všechny.
+            * **Trvale udržitelný rozvoj:** Způsob rozvoje lidské společnosti, který uspokojuje současné potřeby lidí, aniž by ohrozil schopnost budoucích generací uspokojovat jejich vlastní potřeby.
+            * **Uhlíková stopa:** Množství skleníkových plynů (vyjádřené v ekvivalentu CO₂), které člověk, výrobek, služba nebo firma vyprodukuje svou činností.
+            """)
+
+        st.divider()
+        st.info("💡 **Tip pro učení:** Zkus si vybrat 3 libovolné pojmy ze slovníku a vysvětlit jejich vzájemnou souvislost v jedné větě (např. *Fast fashion → Negativní externalita → ESG*).")
