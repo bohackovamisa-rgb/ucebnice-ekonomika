@@ -2998,11 +2998,72 @@ def render():
                             c2_odp[:30],
                         )
 
-    elif (
+elif (
         selected_section_4 == "7.2 Slovníček, rychlé opakování a prověrka"
         or "7.2" in selected_section_4
     ):
-        st.markdown("### 🎓 7.2 Závěrečná prověrka")
+        st.markdown("### 📚 7.2 Slovník pojmů kapitoly")
+        st.markdown(
+            "<p style='font-size: 1.05rem; color: #64748b; margin-bottom: 1.5rem;'>"
+            "Souhrnný tematický přehled všech klíčových pojmů z 4. kapitoly. "
+            "Slouží jako rychlý tahák před testem nebo pracovním pohovorem.</p>",
+            unsafe_allow_html=True,
+        )
+        
+        tab_slov1, tab_slov2, tab_slov3, tab_slov4 = st.tabs([
+            "🧭 Trh práce & Kariéra", 
+            "📜 Právo & Smlouvy", 
+            "💰 Mzda & Daně", 
+            "🧘 HR & Kultura"
+        ])
+        
+        with tab_slov1:
+            st.markdown("""
+            * **ATS (Applicant Tracking System):** Software, který firmám automaticky třídí životopisy podle klíčových slov ještě předtím, než je vidí člověk.
+            * **Gig economy (Platformová ekonomika):** Ekonomika postavená na krátkodobých zakázkách zadávaných přes digitální platformy (Wolt, Uber, Fiverr).
+            * **Hard skills vs. Soft skills:** *Hard skills* jsou odborné technické dovednosti (např. účetnictví, programování). *Soft skills* jsou měkké lidské dovednosti (komunikace, empatie, týmová práce).
+            * **Osobní brand (Digitální stopa):** Dlouhodobý obraz, který o sobě člověk vytváří online (životopis, LinkedIn, sociální sítě, projekty).
+            * **Reskilling (Rekvalifikace):** Získání zcela nových dovedností pro přechod do jiného oboru (např. z číšníka na IT testera).
+            * **Upskilling:** Prohlubování a rozšiřování stávajících dovedností v rámci aktuálního oboru (např. účetní se naučí pracovat s umělou inteligencí).
+            """)
+            
+        with tab_slov2:
+            st.markdown("""
+            * **DPP (Dohoda o provedení práce):** Forma brigády s limitem max. 300 hodin ročně u jednoho zaměstnavatele.
+            * **DPČ (Dohoda o pracovní činnosti):** Forma brigády, kde rozsah práce nesmí překročit polovinu stanovené týdenní pracovní doby (typicky 20 h/týden).
+            * **Odstupné:** Finanční kompenzace od zaměstnavatele (obvykle 1-3 platy), pokud dostanete výpověď z organizačních důvodů (např. rušení pozice).
+            * **Pravidlo 3 a dost:** Ochrana proti řetězení smluv. Smlouvu na dobu určitou lze uzavřít max. na 3 roky a prodloužit maximálně dvakrát.
+            * **Švarcsystém:** Nelegální zaměstnávání, kdy člověk fakticky pracuje jako běžný zaměstnanec (má šéfa, danou pracovní dobu, firemní notebook), ale formálně vystupuje jako OSVČ na IČO.
+            * **Zkušební doba:** Období (max. 4 měsíce u běžných zaměstnanců), během kterého mohou obě strany ukončit pracovní poměr ze dne na den bez udání důvodu.
+            """)
+            
+        with tab_slov3:
+            st.markdown("""
+            * **Celkové náklady zaměstnavatele:** Hrubá mzda + povinné odvody firmy státu (aktuálně 33,8 % navíc k hrubé mzdě). Skutečná cena vaší práce pro firmu.
+            * **Čistá mzda:** Reálná částka, která vám po stržení odvodů a daní přijde na bankovní účet.
+            * **Daňové zvýhodnění (Daňový bonus):** Sleva na děti, která může snížit daň až do mínusu. Stát vám pak tento rozdíl vyplatí navíc k čisté mzdě.
+            * **Hrubá mzda:** Sjednaná odměna v pracovní smlouvě (nebo mzdovém výměru) před zdaněním a odvody. Vždy se uvádí v inzerátech.
+            * **Mzdový výměr:** Samostatný dokument určující výši mzdy. Lze jej (na rozdíl od mzdy sjednané přímo v pracovní smlouvě) jednostranně změnit bez souhlasu zaměstnance.
+            * **Nominální vs. Reálná mzda:** *Nominální* je částka na výplatní pásce. *Reálná mzda* je její skutečná kupní síla očištěná o inflaci (zdražování).
+            * **Odčitatelná položka:** Částka (např. úroky z hypotéky, dary krve, penzijko), která nesnižuje přímo daň, ale pouze základ, ze kterého se daň počítá.
+            * **Prohlášení poplatníka k dani ("Růžový papír"):** Formulář pro uplatnění základní měsíční slevy na dani u zaměstnavatele.
+            * **Sleva na dani:** Částka (např. sleva na poplatníka, na invaliditu), která se odečítá přímo od vypočtené daně (koruna slevy = koruna v kapse).
+            """)
+            
+        with tab_slov4:
+            st.markdown("""
+            * **Firemní kultura:** Skutečná atmosféra, způsob komunikace a chování k lidem ve firmě (co se děje, když se nikdo nedívá a když se udělá chyba).
+            * **Intrapreneurship:** Podnikavé a proaktivní chování v roli běžného zaměstnance (přicházení s inovacemi, nápady).
+            * **Offboarding:** Proces profesionálního ukončení spolupráce se zaměstnancem a jeho odchodu z firmy.
+            * **Onboarding:** Proces zaškolení a adaptace nového zaměstnance v prvních dnech a týdnech v práci.
+            * **Právo na odpojení (Right to disconnect):** Právo zaměstnance nečíst pracovní zprávy a e-maily mimo sjednanou pracovní dobu.
+            * **Red flags:** Varovné signály u pohovoru nebo ve smlouvě (např. nátlak na okamžitý podpis, fráze „jsme jako rodina“ kryjící neplacené přesčasy).
+            * **Syndrom vyhoření (Burnout):** Stav fyzického, emočního a mentálního vyčerpání způsobený dlouhodobým pracovním stresem a přetížením.
+            * **Wellbeing:** Celková pracovní a životní pohoda; zdravé prostředí, které umožňuje práci bez poškozování duševního i fyzického zdraví.
+            """)
+
+        st.divider()
+        st.markdown("### 🎓 7.3 Závěrečná prověrka")
 
         with st.form("final_quiz_ch4"):
             q1 = st.radio(
@@ -3020,7 +3081,7 @@ def render():
                     "A) Kdykoliv, když ztratí jakoukoliv práci.",
                     (
                         "B) Pokud má za poslední 2 roky odpracováno alespoň 12"
-                        " měsíců a neporušil hrubě kázeň."
+                        " měsíců (z kterých se odvádělo pojištění) a neporušil hrubě kázeň."
                     ),
                 ],
                 key="k4_7_2_q2",
