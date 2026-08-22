@@ -251,8 +251,6 @@ def render():
             "| **Liniový management (First-line management)** | Řídí každodenní práci lidí v provozu nebo konkrétním týmu. | Mistr ve výrobě, vedoucí směny, team leader, vedoucí brigádníků. | Kdo dnes co udělá a jak poznáme, že je práce hotová? |"
         )
 
-        st.write("**Příklad ze školní akce:** Vrcholový tým rozhodne, že škola uspořádá benefiční festival. Střední manažeři řeší program, rozpočet, propagaci a partnery. Linioví vedoucí organizují konkrétní směny u vstupu, občerstvení, techniky nebo úklidu.")
-
         col_pyr1, col_pyr2, col_pyr3 = st.columns(3)
         with col_pyr1:
             st.markdown(
@@ -346,7 +344,7 @@ def render():
 
         # 1.2.1
         st.markdown("##### 1.2.1 Plánování a SMART cíl")
-        st.write("Plánování dává týmu smysl a směr. Podle časového horizontu rozlišujeme operativní, taktické a strategické plánování.")
+        st.write("Plánování znamená určit, čeho chce organizace dosáhnout, proč je to důležité a jakými kroky se k cíli dostane.")
         
         st.markdown(
             "| Typ plánování | Časový horizont | Příklad |\n"
@@ -477,10 +475,7 @@ def render():
         elif "4." in wybrana_uroven:
             st.info("🏆 **4. Uznání a respekt:** Pochvala před týmem za dobře odvedenou práci, povýšení, ocenění.")
         else:
-            st.markdown(
-                "<div class='box-purple'>🚀 <b>5. Seberealizace:</b> Svoboda v tvoření, smysluplná práce, možnost učit se nové věci.</div>",
-                unsafe_allow_html=True,
-            )
+            st.success("🚀 **5. Seberealizace:** Svoboda v tvoření, smysluplná práce, možnost učit se nové věci.")
 
         # WORKBOOK KROK 2
         st.markdown(
@@ -1171,6 +1166,7 @@ def render():
             "| **Mikro influencer** | Menší publikum, často užší komunita. | Vyšší důvěra, konkrétnější cílová skupina, dostupnější spolupráce. | Menší dosah. |\n"
             "| **Makro influencer** | Velké publikum a vysoký dosah. | Rychlé zviditelnění značky. | Vyšší cena, nižší osobní důvěra, riziko nesouladu s hodnotami značky. |"
         )
+        st.write("UGC – User Generated Content znamená obsah vytvořený uživateli: recenze, fotky, videa, unboxing, komentáře nebo doporučení. Funguje jako social proof, tedy sociální důkaz. Lidé často věří více zkušenosti jiných zákazníků než oficiální reklamě.")
 
         st.markdown("##### 3.4.4 Guerilla marketing a virální marketing")
         st.write("Guerilla marketing je netradiční, často nízkonákladová forma propagace, která se snaží překvapit, pobavit nebo vyvolat silnou reakci. Může probíhat na ulici, ve škole, na akci nebo online.")
