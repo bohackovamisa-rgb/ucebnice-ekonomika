@@ -1142,7 +1142,7 @@ def render():
             - výpovědní dobu a odkaz na vnitřní předpisy zaměstnavatele.
             """)
 
-        st.markdown("#### 📄 Modelová ukázka pracovní smlouvy (zjednodušený vzor)")
+        st.markdown("#### 📄 Modelová ukázka pracovní smlouvy (zjednodušený výukový vzor)")
         st.markdown(
             """
         <div style="background-color: #ffffff; padding: 25px; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1e293b; margin-bottom: 20px;">
@@ -1905,6 +1905,26 @@ def render():
             unsafe_allow_html=True,
         )
 
+        st.markdown("#### 🧾 Modelový výpočet čisté mzdy krok za krokem:")
+        st.markdown(
+            """
+        | Krok | Položka | Výpočet | Částka |
+        | :--- | :--- | :--- | :--- |
+        | 1. | **Hrubý příjem (základ pro daně a odvody)** | Základ (32 000 Kč) + Příplatky (1 200 Kč) | **33 200 Kč** |
+        | 2. | **Sociální pojištění zaměstnance (7,1 %)** | 33 200 × 7,1 % | **−2 357 Kč** |
+        | 3. | **Zdravotní pojištění zaměstnance (4,5 %)**| 33 200 × 4,5 % | **−1 494 Kč** |
+        | 4. | **Daň před slevami (15 %)** | 33 200 × 15 % | 4 980 Kč |
+        | 5. | **Sleva na poplatníka** | Měsíční daňová sleva (prohlášení k dani) | **+2 570 Kč** |
+        | 6. | **Reálná daň po slevě** | 4 980 − 2 570 | **−2 410 Kč** |
+        | 7. | **ČISTÁ MZDA K VÝPLATĚ** | 33 200 − 2 357 − 1 494 − 2 410 | **26 939 Kč** |
+        """,
+            unsafe_allow_html=True,
+        )
+
+        st.caption(
+            "📌 *Poznámka: Výpočet je zjednodušený pro výukové účely (zaokrouhlování na celé koruny).*"
+        )
+
         st.divider()
         st.markdown("#### 🧮 Interaktivní kalkulačka čisté mzdy (2026)")
         st.write("Vyzkoušej si, jak slevy a odvody ovlivňují výsledek:")
@@ -2380,7 +2400,7 @@ def render():
             st.error(
                 "🚨 **KRITICKÉ RIZIKO VYHOŘENÍ!** Tvůj systém hlásí přetížení."
                 " Chybí ti 'ochranné faktory'. Musíš si okamžitě nastavit"
-                " hranice, naučit se říkat ne a najít si čas na digitální detox"
+                " hranice, naučit se říkat ne a find si čas na digitální detox"
                 " a spánek."
             )
         elif skore_vyhoreni >= 2:
@@ -2527,9 +2547,9 @@ def render():
     # =========================================================================
     # SEKCE 5: KDYŽ SE CESTY ROZEJDOU: KONEC PRÁCE A KRIZOVÉ SITUACE
     # =========================================================================
-    elif selected_section_4 == "5.1 Jak dát a dostat výpověď profesionálně":
+    elif selected_section_4 == "5.1 Jak dát výpověď profesionálně":
         st.markdown(
-            "### 5.1 Jak ukončit pracovní poměr (Možnosti a lhůty)"
+            "### 5.1 Jak dát výpověď profesionálně"
         )
         st.markdown(
             """
@@ -2645,43 +2665,113 @@ def render():
         | :--- | :--- | :--- | :--- |
         | **Do 52 let** | 5 měsíců | 2 měsíce + 2 měsíce + 1 měsíc | **80 % → 50 % → 40 %** z čistého výdělku |
         | **Od 52 do 57 let** | 8 měsíců | 3 měsíce + 3 měsíce + 2 měsíce | **80 % → 50 % → 40 %** z čistého výdělku |
+        | **Nad 57 let** | 11 měsíců | 3 měsíce + 3 měsíce + 5 měsíců | **80 % → 50 % → 40 %** z čistého výdělku |
         """)
-        st.caption("*Nad 57 let je doba obvykle delší (11 měsíců). Pro aktuální a maximální výměry podpor vždy sledujte webové stránky MPSV.*")
+        
+        st.info("🧮 **Jak tabulku číst:** Procenta jsou stejná pro všechny věkové skupiny, ale liší se délka podpůrčí doby. Například člověk do 52 let pobírá podporu celkem 5 měsíců: první 2 měsíce 80 %, další 2 měsíce 50 % a poslední 1 měsíc 40 %.")
+
+        st.markdown("""
+        | Typ limitu / podpory | Částka / Podmínka | Vysvětlení |
+        | :--- | :--- | :--- |
+        | **Maximální měsíční podpora v roce 2026** | **38 537 Kč** | Platí pro všechny věkové skupiny. I když měl člověk vysoký předchozí příjem, podpora má zákonný strop. |
+        | **Podpora při rekvalifikaci** | Až **80 %** čistého výdělku | Nejvýše 38 537 Kč měsíčně. Rekvalifikace může být cestou, jak získat novou kvalifikaci a vrátit se na trh práce v jiném oboru. |
+        """)
+
+        st.warning("📌 **Pozor na podmínky nároku:** Samotná ztráta práce automaticky neznamená nárok na podporu. Obvykle je potřeba splnit podmínku předchozího pojištění nebo započitatelné náhradní doby. Konkrétní nárok vždy posuzuje Úřad práce podle aktuálních pravidel.")
 
         st.divider()
-        st.markdown("#### ⚖️ Kdy mám nárok na podporu?")
-        with st.form("podminky_up"):
-            podm_1 = st.checkbox(
-                "Během posledních 2 let jsem odpracoval/a alespoň 12 měsíců,"
-                " ze kterých se odvádělo důchodové pojištění.",
-                key="k4_5_2_p1",
-            )
-            podm_2 = st.checkbox(
-                "Moje poslední práce neskončila vyhazovem za hrubé porušení"
-                " pracovní kázně.",
-                key="k4_5_2_p2",
-            )
+        st.markdown("#### 🏢 Co Úřad práce dělá")
+        st.markdown("""
+        | Oblast | Co znamená | Příklad |
+        | :--- | :--- | :--- |
+        | **Evidence uchazečů** | Člověk se zaeviduje jako osoba, která hledá práci. | Po skončení zaměstnání se přihlásí na Úřad práce. |
+        | **Zprostředkování práce** | Úřad může nabízet volná pracovní místa. | Doporučení vhodné nabídky nebo konzultace dalšího postupu. |
+        | **Podpora v nezaměstnanosti** | Pokud člověk splní podmínky, dostává finanční podporu. | Překlenutí období mezi dvěma zaměstnáními. |
+        | **Rekvalifikace** | Získání nových dovedností pro jinou práci. | Kurz účetnictví, práce s PC nebo řidičské oprávnění. |
+        | **Poradenství** | Pomoc s orientací na trhu práce, s životopisem atd. | Kariérní konzultace po škole či rodičovské dovolené. |
+        | **Sociální dávky** | ÚP řeší i některé dávky státní sociální podpory. | Příspěvek na bydlení, rodičovský příspěvek aj. |
+        """)
 
-            if st.form_submit_button("Zjistit a uložit nárok na podporu 💾"):
-                if podm_1 and podm_2:
-                    st.success("✅ **Máš nárok na podporu v nezaměstnanosti!**")
-                else:
-                    st.error("❌ **Zamítnuto.** Nesplňuješ zákonné podmínky.")
+        st.divider()
+        col_up1, col_up2 = st.columns(2)
+        with col_up1:
+            st.markdown("#### ❓ Proč na Úřad práce jít")
+            st.write("Na Úřad práce má smysl jít hlavně proto, aby člověk:")
+            st.markdown("""
+            * nezůstal bez informací a bez plánu,
+            * zjistil, zda má nárok na podporu v nezaměstnanosti,
+            * **měl vyřešené zdravotní pojištění** v době, kdy nepracuje,
+            * získal přístup k pracovním nabídkám a poradenství,
+            * mohl se informovat o rekvalifikaci,
+            * měl oficiálně doložené období, kdy práci hledá.
+            """)
+            st.success("💡 **Důležitý praktický důvod:** Když je člověk vedený v evidenci uchazečů o zaměstnání, za určitých podmínek za něj **zdravotní pojištění platí stát**. Pokud se nezaeviduje a zároveň nepracuje, nestuduje ani nepatří do jiné státem hrazené skupiny, musí si zdravotní pojištění platit sám.")
 
-                narok_data = (
-                    f"Odpracováno 12m: {podm_1} | Bez hrubého porušení:"
-                    f" {podm_2}"
-                )
-                if "uloz_odpoved_fn" in st.session_state:
-                    st.session_state["uloz_odpoved_fn"](
-                        "Kapitola 4",
-                        "Podkapitola 5.3 - Nárok na podporu",
-                        narok_data,
-                    )
+        with col_up2:
+            st.markdown("#### 🎒 Co si vzít s sebou")
+            st.write("Konkrétní požadavky se mohou měnit, ale obvykle se hodí mít:")
+            st.markdown("""
+            * občanský průkaz nebo jiný doklad totožnosti,
+            * potvrzení o zaměstnání nebo zápočtový list,
+            * doklad o ukončení pracovního poměru,
+            * doklady o vzdělání,
+            * případně pracovní smlouvu, výpověď nebo dohodu o ukončení,
+            * číslo bankovního účtu, pokud člověk žádá o podporu.
+            """)
+            st.error("🚩 **Častá chyba:** Člověk čeká, protože „si práci určitě rychle najde“. Když se hledání protáhne, může zjistit, že neřešil zdravotní pojištění, nemá potřebné dokumenty nebo přišel pozdě na informace o možné podpoře.")
+
+        st.divider()
+        st.markdown("#### ⏳ Kdy na Úřad práce jít")
+        st.write("Ideální je řešit situaci co nejdříve po skončení práce nebo školy. Čím dříve člověk přijde, tím dříve ví, na čem je.")
+        st.markdown("""
+        | Situace | Kdy jít | Proč |
+        | :--- | :--- | :--- |
+        | **Skončilo zaměstnání** | Co nejdříve po skončení pracovního poměru. | Kvůli evidenci, případné podpoře a zdravotnímu pojištění. |
+        | **Dostal/a jsem výpověď** | Ještě během výpovědní doby si zjistit informace. | Aby člověk nepromeškal důležité kroky a měl plán. |
+        | **Končí škola a nemám práci** | Po skončení studia si ověřit, dokdy za člověka platí ZP stát. | Přechod ze školy do práce má svá pravidla. |
+        | **Chci změnit obor** | Předem se informovat na možnosti rekvalifikace. | Některé kurzy mohou být dostupné jen za určitých podmínek. |
+        | **Nemám příjem** | Nečekat několik měsíců, ale řešit situaci včas. | Úřad může poradit s dalšími možnostmi podpory. |
+        """)
+
+        st.caption("📌 *Princip pro učebnici: Konkrétní částky, lhůty a sazby se mohou měnit. V kapitole je důležité pochopit, že systém existuje jako záchranná síť, ale podmínky je nutné ověřovat v aktuálních zdrojích.*")
+
+        st.divider()
+        st.markdown("<div class='box-yellow'>🧪 <b>Mini úkol: Můj záchranný plán</b></div>", unsafe_allow_html=True)
+        st.write("Představte si, že vám za měsíc končí pracovní smlouva na dobu určitou a zatím nemáte novou práci. Sepište plán prvních pěti kroků: komu napíšete, jaké dokumenty si připravíte, kdy půjdete na Úřad práce a jaké otázky tam položíte.")
+        
+        if "vykresli_otazku_fn" in st.session_state:
+            st.session_state["vykresli_otazku_fn"](
+                "4.5.3",
+                "Sepiš plán svých prvních pěti kroků, pokud ti končí smlouva a nemáš zatím novou práci.",
+                "4",
+                st.session_state.get("ulozene_odpovedi", {}),
+            )
 
     elif selected_section_4 == "5.4 Co dělat, když... (Krizový trenažér)":
         st.markdown("### 5.4 Co dělat, když... (Krizový trenažér)")
+        st.markdown(
+            """
+        <div class='box-red'>
+            🧯 <b>Krizová sekce:</b> Tato část není o teorii. Je o tom, co udělat jako první, když se v práci objeví problém.
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
 
+        st.markdown("""
+        | Situace | Co udělat jako první | Co si uchovat (Důkazy) |
+        | :--- | :--- | :--- |
+        | **Nevyplacená mzda** | Zeptat se písemně a požádat o vysvětlení. | Výplatní pásky, smlouvu, docházku, komunikaci. |
+        | **Šikana nebo ponižování** | Zapisovat konkrétní situace a hledat podporu. | Data, zprávy, svědky, e-maily. |
+        | **Nečekaná výpověď** | Nepodepisovat nic pod tlakem, chtít čas na přečtení. | Výpověď, smlouvu, dodatky. |
+        | **Nebezpečné podmínky** | Upozornit nadřízeného, neohrožovat zdraví. | Fotky, zprávy, záznamy. |
+        | **Nátlak na práci na IČO** | Ověřit, zda nejde o švarcsystém. | Návrh spolupráce, pokyny od firmy, komunikaci. |
+        """)
+        
+        st.info("⚖️ **Důležité:** Tato kapitola nenahrazuje právní pomoc. U vážných situací je vhodné obrátit se na odborníka, inspektorát práce, odbory, právní poradnu nebo příslušnou instituci.")
+
+        st.divider()
+        st.markdown("#### 🕹️ Krizový trenažér: Jak zareaguješ ty?")
         with st.form("krize_form"):
             st.write(
                 "**Šéf (hází ti na stůl papír):** *„Tady mi okamžitě podepiš"
@@ -2874,10 +2964,13 @@ def render():
                 key="k4_7_2_q1",
             )
             q2 = st.radio(
-                "2. Jaká je běžná zkušební doba u běžného zaměstnance?",
+                "2. Kdy má člověk nárok na podporu v nezaměstnanosti?",
                 [
-                    "A) Maximálně 1 měsíc.",
-                    "B) Maximálně 4 měsíce.",
+                    "A) Kdykoliv, když ztratí jakoukoliv práci.",
+                    (
+                        "B) Pokud má za poslední 2 roky odpracováno alespoň 12"
+                        " měsíců a neporušil hrubě kázeň."
+                    ),
                 ],
                 key="k4_7_2_q2",
             )
