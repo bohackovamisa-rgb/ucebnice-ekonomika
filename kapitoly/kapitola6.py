@@ -104,9 +104,8 @@ def zhodnot_reklamu_ai(text_reklamy):
                 data = response.json()
                 return data["choices"][0]["message"]["content"]
     except Exception:
-        pass # Offline fallback
+        pass
         
-    # --- OFFLINE ZÁCHRANA ---
     text_low = text_reklamy.lower()
     score_a = 8 if "?" in text_low or "!" in text_low else 3
     score_i = 7 if len(text_reklamy) > 50 else 2
@@ -199,7 +198,6 @@ def render_marketing_rozpocet():
     st.info(f"💰 Zbývá ti rozdělit: **{budget - (tiktok_spend + google_spend + influencer_spend)} Kč** z 10 000 Kč.")
 
     if st.button("🚀 Spustit kampaň", type="primary", key="btn_rozpocet"):
-        # Matematika trhu
         kliky_tiktok = tiktok_spend / 3
         prodeje_tiktok = math.floor(kliky_tiktok * 0.005)
         
@@ -249,6 +247,7 @@ def render():
     st.markdown("## 6. Management a marketing")
     st.markdown(
         "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
+        "Management a marketing: jak řídit projekt, získat pozornost a budovat značku<br><br>"
         "Management a marketing nejsou jen poučky z učebnice. Jsou to dovednosti, "
         "které potkáváš každý den: při práci v týmu, plánování školní akce, "
         "sledování influencerů, nákupech v e-shopech, budování profilu na sociálních sítích "
@@ -343,13 +342,13 @@ def render():
 
         c_p1, c_p2, c_p3 = st.columns(3)
         c_p1.info(
-            "**Blok 1: Management**\n\n**Co doplníš:** Cíl, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán."
+            "**Blok 1: Management**\n\n**Co doplníš:** Cíl projektu, týmové role, styl řízení, základní plán, rizika a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán projektu."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh."
+            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a marketingový mix 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
         )
         c_p3.success(
-            "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty, personal brand a etická pravidla.\n\n**Výstup:** Etická kampaň."
+            "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty značky, personal/brand profil, kampaň a etická pravidla komunikace.\n\n**Výstup:** Etická marketingová kampaň."
         )
 
         st.markdown(
@@ -441,7 +440,7 @@ def render():
 
         st.markdown(
             "<div class='box-yellow'>"
-            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly ve výsledek."
+            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly v reálný výsledek."
             "</div>",
             unsafe_allow_html=True,
         )
@@ -490,7 +489,7 @@ def render():
 
         st.markdown(
             "| Úroveň managementu | Co řeší | Příklad | Typická otázka |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Vrcholový management / Top management** | Dlouhodobý směr, strategii, zásadní rozhodnutí, odpovědnost za celou organizaci. | CEO, generální ředitel, ředitel školy, představenstvo. | Kam má organizace směřovat za 3–5 let? |\n"
             "| **Střední management / Middle management** | Převádí strategii do plánů oddělení, koordinuje týmy a kontroluje výsledky. | Vedoucí marketingu, vedoucí výroby, manažer závodu, zástupce ředitele. | Jak splníme cíle v našem oddělení? |\n"
             "| **Liniový management / First-line management** | Řídí každodenní práci lidí v provozu nebo konkrétním týmu. | Mistr ve výrobě, vedoucí směny, team leader, vedoucí brigádníků. | Kdo dnes co udělá a jak poznáme, že je práce hotová? |"
@@ -688,12 +687,12 @@ def render():
             st.session_state["vykresli_otazku_fn"]("6.1.4", "1. Napiš přesný S.M.A.R.T. cíl pro svůj projekt (Co, kolik, do kdy):", "6", st.session_state.get("ulozene_odpovedi", {}))
             st.session_state["vykresli_otazku_fn"]("6.1.5", "2. Jak budeš svůj tým motivovat (kromě peněz) na úrovni Uznání a Seberealizace?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
-        st.markdown("#### 1.2.4 Kontrola")
+        st.markdown("#### 1.2.4 Kontrola: Není to slídění, ale navigace")
         st.write("Kontrola neznamená jen „nachytat někoho při chybě“. Jejím smyslem je zjistit, zda se realita shoduje s plánem, a pokud ne, přijmout nápravná opatření.")
         
         st.markdown(
             "| Fáze kontroly | Co se děje |\n"
-            "| :--- | :--- |\n"
+            "| :--- | : |\n"
             "| **1. Stanovení standardů** | Určíme, jak má vypadat dobrý výsledek. |\n"
             "| **2. Zjištění skutečnosti** | Změříme, co se opravdu stalo. |\n"
             "| **3. Srovnání** | Porovnáme plán a realitu. |\n"
@@ -863,7 +862,7 @@ def render():
         st.markdown("#### 1.5.2 Základní typy organizačních struktur")
         st.markdown(
             "| Typ struktury | Jak funguje | Výhoda | Riziko |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Liniová** | Jasná hierarchie: jeden podřízený má jednoho přímého nadřízeného. | Přehlednost, jasné pravomoci a odpovědnost. | Může být nepružná a závislá na rozhodnutí shora. |\n"
             "| **Štábní / liniově-štábní** | Linioví vedoucí rozhodují, ale pomáhají jim odborné poradní útvary. | Manažer má odbornou podporu například v právu, HR nebo financích. | Štáb radí, ale nemusí nést přímou odpovědnost za realizaci. |\n"
             "| **Funkcionální** | Firma je členěná podle odborných funkcí: marketing, finance, výroba, HR, IT. | Specializace a odbornost jednotlivých oddělení. | Oddělení mohou pracovat v „silech“ a málo spolu komunikovat. |\n"
@@ -917,7 +916,7 @@ def render():
         st.write("SWOT analýza je jednoduchý nástroj, který pomáhá posoudit situaci firmy, projektu, produktu nebo člověka. Rozlišuje vnitřní a vnější prostředí.")
         st.markdown(
             "| Část SWOT | Prostředí | Co znamená | Otázka |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **S — Strengths / Silné stránky** | Vnitřní prostředí | V čem jsme dobří a o co se můžeme opřít. | Co nám jde lépe než ostatním? |\n"
             "| **W — Weaknesses / Slabé stránky** | Vnitřní prostředí | Co nás brzdí nebo oslabuje. | Kde máme mezery? |\n"
             "| **O — Opportunities / Příležitosti** | Vnější prostředí | Co se děje kolem nás a můžeme toho využít. | Jaký trend nebo změna nám může pomoct? |\n"
@@ -1020,7 +1019,7 @@ def render():
         st.write("Firmy se v historii nedívaly na zákazníka vždy stejně. Podnikatelské koncepce ukazují, na co se firma při řízení trhu hlavně soustředí.")
         st.markdown(
             "| Koncepce | Hlavní myšlenka | Příklad | Riziko |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Výrobní koncepce** | Vyrábět levně, efektivně a ve velkém. Zákazník koupí to, co je dostupné a levné. | Levná základní trička nebo potraviny vyráběné ve velkých sériích. | Firma může podcenit kvalitu, značku a skutečné potřeby zákazníka. |\n"
             "| **Výrobková koncepce** | Důraz na co nejlepší produkt, kvalitu, technické parametry a inovace. | Telefon s výborným fotoaparátem, prémiové sportovní boty, kvalitní notebook. | Firma může vyrábět „dokonalý“ produkt, který lidé nepotřebují nebo si ho nemohou dovolit. |\n"
             "| **Prodejní koncepce** | Hlavní je zákazníka přesvědčit, přemluvit a prodat mu co nejvíc. | Agresivní telefonní nabídky, tlak na okamžitý nákup, „jen dnes“ akce. | Může poškodit důvěru a vést k manipulaci. |\n"
@@ -1058,7 +1057,7 @@ def render():
         st.markdown("#### 2.2.1 Zdroje dat")
         st.markdown(
             "| Typ dat | Co znamená | Výhody | Nevýhody |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Primární data** | Nově sesbíraná data přímo pro konkrétní účel výzkumu. | Jsou přesně zaměřená na problém firmy. | Sběr může být dražší a časově náročnější. |\n"
             "| **Sekundární data** | Již existující data, která byla původně sesbírána pro jiný účel. | Jsou rychle dostupná a často levnější. | Nemusí přesně odpovídat aktuálnímu problému. |"
         )
@@ -1157,7 +1156,7 @@ def render():
         st.write("**Vrstvy produktu**")
         st.markdown(
             "| Vrstva produktu | Co znamená | Příklad: auto | Příklad: školní merch |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Jádro produktu** | Základní užitek, kvůli kterému zákazník produkt pořizuje. | Potřeba přepravit se z místa na místo. | Oblečení, sounáležitost se školou, identita. |\n"
             "| **Reálný produkt** | Konkrétní podoba produktu: značka, design, kvalita, obal, funkce. | Konkrétní značka auta, výkon, barva, výbava, bezpečnost. | Mikina, materiál, střih, logo, barva, kvalita potisku. |\n"
             "| **Rozšířený produkt** | Doplňkové služby a výhody kolem produktu. | Záruka, servis, financování, dovoz, asistence. | Možnost výměny velikosti, předobjednávka, balení, doručení do školy. |"
@@ -1238,12 +1237,34 @@ def render():
         st.write("**Influencer marketing a UGC:** V moderní propagaci hrají velkou roli influenceři a obsah vytvářený uživateli (UGC). UGC jsou recenze, videa, fotky nebo doporučení od běžných lidí. Často působí důvěryhodněji než klasická reklama, ale placené spolupráce musí být jasně označené.")
         st.write("**Virál není strategie sám o sobě:** Virální příspěvek může přinést velký dosah, ale pokud neodpovídá značce, cílové skupině a produktu, nemusí vést k prodeji ani dlouhodobé důvěře.")
 
+        # --- VYSVĚTLENÍ MODELU AIDA ---
+        st.markdown(
+            """
+            <div class='box-purple'>
+                <strong>🎯 Model AIDA: Jak postavit reklamu, která funguje?</strong><br>
+                Model AIDA popisuje 4 kroky, kterými prochází zákazník před nákupem:<br><br>
+                • <b>A – Attention (Zaujetí):</b> Musíš chytit oko během 2 vteřin (otázka, výrazný nadpis).<br>
+                • <b>I – Interest (Zájem):</b> Popiš problém a nabídni řešení.<br>
+                • <b>D – Desire (Touha):</b> Vzbuď emoce a touhu produkt mít (výhody, sleva, limitka).<br>
+                • <b>A – Action (Akce):</b> Řekni jasně, co má zákazník udělat (tzv. Call to Action, např. „Klikni na odkaz“).
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
+
         # --- AIDA TRENAŽÉR A SIMULÁTOR ROZPOČTU ---
         st.divider()
         render_aida_simulator()
         
         st.divider()
         render_marketing_rozpocet()
+
+        st.markdown(
+            "<br><div class='box-yellow'>📝 <b>Cvičení k bloku 2: 4P vlastního produktu</b><br>"
+            "Vyber produkt nebo službu ze svého projektu a doplň: Product (Co přesně nabízíš a jakou hodnotu to má?), Price (Kolik to bude stát a proč?), Place (Kde a jak se k tomu zákazník dostane?), Promotion (Jak se o tom zákazník dozví?)<br>"
+            "<i>Výstup do projektu: Student doplní cílovou skupinu, positioning a marketingový mix 4P.</i></div>",
+            unsafe_allow_html=True,
+        )
 
         st.markdown(
             "<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 9: Nastavení Produktu, Ceny a Distribuce</b></div>",
@@ -1272,12 +1293,42 @@ def render():
             unsafe_allow_html=True,
         )
         
+        st.markdown(
+            "<div class='box-green'>"
+            "🎯 <b>Cíl 3. bloku:</b> Pochopíš, co je značka, jak vzniká její hodnota, jak funguje personal branding, co ovlivňuje nákupní chování a proč marketing musí řešit etiku, právo a ochranu spotřebitele."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
+        with st.expander("Co má tento blok obsahovat?", expanded=False):
+            st.markdown(
+                "- značka / brand,\n"
+                "- hodnota značky / brand equity,\n"
+                "- budování značky,\n"
+                "- personal branding,\n"
+                "- faktory ovlivňující nákupní chování,\n"
+                "- nákupní psychologie,\n"
+                "- neuromarketing,\n"
+                "- dark patterns,\n"
+                "- greenwashing a pinkwashing,\n"
+                "- etika v marketingu,\n"
+                "- ochrana spotřebitele,\n"
+                "- regulace reklamy,\n"
+                "- klamavá reklama,\n"
+                "- nekalá soutěž,\n"
+                "- označování placené spolupráce,\n"
+                "- reklama na rizikové produkty: alkohol, hazard, energetické nápoje, kryptoměny,\n"
+                "- AI, deepfake reklamy a důvěryhodnost obsahu."
+            )
+
+        st.divider()
         st.markdown("### 3.1 Značka a budování brandu")
         st.write("Značka neboli brand není jen logo nebo název produktu. Je to soubor představ, emocí, zkušeností a asociací, které si lidé s produktem nebo firmou spojují. Fyzický produkt může být technicky podobný jako konkurenční výrobek, ale značka rozhoduje o tom, jak mu zákazník věří, jakou hodnotu mu přisuzuje a zda se k němu opakovaně vrací.")
         st.write("**Jednoduše:** Produkt je to, co firma vyrábí nebo nabízí. Značka je to, co si o tom lidé myslí, cítí a pamatují.")
         st.write("Příklad: Bílé tričko může stát 150 Kč bez značky, ale několik tisíc korun, pokud je spojeno se známým logem, komunitou, statusem nebo životním stylem. Materiál může být podobný, ale vnímaná hodnota je jiná.")
 
         st.markdown("#### 3.1.1 Anatomie a prvky značky")
+        st.write("Značka se skládá z více prvků. Čím jsou jednotnější a zapamatovatelnější, tím snáze si ji lidé vybaví.")
         st.markdown(
             "| Prvek značky | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1287,10 +1338,11 @@ def render():
             "| **Mise a vize** | Mise říká, proč značka existuje dnes. Vize ukazuje, kam chce směřovat. | Mise: zpřístupnit kvalitní vzdělávání. Vize: aby se každý student učil podle sebe. |\n"
             "| **Hodnoty značky** | Principy, které značka zastává a podle kterých se rozhoduje. | Udržitelnost, férovost, kreativita, jednoduchost, dostupnost. |"
         )
-        st.write("**Pozor:** Silná značka nevzniká jen tím, že má hezké logo. Pokud se komunikace značky neshoduje s realitou produktu, zákazník ztratí důvěru.")
+        st.warning("**Pozor:** Silná značka nevzniká jen tím, že má hezké logo. Pokud se komunikace značky neshoduje s realitou produktu, zákazník ztratí důvěru.")
 
         st.markdown("#### 3.1.2 Brand equity a brand loyalty")
-        st.write("Brand equity znamená hodnotu značky. Může být peněžní i nepeněžní. Silná značka umožňuje prodávat dráž, snáze zavádět nové produkty, získávat doporučení a lépe přežít krize. Brand loyalty znamená věrnost značce.")
+        st.write("Brand equity znamená hodnotu značky. Může být peněžní i nepeněžní. Silná značka umožňuje prodávat dráž, snáze zavádět nové produkty, získávat doporučení a lépe přežít krize.")
+        st.write("Brand loyalty znamená věrnost značce. Zákazník se ke značce vrací, doporučuje ji dalším a často ji neporovnává jen podle ceny.")
         st.markdown(
             "| Pojem | Co znamená | Jak se projevuje |\n"
             "| :--- | :--- | :--- |\n"
@@ -1459,7 +1511,7 @@ def render():
         st.write("Influencer marketing využívá důvěru a dosah tvůrců obsahu. Influencer může značce pomoci oslovit konkrétní komunitu, ale spolupráce musí působit důvěryhodně a být jasně označená.")
         st.markdown(
             "| Typ influencera | Jak vypadá | Výhody | Rizika |\n"
-            "| :--- | :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- |\n"
             "| **Mikro influencer** | Menší publikum, často užší komunita. | Vyšší důvěra, konkrétnější cílová skupina, dostupnější spolupráce. | Menší dosah. |\n"
             "| **Makro influencer** | Velké publikum a vysoký dosah. | Rychlé zviditelnění značky. | Vyšší cena, nižší osobní důvěra, riziko nesouladu s hodnotami značky. |"
         )
@@ -1548,7 +1600,7 @@ def render():
             "| Kritérium | Co se hodnotí |\n"
             "| :--- | :--- |\n"
             "| **🏛️ Management** | Jasný cíl, rozdělení rolí, realistický plán a práce s riziky. |\n"
-            "| **🎯 Marketing** | Smysluplná cílová skupina, positioning a propojený marketing mix. |\n"
+            "| **🎯 Marketing** | Smysluplná cílová skupina, positioning a propojený marketingový mix. |\n"
             "| **💎 Brand** | Srozumitelná značka, hodnoty a důvěryhodná komunikace. |\n"
             "| **⚖️ Etika** | Schopnost rozpoznat manipulaci, klamavou reklamu, greenwashing a rizika digitální propagace. |\n"
             "| **🎤 Prezentace** | Srozumitelné vysvětlení, konkrétní příklady a schopnost obhájit rozhodnutí. |"
@@ -1637,7 +1689,7 @@ def render():
                 "* možnost využití sociálních sítí, UGC a věrnostního programu,\n"
                 "* rozhodování o ceně, distribuci služby a propagaci.\n\n"
                 "| Oblast | Možné řešení |\n"
-                "| :--- | :--- |\n"
+                "| :--- | : |\n"
                 "| **Product** | Menší studentské nápoje, zásuvky, Wi-Fi, tichý studijní koutek. |\n"
                 "| **Price** | Studentská cena, věrnostní kartička, zvýhodněné ranní menu. |\n"
                 "| **Place** | Kavárna u školy + možnost předobjednávky přes Instagram nebo jednoduchý formulář. |\n"
@@ -1686,4 +1738,9 @@ def render():
         st.divider()
         st.success(
             "🎉 **GRATULUJEME! Kompletně jsi dokončil/a Kapitolu 6 (Management a Marketing).**"
+        )
+        
+        st.markdown(
+            "<p style='text-align: right; color: #94a3b8; font-size: 0.8rem;'>Naposledy aktualizováno: 31. 7. 2026</p>",
+            unsafe_allow_html=True
         )
