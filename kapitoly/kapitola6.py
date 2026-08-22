@@ -8,7 +8,6 @@ def ziskej_odpoved_od_ai(zprava_zaka):
     """
     Neprůstřelná funkce pro volání AI. Pokud selže API, přepne na offline hodnocení.
     """
-    # 1. POKUS: Volání skutečné AI přes čisté HTTP (nepodléhá změnám SDK verzí)
     try:
         api_key = st.secrets.get("OPENAI_API_KEY", "")
         if api_key:
@@ -16,7 +15,6 @@ def ziskej_odpoved_od_ai(zprava_zaka):
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {api_key}"
             }
-            # Systémový prompt, který instruuje AI, jak má hrát roli
             system_prompt = (
                 "Jsi Karel, arogantní ale nesmírně talentovaný grafik. Šéf ti právě píše ohledně tvého "
                 "včerejšího toxického chování k juniorovi. Odpověz mu z pohledu Karla. "
@@ -25,7 +23,7 @@ def ziskej_odpoved_od_ai(zprava_zaka):
             )
             
             payload = {
-                "model": "gpt-4o-mini", # Standardní stabilní model
+                "model": "gpt-4o-mini",
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": zprava_zaka}
@@ -34,16 +32,15 @@ def ziskej_odpoved_od_ai(zprava_zaka):
                 "max_tokens": 500
             }
             
-            # Timeout 10 sekund, aby aplikace nezamrzla, pokud má AI výpadek
             response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
             
             if response.status_code == 200:
                 data = response.json()
                 return data["choices"][0]["message"]["content"]
     except Exception:
-        pass # Pokud API selže, tiše to přejdeme a spustíme Záchranný plán B
+        pass 
         
-    # 2. ZÁCHRANNÝ PLÁN B (Offline heuristika, pokud AI spadne)
+    # Offline heuristika (Záchranný plán B)
     delka = len(zprava_zaka.split())
     text_lower = zprava_zaka.lower()
     
@@ -107,7 +104,6 @@ def render_ai_treenazer():
                 
         st.session_state["manazer_chat"].append({"role": "assistant", "content": odpoved_ai})
         
-        # Ukládáme výsledek rovnou učiteli do databáze (aby viděl, jak žák konflikt vyřešil)
         if "uloz_odpoved_fn" in st.session_state:
             st.session_state["uloz_odpoved_fn"]("Kapitola 6", "AI Roleplay Trenažér", prompt + "\n\nVýsledek:\n" + odpoved_ai)
 
@@ -122,6 +118,7 @@ def render():
     st.markdown("## 6. Management a marketing")
     st.markdown(
         "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
+        "Management a marketing: jak řídit projekt, získat pozornost a budovat značku<br><br>"
         "Management a marketing nejsou jen poučky z učebnice. Jsou to dovednosti, "
         "které potkáváš každý den: při práci v týmu, plánování školní akce, "
         "sledování influencerů, nákupech v e-shopech, budování profilu na sociálních sítích "
@@ -216,13 +213,13 @@ def render():
 
         c_p1, c_p2, c_p3 = st.columns(3)
         c_p1.info(
-            "**Blok 1: Management**\n\n**Co doplníš:** Cíl, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán."
+            "**Blok 1: Management**\n\n**Co doplníš:** Cíl projektu, týmové role, styl řízení, základní plán, rizika a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán projektu."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh."
+            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a marketingový mix 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
         )
         c_p3.success(
-            "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty, personal brand a etická pravidla.\n\n**Výstup:** Etická kampaň."
+            "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty značky, personal/brand profil, kampaň a etická pravidla komunikace.\n\n**Výstup:** Etická marketingová kampaň."
         )
 
         st.markdown(
@@ -295,7 +292,7 @@ def render():
         st.markdown(
             "<div class='box-blue'>"
             "🏗️ <b>Moderní hook:</b> <i>„Boss vs. Leader: Proč už nikdo nechce pracovat pro šéfa z minulého století?“</i><br>"
-            "Management není o komandování a razítkování papírů. Je to schopnost určit směr, nadchnout a vést tým, férově rozdělit práci, řešit konflikty, rozhodovat se v nejistotě a udržet projekt při životě."
+            "Management není jen kontrolování lidí. Je to schopnost nastavit směr, rozdělit práci, vést tým, řešit konflikty, rozhodovat se v nejistotě a udržet projekt při životě."
             "</div>",
             unsafe_allow_html=True,
         )
@@ -309,12 +306,12 @@ def render():
 
         st.markdown("### 1.1 Podstata a význam managementu")
         st.write(
-            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosáhnuto stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledky."
+            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí všechno udělat osobně — jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
         )
 
         st.markdown(
             "<div class='box-yellow'>"
-            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly v reálný výsledek."
+            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly ve výsledek."
             "</div>",
             unsafe_allow_html=True,
         )
@@ -500,7 +497,7 @@ def render():
         st.write("**Maslowova pyramida potřeb:** Maslow popsal lidské potřeby jako hierarchii. Člověk obvykle nejdřív řeší základní potřeby a teprve potom se může plně soustředit na vyšší potřeby.")
         st.markdown(
             "1. **Fyziologické potřeby** — jídlo, pití, spánek, odpočinek.\n"
-            "2. **Potřeba bezpečí** — jistota, stabilita, safe pracovní prostředí.\n"
+            "2. **Potřeba bezpečí** — jistota, stabilita, bezpečné pracovní prostředí.\n"
             "3. **Sociální potřeby** — vztahy, tým, přijetí, spolupráce.\n"
             "4. **Uznání** — respekt, ocenění, status, pocit užitečnosti.\n"
             "5. **Seberealizace** — rozvoj talentu, smysluplná práce, kreativita, růst."
@@ -605,13 +602,9 @@ def render():
                 st.success("**Následná (PO):** Vyhodnocení zisku a zpětná vazba po akci.")
 
     # =========================================================================
-    # BLOK 2: 1.3 Osobnost manažera a 1.4 Styly řízení
+    # BLOK 3: 1.3 Osobnost manažera a 1.4 Styly řízení
     # =========================================================================
-    elif idx == 2 or idx == 3: # 1.3 or 1.4 (since I combined them in my earlier logic, but let's keep them separate as per dropdown list)
-        pass # To keep the code clean, I will split these explicitly below.
-
-    # Re-evaluating index matching for exact dropdown selections
-    if idx == 2:
+    elif idx == 2:
         st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
         
         st.markdown("### 1.3 Osobnost manažera a role")
@@ -709,7 +702,7 @@ def render():
             st.session_state["vykresli_otazku_fn"]("6.1.7", "2. Jak nastavíš PŘEDBĚŽNOU kontrolu pro svůj projekt?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
         # -------------------------------------------------------------
-        # AI TRENAŽÉR PŘESNĚ ZA STYLY ŘÍZENÍ (JAKO PODKAPITOLA 1.4.1)
+        # AI TRENAŽÉR PŘESNĚ ZA STYLY ŘÍZENÍ
         # -------------------------------------------------------------
         st.divider()
         st.markdown("#### 1.4.1 Řešení konfliktů a Soft-skills")
@@ -830,7 +823,7 @@ def render():
     elif idx == 6:
         st.markdown("## 1. Management – Jak z chaosu udělat fungující firmu")
         
-        st.markdown("### 1.7 Moderní přesah: Agilní řízení, remote work a burnout")
+        st.markdown("### 1.7 Moderní přesah: Agilní řízení, remote work")
         st.write("Současné řízení lidí se posouvá od prostého zadávání úkolů k práci s autonomií, důvěrou, smyslem práce, psychologickým bezpečím a průběžnou zpětnou vazbou. Moderní manažer není jen kontrolor výkonu, ale spíš koordinátor, kouč a tvůrce podmínek, ve kterých tým dokáže dlouhodobě fungovat.")
         
         st.markdown(
@@ -1031,7 +1024,7 @@ def render():
         st.markdown("#### 2.4.1 Product / Produkt")
         st.write("Produkt je všechno, co firma nabízí zákazníkovi k uspokojení potřeby nebo přání. Může jít o fyzickou věc, službu, aplikaci, zážitek, událost, kurz nebo kombinaci více prvků.")
         
-        st.write("**Vrstvy produktu**")
+        st.markdown("**Vrstvy produktu**")
         st.markdown(
             "| Vrstva produktu | Co znamená | Příklad: auto | Příklad: školní merch |\n"
             "| :--- | :--- | :--- | :--- |\n"
@@ -1040,7 +1033,7 @@ def render():
             "| **Rozšířený produkt** | Doplňkové služby a výhody kolem produktu. | Záruka, servis, financování, dovoz, asistence. | Možnost výměny velikosti, předobjednávka, balení, doručení do školy. |"
         )
 
-        st.write("**Životní cyklus produktu**")
+        st.markdown("**Životní cyklus produktu**")
         st.write("Produkt obvykle prochází několika fázemi. V každé fázi se mění tržby, zisk, konkurence i marketingová strategie.")
         st.markdown(
             "| Fáze | Co se děje | Typická marketingová výzva |\n"
@@ -1051,7 +1044,8 @@ def render():
             "| **Pokles** | Prodeje klesají, produkt zastarává nebo ho nahrazují nové technologie a trendy. | Rozhodnout, zda produkt inovovat, stáhnout z trhu nebo nahradit novým. |"
         )
         
-        st.write("**Značka a obal:** Značka pomáhá produkt odlišit, vytváří důvěru a zjednodušuje rozhodování zákazníka. Obal není jen „krabička“. Má několik funkcí:")
+        st.markdown("**Značka a obal**")
+        st.write("Značka pomáhá produkt odlišit, vytváří důvěru a zjednodušuje rozhodování zákazníka. Obal není jen „krabička“. Má několik funkcí:")
         st.markdown(
             "- **ochrannou** — chrání produkt při přepravě a skladování,\n"
             "- **informační** — obsahuje složení, návod, velikost, původ, datum spotřeby,\n"
@@ -1060,8 +1054,10 @@ def render():
         st.write("**Příklad:** U energetického nápoje obal neřeší jen ochranu plechovky. Barvy, název, typografie a styl komunikují energii, výkon, gaming, sport nebo status.")
 
         st.markdown("#### 2.4.2 Price / Cena")
-        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky. Cena není jen číslo: Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
-        st.write("**Metody stanovení ceny**")
+        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky.")
+        st.write("**Cena není jen číslo:** Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
+        
+        st.markdown("**Metody stanovení ceny**")
         st.markdown(
             "| Metoda | Jak funguje | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1070,7 +1066,7 @@ def render():
             "| **Konkurenčně orientovaná cena** | Firma nastaví cenu podle konkurence na trhu. | Kavárna sleduje ceny podobných kaváren v okolí. |"
         )
 
-        st.write("**Cenové strategie**")
+        st.markdown("**Cenové strategie**")
         st.markdown(
             "| Strategie | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1083,14 +1079,16 @@ def render():
 
         st.markdown("#### 2.4.3 Place / Distribuce")
         st.write("Distribuce řeší, jak se produkt dostane od výrobce ke konečnému zákazníkovi. Nestačí mít dobrý produkt — zákazník ho musí umět pohodlně najít, koupit a získat včas.")
-        st.write("**Distribuční cesty**")
+        
+        st.markdown("**Distribuční cesty**")
         st.markdown(
             "| Typ cesty | Jak funguje | Příklad |\n"
             "| :--- | :--- | :--- |\n"
             "| **Přímá distribuční cesta** | Výrobce prodává přímo spotřebiteli bez prostředníka. | Tvůrce prodává vlastní e-book přes svůj web. Pekárna prodává pečivo ve vlastní prodejně. |\n"
             "| **Nepřímá distribuční cesta** | Mezi výrobcem a spotřebitelem je zprostředkovatel. | Výrobce nápojů prodává přes velkoobchod a supermarket. |"
         )
-        st.write("**Zprostředkovatelé**")
+        
+        st.markdown("**Zprostředkovatelé**")
         st.markdown(
             "| Zprostředkovatel | Co dělá | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1230,6 +1228,13 @@ def render():
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"]("6.3.2", "1. Popiš nákupní cestu zákazníka: Jaký spouštěč ho přiměje hledat produkt a jak o něj pečuješ po nákupu?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
+        st.markdown(
+            "<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 13: Neuromarketing a Etický kodex projektu</b></div>",
+            unsafe_allow_html=True,
+        )
+        if "vykresli_otazku_fn" in st.session_state:
+            st.session_state["vykresli_otazku_fn"]("6.3.3", "1. Jaké neuromarketingové podněty použiješ a jak se vyhneš klamavé reklamě?", "6", st.session_state.get("ulozene_odpovedi", {}))
+
     # =========================================================================
     # BLOK 12: 3.3 Etika, právo a ochrana
     # =========================================================================
@@ -1343,6 +1348,13 @@ def render():
         )
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"]("6.3.5", "1. Vyber primární sociální síť, typ obsahu, styl influencerů a nápad na Guerilla kampaň.", "6", st.session_state.get("ulozene_odpovedi", {}))
+
+        st.markdown(
+            "<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 16: Návrh Etické kampaně a dokončení Bloku 3</b></div>",
+            unsafe_allow_html=True,
+        )
+        if "vykresli_otazku_fn" in st.session_state:
+            st.session_state["vykresli_otazku_fn"]("6.3.6", "1. Popiš hlavní sdělení etické kampaně, kanály, KPI a jak se vyhneš greenwashingu.", "6", st.session_state.get("ulozene_odpovedi", {}))
 
     # =========================================================================
     # BLOK 14: 4. Závěrečný výstup
