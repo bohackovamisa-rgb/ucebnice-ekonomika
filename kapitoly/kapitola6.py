@@ -72,7 +72,7 @@ def ziskej_odpoved_od_ai(zprava_zaka):
         )
 
 
-def zhodnot_reklamu_ai(text_reklamy, kontext_zamer, nazev_projektu):
+def zhodnot_reklamu_ai(produkt_nazev, text_reklamy):
     """
     Volá API pro zhodnocení reklamy podle AIDA a navrhuje vylepšené varianty.
     """
@@ -84,20 +84,19 @@ def zhodnot_reklamu_ai(text_reklamy, kontext_zamer, nazev_projektu):
                 "Authorization": f"Bearer {api_key}"
             }
             system_prompt = (
-                f"Jsi špičkový marketingový expert a copywriter. Student vytváří reklamu pro projekt '{nazev_projektu}'.\n"
-                f"Jeho záměr/nápad: '{kontext_zamer}'\n"
-                f"Jeho navržený text reklamy: '{text_reklamy}'\n\n"
+                f"Jsi špičkový marketingový expert a copywriter. Uživatel vytváří propagaci pro produkt/projekt: '{produkt_nazev}'.\n"
+                f"Jeho navržený text reklamy / slogan: '{text_reklamy}'\n\n"
                 "Tvým úkolem je:\n"
                 "1. Na první řádek napiš POUZE: SKORE: [číslo od 0 do 10] (např. SKORE: 7.5)\n"
-                "2. Stručně zhodnoť text podle fází AIDA (Attention, Interest, Desire, Action).\n"
-                "3. Nabídni konkrétní řešení: Navrhni 3 chytlavé marketingové slogany.\n"
-                "4. Napiš hotový ukázkový vzorový příspěvek (připravený pro Instagram/TikTok) vycházející z jeho záměru, který může student ihned použít."
+                "2. Stručně zhodnoť text podle 4 fází AIDA (Attention, Interest, Desire, Action).\n"
+                "3. Navrhni 3 chytlavé moderní marketingové slogany šité přímo na míru tomuto produktu.\n"
+                "4. Napiš hotový ukázkový vzorový příspěvek na sociální sítě podle AIDA, který může student přímo použít."
             )
             payload = {
                 "model": "gpt-4o-mini",
                 "messages": [
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"Záměr: {kontext_zamer}\nReklama: {text_reklamy}"}
+                    {"role": "user", "content": f"Produkt: {produkt_nazev}\nText reklamy: {text_reklamy}"}
                 ],
                 "temperature": 0.7,
                 "max_tokens": 700
@@ -121,28 +120,29 @@ def zhodnot_reklamu_ai(text_reklamy, kontext_zamer, nazev_projektu):
     except Exception:
         pass
         
+    # --- OFFLINE ZÁCHRANA DYNAMICKY PODLE ZADANÉHO PRODUKTU ---
     text_low = text_reklamy.lower()
-    score_a = 8 if "?" in text_low or "!" in text_low else 3
-    score_i = 7 if len(text_reklamy) > 40 else 3
-    score_d = 8 if any(w in text_low for w in ["super", "nejlepší", "sleva", "limit", "kvalit", "stylov", "zážitek", "turnaj"]) else 3
-    score_action = 10 if any(w in text_low for w in ["klik", "kup", "link", "odkaz", "objedn", "vyzkoušej", "piš", "přijď", "registruj"]) else 1
+    score_a = 8 if ("?" in text_low or "!" in text_low) else 4
+    score_i = 7 if len(text_reklamy) > 35 else 3
+    score_d = 8 if any(w in text_low for w in ["super", "nejlepší", "sleva", "moderní", "kvalit", "smysl", "interaktivní", "efektiv"]) else 4
+    score_action = 10 if any(w in text_low for w in ["klik", "kup", "link", "odkaz", "vyzkoušej", "objev", "zjisti", "spusť"]) else 2
     
     celkove_skore = (score_a + score_i + score_d + score_action) / 4.0
     multiplikator = max(0.5, min(2.5, celkove_skore / 4.0))
     
     text_vysledek = (
-        "🤖 **AI Marketingový kouč (Offline rozbor):**\n\n"
+        f"🤖 **AI Marketingový kouč (Offline rozbor pro: {produkt_nazev}):**\n\n"
         f"**Hodnocení AIDA ({celkove_skore:.1f}/10):**\n"
-        f"• **Attention (Zaujetí):** {'Funguje dobře, chytá oko.' if score_a > 5 else 'Slabé, chybí otázka nebo výrazný háček.'}\n"
-        f"• **Interest (Zájem):** {'Vysvětluje podstatu akce/produktu.' if score_i > 5 else 'Příliš krátké, zákazník nechápe hlavní výhodu.'}\n"
-        f"• **Desire (Touha):** {'Buduje emoce a chuť se zúčastnit.' if score_d > 5 else 'Chybí emoce nebo limitovaná nabídka.'}\n"
-        f"• **Action (Akce):** {'Skvělá výzva k akci.' if score_action == 10 else 'Chybí jasný pokyn (např. „Klikni na odkaz a registruj se“).'}\n\n"
-        "💡 **Návrhy lepších sloganů pro tvůj projekt:**\n"
-        f"1. *„Neseď doma: Zažij {nazev_projektu}, o kterém se bude mluvit!“*\n"
-        f"2. *„Tvůj lístek k zážitkům – vyzkoušej {nazev_projektu} dřív, než bude plno.“*\n"
-        f"3. *„Jedinečná atmosféra, skvělá komunita. Připoj se k nám ještě dnes.“*\n\n"
-        "📝 **Ukázkový vzorový příspěvek podle AIDA:**\n"
-        f"„Hledáš plán na víkend? 🔥 {nazev_projektu} startuje už brzy a přináší to nejlepší pro celou školu. Kapacita je omezená na prvních 50 míst. 👉 Klikni na odkaz v biu a zajisti si své místo hned teď!“"
+        f"• **Attention (Zaujetí):** {'Dobře zvolená slova nebo interpunkce, chytá oko.' if score_a > 5 else 'Začátek je spíše popisný, hodila by se otázka nebo silnější claim.'}\n"
+        f"• **Interest (Zájem):** {'Text představuje hlavní přínos a myšlenku.' if score_i > 5 else 'Text je poměrně stručný, rozveď hlavní benefit.'}\n"
+        f"• **Desire (Touha):** {'Obsahuje silné výhody a vzbuzuje zájem.' if score_d > 5 else 'Zdůrazni, co přesně uživatel získá a v čem je řešení jedinečné.'}\n"
+        f"• **Action (Akce):** {'Jasná výzva k akci (Call to Action).' if score_action == 10 else 'Chybí přímá výzva k akci (např. „Vyzkoušejte zdarma na odkazu...“).'}\n\n"
+        f"💡 **Návrhy lepších sloganů pro {produkt_nazev}:**\n"
+        f"1. *„{produkt_nazev} – Znalosti, které dávají smysl.“*\n"
+        f"2. *„Zapomeň na nudu: Objev moderní {produkt_nazev} v praxi.“*\n"
+        f"3. *„Jednoduše, přehledně, interaktivně. Vyzkoušej {produkt_nazev}.“*\n\n"
+        f"📝 **Ukázkový vzorový příspěvek podle AIDA:**\n"
+        f"„Baví tě učit se věci, které mají skutečný smysl? 🚀 {produkt_nazev} mění způsob, jakým chápeš souvislosti. Žádná suchá teorie, ale reálné rozhodování a interaktivní nástroje. 👉 Klikni na odkaz a vyzkoušej první modul zdarma ještě dnes!“"
     )
     return text_vysledek, multiplikator
 
@@ -182,72 +182,75 @@ def render_ai_treenazer():
             st.session_state["uloz_odpoved_fn"]("Kapitola 6", "AI Roleplay Trenažér", prompt + "\n\nVýsledek:\n" + odpoved_ai)
 
 
-def render_aida_simulator(nazev_projektu):
+def render_aida_simulator():
     st.markdown("#### ✍️ Krok 1: Tvůrčí dílna reklamy a sloganů (AIDA)")
     st.write(
-    f"Zkus vytvořit prodejní příspěvek pro svůj projekt/produkt: **{nazev_projektu}** "
-    f"(který sis zvolil/a v úvodu kapitoly). Umělá inteligence zhodnotí, jak kvalitně tvůj text plní pravidla AIDA, "
-    f"a tato kvalita přímo určí úspěch kampaně v simulátoru níže!"
+        "Zadej název svého produktu či nápadu a napiš k němu reklamní text nebo slogan. "
+        "Umělá inteligence zhodnotí tvůj copywriting, **navrhne ti 3 lepší slogany i hotový vzorový příspěvek** a spočítá index úspěšnosti pro simulátor rozpočtu."
     )
+    
+    vychozi_nazev = st.session_state.get("k6_aktivni_projekt", "Interaktivní učebnice ekonomiky")
     
     col_a1, col_a2 = st.columns([1, 1])
     with col_a1:
-        zamer_text = st.text_input(
-            "O co přesně v akci jde a jaký slogan tě napadl?",
-            placeholder="Např. Děláme turnaj v ping-pongu, slogan: Přijďte si zahrát",
-            key="aida_zamer"
+        produkt_nazev = st.text_input(
+            "Co prodáváš / Název tvého produktu či projektu:",
+            value=vychozi_nazev,
+            key="aida_custom_produkt"
         )
     with col_a2:
         reklama_text = st.text_area(
-            "Celý text reklamního příspěvku:",
-            placeholder="Napiš kompletní příspěvek pro sociální sítě...",
-            key="aida_text"
+            "Tvůj reklamní text / slogan / příspěvek:",
+            placeholder="Např. Ekonomika, která dává smysl. Moderní interaktivní e-learning...",
+            key="aida_custom_text"
         )
     
     if st.button("Odeslat k AI analýze a vygenerovat návrhy", type="primary", key="btn_aida"):
-        if len(reklama_text) < 10 and len(zamer_text) < 5:
-            st.warning("Vyplň alespoň stručně záměr nebo text reklamy!")
+        if len(reklama_text.strip()) < 5 or len(produkt_nazev.strip()) < 2:
+            st.warning("Vyplň prosím název produktu i text reklamy!")
         else:
-            with st.spinner("Marketingový AI expert analyzuje tvůj nápad a připravuje doporučení..."):
-                vysledek_text, mult = zhodnot_reklamu_ai(reklama_text, zamer_text, nazev_projektu)
+            with st.spinner(f"Marketingový AI expert analyzuje reklamu pro '{produkt_nazev}'..."):
+                vysledek_text, mult = zhodnot_reklamu_ai(produkt_nazev, reklama_text)
                 st.session_state["k6_aida_multiplikator"] = mult
+                st.session_state["k6_testovany_produkt"] = produkt_nazev
                 st.session_state["k6_reklama_text_ulozena"] = reklama_text
                 
                 st.markdown("##### 💡 Rozbor a doporučená řešení od AI:")
                 st.info(vysledek_text)
                 
                 if mult >= 1.5:
-                    st.success(f"🚀 **Skvělý základ!** Index prodejů v simulátoru rozpočtu: **{mult:.1f}×**.")
+                    st.success(f"🚀 **Skvělý copywriting pro {produkt_nazev}!** Index prodejů v simulátoru rozpočtu: **{mult:.1f}×**.")
                 elif mult >= 1.0:
-                    st.warning(f"⚖️ **Průměrný dosah.** Index prodejů v simulátoru rozpočtu: **{mult:.1f}×**. Můžeš použít vygenerované slogany výše pro lepší výsledek.")
+                    st.warning(f"⚖️ **Průměrný dosah pro {produkt_nazev}.** Index prodejů: **{mult:.1f}×**. Můžeš použít vygenerované slogany výše pro vyšší zisk.")
                 else:
-                    st.error(f"⚠️ **Slabý prodejní tah.** Index prodejů: **{mult:.1f}×**. Doporučujeme upravit text podle vzoru výše.")
+                    st.error(f"⚠️ **Slabý prodejní tah.** Index prodejů: **{mult:.1f}×**. Doporučujeme text upravit podle vzoru výše.")
                 
                 if "uloz_odpoved_fn" in st.session_state:
                     st.session_state["uloz_odpoved_fn"](
                         "Kapitola 6", 
-                        f"AIDA Reklama ({nazev_projektu})", 
-                        f"Záměr: {zamer_text}\nText: {reklama_text}\nIndex: {mult:.2f}"
+                        f"AIDA Reklama ({produkt_nazev})", 
+                        f"Text: {reklama_text}\nIndex: {mult:.2f}"
                     )
 
 
-def render_marketing_rozpocet(nazev_projektu):
-    st.markdown("#### 💸 Krok 2: Simulátor rozpočtu – Spustíš kampaň?")
-    
+def render_marketing_rozpocet():
+    produkt_nazev = st.session_state.get("k6_testovany_produkt", st.session_state.get("k6_aktivni_projekt", "Můj produkt"))
     mult = st.session_state.get("k6_aida_multiplikator", 1.0)
     
-    if "k6_aida_multiplikator" in st.session_state:
+    st.markdown("#### 💸 Krok 2: Simulátor rozpočtu – Spustíš kampaň?")
+    
+    if "k6_testovany_produkt" in st.session_state:
         st.markdown(
             f"<div style='background-color: #f8fafc; padding: 10px; border-radius: 6px; border-left: 4px solid #8b5cf6; margin-bottom: 15px;'>"
-            f"🎯 <b>Propojeno s tvou reklamou:</b> Používá se tvůj copywriting pro <b>{nazev_projektu}</b> s indexem účinnosti <b>{mult:.2f}×</b>."
+            f"🎯 <b>Propojeno s tvou reklamou:</b> Testuje se kampaň pro produkt <b>{produkt_nazev}</b> s indexem účinnosti textu <b>{mult:.2f}×</b>."
             f"</div>",
             unsafe_allow_html=True
         )
     else:
-        st.caption("💡 *Tip: Pokud výše nejprve otestuješ text reklamy v AI dílně, simulátor do výpočtu započítá tvůj reálný copywriting.*")
+        st.caption("💡 *Tip: Pokud výše nejprve otestuješ text reklamy v AI dílně, simulátor do výpočtu započítá tvůj reálný produkt i copywriting.*")
 
     st.write(
-        f"Máš celkový rozpočet **10 000 Kč** na propagaci projektu **{nazev_projektu}**. "
+        f"Máš celkový rozpočet **10 000 Kč** na propagaci produktu **{produkt_nazev}**. "
         "Čistá marže z jednoho prodaného kusu/služby je **250 Kč**. Rozděl částky do jednotlivých kanálů:"
     )
 
@@ -301,7 +304,7 @@ def render_marketing_rozpocet(nazev_projektu):
         
         if cisty_zisk >= 0:
             c3.metric("Čistý výsledek (ROI)", f"+ {cisty_zisk:,} Kč".replace(",", " "))
-            st.success(f"🎉 **Skvělá práce! Kampaň pro {nazev_projektu} je v zisku.** Díky dobrému rozdělení a kvalitnímu textu jsi vydělal/a víc, než stála inzerce.")
+            st.success(f"🎉 **Skvělá práce! Kampaň pro {produkt_nazev} je v zisku.** Díky dobrému rozdělení a kvalitnímu textu jsi vydělal/a víc, než stála inzerce.")
         else:
             c3.metric("Čistý výsledek (ROI)", f"{cisty_zisk:,} Kč".replace(",", " "))
             st.error(f"📉 **Kampaň skončila ve ztrátě {cisty_zisk:,} Kč.** Náklady na reklamu byly vyšší než marže z prodeje.")
@@ -347,7 +350,7 @@ def render_marketing_rozpocet(nazev_projektu):
             st.write(f"- **AIDA multiplikátor textu:** **{mult:.2f}×**")
             
         if "uloz_odpoved_fn" in st.session_state:
-            st.session_state["uloz_odpoved_fn"]("Kapitola 6", f"Marketing Rozpočet ({nazev_projektu})", f"Zisk: {cisty_zisk} Kč | Prodeje: {celkem_prodeju} ks | Index: {mult:.2f}")
+            st.session_state["uloz_odpoved_fn"]("Kapitola 6", f"Marketing Rozpočet ({produkt_nazev})", f"Zisk: {cisty_zisk} Kč | Prodeje: {celkem_prodeju} ks | Index: {mult:.2f}")
 
 
 def render():
@@ -459,7 +462,7 @@ def render():
             "**Blok 1: Management**\n\n**Co doplníš:** Cíl projektu, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán projektu."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
+            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a marketingový mix 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
         )
         c_p3.success(
             "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty značky, personal/brand profil, kampaň a etická pravidla komunikace.\n\n**Výstup:** Etická marketingová kampaň."
@@ -549,7 +552,7 @@ def render():
 
         st.markdown("### 1.1 Podstata a význam managementu")
         st.write(
-            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí všechno udělat osobně — jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
+            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
         )
 
         st.markdown(
@@ -909,7 +912,7 @@ def render():
 
         st.markdown(
             "| Styl řízení | Jak funguje | Výhody | Rizika |\n"
-            "| :--- | :--- | :--- |\n"
+            "| :--- | :--- | :--- | :--- |\n"
             "| **Autoritativní / autokratický** | Manažer rozhoduje sám, dává jasné pokyny a očekává jejich splnění. | Rychlost, jasná odpovědnost, vhodné v krizích nebo při nízké zkušenosti týmu. | Nižší motivace, strach z chyb, málo nápadů od týmu, riziko toxické kultury. |\n"
             "| **Demokratický / participativní** | Manažer zapojuje tým do rozhodování, podporuje diskusi a deleguje pravomoci. | Vyšší motivace, lepší nápady, větší odpovědnost týmu. | Pomalejší rozhodování, riziko dlouhých debat, nemusí fungovat v akutní krizi. |\n"
             "| **Liberální / laissez-faire** | Manažer nechává týmu velkou volnost a zasahuje minimálně. | Podporuje samostatnost, kreativitu a odpovědnost zkušených lidí. | Chaos, nejasné priority, slabá kontrola, problémy u nezkušeného týmu. |"
@@ -1368,11 +1371,10 @@ def render():
 
         # --- AIDA TRENAŽÉR A SIMULÁTOR ROZPOČTU ---
         st.divider()
-        aktivni_nazev = st.session_state.get("k6_aktivni_projekt", "Můj školní projekt")
-        render_aida_simulator(aktivni_nazev)
+        render_aida_simulator()
         
         st.divider()
-        render_marketing_rozpocet(aktivni_nazev)
+        render_marketing_rozpocet()
 
         st.markdown(
             "<br><div class='box-yellow'>📝 <b>Cvičení k bloku 2: 4P vlastního produktu</b><br>"
