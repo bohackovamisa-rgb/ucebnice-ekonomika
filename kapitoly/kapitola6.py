@@ -13,10 +13,10 @@ def render():
     st.title("6. Management a marketing")
     st.markdown(
         "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
-        "Management a marketing nejsou jen poučky z učebnice. Jsou to"
-        " dovednosti, které potkáváš každý den: při týmovce ve škole, organizaci"
-        " festivalu, sledování influencerů, nákupech na e-shopech i při"
-        " přemýšlení, proč věříš jedné značce víc než druhé.</p>",
+        "Management a marketing nejsou jen poučky z učebnice. Jsou to dovednosti, "
+        "které studenti potkávají každý den: při práci v týmu, plánování školní akce, "
+        "sledování influencerů, nákupech v e-shopech, budování profilu na sociálních sítích "
+        "i při rozhodování, proč věří jedné značce víc než druhé.</p>",
         unsafe_allow_html=True,
     )
 
@@ -24,9 +24,10 @@ def render():
     with st.container(border=True):
         st.markdown(
             "<div class='box-blue'>"
-            "<strong>🧠 Pointa kapitoly:</strong> Dobrý nápad sám o sobě nestačí. Někdo musí určit směr, sestavit tým, rozdělit práci, rozhodovat pod tlakem, pochopit zákazníka a vytvořit nabídku, která dává smysl.<br><br>"
-            "• <b>Management</b> řeší, jak věci zorganizovat a dostat nápad do reality.<br>"
-            "• <b>Marketing</b> řeší, pro koho tvoříme hodnotu a jak získat jeho pozornost."
+            "<strong>🧠 Pointa kapitoly:</strong><br>"
+            "Dobrý nápad nestačí. Někdo musí určit směr, sestavit tým, rozdělit práci, "
+            "rozhodovat se pod tlakem, pochopit zákazníka a vytvořit nabídku, která dává smysl. "
+            "Management řeší, jak věci zorganizovat. Marketing řeší, pro koho tvoříme hodnotu a jak ji komunikujeme."
             "</div>",
             unsafe_allow_html=True,
         )
@@ -36,35 +37,48 @@ def render():
         "🎯 Co máš po této kapitole ovládnout? (Klikni pro rozbalení)",
         expanded=False,
     ):
-        col_c1, col_c2 = st.columns(2)
-        with col_c1:
-            st.markdown(
-                "**🏛️ V bloku Management:**\n"
-                "* Vysvětlit podstatu, funkce a pyramidu managementu.\n"
-                "* Rozlišit manažerské role, dovednosti a styly řízení.\n"
-                "* Sestavit **SWOT analýzu** pro projekt nebo svůj osobní rozvoj.\n"
-                "* Řídit rizika, týmovou strukturu a pochopit agilní řízení."
-            )
-        with col_c2:
-            st.markdown(
-                "**🎯 V bloku Marketing & Brand:**\n"
-                "* Sestavit **STP proces** (Segmentace, Targeting, Positioning).\n"
-                "* Sestavit kompletní **Marketingový mix 4P** (Produkt, Cena, Distribuce, Propagace).\n"
-                "* Budovat značku (Brand equity) a svůj vlastní **Personal Brand**.\n"
-                "* Odhalit nákupní psychologii, triky e-shopů (**Dark patterns**) a etiku AI reklamy."
-            )
+        st.markdown(
+            "- vysvětlit podstatu a základní funkce managementu,\n"
+            "- rozlišit manažerské role, dovednosti a styly řízení,\n"
+            "- použít SWOT analýzu pro projekt, firmu nebo osobní rozvoj,\n"
+            "- vysvětlit podstatu marketingu, výzkumu trhu a zákaznické hodnoty,\n"
+            "- použít STP proces: segmentace, targeting, positioning,\n"
+            "- sestavit marketingový mix 4P,\n"
+            "- vysvětlit význam značky, brand equity a personal brandingu,\n"
+            "- rozpoznat vybrané principy nákupní psychologie a dark patterns,\n"
+            "- posoudit etiku reklamy, influencer marketingu, greenwashingu a AI reklamy,\n"
+            "- navrhnout jednoduchý projekt od řízení týmu až po etickou marketingovou kampaň."
+        )
+        st.markdown(
+            """
+            <div style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
+                <i>📘 <b>Vazba na RVP:</b> Kapitola rozvíjí ekonomické, podnikavé, občanské a digitální kompetence v oblastech managementu, plánování, organizování, vedení lidí, kontroly, rozhodování, marketingu, analýzy trhu, marketingového mixu, značky, spotřebitelského chování, ochrany spotřebitele, etiky reklamy a odpovědné komunikace v digitálním prostředí.</i>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.divider()
+    
+    st.markdown("**🧭 Doporučené pořadí studia:**")
+    st.markdown(
+        "1. **Management – Jak z chaosu udělat fungující firmu**\n"
+        "   Nejdřív pochopíš, jak se z nápadu stává organizovaný projekt: plánování, tým, role, vedení lidí, kontrola, rozhodování a rizika.\n\n"
+        "2. **Marketing – Hra o pozornost a marketingový mix**\n"
+        "   Potom se zaměříš na zákazníka, trh, data, segmentaci, positioning a 4P: produkt, cenu, distribuci a propagaci.\n\n"
+        "3. **Brand, nákupní psychologie a etika**\n"
+        "   Nakonec propojíš značku, personal branding, psychologii nákupního chování, dark patterns, greenwashing, regulaci reklamy a odpovědnost firem."
+    )
 
     st.divider()
 
     # =========================================================================
     # 💡 PRAKTICKÁ LINKA: PROJEKT NAPŘÍČ KAPITOLOU
     # =========================================================================
-    st.markdown("### 💡 Projekt napříč kapitolou: Vytvoř si vlastní nápad")
+    st.markdown("### 💡 Projekt napříč kapitolou: Vytvoř si vlastní projekt")
     st.write(
-        "Teorie bez praxe je k ničemu. V této kapitole si vybereš **jeden"
-        " mikro-projekt**, který budeš postupně rozvíjet v každém bloku. Na"
-        " konci kapitoly budeš mít kompletní podklady pro svůj vlastní startup"
-        " nebo akční plán!"
+        "**Hlavní praktická linka kapitoly:** Studenti si vyberou jeden mikro-projekt a budou ho postupně rozvíjet ve všech třech blocích. "
+        "Na konci kapitoly budou mít jednoduchý návrh projektu, jeho řízení, marketingový mix, značku a etickou kampaň."
     )
 
     # Interaktivní výběr a konfigurátor projektu
@@ -76,18 +90,16 @@ def render():
         )
 
         typ_projektu = st.selectbox(
-            "Vyber si projekt, na kterém chceš pracovat:",
+            "Možné projekty k výběru:",
             [
-                "🎒 Školní merch / značka udržitelného oblečení",
-                "🎪 Školní festival, turnaj nebo maturitní ples",
-                "☕ Lokální kavárna, food truck nebo pop-up bistro",
-                "📱 Mobilní aplikace nebo digitální služba pro studenty",
-                "🎙️ Školní podcast, YouTube kanál nebo TikTok profil",
-                "🌱 Nezisková kampaň / charitativní projekt",
-                (
-                    "💼 Osobní značka (Personal brand) na LinkedInu /"
-                    " Instagramu"
-                ),
+                "🎒 školní akce nebo festival",
+                "🛒 studentský e-shop",
+                "👕 značka udržitelného oblečení",
+                "☕ lokální kavárna nebo food truck",
+                "📱 mobilní aplikace",
+                "🌱 nezisková kampaň",
+                "💼 osobní brand na LinkedInu nebo sociálních sítích",
+                "🎙️ školní podcast, YouTube kanál nebo TikTok profil",
                 "✏️ Vlastní nápad (napíšu níže)",
             ],
             key="k6_typ_projektu",
@@ -104,16 +116,13 @@ def render():
 
         c_p1, c_p2, c_p3 = st.columns(3)
         c_p1.info(
-            "**Blok 1: Management**\nDoplníš týmové role, styl řízení, plán,"
-            " rizika a SWOTku."
+            "**Blok 1: Management**\n\n**Co student doplní do projektu:** Cíl projektu, týmové role, styl řízení, základní plán, rizika a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán projektu."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\nUrčíš cílovku (STP) a nastavíš marketingový"
-            " mix 4P."
+            "**Blok 2: Marketing**\n\n**Co student doplní do projektu:** Zákazníka, segment, positioning a marketingový mix 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
         )
         c_p3.success(
-            "**Blok 3: Brand & Etika**\nVytvoříš identitu značky, logo a"
-            " etickou kampaň."
+            "**Blok 3: Brand a etika**\n\n**Co student doplní do projektu:** Název, hodnoty značky, personal/brand profil, kampaň a etická pravidla komunikace.\n\n**Výstup:** Etická marketingová kampaň."
         )
 
         st.markdown(
@@ -170,27 +179,56 @@ def render():
             unsafe_allow_html=True,
         )
 
+        st.markdown(
+            "<div class='box-green'>"
+            "🎯 <b>Cíl 1. bloku:</b> Pochopíš, jak se z nápadu stává funkční organizace nebo projekt. Naučíš se rozlišit základní funkce managementu, styly řízení, manažerské role, organizační struktury a praktické nástroje pro rozhodování."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
+        with st.expander("Co má tento blok obsahovat?", expanded=False):
+            st.markdown(
+                "- podstata a funkce managementu,\n"
+                "- plánování,\n"
+                "- organizování,\n"
+                "- řízení / vedení lidí,\n"
+                "- kontrola,\n"
+                "- manažerské role a dovednosti,\n"
+                "- styly řízení: autoritativní, demokratický / participativní, laissez-faire,\n"
+                "- organizační struktury: liniová, štábní, maticová,\n"
+                "- rozhodování a řízení rizik,\n"
+                "- SWOT analýza,\n"
+                "- moderní řízení týmů: agilita, remote work, digitální nástroje,\n"
+                "- wellbeing, burnout a odpovědnost manažera za udržitelnost týmu."
+            )
+            st.markdown(
+                """
+                <div style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
+                    <i>📘 <b>Vazba na RVP pro SŠ:</b> Tento blok pokrývá podstatu a funkce managementu, plánování, organizování, vedení lidí, kontrolu, manažerské role, styly řízení, organizační struktury, rozhodování, řízení rizik a základní nástroje analýzy.</i>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
         st.divider()
 
         # PODKAPITOLA 1.1
         st.markdown("#### 1.1 Podstata a význam managementu")
         st.write(
-            "Management znamená **řízení organizace nebo projektu tak, aby"
-            " bylo dosáhnuto stanovených cílů**. Často se říká, že management je"
-            " *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer"
-            " tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr,"
-            " rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledky."
+            "Management znamená řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů. "
+            "Často se říká, že management je proces dosahování cílů prostřednictvím činnosti jiných lidí. "
+            "Manažer tedy nemusí všechno udělat osobně — jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
         )
 
         st.markdown(
             "<div class='box-yellow'>"
-            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly v reálný výsledek."
+            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly ve výsledek."
             "</div>",
             unsafe_allow_html=True,
         )
 
         st.write(
-            "Management se objevuje všude, kde lidé spolupracují: ve firmě, škole, neziskovce, sportovním týmu, startupu, nemocnici, restauraci i při organizaci maturitního plesu. Čím složitější je projekt, tím důležitější je řízení času, lidí, peněz, informací a rizik."
+            "Management se objevuje všude, kde lidé spolupracují: ve firmě, škole, neziskovce, sportovním týmu, startupu, nemocnici, restauraci i při organizaci studentského plesu. Čím složitější je projekt, tím důležitější je řízení času, lidí, peněz, informací a rizik."
         )
 
         st.markdown("##### 👥 Kdo je kdo v ekonomickém světě? (Rozlišení rolí)")
@@ -224,7 +262,7 @@ def render():
                     "Vyber odpověď...",
                     "A) Je pouze zaměstnankyní své vlastní firmy.",
                     "B) Je zároveň Podnikatelka, Vlastník i Manažerka.",
-                    "C) Je pouze Podnikatelka, řízení lidí pod ni nespadá.",
+                    "C) Je pouze Podnikatelka, řízení lidi pod ni nespadá.",
                 ],
                 key="k6_1_sara_role",
             )
@@ -240,50 +278,18 @@ def render():
         st.divider()
 
         # PODKAPITOLA 1.1.1
-        st.markdown("#### 1.1.1 Úrovně managementu: Pyramida řízení")
+        st.markdown("#### 1.1.1 Úrovně managementu: pyramida řízení")
         st.write("Ve větších organizacích existují různé úrovně řízení. Každá řeší jiný typ rozhodnutí.")
 
         st.markdown(
             "| Úroveň managementu | Co řeší | Příklad | Typická otázka |\n"
             "| :--- | :--- | :--- | :--- |\n"
-            "| **Vrcholový management (Top management)** | Dlouhodobý směr, strategii, zásadní rozhodnutí, odpovědnost za celou organizaci. | CEO, generální ředitel, ředitel školy, představenstvo. | Kam má organizace směřovat za 3–5 let? |\n"
-            "| **Střední management (Middle management)** | Převádí strategii do plánů oddělení, koordinuje týmy a kontroluje výsledky. | Vedoucí marketingu, vedoucí výroby, manažer závodu, zástupce ředitele. | Jak splníme cíle v našem oddělení? |\n"
-            "| **Liniový management (First-line management)** | Řídí každodenní práci lidí v provozu nebo konkrétním týmu. | Mistr ve výrobě, vedoucí směny, team leader, vedoucí brigádníků. | Kdo dnes co udělá a jak poznáme, že je práce hotová? |"
+            "| **Vrcholový management / Top management** | Dlouhodobý směr, strategii, zásadní rozhodnutí, odpovědnost za celou organizaci. | CEO, generální ředitel, ředitel školy, představenstvo. | Kam má organizace směřovat za 3–5 let? |\n"
+            "| **Střední management / Middle management** | Převádí strategii do plánů oddělení, koordinuje týmy a kontroluje výsledky. | Vedoucí marketingu, vedoucí výroby, manažer závodu, zástupce ředitele. | Jak splníme cíle v našem oddělení? |\n"
+            "| **Liniový management / First-line management** | Řídí každodenní práci lidí v provozu nebo konkrétním týmu. | Mistr ve výrobě, vedoucí směny, team leader, vedoucí brigádníků. | Kdo dnes co udělá a jak poznáme, že je práce hotová? |"
         )
 
-        col_pyr1, col_pyr2, col_pyr3 = st.columns(3)
-        with col_pyr1:
-            st.markdown(
-                "<div style=\"background-color: #fef2f2; padding: 15px; border-left: 5px solid #ef4444; height: 100%;\">"
-                "<h5 style=\"margin-top: 0; color: #b91c1c;\">👑 Vrcholový management (Top)</h5>"
-                "<b>Co řeší:</b> Dlouhodobou strategii (3–5 let), vizi, velká rizika a směr celé firmy.<br><br>"
-                "<b>Lidé:</b> CEO, generální ředitel, ředitel školy, představenstvo.<br><br>"
-                "<b>Otázka:</b> <i>Kam má organizace směřovat?</i>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
-
-        with col_pyr2:
-            st.markdown(
-                "<div style=\"background-color: #fef3c7; padding: 15px; border-left: 5px solid #f59e0b; height: 100%;\">"
-                "<h5 style=\"margin-top: 0; color: #b45309;\">📊 Střední management (Middle)</h5>"
-                "<b>Co řeší:</b> Převádí strategii z vrchu do konkrétních plánů oddělení, koordinuje týmy.<br><br>"
-                "<b>Lidé:</b> Vedoucí marketingu, vedoucí výroby, manažer závodu, zástupce ředitele.<br><br>"
-                "<b>Otázka:</b> <i>Jak splníme cíle v našem úseku?</i>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
-
-        with col_pyr3:
-            st.markdown(
-                "<div style=\"background-color: #f0fdf4; padding: 15px; border-left: 5px solid #10b981; height: 100%;\">"
-                "<h5 style=\"margin-top: 0; color: #047857;\">🛠️ Liniový management (First-line)</h5>"
-                "<b>Co řeší:</b> Každodenní provoz, konkrétní úkoly, řízení pracovníků 'v první linii'.<br><br>"
-                "<b>Lidé:</b> Mistr ve výrobně, vedoucí směny v McDonald's, team leader brigádníků.<br><br>"
-                "<b>Otázka:</b> <i>Kdo dnes co udělá a jak?</i>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
+        st.write("**Příklad ze školní akce:** Vrcholový tým rozhodne, že škola uspořádá benefiční festival. Střední manažeři řeší program, rozpočet, propagaci a partnery. Linioví vedoucí organizují konkrétní směny u vstupu, občerstvení, techniky nebo úklidu.")
 
         st.markdown(
             "<br><div class='box-purple'>🎪 <b>Simulátor pyramidy: Školní benefiční festival</b></div>",
@@ -324,8 +330,11 @@ def render():
 
         # PODKAPITOLA 1.2
         st.divider()
-        st.markdown("#### 1.2 Základní manažerské funkce: Proces řízení")
-        st.write("Manažerská práce se často popisuje jako soubor čtyř navazujících funkcí: plánování, organizování, vedení lidí a kontrola. Nejde o jednorázové kroky, ale o cyklus.")
+        st.markdown("#### 1.2 Základní manažerské funkce: proces řízení")
+        st.write(
+            "Manažerská práce se často popisuje jako soubor čtyř navazujících funkcí: plánování, organizování, vedení lidí a kontrola. "
+            "Nejde o jednorázové kroky, ale o cyklus. Manažer plánuje, rozdělí práci, vede tým, kontroluje výsledek a podle zjištění plán upravuje."
+        )
 
         st.markdown(
             "| Funkce | Co znamená | Otázka pro manažera |\n"
@@ -343,8 +352,12 @@ def render():
         col_fce4.error("🔍 **4. Kontrola**\nMěření výsledků.\n*(Splnili jsme to?)*")
 
         # 1.2.1
-        st.markdown("##### 1.2.1 Plánování a SMART cíl")
-        st.write("Plánování znamená určit, čeho chce organizace dosáhnout, proč je to důležité a jakými kroky se k cíli dostane.")
+        st.markdown("##### 1.2.1 Plánování")
+        st.write(
+            "Plánování znamená určit, čeho chce organizace dosáhnout, proč je to důležité a jakými kroky se k cíli dostane. "
+            "Bez plánování tým často jen „hasí požáry“ a reaguje na problémy, místo aby měl jasný směr."
+        )
+        st.write("Podle časového hlediska rozlišujeme:")
         
         st.markdown(
             "| Typ plánování | Časový horizont | Příklad |\n"
@@ -358,7 +371,7 @@ def render():
             "<div class='box-purple'>🎯 <b>Trenažér: Vylaď cíl podle pravidla S.M.A.R.T.</b></div>",
             unsafe_allow_html=True,
         )
-        st.write("Vágně zadaný cíl (*'Chceme prodávat hodně mikin'*) vedoucího i tým zmate. Správný cíl musí být **S.M.A.R.T.**:")
+        st.write("Dobře formulovaný cíl má být **S.M.A.R.T.**:")
         st.markdown(
             "* **S – Specific:** konkrétní,\n"
             "* **M – Measurable:** měřitelný,\n"
@@ -369,7 +382,7 @@ def render():
 
         with st.container(border=True):
             st.write("**Předělej špatný cíl na SMART cíl:**")
-            st.caption("🔴 *Špatný cíl:* 'Chceme mít úspěšný školní merch.'")
+            st.caption("🔴 *Příklad špatného cíle:* „Chceme mít úspěšný školní merch.“")
 
             c_smart1, c_smart2, c_smart3 = st.columns(3)
             s_ks = c_smart1.number_input("Kolik kusů chceme prodat?:", min_value=10, value=80, step=10, key="k6_1_2_ks")
@@ -380,22 +393,34 @@ def render():
             st.success(f"🟢 **Tvůj vygenerovaný SMART cíl:** *„{smart_text}“*")
 
         # 1.2.2 ORGANIZOVÁNÍ
-        st.markdown("##### 1.2.2 Organizování a Pravomoc vs. Odpovědnost")
+        st.markdown("##### 1.2.2 Organizování")
         st.write("Organizování znamená vytvořit strukturu, ve které lidé vědí, co mají dělat, kdo o čem rozhoduje, kdo komu předává informace a kdo za co odpovídá.")
+        st.write("Manažer při organizování řeší hlavně:")
+        st.markdown(
+            "* dělení práce,\n"
+            "* přidělení úkolů,\n"
+            "* přidělení pravomocí,\n"
+            "* stanovení odpovědnosti,\n"
+            "* koordinaci mezi lidmi a týmy,\n"
+            "* nastavení pravidel komunikace."
+        )
         
         st.markdown(
             "<div class='box-yellow'>"
-            "⚖️ <b>Základní rovnováha managementu:</b><br>"
-            "• <b>Pravomoc:</b> Právo rozhodovat nebo zadávat úkoly.<br>"
-            "• <b>Odpovědnost:</b> Povinnost nést důsledky za výsledek.<br>"
+            "⚖️ <b>Pravomoc vs. odpovědnost:</b><br>"
+            "• <b>Pravomoc</b> znamená právo rozhodovat nebo zadávat úkoly.<br>"
+            "• <b>Odpovědnost</b> znamená povinnost nést důsledky za výsledek.<br>"
             "<i>Problém vzniká, když má člověk odpovědnost, ale nemá dostatečnou pravomoc — například má zařídit akci, ale nesmí rozhodnout o rozpočtu.</i>"
             "</div>",
             unsafe_allow_html=True,
         )
 
         # 1.2.3 VEDENÍ LIDÍ
-        st.markdown("##### 1.2.3 Vedení lidí a Maslowova pyramida potřeb")
-        st.write("Vedení lidí znamená ovlivňovat tým tak, aby lidé rozuměli cíli, chtěli na něm pracovat a měli podmínky k dobrému výkonu. Dobrý manažer neřeší jen úkoly, ale také motivaci, komunikaci, atmosféru a konflikty.")
+        st.markdown("##### 1.2.3 Vedení lidí")
+        st.write(
+            "Vedení lidí znamená ovlivňovat tým tak, aby lidé rozuměli cíli, chtěli na něm pracovat a měli podmínky k dobrému výkonu. "
+            "Dobrý manažer neřeší jen úkoly, ale také motivaci, komunikaci, atmosféru a konflikty."
+        )
         
         st.markdown(
             "| Pojem | Co znamená | Příklad |\n"
@@ -405,17 +430,20 @@ def render():
         )
 
         # MASLOWOVA PYRAMIDA POTŘEB (GRAF & TEORIE)
-        st.markdown("#### 🔺 1.2.3.1 Maslowova pyramida potřeb v praxi")
+        st.markdown("#### 1.2.3.1 Maslowova pyramida potřeb")
         st.write(
-            "Psycholog Abraham Maslow (představitel humanistické psychologie) ukázal, že lidé mají potřeby uspořádané do hierarchie. "
-            "Člověk obvykle nejdřív řeší základní potřeby a teprve potom se může plně soustředit na vyšší potřeby."
+            "Abraham Harold Maslow byl americký psycholog 20. století, který patří mezi představitele humanistické psychologie. "
+            "Zabýval se tím, co lidi motivuje, jaké mají potřeby a proč člověk neusiluje jen o peníze nebo přežití, ale také o vztahy, uznání, smysl a osobní rozvoj."
+        )
+        st.write(
+            "**Maslowova pyramida potřeb:** Maslow popsal lidské potřeby jako hierarchii. Člověk obvykle nejdřív řeší základní potřeby a teprve potom se může plně soustředit na vyšší potřeby."
         )
         st.markdown(
-            "* **Fyziologické potřeby** — jídlo, pití, spánek, odpočinek.\n"
-            "* **Potřeba bezpečí** — jistota, stabilita, bezpečné pracovní prostředí.\n"
-            "* **Sociální potřeby** — vztahy, tým, přijetí, spolupráce.\n"
-            "* **Uznání** — respekt, ocenění, status, pocit užitečnosti.\n"
-            "* **Seberealizace** — rozvoj talentu, smysluplná práce, kreativita, růst."
+            "1. **Fyziologické potřeby** — jídlo, pití, spánek, odpočinek.\n"
+            "2. **Potřeba bezpečí** — jistota, stabilita, bezpečné pracovní prostředí.\n"
+            "3. **Sociální potřeby** — vztahy, tým, přijetí, spolupráce.\n"
+            "4. **Uznání** — respekt, ocenění, status, pocit užitečnosti.\n"
+            "5. **Seberealizace** — rozvoj talentu, smysluplná práce, kreativita, růst."
         )
 
         úrovně_maslow = [
@@ -451,8 +479,15 @@ def render():
         )
         st.plotly_chart(fig_maslow, use_container_width=True)
 
-        st.write("**V managementu:** Maslowova pyramida pomáhá pochopit, že lidé nepracují jen kvůli výplatě. Pokud se zaměstnanec bojí o místo, je přetížený nebo se v týmu necítí bezpečně, těžko bude kreativní a motivovaný. Dobrý manažer proto řeší nejen výkon, ale i bezpečí, vztahy, uznání a prostor pro rozvoj.")
-        st.write("**Komunikace v týmu:** Manažer musí umět vysvětlit zadání, poslouchat zpětnou vazbu, řešit nedorozumění a pojmenovat problém dřív, než přeroste v konflikt. V digitálních týmech je důležité domluvit, co patří do chatu, co do úkolovníku a co už vyžaduje schůzku.")
+        st.write(
+            "**V managementu:** Maslowova pyramida pomáhá pochopit, že lidé nepracují jen kvůli výplatě. "
+            "Pokud se zaměstnanec bojí o místo, je přetížený nebo se v týmu necítí bezpečně, těžko bude kreativní a motivovaný. "
+            "Dobrý manažer proto řeší nejen výkon, ale i bezpečí, vztahy, uznání a prostor pro rozvoj."
+        )
+        st.write(
+            "**Komunikace v týmu:** Manažer musí umět vysvětlit zadání, poslouchat zpětnou vazbu, řešit nedorozumění a pojmenovat problém dřív, než přeroste v konflikt. "
+            "V digitálních týmech je důležité domluvit, co patří do chatu, co do úkolovníku a co už vyžaduje schůzku."
+        )
 
         wybrana_uroven = st.selectbox(
             "🔍 Vyber úroveň pyramidy a podívej se, jak ji řeší dobrý manažer:",
