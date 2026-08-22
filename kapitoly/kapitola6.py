@@ -355,6 +355,47 @@ def render_marketing_rozpocet():
 
 def render():
     # =========================================================================
+    # 📌 GARANTOVANÉ VELIKOSTI NADPISŮ (CSS INJEKCE)
+    # =========================================================================
+    st.markdown(
+        """
+        <style>
+        /* 1. úroveň - Hlavní téma bloku */
+        h2, .stMarkdown h2 {
+            font-size: 1.85rem !important;
+            font-weight: 800 !important;
+            color: #0f172a !important;
+            margin-top: 1.5rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+        /* 2. úroveň - Podkapitoly (1.1, 1.2, 3.1...) */
+        h3, .stMarkdown h3 {
+            font-size: 1.45rem !important;
+            font-weight: 700 !important;
+            color: #1e293b !important;
+            margin-top: 1.3rem !important;
+            margin-bottom: 0.6rem !important;
+        }
+        /* 3. úroveň - Dílčí témata (1.1.1, 3.1.1...) */
+        h4, .stMarkdown h4 {
+            font-size: 1.15rem !important;
+            font-weight: 600 !important;
+            color: #334155 !important;
+            margin-top: 1.0rem !important;
+            margin-bottom: 0.4rem !important;
+        }
+        /* 4. úroveň / Drobné nadpisy */
+        h5, .stMarkdown h5 {
+            font-size: 1.0rem !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # =========================================================================
     # 📌 HLAVIČKA KAPITOLY
     # =========================================================================
     st.markdown(
@@ -462,10 +503,10 @@ def render():
             "**Blok 1: Management**\n\n**Co doplníš:** Cíl projektu, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán projektu."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a marketingový mix 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
+            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh."
         )
         c_p3.success(
-            "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty značky, personal/brand profil, kampaň a etická pravidla komunikace.\n\n**Výstup:** Etická marketingová kampaň."
+            "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty, personal brand a etická pravidla.\n\n**Výstup:** Etická kampaň."
         )
 
         st.markdown(
@@ -1295,10 +1336,8 @@ def render():
         st.write("**Příklad:** U energetického nápoje obal neřeší jen ochranu plechovky. Barvy, název, typografie a styl komunikují energii, výkon, gaming, sport nebo status.")
 
         st.markdown("#### 2.4.2 Price / Cena")
-        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky.")
-        st.write("**Cena není jen číslo:** Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
-        
-        st.markdown("**Metody stanovení ceny**")
+        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky. Cena není jen číslo: Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
+        st.write("**Metody stanovení ceny**")
         st.markdown(
             "| Metoda | Jak funguje | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1307,7 +1346,7 @@ def render():
             "| **Konkurenčně orientovaná cena** | Firma nastaví cenu podle konkurence na trhu. | Kavárna sleduje ceny podobných kaváren v okolí. |"
         )
 
-        st.markdown("**Cenové strategie**")
+        st.write("**Cenové strategie**")
         st.markdown(
             "| Strategie | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1352,6 +1391,7 @@ def render():
         st.write("**Influencer marketing a UGC:** V moderní propagaci hrají velkou roli influenceři a obsah vytvářený uživateli (UGC). UGC jsou recenze, videa, fotky nebo doporučení od běžných lidí. Často působí důvěryhodněji než klasická reklama, ale placené spolupráce musí být jasně označené.")
         st.write("**Virál není strategie sám o sobě:** Virální příspěvek může přinést velký dosah, ale pokud neodpovídá značce, cílové skupině a produktu, nemusí vést k prodeji ani dlouhodobé důvěře.")
 
+        # --- VYSVĚTLENÍ MODELU AIDA ---
         st.markdown(
             """
             <div class='box-purple'>
