@@ -1009,7 +1009,7 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
             st.error(f"Chyba při načítání tříd: {e}")
 
     with tab_vysledky:
-        st.markdown("### Přehled odevzdaných prací z učebnice")
+        st.markdown("### Přehled odevzdaných prací a klasifikace")
 
         CELKEM_UKOLU = {
             "Kapitola 1": 15,
@@ -1048,10 +1048,10 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                     }
 
                     # ---------------------------------------------------------
-                    # 📊 1. HROMADNÝ PŘEHLED CELÉ TŘÍDY
+                    # 📊 1. HROMADNÝ PŘEHLED A KLASIFIKACE
                     # ---------------------------------------------------------
                     st.markdown(
-                        f"#### 📊 Celkový pokrok třídy **{vybrana_t}**"
+                        f"#### 📊 Klasifikace a pokrok třídy **{vybrana_t}**"
                     )
                     
                     with st.expander("⚙️ Nastavení průběžné klasifikace (Metrika známkování)", expanded=False):
@@ -1075,6 +1075,11 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                     h3 = st.session_state.get("hranice_3", 60)
                     h4 = st.session_state.get("hranice_4", 45)
 
+                    hodnocena_cast = st.selectbox(
+                        "Vyberte, co chcete hodnotit a známkovat:",
+                        ["Všechny kapitoly (Celoroční průměr)"] + list(CELKEM_UKOLU.keys())
+                    )
+
                     usernames_tridy = list(zaci_dict.values())
                     vsechny_odp_res = (
                         supabase.table("odpovedi")
@@ -1085,49 +1090,40 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
 
                     if vsechny_odp_res.data:
                         pokrok_data = []
-                        celkem_vsech_ukolu = sum(CELKEM_UKOLU.values())
-
+                        
                         for jmeno, uname in zaci_dict.items():
-                            odp_zaka = [
-                                o
-                                for o in vsechny_odp_res.data
-                                if o["username"] == uname
-                            ]
+                            odp_zaka = [o for o in vsechny_odp_res.data if o["username"] == uname]
                             zak_stats = {"Žák": jmeno}
-                            celkem_hotovo_zaka = 0
-
-                            for kap, celkem_kap in CELKEM_UKOLU.items():
-                                hotovo_kap = len([
-                                    o
-                                    for o in odp_zaka
-                                    if o["kapitola"] == kap
-                                ])
-                                celkem_hotovo_zaka += hotovo_kap
-                                zak_stats[kap] = f"{hotovo_kap} / {celkem_kap}"
-
-                            pct_celkem = (
-                                int(
-                                    (celkem_hotovo_zaka / celkem_vsech_ukolu)
-                                    * 100
-                                )
-                                if celkem_vsech_ukolu > 0
-                                else 0
-                            )
                             
-                            if pct_celkem >= h1:
-                                znamka = "1"
-                            elif pct_celkem >= h2:
-                                znamka = "2"
-                            elif pct_celkem >= h3:
-                                znamka = "3"
-                            elif pct_celkem >= h4:
-                                znamka = "4"
+                            if hodnocena_cast == "Všechny kapitoly (Celoroční průměr)":
+                                celkem_hotovo_zaka = 0
+                                celkem_vsech_ukolu = sum(CELKEM_UKOLU.values())
+                                
+                                for kap, celkem_kap in CELKEM_UKOLU.items():
+                                    hotovo_kap = len([o for o in odp_zaka if o["kapitola"] == kap])
+                                    celkem_hotovo_zaka += hotovo_kap
+                                    zak_stats[kap] = f"{hotovo_kap} / {celkem_kap}"
+                                    
+                                pct = int((celkem_hotovo_zaka / celkem_vsech_ukolu) * 100) if celkem_vsech_ukolu > 0 else 0
+                                zak_stats["✅ Celkem hotovo"] = f"{celkem_hotovo_zaka} úkolů"
+                                zak_stats["📈 Úspěšnost"] = f"{pct} %"
+                                
                             else:
-                                znamka = "5"
-
-                            zak_stats["✅ Celkem hotovo"] = f"{celkem_hotovo_zaka} úkolů"
-                            zak_stats["📈 Úspěšnost"] = f"{pct_celkem} %"
-                            zak_stats["🎓 Průběžná známka"] = znamka
+                                celkem_kap = CELKEM_UKOLU[hodnocena_cast]
+                                hotovo_kap = len([o for o in odp_zaka if o["kapitola"] == hodnocena_cast])
+                                pct = int((hotovo_kap / celkem_kap) * 100) if celkem_kap > 0 else 0
+                                
+                                zak_stats[f"✅ Úkoly ({hodnocena_cast})"] = f"{hotovo_kap} z {celkem_kap}"
+                                zak_stats["📈 Úspěšnost"] = f"{pct} %"
+                            
+                            # Výpočet známky
+                            if pct >= h1: znamka = "1"
+                            elif pct >= h2: znamka = "2"
+                            elif pct >= h3: znamka = "3"
+                            elif pct >= h4: znamka = "4"
+                            else: znamka = "5"
+                            
+                            zak_stats["🎓 Navrhovaná známka"] = znamka
                             pokrok_data.append(zak_stats)
 
                         df_pokrok = pd.DataFrame(pokrok_data)
