@@ -120,12 +120,11 @@ def zhodnot_reklamu_ai(produkt_nazev, text_reklamy):
     except Exception:
         pass
         
-    # --- OFFLINE ZÁCHRANA DYNAMICKY PODLE ZADANÉHO PRODUKTU ---
     text_low = text_reklamy.lower()
     score_a = 8 if ("?" in text_low or "!" in text_low) else 4
     score_i = 7 if len(text_reklamy) > 35 else 3
-    score_d = 8 if any(w in text_low for w in ["super", "nejlepší", "sleva", "moderní", "kvalit", "smysl", "interaktivní", "efektiv"]) else 4
-    score_action = 10 if any(w in text_low for w in ["klik", "kup", "link", "odkaz", "vyzkoušej", "objev", "zjisti", "spusť"]) else 2
+    score_d = 8 if any(w in text_low for w in ["super", "nejlepší", "sleva", "moderní", "kvalit", "smysl", "interaktivní", "efektiv", "stylov"]) else 4
+    score_action = 10 if any(w in text_low for w in ["klik", "kup", "link", "odkaz", "vyzkoušej", "objev", "zjisti", "spusť", "přijď"]) else 2
     
     celkove_skore = (score_a + score_i + score_d + score_action) / 4.0
     multiplikator = max(0.5, min(2.5, celkove_skore / 4.0))
@@ -138,11 +137,11 @@ def zhodnot_reklamu_ai(produkt_nazev, text_reklamy):
         f"• **Desire (Touha):** {'Obsahuje silné výhody a vzbuzuje zájem.' if score_d > 5 else 'Zdůrazni, co přesně uživatel získá a v čem je řešení jedinečné.'}\n"
         f"• **Action (Akce):** {'Jasná výzva k akci (Call to Action).' if score_action == 10 else 'Chybí přímá výzva k akci (např. „Vyzkoušejte zdarma na odkazu...“).'}\n\n"
         f"💡 **Návrhy lepších sloganů pro {produkt_nazev}:**\n"
-        f"1. *„{produkt_nazev} – Znalosti, které dávají smysl.“*\n"
-        f"2. *„Zapomeň na nudu: Objev moderní {produkt_nazev} v praxi.“*\n"
-        f"3. *„Jednoduše, přehledně, interaktivně. Vyzkoušej {produkt_nazev}.“*\n\n"
+        f"1. *„{produkt_nazev} – Řešení, které dává smysl.“*\n"
+        f"2. *„Objev moderní {produkt_nazev} v praxi ještě dnes.“*\n"
+        f"3. *„Jednoduše, přehledně, efektivně. Vyzkoušej {produkt_nazev}.“*\n\n"
         f"📝 **Ukázkový vzorový příspěvek podle AIDA:**\n"
-        f"„Baví tě učit se věci, které mají skutečný smysl? 🚀 {produkt_nazev} mění způsob, jakým chápeš souvislosti. Žádná suchá teorie, ale reálné rozhodování a interaktivní nástroje. 👉 Klikni na odkaz a vyzkoušej první modul zdarma ještě dnes!“"
+        f"„Hledáš spolehlivé a moderní řešení? 🚀 {produkt_nazev} ti ušetří čas a posune tě kupředu. Žádné složitosti, ale konkrétní výsledky v praxi. 👉 Klikni na odkaz a zjisti více informací hned teď!“"
     )
     return text_vysledek, multiplikator
 
@@ -189,19 +188,20 @@ def render_aida_simulator():
         "Umělá inteligence zhodnotí tvůj copywriting, **navrhne ti 3 lepší slogany i hotový vzorový příspěvek** a spočítá index úspěšnosti pro simulátor rozpočtu."
     )
     
-    vychozi_nazev = st.session_state.get("k6_aktivni_projekt", "Interaktivní učebnice ekonomiky")
+    vychozi_nazev = st.session_state.get("k6_aktivni_projekt", "")
     
     col_a1, col_a2 = st.columns([1, 1])
     with col_a1:
         produkt_nazev = st.text_input(
             "Co prodáváš / Název tvého produktu či projektu:",
             value=vychozi_nazev,
+            placeholder="Zadej název produktu, služby nebo akce...",
             key="aida_custom_produkt"
         )
     with col_a2:
         reklama_text = st.text_area(
             "Tvůj reklamní text / slogan / příspěvek:",
-            placeholder="Např. Ekonomika, která dává smysl. Moderní interaktivní e-learning...",
+            placeholder="Napiš sem svůj reklamní text, slogan nebo příspěvek...",
             key="aida_custom_text"
         )
     
@@ -947,15 +947,11 @@ def render():
             st.session_state["vykresli_otazku_fn"]("6.1.6", "1. Jaký styl řízení zvolíš pro svůj projekt a proč?", "6", st.session_state.get("ulozene_odpovedi", {}))
             st.session_state["vykresli_otazku_fn"]("6.1.7", "2. Jak nastavíš PŘEDBĚŽNOU kontrolu pro svůj projekt?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
-        # -------------------------------------------------------------
-        # AI TRENAŽÉR PŘESNĚ ZA STYLY ŘÍZENÍ
-        # -------------------------------------------------------------
         st.divider()
         st.markdown("#### 1.4.1 Řešení konfliktů a Soft-skills")
         st.write("Manažer tráví většinu času řešením problémů s lidmi, ne papírováním. Komunikace, empatie a schopnost zvládat krizové situace (soft-skills) jsou často důležitější než technické znalosti.")
 
         render_ai_treenazer()
-
 
     # =========================================================================
     # BLOK 4: 1.5 Organizační struktury firem
@@ -1299,8 +1295,10 @@ def render():
         st.write("**Příklad:** U energetického nápoje obal neřeší jen ochranu plechovky. Barvy, název, typografie a styl komunikují energii, výkon, gaming, sport nebo status.")
 
         st.markdown("#### 2.4.2 Price / Cena")
-        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky. Cena není jen číslo: Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
-        st.write("**Metody stanovení ceny**")
+        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky.")
+        st.write("**Cena není jen číslo:** Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
+        
+        st.markdown("**Metody stanovení ceny**")
         st.markdown(
             "| Metoda | Jak funguje | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1309,7 +1307,7 @@ def render():
             "| **Konkurenčně orientovaná cena** | Firma nastaví cenu podle konkurence na trhu. | Kavárna sleduje ceny podobných kaváren v okolí. |"
         )
 
-        st.write("**Cenové strategie**")
+        st.markdown("**Cenové strategie**")
         st.markdown(
             "| Strategie | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1354,7 +1352,6 @@ def render():
         st.write("**Influencer marketing a UGC:** V moderní propagaci hrají velkou roli influenceři a obsah vytvářený uživateli (UGC). UGC jsou recenze, videa, fotky nebo doporučení od běžných lidí. Často působí důvěryhodněji než klasická reklama, ale placené spolupráce musí být jasně označené.")
         st.write("**Virál není strategie sám o sobě:** Virální příspěvek může přinést velký dosah, ale pokud neodpovídá značce, cílové skupině a produktu, nemusí vést k prodeji ani dlouhodobé důvěře.")
 
-        # --- VYSVĚTLENÍ MODELU AIDA ---
         st.markdown(
             """
             <div class='box-purple'>
@@ -1369,7 +1366,6 @@ def render():
             unsafe_allow_html=True
         )
 
-        # --- AIDA TRENAŽÉR A SIMULÁTOR ROZPOČTU ---
         st.divider()
         render_aida_simulator()
         
