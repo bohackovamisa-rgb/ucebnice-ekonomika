@@ -309,7 +309,7 @@ def render():
 
         st.markdown("### 1.1 Podstata a význam managementu")
         st.write(
-            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledky."
+            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
         )
 
         st.markdown(
@@ -705,7 +705,7 @@ def render():
             st.session_state["vykresli_otazku_fn"]("6.1.7", "2. Jak nastavíš PŘEDBĚŽNOU kontrolu pro svůj projekt?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
         # -------------------------------------------------------------
-        # AI TRENAŽÉR PŘESNĚ ZA STYLY ŘÍZENÍ (JAKO PODKAPITOLA 1.4.1)
+        # AI TRENAŽÉR PŘESNĚ ZA STYLY ŘÍZENÍ
         # -------------------------------------------------------------
         st.divider()
         st.markdown("#### 1.4.1 Řešení konfliktů a Soft-skills")
@@ -1245,7 +1245,7 @@ def render():
         st.markdown("## 3. Brand, nákupní psychologie a etika")
         
         st.markdown("### 3.3 Etika, právo a ochrana spotřebitele")
-        st.write("Marketing má velký vliv na rozhodování lidí. Proto musí řešit nejen účinnost kampaní, ale také férovost, pravdivost, bezpečnost a ochranu spotřebitele. Cílem etického marketingu není jen „prodat za každou cenu“, ale komunikovat tak, aby zákazník nebyl klamán ani manipulován.")
+        st.write("Marketing má velký vliv na rozhodování lidí. Proto musí řešit nejen účinnost kampaní, ale také férovost, pravdivost, bezpečnost a ochrana spotřebitele. Cílem etického marketingu není jen „prodat za každou cenu“, ale komunikovat tak, aby zákazník nebyl klamán ani manipulován.")
 
         st.markdown("#### 3.3.1 Právní rámec reklamy v ČR a EU")
         st.write("Reklama v ČR a EU podléhá právním pravidlům. Patří sem zejména regulace reklamy, pravidla nekalé soutěže, ochrana spotřebitele, povinnost pravdivých informací a pravidla pro označování komerčních sdělení.")
@@ -1322,6 +1322,7 @@ def render():
         st.write("**Platformy nejsou stejné:** TikTok se hodí pro krátká dynamická videa, Instagram pro vizuální identitu a komunitu, YouTube pro delší obsah, LinkedIn pro profesní komunikaci a newsletter pro přímý vztah bez závislosti na algoritmu.")
 
         st.markdown("#### 3.4.3 Influencer marketing a UGC")
+        st.write("Influencer marketing využívá důvěru a dosah tvůrců obsahu. Influencer může značce pomoci oslovit konkrétní komunitu, ale spolupráce musí působit důvěryhodně a být jasně označená.")
         st.markdown(
             "| Typ influencera | Jak vypadá | Výhody | Rizika |\n"
             "| :--- | :--- | :--- | :--- |\n"
@@ -1337,6 +1338,7 @@ def render():
         st.warning("⚠️ **Pozor:** Šokující kampaň může přinést pozornost, ale také odpor. Virální dosah není automaticky úspěch, pokud poškozuje důvěru nebo nevede k pochopení značky.")
 
         st.markdown("#### 3.4.5 Nové technologie v marketingu")
+        st.write("Nové technologie umožňují marketing více personalizovat, automatizovat a měřit. Zároveň však vyvolávají otázky soukromí, férovosti a transparentnosti.")
         st.markdown(
             "| Technologie | Co umožňuje | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1347,6 +1349,18 @@ def render():
             "| **AI a deepfake reklama** | Tvorba realistického obrazu, hlasu nebo videa pomocí AI. | Virtuální influencer nebo video s člověkem, který ve skutečnosti danou reklamu nenatočil. |"
         )
         st.write("**Etická otázka AI:** Pokud značka používá umělou inteligenci, měla by dbát na pravdivost, transparentnost, ochranu osobních údajů a férové označování obsahu. Deepfake reklama bez souhlasu může být zásadně neetická i právně problematická.")
+
+        st.markdown(
+            "<br><div class='box-yellow'>📝 <b>Cvičení k bloku 3: Etická kampaň</b><br>"
+            "Navrhni krátkou kampaň pro svůj projekt:<br>"
+            "- Jaké sdělení použiješ?<br>"
+            "- Kde bude kampaň probíhat?<br>"
+            "- Jak poznáš, že je úspěšná?<br>"
+            "- Jak se vyhneš manipulaci, klamavé reklamě a greenwashingu?<br>"
+            "- Jak označíš placenou spolupráci, pokud využiješ influencera?<br>"
+            "<i>Výstup do projektu: Student vytvoří základ značky, jednoduchou komunikační kampaň a etická pravidla marketingu.</i></div>",
+            unsafe_allow_html=True,
+        )
 
         st.markdown(
             "<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 15: Digitální a sociální strategie projektu</b></div>",
@@ -1381,14 +1395,29 @@ def render():
         st.markdown("### 4.1 Finální projektový výstup")
         st.write("Sestavení kompletního přehledu tvého projektu:")
 
+        st.markdown("#### Finální úkol: Mini projekt od řízení po kampaň")
+        st.write("Na konci kapitoly odevzdáš krátkou prezentaci nebo dokument, který obsahuje:")
+        st.markdown(
+            "1. název projektu,\n"
+            "2. problém nebo potřebu, kterou řeší,\n"
+            "3. cílovou skupinu,\n"
+            "4. týmové role a styl řízení,\n"
+            "5. SWOT analýzu,\n"
+            "6. marketingový mix 4P,\n"
+            "7. základ značky,\n"
+            "8. návrh kampaně,\n"
+            "9. etická pravidla komunikace,\n"
+            "10. krátké zhodnocení rizik."
+        )
+
         st.markdown(
             "| Kritérium | Co se hodnotí |\n"
             "| :--- | :--- |\n"
-            "| **🏛️ Management** | Jasný SMART cíl, rozdělení rolí v týmu, realistický plán a práce s riziky (Plán B). |\n"
-            "| **🎯 Marketing** | Smysluplně zvolená cílová skupina (STP), originální positioning a propojený marketingový mix 4P. |\n"
-            "| **💎 Brand** | Srozumitelný příběh značky, definované hodnoty, vizuální identita a důvěryhodná komunikace. |\n"
-            "| **⚖️ Etika & Právo** | Schopnost rozpoznat manipulaci, klamavou reklamu, greenwashing a dodržení právních pravidel. |\n"
-            "| **🎤 Prezentace** | Srozumitelné vysvětlení nápadu, konkrétní příklady a schopnost obhájit svá manažerská rozhodnutí. |"
+            "| **🏛️ Management** | Jasný cíl, rozdělení rolí, realistický plán a práce s riziky. |\n"
+            "| **🎯 Marketing** | Smysluplná cílová skupina, positioning a propojený marketingový mix. |\n"
+            "| **💎 Brand** | Srozumitelná značka, hodnoty a důvěryhodná komunikace. |\n"
+            "| **⚖️ Etika** | Schopnost rozpoznat manipulaci, klamavou reklamu, greenwashing a rizika digitální propagace. |\n"
+            "| **🎤 Prezentace** | Srozumitelné vysvětlení, konkrétní příklady a schopnost obhájit rozhodnutí. |"
         )
 
         st.markdown(
@@ -1427,6 +1456,14 @@ def render():
 
         st.divider()
 
+        st.markdown(
+            "<div class='box-green'>"
+            "✅ <b>Co si zapamatovat:</b><br>"
+            "Management pomáhá proměnit nápad v organizovanou akci. Marketing pomáhá pochopit zákazníka a doručit mu hodnotu. Brand vytváří důvěru a identitu. Etika připomíná, že pozornost a prodej nejsou jediným cílem — důležité je také férové jednání, pravdivá komunikace a odpovědnost vůči zákazníkům i společnosti."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
         st.markdown("### 4.2 Případové studie na závěr kapitoly")
         st.write("Vyzkoušej si roli konzultanta na reálných chybách z praxe:")
 
@@ -1438,13 +1475,17 @@ def render():
                 "* špatně provedený nebo úplně chybějící marketingový výzkum,\n"
                 "* nejasná cílová skupina,\n"
                 "* slabý positioning,\n"
-                "* problém v marketingovém mixu: Product (design neodpovídá vkusu), Price (cena neodpovídá ochotě platit), Place (prodej jen přes školní nástěnku nestačí), Promotion (komunikace nevysvětluje hodnotu),\n"
+                "* problém v marketingovém mixu:\n"
+                "  * Product: design neodpovídá vkusu studentů,\n"
+                "  * Price: cena neodpovídá ochotě platit,\n"
+                "  * Place: prodej jen přes školní nástěnku nestačí,\n"
+                "  * Promotion: komunikace nevysvětluje hodnotu produktu,\n"
                 "* riziko špatného plánování a zásob v managementu."
             )
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "6.4.1",
-                    "Případová studie 1 (Školní merch): 1. Jaký MARKETINGOVÝ VÝZKUM měl tým udělat? 2. Jak upravit 4P? 3. Jak eliminovat riziko zásob?",
+                    "Případová studie 1 (Školní merch): 1. Navrhni, jaký marketingový výzkum měl tým udělat před objednávkou. 2. Urči cílový segment a možný positioning merche. 3. Uprav 4P tak, aby měl projekt větší šanci uspět. 4. Navrhni, jak by tým mohl snížit riziko neprodaných zásob.",
                     "6",
                     st.session_state.get("ulozene_odpovedi", {}),
                 )
@@ -1471,7 +1512,7 @@ def render():
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "6.4.2",
-                    "Případová studie 2 (Kavárna): 1. Vytvoř SWOT analýzu 2. Navrhni Brand 3. Navrhni 1 etickou kampaň 4. Jak využít UGC obsah?",
+                    "Případová studie 2 (Kavárna): 1. Vytvoř krátkou SWOT analýzu kavárny. 2. Navrhni brand: název, hodnoty, vizuální styl a tón komunikace. 3. Navrhni jednu etickou kampaň na sociální sítě. 4. Vysvětli, jak by kavárna mohla využít UGC bez manipulace.",
                     "6",
                     st.session_state.get("ulozene_odpovedi", {}),
                 )
@@ -1493,7 +1534,7 @@ def render():
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "6.4.3",
-                    "Případová studie 3 (Influencer): 1. Pojmenuj 3 neetické prvky 2. Jak měla být kampaň správně označena? 3. Navrhni férovější variantu.",
+                    "Případová studie 3 (Influencer): 1. Najdi v případu alespoň tři manipulativní nebo neetické prvky. 2. Vysvětli, jak by měla být spolupráce správně označena. 3. Navrhni férovější variantu kampaně. 4. Posuď, jakou roli zde hraje brand loyalty, social proof a nákupní psychologie.",
                     "6",
                     st.session_state.get("ulozene_odpovedi", {}),
                 )
@@ -1503,7 +1544,7 @@ def render():
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
                 "6.4.4",
-                "Závěrečná reflexe Kapitoly 6: Co by v krizové situaci měl rozhodnout dobrý manažer, jak by marketér upravil komunikaci a kde leží hranice mezi přesvědčováním a manipulací?",
+                "Vyber jednu případovou studii a odpověz: Co by měl dobrý manažer rozhodnout? Jak by měl marketér upravit 4P nebo komunikaci? A kde je hranice mezi přesvědčováním a manipulací?",
                 "6",
                 st.session_state.get("ulozene_odpovedi", {}),
             )
@@ -1511,4 +1552,9 @@ def render():
         st.divider()
         st.success(
             "🎉 **GRATULUJEME! Kompletně jsi dokončil/a Kapitolu 6 (Management a Marketing).**"
+        )
+        
+        st.markdown(
+            "<p style='text-align: right; color: #94a3b8; font-size: 0.8rem;'>Naposledy aktualizováno: 31. 7. 2026</p>",
+            unsafe_allow_html=True
         )
