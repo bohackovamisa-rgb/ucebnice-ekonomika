@@ -1042,7 +1042,7 @@ def render():
             - výpovědní dobu a odkaz na vnitřní předpisy zaměstnavatele.
             """)
 
-        st.markdown("#### 📄 Modelová ukázka pracovní smlouvy (zjednodušený vzor)")
+        st.markdown("#### 📄 Modelová ukázka pracovní smlouvy (zjednodušený výukový vzor)")
         st.markdown(
             """
         <div style="background-color: #ffffff; padding: 25px; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1e293b; margin-bottom: 20px;">
@@ -1501,30 +1501,39 @@ def render():
         selected_section_4
         == "3.1 Hrubá mzda, čistá mzda a superhrubé uvažování"
     ):
+        st.markdown("## 3. Hodnota mé práce: odměňování a peníze")
         st.markdown(
-            "### 3.1 Hrubá mzda, čistá mzda a „superhrubé uvažování“"
+            "### 3.1 Hrubá mzda, čistá mzda a superhrubé uvažování"
         )
         st.markdown(
             """
         <div class='box-blue'>
-            💵 <b>Základní otázka:</b> Kolik za svou práci skutečně dostanu na účet — a kolik reálně stojím zaměstnavatele?
+            💵 <b>Základní otázka:</b> Kolik za práci skutečně dostanu — a kolik moje práce stojí zaměstnavatele?
         </div>
         """,
             unsafe_allow_html=True,
         )
 
         st.write(
-            "Na pracovním inzerátu vidíte **hrubou mzdu**. Na bankovní účet vám"
-            " ale přijde částka menší — **čistá mzda**. A váš zaměstnavatel musí"
-            " mít na vaše místo připravenou částku ještě mnohem vyšší — tzv."
-            " **celkové náklady zaměstnavatele**."
+            "Na pracovní nabídce často vidíme **hrubou mzdu**. Na účet ale přijde **čistá mzda**. "
+            "Zaměstnavatele přitom práce stojí ještě více, protože kromě mzdy řeší odvody, vybavení, prostor, software, školení, administrativu a řízení."
         )
+
+        st.markdown("""
+        | Mzdový pojem | Význam |
+        | :--- | :--- |
+        | **Hrubá mzda** | Částka před odvody a daní sjednaná v pracovní smlouvě. |
+        | **Čistá mzda** | Částka, která reálně přijde zaměstnanci na bankovní účet. |
+        | **Odvody zaměstnance** | Část sociálního (7,1 %) a zdravotního (4,5 %) pojištění placená zaměstnancem. |
+        | **Odvody zaměstnavatele** | Část sociálního (24,8 %) a zdravotního (9 %) pojištění placená zaměstnavatelem navíc. |
+        | **Celkové náklady zaměstnavatele** | Hrubá mzda + odvody firmy (33,8 %) + další provozní náklady spojené s pracovním místem. |
+        """)
 
         st.markdown(
             """
         <div class='box-gray'>
-            🤔 <b>Proč se v názvu kapitoly píše o „superhrubém uvažování“?</b><br>
-            Pojem <i>superhrubá mzda</i> byl v ČR sice v roce 2021 zákonem zrušen a daň se dnes počítá rovnou z hrubé mzdy. Přesto majitelé firem a HR stále musí uplatňovat <b>„superhrubé uvažování“</b>. Tedy uvědomovat si, že když slíbí zaměstnanci 40 000 Kč hrubého, firmu to bude stát celkově skoro 54 000 Kč kvůli povinným státním odvodům za zaměstnance.
+            🤔 <b>Superhrubé uvažování v praxi:</b><br>
+            Pojem <i>superhrubá mzda</i> byl v ČR sice v roce 2021 zrušen a daň se počítá rovnou z hrubé mzdy, přesto firmy stále uplatňují <b>superhrubé uvažování</b>. Když vám firma nabídne 40 000 Kč hrubého, její skutečný náklad je téměř 54 000 Kč kvůli povinným odvodům.
         </div>
         """,
             unsafe_allow_html=True,
@@ -1536,41 +1545,41 @@ def render():
         with col_m1:
             st.markdown("##### 1️⃣ Čistá mzda")
             st.info(
-                "Peníze, které vám reálně přijdou na bankovní účet. Je to částka"
-                " po odečtení vašich odvodů a daně z příjmu."
+                "Peníze, které vám reálně přijdou na bankovní účet po odečtení odvodů a daně z příjmu."
             )
         with col_m2:
             st.markdown("##### 2️⃣ Hrubá mzda")
             st.warning(
-                "Částka ve vaší smlouvě. O této částce se vyjednává na pohovoru"
-                " a počítají se z ní daně a odvody."
+                "Částka ve vaší smlouvě, o které se vyjednává na pohovoru a počítají se z ní daně a odvody."
             )
         with col_m3:
             st.markdown("##### 3️⃣ Celkové náklady")
             st.error(
-                "Skutečná cena vaší práce. Obsahuje hrubou mzdu + dalších cca"
-                " 33,8 %, které za vás firma MUSÍ odvést státu."
+                "Skutečná cena vaší práce pro firmu (hrubá mzda + dalších 33,8 % povinných odvodů státu)."
             )
 
     elif selected_section_4 == "3.2 Nominální a reálná mzda":
-        st.markdown("### 3.2 Nominální a reálná mzda (Kupní síla)")
+        st.markdown("### 3.2 Nominální a reálná mzda")
         st.write(
-            "Pokud vám šéf přidá 5 % ke mzdě, jste na tom lépe? **Ne vždy!**"
-            " Záleží totiž na tom, jak rychle v zemi rostou ceny zboží a služeb"
-            " (tzv. inflace)."
+            "Pokud vám šéf přidá 5 % ke mzdě, jste na tom lépe? **Ne vždy!** "
+            "Záleží totiž na tom, jak rychle v zemi rostou ceny zboží a služeb (tzv. inflace)."
         )
 
         st.markdown("""
-        * 💸 **Nominální mzda:** Částka v korunách, kterou máte na výplatní pásce. (Např. loni 30 000 Kč, letos 33 000 Kč).
-        * 🛒 **Reálná mzda:** Říká, **co si za tyto peníze skutečně koupíte**. Reálná mzda vyjadřuje vaši kupní sílu.
+        * 💸 **Nominální mzda:** Částka vyjádřená v korunách na výplatní pásce.
+        * 🛒 **Reálná mzda:** Říká, **co si za tuto částku skutečně koupíte** (vyjadřuje vaši kupní sílu).
         """)
+
+        st.info(
+            "💡 **Příklad:** Pokud mzda vzroste o 5 %, ale ceny v obchodech vzrostou o 10 %, člověk má sice vyšší nominální mzdu, ale nižší reálnou kupní sílu (zchudnul o 5 %)."
+        )
 
         st.markdown(
             """
         <div class='box-green'>
-            🧮 <b>Jednoduchý princip (Inflace vs. Mzda):</b><br>
-            • Když inflace (ceny v obchodech) roste <b>rychleji</b> než vaše mzda = chudnete (reálná mzda klesá).<br>
-            • Když vaše mzda roste <b>rychleji</b> než inflace = bohatnete (reálná mzda roste).
+            🧮 <b>Jednoduchý princip:</b><br>
+            • Když ceny (inflace) rostou rychleji než mzda, <b>reálná mzda klesá</b>.<br>
+            • Když mzda roste rychleji než ceny, <b>reálná mzda roste</b>.
         </div>
         """,
             unsafe_allow_html=True,
@@ -1639,31 +1648,41 @@ def render():
             st.success("Výpočet byl uložen!")
 
     elif selected_section_4 == "3.3 Výplatní páska a její náležitosti":
-        st.markdown("### 3.3 Výplatní páska a co na ní hledat")
+        st.markdown("### 3.3 Výplatní páska")
         st.write(
-            "Výplatní páska není jen nepřehledný kus papíru plný čísel. Je to"
-            " klíčový **kontrolní dokument**. Ukazuje vám, zda vás firma nešidí"
-            " na odpracovaných hodinách, jestli vám proplácí dovolenou a kolik"
-            " vám z platu sebere stát."
+            "Výplatní páska je **kontrolní dokument**. Ukazuje, jak se z hrubé mzdy stává čistá mzda, "
+            "z čeho se mzda skládá, co bylo přičteno, co bylo sraženo a jak vznikla částka, která přijde na účet."
         )
 
-        st.markdown("#### 🧾 Rozpad výplatní pásky v praxi:")
+        st.markdown("#### 🧾 Na výplatní pásce se typicky objevuje:")
+        st.markdown("""
+        * **hrubá mzda** a základní mzda,
+        * **odpracované hodiny** a časový fond,
+        * **příplatky** (přesčasy, víkendy, noční směny),
+        * **náhrady mzdy** (placená dovolená, svátky),
+        * **sociální a zdravotní pojištění** (srážky zaměstnance i odvody firmy),
+        * **daň z příjmů** a uplatněné **slevy na dani**,
+        * **ostatní srážky** (stravenky, penzijko),
+        * **čistá mzda k výplatě**.
+        """)
 
-        with st.expander(
-            "Klikni pro detailní vysvětlení položek na výplatní pásce",
-            expanded=True,
-        ):
-            st.markdown("""
-            1. **Hlavička a kmenová data:** Vaše osobní číslo, kód zdravotní pojišťovny (např. 111 pro VZP).
-            2. **PHV (Průměrný hodinový výdělek):** Důležité číslo! Z tohoto průměru (za minulé čtvrtletí) se vám počítá, kolik peněz dostanete, když si vezmete placenou dovolenou nebo máte svátek.
-            3. **Časový fond:** Kolik hodin měl daný měsíc (např. 168 h) a kolik jste skutečně odpracovali.
-            4. **Základní mzda a příplatky:** Vaše sjednaná hrubá mzda + peníze navíc za přesčasy, víkendy či noční směny.
-            5. **Dovolená:** Kolik dní dovolené jste čerpali a jaký je váš zůstatek do konce roku.
-            6. **Odvody a daně:** Stržené sociální a zdravotní pojištění a záloha na daň.
-            7. **Nezdanitelné části a slevy:** Slevy na dani, které uplatňujete (např. základní sleva na poplatníka nebo na studenta).
-            8. **Srážky:** Například srážky za stravenky, obědy ve firemní kantýně, nebo exekuce.
-            9. **K VÝPLATĚ:** Peníze, které vám reálně dorazí na bankovní účet.
-            """)
+        st.divider()
+        st.markdown("#### 📊 Modelová výplatní páska (Rozpad položek):")
+        st.markdown("""
+        | Položka výplatní pásky | Částka | Vysvětlení |
+        | :--- | :--- | :--- |
+        | **Hrubá mzda (základní)** | 32 000 Kč | Mzda sjednaná před odvody a daní. |
+        | **Příplatek za práci o víkendu** | 1 200 Kč | Příklad mzdové složky navíc. |
+        | **Hrubý příjem celkem** | **33 200 Kč** | **Základ pro výpočet odvodů a daně.** |
+        | **Sociální pojištění zaměstnance (7,1 %)** | −2 357 Kč | Srážka ze mzdy zaměstnance na ČSSZ. |
+        | **Zdravotní pojištění zaměstnance (4,5 %)** | −1 494 Kč | Srážka ze mzdy zaměstnance zdravotní pojišťovně. |
+        | **Záloha na daň před slevami (15 %)** | −4 980 Kč | Daň vypočtená ze základu daně. |
+        | **Sleva na poplatníka (prohlášení)** | +2 570 Kč | Měsíční sleva snižující daň. |
+        | **Záloha na daň po slevě** | −2 410 Kč | Daň po uplatnění slevy (4 980 − 2 570). |
+        | **ČISTÁ MZDA K VÝPLATĚ** | **26 939 Kč** | **Částka k výplatě na bankovní účet.** |
+        """)
+
+        st.caption("📌 *Poznámka: Jde o zjednodušený výukový příklad. Skutečné sazby a podmínky se mohou měnit podle platné legislativy.*")
 
         st.divider()
         st.markdown(
@@ -1671,10 +1690,8 @@ def render():
             unsafe_allow_html=True,
         )
         st.write(
-            "Jako brigádník / zaměstnanec jsi dostal tuto výplatní pásku za"
-            " minulý měsíc. Víš jistě, že jsi odpracoval celý měsíc (168 h) a"
-            " navíc jsi byl jeden den o víkendu (8 h přesčas). Najdi v tomto"
-            " reálně vypadajícím výpisu **3 zásadní chyby**:"
+            "Jako brigádník / zaměstnanec jsi dostal tuto výplatní pásku za minulý měsíc. Víš jistě, že jsi odpracoval celý měsíc (168 h) a navíc jeden den o víkendu (8 h přesčas). "
+            "Najdi v tomto reálně vypadajícím výpisu **3 zásadní chyby**:"
         )
 
         st.markdown(
@@ -1765,65 +1782,48 @@ def render():
 
     elif selected_section_4 == "3.4 Výpočet čisté mzdy krok za krokem":
         st.markdown("### 3.4 Výpočet čisté mzdy krok za krokem")
+        st.write(
+            "Čistá mzda nevzniká tak, že se z hrubé mzdy „něco náhodně odečte“. Výpočet má přesnou logiku:"
+        )
+
+        st.markdown("""
+        1. **Určí se hrubá mzda** — základní mzda plus příplatky, odměny nebo náhrady.
+        2. **Odečte se sociální pojištění zaměstnance** (7,1 %).
+        3. **Odečte se zdravotní pojištění zaměstnance** (4,5 %).
+        4. **Vypočítá se záloha na daň z příjmů** (15 % ze základu daně).
+        5. **Uplatní se měsíční slevy na dani**, například základní sleva na poplatníka (2 570 Kč/měsíc).
+        6. **Zohlední se další srážky nebo zvýhodnění** (např. daňový bonus na děti).
+        7. **Výsledkem je čistá mzda**, tedy částka vyplacená zaměstnanci na bankovní účet.
+        """)
 
         st.markdown(
             """
         <div class='box-blue'>
             🧮 <b>Zjednodušený vzorec výplaty:</b><br>
-            Čistá mzda = Hrubá mzda − Sociální pojištění zaměstnance − Zdravotní pojištění zaměstnance − Daň (po uplatnění slev)
+            Čistá mzda = Hrubá mzda − Sociální pojištění zaměstnance − Zdravotní pojištění zaměstnance − Daň po slevách ± další položky
         </div>
         """,
             unsafe_allow_html=True,
         )
 
-        st.markdown(
-            "#### 🏥 Co platíte státu? Rozpad Sociálního pojištění"
-        )
-        st.write(
-            "Ze své hrubé mzdy odvádíte 'sociální pojištění' (v ČR aktuálně"
-            " ve výši **7,1 %**). Z čeho se ale přesně skládá?"
-        )
-
-        col_soc1, col_soc2 = st.columns(2)
-        with col_soc1:
-            st.markdown("##### 👴 Důchodové pojištění (6,5 %)")
-            st.write(
-                "Drtivá většinu (6,5 %) jde průběžně státu na vyplácení"
-                " důchodů současným seniorům. Na svůj důchod si z tohoto de"
-                " facto 'nešetříte', platíte ho generaci před vámi (tzv."
-                " průběžný systém)."
-            )
-        with col_soc2:
-            st.markdown("##### 🤒 Nemocenské pojištění (0,6 %)")
-            st.write(
-                "Tato malá část (od r. 2024 znovu zavedená i pro zaměstnance)"
-                " kryje vaše dávky, pokud onemocníte (nemocenská) nebo se staráte"
-                " o nemocné dítě (OČR)."
-            )
-
-        st.divider()
-        st.markdown("#### 🧾 Modelový výpočet čisté mzdy")
-
+        st.markdown("#### 🧾 Modelový výpočet čisté mzdy krok za krokem:")
         st.markdown(
             """
         | Krok | Položka | Výpočet | Částka |
         | :--- | :--- | :--- | :--- |
         | 1. | **Hrubý příjem (základ pro daně a odvody)** | Základ (32 000 Kč) + Příplatky (1 200 Kč) | **33 200 Kč** |
-        | 2. | **Sociální pojištění (zaměstnanec)** | 33 200 × 7,1 % | **- 2 357 Kč** |
-        | 3. | **Zdravotní pojištění (zaměstnanec)**| 33 200 × 4,5 % | **- 1 494 Kč** |
+        | 2. | **Sociální pojištění zaměstnance (7,1 %)** | 33 200 × 7,1 % | **−2 357 Kč** |
+        | 3. | **Zdravotní pojištění zaměstnance (4,5 %)**| 33 200 × 4,5 % | **−1 494 Kč** |
         | 4. | **Daň před slevami (15 %)** | 33 200 × 15 % | 4 980 Kč |
-        | 5. | **Sleva na poplatníka** | Měsíční daňová sleva garantovaná státem všem pracujícím | **+ 2 570 Kč** |
-        | 6. | **Reálná Daň po slevě** | 4 980 Kč (Daň) - 2 570 Kč (Sleva) | **- 2 410 Kč** |
-        | 7. | **ČISTÁ MZDA K VÝPLATĚ** | 33 200 - 2 357 - 1 494 - 2 410 | **26 939 Kč** |
+        | 5. | **Sleva na poplatníka** | Měsíční daňová sleva (prohlášení k dani) | **+2 570 Kč** |
+        | 6. | **Reálná daň po slevě** | 4 980 − 2 570 | **−2 410 Kč** |
+        | 7. | **ČISTÁ MZDA K VÝPLATĚ** | 33 200 − 2 357 − 1 494 − 2 410 | **26 939 Kč** |
         """,
             unsafe_allow_html=True,
         )
 
         st.caption(
-            "📌 *Poznámka: Výpočet je zjednodušený pro výukové účely"
-            " (zaokrouhlování na celé koruny). Skutečné parametry, daňové"
-            " limity a slevy se mohou v závislosti na legislativě každý rok"
-            " měnit.*"
+            "📌 *Poznámka: Výpočet je zjednodušený pro výukové účely (zaokrouhlování na celé koruny).*"
         )
 
     elif (
@@ -1833,49 +1833,33 @@ def render():
         st.markdown(
             "### 3.5 Sazby pojištění, daně a celkové náklady zaměstnavatele"
         )
-
         st.write(
-            "Doposud jsme se dívali na mzdu pohledem zaměstnance (co mi přijde"
-            " na účet). Nyní se podíváme na mzdu **pohledem firmy**. Pro firmu"
-            " nejste jen 'hrubá mzda', jste pro ni **mzdový náklad**."
+            "**Základní princip:** Zaměstnanec ze své mzdy platí sociální pojištění, zdravotní pojištění a daň z příjmů. "
+            "Zaměstnavatel k tomu navíc platí **další sociální a zdravotní pojištění za zaměstnance jako svůj vlastní náklad**."
         )
 
-        st.markdown(
-            "#### 🏢 Proč jste pro firmu mnohem dražší, než si myslíte?"
-        )
+        st.markdown("""
+        | Položka | Platí zaměstnanec | Platí zaměstnavatel (navíc) | K čemu slouží |
+        | :--- | :--- | :--- | :--- |
+        | **Sociální pojištění** | **7,1 %** z hrubé mzdy | **24,8 %** z hrubé mzdy | Důchody (21,5 %), nemocenské pojištění (2,1 %) a politika zaměstnanosti (1,2 %). |
+        | **Zdravotní pojištění** | **4,5 %** z hrubé mzdy | **9,0 %** z hrubé mzdy | Financování zdravotní péče, nemocnic a léků ze systému veřejného pojištění. |
+        | **Daň z příjmů (DPFO)** | **15 %** ze základu daně | Neplatí se jako odvod firmy | Příjem veřejných rozpočtů (po výpočtu se snižuje o slevy na dani). |
+        """)
+
+        st.markdown("#### 🏢 Proč je práce dražší než hrubá mzda?")
         st.write(
-            "Stát firmám nařizuje, aby za každého zaměstnance na hlavní"
-            " pracovní poměr platily ze svých firemních peněz **povinné"
-            " odvody**. Zaměstnavatel musí nad rámec vaší hrubé mzdy zaplatit"
-            " státu dalších **33,8 %**. Tyto peníze jsou pro firmu povinným"
-            " **nákladem**, který fyzicky odejde z firemního bankovního účtu"
-            " přímo státu."
+            "Když má zaměstnanec hrubou mzdu 33 200 Kč, zaměstnavatel neplatí jen těchto 33 200 Kč. "
+            "Navíc odvádí **33,8 % na sociálním a zdravotním pojištění**. Proto jsou celkové náklady zaměstnavatele podstatně vyšší:"
         )
 
-        st.markdown(
-            "#### 🔍 Co přesně zaměstnavatel platí státu (Rozpad 33,8 %)"
-        )
-
-        col_odv1, col_odv2 = st.columns(2)
-        with col_odv1:
-            st.markdown("##### 🏥 Zdravotní pojištění (9 %)")
-            st.write(
-                "Firma odvádí 9 % z vaší hrubé mzdy vaší zdravotní pojišťovně."
-                " Tyto peníze financují chod nemocnic, platy lékařů, operace a"
-                " léky pro celou společnost."
-            )
-        with col_odv2:
-            st.markdown("##### 🏛️ Sociální pojištění (24,8 %)")
-            st.write(
-                "Firma posílá 24,8 % z vaší hrubé mzdy na účet České správy"
-                " sociálního zabezpečení (ČSSZ). Z čeho se tato velká částka"
-                " skládá?"
-            )
-            st.markdown("""
-            * **21,5 % na důchody:** Z těchto peněz stát rovnou platí penze současným důchodcům.
-            * **2,1 % na nemocenské:** Z toho se platí dávky lidem na dlouhodobé neschopence nebo mateřské.
-            * **1,2 % na politiku zaměstnanosti:** Financuje úřady práce a podpory v nezaměstnanosti pro lidi bez práce.
-            """)
+        st.markdown("""
+        | Položka nákladů | Výpočet | Částka |
+        | :--- | :--- | :--- |
+        | **Hrubá mzda zaměstnance** | — | 33 200 Kč |
+        | **Sociální pojištění zaměstnavatele (24,8 %)** | 33 200 × 24,8 % | 8 234 Kč |
+        | **Zdravotní pojištění zaměstnavatele (9,0 %)** | 33 200 × 9,0 % | 2 988 Kč |
+        | **CELKOVÉ MZDOVÉ NÁKLADY ZAMĚSTNAVATELE** | 33 200 + 8 234 + 2 988 | **44 422 Kč** |
+        """)
 
         st.markdown(
             """
@@ -1889,14 +1873,11 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>🧮 <b>Interaktivní simulátor: Z firemní"
-            " kasy až k tobě na účet</b></div>",
+            "<div class='box-yellow'>🧮 <b>Interaktivní simulátor: Z firemní kasy až k tobě na účet</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Vžij se do role majitele firmy. Chceš zaměstnat nového člověka."
-            " Zadej hrubou mzdu, kterou mu nabídneš na pohovoru, a sleduj, jak se"
-            " peníze rozdělí mezi něj a stát:"
+            "Vžij se do role majitele firmy. Chceš zaměstnat nového člověka. Zadej hrubou mzdu, kterou mu nabídneš na pohovoru, a sleduj, jak se peníze rozdělí mezi něj a stát:"
         )
 
         vysnena_mzda = st.slider(
@@ -1965,11 +1946,9 @@ def render():
         st.markdown(
             "### 3.6 Slevy na dani, daňové zvýhodnění a odčitatelné položky"
         )
-
         st.write(
-            "V oblasti daní se často používají tři pojmy, které znějí podobně,"
-            " ale fungují úplně jinak. Pokud chcete maximalizovat svou výplatu"
-            " (nebo vratku daní z finančního úřadu), musíte znát rozdíl!"
+            "V oblasti daní se často používají tři pojmy, které znějí podobně, ale fungují úplně jinak. "
+            "Pokud chcete maximalizovat svou výplatu (nebo vratku daní z finančního úřadu), musíte znát rozdíl!"
         )
 
         st.markdown("#### ⚖️ Tři klíčové pojmy (Co je co?)")
@@ -1997,71 +1976,43 @@ def render():
 
         st.divider()
         st.markdown(
-            "#### 💎 Přehled: Slevy na dani a Daňové zvýhodnění"
+            "#### 💎 Přehled: Slevy na dani a Daňové zvýhodnění (pro rok 2026)"
         )
         st.write(
-            "Abyste mohli slevy uplatňovat už z měsíční výplaty, musíte v práci"
-            " podepsat tzv. **Prohlášení poplatníka k dani** (známý „růžový"
-            " papír“)."
+            "Abyste mohli slevy uplatňovat už z měsíční výplaty, musíte v práci podepsat tzv. **Prohlášení poplatníka k dani** (známý „růžový papír“)."
         )
 
-        with st.expander(
-            "Rozklikni pro zobrazení všech Slev a Zvýhodnění (platné pro rok"
-            " 2026)"
-        ):
-            st.markdown("""
-            **1. Základní sleva na poplatníka**
-            * **Kolik to je:** 30 840 Kč ročně (2 570 Kč měsíčně).
-            * **Kdo má nárok:** Každý pracující (i brigádník na DPP/DPČ, pokud podepíše prohlášení).
+        st.markdown("""
+        | Položka | Výše v roce 2026 | Jak se uplatňuje | Praktická poznámka |
+        | :--- | :--- | :--- | :--- |
+        | **Sleva na poplatníka** | **30 840 Kč ročně** / 2 570 Kč měsíčně | Měsíčně v zaměstnání nebo ročně v přiznání | Základní sleva pro většinu poplatníků se zdanitelným příjmem. |
+        | **Daňové zvýhodnění na 1. dítě** | **15 204 Kč ročně** / 1 267 Kč měsíčně | Měsíčně nebo ročně | Uplatnit ho může jen 1 osoba ve společně hospodařící domácnosti. |
+        | **Daňové zvýhodnění na 2. dítě** | **22 320 Kč ročně** / 1 860 Kč měsíčně | Měsíčně nebo ročně | Pořadí dětí se posuzuje podle počtu vyživovaných dětí v domácnosti. |
+        | **Daňové zvýhodnění na 3. a další dítě** | **27 840 Kč ročně** / 2 320 Kč měsíčně | Měsíčně nebo ročně | U dítěte se ZTP/P se částka daňového zvýhodnění zvyšuje na dvojnásobek. |
+        | **Sleva na manžela/manželku** | **24 840 Kč ročně** | Zpravidla ročně | Jen při splnění podmínek (vlastní příjem do 68 000 Kč/rok a péče o dítě do 3 let). |
+        | **Základní sleva na invaliditu** | **2 520 Kč ročně** / 210 Kč měsíčně | Měsíčně nebo ročně | Pro invaliditu I. nebo II. stupně. |
+        | **Rozšířená sleva na invaliditu** | **5 040 Kč ročně** / 420 Kč měsíčně | Měsíčně nebo ročně | Pro invaliditu III. stupně. |
+        | **Sleva pro držitele průkazu ZTP/P** | **16 140 Kč ročně** / 1 345 Kč měsíčně | Měsíčně nebo ročně | Nárok se dokládá průkazem ZTP/P. |
+        """)
 
-            **2. Daňové zvýhodnění na děti (lze proměnit v daňový bonus)**
-            * **1. dítě:** 15 204 Kč ročně (1 267 Kč měsíčně).
-            * **2. dítě:** 22 320 Kč ročně (1 860 Kč měsíčně).
-            * **3. a další dítě:** 27 840 Kč ročně (2 320 Kč měsíčně).
-            * *Poznámka:* Uplatnit ho může vždy jen jedna osoba ve společné domácnosti. U dítěte se ZTP/P je částka dvojnásobná.
-
-            **3. Slevy pro osoby se zdravotním postižením (ZTP a invalidita)**
-            * **Základní invalidita (I. a II. stupeň):** 2 520 Kč ročně (210 Kč měsíčně).
-            * **Rozšířená invalidita (III. stupeň):** 5 040 Kč ročně (420 Kč měsíčně).
-            * **Držitel průkazu ZTP/P:** 16 140 Kč ročně (1 345 Kč měsíčně).
-
-            **4. Sleva na manžela/manželku (Uplatňuje se POUZE ročně)**
-            * **Kolik to je:** 24 840 Kč ročně.
-            * **Kdo má nárok:** Pokud má druhý z manželů vlastní příjmy max. 68 000 Kč za rok **A ZÁROVEŇ** pečuje o dítě do 3 let věku.
-            """)
-            st.warning(
-                "⚠️ **Zrušené slevy:** Pamatuj, že tzv. 'Sleva na studenta' a"
-                " 'Školkovné' byly státem nedávno zrušeny. Na brigádě tě dnes"
-                " chrání výhradně vysoká 'Základní sleva na poplatníka'."
-            )
+        st.warning(
+            "⚠️ **Poznámka k roku 2026:** Částky slev a zvýhodnění je vhodné pravidelně kontrolovat. Některé dřívější slevy, například sleva na studenta nebo školkovné, už se neuplatňují."
+        )
 
         st.divider()
         st.markdown(
-            "#### 📉 Běžné Odčitatelné položky (Nezdanitelné části základu"
-            " daně)"
+            "#### 📉 Běžné Odčitatelné položky (Nezdanitelné části základu daně)"
         )
         st.write(
-            "Tyto položky řešíte typicky až na jaře v **ročním zúčtování"
-            " daně** (udělá to za vás účetní) nebo v **daňovém přiznání**."
-            " Stát vám díky nim vrátí část zaplacených daní za loňský rok na účet"
-            " jako hezký přeplatek."
+            "Tyto položky řešíte typicky až na jaře v **ročním zúčtování daně** (udělá to za vás účetní) nebo v **daňovém přiznání**. "
+            "Stát vám díky nim vrátí část zaplacených daní za loňský rok na účet jako hezký přeplatek."
         )
 
         st.markdown("""
         * 🩸 **Dary a darování krve:** Darovali jste peníze na charitu, nebo krev? Za 1 bezpříspěvkový odběr krve si snížíte základ daně o 3 000 Kč (vratka na dani = **450 Kč** čistého za odběr). Odběr kostní dřeně = 20 000 Kč.
         * 🏠 **Úroky z hypotéky:** Ze základu daně si můžete odečíst zaplacené úroky z úvěru na bydlení. Maximální limit je **150 000 Kč ročně**. Pokud ho využijete naplno, stát vám na jaře vrátí **až 22 500 Kč**.
+        * 🐖 **Spoření na stáří (Penzijko, Životní pojištění, DIP):** Od roku 2024 stát zavedl **jeden společný limit 48 000 Kč ročně** pro všechny produkty spoření na stáří dohromady (Doplňkové penzijní spoření, Životní pojištění a Dlouhodobý investiční produkt - DIP). Pokud limit naplníte, stát vám vrátí na dani **7 200 Kč**.
         """)
-
-        st.markdown(
-            "##### 🐖 Spoření na stáří (Penzijko, Životní pojištění, DIP)"
-        )
-        st.write(
-            "Od roku 2024 stát zavedl **jeden společný limit 48 000 Kč"
-            " ročně** pro všechny produkty spoření na stáří dohromady (Doplňkové"
-            " penzijní spoření, Životní pojištění a Dlouhodobý investiční produkt"
-            " - DIP). Pokud limit naplníte, stát vám vrátí na dani **7 200"
-            " Kč**."
-        )
 
         st.markdown(
             """
@@ -2076,13 +2027,11 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>🧩 <b>Simulátor: Kouzlo daňového bonusu"
-            " a slev</b></div>",
+            "<div class='box-yellow'>🧩 <b>Simulátor: Kouzlo daňového bonusu a slev</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Nastav hrubou mzdu a přidej životní situaci. Sleduj, co to udělá"
-            " s daní. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?"
+            "Nastav hrubou mzdu a přidej životní situaci. Sleduj, co to udělá s daní. Můžeš mít dokonce **čistou mzdu vyšší než hrubou**?"
         )
 
         col_slev1, col_slev2 = st.columns(2)
