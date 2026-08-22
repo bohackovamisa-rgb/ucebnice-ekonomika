@@ -1378,6 +1378,36 @@ def render():
         """)
 
         st.divider()
+        st.markdown("#### 🔄 Interaktivní simulátor: FIFO vs. LIFO vs. Vážený průměr")
+        st.write("Představ si, že tvůj e-shop nakupuje do skladu stejná trička, ale od dodavatele se postupně zdražují. "
+                 "Nakoupil jsi postupně 3 várky:")
+        st.markdown("1. nákup (Leden): **100 ks po 200 Kč** (Celkem 20 000 Kč)\n"
+                    "2. nákup (Únor): **100 ks po 250 Kč** (Celkem 25 000 Kč)\n"
+                    "3. nákup (Březen): **100 ks po 300 Kč** (Celkem 30 000 Kč)")
+        st.write("Máš na skladě celkem 300 triček v hodnotě 75 000 Kč. Zákazníci si teď koupí **150 triček**. Jakou hodnotu bude mít toto prodané zboží a kolik ti zůstane na skladě?")
+        
+        metoda = st.radio("Vyber účetní metodu vyskladnění:", ["FIFO (První dovnitř, první ven)", "LIFO (Poslední dovnitř, první ven)", "Vážený průměr (Průměrná cena)"])
+        
+        if "FIFO" in metoda:
+            naklad = (100 * 200) + (50 * 250)
+            zustatek = (50 * 250) + (100 * 300)
+            vysvetleni = "Účetní vydal 100 ks z ledna (nejstarší a nejlevnější) a 50 ks z února. Na skladě ti zbyly ty nejdražší kusy. Tvé účetní náklady jsou teď nejnižší a zisk nejvyšší."
+        elif "LIFO" in metoda:
+            naklad = (100 * 300) + (50 * 250)
+            zustatek = (50 * 250) + (100 * 200)
+            vysvetleni = "Účetní vydal 100 ks z března (nejnovější a nejdražší) a 50 ks z února. Na skladě ti zbyly ty nejstarší a nejlevnější kusy. Tvé účetní náklady jsou teď uměle nejvyšší a zisk nejnižší."
+        else:
+            prumer_cena = 75000 / 300
+            naklad = 150 * prumer_cena
+            zustatek = 150 * prumer_cena
+            vysvetleni = "Všechna trička se zprůměrovala na hodnotu 250 Kč/ks. Vyskladnil jsi 150 ks za průměrnou cenu. Zlatá střední cesta."
+            
+        c1, c2 = st.columns(2)
+        c1.metric("Náklad na prodané zboží (do výkazu)", f"{int(naklad):,} Kč".replace(",", " "))
+        c2.metric("Hodnota zbylého skladu (v majetku)", f"{int(zustatek):,} Kč".replace(",", " "))
+        st.info(vysvetleni)
+
+        st.divider()
         st.markdown("#### Moderní řízení zásob")
         st.write(
             "Rozdíl: FIFO, LIFO a vážený průměr řeší hlavně **ocenění zásob při výdeji**. "
@@ -1391,6 +1421,20 @@ def render():
         * 🥈 **Skupina B (cca 20 % položek, 20 % hodnoty):** Středně důležité (např. kvalitní káva). Pravidelná kontrola, běžné plánování.
         * 🥉 **Skupina C (cca 70 % položek, ale jen 10 % hodnoty):** Méně důležité, levné drobnosti (kelímky, šroubky, gumičky). Jednodušší evidence, větší tolerance zásoby.
         """)
+
+        st.markdown("##### 🕵️ Trenažér: Udělej ABC analýzu v kavárně")
+        st.write("Rozřaď následující položky v kavárně do skupin A (Kritické/Drahé), B (Střední) a C (Drobnosti/Levné):")
+        
+        c_abc1, c_abc2, c_abc3 = st.columns(3)
+        abc_kavovar = c_abc1.selectbox("Profesionální kávovar (250 000 Kč):", ["Vyber...", "Skupina A", "Skupina B", "Skupina C"])
+        abc_kava = c_abc2.selectbox("Výběrová zrna kávy (1 000 Kč/kg):", ["Vyber...", "Skupina A", "Skupina B", "Skupina C"])
+        abc_cukr = c_abc3.selectbox("Balený cukr a papírové ubrousky:", ["Vyber...", "Skupina A", "Skupina B", "Skupina C"])
+        
+        if st.button("Vyhodnotit ABC analýzu"):
+            if abc_kavovar == "Skupina A" and abc_kava == "Skupina B" and abc_cukr == "Skupina C":
+                st.success("✅ Trefa! Kávovar (A) úzkostlivě hlídáš a servisuješ. Kávu (B) pravidelně doobjednáváš podle spotřeby. Cukr a ubrousky (C) prostě koupíš po krabicích na měsíc dopředu a moc je neřešíš.")
+            else:
+                st.error("Něco je špatně. Zkus to logicky: Nejdražší a nejkritičtější = A. Střední spotřeba = B. Drobnosti = C.")
 
         st.markdown("##### Vizuální systém KANBAN 🚥")
         st.write(
@@ -1777,29 +1821,39 @@ def render():
     elif selected_section_3 == "6.1 Štíhlá výroba, Poka-Yoke a 5S":
         st.markdown("### 6.1 Štíhlá výroba (Lean), Poka-Yoke a 5S")
 
+        st.markdown("#### 🗑️ Detektiv Plýtvání (Najdi 7 druhů MUDA)")
+        st.write("Spoj reálnou situaci ve firmě se správným typem plýtvání (MUDA):")
+        
+        with st.form("form_muda"):
+            m1 = st.selectbox("1. Kuchařka chodí pro lžíce přes celou jídelnu:", ["Vyber...", "Zbytečný pohyb", "Čekání", "Nadbytečné zásoby", "Chyby a opravy", "Nadvýroba"])
+            m2 = st.selectbox("2. Stroj je rozbitý a operátor nemá 2 hodiny co dělat:", ["Vyber...", "Zbytečný pohyb", "Čekání", "Nadbytečné zásoby", "Chyby a opravy", "Nadvýroba"])
+            m3 = st.selectbox("3. Upečete 500 rohlíků, ale zákazníci koupí jen 200 (zbytek se vyhodí):", ["Vyber...", "Zbytečný pohyb", "Čekání", "Nadbytečné zásoby", "Chyby a opravy", "Nadvýroba"])
+            m4 = st.selectbox("4. Vyrobili jste židli se špatnými šrouby a musíte ji rozebrat a předělat:", ["Vyber...", "Zbytečný pohyb", "Čekání", "Nadbytečné zásoby", "Chyby a opravy", "Nadvýroba"])
+            
+            if st.form_submit_button("Zkontrolovat plýtvání 💾"):
+                if m1 == "Zbytečný pohyb" and m2 == "Čekání" and m3 == "Nadvýroba" and m4 == "Chyby a opravy":
+                    st.success("✅ Jsi mistr štíhlé výroby! Odhalil jsi plýtvání správně.")
+                else:
+                    st.error("Něco tam nesedí, zkus to ještě promyslet.")
+                    
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"](
+                        "Kapitola 3",
+                        "Podkapitola 6.1 - Detektiv plýtvání MUDA",
+                        f"1:{m1} | 2:{m2} | 3:{m3} | 4:{m4}",
+                    )
+
+        st.divider()
         sit = st.text_area(
             "Popiš situaci ze školní jídelny, dílny nebo brigády, kde vzniká"
-            " chaos:",
+            " chaos, a navrhni zlepšení:",
             value=(
                 "Při výdeji obědů kuchařka musí běhat pro příbory do vedlejší"
                 " místnosti a studenti čekají ve 20metrové frontě."
             ),
             key="k3_6_1_sit",
         )
-        plytvani_typ = st.multiselect(
-            "Jaké druhy plýtvání (MUDA) zde vznikají?",
-            [
-                "Čekání",
-                "Zbytečný pohyb",
-                "Zbytečná doprava",
-                "Chyby a opravy",
-                "Nadbytečné zásoby",
-                "Nadvýroba",
-            ],
-            default=["Čekání", "Zbytečný pohyb"],
-            key="k3_6_1_muda",
-        )
-
+        
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"](
                 "3.6.1",
