@@ -59,6 +59,18 @@ def render():
         )
 
     st.divider()
+    
+    st.markdown("**🧭 Doporučené pořadí studia:**")
+    st.markdown(
+        "1. **Management – Jak z chaosu udělat fungující firmu**\n"
+        "   Nejdřív pochopíš, jak se z nápadu stává organizovaný projekt: plánování, tým, role, vedení lidí, kontrola, rozhodování a rizika.\n\n"
+        "2. **Marketing – Hra o pozornost a marketingový mix**\n"
+        "   Potom se zaměříš na zákazníka, trh, data, segmentaci, positioning a 4P: produkt, cenu, distribuci a propagaci.\n\n"
+        "3. **Brand, nákupní psychologie a etika**\n"
+        "   Nakonec propojíš značku, personal branding, psychologii nákupního chování, dark patterns, greenwashing, regulaci reklamy a odpovědnost firem."
+    )
+
+    st.divider()
 
     # =========================================================================
     # 💡 PRAKTICKÁ LINKA: PROJEKT NAPŘÍČ KAPITOLOU
@@ -374,7 +386,7 @@ def render():
         st.write("**Maslowova pyramida potřeb:** Maslow popsal lidské potřeby jako hierarchii. Člověk obvykle nejdřív řeší základní potřeby a teprve potom se může plně soustředit na vyšší potřeby.")
         st.markdown(
             "1. **Fyziologické potřeby** — jídlo, pití, spánek, odpočinek.\n"
-            "2. **Potřeba bezpečí** — jistota, stabilita, bezpečné pracovní prostředí.\n"
+            "2. **Potřeba bezpečí** — jistota, stabilita, safe pracovní prostředí.\n"
             "3. **Sociální potřeby** — vztahy, tým, přijetí, spolupráce.\n"
             "4. **Uznání** — respekt, ocenění, status, pocit užitečnosti.\n"
             "5. **Seberealizace** — rozvoj talentu, smysluplná práce, kreativita, růst."
@@ -537,7 +549,9 @@ def render():
         )
 
         st.write("**Boss vs. leader: v čem je rozdíl?**")
-        st.write("Debata: Je lepší autoritativní Elon Musk, nebo demokratická firemní kultura typu Google / Spotify? V jaké situaci může být každý styl užitečný a kdy začne škodit?")
+        st.write("„Boss“ často stojí na příkazech, kontrole a formální autoritě. „Leader“ umí vysvětlit smysl práce, získat důvěru, rozvíjet lidi a nést odpovědnost. V praxi dobrý manažer někdy musí rozhodnout tvrdě a rychle, ale dlouhodobě nemůže tým řídit jen strachem.")
+        
+        st.write("**Debata:** Je lepší autoritativní Elon Musk, nebo demokratická firemní kultura typu Google / Spotify? V jaké situaci může být každý styl užitečný a kdy začne škodit?")
 
         with st.form("debata_musk_form"):
             st.write("**Která filozofie řízení je ti bližší a proč?**")
@@ -591,6 +605,7 @@ def render():
             "| **Funkcionální** | Firma je členěná podle odborných funkcí: marketing, finance, výroba, HR, IT. | Specializace a odbornost jednotlivých oddělení. | Oddělení mohou pracovat v „silech“ a málo spolu komunikovat. |\n"
             "| **Maticová** | Kombinuje funkční řízení a projektové týmy. Člověk může mít dva nadřízené. | Vhodná pro projekty, inovace a spolupráci napříč firmou. | Dvojí podřízenost může vést ke konfliktům priorit. |"
         )
+        st.write("**Maticová struktura na školním projektu:** Student může patřit do „marketingového týmu“, ale zároveň pracovat na konkrétní akci jako člen projektového týmu festivalu. Funkční vedoucí řeší kvalitu marketingu, projektový vedoucí řeší termíny festivalu. Výhoda je spolupráce napříč obory, riziko je zmatek v tom, kdo má poslední slovo.")
 
         st.markdown("#### 1.5.3 Rozpětí řízení")
         st.write("Rozpětí řízení znamená, kolik podřízených přímo připadá na jednoho vedoucího.")
@@ -657,6 +672,12 @@ def render():
             "| **Záložní plán / Plan B** | Co uděláme, když riziko nastane? | Náhradní mikrofon, náhradní moderátor, přesun programu dovnitř při dešti. |"
         )
         st.write("**Pointa řízení rizik:** Dobrý manažer není člověk, kterému se nikdy nic nepokazí. Je to člověk, který počítá s tím, že se něco pokazit může, a má připravený plán B.")
+
+        st.markdown(
+            "<br><div class='box-yellow'>📝 <b>Cvičení k bloku 1: Osobní nebo projektová SWOT</b><br>"
+            "Vyber sebe, školní projekt nebo lokální podnik. Doplň: S — Strengths (V čem je silný?), W — Weaknesses (Co ho brzdí?), O — Opportunities (Jaké příležitosti může využít?), T — Threats (Jaká rizika mu hrozí?)</div>",
+            unsafe_allow_html=True,
+        )
 
         st.markdown(
             "<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 5: SWOT analýza a Plán B tvého projektu</b></div>",
@@ -849,7 +870,7 @@ def render():
             "| Vrstva produktu | Co znamená | Příklad: auto | Příklad: školní merch |\n"
             "| :--- | :--- | :--- | :--- |\n"
             "| **Jádro produktu** | Základní užitek, kvůli kterému zákazník produkt pořizuje. | Potřeba přepravit se z místa na místo. | Oblečení, sounáležitost se školou, identita. |\n"
-            "| **Reálný produkt** | Konkrétní podoba produktu: značka, design, kvalita, obal, funkce. | Konkrétní značka auta, výkon, barva, výbava, bezpečnost. | Mikina, materiál, střih, logo, barva, kvalita potisku. |\n"
+            "| **Reálný produkt** | Konkrétní podoba produktu: značka, design, quality, obal, funkce. | Konkrétní značka auta, výkon, barva, výbava, bezpečnost. | Mikina, materiál, střih, logo, barva, kvalita potisku. |\n"
             "| **Rozšířený produkt** | Doplňkové služby a výhody kolem produktu. | Záruka, servis, financování, dovoz, asistence. | Možnost výměny velikosti, předobjednávka, balení, doručení do školy. |"
         )
 
