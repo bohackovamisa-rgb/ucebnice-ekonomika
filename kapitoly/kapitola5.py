@@ -190,7 +190,7 @@ def render():
             5. 🌱 **ESG a udržitelná ekonomika** — nakonec propojíš ekonomiku s odpovědností: uhlíková stopa, Green Deal, sociální dopady, greenwashing a otázka, jak firmy vytvářejí hodnotu nejen finančně, ale i společensky.
             """)
 
-    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL (STEJNÝ FORMÁT JAKO V OSTATNÍCH KAPITOLÁCH)
+    # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
     section_options_5 = [
         "1. Stát jako „hospodář“ — proč ho vůbec máme?",
         "2. Daně, státní rozpočet a ekonomická realita",
@@ -352,7 +352,14 @@ def render():
 
         st.divider()
         st.markdown("### 1.3 Ukazatele výkonu ekonomiky a magický čtyřúhelník")
-        st.write("Aby stát, vláda, ČNB, firmy i občané věděli, v jaké kondici ekonomika je, sledují se **makroekonomické ukazatele**. Nejde o čísla „pro ekonomy do tabulek“. Změna se projeví v cenách potravin, dostupnosti brigád, mzdách a hypotékách.")
+        st.write(
+            "Aby stát, vláda, ČNB, firmy i občané věděli, v jaké kondici ekonomika je, sledují se **makroekonomické ukazatele**. "
+            "Jsou to čísla, která pomáhají odpovědět na otázky: Roste ekonomika? Mají lidé práci? Nezdražuje se příliš rychle? Jak jsme na tom vůči zahraničí?"
+        )
+        st.write(
+            "Nejde o čísla „pro ekonomy do tabulek“. Když se změní inflace, nezaměstnanost, úrokové sazby nebo HDP, "
+            "projeví se to v cenách potravin, dostupnosti brigád, mzdách, hypotékách, investicích firem i náladě ve společnosti."
+        )
 
         st.markdown("""
         **Základní ukazatele výkonu ekonomiky:**
@@ -360,7 +367,7 @@ def render():
         * **Tempo růstu HDP** — ukazuje, zda ekonomika roste, stagnuje, nebo klesá.
         * **Míra inflace** — ukazuje, jak rychle roste cenová hladina.
         * **Míra nezaměstnanosti** — ukazuje, jaká část ekonomicky aktivních lidí nemá práci, ale práci hledá.
-        * **Platební bilance** — ukazuje ekonomické vztahy se zahraničím, obchod a toky peněz.
+        * **Platební bilance / běžný účet platební bilance** — ukazuje ekonomické vztahy se zahraničím, například obchod, služby, příjmy a finanční toky.
         * **Reálná mzda** — ukazuje, zda mzdy rostou rychleji, nebo pomaleji než ceny.
         """)
 
@@ -368,26 +375,45 @@ def render():
             "<div class='box-green'><strong>🔗 Klikací zdroje aktuálních dat pro žáky:</strong><br>"
             "- <a href='https://csu.gov.cz/produkty/hmu_cr' target='_blank'>ČSÚ — Hlavní makroekonomické ukazatele</a><br>"
             "- <a href='https://csu.gov.cz/inflace-spotrebitelske-ceny' target='_blank'>ČSÚ — Inflace, spotřebitelské ceny</a><br>"
-            "- <a href='https://www.cnb.cz/cs/statistika/inflace/' target='_blank'>ČNB — Inflace a měnová politika</a><br>"
+            "- <a href='https://www.cnb.cz/cs/statistika/inflace/' target='_blank'>ČNB — Inflace</a><br>"
             "- <a href='https://www.cnb.cz/cs/statistika/platebni_bilance_stat/' target='_blank'>ČNB — Statistiky platební bilance</a></div>",
             unsafe_allow_html=True
         )
 
         st.markdown(
-            "<div class='box-yellow'><strong>🧩 Úkol s reálnými daty:</strong> Otevři odkaz na ČSÚ — Hlavní makroekonomické ukazatele. Najdi poslední dostupný rok a opiš: růst HDP, průměrnou roční inflaci, míru nezaměstnanosti a saldo platební bilance. Potom napiš: „Podle těchto čísel ekonomika vypadá spíš stabilně / nestabilně, protože…“</div>",
+            "<div class='box-yellow'><strong>🧩 Úkol s reálnými daty:</strong> Otevři odkaz na ČSÚ — Hlavní makroekonomické ukazatele. Najdi poslední dostupný rok a opiš do sešitu nebo tabulky: růst HDP, průměrnou roční inflaci, obecnou míru nezaměstnanosti a saldo běžného účtu platební bilance k HDP. Potom napiš jednu větu: „Podle těchto čísel ekonomika vypadá spíš stabilně / nestabilně, protože…“</div>",
             unsafe_allow_html=True
         )
 
         st.markdown("#### 1.3.1 Magický čtyřúhelník hospodářské politiky")
-        st.write("Hospodářská politika sleduje několik cílů najednou. Je „magický“ proto, že všechny cíle nejdou dokonale splnit současně. Když se stát snaží rychle podpořit ekonomiku (sníží nezaměstnanost), může vyvolat zdražování (zvýší inflaci).")
+        st.write(
+            "Hospodářská politika sleduje několik cílů najednou. Klasicky se znázorňují jako **magický čtyřúhelník**. "
+            "Je „magický“ proto, že všechny cíle nejdou dokonale splnit současně."
+        )
+        st.write(
+            "Když se stát snaží rychle podpořit ekonomiku, může tím snížit nezaměstnanost, ale zároveň zvýšit inflaci. "
+            "Když se naopak snaží inflaci brzdit, může zpomalit růst a ztížit firmám investice. "
+            "Proto hospodářská politika není jednoduché tlačítko „zlepšit ekonomiku“, ale hledání rovnováhy mezi několika cíli."
+        )
+
+        st.markdown("""
+        **Jak si představit magický čtyřúhelník:**
+        Představ si graf se čtyřmi vrcholy:
+        1. **Hospodářský růst** — ekonomika vytváří více hodnoty.
+        2. **Nízká nezaměstnanost** — lidé, kteří chtějí pracovat, mají práci.
+        3. **Cenová stabilita** — ceny nerostou příliš rychle a peníze si drží hodnotu.
+        4. **Vnější ekonomická rovnováha** — ekonomika není nebezpečně závislá na nerovnováze vůči zahraničí.
+        """)
+
+        st.info("📈 **Jak nákres číst:** Čím vyrovnanější jsou všechny čtyři oblasti, tím zdravěji ekonomika působí. Pokud je jeden vrchol výrazně „rozbitý“, celá ekonomika může být pod tlakem. Čím blíže je ekonomika k příznivým hodnotám ve všech čtyřech směrech, tím vyrovnanější je její výkon. Problém je, že zlepšení jedné oblasti může zhoršit jinou.")
 
         st.markdown("""
         | Vrchol čtyřúhelníku | Ukazatel | Co znamená | Otázka pro studenta | Riziko, když se nedaří |
         | :--- | :--- | :--- | :--- | :--- |
         | **Hospodářský růst** | HDP a tempo růstu HDP | Růst výkonu ekonomiky — kolik hodnoty ekonomika vytvoří. | Vyrábíme a poskytujeme více hodnoty než dřív? | Stagnace, méně investic, nižší životní úroveň. |
         | **Nízká nezaměstnanost** | Míra nezaměstnanosti | Co nejvíce lidí, kteří chtějí pracovat, má práci. | Mají lidé možnost vydělávat a zapojit se do ekonomiky? | Ztráta příjmů, sociální problémy, nižší spotřeba. |
-        | **Cenová stabilita** | Míra inflace | Ceny nerostou příliš rychle a peníze si drží hodnotu. | Kolik stál kebab nebo lístek do kina před 5 lety a dnes? | Inflace znehodnocuje úspory a komplikuje plánování. |
-        | **Vnější ekonomická rovnováha** | Platební bilance, běžný účet, obchodní bilance | Vyrovnané vztahy se zahraničím — dovoz, vývoz, služby. | Nejsme příliš závislí na dovozu nebo zahraničním financování? | Závislost na zahraničí, tlak na měnu, zranitelnost. |
+        | **Cenová stabilita** | Míra inflace | Ceny nerostou příliš rychle a peníze si drží hodnotu. | Kolik stál kebab, zmrzlina nebo jízdné před pěti lety a kolik stojí dnes? | Inflace znehodnocuje úspory a komplikuje plánování. |
+        | **Vnější ekonomická rovnováha** | Platební bilance, běžný účet, obchodní bilance | Vyrovnané vztahy se zahraničím — dovoz, vývoz, služby, příjmy a platby vůči zahraničí. | Nejsme příliš závislí na dovozu nebo zahraničním financování? | Závislost na zahraničí, tlak na měnu, zranitelnost při krizích. |
         """)
 
         st.markdown(
@@ -396,7 +422,10 @@ def render():
         )
 
         with st.expander("Proč nejde mít všechno najednou?"):
-            st.write("Když stát výrazně zvyšuje výdaje nebo snižuje daně, může tím podpořit poptávku, firmy a zaměstnanost. Pokud je ale ekonomika už napnutá, může více peněz v oběhu tlačit na růst cen. Naopak přísná politika proti inflaci může zdražit úvěry, zpomalit investice a dočasně zvýšit nezaměstnanost. Příklad: Nižší úrokové sazby zlevní hypotéky, ale mohou urychlit inflaci.")
+            st.write("Když stát výrazně zvyšuje výdaje nebo snižuje daně, může tím podpořit poptávku, firmy a zaměstnanost. Pokud je ale ekonomika už napnutá, může více peněz v oběhu tlačit na růst cen. Naopak přísná politika proti inflaci může zdražit úvěry, zpomalit investice a dočasně zvýšit nezaměstnanost.")
+            st.write("**Příklad:** Nižší úrokové sazby mohou pomoci lidem a firmám levněji si půjčit. To může podpořit spotřebu, investice a pracovní místa. Pokud je ale v ekonomice příliš mnoho poptávky a málo zboží nebo služeb, ceny mohou růst rychleji. Jeden cíl se tedy může zlepšit, zatímco jiný se zhorší.")
+
+        st.info("📘 **Co je důležité pro RVP:** Magický čtyřúhelník není jen obrázek. Je to způsob, jak přemýšlet o hospodářské politice: každé rozhodnutí má dopady na růst, zaměstnanost, ceny i vztahy se zahraničím.")
 
         st.divider()
         st.markdown(
@@ -443,7 +472,7 @@ def render():
         | **Regulační politika** | Stát, úřady, EU, dohledové instituce | Nastavuje pravidla pro firmy, ochranu spotřebitele, hospodářskou soutěž, data, bezpečnost a životní prostředí. | Pravidla pro e-shopy, ochrana osobních údajů, digitální platformy, zákaz klamavé reklamy, limity emisí. |
         """)
 
-        st.info("🏦 **ČNB a vláda nejsou totéž:** Vláda rozhoduje o rozpočtu a daních. Česká národní banka (ČNB) je nezávislá centrální banka, která nastavuje měnovou politiku. Obě ale ovlivňují stejnou ekonomiku.")
+        st.info("🏦 **ČNB a vláda nejsou totéž:** Vláda rozhoduje hlavně o rozpočtu, daních a výdajích. ČNB je nezávislá centrální banka, která nastavuje měnovou politiku. Obě oblasti ale ovlivňují stejnou ekonomiku, proto spolu souvisejí.")
 
         with st.expander("Proč je těžší dosáhnout na hypotéku?"):
             st.write("Když jsou úrokové sazby vyšší, půjčené peníze jsou dražší. Hypotéka má vyšší měsíční splátku, banka přísněji posuzuje schopnost splácet a část lidí na úvěr nedosáhne. Vyšší sazby mohou brzdit inflaci, ale zároveň komplikují bydlení, investice firem i spotřebu domácností.")
@@ -452,22 +481,25 @@ def render():
             st.write("To řeší sociální politika a systém sociálního zabezpečení. V ČR existuje veřejné zdravotní pojištění, nemocenské pojištění, důchodový systém, podpora v nezaměstnanosti a různé sociální dávky. Smyslem je, aby životní krize automaticky neznamenala úplný finanční kolaps.")
             st.write("**Srovnání pro pochopení:** V některých zemích může vážnější zdravotní problém znamenat vysoké účty a riziko zadlužení. V ČR člověk u běžné péče často ukáže kartičku pojišťovny, protože zdravotnictví je financováno převážně přes veřejné zdravotní pojištění. Není to „zdarma“ — platí se průběžně z odvodů a veřejných peněz.")
 
+        with st.expander("Debata: Bude důchodový systém stačit i pro dnešní středoškoláky?"):
+            st.write("Jak se změní důchodový systém, když populace stárne a méně pracujících lidí vydělává na rostoucí počet seniorů? Jakou roli v tom hraje vlastní finanční příprava a investice?")
+
         st.divider()
         st.markdown("### 1.5 Kvíz: poznáš funkci státu?")
-        st.write("U každé situace urči, o jakou funkci nebo nástroj státu jde:")
+        st.write("U každé situace urči, o jakou funkci nebo nástroj státu jde. Nejdřív odpověz sám/sama, potom zkontroluj řešení:")
 
         with st.form("fce_statu_quiz_v3"):
             q1 = st.selectbox("1. Vláda zvedne daně lidem s vysokými příjmy a peníze použije na podporu samoživitelů.", ["Vyber...", "Alokační funkce", "Redistribuční funkce", "Monetární politika", "Právní rámec"], key="k5_1_5_q1")
             q2 = st.selectbox("2. Stát financuje opravu mostu, který používají obyvatelé i firmy.", ["Vyber...", "Alokační funkce (Veřejný statek)", "Monetární politika", "Sociální politika", "Redistribuční funkce"], key="k5_1_5_q2")
             q3 = st.selectbox("3. ČNB zvýší úrokové sazby, aby pomohla brzdit inflaci.", ["Vyber...", "Fiskální politika", "Regulační politika", "Monetární politika (Stabilizační)", "Alokační funkce"], key="k5_1_5_q3")
             q4 = st.selectbox("4. Úřad řeší firmu, která klame zákazníky falešnou slevou.", ["Vyber...", "Monetární politika", "Právní a institucionální rámec (Regulace)", "Sociální politika", "Redistribuční funkce"], key="k5_1_5_q4")
-            q5 = st.selectbox("5. Stát podporuje vzdělávání, protože z chytrých lidí má přínos i okolí a celá společnost.", ["Vyber...", "Negativní externalita", "Pozitivní externalita", "Monopol", "Platební bilance"], key="k5_1_5_q5")
+            q5 = st.selectbox("5. Stát podporuje očkování nebo vzdělávání, protože přínos má i okolí a celá společnost.", ["Vyber...", "Negativní externalita", "Pozitivní externalita", "Monopol", "Platební bilance"], key="k5_1_5_q5")
 
             if st.form_submit_button("Zkontrolovat a uložit mé odpovědi 💾"):
                 if q1 == "Redistribuční funkce" and q2 == "Alokační funkce (Veřejný statek)" and q3 == "Monetární politika (Stabilizační)" and q4 == "Právní a institucionální rámec (Regulace)" and q5 == "Pozitivní externalita":
-                    st.success("✅ **Všechno správně!** Perfektně rozumíš tomu, jaké páky má stát v ruce.")
+                    st.success("✅ **Všechno správně!** Perfektně rozumíš tomu, jaké funkce a nástroje stát v ekonomice má.")
                 else:
-                    st.error("❌ Některá z odpovědí je chybná. \n\n*Správné řešení: 1. Redistribuční. 2. Alokační. 3. Monetární. 4. Právní. 5. Pozitivní externalita.*")
+                    st.error("❌ Některá z odpovědí je chybná. \n\n*Správné řešení: 1. Redistribuční funkce (přerozdělení). 2. Alokační funkce (veřejná infrastruktura). 3. Monetární politika (stabilizace cen). 4. Právní a institucionální rámec (ochrana spotřebitele). 5. Pozitivní externalita (přínos pro společnost).*")
 
         st.divider()
         st.markdown("### 1.6 Mini aktivita: Stát jako správce společného účtu")
@@ -475,9 +507,30 @@ def render():
 
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"]("5.1.2", "1. Rozděl 100 000 Kč třídního rozpočtu mezi 3 oblasti: A) bezpečnost/vybavení, B) pomoc slabším studentům, C) akce a rozvoj školy.", "5", st.session_state.get("ulozene_odpovedi", {}))
-            st.session_state["vykresli_otazku_fn"]("5.1.3", "2. Ke každé oblasti napiš, jakou funkci státu to připomíná (alokační, redistribuční, stabilizační...).", "5", st.session_state.get("ulozene_odpovedi", {}))
-            st.session_state["vykresli_otazku_fn"]("5.1.4", "3. Co by se stalo, kdyby o všem rozhodoval jen trh (kdo zaplatí, ten má službu/pomoc, kdo nezaplatí, nemá nic)?", "5", st.session_state.get("ulozene_odpovedi", {}))
+            st.session_state["vykresli_otazku_fn"]("5.1.3", "2. Ke každé oblasti napiš, jakou funkci státu to připomíná: alokační, redistribuční, stabilizační nebo pravidla hry.", "5", st.session_state.get("ulozene_odpovedi", {}))
+            st.session_state["vykresli_otazku_fn"]("5.1.4", "3. Vysvětli, co by se stalo, kdyby o všem rozhodoval jen „trh“ — tedy kdo zaplatí, ten má službu/pomoc, kdo nezaplatí, nemá nic.", "5", st.session_state.get("ulozene_odpovedi", {}))
             st.session_state["vykresli_otazku_fn"]("5.1.5", "4. Napiš jedno riziko příliš malého a jedno riziko příliš velkého zásahu státu/vedení školy.", "5", st.session_state.get("ulozene_odpovedi", {}))
+
+        st.markdown(
+            """
+        <div class='box-purple'>
+            🤖 <b>AI mentoring:</b><br>
+            Zkopíruj tento prompt do AI asistenta:<br>
+            <i>„Vysvětli mi funkce státu v ekonomice na příkladu školy jako malé společnosti. Použij pojmy veřejný statek, externalita, monopol, redistribuce, fiskální politika, monetární politika a magický čtyřúhelník.“</i>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            """
+        <div class='box-green'>
+            ✅ <b>Co si zapamatovat:</b><br>
+            Stát v ekonomice není jen výběr daní. Vytváří pravidla hry, financuje veřejné statky, řeší tržní selhání, zmírňuje nerovnosti a snaží se stabilizovat ekonomiku. Zároveň ale každý zásah něco stojí a může mít vedlejší dopady — proto je hospodářská politika neustálé hledání rovnováhy.
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
 
     # =========================================================================
     # SEKCE 2: DANĚ A STÁTNÍ ROZPOČET
