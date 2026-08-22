@@ -1,6 +1,81 @@
 import math
+import requests
 import plotly.graph_objects as go
 import streamlit as st
+
+
+def ziskej_odpoved_od_ai(zprava_zaka):
+    """
+    Neprůstřelná funkce pro volání AI. Pokud selže API, přepne na offline hodnocení.
+    """
+    # 1. POKUS: Volání skutečné AI přes čisté HTTP (nepodléhá změnám SDK verzí)
+    try:
+        api_key = st.secrets.get("OPENAI_API_KEY", "")
+        if api_key:
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}"
+            }
+            # Systémový prompt, který instruuje AI, jak má hrát roli
+            system_prompt = (
+                "Jsi Karel, arogantní ale nesmírně talentovaný grafik. Šéf ti právě píše ohledně tvého "
+                "včerejšího toxického chování k juniorovi. Odpověz mu z pohledu Karla. "
+                "Hned pod to přidej oddělovač '---' a napiš hodnocení jako AI Mentor. "
+                "Ohodnoť jeho zprávu (0-10) v kategoriích: Empatie, Jasnost, Autorita a dej mu krátkou radu."
+            )
+            
+            payload = {
+                "model": "gpt-4o-mini", # Standardní stabilní model (lze nahradit jakýmkoliv v budoucnu)
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": zprava_zaka}
+                ],
+                "temperature": 0.7,
+                "max_tokens": 500
+            }
+            
+            # Timeout 10 sekund, aby aplikace nezamrzla, pokud má AI výpadek
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
+            
+            if response.status_code == 200:
+                data = response.json()
+                return data["choices"][0]["message"]["content"]
+    except Exception:
+        pass # Pokud API selže (timeout, chybí klíč, starý model), tiše to přejdeme a spustíme Záchranný plán B
+        
+    # 2. ZÁCHRANNÝ PLÁN B (Offline heuristika, pokud AI spadne)
+    # Tohle zaručí, že aplikace bude fungovat navždy, i bez připojení na AI
+    delka = len(zprava_zaka.split())
+    text_lower = zprava_zaka.lower()
+    
+    if delka < 5:
+        return (
+            "👨‍🎨 **Karel:** „To jako vážně? Takhle stručně to se mnou řešíš? Nemám čas na hádanky, jdu pracovat.“\n\n"
+            "---\n\n"
+            "🤖 **AI Mentor (Offline režim):** Tvá zpráva byla příliš krátká. "
+            "**Jasnost (2/10), Empatie (1/10), Autorita (3/10).** Jako manažer musíš problém vysvětlit a jasně komunikovat svá očekávání."
+        )
+    elif "vyhazov" in text_lower or "končíš" in text_lower or "výpověď" in text_lower:
+        return (
+            "👨‍🎨 **Karel:** „Fajn! Mám tři další nabídky, kde mě aspoň docení. Zítra už nepřijdu.“\n\n"
+            "---\n\n"
+            "🤖 **AI Mentor (Offline režim):** Reagoval jsi velmi radikálně. "
+            "**Jasnost (9/10), Empatie (0/10), Autorita (9/10).** Vyhodit toxického zaměstnance je někdy nutné, ale v této situaci firma právě přišla o klíčového klienta. Zkus to příště více diplomaticky."
+        )
+    elif "prosím" in text_lower or "omlouvám" in text_lower or "mrzí mě" in text_lower:
+        return (
+            "👨‍🎨 **Karel:** „No dobře, vím, že jsem to přehnal. Omlouvám se.“\n\n"
+            "---\n\n"
+            "🤖 **AI Mentor (Offline režim):** Použil jsi mírný a vyjednávací tón. "
+            "**Jasnost (6/10), Empatie (8/10), Autorita (4/10).** Uklidnil jsi situaci, ale dej pozor, aby tě Karel nezačal brát jako slabého šéfa. Hranice musí být pevné."
+        )
+    else:
+        return (
+            "👨‍🎨 **Karel:** „Jasně, rozumím. Srovnám se. Neuvědomil jsem si, že to vyznělo tak blbě.“\n\n"
+            "---\n\n"
+            "🤖 **AI Mentor (Offline režim):** Standardní a profesionální komunikace. "
+            "**Jasnost (7/10), Empatie (6/10), Autorita (7/10).** Věcně jsi upozornil na problém. Dobrá manažerská práce."
+        )
 
 
 def render():
@@ -140,26 +215,16 @@ def render():
         """
         <div style='background-color: #e0e7ff; padding: 20px; border-radius: 10px; border-left: 6px solid #4338ca; margin-bottom: 20px;'>
             <h3 style='margin-top: 0; color: #3730a3; margin-bottom: 5px;'>🧭 Navigace kapitolou</h3>
-            <p style='margin-bottom: 0px; color: #312e81;'>Vyber si v roletce podkapitolu, kterou chceš právě studovat:</p>
+            <p style='margin-bottom: 0px; color: #312e81;'>Vyber si v roletce hlavní blok, který chceš právě studovat:</p>
         </div>
         """, 
         unsafe_allow_html=True
     )
     
     section_options_6 = [
-        "1. Management (Úvod, 1.1 Podstata a role)",
-        "1.2 Základní manažerské funkce: proces řízení",
-        "1.3 Osobnost manažera a 1.4 Styly řízení",
-        "1.5 Organizační struktury firem",
-        "1.6 Rozhodování a 1.7 Moderní přesah",
-        "2. Marketing (Úvod a 2.1 Podstata)",
-        "2.2 Marketingový výzkum a analýza trhu",
-        "2.3 STP proces: Segmentace, Cílení, Positioning",
-        "2.4 Marketingový mix: Klasické 4P",
-        "3. Brand, nákupní psychologie a etika (Úvod a 3.1 Značka)",
-        "3.2 Nákupní chování a psychologie spotřebitele",
-        "3.3 Etika, právo a ochrana spotřebitele",
-        "3.4 Moderní formy a trendy v digitálním marketingu",
+        "1. Management – Jak z chaosu udělat fungující firmu",
+        "2. Marketing – Hra o pozornost a marketingový mix",
+        "3. Brand, nákupní psychologie a etika",
         "4. Závěrečný výstup kapitoly a případové studie"
     ]
 
@@ -174,7 +239,7 @@ def render():
     st.divider()
 
     # =========================================================================
-    # BLOK 1: 1. Management (Úvod, 1.1 Podstata a role)
+    # BLOK 1: MANAGEMENT
     # =========================================================================
     if selected_section_6 == section_options_6[0]:
         st.header("1. Management – Jak z chaosu udělat fungující firmu")
@@ -288,12 +353,7 @@ def render():
             st.session_state["vykresli_otazku_fn"]("6.1.2", "2. Jaká oddělení / Middle management budeš v projektu potřebovat?", "6", st.session_state.get("ulozene_odpovedi", {}))
             st.session_state["vykresli_otazku_fn"]("6.1.3", "3. Jaké hlavní úkoly bude muset řešit liniový management v běžném dni?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
-    # =========================================================================
-    # BLOK 2: 1.2 Základní manažerské funkce
-    # =========================================================================
-    elif selected_section_6 == section_options_6[1]:
-        st.header("1. Management – Jak z chaosu udělat fungující firmu")
-        
+        st.divider()
         st.subheader("1.2 Základní manažerské funkce: proces řízení")
         st.write("Manažerská práce se často popisuje jako soubor čtyř navazujících funkcí: plánování, organizování, vedení lidí a kontrola. Nejde o jednorázové kroky, ale o cyklus. Manažer plánuje, rozdělí práci, vede tým, kontroluje výsledek a podle zjištění plán upravuje.")
 
@@ -312,7 +372,7 @@ def render():
         col_fce3.success("💬 **3. Vedení lidí**\nMotivace a komunikace.\n*(Jak je nadchnout?)*")
         col_fce4.error("🔍 **4. Kontrola**\nMěření výsledků.\n*(Splnili jsme to?)*")
 
-        st.markdown("#### 1.2.1 Plánování")
+        st.markdown("#### 1.2.1 Plánování a SMART cíl")
         st.write("Plánování znamená určit, čeho chce organizace dosáhnout, proč je to důležité a jakými kroky se k cíli dostane. Bez plánování tým často jen „hasí požáry“ a reaguje na problémy, místo aby měl jasný směr.")
         st.write("Podle časového hlediska rozlišujeme:")
         
@@ -379,7 +439,6 @@ def render():
             "| **Stimulace** | Vnější podnět nebo odměna, která podporuje určité chování. | Odměna, bonus, pochvala, certifikát, volno, soutěž. |"
         )
 
-        # MASLOWOVA PYRAMIDA POTŘEB (GRAF & TEORIE)
         st.markdown("#### 1.2.3.1 Maslowova pyramida potřeb")
         st.write(
             "Abraham Harold Maslow byl americký psycholog 20. století, který patří mezi představitele humanistické psychologie. "
@@ -449,7 +508,7 @@ def render():
             st.session_state["vykresli_otazku_fn"]("6.1.4", "1. Napiš přesný S.M.A.R.T. cíl pro svůj projekt (Co, kolik, do kdy):", "6", st.session_state.get("ulozene_odpovedi", {}))
             st.session_state["vykresli_otazku_fn"]("6.1.5", "2. Jak budeš svůj tým motivovat (kromě peněz) na úrovni Uznání a Seberealizace?", "6", st.session_state.get("ulozene_odpovedi", {}))
 
-        st.markdown("#### 1.2.4 Kontrola: Není to slídění, ale navigace")
+        st.markdown("#### 1.2.4 Kontrola")
         st.write("Kontrola neznamená jen „nachytat někoho při chybě“. Jejím smyslem je zjistit, zda se realita shoduje s plánem, a pokud ne, přijmout nápravná opatření.")
         
         st.markdown(
@@ -483,13 +542,8 @@ def render():
             with tab_k3:
                 st.success("**Následná (PO):** Vyhodnocení zisku a zpětná vazba po akci.")
 
-    # =========================================================================
-    # BLOK 3: 1.3 Osobnost manažera a 1.4 Styly řízení
-    # =========================================================================
-    elif selected_section_6 == section_options_6[2]:
-        st.header("1. Management – Jak z chaosu udělat fungující firmu")
-        
-        st.subheader("1.3 Osobnost manažera, dovednosti a role")
+        st.divider()
+        st.subheader("1.3 Osobnost manažera a role")
         st.write("Manažer potřebuje kombinaci odbornosti, práce s lidmi a schopnosti vidět celek. Jinak bude působit v malé kavárně, jinak ve škole, jinak ve výrobní firmě a jinak ve startupu. Základní dovednosti se ale opakují.")
         
         st.markdown(
@@ -540,6 +594,7 @@ def render():
         else:
             st.success("🔎 **Monitor & Spojovatel** (informační/interpersonální role).")
 
+        st.divider()
         st.subheader("1.4 Styly řízení")
         st.write("Styl řízení ukazuje, jak manažer pracuje s mocí, odpovědností a zapojením týmu. Neexistuje jeden styl, který by byl nejlepší vždy. Záleží na situaci, zkušenosti týmu, času, riziku a typu úkolu.")
 
@@ -579,6 +634,49 @@ def render():
         if "vykresli_otazku_fn" in st.session_state:
             st.session_state["vykresli_otazku_fn"]("6.1.6", "1. Jaký styl řízení zvolíš pro svůj projekt a proč?", "6", st.session_state.get("ulozene_odpovedi", {}))
             st.session_state["vykresli_otazku_fn"]("6.1.7", "2. Jak nastavíš PŘEDBĚŽNOU kontrolu pro svůj projekt?", "6", st.session_state.get("ulozene_odpovedi", {}))
+
+        # -------------------------------------------------------------
+        # VLOŽENÝ AI TRENAŽÉR PŘESNĚ ZA STYLY ŘÍZENÍ (JAKO PODKAPITOLA 1.4.1)
+        # -------------------------------------------------------------
+        st.divider()
+        st.markdown("#### 1.4.1 Řešení konfliktů a Soft-skills")
+        st.write("Manažer tráví většinu času řešením problémů s lidmi, ne papírováním. Komunikace, empatie a schopnost zvládat krizové situace (soft-skills) jsou často důležitější než technické znalosti.")
+
+        st.markdown("#### 🎭 AI Manažerský trenažér: Toxický talent")
+        st.write("Didaktický můstek: „Teď víš, jaké styly řízení existují. Pojď si to vyzkoušet v praxi. Tvůj úkol je vést krizovou komunikaci. Zvolíš tvrdou autoritu, nebo empatii?“")
+        
+        st.markdown("""
+        <div class='box-red'>
+            <strong>🚨 Situace:</strong> Tvůj hlavní grafik Karel je brilantní, ale včera na poradě veřejně zesměšnil juniorního kolegu. Zbytek týmu je naštvaný. Karla potřebuješ kvůli velké zakázce, ale nesmíš ztratit respekt týmu.
+        </div>
+        <div class='box-blue'>
+            <strong>🎯 Tvůj úkol:</strong> Napiš Karlovi zprávu (jako šéf). Musíš mu dát jasnou zpětnou vazbu, zachovat si autoritu, ale nevyprovokovat ho k výpovědi. AI analyzuje tvůj styl a odpoví za Karla.
+        </div>
+        """, unsafe_allow_html=True)
+
+        if "manazer_chat" not in st.session_state:
+            st.session_state["manazer_chat"] = []
+
+        for message in st.session_state["manazer_chat"]:
+            with st.chat_message(message["role"]):
+                st.write(message["content"])
+
+        if prompt := st.chat_input("Napiš zprávu Karlovi... (např. 'Karle, potřebuji s tebou probrat včerejšek...')", key="karel_chat"):
+            with st.chat_message("user"):
+                st.write(prompt)
+            st.session_state["manazer_chat"].append({"role": "user", "content": prompt})
+
+            with st.chat_message("assistant"):
+                with st.spinner("Karel čte tvou zprávu a AI hodnotí tvůj styl..."):
+                    odpoved_ai = ziskej_odpoved_od_ai(prompt)
+                    st.write(odpoved_ai)
+                    
+            st.session_state["manazer_chat"].append({"role": "assistant", "content": odpoved_ai})
+            
+            # Ukládáme výsledek rovnou učiteli do databáze (aby viděl, jak žák konflikt vyřešil)
+            if "uloz_odpoved_fn" in st.session_state:
+                st.session_state["uloz_odpoved_fn"]("Kapitola 6", "AI Roleplay Trenažér", prompt + "\n\nVýsledek:\n" + odpoved_ai)
+
 
     # =========================================================================
     # BLOK 4: 1.5 Organizační struktury firem
@@ -1197,7 +1295,7 @@ def render():
         st.markdown(
             "<div class='box-blue'>"
             "🚀 <b>Finální výstup kapitoly: Od nápadu k reálné kampani</b><br>"
-            "V předchozích blocích jsi krok za krokem budoval/a svůj vlastní projekt. Nyní je čas dát všechny dílky skládačky dohromady do jednoho uceleného Projektového pasu a prověřit své znalosti na reálné případové studii z praxe!"
+            "V předchozích blocích jsi krok za krokem budoval/a svůj vlastním projekt. Nyní je čas dát všechny dílky skládačky dohromady do jednoho uceleného Projektového pasu a prověřit své znalosti na reálné případové studii z praxe!"
             "</div>",
             unsafe_allow_html=True,
         )
