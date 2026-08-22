@@ -11,6 +11,7 @@ from kapitoly import (
     kapitola6,
 )
 import pandas as pd
+import requests
 import streamlit as st
 from supabase import Client, create_client
 import yfinance as yf
@@ -69,9 +70,7 @@ def init_supabase() -> Client:
 supabase = init_supabase()
 
 
-@st.cache_resource(
-    ttl=60
-)  # Připojení na Google Sheets se obnoví max jednou za minutu
+@st.cache_resource(ttl=60)
 def init_gspread():
     raw_creds = st.secrets["google_credentials"]
     tajemstvi = (
@@ -85,6 +84,52 @@ def init_gspread():
             .strip()
         )
     return gspread.service_account_from_dict(tajemstvi)
+
+
+def get_user_level(total_answers: int):
+    """Vypočítá herní level a XP body studenta."""
+    xp = total_answers * 100
+    if xp < 400:
+        return 1, "Nováček 🥉", xp, 400
+    elif xp < 900:
+        return 2, "Junior Analytik 🥈", xp, 900
+    elif xp < 1500:
+        return 3, "Manažer Projektu 🥇", xp, 1500
+    elif xp < 2500:
+        return 4, "Finanční Žralok 💎", xp, 2500
+    else:
+        return 5, "CEO & Investor 👑", xp, 3500
+
+
+def ai_tutor_chat(otazka_zaka: str):
+    """Zavolá OpenAI API pro plovoucího Eko-Parťáka."""
+    try:
+        api_key = st.secrets.get("OPENAI_API_KEY", "")
+        if api_key:
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}"
+            }
+            system_prompt = (
+                "Jsi Eko-Parťák, přátelský, chytrý a vtipný AI tutor pro studenty středních škol v interaktivní učebnici ekonomiky. "
+                "Odpovídej stručně (max 3-4 věty), polopaticky, srozumitelně s praktickými přirovnáními ze života teenagerů. "
+                "Nikdy nepiš složité definice, které by student nepochopil."
+            )
+            payload = {
+                "model": "gpt-4o-mini",
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": otazka_zaka}
+                ],
+                "temperature": 0.7,
+                "max_tokens": 300
+            }
+            res = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=8)
+            if res.status_code == 200:
+                return res.json()["choices"][0]["message"]["content"]
+    except Exception:
+        pass
+    return "Skvělá otázka! Zkus se na to podívat přes selský rozum: každé rozhodnutí v ekonomice má své náklady a přínosy. Když si vybereš jednu možnost, vzdáváš se jiné (náklad příležitosti)."
 
 
 # --- 🔄 AUTO-LOGIN PO OBNOVENÍ STRÁNKY (F5) PŘES URL QUERY PARAMS ---
@@ -118,7 +163,7 @@ if not st.session_state.get("is_logged_in"):
             pass
 
 
-# --- 1. FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
+# --- FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
 def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     st.markdown(f"**{text_otazky}**")
     staved_text = ulozene_odpovedi.get(otazka_id, "")
@@ -126,7 +171,7 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     if staved_text:
         st.success("✅ **Tento úkol už máš splněný!** (Můžeš ho níže upravit)")
     else:
-        st.info("💡 **Tento úkol zatím nemáš vyplněný.**")
+        st.info("💡 **Tento úkol zatím nemáš vyplněný.** (+100 XP)")
 
     odpoved_zaka = st.text_area(
         "Tvoje odpověď:", value=staved_text, key=f"in_{otazka_id}"
@@ -155,7 +200,7 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
                 st.session_state["ulozene_odpovedi"] = {}
             st.session_state["ulozene_odpovedi"][otazka_id] = odpoved_zaka
 
-            st.toast("Odpověď byla uložena!", icon="💾")
+            st.toast("Odpověď uložena! Získáváš +100 XP 🎯", icon="🎉")
             st.rerun()
         except Exception as e:
             st.error(f"Chyba při zápisu do databáze: {e}")
@@ -164,7 +209,6 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
 st.session_state["vykresli_otazku_fn"] = vykresli_otazku
 
 
-# --- FUNKCE PRO POMOCNÉ UKLÁDÁNÍ RŮZNÝCH INTERAKTIVNÍCH AKTIVIT ---
 def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     username = st.session_state.get("username")
     if not username:
@@ -201,37 +245,74 @@ st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
 
 # =========================================================================
-# 📝 ŽÁKOVSKÝ PANEL (PŘEHLED ÚKOLŮ + INVESTIČNÍ SIMULÁTOR)
+# 📝 ŽÁKOVSKÝ PANEL (PŘEHLED ÚKOLŮ, INVESTICE & ODZNAKY)
 # =========================================================================
 def zakovsky_panel():
-    st.title("👨‍🎓 Můj žákovský panel")
+    st.title("👨‍🎓 Můj žákovský profil")
 
     username = st.session_state.get("username")
     if not username:
         st.warning("Nejprve se prosím přihlaste.")
         return
 
-    tab_ukoly, tab_investice = st.tabs(
-        ["📝 Moje úkoly z učebnice", "📈 Můj investiční profil"]
+    tab_ukoly, tab_gamifikace, tab_investice = st.tabs(
+        ["📝 Moje úkoly z učebnice", "🏆 Herní odznaky a Level", "📈 Můj investiční profil"]
     )
+
+    try:
+        res = (
+            supabase.table("odpovedi")
+            .select("*")
+            .eq("username", username)
+            .execute()
+        )
+        odpovedi_data = res.data if res.data else []
+    except Exception:
+        odpovedi_data = []
+
+    lvl, titul, current_xp, next_xp = get_user_level(len(odpovedi_data))
+
+    with tab_gamifikace:
+        st.markdown(f"### 🎖️ Tvůj aktuální status: **Level {lvl} — {titul}**")
+        st.write(f"Celkem máš **{current_xp} XP bodů**. Každý vyřešený úkol ti přináší **+100 XP**.")
+        
+        progress_xp = min(current_xp / next_xp, 1.0)
+        st.progress(progress_xp, text=f"Postup do další úrovně: {current_xp} / {next_xp} XP")
+        
+        st.divider()
+        st.markdown("#### 🏅 Odemčené odznaky úspěchu")
+        
+        c_bad1, c_bad2, c_bad3, c_bad4 = st.columns(4)
+        has_k1 = any(o.get("kapitola") in ["Kapitola 1", "1"] for o in odpovedi_data)
+        has_k2 = any(o.get("kapitola") in ["Kapitola 2", "2"] for o in odpovedi_data)
+        has_k3 = any(o.get("kapitola") in ["Kapitola 3", "3"] for o in odpovedi_data)
+        has_k4 = any(o.get("kapitola") in ["Kapitola 4", "4"] for o in odpovedi_data)
+
+        if has_k1:
+            c_bad1.success("🚀 **Zakladatel Startupů**\n\n(Aktivita v Kapitol 1)")
+        else:
+            c_bad1.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 1)")
+
+        if has_k2:
+            c_bad2.success("💰 **Finanční Guru**\n\n(Aktivita v Kapitol 2)")
+        else:
+            c_bad2.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 2)")
+
+        if has_k3:
+            c_bad3.success("⚙️ **Mistr Efektivity**\n\n(Aktivita v Kapitol 3)")
+        else:
+            c_bad3.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 3)")
+
+        if has_k4:
+            c_bad4.success("👔 **Vyjednavač Smluv**\n\n(Aktivita v Kapitol 4)")
+        else:
+            c_bad4.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 4)")
 
     with tab_ukoly:
         st.write(
             "Zde vidíš všechny své uložené odpovědi napříč celou učebnicí."
             " Můžeš sledovat svůj pokrok a odpovědi upravovat."
         )
-
-        try:
-            res = (
-                supabase.table("odpovedi")
-                .select("*")
-                .eq("username", username)
-                .execute()
-            )
-            odpovedi_data = res.data if res.data else []
-        except Exception as e:
-            st.error(f"❌ **Chyba při načítání ze Supabase:** {e}")
-            odpovedi_data = []
 
         if not odpovedi_data:
             st.info(
@@ -545,9 +626,6 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02) !important; 
 }
 
-/* =========================================================================
-   🔤 JEDNOTNÉ ČERNÉ NADPISY PRO VŠECHNY KAPITOLY
-   ========================================================================= */
 h1, .stMarkdown h1 { 
     font-family: 'Montserrat', sans-serif !important; 
     color: #0F172A !important; 
@@ -558,7 +636,6 @@ h1, .stMarkdown h1 {
     margin-bottom: 0.75rem !important; 
 }
 
-/* Úroveň 1: Hlavní bloky (## v markdownu) */
 h2, .stMarkdown h2 { 
     font-family: 'Montserrat', sans-serif !important; 
     color: #0F172A !important; 
@@ -571,7 +648,6 @@ h2, .stMarkdown h2 {
     padding-bottom: 0.4rem !important; 
 }
 
-/* Úroveň 2: Podkapitoly typu 1.1, 2.4, 3.1 (### v markdownu) */
 h3, .stMarkdown h3 { 
     font-family: 'Montserrat', sans-serif !important; 
     color: #0F172A !important; 
@@ -581,7 +657,6 @@ h3, .stMarkdown h3 {
     margin-bottom: 0.5rem !important; 
 }
 
-/* Úroveň 3: Podtémata typu 1.1.1, 3.1.1 (#### v markdownu) */
 h4, .stMarkdown h4 { 
     font-family: 'Montserrat', sans-serif !important; 
     color: #1E293B !important; 
@@ -591,7 +666,6 @@ h4, .stMarkdown h4 {
     margin-bottom: 0.4rem !important; 
 }
 
-/* Úroveň 4: Drobné nadpisy (##### v markdownu) */
 h5, .stMarkdown h5 { 
     font-family: 'Montserrat', sans-serif !important; 
     color: #334155 !important; 
@@ -601,7 +675,6 @@ h5, .stMarkdown h5 {
     margin-bottom: 0.3rem !important; 
 }
 
-/* Běžný text odstavců, odrážek a tabulek */
 p, li, td, th, .stMarkdown p { 
     font-family: 'Montserrat', sans-serif !important; 
     color: #334155 !important; 
@@ -656,7 +729,6 @@ def login_screen():
 
             tab_login, tab_reg = st.tabs(["🔑 Přihlášení", "📝 Registrace žáka"])
 
-            # --- TAB 1: PŘIHLÁŠENÍ ---
             with tab_login:
                 with st.form("login_form", border=False):
                     username_input = st.text_input(
@@ -699,7 +771,6 @@ def login_screen():
                                         "trida", ""
                                     )
 
-                                    # Uložení do URL pro perzistenci po F5
                                     st.query_params["user"] = user.get(
                                         "username"
                                     )
@@ -718,7 +789,6 @@ def login_screen():
                         except Exception as e:
                             st.error(f"Chyba při připojování: {e}")
 
-            # --- TAB 2: REGISTRACE ---
             with tab_reg:
                 with st.form("reg_form", border=False):
                     reg_jmeno = st.text_input(
@@ -798,13 +868,12 @@ def login_screen():
     return False
 
 
-# Stopne vykreslování, pokud uživatel není přihlášen
 if not login_screen():
     st.stop()
 
 
 # =========================================================================
-# 6. BOČNÍ NAVIGAČNÍ PANEL (SIDEBAR)
+# 6. BOČNÍ NAVIGAČNÍ PANEL (SIDEBAR S GAMIFIKACÍ & AI TUTOREM)
 # =========================================================================
 with st.sidebar:
     st.markdown(
@@ -813,14 +882,48 @@ with st.sidebar:
             <span style='font-size: 0.72rem; font-weight: 800; color: #78716C; text-transform: uppercase;'>E-Learning Portal</span>
             <h2 style='margin: 0; padding: 0; border: none; font-size: 1.25rem; color: #0F172A; font-weight: 800;'>Učebnice Ekonomiky</h2>
         </div>
-        <div style='background-color: #F2EFE9; padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #EAE7DC;'>
-            <div style='font-size: 0.75rem; color: #78716C; font-weight: 600;'>PŘIHLÁŠEN(A):</div>
-            <div style='font-size: 0.95rem; font-weight: 700; color: #1C1917;'>👤 {st.session_state.get('user_name', 'Uživatel')}</div>
-            <div style='font-size: 0.8rem; color: #44403C;'>Role: {st.session_state.get('user_role', 'student').capitalize()} {f"({st.session_state.get('user_class', '')})" if st.session_state.get('user_class') else ""}</div>
-        </div>
         """,
         unsafe_allow_html=True,
     )
+
+    # 🎮 WIDGET GAMIFIKACE PRO ŽÁKA
+    if st.session_state.get("user_role") == "student":
+        try:
+            res_cnt = (
+                supabase.table("odpovedi")
+                .select("id", count="exact")
+                .eq("username", st.session_state["username"])
+                .execute()
+            )
+            pocet_odp = res_cnt.count if res_cnt.count is not None else 0
+        except Exception:
+            pocet_odp = 0
+
+        lvl, titul, current_xp, next_xp = get_user_level(pocet_odp)
+        prog = min(current_xp / next_xp, 1.0)
+
+        st.markdown(
+            f"""
+            <div style='background: linear-gradient(135deg, #1e293b, #0f172a); padding: 1rem; border-radius: 14px; margin-bottom: 1rem; color: #ffffff;'>
+                <div style='font-size: 0.72rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;'>Tvůj herní status</div>
+                <div style='font-size: 1.1rem; font-weight: 800; color: #38bdf8; margin: 2px 0;'>Level {lvl}: {titul}</div>
+                <div style='font-size: 0.8rem; color: #cbd5e1;'>✨ <b>{current_xp} XP</b> / {next_xp} XP</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.progress(prog)
+    else:
+        st.markdown(
+            f"""
+            <div style='background-color: #F2EFE9; padding: 0.8rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #EAE7DC;'>
+                <div style='font-size: 0.75rem; color: #78716C; font-weight: 600;'>PŘIHLÁŠEN(A):</div>
+                <div style='font-size: 0.95rem; font-weight: 700; color: #1C1917;'>👤 {st.session_state.get('user_name', 'Uživatel')}</div>
+                <div style='font-size: 0.8rem; color: #44403C;'>Role: Učitel / Správce</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     # Učitelský panel jen pro učitele
     if st.session_state.get("user_role") == "teacher":
@@ -876,7 +979,7 @@ with st.sidebar:
         st.rerun()
 
     if st.button(
-        "Moje odpovědi 📝",
+        "Můj profil & Úkoly 📝",
         use_container_width=True,
         type=(
             "primary"
@@ -893,7 +996,6 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # 🔐 CHYTRÝ ZÁMEK: Odemčeno jen pro plné uživatele. "demo" a "nakladatel" vidí jen 2 kapitoly.
     username_aktualni = st.session_state.get("username", "").lower()
 
     if "nakladatel" in username_aktualni or "demo" in username_aktualni:
@@ -924,6 +1026,17 @@ with st.sidebar:
             st.rerun()
 
     st.divider()
+
+    # 🤖 PLOVOUCÍ AI TUTOR (EKO-PARŤÁK)
+    with st.expander("🤖 Eko-Parťák (AI Tutor)", expanded=False):
+        st.caption("Nerozumíš nějakému pojmu? Zeptej se mě!")
+        ai_q = st.text_input("Dotaz pro AI:", placeholder="např. Co je to bod zvratu?", key="sidebar_ai_q")
+        if st.button("Vysvětlit 💡", key="btn_sidebar_ai"):
+            if ai_q:
+                with st.spinner("Přemýšlím..."):
+                    ans = ai_tutor_chat(ai_q)
+                    st.info(ans)
+
     if st.button("Odhlásit se 🚪", use_container_width=True):
         st.session_state.clear()
         st.query_params.clear()
@@ -1047,9 +1160,6 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                         z["jmeno"]: z["username"] for z in zaci_res.data
                     }
 
-                    # ---------------------------------------------------------
-                    # 📊 1. HROMADNÝ PŘEHLED A KLASIFIKACE
-                    # ---------------------------------------------------------
                     st.markdown(
                         f"#### 📊 Klasifikace a pokrok třídy **{vybrana_t}**"
                     )
@@ -1139,9 +1249,6 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
 
                     st.divider()
 
-                    # ---------------------------------------------------------
-                    # 🔍 2. DETAIL A EXPORT KONKRÉTNÍHO ŽÁKA
-                    # ---------------------------------------------------------
                     st.markdown(
                         "#### 🔍 Detailní odpovědi konkrétního žáka"
                     )
@@ -1580,10 +1687,10 @@ elif st.session_state["current_view"] == "Uvod":
     st.markdown("""
     1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
     2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
-    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity.
-    4. **Používej AI mentoring.** Fialové bloky obsahují prompty, které ti pomohou s vysvětlením, kontrolou nebo rozvojem tvého projektu.
-    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, co ještě potřebuješ dovysvětlit a jak bys téma použil/a v praxi.
-    6. **Závěrečný projekt.** Na úplném konci propojíš všechno dohromady a vytvoříš návrh vlastního odpovědného projektu.
+    3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity. Každý úkol ti přináší **+100 XP bodů**!
+    4. **Používej AI mentoring.** Fialové bloky obsahují prompty a v bočním panelu máš kdykoliv po ruce **Eko-Parťáka**.
+    5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, a otestuj si znalosti v případových studiích.
+    6. **Sbírej herní odznaky.** Postupuj v levelech z *Nováčka* až na *CEO & Investora*!
     """)
 
     st.divider()
@@ -1592,7 +1699,7 @@ elif st.session_state["current_view"] == "Uvod":
     st.markdown(
         """
     <div class="box-blue">📘 <b>Modrá:</b> Výklad, struktura, důležité vysvětlení</div>
-    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení</div>
+    <div class="box-yellow">💡 <b>Žlutá:</b> Úkol, otázka, aktivita, procvičení (+100 XP)</div>
     <div class="box-purple">🤖 <b>Fialová:</b> AI mentoring a práce s asistencí</div>
     <div class="box-green">✅ <b>Zelená:</b> Praxe, doporučení, dobrý postup</div>
     <div class="box-red">⚠️ <b>Červená / Oranžová:</b> Riziko, varování, právní nebo etický problém</div>
