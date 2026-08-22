@@ -8,7 +8,6 @@ def ziskej_odpoved_od_ai(zprava_zaka):
     """
     Neprůstřelná funkce pro volání AI. Pokud selže API, přepne na offline hodnocení.
     """
-    # 1. POKUS: Volání skutečné AI přes čisté HTTP (nepodléhá změnám SDK verzí)
     try:
         api_key = st.secrets.get("OPENAI_API_KEY", "")
         if api_key:
@@ -16,7 +15,6 @@ def ziskej_odpoved_od_ai(zprava_zaka):
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {api_key}"
             }
-            # Systémový prompt, který instruuje AI, jak má hrát roli
             system_prompt = (
                 "Jsi Karel, arogantní ale nesmírně talentovaný grafik. Šéf ti právě píše ohledně tvého "
                 "včerejšího toxického chování k juniorovi. Odpověz mu z pohledu Karla. "
@@ -25,7 +23,7 @@ def ziskej_odpoved_od_ai(zprava_zaka):
             )
             
             payload = {
-                "model": "gpt-4o-mini", # Standardní stabilní model
+                "model": "gpt-4o-mini",
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": zprava_zaka}
@@ -34,16 +32,15 @@ def ziskej_odpoved_od_ai(zprava_zaka):
                 "max_tokens": 500
             }
             
-            # Timeout 10 sekund, aby aplikace nezamrzla, pokud má AI výpadek
             response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
             
             if response.status_code == 200:
                 data = response.json()
                 return data["choices"][0]["message"]["content"]
     except Exception:
-        pass # Pokud API selže, tiše to přejdeme a spustíme Záchranný plán B
+        pass 
         
-    # 2. ZÁCHRANNÝ PLÁN B (Offline heuristika, pokud AI spadne)
+    # Offline heuristika (Záchranný plán B)
     delka = len(zprava_zaka.split())
     text_lower = zprava_zaka.lower()
     
@@ -75,6 +72,56 @@ def ziskej_odpoved_od_ai(zprava_zaka):
             "🤖 **AI Mentor (Offline režim):** Standardní a profesionální komunikace. "
             "**Jasnost (7/10), Empatie (6/10), Autorita (7/10).** Věcně jsi upozornil na problém. Dobrá manažerská práce."
         )
+
+def zhodnot_reklamu_ai(text_reklamy):
+    """
+    Volá API pro zhodnocení reklamy podle AIDA. Má offline záchranu.
+    """
+    try:
+        api_key = st.secrets.get("OPENAI_API_KEY", "")
+        if api_key:
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}"
+            }
+            system_prompt = (
+                "Jsi expert na marketing a copywriting. Zhodnoť studentův reklamní příspěvek "
+                "podle modelu AIDA (Attention, Interest, Desire, Action). "
+                "Buď přísný, ale konstruktivní. Každé fázi dej skóre 0-10 a přidej krátký komentář. "
+                "Na konec dej celkové zhodnocení a radu ke zlepšení."
+            )
+            payload = {
+                "model": "gpt-4o-mini",
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": text_reklamy}
+                ],
+                "temperature": 0.7,
+                "max_tokens": 500
+            }
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                return data["choices"][0]["message"]["content"]
+    except Exception:
+        pass # Offline fallback
+        
+    # --- OFFLINE ZÁCHRANA ---
+    text_low = text_reklamy.lower()
+    score_a = 8 if "?" in text_low or "!" in text_low else 3
+    score_i = 7 if len(text_reklamy) > 50 else 2
+    score_d = 7 if "super" in text_low or "nejlepší" in text_low or "sleva" in text_low else 3
+    score_action = 10 if "klik" in text_low or "kup" in text_low or "link" in text_low or "odkaz" in text_low else 0
+    
+    return (
+        "🤖 **AI Copywriter (Offline analýza):**\n\n"
+        f"**Attention (Zaujetí) - {score_a}/10:** {'Použil jsi interpunkci, to pomáhá chytit oko.' if score_a > 5 else 'Začátek je nudný, chybí otázka nebo šok.'}\n"
+        f"**Interest (Zájem) - {score_i}/10:** {'Délka textu dává prostor pro vysvětlení problému.' if score_i > 5 else 'Text je moc krátký na to, aby vzbudil zájem.'}\n"
+        f"**Desire (Touha) - {score_d}/10:** {'Snažíš se ukázat výhody, to je fajn.' if score_d > 5 else 'Chybí emoce. Proč by to ten člověk měl chtít?'}\n"
+        f"**Action (Akce) - {score_action}/10:** {'Skvělé, máš tam jasnou výzvu k akci!' if score_action == 10 else 'Zásadní chyba! Neřekl jsi lidem, co mají udělat (např. klikni na odkaz).'}\n\n"
+        "**Tip:** Reklama bez výzvy k akci je jen vyhozený rozpočet."
+    )
+
 
 def render_ai_treenazer():
     st.markdown("#### 🎭 AI Manažerský trenažér: Toxický talent")
@@ -110,6 +157,87 @@ def render_ai_treenazer():
         if "uloz_odpoved_fn" in st.session_state:
             st.session_state["uloz_odpoved_fn"]("Kapitola 6", "AI Roleplay Trenažér", prompt + "\n\nVýsledek:\n" + odpoved_ai)
 
+def render_aida_simulator():
+    st.markdown("#### ✍️ AI Trenažér: Napiš reklamu, která prodává (AIDA)")
+    st.write(
+        "Zkus prodat náš školní projekt (např. ReStart Batoh nebo školní mikiny) "
+        "v jednom příspěvku na Instagram. Umělá inteligence zhodnotí, jestli tvůj text plní 4 pravidla úspěšné reklamy."
+    )
+    
+    reklama_text = st.text_area("Tvůj text reklamy:", placeholder="Zadej svůj chytlavý text sem...")
+    
+    if st.button("Odeslat reklamu k AI analýze", type="primary", key="btn_aida"):
+        if len(reklama_text) < 10:
+            st.warning("Napiš alespoň jednu pořádnou větu!")
+        else:
+            with st.spinner("AI analyzuje tvou reklamu..."):
+                vysledek = zhodnot_reklamu_ai(reklama_text)
+                st.markdown("##### 📊 Hodnocení tvé kampaně")
+                st.info(vysledek)
+                
+                if "uloz_odpoved_fn" in st.session_state:
+                    st.session_state["uloz_odpoved_fn"]("Kapitola 6", "AIDA Reklama", reklama_text)
+
+def render_marketing_rozpocet():
+    st.markdown("#### 💸 Simulátor rozpočtu: Spálíš peníze, nebo vyděláš?")
+    st.write(
+        "Napsat hezkou reklamu nestačí. Teď ji musíš dostat k lidem. Máš rozpočet **10 000 Kč** na propagaci. "
+        "Zisk z jednoho prodaného kusu je **250 Kč**. Tvým úkolem je rozdělit peníze tak, abys neskončil ve ztrátě."
+    )
+
+    budget = 10000
+    
+    tiktok_spend = st.slider("📱 TikTok (Levné kliky: 3 Kč/klik, ale kupuje jen 0.5 % lidí)", 0, budget, 3000, step=500)
+    zbyva_po_tt = budget - tiktok_spend
+    
+    max_google = max(0, min(5000, zbyva_po_tt))
+    google_spend = st.slider("🔍 Google (Drahé kliky: 15 Kč/klik, ale kupují 4 % lidí)", 0, zbyva_po_tt, max_google, step=500)
+    zbyva_po_g = zbyva_po_tt - google_spend
+    
+    influencer_spend = st.slider("📸 Mikro-influencer (Fixní odměna, dosah záleží na motivaci)", 0, zbyva_po_g, zbyva_po_g, step=500)
+
+    st.info(f"💰 Zbývá ti rozdělit: **{budget - (tiktok_spend + google_spend + influencer_spend)} Kč** z 10 000 Kč.")
+
+    if st.button("🚀 Spustit kampaň", type="primary", key="btn_rozpocet"):
+        # Matematika trhu
+        kliky_tiktok = tiktok_spend / 3
+        prodeje_tiktok = math.floor(kliky_tiktok * 0.005)
+        
+        kliky_google = google_spend / 15
+        prodeje_google = math.floor(kliky_google * 0.04)
+        
+        if influencer_spend < 2000:
+            prodeje_influencer = math.floor(influencer_spend / 500)
+        else:
+            prodeje_influencer = math.floor((influencer_spend / 300) * 1.5)
+            
+        celkem_prodeju = prodeje_tiktok + prodeje_google + prodeje_influencer
+        celkovy_zisk_z_produktu = celkem_prodeju * 250
+        utraceno_celkem = tiktok_spend + google_spend + influencer_spend
+        cisty_zisk = celkovy_zisk_z_produktu - utraceno_celkem
+
+        st.divider()
+        st.markdown("##### 📈 Výsledky tvé kampaně")
+        
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Prodané kusy", f"{celkem_prodeju} ks")
+        c2.metric("Tržby z prodeje", f"{celkovy_zisk_z_produktu:,} Kč".replace(",", " "))
+        
+        if cisty_zisk >= 0:
+            c3.metric("Čistý výsledek (ROI)", f"+ {cisty_zisk:,} Kč".replace(",", " "))
+            st.success("🎉 Skvělá práce! Kampaň je v zisku. Vydělal jsi víc, než jsi investoval do reklamy.")
+        else:
+            c3.metric("Čistý výsledek (ROI)", f"{cisty_zisk:,} Kč".replace(",", " "))
+            st.error("📉 Kampaň skončila ve ztrátě. Stálo tě víc lidi přivést, než kolik jsi na nich vydělal.")
+            
+        with st.expander("🔍 Podrobná analytika"):
+            st.write(f"- **TikTok:** Přivedl {int(kliky_tiktok)} lidí, koupilo {prodeje_tiktok}.")
+            st.write(f"- **Google:** Přivedl {int(kliky_google)} lidí, koupilo {prodeje_google}.")
+            st.write(f"- **Influencer:** Přinesl {prodeje_influencer} prodejů.")
+            
+        if "uloz_odpoved_fn" in st.session_state:
+            st.session_state["uloz_odpoved_fn"]("Kapitola 6", "Marketing Rozpočet", f"Zisk: {cisty_zisk} Kč")
+
 
 def render():
     # =========================================================================
@@ -118,7 +246,7 @@ def render():
     st.markdown(
         "<span class='hero-badge'>Kapitola 6</span>", unsafe_allow_html=True
     )
-    st.title("6. Management a marketing")
+    st.markdown("## 6. Management a marketing")
     st.markdown(
         "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
         "Management a marketing nejsou jen poučky z učebnice. Jsou to dovednosti, "
@@ -308,12 +436,12 @@ def render():
 
         st.markdown("### 1.1 Podstata a význam managementu")
         st.write(
-            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledky."
+            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
         )
 
         st.markdown(
             "<div class='box-yellow'>"
-            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly v reálný výsledek."
+            "🧠 <b>Jednoduše:</b> Management je schopnost proměnit chaos v plán, plán v konkrétní úkoly a úkoly ve výsledek."
             "</div>",
             unsafe_allow_html=True,
         )
@@ -1110,6 +1238,13 @@ def render():
         st.write("**Influencer marketing a UGC:** V moderní propagaci hrají velkou roli influenceři a obsah vytvářený uživateli (UGC). UGC jsou recenze, videa, fotky nebo doporučení od běžných lidí. Často působí důvěryhodněji než klasická reklama, ale placené spolupráce musí být jasně označené.")
         st.write("**Virál není strategie sám o sobě:** Virální příspěvek může přinést velký dosah, ale pokud neodpovídá značce, cílové skupině a produktu, nemusí vést k prodeji ani dlouhodobé důvěře.")
 
+        # --- AIDA TRENAŽÉR A SIMULÁTOR ROZPOČTU ---
+        st.divider()
+        render_aida_simulator()
+        
+        st.divider()
+        render_marketing_rozpocet()
+
         st.markdown(
             "<br><div class='box-yellow'>📝 <b>Projektový pas – Krok 9: Nastavení Produktu, Ceny a Distribuce</b></div>",
             unsafe_allow_html=True,
@@ -1413,7 +1548,7 @@ def render():
             "| Kritérium | Co se hodnotí |\n"
             "| :--- | :--- |\n"
             "| **🏛️ Management** | Jasný cíl, rozdělení rolí, realistický plán a práce s riziky. |\n"
-            "| **🎯 Marketing** | Smysluplná cílová skupina, positioning a propojený marketingový mix. |\n"
+            "| **🎯 Marketing** | Smysluplná cílová skupina, positioning a propojený marketing mix. |\n"
             "| **💎 Brand** | Srozumitelná značka, hodnoty a důvěryhodná komunikace. |\n"
             "| **⚖️ Etika** | Schopnost rozpoznat manipulaci, klamavou reklamu, greenwashing a rizika digitální propagace. |\n"
             "| **🎤 Prezentace** | Srozumitelné vysvětlení, konkrétní příklady a schopnost obhájit rozhodnutí. |"
@@ -1551,9 +1686,4 @@ def render():
         st.divider()
         st.success(
             "🎉 **GRATULUJEME! Kompletně jsi dokončil/a Kapitolu 6 (Management a Marketing).**"
-        )
-        
-        st.markdown(
-            "<p style='text-align: right; color: #94a3b8; font-size: 0.8rem;'>Naposledy aktualizováno: 31. 7. 2026</p>",
-            unsafe_allow_html=True
         )
