@@ -63,7 +63,6 @@ CELKEM_UKOLU = {
 # 2. POMOCNÉ FUNKCE A DATABÁZE SUPABASE & GOOGLE SHEETS
 # =========================================================================
 def ocisti_username(text: str) -> str:
-    """Odstraní diakritiku a převede text na malá písmena pro bezpečný dotaz do DB."""
     if not text:
         return ""
     text = unicodedata.normalize("NFD", text)
@@ -97,7 +96,6 @@ def init_gspread():
 
 
 def get_user_level(total_answers: int):
-    """Vypočítá herní level a XP body studenta."""
     xp = total_answers * 100
     if xp < 400:
         return 1, "Nováček 🥉", xp, 400
@@ -112,7 +110,6 @@ def get_user_level(total_answers: int):
 
 
 def ai_tutor_chat(otazka_zaka: str, aktualni_kapitola: str):
-    """Zavolá OpenAI API pro plovoucího Eko-Parťáka s kontextem aktuální kapitoly."""
     try:
         api_key = st.secrets.get("OPENAI_API_KEY", "")
         if api_key:
@@ -121,10 +118,10 @@ def ai_tutor_chat(otazka_zaka: str, aktualni_kapitola: str):
                 "Authorization": f"Bearer {api_key}"
             }
             system_prompt = (
-                f"Jsi Eko-Parťák, přátelský, chytrý a vtipný AI tutor pro studenty středních škol. "
+                f"Jsi Eko-Sova 🦉, moudrý, vtipný a lehce praštěný AI mentor pro studenty středních škol. "
                 f"Student se právě nachází v modulu: '{aktualni_kapitola}'. "
-                "Odpovídej stručně (max 3-4 věty), polopaticky, srozumitelně s praktickými přirovnáními ze života teenagerů. "
-                "Nikdy nepiš složité teoretické poučky, pokud je nevysvětlíš na příkladu z praxe."
+                "Odpovídej stručně (max 3-4 věty), lidsky, energicky a s humorem, s praktickými přirovnáními ze života. "
+                "Používej občas soví houkání ('Húú!'). Žádné suché poučky!"
             )
             payload = {
                 "model": "gpt-4o-mini",
@@ -140,11 +137,10 @@ def ai_tutor_chat(otazka_zaka: str, aktualni_kapitola: str):
                 return res.json()["choices"][0]["message"]["content"]
     except Exception:
         pass
-    return "Skvělá otázka! Zkus se na to podívat přes selský rozum: každé rozhodnutí v ekonomice má své náklady a přínosy. Když si vybereš jednu možnost, vzdáváš se jiné (náklad příležitosti)."
+    return "Húúú! 🦉 Skvělá otázka! Zkus se na to podívat jednoduše: v ekonomice nic není zadarmo. Když si vybereš jednu věc, vzdáváš se jiné (náklad obětované příležitosti)."
 
 
 def ai_analyza_tridy(nazev_tridy: str, data_odpovedi: list, celkem_ukolu_map: dict):
-    """Generuje didaktickou AI diagnostiku pro učitele na základě anonymizovaných dat třídy."""
     try:
         api_key = st.secrets.get("OPENAI_API_KEY", "")
         if api_key:
@@ -185,38 +181,6 @@ def ai_analyza_tridy(nazev_tridy: str, data_odpovedi: list, celkem_ukolu_map: di
         return f"Analýzu se nepodařilo vygenerovat: {e}"
     return "Analýza není momentálně dostupná. Zkontrolujte připojení k internetu a API klíč."
 
-# --- 🔄 AUTO-LOGIN PO OBNOVENÍ STRÁNKY (F5) PŘES URL QUERY PARAMS ---
-if not st.session_state.get("is_logged_in"):
-    saved_user = st.query_params.get("user")
-    if saved_user:
-        ciste_jmeno = ocisti_username(saved_user)
-        try:
-            res_auto = (
-                supabase.table("uzivatele")
-                .select("*")
-                .eq("username", ciste_jmeno)
-                .execute()
-            )
-            if res_auto.data:
-                user_auto = res_auto.data[0]
-                st.session_state["is_logged_in"] = True
-                st.session_state["username"] = user_auto.get("username")
-                st.session_state["user_role"] = user_auto.get("role", "student")
-                st.session_state["user_name"] = (
-                    user_auto.get("jmeno")
-                    or user_auto.get("username")
-                    or "Uživatel"
-                )
-                st.session_state["user_class"] = user_auto.get("trida", "")
-
-                saved_view = st.query_params.get("view")
-                if saved_view:
-                    st.session_state["current_view"] = saved_view
-        except Exception:
-            pass
-
-
-# --- FUNKCE PRO VYKRESLENÍ A ZÁPIS OTÁZKY V KAPITOLÁCH ---
 def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
     st.markdown(f"**{text_otazky}**")
     staved_text = ulozene_odpovedi.get(otazka_id, "")
@@ -259,15 +223,10 @@ def vykresli_otazku(otazka_id, text_otazky, kapitola_id, ulozene_odpovedi):
         except Exception as e:
             st.error(f"Chyba při zápisu do databáze: {e}")
 
-
-st.session_state["vykresli_otazku_fn"] = vykresli_otazku
-
-
 def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     username = st.session_state.get("username")
     if not username:
         return
-
     try:
         existing = (
             supabase.table("odpovedi")
@@ -277,7 +236,6 @@ def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
             .eq("otazka_id", otazka_id)
             .execute()
         )
-
         if existing.data:
             supabase.table("odpovedi").update({"odpoved": odpoved_text}).eq(
                 "username", username
@@ -295,12 +253,40 @@ def uloz_odpoved(kapitola: str, otazka_id: str, odpoved_text: str):
     except Exception as e:
         st.error(f"Chyba při ukládání odpovědi: {e}")
 
-
+st.session_state["vykresli_otazku_fn"] = vykresli_otazku
 st.session_state["uloz_odpoved_fn"] = uloz_odpoved
 
+# =========================================================================
+# 3. AUTO LOGIN
+# =========================================================================
+if not st.session_state.get("is_logged_in"):
+    saved_user = st.query_params.get("user")
+    if saved_user:
+        ciste_jmeno = ocisti_username(saved_user)
+        try:
+            res_auto = (
+                supabase.table("uzivatele")
+                .select("*")
+                .eq("username", ciste_jmeno)
+                .execute()
+            )
+            if res_auto.data:
+                user_auto = res_auto.data[0]
+                st.session_state["is_logged_in"] = True
+                st.session_state["username"] = user_auto.get("username")
+                st.session_state["user_role"] = user_auto.get("role", "student")
+                st.session_state["user_name"] = (
+                    user_auto.get("jmeno") or user_auto.get("username") or "Uživatel"
+                )
+                st.session_state["user_class"] = user_auto.get("trida", "")
+                saved_view = st.query_params.get("view")
+                if saved_view:
+                    st.session_state["current_view"] = saved_view
+        except Exception:
+            pass
 
 # =========================================================================
-# 4. GLOBÁLNÍ DESIGN, ACCESSIBILITY & PLOVOUCÍ AI WIDGET
+# 4. GLOBÁLNÍ DESIGN, ACCESSIBILITY & PLOVOUCÍ SOVA
 # =========================================================================
 font_family = "'OpenDyslexic', sans-serif" if st.session_state.get("dyslexic_mode") else "'Montserrat', -apple-system, sans-serif"
 letter_spacing = "0.08em" if st.session_state.get("dyslexic_mode") else "-0.01em"
@@ -373,38 +359,49 @@ section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-
 .box-red { background-color: #FAF3F3 !important; border-left: 3px solid #C98A8A !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C2E2E !important; font-size: 0.93rem; }
 .box-gray { background-color: #F2EFE9 !important; border-left: 3px solid #A8A29E !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #44403C !important; font-size: 0.93rem; }
 
-/* 🌟 SKUTEČNĚ PLOVOUCÍ AI TUTOR V PRAVÉM DOLNÍM ROHU 🌟 */
+/* 🦉 ANIMOVANÁ PLOVOUCÍ SOVA V ROHU 🦉 */
+@keyframes floatSova {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(4deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
 div[data-testid="stPopover"] {
     position: fixed !important;
-    bottom: 25px !important;
-    right: 25px !important;
+    bottom: 30px !important;
+    right: 30px !important;
     z-index: 999999 !important;
 }
+
 div[data-testid="stPopover"] > button {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899) !important;
     color: #ffffff !important;
-    border-radius: 16px !important;
-    width: 65px !important;
-    height: 65px !important;
+    border-radius: 20px !important;
+    width: 68px !important;
+    height: 68px !important;
     padding: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4) !important;
-    border: 2px solid #ffffff !important;
-    font-size: 1.8rem !important;
+    box-shadow: 0 12px 30px rgba(168, 85, 247, 0.45) !important;
+    border: 3px solid #ffffff !important;
+    font-size: 2.2rem !important;
+    animation: floatSova 3s ease-in-out infinite !important;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
+
 div[data-testid="stPopover"] > button:hover {
-    transform: scale(1.1) translateY(-4px) !important;
-    box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6) !important;
+    transform: scale(1.15) rotate(8deg) !important;
+    box-shadow: 0 18px 40px rgba(168, 85, 247, 0.7) !important;
 }
+
 div[data-testid="stPopoverBody"] {
-    width: 320px !important;
+    width: 350px !important;
     padding: 1.5rem !important;
-    border-radius: 16px !important;
+    border-radius: 20px !important;
     border: 1px solid #EAE7DC !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.15) !important;
+    background: #ffffff !important;
 }
 """
 
@@ -823,7 +820,7 @@ if st.session_state["current_view"] == "Uvod":
     1. **Otevři kapitolu z obsahu.** Nejprve si projdi úvod, rychlou orientaci a cíle kapitoly.
     2. **Čti po menších blocích.** Každá kapitola je členěná na výklad, příklady, tabulky, aktivity a reflexi.
     3. **Plň průběžné úkoly.** Žluté bloky slouží jako pracovní úkoly, otázky a aktivity. Každý úkol ti přináší **+100 XP bodů**!
-    4. **Používej AI mentoring.** Fialové bloky obsahují prompty a v pravém dolním rohu máš kdykoliv po ruce **plovoucího Eko-Parťáka**.
+    4. **Používej AI mentoring.** Fialové bloky obsahují prompty a v pravém dolním rohu na tebe dohlíží **plovoucí Eko-Sova 🦉**.
     5. **Na konci kapitoly udělej reflexi.** Shrň, co už chápeš, a otestuj si znalosti v případových studiích.
     6. **Sbírej herní odznaky.** Postupuj v levelech z *Nováčka* až na *CEO & Investora*!
     """)
@@ -1106,7 +1103,7 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
                                 st.write("**📜 Historie obchodů:**")
                                 if not df_transakce.empty:
                                     df_trans_zak = df_transakce[df_transakce["Nick"].astype(str).str.strip().str.lower() == zak["Nick"].strip().lower()]
-                                    if not df_trans_zak.empty:
+                                    if not df_transakce.empty:
                                         sloupce_k_zobrazeni = [c for c in df_trans_zak.columns if c not in ["Nick", "Jmeno"]]
                                         st.dataframe(df_trans_zak[sloupce_k_zobrazeni].iloc[::-1], use_container_width=True, hide_index=True)
                     else:
@@ -1134,7 +1131,7 @@ elif st.session_state["current_view"] == "Ucitel_Panel":
             st.markdown("#### 🛡️ GDPR & Bezpečnost AI (MŠMT Standard)")
             st.markdown("""
             * **Anonymizace dat:** AI moduly (OpenAI API) nezpracovávají žádná rodná čísla, adresy ani plná jména studentů.
-            * **Minimální stopa:** Všechny dotazy pro Eko-Parťáka jsou zpracovávány bez trénování modelů na datech žáků.
+            * **Minimální stopa:** Všechny dotazy pro Eko-Sovu jsou zpracovávány bez trénování modelů na datech žáků.
             * **Inkluze a přístupnost:** Splňuje standardy přístupnosti díky integrovanému **OpenDyslexic režimu** a kontrastním prvkům.
             """)
 
@@ -1215,15 +1212,15 @@ else:
             modul.show()
 
 # =========================================================================
-# 8. 💬 SKUTEČNĚ PLOVOUCÍ AI TUTOR (EKO-PARŤÁK) V PRAVÉM DOLNÍM ROHU
+# 8. 🦉 PLOVOUCÍ EKO-SOVA V PRAVÉM DOLNÍM ROHU
 # =========================================================================
 curr_view_name = st.session_state.get("current_view", "Obecná ekonomika")
-with st.popover("💬", help="Zeptat se Eko-Parťáka"):
-    st.markdown("#### 💬 Eko-Parťák")
-    st.caption(f"📍 Kontext: **{curr_view_name}**")
-    ai_q = st.text_input("Něco není jasné? Zeptej se:", placeholder="např. Co je to bod zvratu?", key="floating_ai_q")
-    if st.button("Vysvětlit 💡", key="btn_floating_ai", use_container_width=True):
+with st.popover("🦉", help="Klikni na Eko-Sovu pro radu"):
+    st.markdown("### 🦉 Eko-Sova ti radí!")
+    st.caption(f"📍 *Probíráme:* **{curr_view_name}**")
+    ai_q = st.text_input("Zeptej se mě na cokoliv:", placeholder="Húú! Čemu nerozumíš?", key="floating_ai_q")
+    if st.button("Poradit se se Sovou ✨", key="btn_floating_ai", use_container_width=True, type="primary"):
         if ai_q:
-            with st.spinner("Přemýšlím..."):
+            with st.spinner("Sova přemýšlí... 🦉"):
                 ans = ai_tutor_chat(ai_q, curr_view_name)
                 st.info(ans)
