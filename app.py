@@ -286,33 +286,39 @@ if not st.session_state.get("is_logged_in"):
             pass
 
 # =========================================================================
-# 4. GLOBÁLNÍ DESIGN, ACCESSIBILITY & DYSLEXICKÝ REŽIM
+# 4. GLOBÁLNÍ DESIGN A ACCESSIBILITY
 # =========================================================================
 font_family = "'OpenDyslexic', sans-serif" if st.session_state.get("dyslexic_mode") else "'Montserrat', -apple-system, sans-serif"
 letter_spacing = "0.08em" if st.session_state.get("dyslexic_mode") else "-0.01em"
 line_height = "1.9" if st.session_state.get("dyslexic_mode") else "1.7"
 
-st.markdown(
-    f"""
-<style>
+# Zde je dynamická část ovlivňující dyslektický font
+dynamic_css = f"""
+html, body, [class*="css"], .stApp {{ 
+    font-family: {font_family} !important; 
+    letter-spacing: {letter_spacing} !important;
+}}
+p, li, td, th, .stMarkdown p {{ 
+    font-family: {font_family} !important; 
+    line-height: {line_height} !important; 
+}}
+h1, h2, h3, h4, h5, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5 {{
+    font-family: {font_family} !important; 
+}}
+"""
+
+# Zde je čistá statická část se všemi grafickými styly z minula (bez Python formátování f"")
+static_css = """
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 @import url('https://fonts.cdnfonts.com/css/opendyslexic');
 
-[data-testid="stSidebarNav"] {{ display: none !important; }}
+[data-testid="stSidebarNav"] { display: none !important; }
 
-html, body, [class*="css"], .stApp {{ 
-    font-family: {font_family} !important; 
-    background-color: #FAF8F5 !important; 
-    color: #1C1917 !important; 
-    letter-spacing: {letter_spacing} !important;
-}}
-.main .block-container {{ 
-    max-width: 920px !important; 
-    padding-top: 2.5rem !important; 
-    padding-bottom: 5rem !important; 
-}}
+html, body, [class*="css"], .stApp { background-color: #FAF8F5 !important; color: #1C1917 !important; }
 
-div[data-testid="stVerticalBlockBorderWrapper"] {{
+.main .block-container { max-width: 920px !important; padding-top: 2.5rem !important; padding-bottom: 5rem !important; }
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
     background-color: #FFFFFF !important; 
     border-radius: 18px !important; 
     border: 1px solid #EAE7DC !important; 
@@ -320,26 +326,45 @@ div[data-testid="stVerticalBlockBorderWrapper"] {{
     padding: 2rem !important; 
     margin-bottom: 1.5rem !important;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important; 
-}}
+}
+div[data-testid="stVerticalBlockBorderWrapper"]:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02) !important; 
+}
 
-h1, .stMarkdown h1 {{ font-family: {font_family} !important; color: #0F172A !important; font-weight: 800 !important; font-size: 2.2rem !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }}
-h2, .stMarkdown h2 {{ font-family: {font_family} !important; color: #0F172A !important; font-weight: 800 !important; font-size: 1.75rem !important; margin-top: 2rem !important; margin-bottom: 0.75rem !important; border-bottom: 1px solid #E2E8F0 !important; padding-bottom: 0.4rem !important; }}
-h3, .stMarkdown h3 {{ font-family: {font_family} !important; color: #0F172A !important; font-weight: 700 !important; font-size: 1.4rem !important; margin-top: 1.5rem !important; margin-bottom: 0.5rem !important; }}
-p, li, td, th, .stMarkdown p {{ font-family: {font_family} !important; color: #334155 !important; font-size: 0.95rem !important; line-height: {line_height} !important; font-weight: 400 !important; }}
+h1, .stMarkdown h1 { color: #0F172A !important; font-weight: 800 !important; font-size: 2.2rem !important; letter-spacing: -0.03em !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
+h2, .stMarkdown h2 { color: #0F172A !important; font-weight: 800 !important; font-size: 1.75rem !important; letter-spacing: -0.02em !important; margin-top: 2rem !important; margin-bottom: 0.75rem !important; border-bottom: 1px solid #E2E8F0 !important; padding-bottom: 0.4rem !important; }
+h3, .stMarkdown h3 { color: #0F172A !important; font-weight: 700 !important; font-size: 1.4rem !important; margin-top: 1.5rem !important; margin-bottom: 0.5rem !important; }
+h4, .stMarkdown h4 { color: #1E293B !important; font-weight: 600 !important; font-size: 1.15rem !important; margin-top: 1.2rem !important; margin-bottom: 0.4rem !important; }
+h5, .stMarkdown h5 { color: #334155 !important; font-weight: 600 !important; font-size: 1.0rem !important; margin-top: 0.8rem !important; margin-bottom: 0.3rem !important; }
+p, li, td, th, .stMarkdown p { color: #334155 !important; font-size: 0.95rem !important; font-weight: 400 !important; }
 
-button[data-testid="baseButton-primary"], button[kind="primary"] {{ border-radius: 9999px !important; border: 1px solid #111111 !important; background-color: #111111 !important; color: #FFFFFF !important; font-weight: 600 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; }}
-button[data-testid="baseButton-secondary"], button[kind="secondary"] {{ border-radius: 9999px !important; background-color: #F2EFE9 !important; color: #44403C !important; border: 1px solid #E2DEC6 !important; font-weight: 500 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; }}
+button[data-testid="baseButton-primary"], button[kind="primary"] { font-family: 'Montserrat', sans-serif !important; border-radius: 9999px !important; border: 1px solid #111111 !important; background-color: #111111 !important; color: #FFFFFF !important; font-weight: 600 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; box-shadow: 0 4px 10px rgba(17, 17, 17, 0.15) !important; transition: all 0.2s ease !important; }
+button[data-testid="baseButton-primary"]:hover, button[kind="primary"]:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(17, 17, 17, 0.25) !important; }
+button[data-testid="baseButton-primary"] *, button[kind="primary"] * { color: #FFFFFF !important; }
 
-.box-blue {{ background-color: #F4F7F9 !important; border-left: 3px solid #8AA2B6 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2C3E50 !important; }}
-.box-yellow {{ background-color: #FAF7EE !important; border-left: 3px solid #D8C397 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C4E31 !important; }}
-.box-purple {{ background-color: #F8F5F8 !important; border-left: 3px solid #B4A2B8 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; color: #4A3B4E !important; }}
-.box-green {{ background-color: #F3F6F3 !important; border-left: 3px solid #8DAE93 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2A4231 !important; }}
-.box-red {{ background-color: #FAF3F3 !important; border-left: 3px solid #C98A8A !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C2E2E !important; }}
-.box-gray {{ background-color: #F2EFE9 !important; border-left: 3px solid #A8A29E !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #44403C !important; }}
-</style>
-""",
-    unsafe_allow_html=True,
-)
+button[data-testid="baseButton-secondary"], button[kind="secondary"] { font-family: 'Montserrat', sans-serif !important; border-radius: 9999px !important; background-color: #F2EFE9 !important; color: #44403C !important; border: 1px solid #E2DEC6 !important; font-weight: 500 !important; font-size: 0.88rem !important; padding: 0.6rem 1.4rem !important; transition: all 0.2s ease !important; }
+button[data-testid="baseButton-secondary"]:hover, button[kind="secondary"]:hover { background-color: #111111 !important; border-color: #111111 !important; color: #FFFFFF !important; transform: translateY(-1px); }
+button[data-testid="baseButton-secondary"] *, button[kind="secondary"] * { color: #44403C !important; }
+button[data-testid="baseButton-secondary"]:hover *, button[kind="secondary"]:hover * { color: #FFFFFF !important; }
+
+.stTextInput input, .stTextArea textarea, div[data-baseweb="select"] > div { font-family: 'Montserrat', sans-serif !important; border-radius: 12px !important; border: 1px solid #E2DEC6 !important; background-color: #F2EFE9 !important; color: #0F172A !important; font-size: 0.92rem !important; padding: 0.65rem 0.9rem !important; transition: all 0.2s ease !important; }
+.stTextInput input:focus, .stTextArea textarea:focus, div[data-baseweb="select"] > div:focus { border-color: #111111 !important; background-color: #FFFFFF !important; box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.1) !important; }
+
+section[data-testid="stSidebar"] { background-color: #FAF8F5 !important; border-right: 1px solid #E5E0D8 !important; }
+.sidebar-section-title { font-size: 0.72rem; font-weight: 700; color: #78716C; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1.4rem; margin-bottom: 0.6rem; }
+
+.box-blue { background-color: #F4F7F9 !important; border-left: 3px solid #8AA2B6 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2C3E50 !important; font-size: 0.93rem; }
+.box-yellow { background-color: #FAF7EE !important; border-left: 3px solid #D8C397 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C4E31 !important; font-size: 0.93rem; }
+.box-purple { background-color: #F8F5F8 !important; border-left: 3px solid #B4A2B8 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; color: #4A3B4E !important; font-size: 0.93rem; word-wrap: break-word; }
+.box-green { background-color: #F3F6F3 !important; border-left: 3px solid #8DAE93 !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #2A4231 !important; font-size: 0.93rem; }
+.box-red { background-color: #FAF3F3 !important; border-left: 3px solid #C98A8A !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #5C2E2E !important; font-size: 0.93rem; }
+.box-gray { background-color: #F2EFE9 !important; border-left: 3px solid #A8A29E !important; padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; color: #44403C !important; font-size: 0.93rem; }
+"""
+
+# Vložíme do aplikace statickou i dynamickou část CSS
+st.markdown(f"<style>{static_css} {dynamic_css}</style>", unsafe_allow_html=True)
+
 
 # =========================================================================
 # 5. PŘIHLAŠOVACÍ A REGISTRAČNÍ BRÁNA
@@ -596,22 +621,22 @@ def zakovsky_panel():
         has_k4 = any(o.get("kapitola") in ["Kapitola 4", "4"] for o in odpovedi_data)
 
         if has_k1:
-            c_bad1.success("🚀 **Zakladatel Startupů**\n\n(Aktivita v Kapitol 1)")
+            c_bad1.success("🚀 **Zakladatel Startupů**\n\n(Aktivita v Kap. 1)")
         else:
             c_bad1.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 1)")
 
         if has_k2:
-            c_bad2.success("💰 **Finanční Guru**\n\n(Aktivita v Kapitol 2)")
+            c_bad2.success("💰 **Finanční Guru**\n\n(Aktivita v Kap. 2)")
         else:
             c_bad2.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 2)")
 
         if has_k3:
-            c_bad3.success("⚙️ **Mistr Efektivity**\n\n(Aktivita v Kapitol 3)")
+            c_bad3.success("⚙️ **Mistr Efektivity**\n\n(Aktivita v Kap. 3)")
         else:
             c_bad3.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 3)")
 
         if has_k4:
-            c_bad4.success("👔 **Vyjednavač Smluv**\n\n(Aktivita v Kapitol 4)")
+            c_bad4.success("👔 **Vyjednavač Smluv**\n\n(Aktivita v Kap. 4)")
         else:
             c_bad4.info("🔒 *Zamčeno*\n\n(Splň úkol v Kap. 4)")
 
