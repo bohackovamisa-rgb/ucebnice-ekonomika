@@ -608,7 +608,28 @@ with st.sidebar:
         st.query_params.clear()
         st.rerun()
 
+# =========================================================================
+# 🦉 PLOVOUCÍ EKO-SOVA (AI TUTOR CHAT)
+# =========================================================================
+with st.popover("🦉"):
+    st.markdown("### 🦉 Eko-Sova radí!")
+    otazka = st.text_input("Zeptej se mě na cokoliv z ekonomiky:")
+    
+    if st.button("Zeptat se", key="btn_sova_ptat_se"):
+        if otazka:
+            with st.spinner("Sova houká a přemýšlí..."):
+                # Zavolá vaši už hotovou funkci s OpenAI
+                odpoved = ai_tutor_chat(otazka, st.session_state.get("current_view", "Neznámá kapitola"))
+                st.info(odpoved)
+        else:
+            st.warning("Nejprve musíš napsat otázku!")
 
+# =========================================================================
+# 7. ROUTING A STRÁNKY APLIKACE (MAIN VIEWS)
+# =========================================================================
+def zakovsky_panel():
+    st.title("👨‍🎓 Můj žákovský profil")
+    # ... zbytek vašeho kódu ...
 # =========================================================================
 # 7. ROUTING A STRÁNKY APLIKACE (MAIN VIEWS)
 # =========================================================================
