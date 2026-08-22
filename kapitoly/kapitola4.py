@@ -3,18 +3,21 @@ import streamlit as st
 
 
 def render():
+    # =========================================================================
+    # 📌 HLAVIČKA KAPITOLY
+    # =========================================================================
     st.markdown(
         "<span class='hero-badge'>Kapitola 4</span>", unsafe_allow_html=True
     )
-    st.title(
-        "4. Cesta zaměstnance: od první orientace po kariérní rozhodnutí"
+    st.markdown(
+        "## 4. Cesta zaměstnance: od první orientace po kariérní rozhodnutí"
     )
     st.markdown(
-        "<p style='font-size: 1rem; color: #64748b; margin-bottom: 1.5rem;'>"
-        "Práce není jen o výplatní pásce. Je to rozhodování o vlastní hodnotě,"
-        " dovednostech, právní ochraně, penězích, vztazích na pracovišti i o"
-        " tom, jak se přizpůsobit světu, který mění digitalizace, AI a globální"
-        " konkurence.</p>",
+        "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
+        "Práce není jen výplata. Je to rozhodování o vlastní hodnotě, dovednostech, právní ochraně, penězích, "
+        "vztazích na pracovišti i o tom, jak se člověk přizpůsobuje světu, který mění digitalizace, AI a globální konkurence.<br><br>"
+        "Tato kapitola je postavená jako cesta zaměstnance: od otázky „kdo jsem a co umím?“ přes hledání práce, "
+        "smlouvu a výplatní pásku až po wellbeing, kariérní růst, výpověď a krizové situace.</p>",
         unsafe_allow_html=True,
     )
 
@@ -30,26 +33,36 @@ def render():
 
     # 📌 PŘEHLED A NAVIGACE KAPITOLOU
     with st.expander(
-        "🧭 Co si z kapitoly odnesete a doporučené pořadí studia", expanded=False
+        "🧭 O čem kapitola je, kde ji využijete a co si z ní odnesete (Rozbalit)", expanded=False
     ):
         c_nav1, c_nav2 = st.columns(2)
         with c_nav1:
             st.markdown("""
-            **🎯 Klíčové výstupy:**
-            * 🧭 **Orientace na trhu práce:** Proč se některé dovednosti oceňují více a jak trh mění AI.
-            * 🧑‍💼 **HR, zaměstnání a právo:** Nábor, pracovní smlouva, DPP, DPČ, Švarcsystém a gig economy.
-            * 🚩 **Red flags:** Varovné signály v inzerátech, na pohovoru i ve smlouvě.
-            * 💵 **Mzda a cena práce:** Hrubá vs. čistá mzda, odvody a celkové náklady zaměstnavatele.
-            * 🧘 **Wellbeing a kariéra:** Firemní kultura, prevence vyhoření, upskilling a reskilling.
+            **🎯 Co si z kapitoly odnesete:**
+            * 🧭 **Orientace na trhu práce:** Proč se některé dovednosti na trhu práce oceňují více než jiné a jak se profese mění vlivem AI, automatizace a globalizace.
+            * 🧑‍💼 **HR, zaměstnání a právo:** Personalistika, nábor, pracovní smlouva, DPP, DPČ, OSVČ, freelancing, gig economy a rizika švarcsystému.
+            * 🚩 **Red flags:** Varovné signály v inzerátu, na pohovoru i ve smlouvě.
+            * 💵 **Mzda a cena práce:** Hrubá mzda, čistá mzda, nominální a reálná mzda i celkové náklady zaměstnavatele.
+            * 🤖 **AI jako pomocník:** Generativní AI může pomoci s přípravou na pohovor, motivační dopis, životopis i analýzu pracovního trhu.
+            * 🧘 **Wellbeing a kariéra:** Souvislost firemní kultury, vyhoření, práva na odpojení, upskillingu a reskillingu s dlouhodobou kariérou.
             """)
+            st.markdown(
+                """
+            <div style="font-size: 0.85rem; color: #64748b; margin-top: 10px;">
+                <i>💼 <b>Kde to využijete:</b> Při výběru oboru, brigády nebo první práce, při psaní životopisu, pohovoru, čtení smlouvy, vyjednávání mzdy i při řešení problémů na pracovišti.</i>
+            </div>
+            """,
+                unsafe_allow_html=True,
+            )
+
         with c_nav2:
             st.markdown("""
             **🧭 Doporučené pořadí studia:**
-            1. 🧭 **Já na trhu práce** (orientace v hodnotě práce, AI a digitální stopě)
-            2. 📜 **Hra podle pravidel** (nábor, smlouvy, DPP, DPČ, zkušební doba, Švarcsystém)
-            3. 💰 **Hodnota mé práce** (výplatní páska, čistá mzda, odvody, daně)
-            4. 🧘 **Život v práci** (kultura, wellbeing, vyhoření, právo na odpojení)
-            5. 🚪 **Když se cesty rozejdou** (výpověď, odstupné, úřad práce, podpora)
+            1. 🧭 **Já na trhu práce** — Nejdřív přichází orientace v tom, co trh práce oceňuje, jak funguje nabídka a poptávka po práci, jaké profese mění AI a proč je důležitá digitální stopa.
+            2. 📜 **Hra podle pravidel** — Potom přichází orientace v náboru, pracovních smlouvách, DPP, DPČ, zkušební době, švarcsystému a platformové práci.
+            3. 💰 **Hodnota mé práce** — Následně se rozkrývá mzda, odvody, čistý příjem, celkové náklady zaměstnavatele, inflace a celková odměna včetně benefitů.
+            4. 🧘 **Život v práci** — Poté přichází firemní kultura, wellbeing, vyhoření, právo na odpojení, intrapreneurship a celoživotní učení.
+            5. 🚪 **Když se cesty rozejdou** — Nakonec se řeší výpověď, odstupné, úřad práce, podpora, rekvalifikace a krizové situace.
             """)
 
     # 📌 JEDNOTNÁ NABÍDKA PODKAPITOL
@@ -86,14 +99,13 @@ def render():
         "7.2 Slovníček, rychlé opakování a prověrka",
     ]
 
-    st.markdown(
-        "📌 <strong>Přechod na podkapitolu:</strong>", unsafe_allow_html=True
-    )
+    st.markdown("### 📌 Přechod na podkapitolu:")
     selected_section_4 = st.selectbox(
         "Přechod na podkapitolu:",
         section_options_4,
         index=0,
         label_visibility="collapsed",
+        key="k4_section_select",
     )
     st.divider()
 
@@ -101,6 +113,7 @@ def render():
     # SEKCE 1: JÁ NA TRHU PRÁCE: PŘÍPRAVA A ORIENTACE
     # =========================================================================
     if selected_section_4 == "1.1 Proč trh platí různé profese různě":
+        st.markdown("## 1. Já na trhu práce: příprava a orientace")
         st.markdown("### 1.1 Proč trh platí různé profese různě")
         st.markdown(
             """
@@ -112,26 +125,34 @@ def render():
         )
 
         st.write(
-            "Trh práce je prostředí, kde se potkává **nabídka práce** (lidé"
-            " nabízející čas a dovednosti), **poptávka po práci** (firmy"
-            " potřebující vykonat činnost) a **cena práce** (mzda či odměna)."
+            "Trh práce není jen místo, kde „zaměstnavatelé nabízejí práci“. Je to prostředí, kde se potkává:"
         )
+        st.markdown("""
+        * **nabídka práce** — lidé nabízejí svůj čas, dovednosti, znalosti, odpovědnost a energii,
+        * **poptávka po práci** — firmy, instituce nebo zákazníci potřebují určité činnosti vykonat,
+        * **cena práce** — mzda, odměna nebo honorář, který je výsledkem hodnoty práce, dostupnosti lidí, odpovědnosti, rizika a vyjednávání.
+        """)
+
         st.write(
-            "Mzda se neodvíjí od toho, jak moc se člověk fyzicky nadře."
-            " Ovlivňuje ji kombinace následujících faktorů:"
+            "Nejde jen o to, jestli je práce „těžká“ nebo jak moc se člověk fyzicky nadře. Mzdu ovlivňuje kombinace následujících faktorů:"
         )
 
         st.markdown(
             """
         | Faktor | Co znamená | Příklad z praxe |
         | :--- | :--- | :--- |
-        | 💎 **Nedostatek dovedností** | Čím méně lidí danou věc umí, tím vyšší je odměna. | Datová analýza, kyberbezpečnost, specializovaný řemeslník. |
-        | ⚖️ **Odpovědnost** | Čím větší dopad máchyba, tím vyšší jsou nároky i mzda. | Lékař, pilot, hlavní účetní, jeřábník. |
+        | 💎 **Nedostatek dovedností** | Čím méně lidí danou věc umí, tím vyšší může být odměna. | Datová analýza, kyberbezpečnost, specializovaný řemeslník. |
+        | ⚖️ **Odpovědnost** | Čím větší dopad má chyba, tím vyšší nároky i odměna. | Lékař, pilot, hlavní účetní, jeřábník. |
         | 🚀 **Produktivita a přidaná hodnota** | Kolik hodnoty či úspor dokáže člověk vytvořit za jednotku času. | Programátor, který automatizuje proces pro tisíce uživatelů. |
         | ⚠️ **Riziko a náročnost** | Fyzické, psychické nebo bezpečnostní nároky práce. | Práce ve zdravotnictví, výškové práce, směnný provoz. |
-        | 💬 **Vyjednávací síla a region** | Místo výkonu práce, praxe, vzdělání a schopnost doložit výsledky. | Praha vs. menší regiony, junior vs. seniorní specialista. |
+        | 💬 **Vyjednávací síla a region** | Schopnost doložit výsledky, praxe, reference, vzdělání a místo výkonu práce. | Portfolio, reference, praxe, Praha vs. menší regiony. |
         """,
             unsafe_allow_html=True,
+        )
+
+        st.info(
+            "💡 **Příklad:** IT analytik může být placen více než administrativní asistent ne proto, že by „pracoval víc“, "
+            "ale protože jeho dovednosti jsou vzácnější, mají vyšší dopad na fungování firmy a často umožňují ušetřit nebo vydělat velké částky."
         )
 
         st.markdown(
@@ -145,13 +166,11 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Reálné"
-            " faktory mzdy v ČR</b></div>",
+            "<div class='box-yellow'>🧮 <b>Interaktivní kalkulačka: Reálné faktory mzdy v ČR</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Vyber obor, přesný kraj, vzdělání a praxi. Kalkulačka vychází z"
-            " reálných mzdových mediánů v České republice:"
+            "Vyber obor, přesný kraj, vzdělání a praxi. Kalkulačka vychází z reálných mzdových mediánů v České republice:"
         )
 
         col_sim1, col_sim2 = st.columns(2)
@@ -289,24 +308,23 @@ def render():
     elif selected_section_4 == "1.2 Trh práce 4.0 a AI":
         st.markdown("### 1.2 Trh práce 4.0 a AI")
         st.write(
-            "Trh práce se pod vlivem technologií mění nejrychleji v historii."
-            " Tradiční představa, že po škole nastoupíte do jedné firmy a"
-            " zůstanete v ní 40 let, už neplatí."
+            "Trh práce se mění rychleji než dříve. Tradiční představa, že po škole nastoupíte do jedné firmy a"
+            " zůstanete v ní 40 let, už neplatí. Důvodem jsou zejména:"
         )
 
-        st.markdown("#### Hlavní hýbatelé Trhu práce 4.0:")
         st.markdown("""
-        * ⚙️ **Automatizace:** Stroje, algoritmy a roboti přebírají rutinní a opakující se činnosti.
-        * 🤖 **Generativní umělá inteligence (AI):** Pomáhá psát texty, analyzovat data, překládat, kódovat, navrhovat grafiku i vyhodnocovat dokumenty.
-        * 🏠 **Remote work a hybridní práce:** Práce na dálku odstraňuje hranice měst – můžete pracovat z regionu pro pražskou nebo zahraniční firmu.
-        * 📲 **Platformová ekonomika (Gig Economy):** Část práce se přesouvá do aplikací a zakázkových platforem (Uber, Bolt, Foodora, Freelance portály).
-        * 🌐 **Globální konkurence:** U digitálních profesí nesoutěžíte jen s kolegy ze třídy, ale s pracovníky z celého světa.
+        * ⚙️ **Automatizace** — stroje a software přebírají rutinní a opakující se úkoly.
+        * 🤖 **Umělá inteligence (AI)** — pomáhá psát, analyzovat data, vyhledávat, překládat, kódovat, navrhovat grafiku i vyhodnocovat dokumenty.
+        * 🏠 **Remote work a hybridní práce** — práce na dálku rozšiřuje konkurenci i možnosti (můžete pracovat z regionu pro pražskou nebo zahraniční firmu).
+        * 📲 **Platformová ekonomika (Gig Economy)** — část práce se přesouvá do aplikací a digitálních platforem (Uber, Bolt, Foodora, Freelance portály).
+        * 🌐 **Globální trh práce** — u některých profesí nekonkurujete jen lidem z města nebo ze třídy, ale pracovníkům z celého světa.
         """)
 
         st.markdown(
             """
         <div class='box-purple'>
-            🤖 <b>Důležité pravidlo AI na trhu práce:</b> AI většinou nenahrazuje celé profese najednou. Častěji mění jednotlivé činnosti uvnitř profese.<br>
+            🤖 <b>Důležité pravidlo AI na trhu práce:</b><br>
+            AI většinou nenahrazuje celé profese najednou. Častěji mění jednotlivé činnosti uvnitř profese. Člověk, který AI umí používat, může získat výhodu proti člověku, který ji ignoruje.<br><br>
             <b>Platí krédo:</b> <i>„AI vás o práci nepřipraví. O práci vás připraví člověk, který s AI umí pracovat lépe než vy.“</i>
         </div>
         """,
@@ -315,8 +333,7 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>🧩 <b>Kvíz: Jak AI mění jednotlivé"
-            " obory?</b></div>",
+            "<div class='box-yellow'>🧩 <b>Kvíz: Jak AI mění jednotlivé obory?</b></div>",
             unsafe_allow_html=True,
         )
 
@@ -334,8 +351,7 @@ def render():
                 key="k4_1_2_q1",
             )
             q_ai2 = st.radio(
-                "Jaká je největší výhoda znalosti AI nástrojů pro juniorního"
-                " zaměstnance?",
+                "Jaká je největší výhoda znalosti AI nástrojů pro juniorního zaměstnance?",
                 [
                     "Může v práci 8 hodin spát a nic nedělat",
                     (
@@ -356,13 +372,11 @@ def render():
                     and "Zvýší svou produktivitu" in q_ai2
                 ):
                     st.success(
-                        "✅ Přesně tak! AI posouvá lidi od rutiny k řešení"
-                        " složitějších problémů."
+                        "✅ Přesně tak! AI posouvá lidi od rutiny k řešení složitějších problémů."
                     )
                 else:
                     st.error(
-                        "Zkus to znovu. Pamatuj, že AI nahrazuje úkoly, ne"
-                        " lidskou odpovědnost a kritické myšlení."
+                        "Zkus to znovu. Pamatuj, že AI nahrazuje úkoly, ne lidskou odpovědnost a kritické myšlení."
                     )
 
                 ai_quiz_data = f"1: {q_ai1} | 2: {q_ai2}"
@@ -376,39 +390,42 @@ def render():
     elif selected_section_4 == "1.3 Profese a dovednosti budoucnosti":
         st.markdown("### 1.3 Profese a dovednosti budoucnosti")
         st.write(
-            "Technické znalosti konkrétního softwaru stárnou. Co zůstává trvale"
-            " cenné, jsou **hard skills (odborné dovednosti)** spojené s **soft"
-            " skills (měkkými dovednostmi)**."
+            "Technické znalosti konkrétního softwaru stárnou. Co zůstává trvale cenné, jsou **hard skills (odborné dovednosti)** spojené s **soft skills (měkkými dovednostmi)**."
         )
 
         col_sk1, col_sk2 = st.columns(2)
         with col_sk1:
             st.markdown("##### 🧠 Klíčové dovednosti budoucnosti:")
             st.markdown("""
-            * 🔍 **Práce s informacemi** a ověřování zdrojů (kritické myšlení),
-            * 🤖 **Prompting a práce s AI nástroji**,
+            * 🔍 **Práce s informacemi a ověřování zdrojů** (kritické myšlení),
+            * 💬 **Komunikace a spolupráce**,
+            * 💻 **Digitální gramotnost**,
+            * 🤖 **Práce s AI nástroji a prompting**,
             * 📊 **Analytické a logické myšlení**,
             * 🎨 **Kreativita a inovativnost**,
-            * 🔄 **Schopnost učit se nové věci** (Adaptabilita).
+            * 🔄 **Schopnost učit se nové věci** (Adaptabilita),
+            * 🧘 **Odolnost vůči stresu**,
+            * 🛡️ **Etické rozhodování**.
             """)
         with col_sk2:
             st.markdown("##### 🤝 Lidské dovednosti (které AI nenahradí):")
             st.markdown("""
-            * 💬 **Komunikace, empatie a vyjednávání**,
-            * 👥 **Týmová spolupráce a vedení lidí**,
-            * 🛡️ **Etické rozhodování a morální odpovědnost**,
-            * 🧘 **Resilience (odolnost vůči stresu a změnám)**.
+            * 💬 **Empatie, naslouchání a vyjednávání**,
+            * 👥 **Týmové vedení a motivace lidí**,
+            * 🛡️ **Morální odpovědnost a lidský úsudek**,
+            * 🧘 **Resilience (psychická odolnost vůči změnám)**.
             """)
 
         st.divider()
         st.markdown(
-            "<div class='box-purple'>🧪 <b>Mini-úkol: AI Rozřazovač činností"
-            " u profesí</b></div>",
+            "<div class='box-purple'>🧪 <b>Mini-úkol: AI Rozřazovač činností u profesí</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Vyber profesi a zkus rozřadit její náplň práce: Co převzneme AI, co"
-            " AI zrychlí a co zůstane čistě lidské?"
+            "Vyberte jednu profesi, která vás zajímá. Zkuste rozřadit její činnosti do tří skupin:\n"
+            "1. Co může AI převzít?\n"
+            "2. Co může AI zrychlit?\n"
+            "3. Co zůstane silně lidské?"
         )
 
         profese_vyber = st.selectbox(
@@ -435,8 +452,7 @@ def render():
             if "vykresli_otazku_fn" in st.session_state:
                 st.session_state["vykresli_otazku_fn"](
                     "4.1.1",
-                    f"Rozřaď náplň práce pro profesi ({profese_vyber}): Co"
-                    " přebere AI, co AI zrychlí a co zůstane čistě lidské?",
+                    f"Rozřaď náplň práce pro profesi ({profese_vyber}): Co přebere AI, co AI zrychlí a co zůstane čistě lidské?",
                     "4",
                     st.session_state.get("ulozene_odpovedi", {}),
                 )
@@ -453,25 +469,24 @@ def render():
         )
 
         st.write(
-            "Zaměstnavatel dnes nehledá jen strohý papírový životopis. Hledá"
-            " důkaz, že umíte přemýšlet, komunikovat a pracovat na sobě. **Osobní"
-            " brand (osobní značka)** je obraz, který o sobě dlouhodobě"
-            " vytváříte."
+            "Zaměstnavatel často nehledá jen „životopis“. Hledá důkaz, že člověk umí přemýšlet, komunikovat a pracovat na sobě. "
+            "**Osobní brand (osobní značka)** je obraz, který o sobě dlouhodobě vytváříte."
         )
 
         st.markdown("##### Co tvoří tvůj osobní brand:")
         st.markdown("""
-        * 📄 **Profesionální Životopis (CV) a portfolio** (reálné ukázky projektů),
-        * 🌐 **LinkedIn profil** nebo profesní síť,
-        * 📱 **Digitální stopa** na sociálních sítích (Instagram, TikTok, Facebook, Discord),
-        * 🏆 **Školní a mimoškolní projekty, dobrovolnictví, soutěže**,
-        * 💬 **Reference** od předchozích zaměstnavatelů nebo učitelů.
+        * 📄 **Životopis (CV)**,
+        * 🎨 **Portfolio** (reálné ukázky prací a projektů),
+        * 🌐 **LinkedIn nebo jiný profesní profil**,
+        * 🏆 **Školní a osobní projekty, dobrovolnictví a soutěže**,
+        * 📱 **Komunikace na sociálních sítích a digitální stopa**,
+        * 💬 **Reference** od učitelů či předchozích zaměstnavatelů,
+        * 🔍 **Výsledky dohledatelné online**.
         """)
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>📋 <b>Audit tvé digitální stopy (Rychlá"
-            " kontrola)</b></div>",
+            "<div class='box-yellow'>📋 <b>Audit tvé digitální stopy (Rychlá kontrola)</b></div>",
             unsafe_allow_html=True,
         )
         st.write("Zaškrtni položky, které máš v pořádku:")
@@ -502,8 +517,7 @@ def render():
 
         if score_d == 4:
             st.success(
-                "🎉 **Vynikající! Tvá digitální stopa působí profesionálně a"
-                " bezpečně.**"
+                "🎉 **Vynikající! Tvá digitální stopa působí profesionálně a bezpečně.**"
             )
         elif score_d >= 2:
             st.info(
@@ -528,11 +542,10 @@ def render():
 
         st.divider()
         st.markdown(
-            "#### 📱 Hybridní prvek: Otestuj si profese budoucnosti"
+            "#### 📱 Hybridní prvek učebnice: Otestuj si profese budoucnosti"
         )
         st.write(
-            "Naskenuj QR kód nebo klikni na tlačítko a vyzkoušej si oficiální"
-            " kariérní dotazník národního systému kvalifikací:"
+            "Naskenuj QR kód nebo klikni na tlačítko a vyzkoušej si oficiální kariérní dotazník národního systému kvalifikací na test „Jaká profese budoucnosti se ke mně hodí?“ a na aktuální přehled pracovních nabídek v regionu nebo oboru:"
         )
 
         col_qr1, col_qr2 = st.columns([1, 2])
@@ -1218,8 +1231,7 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>📅 <b>Kalkulačka kariérní"
-            " jistoty</b></div>",
+            "<div class='box-yellow'>📅 <b>Kalkulačka kariérní jistoty</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
@@ -1237,23 +1249,17 @@ def render():
 
         if poradi_smlouvy == 1:
             st.info(
-                "📄 Podepsal jsi 1. smlouvu. Běžný postup při nástupu do nové"
-                " práce."
+                "📄 Podepsal jsi 1. smlouvu. Běžný postup při nástupu do nové práce."
             )
         elif poradi_smlouvy == 2:
             st.info("📄 Podepsal jsi 1. prodloužení. Vše je v pořádku.")
         elif poradi_smlouvy == 3:
             st.warning(
-                "⚠️ **Poslední povoleno!** Toto je tvá celkově třetí a ze"
-                " zákona poslední smlouva na dobu určitou. Až vyprší, musí"
-                " přijít smlouva na neurčito."
+                "⚠️ **Poslední povoleno!** Toto je tvá celkově třetí a ze zákona poslední smlouva na dobu určitou. Až vyprší, musí přijít smlouva na neurčito."
             )
         else:
             st.error(
-                "🚨 **PORUŠENÍ ZÁKONA:** Čtvrtá smlouva na dobu určitou v řadě"
-                " je (až na specifické sezónní výjimky) nezákonná! Máš právo"
-                " písemně oznámit zaměstnavateli, že trváš na zaměstnávání a"
-                " tvůj poměr se tím mění na dobu neurčitou."
+                "🚨 **PORUŠENÍ ZÁKONA:** Čtvrtá smlouva na dobu určitou v řadě je (až na specifické sezónní výjimky) nezákonná! Máš právo písemně oznámit zaměstnavateli, že trváš na zaměstnávání a tvůj poměr se tím mění na dobu neurčitou."
             )
 
         if st.button("Uložit test pravidla '3 a dost' 💾", key="btn_k4_2_7"):
@@ -1295,13 +1301,11 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>📋 <b>Diagnostika: Jsem oběť"
-            " Švarcsystému?</b></div>",
+            "<div class='box-yellow'>📋 <b>Diagnostika: Jsem oběť Švarcsystému?</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Zaškrtni všechny výroky, které platí pro tvou 'podnikatelskou'"
-            " činnost (na IČO) u dané firmy:"
+            "Zaškrtni všechny výroky, které platí pro tvou 'podnikatelskou' činnost (na IČO) u dané firmy:"
         )
 
         svarc1 = st.checkbox(
@@ -1309,18 +1313,15 @@ def render():
             key="k4_2_8_s1",
         )
         svarc2 = st.checkbox(
-            "Šéf mi nařizuje pracovní dobu (od 8 do 16) a musím se hlásit o"
-            " pauzy.",
+            "Šéf mi nařizuje pracovní dobu (od 8 do 16) a musím se hlásit o pauzy.",
             key="k4_2_8_s2",
         )
         svarc3 = st.checkbox(
-            "Pracuji na firemním notebooku a nosím firemní tričko s jejich"
-            " logem.",
+            "Pracuji na firemním notebooku a nosím firemní tričko s jejich logem.",
             key="k4_2_8_s3",
         )
         svarc4 = st.checkbox(
-            "Nemám možnost práci delegovat na někoho jiného, musím ji vykonat"
-            " osobně.",
+            "Nemám možnost práci delegovat na někoho jiného, musím ji vykonat osobně.",
             key="k4_2_8_s4",
         )
 
@@ -1328,22 +1329,15 @@ def render():
 
         if skore_svarc >= 3:
             st.error(
-                "🚩 **Tohle je učebnicový Švarcsystém!** Splňuješ všechny"
-                " znaky závislé práce podle § 2 Zákoníku práce (vztah"
-                " nadřízenosti, osobní výkon, náklady zaměstnavatele). Pracuješ"
-                " nelegálně na IČO."
+                "🚩 **Tohle je učebnicový Švarcsystém!** Splňuješ všechny znaky závislé práce podle § 2 Zákoníku práce (vztah nadřízenosti, osobní výkon, náklady zaměstnavatele). Pracuješ nelegálně na IČO."
             )
         elif skore_svarc > 0:
             st.warning(
-                "⚠️ **Riziková zóna:** Tvá práce má znaky zaměstnání. Jako"
-                " skutečný podnikatel na IČO bys měl mít svobodu v organizaci"
-                " času a nést vlastní podnikatelské riziko."
+                "⚠️ **Riziková zóna:** Tvá práce má znaky zaměstnání. Jako skutečný podnikatel na IČO bys měl mít svobodu v organizaci času a nést vlastní podnikatelské riziko."
             )
         else:
             st.success(
-                "✅ **Zdravé podnikání:** Pokud nevykazuješ tyto znaky, funguješ"
-                " jako skutečný freelancer (např. IT specialista či grafik"
-                " pracující na zakázkách pro více klientů)."
+                "✅ **Zdravé podnikání:** Pokud nevykazuješ tyto znaky, funguješ jako skutečný freelancer (např. IT specialista či grafik pracující na zakázkách pro více klientů)."
             )
 
         if st.button("Uložit diagnostiku Švarcsystému 💾", key="btn_k4_2_8"):
@@ -1359,9 +1353,7 @@ def render():
         st.divider()
         st.markdown("#### 🚴 Gig economy (Platformová ekonomika)")
         st.write(
-            "Rozvoz jídla (Foodora, Wolt), alternativní taxi (Bolt, Uber) nebo"
-            " drobné IT zakázky přes aplikace. Zde je vaším 'šéfem' často"
-            " neviditelný algoritmus."
+            "Rozvoz jídla (Foodora, Wolt), alternativní taxi (Bolt, Uber) nebo drobné IT zakázky přes aplikace. Zde je vaším 'šéfem' často neviditelný algoritmus."
         )
 
         col_gig1, col_gig2 = st.columns(2)
@@ -1369,19 +1361,15 @@ def render():
             st.success(
                 "🟢 **Výhody Gig Economy:**\n"
                 "* Okamžitý nástup a nízká bariéra vstupu.\n"
-                "* Extrémní flexibilita (aplikaci zapnete jen když chcete"
-                " vydělávat).\n"
+                "* Extrémní flexibilita (aplikaci zapnete jen když chcete vydělávat).\n"
                 "* Možnost kombinovat s jinou prací nebo studiem."
             )
         with col_gig2:
             st.error(
                 "🔴 **Temná strana (Rizika):**\n"
-                "* Odměna se mění podle toho, jak algoritmus sníží/zvýší"
-                " sazby.\n"
-                "* Falešná svoboda: aplikace vás penalizuje za odmítání"
-                " zakázek.\n"
-                "* Z opotřebení vlastního auta/kola nebo telefonu vám nikdo"
-                " nic nezaplatí."
+                "* Odměna se mění podle toho, jak algoritmus sníží/zvýší sazby.\n"
+                "* Falešná svoboda: aplikace vás penalizuje za odmítání zakázek.\n"
+                "* Z opotřebení vlastního auta/kola nebo telefonu vám nikdo nic nezaplatí."
             )
 
     elif selected_section_4 == "2.9 Red flags v inzerátech a smlouvách":
@@ -1389,9 +1377,7 @@ def render():
             "### 2.9 Red flags: Varovné signály v inzerátech a smlouvách"
         )
         st.write(
-            "Slovo **'Red Flag'** (červená vlajka) označuje signál, že s danou"
-            " firmou nebo smlouvou něco není v pořádku. V rámci finanční a"
-            " občanské gramotnosti je klíčové umět tyto triky dekódovat."
+            "Slovo **'Red Flag'** (červená vlajka) označuje signál, že s danou firmou nebo smlouvou něco není v pořádku. V rámci finanční a občanské gramotnosti je klíčové umět tyto triky dekódovat."
         )
 
         st.markdown("#### 🕵️ Dekodér inzerátů")
@@ -1418,40 +1404,29 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>🧪 <b>Simulátor pohovoru: Jak se bránit"
-            " manipulaci</b></div>",
+            "<div class='box-yellow'>🧪 <b>Simulátor pohovoru: Jak se bránit manipulaci</b></div>",
             unsafe_allow_html=True,
         )
 
         with st.form("red_flags_form"):
             st.write(
-                "Sedíš na pohovoru. Personalista ti s úsměvem položí smlouvu na"
-                " stůl a řekne:"
+                "Sedíš na pohovoru. Personalista ti s úsměvem položí smlouvu na stůl a řekne:"
             )
             st.markdown(
-                "*„Tak tady to máme. Je to standardní smlouva, všichni u nás ji"
-                " mají stejnou. Tady do kolonky druh práce jsme raději dali"
-                " 'Pracovník provozu', abychom to nekomplikovali, a mzdu si"
-                " dohodneme pak ústně, víte, že my na papíry moc nehrajeme. Kde"
-                " vám to mám podepsat?“*"
+                "*„Tak tady to máme. Je to standardní smlouva, všichni u nás ji mají stejnou. Tady do kolonky druh práce jsme raději dali 'Pracovník provozu', abychom to nekomplikovali, a mzdu si dohodneme pak ústně, víte, že my na papíry moc nehrajeme. Kde vám to mám podepsat?“*"
             )
 
             odp = st.radio(
                 "Tvoje reakce:",
                 [
                     (
-                        "A) Super, děkuji za důvěru! (Podepíšu to hned, ať"
-                        " dělám dobrý dojem)."
+                        "A) Super, děkuji za důvěru! (Podepíšu to hned, ať dělám dobrý dojem)."
                     ),
                     (
-                        "B) 'Pracovník provozu' je moc široký pojem. Rád/a bych"
-                        " to změnil/a na 'Asistent prodeje'. A mzdu musíme mít"
-                        " před nástupem určenou minimálně písemným mzdovým"
-                        " výměrem."
+                        "B) 'Pracovník provozu' je moc široký pojem. Rád/a bych to změnil/a na 'Asistent prodeje'. A mzdu musíme mít před nástupem určenou minimálně písemným mzdovým výměrem."
                     ),
                     (
-                        "C) Řeknu, ať do smlouvy napíšou mzdu 150 000 Kč, jinak"
-                        " odcházím."
+                        "C) Řeknu, ať do smlouvy napíšou mzdu 150 000 Kč, jinak odcházím."
                     ),
                 ],
                 key="k4_2_9_odp",
@@ -1460,23 +1435,15 @@ def render():
             if st.form_submit_button("Vyhodnotit a uložit reakci 💾"):
                 if odp.startswith("B"):
                     st.success(
-                        "✅ **Skvělá reakce dospělého člověka!** Chráníš se před"
-                        " tím, abys dělal děvečku pro všechno, a trváš na"
-                        " transparentnosti. Na ústní dohody se v pracovním"
-                        " právu nehraje."
+                        "✅ **Skvělá reakce dospělého člověka!** Chráníš se před tím, abys dělal děvečku pro všechno, a trváš na transparentnosti. Na ústní dohody se v pracovním právu nehraje."
                     )
                 elif odp.startswith("A"):
                     st.error(
-                        "❌ **Prohrál jsi hru podle pravidel.** Právě jsi"
-                        " podepsal souhlas s tím, že tě firma může úkolovat"
-                        " čímkoliv. A pokud ti na konci měsíce dají minimální"
-                        " mzdu, nemáš v ruce jediný důkaz, že slíbili víc."
+                        "❌ **Prohrál jsi hru podle pravidel.** Právě jsi podepsal souhlas s tím, že tě firma může úkolovat čímkoliv. A pokud ti na konci měsíce dají minimální mzdu, nemáš v ruce jediný důkaz, že slíbili víc."
                     )
                 elif odp.startswith("C"):
                     st.warning(
-                        "⚠️ **Příliš arogantní.** Být asertivní neznamená být"
-                        " neslušný nebo klást absurdní ultimáta. Cílem je"
-                        " narovnat podmínky podle zákona."
+                        "⚠️ **Příliš arogantní.** Být asertivní neznamená být neslušný nebo klást absurdní ultimáta. Cílem je narovnat podmínky podle zákona."
                     )
 
                 if "uloz_odpoved_fn" in st.session_state:
@@ -1570,13 +1537,11 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>📉 <b>Simulátor: Skutečně jsi zbohatl?"
-            " (Kupní síla)</b></div>",
+            "<div class='box-yellow'>📉 <b>Simulátor: Skutečně jsi zbohatl? (Kupní síla)</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
-            "Zadej svou výplatu a změň inflaci, ať vidíš, jestli si toho koupíš"
-            " víc nebo míň:"
+            "Zadej svou výplatu a změň inflaci, ať vidíš, jestli si toho koupíš víc nebo míň:"
         )
 
         col_inf1, col_inf2 = st.columns(2)
@@ -1661,8 +1626,7 @@ def render():
 
         st.divider()
         st.markdown(
-            "<div class='box-yellow'>🧪 <b>Aktivita: Výplatní páska s"
-            " chybami</b></div>",
+            "<div class='box-yellow'>🧪 <b>Aktivita: Výplatní páska s chybami</b></div>",
             unsafe_allow_html=True,
         )
         st.write(
@@ -1702,12 +1666,10 @@ def render():
 
         with st.form("chyby_paska"):
             st.write(
-                "Kde tě zaměstnavatel (ať už omylem, nebo úmyslně) připravil"
-                " o peníze?"
+                "Kde tě zaměstnavatel (ať už omylem, nebo úmyslně) připravil o peníze?"
             )
             chyb1 = st.checkbox(
-                "Chybí povinný příplatek za práci o víkendu (i když je uvedeno"
-                " 8 odpracovaných hodin).",
+                "Chybí povinný příplatek za práci o víkendu (i když je uvedeno 8 odpracovaných hodin).",
                 key="k4_3_3_c1",
             )
             chyb2 = st.checkbox(
@@ -1715,8 +1677,7 @@ def render():
                 key="k4_3_3_c2",
             )
             chyb3 = st.checkbox(
-                "Není uplatněna sleva na poplatníka (firma zřejmě nepředložila"
-                " 'Růžové prohlášení' k podpisu).",
+                "Není uplatněna sleva na poplatníka (firma zřejmě nepředložila 'Růžové prohlášení' k podpisu).",
                 key="k4_3_3_c3",
             )
             chyb4 = st.checkbox(
@@ -1724,8 +1685,7 @@ def render():
                 key="k4_3_3_c4",
             )
             chyb5 = st.checkbox(
-                "Zůstatek dovolené je zapsán v desetinných číslech, což zákoník"
-                " práce neumožňuje.",
+                "Zůstatek dovolené je zapsán v desetinných číslech, což zákoník práce neumožňuje.",
                 key="k4_3_3_c5",
             )
 
@@ -2005,8 +1965,7 @@ def render():
         )
 
         with st.expander(
-            "Rozklikni pro zobrazení všech Slev a Zvýhodnění (platné pro rok"
-            " 2026)"
+            "Rozklikni pro zobrazení všech Slev a Zvýhodnění (platné pro rok 2026)"
         ):
             st.markdown("""
             **1. Základní sleva na poplatníka**
@@ -2036,8 +1995,7 @@ def render():
 
         st.divider()
         st.markdown(
-            "#### 📉 Běžné Odčitatelné položky (Nezdanitelné části základu"
-            " daně)"
+            "#### 📉 Běžné Odčitatelné položky (Nezdanitelné části základu daně)"
         )
         st.write(
             "Tyto položky řešíte typicky až na jaře v **ročním zúčtování"
