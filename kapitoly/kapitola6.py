@@ -103,7 +103,6 @@ def zhodnot_reklamu_ai(text_reklamy, nazev_projektu):
                 data = response.json()
                 content = data["choices"][0]["message"]["content"]
                 
-                # Extrakce skóre z prvního řádku pro simulátor
                 celkove_skore = 6.0
                 try:
                     if "SKORE:" in content:
@@ -118,7 +117,6 @@ def zhodnot_reklamu_ai(text_reklamy, nazev_projektu):
     except Exception:
         pass
         
-    # --- OFFLINE ZÁCHRANA ---
     text_low = text_reklamy.lower()
     score_a = 8 if "?" in text_low or "!" in text_low else 3
     score_i = 7 if len(text_reklamy) > 50 else 3
@@ -219,28 +217,38 @@ def render_marketing_rozpocet(nazev_projektu):
             unsafe_allow_html=True
         )
     else:
-        st.caption(f"💡 *Tip: Pokud výše nejprve otestuješ text reklamy v AI trenažéru, simulátor do výpočtu započítá tvůj reálný copywriting.*")
+        st.caption("💡 *Tip: Pokud výše nejprve otestuješ text reklamy v AI trenažéru, simulátor do výpočtu započítá tvůj reálný copywriting.*")
 
     st.write(
-        f"Máš rozpočet **10 000 Kč** na propagaci projektu **{nazev_projektu}**. "
-        "Čistá marže z jednoho prodaného kusu/služby je **250 Kč**. Tvým úkolem je rozdělit peníze mezi kanály tak, abys neskončil/a ve ztrátě."
+        f"Máš celkový rozpočet **10 000 Kč** na propagaci projektu **{nazev_projektu}**. "
+        "Čistá marže z jednoho prodaného kusu/služby je **250 Kč**. Rozděl částky do jednotlivých kanálů:"
     )
 
     budget = 10000
     
-    tiktok_spend = st.slider("📱 TikTok reklama (Levné kliky: 3 Kč/klik)", 0, budget, 3000, step=500, key="sb_tt")
-    zbyva_po_tt = budget - tiktok_spend
-    
-    max_google = max(0, min(5000, zbyva_po_tt))
-    google_spend = st.slider("🔍 Google Ads ve vyhledávání (Dražší kliky: 15 Kč/klik)", 0, zbyva_po_tt, max_google, step=500, key="sb_gg")
-    zbyva_po_g = zbyva_po_tt - google_spend
-    
-    influencer_spend = st.slider("📸 Mikro-influencer spolupráce (Fixní balíček)", 0, zbyva_po_g, zbyva_po_g, step=500, key="sb_inf")
+    col_s1, col_s2, col_s3 = st.columns(3)
+    with col_s1:
+        tiktok_spend = st.slider("📱 TikTok (3 Kč/klik)", min_value=0, max_value=budget, value=3000, step=500, key="sb_tt")
+    with col_s2:
+        google_spend = st.slider("🔍 Google Ads (15 Kč/klik)", min_value=0, max_value=budget, value=3000, step=500, key="sb_gg")
+    with col_s3:
+        influencer_spend = st.slider("📸 Mikro-influencer", min_value=0, max_value=budget, value=4000, step=500, key="sb_inf")
 
-    zbyva_celkem = budget - (tiktok_spend + google_spend + influencer_spend)
-    st.info(f"💰 Zbývá ti nerozděleno: **{zbyva_celkem} Kč** z 10 000 Kč.")
+    celkem_spend = tiktok_spend + google_spend + influencer_spend
+    rozdil = budget - celkem_spend
+
+    if rozdil > 0:
+        st.info(f"💰 Zbývá ti nerozděleno: **{rozdil:,} Kč** z {budget:,} Kč.".replace(",", " "))
+    elif rozdil == 0:
+        st.success(f"✅ Rozpočet je přesně vyčerpán (**{celkem_spend:,} Kč**).".replace(",", " "))
+    else:
+        st.error(f"🚨 **Překročen rozpočet o {abs(rozdil):,} Kč!** Celkem zadáno {celkem_spend:,} Kč z povolených {budget:,} Kč. Uprav posuvníky.".replace(",", " "))
 
     if st.button("🚀 Spustit kampaň na trhu", type="primary", key="btn_rozpocet"):
+        if rozdil < 0:
+            st.error("Kampaň nelze spustit, protože rozpočet překračuje limit 10 000 Kč. Uprav prosím částky.")
+            return
+
         kliky_tiktok = tiktok_spend / 3
         prodeje_tiktok = math.floor(kliky_tiktok * 0.005 * mult)
         
@@ -254,7 +262,7 @@ def render_marketing_rozpocet(nazev_projektu):
             
         celkem_prodeju = prodeje_tiktok + prodeje_google + prodeje_influencer
         celkovy_zisk_z_produktu = celkem_prodeju * 250
-        utraceno_celkem = tiktok_spend + google_spend + influencer_spend
+        utraceno_celkem = celkem_spend
         cisty_zisk = celkovy_zisk_z_produktu - utraceno_celkem
 
         st.divider()
@@ -352,7 +360,6 @@ def render():
         "Na konci kapitoly budeš mít jednoduchý návrh projektu, jeho řízení, marketingový mix, značku a etickou kampaň."
     )
 
-    # Interaktivní výběr a konfigurátor projektu
     with st.container(border=True):
         st.markdown(
             "<div class='box-purple'>🚀 <b>Inkubátor projektů: Zvol si své téma</b></div>",
@@ -384,7 +391,6 @@ def render():
         else:
             nazev_projektu = typ_projektu.split(" ", 1)[1]
 
-        # Uložíme název projektu globálně pro simulátory
         st.session_state["k6_aktivni_projekt"] = nazev_projektu
 
         c_p1, c_p2, c_p3 = st.columns(3)
@@ -1646,7 +1652,7 @@ def render():
 
         st.markdown(
             "| Kritérium | Co se hodnotí |\n"
-            "| :--- | :--- |\n"
+            "| :--- | : |\n"
             "| **🏛️ Management** | Jasný cíl, rozdělení rolí, realistický plán a práce s riziky. |\n"
             "| **🎯 Marketing** | Smysluplná cílová skupina, positioning a propojený marketingový mix. |\n"
             "| **💎 Brand** | Srozumitelná značka, hodnoty a důvěryhodná komunikace. |\n"
