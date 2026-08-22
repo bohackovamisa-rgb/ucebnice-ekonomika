@@ -274,16 +274,60 @@ def render_marketing_rozpocet(nazev_projektu):
         
         if cisty_zisk >= 0:
             c3.metric("Čistý výsledek (ROI)", f"+ {cisty_zisk:,} Kč".replace(",", " "))
-            st.success(f"🎉 **Skvělá práce! Kampaň pro {nazev_projektu} je v zisku.** Díky dobrému rozdělení a kvalitnímu textu jsi vydělal/a víc, než stála inzerce.")
+            st.success(f"🎉 **Skvělá práce! Kampaň pro {nazev_projektu} je v zisku.** Vydělal/a jsi víc, než stála inzerce.")
         else:
             c3.metric("Čistý výsledek (ROI)", f"{cisty_zisk:,} Kč".replace(",", " "))
-            st.error(f"📉 **Kampaň skončila ve ztrátě {cisty_zisk:,} Kč.** Náklady na reklamu byly vyšší než marže z prodaných kusů. Zkus vylepšit text nebo zvolit jiný poměr kanálů.".replace(",", " "))
+            st.error(f"📉 **Kampaň skončila ve ztrátě {cisty_zisk:,} Kč.** Náklady na reklamu byly vyšší než marže z prodeje.")
             
-        with st.expander("🔍 Podrobná analytika výkonu"):
-            st.write(f"- **TikTok:** Získal {int(kliky_tiktok)} návštěv, prodáno **{prodeje_tiktok} ks**.")
-            st.write(f"- **Google Ads:** Získal {int(kliky_google)} přesně cílených lidí, prodáno **{prodeje_google} ks**.")
-            st.write(f"- **Influencer:** Přinesl komunitní zásah a prodal **{prodeje_influencer} ks**.")
-            st.write(f"- **Vliv copywritingu (AIDA):** Všechny prodeje byly vynásobeny faktorem **{mult:.2f}×** podle kvality tvého textu.")
+        # =========================================================================
+        # 🧠 INTELIGENTNÍ DIAGNOSTIKA A PORADCE PRO ŽÁKA
+        # =========================================================================
+        st.markdown("##### 🧭 Diagnostika a doporučení pro zlepšení")
+        
+        doporuceni = []
+        
+        # 1. Zhodnocení vlivu textu (AIDA)
+        if mult < 1.0:
+            doporuceni.append(
+                "❌ **Slabý reklamní text (Copywriting):** Tvůj index konverzí je nízký. Lidé na reklamu kliknou, ale neobjednají. "
+                "Vrať se do Kroku 1, přidej silnější háček a jasnou výzvu k akci (např. *'Objednej ještě dnes s 20% slevou'*)."
+            )
+        elif mult >= 1.5:
+            doporuceni.append("✅ **Silný copywriting:** Tvůj text má skvělý prodejní náboj a výrazně pomáhá konverzím.")
+            
+        # 2. Diagnostika TikToku
+        cpa_tt = (tiktok_spend / prodeje_tiktok) if prodeje_tiktok > 0 else tiktok_spend
+        if tiktok_spend > 3500 and cpa_tt > 250:
+            doporuceni.append(
+                f"⚠️ **Příliš velký rozpočet na TikToku ({tiktok_spend:,} Kč):** TikTok má sice levné kliky, ale lidé tam nechodí primárně nakupovat. "
+                f"Získání 1 zákazníka tě tu stálo {int(cpa_tt)} Kč (přičemž tvoje marže je jen 250 Kč). Zkroť rozpočet na TikToku a přesuň peníze tam, kde lidé aktivně hledají řešení."
+            )
+            
+        # 3. Diagnostika Googlu
+        if google_spend < 2500:
+            doporuceni.append(
+                "💡 **Podinvestovaný Google Ads:** Lidé na vyhledávači aktivně hledají to, co nabízíš, a mají vysoký konverzní poměr (4 %). "
+                "Zkus do Googlu zainvestovat více peněz (např. 4 000 – 5 000 Kč), vrátí se ti to nejrychleji."
+            )
+            
+        # 4. Diagnostika Influencera
+        if 0 < influencer_spend < 2000:
+            doporuceni.append(
+                "⚠️ **Malý rozpočet na influencera:** Částka pod 2 000 Kč ti přinesla jen slabou propagaci bez bonusového dosahu. "
+                "U influencerů se vyplatí buď neplatit nic (spoléhat na barter), nebo investovat alespoň 3 000 Kč do pořádného balíčku."
+            )
+        elif influencer_spend >= 4000 and mult >= 1.2:
+            doporuceni.append("🌟 **Influencer kampaň zafungovala skvěle:** Velký zásah v kombinaci s dobrým textem přinesl silný komunitní prodej.")
+
+        for d in doporuceni:
+            st.markdown(d)
+            
+        with st.expander("🔍 Podrobná čísla a efektivita kanálů"):
+            st.write(f"- **TikTok:** Utraceno {tiktok_spend:,} Kč ➔ {int(kliky_tiktok)} návštěv ➔ **{prodeje_tiktok} ks** (Cena za prodej: {int(cpa_tt)} Kč)")
+            cpa_gg = (google_spend / prodeje_google) if prodeje_google > 0 else google_spend
+            st.write(f"- **Google Ads:** Utraceno {google_spend:,} Kč ➔ {int(kliky_google)} návštěv ➔ **{prodeje_google} ks** (Cena za prodej: {int(cpa_gg)} Kč)")
+            st.write(f"- **Mikro-influencer:** Utraceno {influencer_spend:,} Kč ➔ **{prodeje_influencer} ks**")
+            st.write(f"- **AIDA multiplikátor textu:** **{mult:.2f}×**")
             
         if "uloz_odpoved_fn" in st.session_state:
             st.session_state["uloz_odpoved_fn"]("Kapitola 6", f"Marketing Rozpočet ({nazev_projektu})", f"Zisk: {cisty_zisk} Kč | Prodeje: {celkem_prodeju} ks | Index: {mult:.2f}")
@@ -398,7 +442,7 @@ def render():
             "**Blok 1: Management**\n\n**Co doplníš:** Cíl projektu, týmové role, styl řízení, plán a SWOT analýzu.\n\n**Výstup:** Mini manažerský plán projektu."
         )
         c_p2.warning(
-            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a marketingový mix 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
+            "**Blok 2: Marketing**\n\n**Co doplníš:** Zákazníka, segment, positioning a 4P.\n\n**Výstup:** Marketingový návrh produktu nebo služby."
         )
         c_p3.success(
             "**Blok 3: Brand & Etika**\n\n**Co doplníš:** Název, hodnoty značky, personal/brand profil, kampaň a etická pravidla komunikace.\n\n**Výstup:** Etická marketingová kampaň."
@@ -745,7 +789,7 @@ def render():
         
         st.markdown(
             "| Fáze kontroly | Co se děje |\n"
-            "| :--- | : |\n"
+            "| :--- | :--- |\n"
             "| **1. Stanovení standardů** | Určíme, jak má vypadat dobrý výsledek. |\n"
             "| **2. Zjištění skutečnosti** | Změříme, co se opravdu stalo. |\n"
             "| **3. Srovnání** | Porovnáme plán a realitu. |\n"
@@ -1235,8 +1279,10 @@ def render():
         st.write("**Příklad:** U energetického nápoje obal neřeší jen ochranu plechovky. Barvy, název, typografie a styl komunikují energii, výkon, gaming, sport nebo status.")
 
         st.markdown("#### 2.4.2 Price / Cena")
-        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky. Cena není jen číslo: Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
-        st.write("**Metody stanovení ceny**")
+        st.write("Cena je jediný prvek marketingového mixu, který přímo generuje příjmy. Produkt, distribuce i propagace obvykle vytvářejí náklady. Cena zároveň silně ovlivňuje vnímání hodnoty a pozici značky.")
+        st.write("**Cena není jen číslo:** Nízká cena může přilákat zákazníky, ale také vyvolat dojem nízké kvality. Vysoká cena může působit prémiově, ale musí být podpořená kvalitou, značkou nebo jedinečností.")
+        
+        st.markdown("**Metody stanovení ceny**")
         st.markdown(
             "| Metoda | Jak funguje | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1245,7 +1291,7 @@ def render():
             "| **Konkurenčně orientovaná cena** | Firma nastaví cenu podle konkurence na trhu. | Kavárna sleduje ceny podobných kaváren v okolí. |"
         )
 
-        st.write("**Cenové strategie**")
+        st.markdown("**Cenové strategie**")
         st.markdown(
             "| Strategie | Co znamená | Příklad |\n"
             "| :--- | :--- | :--- |\n"
@@ -1652,7 +1698,7 @@ def render():
 
         st.markdown(
             "| Kritérium | Co se hodnotí |\n"
-            "| :--- | : |\n"
+            "| :--- | :--- |\n"
             "| **🏛️ Management** | Jasný cíl, rozdělení rolí, realistický plán a práce s riziky. |\n"
             "| **🎯 Marketing** | Smysluplná cílová skupina, positioning a propojený marketingový mix. |\n"
             "| **💎 Brand** | Srozumitelná značka, hodnoty a důvěryhodná komunikace. |\n"
@@ -1743,7 +1789,7 @@ def render():
                 "* možnost využití sociálních sítí, UGC a věrnostního programu,\n"
                 "* rozhodování o ceně, distribuci služby a propagaci.\n\n"
                 "| Oblast | Možné řešení |\n"
-                "| :--- | : |\n"
+                "| :--- | :--- |\n"
                 "| **Product** | Menší studentské nápoje, zásuvky, Wi-Fi, tichý studijní koutek. |\n"
                 "| **Price** | Studentská cena, věrnostní kartička, zvýhodněné ranní menu. |\n"
                 "| **Place** | Kavárna u školy + možnost předobjednávky přes Instagram nebo jednoduchý formulář. |\n"
