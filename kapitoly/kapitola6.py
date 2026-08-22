@@ -107,7 +107,6 @@ def render_ai_treenazer():
                 
         st.session_state["manazer_chat"].append({"role": "assistant", "content": odpoved_ai})
         
-        # Ukládáme výsledek rovnou učiteli do databáze (aby viděl, jak žák konflikt vyřešil)
         if "uloz_odpoved_fn" in st.session_state:
             st.session_state["uloz_odpoved_fn"]("Kapitola 6", "AI Roleplay Trenažér", prompt + "\n\nVýsledek:\n" + odpoved_ai)
 
@@ -119,7 +118,7 @@ def render():
     st.markdown(
         "<span class='hero-badge'>Kapitola 6</span>", unsafe_allow_html=True
     )
-    st.markdown("## 6. Management a marketing")
+    st.title("6. Management a marketing")
     st.markdown(
         "<p style='font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem;'>"
         "Management a marketing nejsou jen poučky z učebnice. Jsou to dovednosti, "
@@ -309,7 +308,7 @@ def render():
 
         st.markdown("### 1.1 Podstata a význam managementu")
         st.write(
-            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledek."
+            "Management znamená **řízení organizace nebo projektu tak, aby bylo dosaženo stanovených cílů**. Často se říká, že management je *proces dosahování cílů prostřednictvím činnosti jiných lidí*. Manažer tedy nemusí dělat všechno sám – jeho úkolem je nastavit směr, rozdělit práci, motivovat tým, rozhodovat a kontrolovat výsledky."
         )
 
         st.markdown(
